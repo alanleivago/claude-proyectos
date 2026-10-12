@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reflejo</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; image-rendering: pixelated; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  REFLEJO — 9:16, 15.0s @ 120 BPM grid, 24fps, style "onebit". Hard cuts only (BRIDGES = []), every cut on the 8th grid.
+//  Mirror shots: the frame is the glass, the person is a black hair mass in the foreground; the reflection faces camera.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 15.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'sans-serif';
+const CX = 500;
+
+// [t0, scene]
+const SHOT_LIST = [
+  [0.0, 'mirrorClose'],   // 1 the question
+  [3.0, 'handLag'],       // 2 the reflection lags
+  [6.0, 'selfBlink'],     // 3a the person blinks (camera = the mirror's view)
+  [7.5, 'reflStare'],     // 3b the reflection doesn't
+  [9.0, 'stepBack'],      // 4 hands on the glass, the smile; the light dies
+  [12.5, 'grinXCU'],      // 5 the payoff
+];
+const SCENE = { mirrorClose: () => sceneMirrorClose(), handLag: () => sceneHandLag(), selfBlink: () => sceneSelfBlink(), reflStare: () => sceneReflStare(), stepBack: () => sceneStepBack(), grinXCU: () => sceneGrinXCU() };
+const ERA_LIST = SHOT_LIST.map(([t0, sc], i) => [t0, i + 1 < SHOT_LIST.length ? SHOT_LIST[i + 1][0] : DURATION, SCENE[sc]]);
+// the subtitles: typed on at 0.045 s per glyph (the score clicks on each glyph)
+const SUBS = [
+  { t0: 0.3, t1: 3.0, lines: ['¿Qué pasaría si tu reflejo', 'dejara de imitarte?'] },
+  { t0: 3.25, t1: 6.0, lines: ['Al principio,', 'solo se retrasa.'] },
+  { t0: 6.2, t1: 9.0, lines: ['Luego deja', 'de parpadear.'] },
+  { t0: 10.3, t1: 12.5, lines: ['Y entonces sonríe.'] },
+  { t0: 13.0, t1: 15.0, lines: ['…pero tú no.'] },
+];
+const CUE = { handUp: 3.6, reflHand: 4.45, blink: 6.55, stepBack: 9.15, press: 9.7, smile: 10.4, lightOff: 11.9, sting: 12.5 };
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'beat-cut',
+  shots: SHOT_LIST.map(([t0, sc], i) => ({ id: i + 1, key: sc, era: i, t0, t1: ERA_LIST[i][1], title: sc })),
+  cuts: SHOT_LIST.slice(1).map(([t0]) => t0),
+  morphs: [],
+  cues: CUE,
+  acts: [
+    { name: '1 Pregunta', role: 'build', t0: 0.0, t1: 3.0 },
+    { name: '2 Retraso', role: 'journey', t0: 3.0, t1: 9.0 },
+    { name: '3 Sonrisa', role: 'journey', t0: 9.0, t1: 11.9 },
+    { name: '4 Silencio', role: 'silence', t0: 11.9, t1: 12.5 },
+    { name: '5 Pero tú no', role: 'gift', t0: 12.5, t1: 15.0 },
+  ],
+  board: [
+    { t: 2.4, title: 'la pregunta', sound: 'room tone, tube hum, drip, type clicks', next: 'hard cut' },
+    { t: 4.9, title: 'el retraso', sound: 'cloth rustle, then a softer one from the glass', next: 'hard cut' },
+    { t: 6.6, title: 'parpadea', sound: 'hum, drip', next: 'hard cut' },
+    { t: 8.4, title: 'no parpadea', sound: 'hum thins', next: 'hard cut' },
+    { t: 11.6, title: 'sonríe', sound: 'glass creaks; the lamp flickers', next: 'the lamp dies (same shot)' },
+    { t: 12.2, title: 'se apaga la luz', sound: 'click, then silence', next: 'hard cut on the hit' },
+    { t: 13.9, title: '…pero tú no', sound: 'impact + glass crack (loudest), ringing tail', next: 'end' },
+  ],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El agujero negro</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0d14; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  ¿QUE PASARÍA SI LA TIERRA CAYERA EN UN AGUJERO NEGRO? — 9:16, 70s, 24fps, motion on 1s.
+//  F5: a hilltop above a valley town from dusk into night. A black hole beside the Moon pulls it apart; the debris
+//  becomes a lensed accretion disk that fills the sky; the ground is pulled, everything loose falls upwards, the crust
+//  cracks; the camera lifts through the clouds towards the shadow. The HUD counts down to arrival.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 70.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 70, () => sceneHole()]];
+const SHOTS = [
+  ['colina',   0, 0.0,  5.0,  'atardecer en la colina, un punto negro junto a la Luna'],
+  ['luna',     0, 5.0,  13.0, 'la Luna se estira y se deshace'],
+  ['disco',    0, 13.0, 23.0, 'nace el disco, el cielo se vuelve dorado'],
+  ['tira',     0, 23.0, 33.0, 'las nubes corren hacia él, el pueblo parpadea'],
+  ['sube',     0, 33.0, 43.0, 'todo lo suelto cae hacia arriba; la cámara se alza'],
+  ['grietas',  0, 43.0, 53.0, 'el disco llena el cielo, el suelo se agrieta'],
+  ['nubes',    0, 53.0, 61.0, 'subes entre las nubes hacia la sombra'],
+  ['vacio',    0, 61.0, 62.5, 'silencio'],
+  ['horizonte',0, 62.5, 64.0, 'cruzas el horizonte'],
+  ['final',    0, 64.0, 70.0, 'Gaia BH1, a 1.560 años luz'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { moon: 5.0, disk: 13.0, pull: 23.0, rise: 33.0, crack: 43.0, clouds: 53.0, vacuum: 61.0, hit: 62.5, card: 64.0 },
+  acts: [
+    { name: '1 Colina',   role: 'build',   t0: 0.0,  t1: 5.0 },
+    { name: '2 Luna',     role: 'journey', t0: 5.0,  t1: 13.0 },
+    { name: '3 Disco',    role: 'journey', t0: 13.0, t1: 23.0 },
+    { name: '4 Tira',     role: 'journey', t0: 23.0, t1: 33.0 },
+    { name: '5 Sube',     role: 'journey', t0: 33.0, t1: 43.0 },
+    { name: '6 Grietas',  role: 'peak',    t0: 43.0, t1: 53.0 },
+    { name: '7 Nubes',    role: 'journey', t0: 53.0, t1: 61.0 },
+    { name: '8 Vacío',    role: 'silence', t0: 61.0, t1: 62.5 },
+    { name: '9 Horizonte',role: 'gift',    t0: 62.5, t1: 64.0 },
+    { name: '10 Final',   role: 'goodbye', t0: 64.0, t1: 70.0 },
+  ],
+  board: [
+    { t: 2.5,  title: '¿Que pasaría si la Tierra cayera en un agujero negro?', sound: 'grillos, viento suave, pueblo lejano', next: 'la Luna cae' },
+    { t: 9.5,  title: 'La Luna se deshace', sound: 'viento, retumbo lejano', next: 'nace el disco' },
+    { t: 18.0, title: 'Ahora tiene un anillo', sound: 'zumbido grave creciente', next: 'tira del suelo' },
+    { t: 28.0, title: 'La gravedad tira del suelo', sound: 'ráfagas, perros, alarmas', next: 'todo sube' },
+    { t: 38.0, title: 'Todo lo suelto cae hacia arriba', sound: 'crujidos, escombros', next: 'la Tierra' },
+    { t: 48.0, title: 'La Tierra es la siguiente', sound: 'rugido, terremoto (el acto más intenso)', next: 'las nubes' },
+    { t: 57.0, title: 'Desde fuera, te verían congelado', sound: 'el rugido se apaga', next: 'silencio' },
+    { t: 62.6, title: 'El horizonte', sound: 'EL GOLPE (62,5 s) tras 1,5 s de silencio', next: 'negro' },
+    { t: 67.5, title: 'Gaia BH1, a 1.560 años luz', sound: 'un grave que se apaga', next: 'fin' },
+  ],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

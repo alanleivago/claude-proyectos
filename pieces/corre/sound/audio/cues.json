@@ -1,0 +1,15 @@
+{
+  "fps": 24,
+  "duration_s": 75.0,
+  "energy": "punchy",
+  "lufs": -15,
+  "kit": "F:/Claude Proyectos/sound-layer/kit",
+  "room": {"decay_s": 0.5, "wet_db": -16},
+  "voice": [{"file": "audio/bed.wav", "start_s": 0}],
+  "silence_ok": [[64.85, 65.5], [74.6, 75.0]],
+  "cues": [
+    {"id": "riser",  "t": 64.85, "sound": "reverse/fs-503817-gated-riser-wav-1", "weight": "support", "align": "end"},
+    {"id": "suck",   "t": 64.85, "sound": "reverse/fs-218354-movie-short-swell-1", "weight": "support", "align": "end"},
+    {"id": "IMPACT", "t": 65.5,  "sound": "audio/own/hero-hit.wav+audio/own/hero-boom.wav", "weight": "hero", "visual": "cut", "stop_before": true}
+  ]
+}

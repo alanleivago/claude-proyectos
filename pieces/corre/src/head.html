@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cada vez más rápido</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0d14; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  ¿QUE PASARÍA SI TE CORRIERAS CADA VEZ MÁS RÁPIDO? — 9:16, 75s, 24fps, motion on 1s.
+//  F5: a first-person run that never stops speeding up: a seaside promenade at sunrise (sea on the left), a coast road,
+//  the old town (sound barrier), a canyon of towers, the plains (the air burns), orbit, escape, the Moon, Jupiter,
+//  and the stars crowding ahead as you approach the speed of light. The HUD counter is your speed.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 75.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 75, () => sceneRun()]];
+const SHOTS = [
+  ['paseo',    0, 0.0,  4.5,  'paseo marítimo al amanecer, título'],
+  ['corre',    0, 4.5,  10.0, 'empiezas a correr, miras al mar'],
+  ['costa',    0, 10.0, 17.0, 'carretera costera, adelantas coches'],
+  ['sonido',   0, 17.0, 23.0, 'barrera del sonido; miras atrás: estallan los cristales'],
+  ['torres',   0, 23.0, 31.0, 'cañón de torres, luego la llanura'],
+  ['plasma',   0, 31.0, 38.0, 'el aire frente a ti arde'],
+  ['orbita',   0, 38.0, 44.0, 'la Tierra se curva, escapas'],
+  ['silencio', 0, 44.0, 48.0, 'miras atrás: la Tierra se aleja'],
+  ['planetas', 0, 48.0, 56.0, 'la Luna a la izquierda, Júpiter a la derecha'],
+  ['luz',      0, 56.0, 65.0, 'las estrellas se amontonan delante'],
+  ['punto',    0, 65.0, 69.0, 'todo el cielo en un punto de luz'],
+  ['final',    0, 69.0, 75.0, 'la sonda Parker: 692.000 km/h'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { run: 4.5, sea: 7.0, car: 12.3, boom: 18.6, back: 20.2, sr71: 26.0, plasma: 31.0, orbit: 37.5, escape: 41.0, turn: 44.0, moon: 49.6, jupiter: 53.6, light: 56.0, vacuum: 64.9, hit: 65.5, card: 69.0 },
+  acts: [
+    { name: '1 Paseo',    role: 'build',   t0: 0.0,  t1: 4.5 },
+    { name: '2 Corre',    role: 'journey', t0: 4.5,  t1: 10.0 },
+    { name: '3 Costa',    role: 'journey', t0: 10.0, t1: 17.0 },
+    { name: '4 Sonido',   role: 'journey', t0: 17.0, t1: 23.0 },
+    { name: '5 Torres',   role: 'journey', t0: 23.0, t1: 31.0 },
+    { name: '6 Plasma',   role: 'peak',    t0: 31.0, t1: 38.0 },
+    { name: '7 Órbita',   role: 'journey', t0: 38.0, t1: 44.0 },
+    { name: '8 Silencio', role: 'silence', t0: 44.0, t1: 48.0 },
+    { name: '9 Planetas', role: 'journey', t0: 48.0, t1: 56.0 },
+    { name: '10 Luz',     role: 'journey', t0: 56.0, t1: 65.0 },
+    { name: '11 Punto',   role: 'gift',    t0: 65.0, t1: 69.0 },
+    { name: '12 Final',   role: 'goodbye', t0: 69.0, t1: 75.0 },
+  ],
+  board: [
+    { t: 2.5,  title: '¿Que pasaría si corrieras cada vez más rapido?', sound: 'olas, gaviotas, ciudad despertando', next: 'empiezas a correr' },
+    { t: 7.8,  title: 'Empiezas a correr (miras al mar)', sound: 'pasos, respiración', next: 'la carretera costera' },
+    { t: 12.9, title: 'Adelantas coches (miras al conductor)', sound: 'coches con Doppler, viento', next: 'Mach 1' },
+    { t: 18.8, title: 'Rompes la barrera del sonido', sound: 'estampido sónico', next: 'miras atrás' },
+    { t: 21.0, title: 'Detrás de ti, estallan los cristales', sound: 'cristales, viento', next: 'las torres' },
+    { t: 27.0, title: 'Más rápido que el avión más rápido', sound: 'rugido de reactor, viento', next: 'la llanura' },
+    { t: 34.0, title: 'El aire frente a ti arde', sound: 'rugido de fuego (el acto más intenso)', next: 'despegas' },
+    { t: 40.0, title: 'Ya no puedes caer', sound: 'el rugido se apaga', next: 'escapas' },
+    { t: 46.0, title: 'Silencio: la Tierra se aleja', sound: 'latido, respiración', next: 'la Luna' },
+    { t: 49.6, title: 'La Luna, a la izquierda', sound: 'zumbido grave', next: 'Júpiter' },
+    { t: 53.6, title: 'Júpiter, a la derecha', sound: 'zumbido grave', next: 'la luz' },
+    { t: 60.5, title: 'Las estrellas se amontonan delante', sound: 'subida grave', next: 'un punto' },
+    { t: 66.5, title: 'Pero la luz nunca la alcanzas', sound: 'EL GOLPE (65,5 s) tras 0,6 s de silencio', next: 'el dato' },
+    { t: 72.5, title: 'La sonda Parker: 692.000 km/h', sound: 'un grave que se apaga', next: 'fin' },
+  ],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

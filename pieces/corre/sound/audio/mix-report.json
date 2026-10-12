@@ -1,0 +1,81 @@
+{
+ "cues_file": "F:\\Claude Proyectos\\pieces\\corre\\sound\\audio\\cues.json",
+ "fps": 24,
+ "duration_s": 75.0,
+ "target_lufs": -15,
+ "master_lufs": -15.14,
+ "master_true_peak_db": -2.0,
+ "master_gain_db": 1.2,
+ "events": [
+  {
+   "id": "riser",
+   "sound": "reverse/fs-503817-gated-riser-wav-1",
+   "files": [
+    "F:/Claude Proyectos/sound-layer/kit\\reverse/fs-503817-gated-riser-wav-1.wav"
+   ],
+   "weight": "support",
+   "align": "end",
+   "cue_s": 64.85,
+   "peak_s": 64.4718,
+   "pan": 0.0,
+   "gain_db": -31.65,
+   "limited_by": "best-band target",
+   "band_hz": [
+    1000,
+    2000
+   ],
+   "win_s": [
+    64.4618,
+    64.6218
+   ],
+   "visual": null
+  },
+  {
+   "id": "suck",
+   "sound": "reverse/fs-218354-movie-short-swell-1",
+   "files": [
+    "F:/Claude Proyectos/sound-layer/kit\\reverse/fs-218354-movie-short-swell-1.wav"
+   ],
+   "weight": "support",
+   "align": "end",
+   "cue_s": 64.85,
+   "peak_s": 64.6987,
+   "pan": 0.0,
+   "gain_db": -37.72,
+   "limited_by": "best-band target",
+   "band_hz": [
+    1000,
+    2000
+   ],
+   "win_s": [
+    64.6887,
+    64.8429
+   ],
+   "visual": null
+  },
+  {
+   "id": "IMPACT",
+   "sound": "audio/own/hero-hit.wav+audio/own/hero-boom.wav",
+   "files": [
+    "audio/own/hero-hit.wav",
+    "audio/own/hero-boom.wav"
+   ],
+   "weight": "hero",
+   "align": "peak",
+   "cue_s": 65.5,
+   "peak_s": 65.5,
+   "pan": 0.0,
+   "gain_db": 12.9,
+   "limited_by": "main-band target (hero)",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    65.49,
+    65.65
+   ],
+   "visual": "cut"
+  }
+ ]
+}

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La Luna cae</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0d14; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  ¿QUÉ PASARÍA SI LA LUNA CHOCARA CONTRA LA TIERRA? — 9:16, 70s, 24fps, motion on 1s.
+//  F5: one handheld camera floating above the rooftops of a coastal town at night (harbour, lighthouse, headland).
+//  The Moon falls, drags the tide, cracks at the Roche limit, shatters, rains fire; the sea pulls back and a 400 m wave arrives.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 70.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 70, () => sceneTown()]];
+const SHOTS = [
+  ['pueblo',   0, 0.0,  5.0,  'pueblo costero dormido, título'],
+  ['cae',      0, 5.0,  16.0, 'la Luna crece, se encienden ventanas'],
+  ['marea',    0, 16.0, 26.0, 'la marea sube sobre el muelle'],
+  ['grietas',  0, 26.0, 34.0, 'grietas de lava en la Luna'],
+  ['rompe',    0, 34.0, 38.0, 'la Luna se parte (pausa)'],
+  ['lluvia',   0, 38.0, 48.0, 'fragmentos ardiendo, horizonte naranja'],
+  ['retira',   0, 48.0, 56.0, 'el mar se retira, una línea oscura'],
+  ['ola',      0, 56.0, 64.0, 'la ola de 400 m llega a la cámara'],
+  ['negro',    0, 64.0, 66.0, 'negro'],
+  ['final',    0, 66.0, 70.0, 'la Luna se aleja 3,8 cm al año'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { fall: 5.0, tide: 16.0, crack: 26.0, split: 34.0, rain: 38.0, ocean: 47.8, drain: 48.6, line: 50.0, wave: 56.0, back: 58.5, vacuum: 62.42, impact: 63.0, black: 64.0, card: 66.0 },
+  acts: [
+    { name: '1 Pueblo',   role: 'build',   t0: 0.0,  t1: 5.0 },
+    { name: '2 Cae',      role: 'journey', t0: 5.0,  t1: 16.0 },
+    { name: '3 Marea',    role: 'journey', t0: 16.0, t1: 26.0 },
+    { name: '4 Grietas',  role: 'journey', t0: 26.0, t1: 34.0 },
+    { name: '5 Se rompe', role: 'silence', t0: 34.0, t1: 38.0 },
+    { name: '6 Lluvia',   role: 'peak',    t0: 38.0, t1: 48.0 },
+    { name: '7 Retirada', role: 'journey', t0: 48.0, t1: 56.0 },
+    { name: '8 La ola',   role: 'gift',    t0: 56.0, t1: 64.0 },
+    { name: '9 Negro',    role: 'goodbye', t0: 64.0, t1: 66.0 },
+    { name: '10 Final',   role: 'goodbye', t0: 66.0, t1: 70.0 },
+  ],
+  board: [
+    { t: 2.5,  title: '¿Y si la Luna chocara contra la Tierra?', sound: 'grillos, mar suave, un perro lejos, campanada, viento', next: 'la Luna empieza a crecer' },
+    { t: 12.0, title: 'La Luna está cayendo', sound: 'viento nocturno, ventanas y persianas, murmullo, un coche', next: 'su gravedad tira del mar' },
+    { t: 22.0, title: 'La marea sube sobre el muelle', sound: 'mar creciendo, olas contra el muro, cascos, amarras crujiendo', next: 'aparecen grietas' },
+    { t: 31.0, title: 'La Tierra la desgarra (límite de Roche)', sound: 'retumbo grave, roca enorme crujiendo a lo lejos', next: 'se parte' },
+    { t: 36.5, title: 'Se rompe', sound: 'casi silencio: solo viento', next: 'caen los trozos' },
+    { t: 44.0, title: 'Caen trozos como montañas', sound: 'silbidos con Doppler, impactos lejanos con eco, alarmas, perros, pánico', next: 'uno cae en el océano' },
+    { t: 53.0, title: 'El mar se retira', sound: 'succión, gorgoteo, rugido creciente, sirena', next: 'llega la ola' },
+    { t: 61.0, title: 'La ola mide 400 metros', sound: 'rugido total; vacío de 0,6 s; EL GOLPE MÁS FUERTE a los 63 s', next: 'negro' },
+    { t: 64.8, title: 'Negro', sound: 'silencio total', next: 'el dato real' },
+    { t: 68.5, title: 'Tranquilo: la Luna se aleja 3,8 cm cada año', sound: 'burbujas amortiguadas, viento leve; sin tono', next: 'fin' },
+  ],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

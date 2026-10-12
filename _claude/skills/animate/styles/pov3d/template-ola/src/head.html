@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ola de 700 metros</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0c1216; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  ¿QUÉ PASARÍA SI UNA OLA DE 700 METROS GOLPEARA TU CIUDAD? — 9:16, 65s @ 120 BPM, 24fps, motion on 1s.
+//  F5: one eye-level camera on a harbour promenade (railing in front, skyline across the water);
+//  the sea drains, a line rises on the horizon and becomes a wall. The HUD counter changes what it measures.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 65.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 65, () => sceneHarbour()]];
+const SHOTS = [
+  ['puerto',   0, 0.0,  5.0,  'paseo marítimo soleado, título'],
+  ['retirada', 0, 5.0,  14.0, 'el mar se retira, los barcos se posan en el fondo'],
+  ['calma',    0, 14.0, 17.0, 'calma inquietante'],
+  ['linea',    0, 17.0, 26.0, 'una línea oscura en el horizonte'],
+  ['crece',    0, 26.0, 40.0, 'la ola crece, la gente huye'],
+  ['muro',     0, 40.0, 52.0, 'un muro más alto que los rascacielos'],
+  ['impacto',  0, 52.0, 58.0, 'la cámara retrocede y mira arriba; el impacto'],
+  ['negro',    0, 58.0, 61.0, 'espuma blanca, luego negro'],
+  ['final',    0, 61.0, 65.0, 'la ola más alta registrada'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { drain: 5.5, calm: 14.0, line: 17.0, siren: 18.0, grow: 26.0, run: 26.5, wall: 40.0, swallow: 45.0, back: 52.0, impact: 57.5, white: 57.5, black: 58.6, card: 61.0 },
+  acts: [
+    { name: '1 Puerto',   role: 'build',   t0: 0.0,  t1: 5.0 },
+    { name: '2 Retirada', role: 'journey', t0: 5.0,  t1: 14.0 },
+    { name: '3 Calma',    role: 'silence', t0: 14.0, t1: 17.0 },
+    { name: '4 Línea',    role: 'journey', t0: 17.0, t1: 26.0 },
+    { name: '5 Crece',    role: 'journey', t0: 26.0, t1: 40.0 },
+    { name: '6 Muro',     role: 'peak',    t0: 40.0, t1: 52.0 },
+    { name: '7 Impacto',  role: 'gift',    t0: 52.0, t1: 58.0 },
+    { name: '8 Negro',    role: 'goodbye', t0: 58.0, t1: 61.0 },
+    { name: '9 Final',    role: 'goodbye', t0: 61.0, t1: 65.0 },
+  ],
+  board: [
+    { t: 2.5,  title: '¿Una ola de 700 metros?', sound: 'ciudad, gaviotas, chapoteo, campana de boya, pad suave', next: 'el agua empieza a bajar' },
+    { t: 11.0, title: 'El mar se retira', sound: 'succión y gorgoteo, crujidos de cascos, peces; la música se apaga', next: 'todo queda quieto' },
+    { t: 15.5, title: 'Calma', sound: 'casi silencio: solo viento', next: 'algo en el horizonte' },
+    { t: 23.0, title: 'Una línea en el horizonte', sound: 'retumbo lejano, sirena de alerta a lo lejos', next: 'la línea crece' },
+    { t: 34.0, title: 'Sigue creciendo; la gente huye', sound: 'rugido en capas, sirena más cerca, bocinas, gritos, pájaros', next: 'alcanza la ciudad' },
+    { t: 47.0, title: 'Más alta que los rascacielos', sound: 'rugido enorme, crepitar de agua, viento, cristales', next: 'llega al paseo' },
+    { t: 56.0, title: 'No hay a dónde ir', sound: 'el golpe más fuerte al impactar (57,5 s)', next: 'blanco' },
+    { t: 58.2, title: 'Blanco y negro', sound: 'silencio total', next: 'el dato real' },
+    { t: 63.0, title: '524 m · bahía Lituya, 1958', sound: 'burbujas bajo el agua, un tono suave', next: 'fin' },
+  ],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

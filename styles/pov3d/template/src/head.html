@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>¿Y si el Sol explotara?</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #14100d; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  ¿Y SI EL SOL EXPLOTARA? — 9:16, 60s @ 120 BPM, 24fps, motion on 1s. F5: one fixed camera on a busy beach;
+//  the world changes, the place stays. A HUD counter changes what it measures each act.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 60.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 52, () => sceneBeach()], [52, 60, () => sceneDust()]];
+const SHOTS = [
+  ['calm',    0, 0.0,  5.0,  'playa tranquila, título'],
+  ['unaware', 0, 5.0,  20.0, 'el Sol ya explotó; la luz viene en camino (8:20 → 0:00)'],
+  ['flash',   0, 20.0, 30.0, 'el destello: el Sol crece, la gente huye'],
+  ['fire',    0, 30.0, 40.0, 'todo arde, el mar se evapora'],
+  ['blast',   0, 40.0, 52.0, 'la onda expansiva llena el cielo'],
+  ['here',    1, 52.0, 58.0, 'AQUÍ: polvo naranja'],
+  ['coda',    1, 58.0, 60.0, 'tranquilo: el Sol no puede explotar'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [52.0],
+  morphs: [],
+  cues: { boom: 5.0, light: 19.5, flash: 20.0, fire: 30.0, sea: 34.0, blast: 40.0, here: 52.0, coda: 58.0 },
+  acts: [
+    { name: '1 Calma',    role: 'build',   t0: 0.0,  t1: 20.0 },
+    { name: '2 Destello', role: 'gift',    t0: 20.0, t1: 30.0 },
+    { name: '3 Fuego',    role: 'journey', t0: 30.0, t1: 40.0 },
+    { name: '4 Onda',     role: 'peak',    t0: 40.0, t1: 52.0 },
+    { name: '5 Aquí',     role: 'end',     t0: 52.0, t1: 60.0 },
+  ],
+  board: [
+    { t: 2.5,  title: '¿Y si el Sol explotara?', sound: 'pad suave, olas', next: 'el contador aparece' },
+    { t: 11.0, title: 'la luz llega en 8:20', sound: 'pulso tenso, tic por segundo', next: 'el contador llega a 0:00' },
+    { t: 19.7, title: 'su luz aún viene', sound: 'silencio', next: 'destello' },
+    { t: 24.0, title: 'el Sol brilla más', sound: 'golpe más fuerte', next: 'el calor' },
+    { t: 36.0, title: 'todo arde', sound: 'fuego creciente', next: 'la onda' },
+    { t: 48.0, title: 'llena medio cielo', sound: 'grave que sube', next: 'corte en seco' },
+    { t: 55.0, title: 'AQUÍ', sound: 'rumor', next: 'cierre' },
+    { t: 59.2, title: 'tranquilo', sound: 'un tono suave', next: 'fin' },
+  ],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

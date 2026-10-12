@@ -1,0 +1,27 @@
+# --- heavy, regenerable render output
+pieces/*/frames/
+pieces/*/frames-*/
+pieces/*/renders/
+pieces/*/sound/out/
+*.mp4
+*.wav
+*.mp3
+*.flac
+*.aif
+*.aiff
+*.ogg
+
+# --- reference media stays local (never committed)
+Ref */
+references/
+
+# --- sound-layer: the downloaded library and recordings (rebuild with sfx.py kit / sfx.py search)
+sound-layer/kit/
+sound-layer/work/
+
+# --- system / editor
+node_modules/
+.DS_Store
+Thumbs.db
+__pycache__/
+.venv/
