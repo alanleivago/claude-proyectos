@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Five seconds without oxygen</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0d14; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+const OX_EN = true;   // English version: blue sky, bridge, other layout, English text
+// =====================================================================
+//  ¿QUÉ PASARÍA SI EL OXÍGENO DESAPARECIERA DURANTE 5 SEGUNDOS? — 9:16, 70s, 24fps, motion on 1s.
+//  F5: a rooftop café above a harbour town at golden hour. Every oxygen atom vanishes for 5 s (shown ×10 slow):
+//  ears pop, every flame and engine dies, the sea turns to hydrogen and drains, glass and concrete crumble, the terrace
+//  gives way and you fall into the dust; then the oxygen returns into a world full of hydrogen. The HUD counts the 5 s.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 70.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 70, () => sceneOxy()]];
+const SHOTS = [
+  ['terraza',  0, 0.0,  5.0,  'terraza café sobre el puerto, hora dorada'],
+  ['oidos',    0, 5.0,  11.0, 'el oxígeno desaparece: estallan los oídos'],
+  ['fuego',    0, 11.0, 17.0, 'se apagan los fuegos, se paran los motores'],
+  ['mar',      0, 17.0, 27.0, 'el mar se vuelve hidrógeno y se vacía'],
+  ['polvo',    0, 27.0, 37.0, 'cristal y hormigón se deshacen'],
+  ['suelo',    0, 37.0, 45.0, 'la terraza cede: caes'],
+  ['caida',    0, 45.0, 53.0, 'caes entre polvo e hidrógeno'],
+  ['vacio',    0, 53.0, 55.0, 'silencio'],
+  ['fuego2',   0, 55.0, 63.0, 'vuelve el oxígeno: bola de fuego'],
+  ['negro',    0, 63.0, 64.0, 'negro'],
+  ['final',    0, 64.0, 70.0, 'el 46 % de la roca es oxígeno'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { gone: 5.0, fires: 11.0, sea: 17.5, crumble: 27.0, floor: 37.5, back: 55.0, black: 63.0, card: 64.0 },
+  acts: [
+    { name: '1 Terraza', role: 'build',   t0: 0.0,  t1: 5.0 },
+    { name: '2 Oídos',   role: 'journey', t0: 5.0,  t1: 11.0 },
+    { name: '3 Fuego',   role: 'journey', t0: 11.0, t1: 17.0 },
+    { name: '4 Mar',     role: 'journey', t0: 17.0, t1: 27.0 },
+    { name: '5 Polvo',   role: 'journey', t0: 27.0, t1: 37.0 },
+    { name: '6 Suelo',   role: 'peak',    t0: 37.0, t1: 45.0 },
+    { name: '7 Caída',   role: 'journey', t0: 45.0, t1: 53.0 },
+    { name: '8 Vacío',   role: 'silence', t0: 53.0, t1: 55.0 },
+    { name: '9 Fuego',   role: 'gift',    t0: 55.0, t1: 63.0 },
+    { name: '10 Final',  role: 'goodbye', t0: 63.0, t1: 70.0 },
+  ],
+  board: [
+    { t: 2.5,  title: '¿Qué pasaría si el oxígeno desapareciera durante 5 segundos?', sound: 'gaviotas, gente, copas, mar', next: 'desaparece' },
+    { t: 7.5,  title: 'A todos les estallan los oídos', sound: 'pop seco, luego sordo', next: 'los fuegos' },
+    { t: 14.0, title: 'Todo fuego se apaga; cada motor se para', sound: 'humo, motores que mueren', next: 'el mar' },
+    { t: 22.5, title: 'El mar se vuelve hidrógeno', sound: 'siseo, agua que se va, cascos', next: 'el polvo' },
+    { t: 32.0, title: 'El cristal y el hormigón se deshacen', sound: 'derrumbes, polvo', next: 'el suelo' },
+    { t: 41.0, title: 'El suelo bajo tus pies, también', sound: 'crujido, caída (el acto más intenso)', next: 'la caída' },
+    { t: 49.0, title: 'Por ahora, nada puede arder', sound: 'viento de caída', next: 'silencio' },
+    { t: 56.0, title: 'Vuelve el oxígeno', sound: 'EL GOLPE (55 s) tras 1,5 s de silencio', next: 'negro' },
+    { t: 67.0, title: 'El 46 % de la roca es oxígeno', sound: 'un grave que se apaga', next: 'fin' },
+  ],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

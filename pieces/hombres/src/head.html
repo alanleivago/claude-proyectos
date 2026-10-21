@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sin hombres</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0d14; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  ¿QUÉ PASARÍA SI TODOS LOS HOMBRES DE LA TIERRA DESAPARECIERAN? — 9:16, 180 s, 24 fps.
+//  A chronology told through one family — Lucía (8) and her mother Ana — from the second every man vanishes (an arena
+//  countdown) to the day Lucía teaches her little brother to ride the same bike on the same street. HUD: world population.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 180.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 180, () => sceneMain()]];
+// [key, t0, t1, what]
+const SHOTS = [
+  ['arena',     0,   12,  'estadio, cuenta 6→0, los hombres desaparecen'],
+  ['bike',      12,  25,  'Lucía en bici; su papá desaparece'],
+  ['cockpit',   25,  33,  'cabina sin piloto, barcos a la deriva'],
+  ['vigil',     33,  45,  'vigilia con velas; Ana y Lucía'],
+  ['trench',    45,  51,  'trincheras vacías'],
+  ['hall',      51,  58,  'parlamento vacío'],
+  ['hospital',  58,  66,  'las enfermeras siguen'],
+  ['market',    66,  72,  'estanterías vacías'],
+  ['blackout',  72,  78,  'se va la luz'],
+  ['school',    78,  88,  'Ana aprende un oficio nuevo'],
+  ['pole',      88,  100, 'Ana sube al poste; vuelve la luz'],
+  ['work',      100, 112, 'mes 3: mujeres en todos los oficios'],
+  ['night',     112, 128, '3 AM, camina sola a casa'],
+  ['lab',       128, 140, 'banco de esperma'],
+  ['scan',      140, 152, 'ecografía: es un niño'],
+  ['ward',      152, 162, 'maternidad'],
+  ['street2',   162, 172, 'misma calle, misma bici'],
+  ['card',      172, 180, 'tarjeta final'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F2',
+  shots: SHOTS.map(([key, t0, t1, title], i) => ({ id: i + 1, key, era: 0, t0, t1, title })),
+  cuts: SHOTS.slice(1).map((s) => s[1]),
+  morphs: [],
+  cues: { zero: 6.0, vanish: 12.0 },
+  acts: [
+    { name: '1 Estadio', role: 'gift', t0: 0, t1: 12 },
+    { name: '2 Pérdida', role: 'journey', t0: 12, t1: 45 },
+    { name: '3 Caos', role: 'peak', t0: 45, t1: 78 },
+    { name: '4 Reconstruir', role: 'journey', t0: 78, t1: 112 },
+    { name: '5 Sin miedo', role: 'journey', t0: 112, t1: 128 },
+    { name: '6 Futuro', role: 'journey', t0: 128, t1: 172 },
+    { name: '7 Final', role: 'goodbye', t0: 172, t1: 180 },
+  ],
+  board: SHOTS.map(([key, t0, t1, title]) => ({ t: t0 + (t1 - t0) * 0.6, title, sound: '', next: '' })),
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

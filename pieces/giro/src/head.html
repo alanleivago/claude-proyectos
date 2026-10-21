@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sin giro</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0d14; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  ¿QUE PASARÍA SI LA TIERRA DEJARA DE GIRAR? — 9:16, 70s, 24fps, motion on 1s.
+//  F5: street level on a steep colonial street that runs down to the sea, on the equator, morning. The ground moves east at
+//  1.670 km/h; the Earth brakes, the air and the ocean do not: people fall, the wind (from the sea, in your face) strips the
+//  street, the houses and the towers across the bay fly apart; the planet stops and the ocean comes up the street.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 70.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 70, () => sceneSpin()]];
+const SHOTS = [
+  ['calle',   0, 0.0,  5.0,  'calle empinada hacia el mar, mañana, ecuador'],
+  ['ecuador', 0, 5.0,  11.0, 'estás sobre el ecuador: 1.670 km/h'],
+  ['frena',   0, 11.0, 17.0, 'la Tierra frena: sacudida, grietas, la gente cae'],
+  ['aire',    0, 17.0, 25.0, 'el aire sigue girando: llega el viento'],
+  ['vuela',   0, 25.0, 33.0, 'todo lo suelto sale volando'],
+  ['huracan', 0, 33.0, 42.0, 'peor que un huracán: fachadas y tejados'],
+  ['edificios',0, 42.0, 50.0, 'los edificios se desarman'],
+  ['sonido',  0, 50.0, 57.0, 'viento supersónico, polvo'],
+  ['oceano',  0, 57.0, 60.8, 'la Tierra se detiene; el océano no'],
+  ['silencio',0, 60.8, 61.8, 'silencio'],
+  ['golpe',   0, 61.8, 63.0, 'la ola golpea el cristal'],
+  ['final',   0, 63.0, 70.0, 'en el ecuador giras a 1.670 km/h'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { brake: 11.0, wind: 17.0, fly: 25.0, strip: 33.0, houses: 42.0, sonic: 50.0, stop: 57.0, hush: 60.8, hit: 61.8, card: 63.5 },
+  acts: [
+    { name: '1 Calle',     role: 'build',   t0: 0.0,  t1: 5.0 },
+    { name: '2 Ecuador',   role: 'journey', t0: 5.0,  t1: 11.0 },
+    { name: '3 Frena',     role: 'journey', t0: 11.0, t1: 17.0 },
+    { name: '4 Aire',      role: 'journey', t0: 17.0, t1: 25.0 },
+    { name: '5 Vuela',     role: 'journey', t0: 25.0, t1: 33.0 },
+    { name: '6 Huracán',   role: 'journey', t0: 33.0, t1: 42.0 },
+    { name: '7 Edificios', role: 'peak',    t0: 42.0, t1: 50.0 },
+    { name: '8 Sonido',    role: 'journey', t0: 50.0, t1: 57.0 },
+    { name: '9 Océano',    role: 'journey', t0: 57.0, t1: 60.8 },
+    { name: '10 Silencio', role: 'silence', t0: 60.8, t1: 61.8 },
+    { name: '11 Golpe',    role: 'gift',    t0: 61.8, t1: 63.0 },
+    { name: '12 Final',    role: 'goodbye', t0: 63.0, t1: 70.0 },
+  ],
+  board: [
+    { t: 2.5,  title: '¿Que pasaría si la tierra dejara de girar?', sound: 'calle, gente, gaviotas, mar', next: 'el ecuador' },
+    { t: 8.0,  title: 'Aquí el suelo va a 1.670 km/h hacia el este', sound: 'calle', next: 'frena' },
+    { t: 13.5, title: 'La Tierra frena. Tú no.', sound: 'crujido grave, gritos', next: 'el aire' },
+    { t: 21.0, title: 'El aire sigue girando', sound: 'viento que crece', next: 'vuela' },
+    { t: 29.0, title: 'Todo lo suelto se va', sound: 'viento, golpes, chatarra', next: 'fachadas' },
+    { t: 38.0, title: 'Peor que cualquier huracán', sound: 'muro de viento, cristales', next: 'edificios' },
+    { t: 46.0, title: 'Los edificios no resisten', sound: 'derrumbes', next: 'sonido' },
+    { t: 53.5, title: 'Más rápido que el sonido', sound: 'estampido, rugido', next: 'océano' },
+    { t: 59.5, title: 'La Tierra se detiene. El océano no.', sound: 'agua, luego SILENCIO', next: 'golpe' },
+    { t: 62.0, title: 'La ola rompe el cristal', sound: 'EL GOLPE (61,8 s)', next: 'final' },
+    { t: 67.0, title: 'En el ecuador giras a 1.670 km/h', sound: 'grave que se apaga', next: 'fin' },
+  ],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

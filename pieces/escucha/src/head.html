@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>¿Tu celular te escucha?</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0c0a08; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  ¿TU CELULAR TE ESCUCHA? — scroll3d, 9:16, 30fps, voice-led (the user's Spanish take).
+//  A Spanish remake of reference 9 (is your phone listening for ads?) in the scroll3d look
+//  (reference 7's dusk test track, HUD pill, readout, labels). Shots authored in REFERENCE time R = refT(TT).
+// =====================================================================
+const FPS = 30, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const VL = (id) => VOICE.lines.find((l) => l.id === id);
+const DURATION = Math.round(VOICE.duration * FPS) / FPS;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 0 };
+const HAND = '"FreeSans", Helvetica, Arial, sans-serif';
+const CX = 540;
+
+// [reference time, Spanish time] — line starts and ends of both voices
+const ANCH = [
+  [0.0, 0.0],
+  [3.1, 4.2],
+  [3.6, 4.42],
+  [6.6, 7.3],
+  [7.3, 7.82],
+  [8.2, 9.14],
+  [8.7, 9.8],
+  [11.9, 12.98],
+  [12.38, 13.04],
+  [13.2, 14.28],
+  [13.46, 14.82],
+  [15.8, 17.62],
+  [16.48, 18.0],
+  [18.5, 21.14],
+  [19.24, 21.42],
+  [20.8, 23.26],
+  [21.66, 23.68],
+  [25.4, 27.38],
+  [28.8, 30.68],
+  [29.42, 30.88],
+  [32.1, 34.44],
+  [32.22, 34.78],
+  [33.9, 36.34],
+  [37.1, 39.8],
+  [37.9, 40.2],
+  [39.2, 41.34],
+  [39.88, 41.78],
+  [42.8, 44.14],
+  [47.1, 48.12],
+  [47.7, 48.48],
+  [50.1, 52.08],
+  [50.64, 52.34],
+  [53.4, 55.06],
+  [54.1, 55.28],
+  [55.9, 57.24],
+  [58.1, 59.62],
+  [58.5, 59.98],
+  [61.17, 62.28],
+  [61.17, DURATION]
+];
+function refT(t) {
+  if (t <= 0) return 0;
+  for (let i = 1; i < ANCH.length; i++) { const [r0, s0] = ANCH[i - 1], [r1, s1] = ANCH[i]; if (t <= s1) return r0 + (r1 - r0) * (t - s0) / (s1 - s0); }
+  return ANCH[ANCH.length - 1][0];
+}
+function esT(r) {
+  for (let i = 1; i < ANCH.length; i++) { const [r0, s0] = ANCH[i - 1], [r1, s1] = ANCH[i]; if (r <= r1) return s0 + (s1 - s0) * (r - r0) / (r1 - r0); }
+  return DURATION;
+}
+
+const ERA_LIST = [[0, DURATION, () => sceneMain()]];
+const SHOTS_R = [
+  ['rings', 0, 3.6, 'el celular en la mesa: ¿escucha?'],
+  ['lock', 3.6, 7.3, 'pantalla bloqueada: llega el anuncio'],
+  ['sala', 7.3, 12.3, 'los dos en el sillón hablan de la freidora'],
+  ['manana', 12.3, 16.3, 'a la mañana: pum, el anuncio'],
+  ['mic', 16.3, 21.0, 'el micrófono: ¿encendido? probablemente no'],
+  ['apps', 21.0, 28.8, '17.260 apps revisadas: 0 atrapadas'],
+  ['bateria', 28.8, 34.5, 'la batería se muere'],
+  ['punto', 34.5, 37.9, 'el puntito del micrófono'],
+  ['dos', 37.9, 39.8, '¿cómo lo supo?'],
+  ['busqueda', 39.8, 42.9, 'tu amigo la buscó'],
+  ['wifi', 42.9, 47.6, 'la misma Wi-Fi, el mismo lugar'],
+  ['red', 47.6, 50.6, 'para la empresa de anuncios'],
+  ['conectados', 50.6, 53.9, 'conectados: el anuncio pasa'],
+  ['mesa', 53.9, 55.2, 'no te escuchó'],
+  ['final', 55.2, 61.17, 'supo con quién estabas']
+];
+const SHOTS = SHOTS_R.map(([k, a, b, title]) => [k, 0, esT(a), esT(b), title]);
+const CUTS_R = [];   // no hard cuts: every boundary is a dissolve (shots.js)
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'voice-led explainer (scroll3d remake of reference 9)',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: CUTS_R.map(esT),
+  morphs: SHOTS_R.slice(1).map((s) => esT(s[1])),
+  cues: { hit: esT(47.6) },
+  acts: [
+    { name: '1 Parece',      role: 'build',   t0: 0,          t1: esT(16.3) },
+    { name: '2 El micrófono', role: 'peak',   t0: esT(16.3),  t1: esT(37.9) },
+    { name: '3 ¿Cómo?',      role: 'journey', t0: esT(37.9),  t1: esT(47.45) },
+    { name: '4 Conectados',  role: 'gift',    t0: esT(47.45),  t1: esT(53.9) },
+    { name: '5 Peor',        role: 'end',     t0: esT(53.9),  t1: DURATION },
+  ],
+  board: [
+    { t: esT(2.16), title: 'el celular en la mesa: ¿escucha?', sound: '', next: '' },
+    { t: esT(5.82), title: 'pantalla bloqueada: llega el anuncio', sound: '', next: '' },
+    { t: esT(10.3), title: 'los dos en el sillón hablan de la freidora', sound: '', next: '' },
+    { t: esT(14.7), title: 'a la mañana: pum, el anuncio', sound: '', next: '' },
+    { t: esT(19.12), title: 'el micrófono: ¿encendido? probablemente no', sound: '', next: '' },
+    { t: esT(25.68), title: '17.260 apps revisadas: 0 atrapadas', sound: '', next: '' },
+    { t: esT(32.22), title: 'la batería se muere', sound: '', next: '' },
+    { t: esT(36.54), title: 'el puntito del micrófono', sound: '', next: '' },
+    { t: esT(39.04), title: '¿cómo lo supo?', sound: '', next: '' },
+    { t: esT(41.66), title: 'tu amigo la buscó', sound: '', next: '' },
+    { t: esT(45.72), title: 'la misma Wi-Fi, el mismo lugar', sound: '', next: '' },
+    { t: esT(49.4), title: 'para la empresa de anuncios', sound: '', next: '' },
+    { t: esT(52.58), title: 'conectados: el anuncio pasa', sound: '', next: '' },
+    { t: esT(54.68), title: 'no te escuchó', sound: '', next: '' },
+    { t: esT(58.78), title: 'supo con quién estabas', sound: '', next: '' }
+  ],
+  narration: VOICE.lines.map((l) => ({ id: l.id, t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;

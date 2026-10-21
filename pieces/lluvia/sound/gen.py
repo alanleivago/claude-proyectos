@@ -1,28 +1,40 @@
-# gen.py: writes layers.json — the recorded bed for lluvia (Wikimedia Commons, CC0 / public domain; see CREDITS.md).
+# gen.py: writes layers.json — the sound bed for lluvia (CC0 recordings + code layers from synth.py)
 import json
-R = "rec/"
+C = "F:/Claude Proyectos/sound-layer/work/cand/"
+def f(cat, id): return f"{C}{cat}/transition/_raw/ov-{id}.mp3"
 L = []
-def lay(id, file, t0, t1, g, **o): L.append(dict(id=id, file=R + file, t0=t0, t1=t1, g=g, **o))
-CUT = 62.6   # silence before the roar at 63.3
-# 1. the storm comes in (0-5): wind, distant thunder, the last birds
-lay("wind", "Howling_wind.ogg", 0, 53.5, [[0, -40], [0.5, -24], [5, -22], [30, -20], [43, -22], [50, -24], [53.5, -45]], src=30)
-lay("distant", "Light_Rain_Distant_Thunder_July_5th_2016.wav", 0, 9, [[0, -40], [0.5, -18], [5, -16], [9, -40]], src=0)
-# 2. the rain (4.5-53): light, then heavy, on the roofs and the window; on water later
-lay("rainlight", "Rain_against_the_window.ogg", 4.5, 14, [[4.5, -40], [6, -16], [10, -14], [14, -30]], src=5)
-lay("rainheavy", "Rain_and_thunder_1.ogg", 9, 53.5, [[9, -40], [12, -15], [30, -14], [43, -16], [48, -18], [53, -26], [53.5, -50]], src=0)
-lay("rainloop", "Listening_to_Raindrops_1035382_-_heavy_loop.mp3", 11, 43, [[11, -40], [14, -18], [42, -18], [43, -40]], lp=7000, pan=0.3)
-lay("rainstorm", "Thunderstorm_after_hot_summer_day_17_minutes_01_of_04.ogg", 43, 53.5, [[43, -40], [44, -17], [52, -19], [53.5, -45]], src=40)
-# 3. the flood: rushing water through the streets, a church bell drowning
-lay("river", "433589_jackthemurray_stream-river-water-up-close.wav", 14.5, 34, [[14.5, -40], [16.5, -14], [24, -12], [30, -18], [34, -40]], lp=5000)
-for k, t in enumerate([2.6, 3.4, 18.0]):
-    lay(f"dog{k}", "Bark__avk_.wav", t, t + 0.9, [[t, -24], [t + 0.9, -30]], loop=False, lp=2600, pan=-0.4)
-# 4. the jungle (34-43): frogs and insects under the rain
-lay("frogs", "Edible_frogs_sounds._May._The_Village_of_Krzemienica_d_Voivodeship_Poland.ogg", 34, 53.5, [[34, -40], [36, -18], [52, -20], [53.5, -40]], lp=6000, pan=-0.3)
-lay("jungle", "Walk_in_the_rainforest.ogg", 36, CUT, [[36, -40], [38, -22], [53, -20], [55, -12], [62.5, -16]], src=2, lp=9000, pan=0.3)
-# 5. the Carnian (43-53): the volcano rumbles; then the rain stops (53-56): drips, birds, the swamp
-lay("volcano", "Earthquake.ogg", 47.5, 57, [[47.5, -40], [48.2, -12], [52, -14], [57, -30]], src=20, lp=300)
-lay("boom", "Explosions-LS100152.ogg", 47.6, 50, [[47.6, -14], [50, -30]], loop=False, lp=400)
-lay("birds", "404114_felix-blume_toucans-singing-in-the-amazonian-rainforest-brazil.ogg", 53.2, CUT, [[53.2, -40], [54.5, -16], [62.5, -20]], src=10, pan=-0.3)
-lay("drips", "Rain_against_the_window.ogg", 53, 58, [[53, -30], [54, -24], [58, -40]], src=40, hp=1500)
-json.dump(dict(duration_s=70.0, layers=L), open("layers.json", "w"), indent=1)
+def lay(id, file, t0, t1, g, **o): L.append(dict(id=id, file=file, t0=t0, t1=t1, g=g, **o))
+UNDER, HIT, STOP = 47.0, 54.4, 55.0
+
+# 1. the city (0-10), then the rain takes over
+lay("street", f("traffic2", "b855dc09"), 0, 14, [[0, -40], [0.4, -17], [6, -21], [10, -28], [14, -40]], src=10)
+lay("crowd", f("murmur", "9783c4b5"), 0, 10.5, [[0, -40], [0.4, -21], [8, -26], [10.5, -40]], hp=150)
+lay("drops", f("umbrella", "81caa6b0"), 0.8, 12, [[0.8, -40], [2.5, -22], [8, -20], [12, -32]], src=5)
+lay("steps", f("steps", "9a3e9d04"), 5.5, 9.5, [[5.5, -24], [9.5, -40]], loop=False, pan=0.3)
+# 2. the downpour: city rain with thunder, growing into a wall; water running, gurgling drains
+lay("rain1", f("rain", "aeb93f5a"), 2, UNDER, [[2, -40], [5, -20], [15, -15], [35, -13], [UNDER, -12]], src=20)
+lay("rain2", f("rain", "6772eec3"), 6, UNDER, [[6, -40], [10, -19], [30, -15], [UNDER, -13]], src=8)
+lay("rain3", f("rain", "ec0aada3"), 20, UNDER, [[20, -40], [24, -18], [44, -14], [UNDER, -13]], src=40)
+lay("drain", f("drain", "c6d3cbf2"), 10, 30, [[10, -40], [12, -19], [26, -21], [30, -40]])
+lay("flow", f("rapids", "2791b267"), 24, UNDER, [[24, -40], [27, -21], [40, -19], [UNDER, -24]])
+lay("splash", f("lap", "27727379"), 17, 40, [[17, -40], [19, -22], [36, -24], [40, -40]], pan=-0.3)
+for k, (tt, tid) in enumerate([(8.2, "679eb912"), (15.3, "ae930eab"), (31.4, "28ff7103"), (38.6, "679eb912"), (44.1, "ae930eab")]):
+    lay(f"thun{k}", f("thunder", tid), tt, min(tt + 4.5, UNDER), [[tt, -12], [min(tt + 4.5, UNDER), -30]], loop=False, pan=0.4 if k % 2 else -0.4)
+# 3. under the water (47-54.4): code drone + bubbles recording
+lay("bubbles", f("bubbles", "be1cfee7"), UNDER, HIT - 0.9, [[UNDER, -26], [HIT - 0.9, -30]], src=30, lp=1200)
+# 4. THE THUNDER (54.4) after 0.5 s of near silence; then silence, drips, the water draining, birds, a breeze
+lay("thhit", f("thunder", "29f0067b"), HIT, HIT + 4.5, [[HIT, 2], [HIT + 4.5, -30]], loop=False, hp=280)
+lay("drip1", f("drip", "d9fe8532"), STOP + 0.4, 66, [[STOP + 0.4, -40], [STOP + 1.5, -22], [64, -24], [66, -40]])
+lay("drip2", f("drip", "34b7caec"), 56, 66, [[56, -40], [57.5, -24], [66, -40]], pan=0.4)
+lay("drainout", f("drain", "8465ef8b"), 58, 66, [[58, -40], [59, -20], [64, -22], [66, -40]], src=30, lp=2500)
+lay("birds", f("birds", "98041fcc"), 62, 70, [[62, -40], [64, -18], [69, -18], [70, -40]])
+lay("birds2", f("birds", "0e2335ff"), 64.5, 70, [[64.5, -40], [66, -22], [70, -40]], src=20, pan=0.3)
+lay("breeze", f("wind", "c0b32166"), 57, 70, [[57, -40], [60, -30], [70, -32]], lp=1200)
+K = 'audio/code/'
+lay('c_rain', K + 'rainwall.wav', 2.0, UNDER, [[2.0, -12], [40, -9], [UNDER, -8]], loop=False)
+lay('c_under', K + 'under.wav', UNDER, HIT - 0.8, [[UNDER, -12], [HIT - 0.8, -12]], loop=False)
+for k, tt in enumerate([8.2, 15.3, 31.4, 38.6, 44.1]): lay(f'c_roll{k}', K + 'roll.wav', tt + 0.15, tt + 3.15, [[tt + 0.15, -16], [tt + 3.15, -16]], loop=False)
+lay('c_thunder', K + 'thunder.wav', HIT, HIT + 4.5, [[HIT, 8], [HIT + 4.5, 8]], loop=False, hp=280)
+lay('c_end', K + 'end.wav', 70.0, 74.9, [[70.0, -18], [74.9, -18]], loop=False)
+json.dump(dict(duration_s=75.0, layers=L), open("layers.json", "w"), indent=1)
 print(len(L), "layers")

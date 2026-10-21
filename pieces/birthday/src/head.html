@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Birthday Paradox</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #05080a; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  THE BIRTHDAY PARADOX — Bitstory #3. 9:16, voice-led (~62s), 24fps, style bitpix. One stage (F2).
+//  23 dots in a ring; the calendar; your 6%; the pairs (1, 45, 253) web; the exact curve; 100,000 simulated
+//  rooms (src/sim.js); a football pitch; the comments. Mint = people and pairs; yellow = days; magenta = a match.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4, GRID0 = 0;
+const VL = (id) => VOICE.lines.find((l) => l.id === id);
+const VW = (id, w, n = 1) => { const L = VL(id); let k = 0; for (const x of L.words) if (x.w.toLowerCase().replace(/[^a-z0-9']/g, '') === w.toLowerCase() && ++k === n) return x.t0; return L.t0; };
+const DURATION = Math.round(VOICE.duration * FPS) / FPS;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", "DejaVu Serif", serif';
+const CX = 540;
+const onBeat = (t) => t;
+
+// sections: each starts ~0.3s before its first line
+const B0 = (id) => VL(id).t0 - 0.3;
+const HIT = VL('chances').t0 - 0.32;                    // the payoff hit: the 253-line web completes, in the pause before "253 chances"
+const ERA_LIST = [[0, DURATION, () => sceneStage()]];
+const SHOTS = [
+  ['room',     0, 0,             B0('impossible'), '23 dots in a ring; not 183'],
+  ['calendar', 0, B0('impossible'), B0('mine'),    'the 365-day calendar barely touched'],
+  ['mine',     0, B0('mine'),    B0('pairs'),      'your birthday: about 6%'],
+  ['pairs',    0, B0('pairs'),   HIT,              'pairs: 1, 45, 253'],
+  ['web',      0, HIT,           B0('odds'),       '253 chances'],
+  ['curve',    0, B0('odds'),    B0('sim'),        'the exact curve: 50.7% at 23, 99.9% at 70'],
+  ['sim',      0, B0('sim'),     B0('match'),      '100,000 rooms: 50,683 with a match'],
+  ['pitch',    0, B0('match'),   B0('test'),       '22 players + a referee'],
+  ['comments', 0, B0('test'),    DURATION,         'write your birthday; Bitstory'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, gridOffset: GRID0, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE, aspect: '9:16',
+  format: 'morph-chain',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [], morphs: [],
+  cues: { hit: HIT },
+  acts: [
+    { name: '1 Room',    role: 'build',   t0: 0, t1: B0('pairs') },
+    { name: '2 Pairs',   role: 'peak',    t0: B0('pairs'), t1: VL('grow').t1 },
+    { name: '3 Silence', role: 'silence', t0: VL('grow').t1 + 0.1, t1: HIT - 0.1 },
+    { name: '4 Web',     role: 'gift',    t0: HIT, t1: B0('match') },
+    { name: '5 Comments', role: 'goodbye', t0: B0('match'), t1: DURATION },
+  ],
+  board: [
+    { t: VL('likely').t1 - 0.2, title: '23 in a room', sound: 'a tick per dot', next: 'not 183' },
+    { t: VL('again').t1 - 0.3, title: 'not 183', sound: 'a strike', next: 'the calendar' },
+    { t: VL('impossible').t1 - 0.2, title: '365 days', sound: 'dots landing', next: 'back to the ring' },
+    { t: VL('mine').t1 - 0.3, title: 'about 6%', sound: 'a soft chime', next: 'all the pairs' },
+    { t: VL('grow').t1 - 0.3, title: '1, 45, 253', sound: 'lines drawing, faster', next: 'silence, the hit' },
+    { t: VL('chances').t1 - 0.2, title: '253 chances', sound: 'the loudest hit', next: 'the curve' },
+    { t: VL('odds').t1 - 0.2, title: '50.7% / 99.9%', sound: 'a rising tone', next: 'the rooms' },
+    { t: VL('sim').t1 - 0.2, title: '100,000 rooms', sound: 'a rain of ticks', next: 'the pitch' },
+    { t: VL('pitch').t1 - 0.3, title: 'the pitch', sound: 'a whistle', next: 'the comments' },
+    { t: DURATION - 0.6, title: 'Bitstory', sound: 'keys', next: 'loops' },
+  ],
+  narration: VOICE.lines.map((l) => ({ id: l.id, t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;

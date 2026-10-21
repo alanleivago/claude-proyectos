@@ -58,6 +58,18 @@ const onlyAudio = flag('only-audio');
 const FORMAT = opt('format', null), BLUR = Math.max(1, parseInt(opt('blur', '1'), 10));
 const url = pathToFileURL(path.join(ROOT, 'index.html')).href + '?export=1' + (FORMAT ? `&format=${encodeURIComponent(FORMAT)}` : '');
 const PIECE_JSON = fs.existsSync(path.join(ROOT, 'piece.json')) ? JSON.parse(fs.readFileSync(path.join(ROOT, 'piece.json'), 'utf8')) : {};
+// the final loudness: piece.json "loudness" (LUFS, default -14) and "truePeak" (dB, default -1.5)
+const LUFS = PIECE_JSON.loudness ?? -14, TPK = PIECE_JSON.truePeak ?? -1.5;
+// linear loudness: measure the integrated loudness, apply ONE gain, then a brick-wall limiter at the peak ceiling.
+// (ffmpeg's one-pass loudnorm is dynamic: it pumps quiet stretches up and flattens the story's dynamics.)
+function normalize(src, dst) {
+  const m = spawnSync('ffmpeg', ['-hide_banner', '-nostats', '-i', src, '-af', 'ebur128', '-f', 'null', '-'], { encoding: 'utf8' });
+  const all = [...m.stderr.matchAll(/I:\s+(-?[\d.]+) LUFS/g)], I = parseFloat(all[all.length - 1][1]);   // the summary's integrated loudness
+  const g = LUFS - I, lim = Math.pow(10, TPK / 20);
+  const r = spawnSync('ffmpeg', ['-y', '-hide_banner', '-loglevel', 'error', '-i', src, '-af', `volume=${g.toFixed(2)}dB,alimiter=limit=${lim.toFixed(4)}:attack=2:release=60:level=false:asc=true`, '-ar', '48000', '-c:a', 'pcm_s16le', dst], { stdio: 'inherit' });
+  if (r.status !== 0) { console.error('normalize failed'); process.exit(1); }
+  return { I, g };
+}
 
 fs.mkdirSync(RENDERS, { recursive: true });
 const BASE_ARGS = ['--autoplay-policy=no-user-gesture-required'];
@@ -144,11 +156,12 @@ if (!flag('no-audio')) {
     if (!fs.existsSync(track)) { console.error('music file not found:', track); process.exit(1); }
     const chain = `[0:a]aresample=48000,aformat=channel_layouts=stereo,volume=${M.gain ?? 0}dB,afade=t=out:st=${Math.max(0, dur - fade)}:d=${fade}`;
     const inputs = ['-ss', String(M.start ?? 0), '-t', String(dur), '-i', track, ...(fs.existsSync(sfx) ? ['-i', sfx] : [])];
-    const graph = fs.existsSync(sfx) ? `${chain}[m];[1:a]aresample=48000,aformat=channel_layouts=stereo[s];[m][s]amix=inputs=2:normalize=0:duration=first,loudnorm=I=-14:TP=-1.5:LRA=11[o]` : `${chain},loudnorm=I=-14:TP=-1.5:LRA=11[o]`;
-    let r = spawnSync('ffmpeg', ['-y', '-hide_banner', '-loglevel', 'error', ...inputs, '-filter_complex', graph, '-map', '[o]', '-ar', '48000', '-t', String(dur), wavPath], { stdio: 'inherit' });
+    const graph = fs.existsSync(sfx) ? `${chain}[m];[1:a]aresample=48000,aformat=channel_layouts=stereo[s];[m][s]amix=inputs=2:normalize=0:duration=first[o]` : `${chain}[o]`;
+    let r = spawnSync('ffmpeg', ['-y', '-hide_banner', '-loglevel', 'error', ...inputs, '-filter_complex', graph, '-map', '[o]', '-ar', '48000', '-c:a', 'pcm_f32le', '-t', String(dur), wavPath + '.raw.wav'], { stdio: 'inherit' });
     if (r.status !== 0) { console.error('music mix failed'); process.exit(1); }
+    normalize(wavPath + '.raw.wav', wavPath); fs.unlinkSync(wavPath + '.raw.wav');
     r = spawnSync('ffmpeg', ['-y', '-hide_banner', '-loglevel', 'error', '-ss', String(M.start ?? 0), '-t', String(dur), '-i', track, '-filter_complex', `${chain}[o]`, '-map', '[o]', path.join(RENDERS, 'stem-music.wav')], { stdio: 'inherit' });
-    console.log(`music: ${path.basename(track)} from ${M.start ?? 0}s, ${dur.toFixed(2)}s${fs.existsSync(sfx) ? ' + the score\'s sfx stem' : ''}, loudness -14 LUFS -> audio.wav`);
+    console.log(`music: ${path.basename(track)} from ${M.start ?? 0}s, ${dur.toFixed(2)}s${fs.existsSync(sfx) ? ' + the score\'s sfx stem' : ''}, loudness ${LUFS} LUFS (linear) -> audio.wav`);
   }
   // the voice-over on top of whatever the score (or the track) became
   const V = PIECE_JSON.voice;
@@ -159,11 +172,12 @@ if (!flag('no-audio')) {
     const graph = `[1:a]aresample=48000,aformat=channel_layouts=stereo,volume=${V.gain ?? 0}dB,apad,asplit=2[v][k];` +
       `[0:a]aresample=48000,aformat=channel_layouts=stereo,volume=${V.music ?? -14}dB[s];` +
       `[s][k]sidechaincompress=threshold=0.02:ratio=4:attack=30:release=400[d];` +
-      `[d][v]amix=inputs=2:normalize=0:duration=first,loudnorm=I=-14:TP=-1.5:LRA=11[o]`;
-    let r = spawnSync('ffmpeg', ['-y', '-hide_banner', '-loglevel', 'error', '-i', mixIn, '-i', vo, '-filter_complex', graph, '-map', '[o]', '-ar', '48000', '-t', String(dur), wavPath], { stdio: 'inherit' });
+      `[d][v]amix=inputs=2:normalize=0:duration=first[o]`;
+    let r = spawnSync('ffmpeg', ['-y', '-hide_banner', '-loglevel', 'error', '-i', mixIn, '-i', vo, '-filter_complex', graph, '-map', '[o]', '-ar', '48000', '-c:a', 'pcm_f32le', '-t', String(dur), wavPath + '.raw.wav'], { stdio: 'inherit' });
     if (r.status !== 0) { console.error('voice mix failed'); process.exit(1); }
+    normalize(wavPath + '.raw.wav', wavPath); fs.unlinkSync(wavPath + '.raw.wav');
     r = spawnSync('ffmpeg', ['-y', '-hide_banner', '-loglevel', 'error', '-i', vo, '-af', 'apad', '-ar', '48000', '-ac', '2', '-t', String(dur), path.join(RENDERS, 'stem-voice.wav')], { stdio: 'inherit' });
-    console.log(`voice: ${path.basename(vo)} over the score at ${V.music ?? -14} dB (ducked under the voice), loudness -14 LUFS -> audio.wav (the score alone: audio-score.wav)`);
+    console.log(`voice: ${path.basename(vo)} over the score at ${V.music ?? -14} dB (ducked under the voice), loudness ${LUFS} LUFS (linear) -> audio.wav (the score alone: audio-score.wav)`);
   }
 }
 await browser.close();

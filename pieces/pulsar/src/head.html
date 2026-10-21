@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Púlsar</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0d14; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  ¿QUÉ PASARÍA SI UN PÚLSAR APARECIERA JUNTO A LA TIERRA? — 9:16, 79 s, 24 fps.
+//  A seaside fair at night with a drone show. A pulsar at 0.1 light-years: its X-ray beam sweeps Earth every 1.5 s,
+//  auroras, the ozone drains; it is a magnetar: a giant flare turns the sky violet, the shock breaks glass; satellites die; a brown sky.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 79.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 79, () => sceneMain()]];
+const SHOTS = [
+  ['fair',   0,  16, 'feria junto al mar; drones; aparece un punto nuevo'],
+  ['beam',   16, 34, 'el haz barre el cielo; auroras; el ozono baja'],
+  ['mag',    34, 44, 'es un magnetar; silencio'],
+  ['flare',  44, 59, 'erupción gigante: cielo violeta; onda de choque; cristales'],
+  ['after',  59, 71, 'apagón; satélites muertos; cielo marrón'],
+  ['card',   71, 79, 'tarjeta final'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, t0, t1, title], i) => ({ id: i + 1, key, era: 0, t0, t1, title })),
+  cuts: [], morphs: [],
+  cues: { appear: 9.0, flare: 44.0, shock: 51.0 },
+  acts: [
+    { name: '1 Feria', role: 'build', t0: 0, t1: 16 },
+    { name: '2 Haz', role: 'journey', t0: 16, t1: 34 },
+    { name: '3 Magnetar', role: 'peak', t0: 34, t1: 43 },
+    { name: '4 Silencio', role: 'silence', t0: 43, t1: 43.9 },
+    { name: '5 Erupción', role: 'gift', t0: 43.9, t1: 59 },
+    { name: '6 Después', role: 'goodbye', t0: 59, t1: 79 },
+  ],
+  board: [[3, 'título, la feria'], [7, 'drones: el corazón'], [12, 'un punto nuevo'], [19, 'el haz'], [25, 'cada 1,5 s'], [31, 'auroras, ozono'], [38, 'magnetar'], [45.5, 'erupción'], [49, 'cielo violeta'], [53, 'onda de choque'], [57, 'cristales rotos'], [62, 'satélites'], [68, 'cielo marrón'], [75, 'tarjeta']].map(([t, title]) => ({ t, title, sound: '', next: '' })),
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

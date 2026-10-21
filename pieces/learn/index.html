@@ -1,0 +1,1906 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How a Machine Learns</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #05080a; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// ---- voice.json (tools/voice.mjs): the voice-over's lines and word times
+const VOICE = {"duration":131.072,"lead":0.4,"tail":2.6,"lines":[{"id":"open","text":"No one ever told an AI what a cat is.","t0":0.4,"t1":2.686,"words":[{"w":"No","t0":0,"t1":0.58},{"w":"one","t0":0.58,"t1":0.7},{"w":"ever","t0":0.7,"t1":0.96},{"w":"told","t0":0.96,"t1":1.16},{"w":"an","t0":1.16,"t1":1.4},{"w":"AI","t0":1.4,"t1":1.78},{"w":"what","t0":1.78,"t1":2.04},{"w":"a","t0":2.04,"t1":2.2},{"w":"cat","t0":2.2,"t1":2.36},{"w":"is.","t0":2.36,"t1":2.7}]},{"id":"rules","text":"There's no list of rules written by a human. And still, it gets it right.","t0":2.886,"t1":6.456,"words":[{"w":"There's","t0":2.7,"t1":3.18},{"w":"no","t0":3.18,"t1":3.34},{"w":"list","t0":3.34,"t1":3.54},{"w":"of","t0":3.54,"t1":3.72},{"w":"rules","t0":3.72,"t1":4},{"w":"written","t0":4,"t1":4.2},{"w":"by","t0":4.2,"t1":4.48},{"w":"a","t0":4.48,"t1":4.6},{"w":"human.","t0":4.6,"t1":4.88},{"w":"And","t0":4.88,"t1":5.2},{"w":"still,","t0":5.2,"t1":5.54},{"w":"it","t0":5.54,"t1":5.76},{"w":"gets","t0":5.76,"t1":5.92},{"w":"it","t0":5.92,"t1":6.08},{"w":"right.","t0":6.08,"t1":6.36}]},{"id":"inside","text":"Here's what actually happens inside.","t0":6.656,"t1":8.873,"words":[{"w":"Here's","t0":6.36,"t1":6.92},{"w":"what","t0":6.92,"t1":7.02},{"w":"actually","t0":7.02,"t1":7.4},{"w":"happens","t0":7.4,"t1":7.76},{"w":"inside.","t0":8.3,"t1":8.82}]},{"id":"numbers","text":"Inside, there are only numbers.","t0":9.323,"t1":10.628,"words":[{"w":"Inside,","t0":9.323,"t1":9.06,"est":true},{"w":"there","t0":9.06,"t1":9.66},{"w":"are","t0":9.66,"t1":9.78},{"w":"only","t0":9.78,"t1":10.02},{"w":"numbers.","t0":10.02,"t1":10.5}]},{"id":"neuron","text":"Each neuron takes its inputs, multiplies each one by a weight, adds them up, and squashes the result through a curve.","t0":10.828,"t1":18.147,"words":[{"w":"Each","t0":10.5,"t1":11.02},{"w":"neuron","t0":11.02,"t1":11.4},{"w":"takes","t0":11.4,"t1":11.66},{"w":"its","t0":11.66,"t1":11.9},{"w":"inputs,","t0":11.9,"t1":12.4},{"w":"multiplies","t0":12.4,"t1":13.42},{"w":"each","t0":13.42,"t1":13.68},{"w":"one","t0":13.68,"t1":14},{"w":"by","t0":14,"t1":14.34},{"w":"a","t0":14.34,"t1":14.44},{"w":"weight,","t0":14.44,"t1":14.76},{"w":"adds","t0":14.76,"t1":15.36},{"w":"them","t0":15.36,"t1":15.6},{"w":"up,","t0":15.6,"t1":15.92},{"w":"and","t0":15.92,"t1":16.44},{"w":"squashes","t0":16.44,"t1":16.88},{"w":"the","t0":16.88,"t1":17.16},{"w":"result","t0":17.16,"t1":17.46},{"w":"through","t0":17.46,"t1":17.68},{"w":"a","t0":17.68,"t1":17.82},{"w":"curve.","t0":17.82,"t1":18.12}]},{"id":"thatsall","text":"That's it. That's all the intelligence a single neuron has.","t0":18.347,"t1":21.619,"words":[{"w":"That's","t0":18.12,"t1":18.66},{"w":"it.","t0":18.66,"t1":18.86},{"w":"That's","t0":18.9,"t1":19.5},{"w":"all","t0":19.5,"t1":19.64},{"w":"the","t0":19.64,"t1":19.78},{"w":"intelligence","t0":19.78,"t1":20.28},{"w":"a","t0":20.28,"t1":20.5},{"w":"single","t0":20.5,"t1":20.78},{"w":"neuron","t0":20.78,"t1":21.1},{"w":"has.","t0":21.1,"t1":21.48}]},{"id":"stack","text":"The trick is stacking them.","t0":22.069,"t1":23.453,"words":[{"w":"The","t0":22.069,"t1":22.22,"est":true},{"w":"trick","t0":22.22,"t1":22.46},{"w":"is","t0":22.46,"t1":22.66},{"w":"stacking","t0":22.66,"t1":23.08},{"w":"them.","t0":23.08,"t1":23.46}]},{"id":"layers","text":"Each layer combines what the one before it found, and layer by layer, more and more complex shapes appear.","t0":23.653,"t1":29.768,"words":[{"w":"Each","t0":23.46,"t1":23.84},{"w":"layer","t0":23.84,"t1":24.16},{"w":"combines","t0":24.16,"t1":24.66},{"w":"what","t0":24.66,"t1":24.96,"est":true},{"w":"the","t0":24.96,"t1":25.1},{"w":"one","t0":25.1,"t1":25.28},{"w":"before","t0":25.28,"t1":25.6},{"w":"it","t0":25.6,"t1":25.78},{"w":"found,","t0":25.78,"t1":26.1},{"w":"and","t0":26.1,"t1":26.74},{"w":"layer","t0":26.74,"t1":26.98},{"w":"by","t0":26.98,"t1":27.24},{"w":"layer,","t0":27.24,"t1":27.62},{"w":"more","t0":27.62,"t1":28.06},{"w":"and","t0":28.06,"t1":28.18},{"w":"more","t0":28.18,"t1":28.38},{"w":"complex","t0":28.38,"t1":28.84},{"w":"shapes","t0":28.84,"t1":29.22},{"w":"appear.","t0":29.22,"t1":29.64}]},{"id":"twoin","text":"Here, two numbers go in.","t0":29.968,"t1":31.449,"words":[{"w":"Here,","t0":29.64,"t1":30.14},{"w":"two","t0":30.14,"t1":30.54},{"w":"numbers","t0":30.54,"t1":30.88},{"w":"go","t0":30.88,"t1":31.16},{"w":"in.","t0":31.16,"t1":31.44}]},{"id":"pixels","text":"A network that looks at images takes in thousands of pixels at once.","t0":31.649,"t1":35.066,"words":[{"w":"A","t0":31.44,"t1":31.76},{"w":"network","t0":31.76,"t1":32.04},{"w":"that","t0":32.04,"t1":32.26},{"w":"looks","t0":32.26,"t1":32.46},{"w":"at","t0":32.46,"t1":32.62},{"w":"images","t0":32.62,"t1":33.02},{"w":"takes","t0":33.02,"t1":33.36},{"w":"in","t0":33.36,"t1":33.58},{"w":"thousands","t0":33.58,"t1":33.88},{"w":"of","t0":33.88,"t1":34.12},{"w":"pixels","t0":34.12,"t1":34.42},{"w":"at","t0":34.42,"t1":34.62},{"w":"once.","t0":34.62,"t1":35}]},{"id":"random","text":"At the start, every weight is a random number, so the network is completely lost. Its error is worse than flipping a coin.","t0":35.466,"t1":41.839,"words":[{"w":"At","t0":35.466,"t1":35.6,"est":true},{"w":"the","t0":35.6,"t1":35.74},{"w":"start,","t0":35.74,"t1":36.02},{"w":"every","t0":36.02,"t1":36.46},{"w":"weight","t0":36.46,"t1":36.68},{"w":"is","t0":36.68,"t1":36.86},{"w":"a","t0":36.86,"t1":36.98},{"w":"random","t0":36.98,"t1":37.2},{"w":"number,","t0":37.2,"t1":37.6},{"w":"so","t0":37.6,"t1":37.88},{"w":"the","t0":37.88,"t1":38},{"w":"network","t0":38,"t1":38.32},{"w":"is","t0":38.32,"t1":38.52},{"w":"completely","t0":38.52,"t1":38.9},{"w":"lost.","t0":38.9,"t1":39.44},{"w":"Its","t0":39.44,"t1":39.88},{"w":"error","t0":39.88,"t1":40.24},{"w":"is","t0":40.24,"t1":40.5},{"w":"worse","t0":40.5,"t1":40.74},{"w":"than","t0":40.74,"t1":41},{"w":"flipping","t0":41,"t1":41.28},{"w":"a","t0":41.28,"t1":41.46},{"w":"coin.","t0":41.46,"t1":41.76}]},{"id":"compare","text":"It compares its answer with the right one, and that gap is boiled down to a single number.","t0":42.039,"t1":46.426,"words":[{"w":"It","t0":41.76,"t1":42.16},{"w":"compares","t0":42.16,"t1":42.48},{"w":"its","t0":42.48,"t1":42.74},{"w":"answer","t0":42.74,"t1":43.1},{"w":"with","t0":43.1,"t1":43.28},{"w":"the","t0":43.28,"t1":43.4},{"w":"right","t0":43.4,"t1":43.6},{"w":"one,","t0":43.6,"t1":43.84},{"w":"and","t0":43.84,"t1":44.18},{"w":"that","t0":44.18,"t1":44.34},{"w":"gap","t0":44.34,"t1":44.6},{"w":"is","t0":44.6,"t1":44.8},{"w":"boiled","t0":44.8,"t1":45},{"w":"down","t0":45,"t1":45.32},{"w":"to","t0":45.32,"t1":45.52},{"w":"a","t0":45.52,"t1":45.66},{"w":"single","t0":45.66,"t1":45.92},{"w":"number.","t0":45.92,"t1":46.34}]},{"id":"error","text":"The error.","t0":46.626,"t1":47.175,"words":[{"w":"The","t0":46.34,"t1":46.76},{"w":"error.","t0":46.76,"t1":47.1}]},{"id":"idea","text":"And now, the idea that changes everything.","t0":47.675,"t1":49.74,"words":[{"w":"And","t0":47.675,"t1":47.8,"est":true},{"w":"now,","t0":47.8,"t1":48.08},{"w":"the","t0":48.08,"t1":48.48},{"w":"idea","t0":48.48,"t1":48.68},{"w":"that","t0":48.68,"t1":48.88},{"w":"changes","t0":48.88,"t1":49.14},{"w":"everything.","t0":49.14,"t1":49.66}]},{"id":"landscape","text":"Picture that error as a landscape.","t0":49.94,"t1":51.572,"words":[{"w":"Picture","t0":49.66,"t1":50.16},{"w":"that","t0":50.16,"t1":50.4},{"w":"error","t0":50.4,"t1":50.68},{"w":"as","t0":50.68,"t1":50.88},{"w":"a","t0":50.88,"t1":51},{"w":"landscape.","t0":51,"t1":51.46}]},{"id":"directions","text":"Every weight is a direction you can move in, and the height is how badly the network is doing.","t0":51.772,"t1":56.163,"words":[{"w":"Every","t0":51.46,"t1":52},{"w":"weight","t0":52,"t1":52.3},{"w":"is","t0":52.3,"t1":52.48},{"w":"a","t0":52.48,"t1":52.6},{"w":"direction","t0":52.6,"t1":52.94},{"w":"you","t0":52.94,"t1":53.14},{"w":"can","t0":53.14,"t1":53.32},{"w":"move","t0":53.32,"t1":53.54},{"w":"in,","t0":53.54,"t1":53.78},{"w":"and","t0":53.78,"t1":54.02},{"w":"the","t0":54.02,"t1":54.14},{"w":"height","t0":54.14,"t1":54.44},{"w":"is","t0":54.44,"t1":54.72},{"w":"how","t0":54.72,"t1":54.88},{"w":"badly","t0":54.88,"t1":55.16},{"w":"the","t0":55.16,"t1":55.32},{"w":"network","t0":55.32,"t1":55.58},{"w":"is","t0":55.58,"t1":55.8},{"w":"doing.","t0":55.8,"t1":56.1}]},{"id":"training","text":"Training is just one thing.","t0":56.363,"t1":57.558,"words":[{"w":"Training","t0":56.1,"t1":56.62},{"w":"is","t0":56.62,"t1":56.84},{"w":"just","t0":56.84,"t1":57.06},{"w":"one","t0":57.06,"t1":57.32},{"w":"thing.","t0":57.32,"t1":57.62}]},{"id":"down","text":"Going down.","t0":57.758,"t1":59.283,"words":[{"w":"Going","t0":57.62,"t1":58.42},{"w":"down.","t0":58.42,"t1":58.76}]},{"id":"slope","text":"The slope under your feet tells you which way.","t0":59.483,"t1":61.485,"words":[{"w":"The","t0":59.483,"t1":59.56,"est":true},{"w":"slope","t0":59.56,"t1":59.82},{"w":"under","t0":59.82,"t1":60.06},{"w":"your","t0":60.06,"t1":60.26},{"w":"feet","t0":60.26,"t1":60.5},{"w":"tells","t0":60.5,"t1":60.78},{"w":"you","t0":60.78,"t1":60.96},{"w":"which","t0":60.96,"t1":61.12},{"w":"way.","t0":61.12,"t1":61.5}]},{"id":"step","text":"Take a step downhill, check the slope again, and repeat.","t0":61.685,"t1":65.438,"words":[{"w":"Take","t0":61.5,"t1":61.82},{"w":"a","t0":61.82,"t1":61.96},{"w":"step","t0":61.96,"t1":62.14},{"w":"downhill,","t0":62.14,"t1":62.62},{"w":"check","t0":62.62,"t1":63.04},{"w":"the","t0":63.04,"t1":63.24},{"w":"slope","t0":63.24,"t1":63.5},{"w":"again,","t0":63.5,"t1":63.82},{"w":"and","t0":63.82,"t1":64.2},{"w":"repeat.","t0":64.2,"t1":64.58}]},{"id":"flat","text":"Near the bottom, the ground flattens out and the steps get tiny.","t0":65.638,"t1":68.822,"words":[{"w":"Near","t0":65.638,"t1":65.46,"est":true},{"w":"the","t0":65.46,"t1":65.92},{"w":"bottom,","t0":65.92,"t1":66.26},{"w":"the","t0":66.26,"t1":66.6},{"w":"ground","t0":66.6,"t1":66.84},{"w":"flattens","t0":66.84,"t1":67.34},{"w":"out","t0":67.34,"t1":67.58},{"w":"and","t0":67.58,"t1":67.74},{"w":"the","t0":67.74,"t1":67.86},{"w":"steps","t0":67.86,"t1":68.14},{"w":"get","t0":68.14,"t1":68.4},{"w":"tiny.","t0":68.4,"t1":68.74}]},{"id":"gd","text":"This is gradient descent.","t0":69.022,"t1":70.221,"words":[{"w":"This","t0":68.74,"t1":69.12},{"w":"is","t0":69.12,"t1":69.3},{"w":"gradient","t0":69.3,"t1":69.64},{"w":"descent.","t0":69.64,"t1":70.06}]},{"id":"how","text":"But how do you find the slope of millions of weights at once?","t0":70.721,"t1":73.516,"words":[{"w":"But","t0":70.721,"t1":70.82,"est":true},{"w":"how","t0":70.82,"t1":71},{"w":"do","t0":71,"t1":71.1},{"w":"you","t0":71.1,"t1":71.24},{"w":"find","t0":71.24,"t1":71.44},{"w":"the","t0":71.44,"t1":71.6},{"w":"slope","t0":71.6,"t1":71.86},{"w":"of","t0":71.86,"t1":72.04},{"w":"millions","t0":72.04,"t1":72.24},{"w":"of","t0":72.24,"t1":72.5},{"w":"weights","t0":72.5,"t1":72.72},{"w":"at","t0":72.72,"t1":72.94},{"w":"once?","t0":72.94,"t1":73.28}]},{"id":"back","text":"You measure the error at the end and push it backwards, layer by layer, handing out blame.","t0":73.716,"t1":78.791,"words":[{"w":"You","t0":73.38,"t1":73.82},{"w":"measure","t0":73.82,"t1":74.1},{"w":"the","t0":74.1,"t1":74.3},{"w":"error","t0":74.3,"t1":74.56},{"w":"at","t0":74.56,"t1":74.78},{"w":"the","t0":74.78,"t1":74.92},{"w":"end","t0":74.92,"t1":75.16},{"w":"and","t0":75.16,"t1":75.38},{"w":"push","t0":75.38,"t1":75.58},{"w":"it","t0":75.58,"t1":75.76},{"w":"backwards,","t0":75.76,"t1":76.36},{"w":"layer","t0":76.36,"t1":77.02},{"w":"by","t0":77.02,"t1":77.28},{"w":"layer,","t0":77.28,"t1":77.64},{"w":"handing","t0":77.64,"t1":78.02},{"w":"out","t0":78.02,"t1":78.3},{"w":"blame.","t0":78.3,"t1":78.6}]},{"id":"blame","text":"How much did each weight have to do with the mistake?","t0":78.991,"t1":81.4,"words":[{"w":"How","t0":78.6,"t1":79.16},{"w":"much","t0":79.16,"t1":79.36},{"w":"did","t0":79.36,"t1":79.56},{"w":"each","t0":79.56,"t1":79.78},{"w":"weight","t0":79.78,"t1":80.04},{"w":"have","t0":80.04,"t1":80.24},{"w":"to","t0":80.24,"t1":80.4},{"w":"do","t0":80.4,"t1":80.54},{"w":"with","t0":80.54,"t1":80.72},{"w":"the","t0":80.72,"t1":80.84},{"w":"mistake?","t0":80.84,"t1":81.28}]},{"id":"bp","text":"That's backpropagation, described in nineteen eighty-six. It's the engine behind all of this.","t0":81.6,"t1":86.594,"words":[{"w":"That's","t0":81.4,"t1":81.84},{"w":"backpropagation,","t0":81.84,"t1":82.78,"est":true},{"w":"described","t0":82.78,"t1":83.36},{"w":"in","t0":83.36,"t1":83.6},{"w":"nineteen","t0":83.6,"t1":84.03,"est":true},{"w":"eighty-six.","t0":84.03,"t1":84.46,"est":true},{"w":"It's","t0":84.46,"t1":85.12},{"w":"the","t0":85.12,"t1":85.28},{"w":"engine","t0":85.28,"t1":85.54},{"w":"behind","t0":85.54,"t1":85.88},{"w":"all","t0":85.88,"t1":86.12},{"w":"of","t0":86.12,"t1":86.26},{"w":"this.","t0":86.26,"t1":86.48}]},{"id":"repeat","text":"And that's it. You repeat.","t0":87.044,"t1":88.426,"words":[{"w":"And","t0":87.044,"t1":87.14,"est":true},{"w":"that's","t0":87.14,"t1":87.42},{"w":"it.","t0":87.42,"t1":87.58},{"w":"You","t0":87.58,"t1":87.92},{"w":"repeat.","t0":87.92,"t1":88.28}]},{"id":"learning","text":"This network is learning, right now, to separate these two groups.","t0":88.626,"t1":91.937,"words":[{"w":"This","t0":88.28,"t1":88.78},{"w":"network","t0":88.78,"t1":89.1},{"w":"is","t0":89.1,"t1":89.32},{"w":"learning,","t0":89.32,"t1":89.64},{"w":"right","t0":89.64,"t1":90.1},{"w":"now,","t0":90.1,"t1":90.38},{"w":"to","t0":90.38,"t1":90.7},{"w":"separate","t0":90.7,"t1":90.98},{"w":"these","t0":90.98,"t1":91.26},{"w":"two","t0":91.26,"t1":91.5},{"w":"groups.","t0":91.5,"t1":91.86}]},{"id":"boundary","text":"What bends is its decision boundary.","t0":92.137,"t1":94.32,"words":[{"w":"What","t0":91.86,"t1":92.32},{"w":"bends","t0":92.32,"t1":92.6,"est":true},{"w":"is","t0":92.6,"t1":92.8},{"w":"its","t0":92.8,"t1":92.94},{"w":"decision","t0":92.94,"t1":93.42},{"w":"boundary.","t0":93.42,"t1":93.86}]},{"id":"nobody","text":"Nobody told it where the curve was. It found it by walking downhill, one step at a time.","t0":94.52,"t1":99.558,"words":[{"w":"Nobody","t0":94.36,"t1":94.76},{"w":"told","t0":94.76,"t1":95.1},{"w":"it","t0":95.1,"t1":95.28},{"w":"where","t0":95.28,"t1":95.4},{"w":"the","t0":95.4,"t1":95.56},{"w":"curve","t0":95.56,"t1":95.78},{"w":"was.","t0":95.78,"t1":96.12},{"w":"It","t0":96.12,"t1":96.68},{"w":"found","t0":96.68,"t1":96.9},{"w":"it","t0":96.9,"t1":97.06},{"w":"by","t0":97.06,"t1":97.2},{"w":"walking","t0":97.2,"t1":97.54},{"w":"downhill,","t0":97.54,"t1":97.98},{"w":"one","t0":97.98,"t1":98.64},{"w":"step","t0":98.64,"t1":98.9},{"w":"at","t0":98.9,"t1":99.06},{"w":"a","t0":99.06,"t1":99.18},{"w":"time.","t0":99.18,"t1":99.48}]},{"id":"count","text":"This network has one hundred fifty-one weights.","t0":100.008,"t1":102.314,"words":[{"w":"This","t0":99.6,"t1":100.18},{"w":"network","t0":100.18,"t1":100.54},{"w":"has","t0":100.54,"t1":100.76},{"w":"one","t0":100.76,"t1":101.148,"est":true},{"w":"hundred","t0":101.148,"t1":101.537,"est":true},{"w":"fifty-one","t0":101.537,"t1":101.925,"est":true},{"w":"weights.","t0":101.925,"t1":102.314,"est":true}]},{"id":"llm","text":"The language models you use every day have hundreds of billions, and they walked down that same landscape reading trillions of words.","t0":102.514,"t1":109.117,"words":[{"w":"The","t0":102.14,"t1":102.6},{"w":"language","t0":102.6,"t1":102.9},{"w":"models","t0":102.9,"t1":103.26},{"w":"you","t0":103.26,"t1":103.48},{"w":"use","t0":103.48,"t1":103.7},{"w":"every","t0":103.7,"t1":104.04},{"w":"day","t0":104.04,"t1":104.3},{"w":"have","t0":104.3,"t1":104.52},{"w":"hundreds","t0":104.52,"t1":104.86},{"w":"of","t0":104.86,"t1":105.06},{"w":"billions,","t0":105.06,"t1":105.44},{"w":"and","t0":105.44,"t1":106.06},{"w":"they","t0":106.06,"t1":106.18},{"w":"walked","t0":106.18,"t1":106.4,"est":true},{"w":"down","t0":106.4,"t1":106.64},{"w":"that","t0":106.64,"t1":106.84},{"w":"same","t0":106.84,"t1":107.12},{"w":"landscape","t0":107.12,"t1":107.56},{"w":"reading","t0":107.56,"t1":107.94},{"w":"trillions","t0":107.94,"t1":108.42},{"w":"of","t0":108.42,"t1":108.68},{"w":"words.","t0":108.68,"t1":109}]},{"id":"size","text":"Change the size. The operation is the same.","t0":109.317,"t1":111.942,"words":[{"w":"Change","t0":109,"t1":109.52},{"w":"the","t0":109.52,"t1":109.8},{"w":"size.","t0":109.8,"t1":110.16},{"w":"The","t0":110.16,"t1":110.74},{"w":"operation","t0":110.74,"t1":111.16},{"w":"is","t0":111.16,"t1":111.44},{"w":"the","t0":111.44,"t1":111.6},{"w":"same.","t0":111.6,"t1":111.88}]},{"id":"strange","text":"And here's the strangest part.","t0":112.342,"t1":113.56,"words":[{"w":"And","t0":112.342,"t1":112.46,"est":true},{"w":"here's","t0":112.46,"t1":112.72},{"w":"the","t0":112.72,"t1":112.86},{"w":"strangest","t0":112.86,"t1":113.28},{"w":"part.","t0":113.28,"t1":113.52}]},{"id":"kept","text":"This network never kept a single example.","t0":114.56,"t1":116.339,"words":[{"w":"This","t0":114.46,"t1":114.72},{"w":"network","t0":114.72,"t1":115.06},{"w":"never","t0":115.06,"t1":115.32},{"w":"kept","t0":115.32,"t1":115.58},{"w":"a","t0":115.58,"t1":115.76},{"w":"single","t0":115.76,"t1":116},{"w":"example.","t0":116,"t1":116.38}]},{"id":"moved","text":"It only moved numbers, until the shape of the problem was carved into them.","t0":116.539,"t1":120.783,"words":[{"w":"It","t0":116.98,"t1":117.08},{"w":"only","t0":117.08,"t1":117.3},{"w":"moved","t0":117.3,"t1":117.6},{"w":"numbers,","t0":117.6,"t1":118.02},{"w":"until","t0":118.02,"t1":118.76},{"w":"the","t0":118.76,"t1":118.92},{"w":"shape","t0":118.92,"t1":119.1},{"w":"of","t0":119.1,"t1":119.26},{"w":"the","t0":119.26,"t1":119.42},{"w":"problem","t0":119.42,"t1":119.7},{"w":"was","t0":119.7,"t1":119.94},{"w":"carved","t0":119.94,"t1":120.24},{"w":"into","t0":120.24,"t1":120.46},{"w":"them.","t0":120.46,"t1":120.78}]},{"id":"cat","text":"That's why it recognizes a cat it has never seen.","t0":120.983,"t1":123.374,"words":[{"w":"That's","t0":120.78,"t1":121.22},{"w":"why","t0":121.22,"t1":121.38},{"w":"it","t0":121.38,"t1":121.48},{"w":"recognizes","t0":121.48,"t1":121.96},{"w":"a","t0":121.96,"t1":122.26},{"w":"cat","t0":122.26,"t1":122.46},{"w":"it","t0":122.54,"t1":122.56},{"w":"has","t0":122.56,"t1":122.68},{"w":"never","t0":122.68,"t1":122.9},{"w":"seen.","t0":122.9,"t1":123.28}]},{"id":"end","text":"For a machine, learning is walking down a hill blindfolded, millions of times.","t0":123.774,"t1":128.472,"words":[{"w":"For","t0":123.774,"t1":123.88,"est":true},{"w":"a","t0":123.88,"t1":124},{"w":"machine,","t0":124,"t1":124.42},{"w":"learning","t0":124.42,"t1":125.12},{"w":"is","t0":125.12,"t1":125.36},{"w":"walking","t0":125.36,"t1":125.66},{"w":"down","t0":125.66,"t1":125.92},{"w":"a","t0":125.92,"t1":126.08},{"w":"hill","t0":126.08,"t1":126.26},{"w":"blindfolded,","t0":126.26,"t1":127.16},{"w":"millions","t0":127.16,"t1":127.6},{"w":"of","t0":127.6,"t1":127.94},{"w":"times.","t0":127.94,"t1":128.34}]}]};
+// =====================================================================
+//  HOW A MACHINE LEARNS — Bitstory #2. 9:16, voice-led (~2:15), 24fps, style bitpix. One stage (F2).
+//  A real 2-10-10-1 network (151 weights, src/net.js) trained in code: the cat, the neuron, the layers,
+//  the error, the landscape and the descent, backpropagation, the bending boundary, the scale, a cat never seen.
+//  Mint = the network and its right answers; yellow = the weights; magenta = the error and the blame.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4, GRID0 = 0;
+const VL = (id) => VOICE.lines.find((l) => l.id === id);
+const VW = (id, w, n = 1) => { const L = VL(id); let k = 0; for (const x of L.words) if (x.w.toLowerCase().replace(/[^a-z0-9']/g, '') === w.toLowerCase() && ++k === n) return x.t0; return L.t0; };
+const DURATION = Math.round(VOICE.duration * FPS) / FPS;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", "DejaVu Serif", serif';
+const CX = 540;
+const onBeat = (t) => t;
+
+// sections: each starts ~0.3s before its first line
+const B0 = (id) => VL(id).t0 - 0.3;
+const S_CAT = 0, S_NEU = B0('numbers'), S_NET = B0('stack'), S_ERR = B0('random'), S_LAND = B0('idea'), S_BACK = B0('how'),
+  S_BND = B0('repeat'), S_SCALE = B0('count'), S_STR = B0('strange');
+const HIT = VL('kept').t0 - 0.32;                       // the payoff hit, in the pause before "This network never kept a single example"
+const S_END = B0('end');
+const ERA_LIST = [[0, DURATION, () => sceneStage()]];
+const SHOTS = [
+  ['cat',       0, S_CAT,   S_NEU,   'a pixel cat; CAT ✓'],
+  ['neuron',    0, S_NEU,   S_NET,   'only numbers: one neuron multiplies, adds, squashes'],
+  ['network',   0, S_NET,   S_ERR,   'stacked: 2-10-10-1; two numbers in; thousands of pixels'],
+  ['error',     0, S_ERR,   S_LAND,  'random weights; says / should be; the error'],
+  ['landscape', 0, S_LAND,  S_BACK,  'the error as a landscape; the ball goes down'],
+  ['backprop',  0, S_BACK,  S_BND,   'blame flows backwards; 1986'],
+  ['boundary',  0, S_BND,   S_SCALE, 'the real boundary bends, epoch by epoch'],
+  ['scale',     0, S_SCALE, S_STR,   '151 -> hundreds of billions; trillions of words'],
+  ['strange',   0, S_STR,   HIT,     'the strangest part; silence'],
+  ['unseen',    0, HIT,     S_END,   'no examples kept; a cat never seen'],
+  ['end',       0, S_END,   DURATION, 'downhill, blindfolded; Bitstory'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, gridOffset: GRID0, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE, aspect: '9:16',
+  format: 'morph-chain',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { hit: HIT },
+  acts: [
+    { name: '1 Inside',    role: 'build',   t0: 0, t1: S_LAND },
+    { name: '2 Descent',   role: 'peak',    t0: S_LAND, t1: VL('strange').t1 },
+    { name: '3 Silence',   role: 'silence', t0: VL('strange').t1 + 0.1, t1: HIT },
+    { name: '4 Unseen',    role: 'gift',    t0: HIT, t1: S_END },
+    { name: '5 Downhill',  role: 'goodbye', t0: S_END, t1: DURATION },
+  ],
+  board: [
+    { t: VL('rules').t1 - 0.2, title: 'CAT ✓', sound: 'soft ticks as the pixels land', next: 'pixels turn into numbers' },
+    { t: VL('neuron').t1 - 0.3, title: 'one neuron', sound: 'a tick per operation', next: 'it clones into layers' },
+    { t: VL('layers').t1 - 0.3, title: 'stacked layers', sound: 'signals flowing', next: 'random weights' },
+    { t: VL('error').t1, title: 'the error', sound: 'a low thud', next: 'the number becomes height' },
+    { t: VL('step').t1 - 0.2, title: 'going down', sound: 'a step per step', next: 'the ball becomes the output' },
+    { t: VL('bp').t1 - 0.4, title: 'backpropagation', sound: 'reverse whooshes', next: 'the plane of dots' },
+    { t: VL('nobody').t1 - 0.4, title: 'the boundary bends', sound: 'ticks per epoch', next: 'the number of weights' },
+    { t: VL('llm').t1 - 0.3, title: 'hundreds of billions', sound: 'swelling', next: 'silence' },
+    { t: VL('cat').t1 - 0.2, title: 'a cat never seen', sound: 'the loudest hit', next: 'downhill' },
+    { t: DURATION - 0.6, title: 'Bitstory', sound: 'resolve', next: 'loops' },
+  ],
+  narration: VOICE.lines.map((l) => ({ id: l.id, t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;
+// =====================================================================
+//  kit/core.js — seeded RNG, math, easing, palette, geometry, the hand-drawn drawing kit
+//  (wobble on the boil, ink, paint, hatch, pencil, stipple, grain), cameras, mono text.
+//  Needs from the piece head: FPS, W, H. Render state: ctx, F (frame), B (boil = floor(F/2)).
+// =====================================================================
+
+// ---------------------------------------------------------------------
+//  seeded RNG
+// ---------------------------------------------------------------------
+function mulberry32(a) {
+  return function () {
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+function hash(...xs) {
+  let h = 2166136261 >>> 0;
+  for (const x of xs) {
+    const s = String(x);
+    for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+    h ^= 124; h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+function RNG(...xs) {
+  const f = mulberry32(hash(...xs));
+  return {
+    f,
+    r: (a, b) => a + (b - a) * f(),
+    n: (amt) => (f() * 2 - 1) * amt,
+    i: (a, b) => a + Math.floor(f() * (b - a + 1)),
+    pick: (arr) => arr[Math.floor(f() * arr.length)],
+  };
+}
+
+// ---------------------------------------------------------------------
+//  math
+// ---------------------------------------------------------------------
+const TAU = Math.PI * 2, DEG = Math.PI / 180;
+const clamp = (x, a = 0, b = 1) => (x < a ? a : x > b ? b : x);
+const lerp = (a, b, t) => a + (b - a) * t;
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+// has absolute time t reached cut time c? (cuts snap to the nearest frame, like shot boundaries)
+const past = (t, c) => Math.round(t * FPS + 1e-6) >= Math.round(c * FPS);
+const dist = (a, b) => Math.hypot(b[0] - a[0], b[1] - a[1]);
+const EZ = {
+  o2: (t) => 1 - (1 - clamp(t)) ** 2,
+  o3: (t) => 1 - (1 - clamp(t)) ** 3,
+  i2: (t) => clamp(t) ** 2,
+  i3: (t) => clamp(t) ** 3,
+  io: (t) => { t = clamp(t); return t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2; },
+  back: (t) => { t = clamp(t) - 1; return 1 + 2.70158 * t * t * t + 1.70158 * t * t; },
+};
+
+// ---------------------------------------------------------------------
+//  render state
+// ---------------------------------------------------------------------
+let ctx = null;   // current 2d context
+let F = 0;        // absolute frame index
+let B = 0;        // boil index — reseeds every 2 frames (Math.floor(t*12))
+
+const C = {
+  ink: '#3a2417', cream: '#efe5cf', paper: '#f4ecd9', paperLine: 'rgba(90,130,190,0.32)',
+  orange: '#e58a4e', orangeD: '#c3622e', orangeL: '#f4b27c', terra: '#d97757',
+  rose: '#d98b8b', roseD: '#b0616a', roseL: '#efb9b0',
+  wood: '#d6a466', woodD: '#a8773f', woodL: '#e9c48f',
+  sky: '#9cc4d6', skyD: '#6f9fb8', skyL: '#c9e1ea',
+  teal: '#3d9f96', tealL: '#86c9be',
+  yellow: '#f0c55a', yellowL: '#f7dd92',
+  green: '#5f9c5c', greenL: '#a3cf92',
+  red: '#d4382c', redL: '#ea7a6c',
+  skin: '#ebb68f', skinD: '#c7815d', skinL: '#f7d4b4',
+  lav: 'rgba(104,112,214,0.7)', lavS: 'rgba(104,112,214,0.42)',
+  navy: '#0c0d1c', navy2: '#15173a', peri: '#c8d0f0', periD: '#7c86c4', periS: 'rgba(150,164,230,0.20)',
+  cyan: '#52d6c4', mag: '#e0368f', glow: '#5de37a', white: '#f4f6ff',
+};
+const RAINBOW = ['#f0d042', '#e050b8', '#46cde0', '#7ad866', '#a47ef0'];
+const MONO = 'Consolas, "Cascadia Mono", Menlo, "DejaVu Sans Mono", "Courier New", monospace';   // Windows first, then macOS / Linux
+
+// ---------------------------------------------------------------------
+//  geometry
+// ---------------------------------------------------------------------
+function ellipsePts(cx, cy, rx, ry, rot = 0, n = 64, a0 = 0, a1 = TAU) {
+  const P = [], c = Math.cos(rot), s = Math.sin(rot), full = Math.abs(a1 - a0 - TAU) < 1e-6;
+  for (let i = 0; i < n; i++) {
+    const a = a0 + (a1 - a0) * i / (full ? n : n - 1);
+    const x = Math.cos(a) * rx, y = Math.sin(a) * ry;
+    P.push([cx + x * c - y * s, cy + x * s + y * c]);
+  }
+  return P;
+}
+function rrectPts(x, y, w, h, r, n = 6) {
+  r = Math.min(r, w / 2, h / 2);
+  const P = [], cs = [[x + w - r, y + r, -Math.PI / 2], [x + w - r, y + h - r, 0], [x + r, y + h - r, Math.PI / 2], [x + r, y + r, Math.PI]];
+  for (const [cx, cy, a0] of cs) for (let i = 0; i <= n; i++) { const a = a0 + (Math.PI / 2) * i / n; P.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r]); }
+  return P;
+}
+function arcPts(cx, cy, r, a0, a1, n = 18, sy = 1) {
+  const P = [];
+  for (let i = 0; i <= n; i++) { const a = a0 + (a1 - a0) * i / n; P.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r * sy]); }
+  return P;
+}
+function xform(P, tx, ty, rot = 0, sx = 1, sy = sx) {
+  const c = Math.cos(rot), s = Math.sin(rot);
+  return P.map(([x, y]) => [tx + x * sx * c - y * sy * s, ty + x * sx * s + y * sy * c]);
+}
+function bbox(P, pad = 0) {
+  let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+  for (const [x, y] of P) { if (x < x0) x0 = x; if (y < y0) y0 = y; if (x > x1) x1 = x; if (y > y1) y1 = y; }
+  return { x0: x0 - pad, y0: y0 - pad, x1: x1 + pad, y1: y1 + pad };
+}
+function resample(P, closed, step) {
+  const out = [], n = P.length, m = closed ? n : n - 1;
+  for (let i = 0; i < m; i++) {
+    const a = P[i], b = P[(i + 1) % n], k = Math.max(1, Math.ceil(dist(a, b) / step));
+    for (let j = 0; j < k; j++) out.push([a[0] + (b[0] - a[0]) * j / k, a[1] + (b[1] - a[1]) * j / k]);
+  }
+  if (!closed) out.push(P[n - 1]);
+  return out;
+}
+function pathLen(P) { let L = 0; for (let i = 1; i < P.length; i++) L += dist(P[i - 1], P[i]); return L; }
+function subPath(P, frac) {
+  let want = pathLen(P) * clamp(frac);
+  const out = [P[0]];
+  for (let i = 1; i < P.length; i++) {
+    const d = dist(P[i - 1], P[i]);
+    if (want >= d) { out.push(P[i]); want -= d; }
+    else { const k = want / (d || 1); out.push([lerp(P[i - 1][0], P[i][0], k), lerp(P[i - 1][1], P[i][1], k)]); break; }
+  }
+  return out;
+}
+function pointAt(P, frac) { const S = subPath(P, frac); return S[S.length - 1]; }
+
+// ---------------------------------------------------------------------
+//  drawing kit — boil, sketchy lines, hatching, stipple, pencil, grain
+// ---------------------------------------------------------------------
+// smooth hand wobble along the normal; reseeded every boil step
+function wobble(P, closed, amt, key, step = 7) {
+  const Q = resample(P, closed, step), n = Q.length;
+  const R = RNG('wob', key, B);
+  const f1 = R.r(0.012, 0.03), f2 = R.r(0.05, 0.1), p1 = R.r(0, TAU), p2 = R.r(0, TAU);
+  const sx = R.n(amt * 0.5), sy = R.n(amt * 0.5);
+  const out = new Array(n); let s = 0;
+  for (let i = 0; i < n; i++) {
+    const a = Q[closed ? (i - 1 + n) % n : Math.max(0, i - 1)], b = Q[closed ? (i + 1) % n : Math.min(n - 1, i + 1)];
+    const nx = a[1] - b[1], ny = b[0] - a[0], l = Math.hypot(nx, ny) || 1;
+    if (i) s += dist(Q[i - 1], Q[i]);
+    const o = amt * (0.75 * Math.sin(s * f1 + p1) + 0.35 * Math.sin(s * f2 + p2));
+    out[i] = [Q[i][0] + nx / l * o + sx, Q[i][1] + ny / l * o + sy];
+  }
+  return out;
+}
+function trace(P, closed) {
+  ctx.beginPath();
+  const n = P.length; if (n < 2) return;
+  if (closed) {
+    ctx.moveTo((P[n - 1][0] + P[0][0]) / 2, (P[n - 1][1] + P[0][1]) / 2);
+    for (let i = 0; i < n; i++) { const p = P[i], q = P[(i + 1) % n]; ctx.quadraticCurveTo(p[0], p[1], (p[0] + q[0]) / 2, (p[1] + q[1]) / 2); }
+    ctx.closePath();
+  } else {
+    ctx.moveTo(P[0][0], P[0][1]);
+    for (let i = 1; i < n - 1; i++) { const p = P[i], q = P[i + 1]; ctx.quadraticCurveTo(p[0], p[1], (p[0] + q[0]) / 2, (p[1] + q[1]) / 2); }
+    ctx.lineTo(P[n - 1][0], P[n - 1][1]);
+  }
+}
+// sketchy stroke. o: closed, color, w, amt, key, alpha, frac (write-on), double
+function ink(P, o = {}) {
+  const closed = !!o.closed, key = o.key ?? 'ink';
+  let Q = o.raw ? P : wobble(P, closed, o.amt ?? 1.8, key);
+  let cl = closed;
+  if (o.frac != null && o.frac < 1) { if (o.frac <= 0) return Q; Q = subPath(closed ? [...Q, Q[0]] : Q, o.frac); cl = false; }
+  ctx.strokeStyle = o.color || C.ink; ctx.lineWidth = o.w ?? 3; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  ctx.globalAlpha = o.alpha ?? 1;
+  trace(Q, cl); ctx.stroke();
+  if (o.double) {
+    let Q2 = wobble(P, closed, (o.amt ?? 1.8) * 1.6 + 0.8, key + '~');
+    if (!cl && closed) Q2 = subPath([...Q2, Q2[0]], o.frac ?? 1);
+    ctx.lineWidth = (o.w ?? 3) * 0.4; ctx.globalAlpha = (o.alpha ?? 1) * 0.55; trace(Q2, cl); ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
+  return Q;
+}
+// filled shape + textures (clipped) + ink outline
+function paint(P, o = {}) {
+  const key = o.key || 'paint';
+  const Q = o.raw ? P : wobble(P, true, o.amt ?? 1.6, key);
+  ctx.save();
+  trace(Q, true);
+  if (o.fill) { ctx.globalAlpha = o.fillAl ?? 1; ctx.fillStyle = o.fill; ctx.fill(); ctx.globalAlpha = 1; }
+  if (o.tex) { ctx.clip(); const bb = bbox(Q, 6); o.tex.forEach((t, i) => texture(bb, { key: key + ':' + i, ...t })); }
+  ctx.restore();
+  if (o.line !== false) {
+    ctx.strokeStyle = o.line || C.ink; ctx.lineWidth = o.w ?? 3; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    ctx.globalAlpha = o.lineAl ?? 1; trace(Q, true); ctx.stroke(); ctx.globalAlpha = 1;
+  }
+  return Q;
+}
+function texture(bb, t) {
+  if (t.k === 'hatch') hatch(bb, t);
+  else if (t.k === 'cross') { hatch(bb, t); hatch(bb, { ...t, a: (t.a ?? 0.7) + (t.a2 ?? 1.25), key: t.key + 'x' }); }
+  else if (t.k === 'pencil') pencil(bb, t);
+  else if (t.k === 'stipple') stipple(bb, t);
+  else if (t.k === 'fn') t.fn(bb);
+}
+// parallel hatching inside current clip. t: a angle, gap, c, w, al, dash [min,max], skip, dens(x,y)
+function hatch(bb, t) {
+  const a = t.a ?? 0.7, gap = t.gap ?? 7, S = RNG('hs', t.key), R = RNG('hj', t.key, B);
+  const cx = (bb.x0 + bb.x1) / 2, cy = (bb.y0 + bb.y1) / 2, rad = Math.hypot(bb.x1 - bb.x0, bb.y1 - bb.y0) / 2 + 4;
+  const ca = Math.cos(a), sa = Math.sin(a), dens = t.dens, jit = t.jit ?? 0.9, dash = t.dash;
+  ctx.beginPath();
+  for (let d = -rad; d <= rad; d += gap) {
+    const dd = d + S.n(gap * 0.3);
+    let u = -rad + (dash ? S.r(0, dash[1]) : 0);
+    while (u < rad) {
+      const len = dash ? S.r(dash[0], dash[1]) : rad * 2, u2 = Math.min(rad, u + len);
+      const mu = (u + u2) / 2, mx = cx + ca * mu - sa * dd, my = cy + sa * mu + ca * dd, p = S.f();
+      if (!dens || p < dens(mx, my)) {
+        const e1 = R.n(jit), e2 = R.n(jit);
+        ctx.moveTo(cx + ca * u - sa * (dd + e1), cy + sa * u + ca * (dd + e1));
+        ctx.lineTo(cx + ca * u2 - sa * (dd + e2), cy + sa * u2 + ca * (dd + e2));
+      }
+      u = u2 + (dash ? S.r(t.skip?.[0] ?? 3, t.skip?.[1] ?? 12) : 0);
+    }
+  }
+  ctx.strokeStyle = t.c || C.ink; ctx.lineWidth = t.w ?? 1.2; ctx.globalAlpha = t.al ?? 0.5; ctx.lineCap = 'round';
+  ctx.stroke(); ctx.globalAlpha = 1;
+}
+// colored-pencil diagonal strokes
+function pencil(bb, t) {
+  const S = RNG('ps', t.key), R = RNG('pj', t.key, B);
+  const area = (bb.x1 - bb.x0) * (bb.y1 - bb.y0);
+  const n = Math.min(t.max ?? 6000, t.n ?? Math.floor(area / (t.per ?? 700)));
+  const a = t.a ?? -0.95, L = t.len ?? 14, dens = t.dens;
+  ctx.beginPath();
+  for (let i = 0; i < n; i++) {
+    const x = S.r(bb.x0, bb.x1), y = S.r(bb.y0, bb.y1), p = S.f(), aa = a + S.n(0.22), l = L * (0.5 + S.f() * 0.7);
+    if (dens && p > dens(x, y)) continue;
+    const jx = R.n(1.1), jy = R.n(1.1), dx = Math.cos(aa) * l / 2, dy = Math.sin(aa) * l / 2;
+    ctx.moveTo(x - dx + jx, y - dy + jy); ctx.lineTo(x + dx + jx, y + dy + jy);
+  }
+  ctx.strokeStyle = t.c; ctx.lineWidth = t.w ?? 1.4; ctx.globalAlpha = t.al ?? 0.45; ctx.lineCap = 'round';
+  ctx.stroke(); ctx.globalAlpha = 1;
+}
+// square stipple dots
+function stipple(bb, t) {
+  const S = RNG('ss', t.key), R = RNG('sj', t.key, B);
+  const n = t.n ?? 400, sz = t.s ?? 2.2, dens = t.dens, jit = t.jit ?? 0.8;
+  ctx.fillStyle = t.c; ctx.globalAlpha = t.al ?? 1; ctx.beginPath();
+  for (let i = 0; i < n; i++) {
+    const x = S.r(bb.x0, bb.x1), y = S.r(bb.y0, bb.y1), p = S.f(), s = sz * (0.6 + S.f() * 0.8);
+    if (dens && p > dens(x, y)) continue;
+    ctx.rect(x + R.n(jit), y + R.n(jit), s, s);
+  }
+  ctx.fill(); ctx.globalAlpha = 1;
+}
+// screen-space paper grain, reseeded with the boil
+function grain(o = {}) {
+  ctx.save(); screen();
+  const R = RNG('grain', B), n = o.n ?? 2600;
+  ctx.fillStyle = o.dark || 'rgba(70,45,25,0.13)'; ctx.beginPath();
+  for (let i = 0; i < n; i++) ctx.rect(R.r(0, W), R.r(0, H), 1.7, 1.7);
+  ctx.fill();
+  ctx.fillStyle = o.light || 'rgba(255,250,236,0.20)'; ctx.beginPath();
+  for (let i = 0; i < n; i++) ctx.rect(R.r(0, W), R.r(0, H), 1.9, 1.9);
+  ctx.fill();
+  // a few paper fibres
+  ctx.strokeStyle = 'rgba(80,55,35,0.07)'; ctx.lineWidth = 1; ctx.beginPath();
+  for (let i = 0; i < 90; i++) { const x = R.r(0, W), y = R.r(0, H), a = R.r(0, TAU), l = R.r(6, 22); ctx.moveTo(x, y); ctx.lineTo(x + Math.cos(a) * l, y + Math.sin(a) * l); }
+  ctx.stroke();
+  ctx.restore();
+}
+
+// ---------------------------------------------------------------------
+//  construction lines, rulers, sparks, bursts, rainbow contours
+// ---------------------------------------------------------------------
+function construct(cx, cy, r, o = {}) {
+  const R = RNG('con', o.key ?? 'c', B);
+  ctx.save();
+  ctx.strokeStyle = o.c || C.lav; ctx.lineWidth = o.w ?? 1.4; ctx.globalAlpha = o.al ?? 1; ctx.lineCap = 'round';
+  const a0 = (o.a0 ?? R.r(0, TAU)), sw = o.sweep ?? 1.05;
+  ctx.beginPath(); ctx.ellipse(cx + R.n(1.2), cy + R.n(1.2), r, r * (o.sq ?? 1), o.rot ?? 0, a0, a0 + TAU * sw); ctx.stroke();
+  if (o.cross) { const k = o.cross; ctx.beginPath(); ctx.moveTo(cx - k, cy); ctx.lineTo(cx + k, cy); ctx.moveTo(cx, cy - k); ctx.lineTo(cx, cy + k); ctx.stroke(); }
+  if (o.ticks) {
+    ctx.beginPath();
+    for (let i = 0; i < o.ticks; i++) { const a = i / o.ticks * TAU + (o.rot ?? 0); ctx.moveTo(cx + Math.cos(a) * (r - 6), cy + Math.sin(a) * (r - 6)); ctx.lineTo(cx + Math.cos(a) * (r + 6), cy + Math.sin(a) * (r + 6)); }
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+function cline(x1, y1, x2, y2, o = {}) {
+  const R = RNG('cl', o.key ?? 'l', B);
+  ctx.save(); ctx.strokeStyle = o.c || C.lavS; ctx.lineWidth = o.w ?? 1.2; ctx.globalAlpha = o.al ?? 1;
+  ctx.beginPath(); ctx.moveTo(x1 + R.n(1), y1 + R.n(1)); ctx.lineTo(x2 + R.n(1), y2 + R.n(1)); ctx.stroke(); ctx.restore();
+}
+function ruler(x1, y1, x2, y2, o = {}) {
+  const R = RNG('rul', o.key ?? 'r', B);
+  const L = Math.hypot(x2 - x1, y2 - y1) || 1, ux = (x2 - x1) / L, uy = (y2 - y1) / L, nx = -uy, ny = ux;
+  const frac = clamp(o.frac ?? 1), step = o.step ?? 16, tk = o.tick ?? 7, side = o.side ?? 1;
+  ctx.save(); ctx.strokeStyle = o.c || C.periD; ctx.lineWidth = o.w ?? 1.5; ctx.globalAlpha = o.al ?? 1; ctx.lineCap = 'round';
+  const jx = R.n(0.8), jy = R.n(0.8);
+  ctx.beginPath(); ctx.moveTo(x1 + jx, y1 + jy); ctx.lineTo(x1 + ux * L * frac + jx, y1 + uy * L * frac + jy);
+  const n = Math.floor(L * frac / step);
+  for (let i = 0; i <= n; i++) {
+    const k = i % 5 === 0 ? tk * 1.9 : tk, px = x1 + ux * i * step + jx, py = y1 + uy * i * step + jy;
+    ctx.moveTo(px, py); ctx.lineTo(px + nx * k * side, py + ny * k * side);
+  }
+  ctx.moveTo(x1 - nx * tk * 1.6, y1 - ny * tk * 1.6); ctx.lineTo(x1 + nx * tk * 2.2, y1 + ny * tk * 2.2);
+  if (frac >= 1) { ctx.moveTo(x2 - nx * tk * 1.6, y2 - ny * tk * 1.6); ctx.lineTo(x2 + nx * tk * 2.2, y2 + ny * tk * 2.2); }
+  ctx.stroke(); ctx.restore();
+}
+// glowing radial spark (dark world)
+function sparkBurst(cx, cy, r, o = {}) {
+  if (r <= 0.5) return;
+  const R = RNG('spk', o.key ?? 's', B), n = o.n ?? 18, rays = [];
+  for (let i = 0; i < n; i++) { const a = i / n * TAU + R.n(0.14); rays.push([a, r * R.r(0.28, 0.5), r * R.r(0.72, 1.15)]); }
+  const path = () => { ctx.beginPath(); for (const [a, r0, r1] of rays) { ctx.moveTo(cx + Math.cos(a) * r0, cy + Math.sin(a) * r0); ctx.lineTo(cx + Math.cos(a) * r1, cy + Math.sin(a) * r1); } };
+  ctx.save(); ctx.lineCap = 'round';
+  path(); ctx.strokeStyle = o.glow || 'rgba(82,214,196,0.22)'; ctx.lineWidth = (o.w ?? 2.4) * 3.4; ctx.stroke();
+  path(); ctx.strokeStyle = o.c || '#8ff5e6'; ctx.lineWidth = o.w ?? 2.4; ctx.stroke();
+  if (o.core !== false) {
+    const cr = Math.max(2.5, r * (o.coreR ?? 0.15));
+    ctx.beginPath(); ctx.arc(cx, cy, cr * 2.2, 0, TAU); ctx.fillStyle = 'rgba(190,215,255,0.16)'; ctx.fill();
+    ctx.beginPath(); ctx.arc(cx, cy, cr, 0, TAU); ctx.fillStyle = C.white; ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = C.periD; ctx.stroke();
+  }
+  if (o.specks) { ctx.fillStyle = o.c || '#8ff5e6'; for (let i = 0; i < o.specks; i++) { const a = R.r(0, TAU), d = r * R.r(0.2, 1.4); ctx.fillRect(cx + Math.cos(a) * d, cy + Math.sin(a) * d, 2, 2); } }
+  ctx.restore();
+}
+// radial tick burst (warm world impact)
+function burst(cx, cy, r0, r1, o = {}) {
+  const R = RNG('bur', o.key ?? 'b', B), n = o.n ?? 12;
+  ctx.save(); ctx.strokeStyle = o.c || C.ink; ctx.lineWidth = o.w ?? 3; ctx.lineCap = 'round'; ctx.globalAlpha = o.al ?? 1; ctx.beginPath();
+  for (let i = 0; i < n; i++) {
+    const a = i / n * TAU + R.n(0.15) + (o.rot ?? 0), a1 = r0 * R.r(0.85, 1.1), b1 = r1 * R.r(0.75, 1.15);
+    ctx.moveTo(cx + Math.cos(a) * a1, cy + Math.sin(a) * a1); ctx.lineTo(cx + Math.cos(a) * b1, cy + Math.sin(a) * b1);
+  }
+  ctx.stroke(); ctx.restore();
+}
+function star4(x, y, s, c) {
+  ctx.save(); ctx.fillStyle = c; ctx.beginPath();
+  ctx.moveTo(x, y - s); ctx.quadraticCurveTo(x, y, x + s, y); ctx.quadraticCurveTo(x, y, x, y + s);
+  ctx.quadraticCurveTo(x, y, x - s, y); ctx.quadraticCurveTo(x, y, x, y - s); ctx.fill(); ctx.restore();
+}
+// rainbow contour strokes around a moving part
+function rainbow(P, o = {}) {
+  const bb = bbox(P), cx = o.cx ?? (bb.x0 + bb.x1) / 2, cy = o.cy ?? (bb.y0 + bb.y1) / 2, n = o.n ?? 3;
+  for (let i = 0; i < n; i++) {
+    const S = RNG('rb', o.key, i, B), sc = 1 + (o.spread ?? 0.07) * (i + 1) + S.n(0.02);
+    const Q = P.map(([x, y]) => [cx + (x - cx) * sc + S.n(o.drift ?? 3), cy + (y - cy) * sc + S.n(o.drift ?? 3)]);
+    ink(Q, { closed: o.closed ?? true, color: RAINBOW[(i + (o.off ?? 0)) % RAINBOW.length], w: o.w ?? 1.6, amt: o.amt ?? 3.5, key: o.key + 'rb' + i, alpha: o.al ?? 0.85 });
+  }
+}
+// hex cell grid inside current clip
+function hexGrid(bb, size, o = {}) {
+  const h = size * Math.sqrt(3), R = RNG('hex', o.key ?? 'h', B);
+  ctx.save(); ctx.strokeStyle = o.c || C.periS; ctx.lineWidth = o.w ?? 1.2; ctx.globalAlpha = o.al ?? 1; ctx.beginPath();
+  let row = 0;
+  for (let y = bb.y0 - h; y < bb.y1 + h; y += h * 0.5, row++) {
+    for (let x = bb.x0 - size * 3 + (row % 2) * size * 1.5; x < bb.x1 + size * 3; x += size * 3) {
+      const jx = R.n(0.6), jy = R.n(0.6);
+      for (let k = 0; k < 6; k++) {
+        const a = k / 6 * TAU, b = (k + 1) / 6 * TAU;
+        if (k === 0) ctx.moveTo(x + Math.cos(a) * size + jx, y + Math.sin(a) * size + jy);
+        ctx.lineTo(x + Math.cos(b) * size + jx, y + Math.sin(b) * size + jy);
+      }
+    }
+  }
+  ctx.stroke(); ctx.restore();
+}
+
+// ---------------------------------------------------------------------
+//  iris, camera, text
+// ---------------------------------------------------------------------
+// ragged hatched rim; dir=+1 strokes reach outward, -1 inward
+function irisRim(cx, cy, r, dir, o = {}) {
+  const R = RNG('irisR', o.key ?? 'i', B), n = Math.min(1600, Math.floor(r * TAU / 2.0));
+  ctx.strokeStyle = o.c || '#0b0c17'; ctx.lineWidth = o.w ?? 1.6; ctx.lineCap = 'round'; ctx.beginPath();
+  for (let i = 0; i < n; i++) {
+    const a = R.r(0, TAU), L = R.r(3, 11) + (R.f() < 0.28 ? R.r(10, 34) : 0), sl = R.n(0.4);
+    const r0 = r - dir * R.r(2, 6), r1 = r + dir * L, ax = Math.cos(a), ay = Math.sin(a);
+    ctx.moveTo(cx + ax * r0, cy + ay * r0); ctx.lineTo(cx + ax * r1 - ay * L * sl, cy + ay * r1 + ax * L * sl);
+  }
+  ctx.stroke();
+}
+// iris into a black hole (screen space)
+function irisHole(cx, cy, r, o = {}) {
+  if (r <= 0.5) return;
+  ctx.save(); screen();
+  const col = o.c || '#0b0c17';
+  const P = wobble(ellipsePts(cx, cy, r, r, 0, 140), true, Math.min(4, 0.6 + r * 0.02), 'ih' + (o.key ?? ''), 9);
+  trace(P, true); ctx.fillStyle = col; ctx.fill();
+  irisRim(cx, cy, r, +1, { c: col, key: o.key });
+  if (o.inner) { ctx.save(); trace(P, true); ctx.clip(); o.inner(r); ctx.restore(); }
+  ctx.restore();
+}
+// world point (cx,cy) lands at screen centre
+function camera(cx, cy, zoom = 1, rot = 0, sx = 0, sy = 0) {
+  const c = Math.cos(rot) * zoom, s = Math.sin(rot) * zoom;
+  ctx.setTransform(c, s, -s, c, W / 2 + sx - (c * cx - s * cy), H / 2 + sy - (s * cx + c * cy));
+}
+function screen() { ctx.setTransform(1, 0, 0, 1, 0, 0); }
+function toScreen(x, y) { const p = ctx.getTransform().transformPoint(new DOMPoint(x, y)); return [p.x, p.y]; }
+function fillAll(color) { ctx.save(); screen(); ctx.fillStyle = color; ctx.fillRect(0, 0, W, H); ctx.restore(); }
+
+// monospace text with per-glyph hand jitter
+function monoText(str, x, y, size, color, o = {}) {
+  ctx.save();
+  ctx.font = `${o.weight ?? 700} ${size}px ${MONO}`; ctx.fillStyle = color; ctx.textBaseline = 'alphabetic';
+  const cw = ctx.measureText('M').width, R = RNG('txt', o.key ?? str, B), jit = o.jit ?? 0.9;
+  const n = Math.min(o.count ?? str.length, str.length);
+  ctx.globalAlpha = o.al ?? 1;
+  for (let i = 0; i < n; i++) {
+    const ch = str[i]; if (ch === ' ') continue;
+    ctx.save(); ctx.translate(x + i * cw + R.n(jit), y + R.n(jit)); ctx.rotate(R.n(0.045)); ctx.fillText(ch, 0, 0); ctx.restore();
+  }
+  ctx.restore();
+  return cw;
+}
+function monoW(size) { ctx.save(); ctx.font = `700 ${size}px ${MONO}`; const w = ctx.measureText('M').width; ctx.restore(); return w; }
+
+// single-stroke hand lettering (x-height 0.5, ascender 1.0, baseline 0)
+const GLYPHS = {
+  ' ': { w: 0.26, s: [] },
+  c: { w: 0.5, s: [arcPts(0.26, -0.25, 0.25, -35 * DEG, -322 * DEG, 22)] },
+  o: { w: 0.52, s: [arcPts(0.26, -0.25, 0.25, -95 * DEG, -460 * DEG, 30)] },
+  a: { w: 0.54, s: [[...arcPts(0.25, -0.25, 0.235, -28 * DEG, -335 * DEG, 24)], [[0.49, -0.5], [0.49, -0.05], [0.55, 0.0]]] },
+  d: { w: 0.56, s: [[...arcPts(0.25, -0.25, 0.235, -28 * DEG, -335 * DEG, 24)], [[0.49, -1.0], [0.49, -0.05], [0.56, 0.0]]] },
+  l: { w: 0.24, s: [[[0.08, -1.0], [0.08, -0.1], [0.12, -0.01], [0.2, 0.0]]] },
+  u: { w: 0.54, s: [[[0.03, -0.5], [0.03, -0.22], ...arcPts(0.255, -0.22, 0.225, 180 * DEG, 0, 14), [0.48, -0.5]], [[0.48, -0.5], [0.48, -0.04], [0.54, 0.0]]] },
+  e: { w: 0.52, s: [[[0.03, -0.26], [0.5, -0.26], ...arcPts(0.265, -0.25, 0.245, -4 * DEG, -318 * DEG, 26)]] },
+};
+function handwrite(str, x, y, size, o = {}) {
+  const strokes = []; let pen = 0;
+  for (const ch of str) {
+    const g = GLYPHS[ch] || GLYPHS[' '];
+    for (const s of g.s) strokes.push(s.map(([u, v]) => [x + (pen + u) * size, y + v * size]));
+    pen += g.w + 0.1;
+  }
+  const lens = strokes.map(pathLen), total = lens.reduce((a, b) => a + b, 0);
+  let budget = clamp(o.frac ?? 1) * total;
+  for (let i = 0; i < strokes.length && budget > 0; i++) {
+    const f = Math.min(1, budget / lens[i]); budget -= lens[i];
+    if (o.glow) ink(strokes[i], { color: o.glow, w: (o.w ?? size * 0.06) * 3, amt: o.amt ?? 1.0, key: 'hw' + i + str, frac: f });
+    ink(strokes[i], { color: o.c, w: o.w ?? size * 0.06, amt: o.amt ?? 1.0, key: 'hw' + i + str, frac: f });
+  }
+  return pen * size;
+}
+
+// =====================================================================
+// ---- small props and helpers
+function drawPencil(tx, ty, ang, len, k = 1, key = 'pencil') {
+  ctx.save(); ctx.translate(tx, ty); ctx.rotate(ang); ctx.scale(k, k);
+  paint([[46, -16], [len, -16], [len, 16], [46, 16]], {
+    fill: C.yellow, key: key + 'b', w: 3,
+    tex: [{ k: 'hatch', a: 0.05, gap: 5, c: '#a8741d', al: 0.55, w: 1.1, dash: [20, 90], dens: (x, y) => (y > 5 ? 1 : 0.08) }, { k: 'pencil', c: '#fff1b8', al: 0.5, a: 0.05, len: 30, per: 120, dens: (x, y) => (y < -4 ? 1 : 0.1) }],
+  });
+  ink([[50, -5], [len, -5]], { w: 1.6, key: key + 'f1', alpha: 0.7 });
+  ink([[50, 6], [len, 6]], { w: 1.6, key: key + 'f2', alpha: 0.7 });
+  paint([[1, 0], [46, -15], [46, 15]], { fill: '#efcf9f', key: key + 'c', w: 2.6, tex: [{ k: 'hatch', a: 1.2, gap: 4, al: 0.35, dens: (x, y) => (y > 2 ? 1 : 0.1) }] });
+  paint([[0, 0], [15, -5], [15, 5]], { fill: '#3b3438', key: key + 't', w: 2 });
+  paint([[len, -17], [len + 26, -17], [len + 26, 17], [len, 17]], { fill: '#bcb7ab', key: key + 'fe', w: 2.6, tex: [{ k: 'hatch', a: Math.PI / 2, gap: 5, al: 0.5 }] });
+  paint(rrectPts(len + 24, -16, 34, 32, 10), { fill: '#e58f8c', key: key + 'e', w: 2.6, tex: [{ k: 'pencil', c: C.roseD, al: 0.5, per: 60 }] });
+  ctx.restore();
+}
+// smoothstep of x between a and b (NOT manim's `smooth` rate function — the math style calls that smoothM)
+const smooth = (a, b, x) => { const u = clamp((x - a) / (b - a)); return u * u * (3 - 2 * u); };
+const mod = (a, n) => ((a % n) + n) % n;
+function asterisk(x, y, r0, r1, n, rot, color, w) {
+  ctx.save(); ctx.strokeStyle = color; ctx.lineWidth = w; ctx.lineCap = 'round'; ctx.beginPath();
+  for (let i = 0; i < n; i++) { const a = i / n * TAU + rot; ctx.moveTo(x + Math.cos(a) * r0, y + Math.sin(a) * r0); ctx.lineTo(x + Math.cos(a) * r1, y + Math.sin(a) * r1); }
+  ctx.stroke(); ctx.restore();
+}
+
+// ---------------------------------------------------------------------
+//  time (set by the renderer): TT = absolute time on the motion step (on 2s unless STYLE.ones);
+//  E0 = the current era's start; DEFER = overlay queue (captions drawn after the camera); SPARK_AT = the hero's screen spot
+//  ev(t, d) = 0..1 progress of an event at t over d seconds; popS(t) = back-eased pop-in scale
+// ---------------------------------------------------------------------
+let TT = 0, E0 = 0, DEFER = null, SPARK_AT = null;
+const ev = (t, d = 0.25) => clamp((TT - t) / d);
+const popS = (t) => (TT < t ? 0 : EZ.back(clamp((TT - t) / 0.25)));
+
+// ---------------------------------------------------------------------
+//  springs: closed-form, so any frame can be drawn on its own (deterministic, no state)
+//  springEase(t, k, d)       0 -> 1 over time t >= 0 (stiffness k, damping d): accelerates, overshoots a hair, settles
+//  springMove(t0, a, b, p)   a value moving from a to b, starting at time t0 (p = a SPRING preset)
+//  springTrack(keys, p)      a value with many targets: keys = [[t, value], ...] sorted by t. One spring per change,
+//                            added up, so a target change mid-move stays continuous (cursors, widths, positions)
+// ---------------------------------------------------------------------
+const SPRING = {
+  snappy: { k: 320, d: 30 },    // UI: buttons, toggles, leading edges
+  smooth: { k: 170, d: 26 },    // cards, containers, the camera
+  heavy: { k: 90, d: 19 },      // big type, logos, large objects
+  playful: { k: 260, d: 14 },   // mascots, stickers: visible overshoot
+};
+function springEase(t, k = 170, d = 26) {
+  if (t <= 0) return 0;
+  const w0 = Math.sqrt(k), z = d / (2 * w0);
+  if (z < 1) { const wd = w0 * Math.sqrt(1 - z * z); return 1 - Math.exp(-z * w0 * t) * (Math.cos(wd * t) + (z * w0 / wd) * Math.sin(wd * t)); }
+  return 1 - Math.exp(-w0 * t) * (1 + w0 * t);
+}
+const springMove = (t0, a, b, p = SPRING.smooth) => a + (b - a) * springEase(TT - t0, p.k, p.d);
+function springTrack(keys, p = SPRING.smooth) {
+  let v = keys[0][1];
+  for (let i = 1; i < keys.length; i++) v += (keys[i][1] - keys[i - 1][1]) * springEase(TT - keys[i][0], p.k, p.d);
+  return v;
+}
+
+// ---------------------------------------------------------------------
+//  layout for several formats (9:16, 1:1, 16:9, 4:5 from one piece): place things by fractions of the frame,
+//  size them by UNIT (1 at 1080 on the short side). LX(0.5), LY(0.62), 120 * UNIT. PORTRAIT / WIDE pick layouts.
+// ---------------------------------------------------------------------
+const LX = (f) => f * W, LY = (f) => f * H, UNIT = Math.min(W, H) / 1080, PORTRAIT = H > W * 1.2, WIDE = W > H * 1.2;
+
+// ---------------------------------------------------------------------
+//  the user's own assets (screenshots, logos): files in <piece>/assets/ that tools/build.mjs embeds in the page.
+//  asset('logo.png') -> the Image (or null); drawAsset(name, x, y, w, h, { fit: 'contain'|'cover', r, alpha })
+//  Real product UI only: never redraw a product screen from imagination when a screenshot exists.
+// ---------------------------------------------------------------------
+const asset = (name) => (typeof ASSETS !== 'undefined' && ASSETS[name] && ASSETS[name].complete ? ASSETS[name] : null);
+function drawAsset(name, x, y, w, h, o = {}) {
+  const img = asset(name); if (!img) return false;
+  const iw = img.naturalWidth || img.width, ih = img.naturalHeight || img.height;
+  const s = (o.fit === 'cover' ? Math.max : Math.min)(w / iw, h / ih), dw = iw * s, dh = ih * s;
+  ctx.save(); ctx.globalAlpha *= o.alpha ?? 1;
+  if (o.r || o.fit === 'cover') { ctx.beginPath(); ctx.roundRect(x, y, w, h, o.r || 0); ctx.clip(); }
+  ctx.drawImage(img, x + (w - dw) / 2, y + (h - dh) / 2, dw, dh);
+  ctx.restore(); return true;
+}
+// =====================================================================
+//  styles/bitpix/kit.js — a dark data-explainer look: near-black navy ground, crisp vector shapes with thin
+//  dark seams, three neon inks that each mean one thing (yellow = the original, mint = the new, magenta = the
+//  question), glowing dots and particles, small mono data labels and a large serif voice for captions.
+//  Built on kit/core.js. Motion on 1s with springs. Helpers are prefixed bp.
+// =====================================================================
+const BP = {
+  ground: '#0b1014', panel: '#131a24', line: '#1b2835', grid: '#121a22', dim: '#5b646c', soft: '#8b949c', text: '#e4e3dc',
+  mint: '#1fffa9', mintD: '#008f5c', yellow: '#ffd426', yellowD: '#8a7110', magenta: '#e50673', magentaD: '#7a0a3e',
+  sail: 'rgba(160,170,184,0.22)', sailLine: 'rgba(190,198,210,0.55)', azure: '#5797e7',
+  serif: 'Georgia, Cambria, "Times New Roman", "DejaVu Serif", serif',
+  mono: 'Consolas, "SF Mono", Menlo, "Cascadia Mono", "DejaVu Sans Mono", monospace',
+};
+const bpHex = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+const bpMix = (a, b, u) => { const x = bpHex(a), y = bpHex(b); return '#' + x.map((v, i) => Math.round(lerp(v, y[i], clamp(u))).toString(16).padStart(2, '0')).join(''); };
+const bpA = (h, a) => { const [r, g, b] = bpHex(h); return `rgba(${r},${g},${b},${a})`; };
+
+// ---- text: serif voice (captions, questions) and mono data labels. o.frac types it on letter by letter.
+function bpText(str, x, y, size, color, o = {}) {
+  ctx.save();
+  ctx.font = `${o.italic ? 'italic ' : ''}${o.weight ?? 400} ${size}px ${o.font ?? BP.serif}`;
+  ctx.textAlign = o.align ?? 'center'; ctx.textBaseline = 'alphabetic';
+  if (o.spacing) ctx.letterSpacing = o.spacing + 'px';
+  ctx.globalAlpha = clamp(o.alpha ?? 1);
+  const n = Math.round(str.length * clamp(o.frac ?? 1)), s = str.slice(0, n);
+  const w = ctx.measureText(str).width;
+  if (o.glow) { ctx.shadowColor = color; ctx.shadowBlur = o.glow; }
+  ctx.fillStyle = color;
+  if (o.align === 'center' || o.align == null) { ctx.textAlign = 'left'; ctx.fillText(s, x - w / 2, y); }
+  else ctx.fillText(s, x, y);
+  ctx.restore();
+  return w;
+}
+// a caption block: serif, centred, lines fade up in turn; alpha a (0..1) for the whole block
+function bpLines(lines, x, y, size, color, a = 1, o = {}) {
+  lines.forEach((ln, i) => {
+    const s = typeof ln === 'string' ? { t: ln } : ln;
+    bpText(s.t, x, y + i * size * (o.lead ?? 1.22), s.size ?? size, s.c ?? color, { alpha: a * (s.a ?? 1), italic: s.i ?? o.italic, font: s.font ?? o.font, weight: s.w ?? o.weight, spacing: o.spacing, align: o.align });
+  });
+}
+// a pill label (reference: thin rounded outline, mono text)
+function bpPill(str, x, y, size, color, a = 1) {
+  ctx.save(); ctx.globalAlpha = clamp(a); ctx.font = `400 ${size}px ${BP.mono}`;
+  const w = ctx.measureText(str).width + size * 1.4, h = size * 1.9;
+  trace(rrectPts(x - w / 2, y - h / 2, w, h, h * 0.35, 6), true);
+  ctx.fillStyle = bpA(BP.ground, 0.85); ctx.fill(); ctx.lineWidth = 3.5; ctx.strokeStyle = color; ctx.stroke();
+  ctx.fillStyle = color; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(str, x, y + 1);
+  ctx.restore();
+}
+
+// ---- the ground: flat navy, a faint grid that drifts with the camera, a soft vignette
+function bpGround(o = {}) {
+  fillAll(BP.ground);
+  if (o.grid !== false) {
+    ctx.save(); ctx.strokeStyle = BP.grid; ctx.lineWidth = 2;
+    const g = o.gap ?? 120;
+    for (let x = -g * 4; x < W + g * 4; x += g) { ctx.beginPath(); ctx.moveTo(x, -H); ctx.lineTo(x, H * 2); ctx.stroke(); }
+    for (let y = -g * 6; y < H + g * 6; y += g) { ctx.beginPath(); ctx.moveTo(-W, y); ctx.lineTo(W * 2, y); ctx.stroke(); }
+    ctx.restore();
+  }
+}
+function bpVignette() {
+  ctx.save(); screen();
+  const g = ctx.createRadialGradient(W / 2, H * 0.45, H * 0.25, W / 2, H * 0.45, H * 0.75);
+  g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(2,4,6,0.55)');
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); ctx.restore();
+}
+function bpGlow(x, y, r, color, a = 0.5) {
+  ctx.save(); const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+  g.addColorStop(0, bpA(color, a)); g.addColorStop(1, bpA(color, 0));
+  ctx.fillStyle = g; ctx.fillRect(x - r, y - r, r * 2, r * 2); ctx.restore();
+}
+function bpDot(x, y, r, c, a = 1) { ctx.save(); ctx.globalAlpha = clamp(a); ctx.fillStyle = c; ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.fill(); ctx.restore(); }
+
+// ---- water: stacked thin wave lines that slide; o.y = surface, o.x0/x1 extent
+function bpWater(y, o = {}) {
+  const x0 = o.x0 ?? -200, x1 = o.x1 ?? W + 200, n = o.n ?? 5, a = o.a ?? 1;
+  ctx.save(); ctx.lineCap = 'round';
+  for (let k = 0; k < n; k++) {
+    const yy = y + k * (o.gap ?? 26), sp = (k % 2 ? -1 : 1) * (18 + k * 6), amp = 5 + k * 1.5, wl = 140 + k * 30;
+    ctx.beginPath();
+    for (let x = x0; x <= x1; x += 10) { const v = yy + Math.sin((x + TT * sp) / wl * TAU) * amp; x === x0 ? ctx.moveTo(x, v) : ctx.lineTo(x, v); }
+    ctx.strokeStyle = bpA(o.c ?? BP.line, a * (1 - k / (n + 1)) * (o.al ?? 0.9)); ctx.lineWidth = o.w ?? 3; ctx.stroke();
+  }
+  ctx.restore();
+}
+
+// ---- the ship: a hull of 38 planks in 5 rows, prow and stern curls, a mast, a yard, a sail, rigging and oars.
+//  Local units: the hull spans x in [-1, 1]; s = half-width in px. Returns nothing; bpPlanks gives the plank outlines.
+const BP_ROWS = [6, 6, 6, 5, 5, 5, 5];   // 38 planks: long strips, 7 rows
+const bpTop = (x) => -0.04 - 0.3 * Math.pow(Math.abs(x), 5);
+const bpDepth = (x) => 0.3 * Math.pow(Math.max(0, 1 - x * x), 0.6);
+function bpPlankLocal() {   // static: the 38 plank outlines in local units, with row/col and centre
+  if (bpPlankLocal.c) return bpPlankLocal.c;
+  const out = [];
+  BP_ROWS.forEach((nc, r) => {
+    const off = (r % 2) * 0.5 / nc, xa = -0.985, xb = 0.985;
+    for (let c = 0; c < nc; c++) {
+      const u0 = clamp(c / nc + (c ? off : 0)), u1 = clamp((c + 1) / nc + (c < nc - 1 ? off : 0));
+      const x0 = lerp(xa, xb, u0), x1 = lerp(xa, xb, u1), P = [];
+      for (let i = 0; i <= 8; i++) { const x = lerp(x0, x1, i / 8); P.push([x, bpTop(x) + bpDepth(x) * r / BP_ROWS.length]); }
+      for (let i = 8; i >= 0; i--) { const x = lerp(x0, x1, i / 8); P.push([x, bpTop(x) + bpDepth(x) * (r + 1) / BP_ROWS.length]); }
+      const xm = (x0 + x1) / 2;
+      out.push({ r, c, P, cx: xm, cy: bpTop(xm) + bpDepth(xm) * (r + 0.5) / BP_ROWS.length });
+    }
+  });
+  return (bpPlankLocal.c = out);
+}
+// world-space plank outlines for a ship at (x, y) with half-width s
+const bpPlanks = (x, y, s) => bpPlankLocal().map((p) => ({ ...p, P: p.P.map(([u, v]) => [x + u * s, y + v * s]), cx: x + p.cx * s, cy: y + p.cy * s }));
+
+// o.plank(i) -> { c, dx, dy, rot, a, glow } per plank (default all o.c); o.c the ship's ink; o.a alpha; o.rig ink for mast
+function bpShip(x, y, s, o = {}) {
+  const ink = o.c ?? BP.yellow, a = o.a ?? 1, rig = o.rig ?? ink, sw = Math.max(1.5, s * 0.008), bob = o.still ? 0 : Math.sin(TT * 1.3 + (o.phase ?? 0)) * s * 0.012;
+  const roll = o.still ? 0 : Math.sin(TT * 0.9 + (o.phase ?? 0)) * 0.012;
+  ctx.save(); ctx.globalAlpha = clamp(a); ctx.translate(x, y + bob); ctx.rotate(roll); ctx.scale(s, s);
+  const L = (w) => (ctx.lineWidth = w / s), rigA = clamp(o.rigA ?? 1);
+  ctx.globalAlpha = clamp(a * rigA);
+  // oars (under the hull)
+  if (o.oars !== false) {
+    ctx.strokeStyle = bpA(rig, 0.85); L(sw * 1.3); ctx.lineCap = 'round';
+    for (let i = 0; i < 9; i++) { const xx = -0.5 + i * 0.12, sweep = Math.sin(TT * 2.2 + i * 0.25) * 0.03; ctx.beginPath(); ctx.moveTo(xx, 0.14); ctx.lineTo(xx - 0.06 + sweep, 0.42); ctx.stroke(); }
+  }
+  // sail (behind mast): translucent grey, billowing
+  if (o.sail !== false) {
+    const bil = 0.06 + Math.sin(TT * 1.1 + (o.phase ?? 0)) * 0.015;
+    ctx.beginPath(); ctx.moveTo(-0.34, -0.96); ctx.quadraticCurveTo(0.02, -0.92 + bil, 0.38, -0.96);
+    ctx.quadraticCurveTo(0.5 + bil, -0.62, 0.28, -0.3); ctx.quadraticCurveTo(-0.02, -0.36 - bil, -0.3, -0.3);
+    ctx.quadraticCurveTo(-0.38 + bil, -0.62, -0.34, -0.96); ctx.closePath();
+    ctx.fillStyle = BP.sail; ctx.fill(); ctx.strokeStyle = BP.sailLine; L(sw * 0.7); ctx.stroke();
+  }
+  // rigging
+  ctx.strokeStyle = bpA('#9aa4ae', 0.45); L(sw * 0.6);
+  for (const [ex, ey] of [[-0.98, -0.42], [0.98, -0.42]]) { ctx.beginPath(); ctx.moveTo(0, -1.06); ctx.lineTo(ex, ey); ctx.stroke(); }
+  // mast and yard
+  ctx.strokeStyle = o.mastC ?? rig; ctx.lineCap = 'butt'; L(sw * 3.2);
+  ctx.beginPath(); ctx.moveTo(0, bpTop(0) + 0.05); ctx.lineTo(0, -1.08); ctx.stroke();
+  L(sw * 2.2); ctx.beginPath(); ctx.moveTo(-0.45, -0.99); ctx.lineTo(0.45, -0.99); ctx.stroke();
+  ctx.globalAlpha = clamp(a);
+  // prow and stern curls
+  ctx.strokeStyle = o.curlC ?? ink; L(sw * 1.6); ctx.lineCap = 'round';
+  for (const sg of [-1, 1]) {
+    ctx.beginPath(); ctx.moveTo(sg * 0.97, bpTop(0.97) + 0.02);
+    ctx.bezierCurveTo(sg * 1.07, -0.5, sg * 1.06, -0.8, sg * 0.96, -0.8); ctx.bezierCurveTo(sg * 0.89, -0.8, sg * 0.9, -0.71, sg * 0.95, -0.72); ctx.stroke();
+  }
+  // planks
+  const pl = bpPlankLocal();
+  ctx.lineJoin = 'round';
+  pl.forEach((p, i) => {
+    const q = o.plank ? o.plank(i) : null; if (q && q.hide) return;
+    const c = (q && q.c) || ink, pa = q && q.a != null ? q.a : 1;
+    ctx.save(); ctx.globalAlpha = clamp(a * pa);
+    if (q && (q.dx || q.dy || q.rot)) { ctx.translate(p.cx + (q.dx || 0) / s, p.cy + (q.dy || 0) / s); ctx.rotate(q.rot || 0); ctx.translate(-p.cx, -p.cy); }
+    ctx.beginPath(); p.P.forEach(([u, v], k) => (k ? ctx.lineTo(u, v) : ctx.moveTo(u, v))); ctx.closePath();
+    if (q && q.glow) { ctx.shadowColor = c; ctx.shadowBlur = q.glow; }
+    ctx.fillStyle = c; ctx.fill(); ctx.shadowBlur = 0;
+    ctx.strokeStyle = bpMix(c[0] === '#' ? c : BP.yellow, BP.ground, 0.72); L(Math.max(1.6, s * 0.0045)); ctx.stroke();
+    ctx.restore();
+  });
+  // gunwale line
+  ctx.strokeStyle = o.rimC ?? ink; L(sw * 1.4); ctx.beginPath();
+  for (let i = 0; i <= 40; i++) { const xx = lerp(-0.97, 0.97, i / 40); i ? ctx.lineTo(xx, bpTop(xx) - 0.01) : ctx.moveTo(xx, bpTop(xx) - 0.01); }
+  ctx.stroke();
+  ctx.restore();
+}
+// a loose plank (sinking, flying): a slightly bowed bar of length len, angle rot
+function bpLoosePlank(x, y, len, rot, c, a = 1, th = 0.22) {
+  ctx.save(); ctx.globalAlpha = clamp(a); ctx.translate(x, y); ctx.rotate(rot);
+  const h = len * th;
+  trace(rrectPts(-len / 2, -h / 2, len, h, h * 0.45, 4), true); ctx.fillStyle = c; ctx.fill();
+  ctx.lineWidth = 2; ctx.strokeStyle = BP.ground; ctx.stroke();
+  ctx.restore();
+}
+
+// ---- a torn plank: the plank's own outline P (9 top points, then 9 bottom points reversed, world coords, centre cx, cy),
+//  drawn at (x, y) turned by rot, with splintered ends (jag 0..1) and a grain line. key seeds the teeth.
+function bpSplinter(P, cx, cy, x, y, rot, c, a = 1, jag = 1, key = 'sp') {
+  const R = RNG('splinter', key), n = P.length / 2, top = P.slice(0, n), bot = P.slice(n);
+  const ax = top[n - 1][0] - top[0][0], ay = top[n - 1][1] - top[0][1], al = Math.hypot(ax, ay) || 1, dx = ax / al, dy = ay / al;
+  const teeth = (p, q, sgn) => { const out = []; for (let k = 1; k <= 4; k++) { const f = k / 5, d = sgn * jag * al * (k % 2 ? R.r(0.05, 0.13) : R.r(-0.06, 0.0)); out.push([lerp(p[0], q[0], f) + dx * d, lerp(p[1], q[1], f) + dy * d]); } return out; };
+  const Q = [...top, ...teeth(top[n - 1], bot[0], 1), ...bot, ...teeth(bot[n - 1], top[0], -1)];
+  ctx.save(); ctx.globalAlpha = clamp(a); ctx.translate(x, y); ctx.rotate(rot); ctx.translate(-cx, -cy);
+  ctx.beginPath(); Q.forEach(([u, v], i) => (i ? ctx.lineTo(u, v) : ctx.moveTo(u, v))); ctx.closePath();
+  ctx.fillStyle = c; ctx.fill(); ctx.lineJoin = 'miter'; ctx.lineWidth = 1.6; ctx.strokeStyle = bpMix(c, BP.ground, 0.6); ctx.stroke();
+  // grain: two thin lines along the plank
+  ctx.strokeStyle = bpA(bpMix(c, BP.ground, 0.5), 0.7); ctx.lineWidth = 1.4;
+  for (const f of [0.35, 0.68]) { ctx.beginPath(); for (let i = 0; i < n; i++) { const t = top[i], b = bot[n - 1 - i], px = lerp(t[0], b[0], f), py = lerp(t[1], b[1], f); i ? ctx.lineTo(px, py) : ctx.moveTo(px, py); } ctx.stroke(); }
+  ctx.restore();
+}
+// chips: thin slivers thrown off where a plank is torn out (u = 0..1 over their flight)
+function bpChips(x, y, u, c, key, n = 7) {
+  if (u <= 0 || u >= 1) return;
+  for (let i = 0; i < n; i++) {
+    const R = RNG('chip', key, i), an = R.r(-Math.PI * 0.95, -Math.PI * 0.05), sp = R.r(160, 420), t = u * R.r(0.5, 0.9);
+    const px = x + Math.cos(an) * sp * t, py = y + Math.sin(an) * sp * t + 900 * t * t, len = R.r(12, 26), w = R.r(2.5, 4.5), r = an + t * R.r(-14, 14);
+    ctx.save(); ctx.globalAlpha = clamp(1 - u); ctx.translate(px, py); ctx.rotate(r);
+    ctx.beginPath(); ctx.moveTo(-len / 2, 0); ctx.lineTo(len * 0.1, -w / 2); ctx.lineTo(len / 2, 0); ctx.lineTo(len * 0.05, w / 2); ctx.closePath();
+    ctx.fillStyle = c; ctx.fill(); ctx.restore();
+  }
+}
+
+// ---- a human figure as dots on a hex grid: head, neck, torso, arms, legs. Cached per (size); returns local points.
+function bpPersonDots(h, gap) {
+  const k = h + ':' + gap; bpPersonDots.c = bpPersonDots.c || {}; if (bpPersonDots.c[k]) return bpPersonDots.c[k];
+  const u = h / 100, inside = (x, y) => {   // x, y in units of h/100, origin top-centre
+    if (Math.hypot(x, y - 10) < 9.6) return 'head';
+    if (Math.abs(x) < 3.6 && y >= 19 && y < 24) return 'body';
+    if (y >= 23 && y < 57) { const half = Math.min(11, 11 - (27 - y) * 1.1); if (Math.abs(x) < half) return 'body'; }
+    if (y >= 25 && y < 58) { const ax = 17 + (y - 25) * 0.06, aw = y < 28 ? 2.8 - (28 - y) * 0.5 : 2.9; if (Math.abs(Math.abs(x) - ax) < aw) return 'body'; }
+    if (y >= 57 && y < 100) { if (Math.abs(Math.abs(x) - 5.8) < 4.1) return 'body'; }
+    return null;
+  };
+  const out = [], dy = gap * Math.sqrt(3) / 2;
+  for (let r = 0, y = 0; y <= h; r++, y += dy) for (let x = -h * 0.3 + (r % 2) * gap / 2; x <= h * 0.3; x += gap) {
+    const part = inside(x / u, y / u); if (part) out.push({ x, y, part });
+  }
+  return (bpPersonDots.c[k] = out);
+}
+
+// ---- a horizontal timeline with end ticks and labels; u = fill 0..1
+function bpTimeline(x0, x1, y, u, la, lb, c = BP.mint, a = 1) {
+  ctx.save(); ctx.globalAlpha = clamp(a); ctx.lineCap = 'round';
+  ctx.strokeStyle = BP.dim; ctx.lineWidth = 5; ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x1, y); ctx.stroke();
+  for (const x of [x0, x1]) { ctx.beginPath(); ctx.moveTo(x, y - 24); ctx.lineTo(x, y + 24); ctx.stroke(); }
+  if (u > 0) { const xu = lerp(x0, x1, clamp(u)); ctx.strokeStyle = c; ctx.lineWidth = 8; ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(xu, y); ctx.stroke(); bpGlow(xu, y, 54, c, 0.6); bpDot(xu, y, 13, c); }
+  ctx.restore();
+  bpText(la, x0, y + 70, 38, BP.soft, { font: BP.mono, align: 'left', alpha: a });
+  bpText(lb, x1, y + 70, 38, BP.soft, { font: BP.mono, align: 'right', alpha: a });
+}
+
+// =====================================================================
+//  STYLE — the renderer's hooks
+// =====================================================================
+const STYLE = {
+  name: 'bitpix',
+  paper: BP.ground,
+  backdrop(c) { fillAll(c[0] === '#' ? c : BP.ground); },
+  window(P, key, src, o) {
+    ctx.save(); trace(P, true); ctx.clip(); ctx.drawImage(src, 0, 0); ctx.restore();
+    ctx.save(); trace(P, true); ctx.lineWidth = 3; ctx.strokeStyle = o && o.c ? o.c : BP.mint; ctx.stroke(); ctx.restore();
+  },
+  blob(P, c) { ctx.save(); trace(P, true); ctx.fillStyle = c; ctx.fill(); ctx.restore(); },
+  hero(x, y, r) { bpGlow(x, y, r * 2.2, BP.mint, 0.5); bpDot(x, y, r * 0.5, BP.mint); },
+  heroColor: BP.mint,
+  post() { bpVignette(); },
+  ones: true,
+};
+// =====================================================================
+//  NET — a real 2 -> 10 -> 10 -> 1 network (tanh, tanh, sigmoid): 2*10+10 + 10*10+10 + 10+1 = 151 weights.
+//  Trained here, once, deterministically, by plain full-batch gradient descent on two interleaved moons.
+//  Everything the piece shows about it (the error, the boundary, the 151, the descent) is read from this.
+// =====================================================================
+const NN = (() => {
+  let s = 20261013;   // its own seeded generator, so the training never depends on draw order
+  const rnd = () => { s |= 0; s = (s + 0x6D2B79F5) | 0; let t = Math.imul(s ^ (s >>> 15), 1 | s); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+  const gauss = () => Math.sqrt(-2 * Math.log(rnd() + 1e-12)) * Math.cos(2 * Math.PI * rnd());
+  // data: two moons, 100 points each, in [-1.6, 1.6]
+  const X = [], Y = [];
+  for (let i = 0; i < 200; i++) {
+    const c = i % 2, a = Math.PI * rnd();
+    let x = c ? 1 - Math.cos(a) : Math.cos(a), y = c ? 0.5 - Math.sin(a) : Math.sin(a);
+    x = (x - 0.5) * 1.25 + gauss() * 0.11; y = (y - 0.25) * 1.6 + gauss() * 0.11;
+    X.push([x, y]); Y.push(c);
+  }
+  // unseen test points for the end (drawn from the same moons)
+  const XT = [];
+  for (let i = 0; i < 26; i++) { const c = i % 2, a = Math.PI * rnd(); let x = c ? 1 - Math.cos(a) : Math.cos(a), y = c ? 0.5 - Math.sin(a) : Math.sin(a); XT.push([(x - 0.5) * 1.25 + gauss() * 0.08, (y - 0.25) * 1.6 + gauss() * 0.08, c]); }
+  const L = [2, 10, 10, 1];
+  const init = () => { const W = []; for (let l = 0; l < 3; l++) { const m = [], b = []; for (let j = 0; j < L[l + 1]; j++) { const r = []; for (let i = 0; i < L[l]; i++) r.push(gauss() * 1.3); m.push(r); b.push(gauss() * 0.4); } W.push({ m, b }); } return W; };
+  const clone = (W) => W.map((l) => ({ m: l.m.map((r) => r.slice()), b: l.b.slice() }));
+  const flat = (W) => { const v = []; W.forEach((l) => { l.m.forEach((r) => v.push(...r)); v.push(...l.b); }); return v; };
+  function forward(W, x) {
+    const A = [x];
+    for (let l = 0; l < 3; l++) { const a = A[l], o = []; for (let j = 0; j < L[l + 1]; j++) { let z = W[l].b[j]; for (let i = 0; i < L[l]; i++) z += W[l].m[j][i] * a[i]; o.push(l < 2 ? Math.tanh(z) : 1 / (1 + Math.exp(-z))); } A.push(o); }
+    return A;
+  }
+  const predict = (W, x, y) => forward(W, [x, y])[3][0];
+  function loss(W) { let e = 0; for (let k = 0; k < X.length; k++) { const p = Math.min(1 - 1e-7, Math.max(1e-7, predict(W, X[k][0], X[k][1]))); e -= Y[k] ? Math.log(p) : Math.log(1 - p); } return e / X.length; }
+  // one full-batch gradient step; returns the gradient (for the blame picture) and applies it
+  function grad(W) {
+    const G = W.map((l) => ({ m: l.m.map((r) => r.map(() => 0)), b: l.b.map(() => 0) }));
+    for (let k = 0; k < X.length; k++) {
+      const A = forward(W, X[k]); let d = [A[3][0] - Y[k]];   // dLoss/dz at the sigmoid output
+      for (let l = 2; l >= 0; l--) {
+        for (let j = 0; j < L[l + 1]; j++) { G[l].b[j] += d[j] / X.length; for (let i = 0; i < L[l]; i++) G[l].m[j][i] += d[j] * A[l][i] / X.length; }
+        if (l > 0) { const nd = []; for (let i = 0; i < L[l]; i++) { let s2 = 0; for (let j = 0; j < L[l + 1]; j++) s2 += W[l].m[j][i] * d[j]; nd.push(s2 * (1 - A[l][i] * A[l][i])); } d = nd; }
+      }
+    }
+    return G;
+  }
+  const step = (W, G, lr) => { W.forEach((l, li) => { l.m.forEach((r, j) => r.forEach((_, i) => (r[i] -= lr * G[li].m[j][i]))); l.b.forEach((_, j) => (l.b[j] -= lr * G[li].b[j])); }); };
+  // train: keep a snapshot every 4 epochs and the error every epoch
+  const W0 = init(), W = clone(W0), EPOCHS = 2400, SNAP = 4, snaps = [clone(W)], err = [loss(W)];
+  let G0 = null;
+  for (let e = 1; e <= EPOCHS; e++) {
+    const G = grad(W); if (e === 1) G0 = G;
+    step(W, G, e < 1200 ? 0.6 : 0.4);
+    err.push(loss(W)); if (e % SNAP === 0) snaps.push(clone(W));
+  }
+  const acc = (Wx) => X.reduce((a, x, k) => a + ((predict(Wx, x[0], x[1]) > 0.5) === !!Y[k]), 0) / X.length;
+  const accTest = (Wx) => XT.reduce((a, x) => a + ((predict(Wx, x[0], x[1]) > 0.5) === !!x[2]), 0) / XT.length;
+  // the landscape: a slice through two output weights (the error is convex in them: a clean bowl), others at the end values
+  const WF = clone(W), oi = [3, 7];
+  const ow = oi.map((i) => WF[2].m[0][i]);
+  function sliceLoss(a, b) { const Wt = clone(WF); Wt[2].m[0][oi[0]] = a; Wt[2].m[0][oi[1]] = b; return loss(Wt); }
+  const RANGE = 4.2, NG = 34, surf = [];
+  for (let gy = 0; gy <= NG; gy++) { const r = []; for (let gx = 0; gx <= NG; gx++) r.push(sliceLoss(ow[0] - RANGE + 2 * RANGE * gx / NG, ow[1] - RANGE + 2 * RANGE * gy / NG)); surf.push(r); }
+  // a real descent on that slice from a far corner: gradient by finite differences, fixed learning rate
+  const path = []; let a = ow[0] + RANGE * 0.88, b = ow[1] + RANGE * 0.8;
+  for (let k = 0; k < 120; k++) {
+    const h = 1e-3, f = sliceLoss(a, b); path.push([a, b, f]);
+    const ga = (sliceLoss(a + h, b) - f) / h, gb = (sliceLoss(a, b + h) - f) / h;
+    a -= 1.6 * ga; b -= 1.6 * gb;
+  }
+  return { X, Y, XT, L, W0, WF, snaps, SNAP, err, EPOCHS, G0, forward, predict, loss, flat, acc, accTest, ow, RANGE, NG, surf, path, count: flat(W0).length };
+})();
+if (typeof module !== 'undefined') module.exports = NN;
+// =====================================================================
+//  COMMON — overlays, fades, the pixel cats, the network drawing, the landscape projection
+// =====================================================================
+const SHIFT = 0;   // centred: the user prefers a centred frame over clearing the phone UI strip
+const OV = (f) => { const g = () => { ctx.save(); ctx.translate(SHIFT, 0); f(); ctx.restore(); }; DEFER ? DEFER.push(g) : g(); };
+const fadeIn = (t, d = 0.35) => EZ.o2(ev(t, d));
+const fadeOut = (t, d = 0.35) => 1 - EZ.i2(ev(t, d));
+const win = (t0, t1, d = 0.35) => fadeIn(t0, d) * fadeOut(t1, d);
+const topTag = (str, a, c = BP.soft) => { if (a > 0) OV(() => bpText(str, 540, 322, 46, c, { font: BP.mono, alpha: a, spacing: 2 })); };
+const caption = (lines, a, y = 1400, size = 74, o = {}) => { if (a > 0) OV(() => bpLines(lines, 540, y, size, BP.text, a, o)); };
+const fmt = (v, d = 2) => (v >= 0 ? '+' : '−') + Math.abs(v).toFixed(d);
+const sig = (z) => 1 / (1 + Math.exp(-z));
+
+// ---- pixel cats (X body, E eyes, N nose, M mouth line)
+const CAT_A = [
+  '..X..........X..',
+  '.XXX........XXX.',
+  '.XXXX......XXXX.',
+  '.XXXXXXXXXXXXXX.',
+  'XXXXXXXXXXXXXXXX',
+  'XXXEEXXXXXXEEXXX',
+  'XXXEEXXXXXXEEXXX',
+  'XXXXXXXNNXXXXXXX',
+  'XXXXXXXXXXXXXXXX',
+  '.XXXXMXXXXMXXXX.',
+  '..XXXXMMMMXXXX..',
+  '...XXXXXXXXXX...',
+];
+const CAT_B = [   // a different cat: one ear folded, eyes half closed, sitting with a tail
+  '.X...........X.....',
+  'XXX.........XX.....',
+  'XXXX.......XXX.....',
+  'XXXXXXXXXXXXXX.....',
+  'XXXXXXXXXXXXXXX....',
+  'XXEEEXXXXXEEEXX....',
+  'XXXXXXXNNXXXXXX....',
+  '.XXXXXMXXMXXXX.....',
+  '..XXXXXMMXXXX......',
+  '..XXXXXXXXXXXX.....',
+  '.XXXXXXXXXXXXXX..XX',
+  '.XXXXXXXXXXXXXX.XX.',
+  '.XXXXXXXXXXXXXXXX..',
+  '..XXXX....XXXXX....',
+];
+// cells of a cat: [{ x, y, k }] in units, centred
+function catCells(P) { const out = [], h = P.length, w = P[0].length; P.forEach((row, j) => [...row].forEach((ch, i) => { if (ch !== '.') out.push({ x: i - (w - 1) / 2, y: j - (h - 1) / 2, k: ch }); })); return out; }
+const catColor = (k) => (k === 'E' || k === 'N' ? BP.magenta : k === 'M' ? '#0e5a3e' : BP.mint);
+function drawCat(P, cx, cy, cell, a = 1, o = {}) {
+  catCells(P).forEach((c, i) => {
+    const R = RNG('catin', P.length, i), u = o.build != null ? EZ.o3(seg(o.build, R.r(0, 0.5), R.r(0.5, 1))) : 1;
+    if (u <= 0) return;
+    const sx = R.r(-600, 600), sy = R.r(-900, 900), x = lerp(cx + sx, cx + c.x * cell, u), y = lerp(cy + sy, cy + c.y * cell, u);
+    const bl = c.k === 'E' && o.blink ? o.blink : 0, bob = o.bob ? Math.sin(TT * 2.2 + c.x * 0.15) * o.bob : 0;
+    ctx.save(); ctx.globalAlpha = clamp(a * u); ctx.fillStyle = bl > 0.5 ? BP.mint : catColor(c.k);
+    const s = cell * 0.86; trace(rrectPts(x - s / 2, y + bob - s / 2, s, s, s * 0.18, 3), true); ctx.fill(); ctx.restore();
+  });
+}
+
+// ---- the network: node positions and drawing
+const NL = [2, 10, 10, 1];
+function netPos(cy = 960, gapY = 250, spread = 78) {   // [[x, y], ...] per layer, top to bottom
+  return NL.map((n, l) => Array.from({ length: n }, (_, i) => [540 + (i - (n - 1) / 2) * (n === 2 ? 240 : spread), cy + (l - 1.5) * gapY]));
+}
+// o: { a, show[l] 0..1 (layer reveal), Wt (weights), flick (0..1 random flicker), fwd (signal phase 0..1 or null),
+//      back (0..1 blame wave from output to input), blame (gradient), x (input for activations), cy, gapY }
+function drawNet(o) {
+  const P = netPos(o.cy, o.gapY, o.spread), Wt = o.Wt || NN.W0, a = o.a ?? 1, show = o.show || [1, 1, 1, 1];
+  const A = o.x ? NN.forward(Wt, o.x) : null;
+  let gmax = 1e-9; if (o.blame) o.blame.forEach((l) => l.m.forEach((r) => r.forEach((v) => (gmax = Math.max(gmax, Math.abs(v))))));
+  ctx.save(); ctx.lineCap = 'round';
+  for (let l = 0; l < 3; l++) {
+    const vis = Math.min(show[l], show[l + 1]); if (vis <= 0) continue;
+    for (let j = 0; j < NL[l + 1]; j++) for (let i = 0; i < NL[l]; i++) {
+      let w = Wt[l].m[j][i];
+      if (o.flick) w = lerp(w, RNG('flick', l, j, i, Math.floor(TT * 8)).r(-2.5, 2.5), o.flick);
+      const [x0, y0] = P[l][i], [x1, y1] = P[l + 1][j];
+      const f = clamp(vis * 1.4 - (i + j) / (NL[l] + NL[l + 1]) * 0.4);
+      let c = BP.yellow, al = 0.12 + 0.45 * clamp(Math.abs(w) / 2.5), lw = 1.2 + 2.2 * clamp(Math.abs(w) / 2.5);
+      // blame: the backward wave reaches layer l when back passes its depth
+      if (o.blame && o.back != null) {
+        const reach = clamp((o.back - (2 - l) / 3) * 3), g = Math.abs(o.blame[l].m[j][i]) / gmax;
+        if (reach > 0) { c = bpMix(BP.yellow, BP.magenta, reach); al = lerp(al, 0.15 + 0.85 * Math.sqrt(g), reach); lw = lerp(lw, 1 + 5 * Math.sqrt(g), reach); }
+      }
+      ctx.globalAlpha = clamp(a * al); ctx.strokeStyle = c; ctx.lineWidth = lw;
+      ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(lerp(x0, x1, f), lerp(y0, y1, f)); ctx.stroke();
+    }
+  }
+  // signals forward: one pulse per edge group travelling down
+  if (o.fwd != null) for (let l = 0; l < 3; l++) {
+    const u = clamp(o.fwd * 3 - l); if (u <= 0 || u >= 1) continue;
+    for (let j = 0; j < NL[l + 1]; j++) for (let i = 0; i < NL[l]; i++) if ((i + j * 3) % 3 === 0) {
+      const [x0, y0] = P[l][i], [x1, y1] = P[l + 1][j]; bpDot(lerp(x0, x1, u), lerp(y0, y1, u), 4, BP.mint, a * 0.9);
+    }
+  }
+  // the blame pulses travelling back up
+  const bb = o.back != null ? (o.back > 1 ? o.back - 1 : o.back) : null;
+  if (bb != null) for (let l = 2; l >= 0; l--) {
+    const u = clamp(bb * 3 - (2 - l)); if (u <= 0 || u >= 1) continue;
+    for (let j = 0; j < NL[l + 1]; j++) for (let i = 0; i < NL[l]; i++) if ((i * 2 + j) % 2 === 0) {
+      const [x0, y0] = P[l][i], [x1, y1] = P[l + 1][j]; bpGlow(lerp(x1, x0, u), lerp(y1, y0, u), 18, BP.magenta, a * 0.5); bpDot(lerp(x1, x0, u), lerp(y1, y0, u), 7, BP.magenta, a);
+    }
+  }
+  // nodes
+  NL.forEach((n, l) => { if (show[l] <= 0) return; for (let i = 0; i < n; i++) {
+    const [x, y] = P[l][i], s = EZ.back(clamp(show[l] * 1.6 - i / n * 0.6)); if (s <= 0) continue;
+    const act = A ? (l === 3 ? A[3][0] * 2 - 1 : A[l][i]) : 0, r = (l === 3 ? 26 : l === 0 ? 24 : 17) * s;
+    let c = l === 3 && o.outC ? o.outC : BP.mint;
+    if (o.back != null && clamp((o.back - (3 - l) / 3) * 3) > 0 && l > 0) c = bpMix(BP.mint, BP.magenta, 0.6);
+    bpGlow(x, y, r * 2.2, c, a * (0.25 + 0.35 * Math.abs(act)));
+    ctx.globalAlpha = clamp(a); ctx.fillStyle = BP.ground; ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.fill();
+    ctx.lineWidth = 3; ctx.strokeStyle = c; ctx.stroke();
+    ctx.globalAlpha = clamp(a * (0.25 + 0.75 * Math.abs(act))); ctx.fillStyle = c; ctx.beginPath(); ctx.arc(x, y, r * 0.62, 0, TAU); ctx.fill();
+  } });
+  ctx.restore();
+  return P;
+}
+
+// ---- the landscape: NN.surf projected in 3D, slowly turning; height = error
+const SURF = { cx: 540, cy: 1060, R: 330, H: 400 };
+function surfZ(gx, gy) { const s = NN.surf, n = NN.NG; const x = clamp(gx, 0, n), y = clamp(gy, 0, n), i = Math.min(n - 1, Math.floor(x)), j = Math.min(n - 1, Math.floor(y)), u = x - i, v = y - j;
+  return lerp(lerp(s[j][i], s[j][i + 1], u), lerp(s[j + 1][i], s[j + 1][i + 1], u), v); }
+const ZMAX = Math.max(...NN.surf.flat());
+function surfProj(gx, gy, z, rot, k = 1) {   // grid coords (0..NG), error z -> screen
+  const n = NN.NG, X = (gx / n - 0.5) * 2, Y = (gy / n - 0.5) * 2, c = Math.cos(rot), s = Math.sin(rot);
+  const xr = X * c - Y * s, yr = X * s + Y * c;
+  return [SURF.cx + xr * SURF.R * k, SURF.cy + yr * SURF.R * 0.5 * k - Math.pow(z / ZMAX, 0.6) * SURF.H * k];
+}
+const pathGrid = (p) => [(p[0] - (NN.ow[0] - NN.RANGE)) / (2 * NN.RANGE) * NN.NG, (p[1] - (NN.ow[1] - NN.RANGE)) / (2 * NN.RANGE) * NN.NG];
+function heightColor(u) { return u < 0.5 ? bpMix(BP.mint, BP.yellow, u * 2) : bpMix(BP.yellow, BP.magenta, (u - 0.5) * 2); }
+function drawSurface(a, rot, k = 1, grow = 1) {
+  const n = NN.NG, quads = [];
+  for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) {
+    const z = (NN.surf[j][i] + NN.surf[j][i + 1] + NN.surf[j + 1][i] + NN.surf[j + 1][i + 1]) / 4 * grow;
+    const P = [[i, j], [i + 1, j], [i + 1, j + 1], [i, j + 1]].map(([x, y]) => surfProj(x, y, NN.surf[y][x] * grow, rot, k));
+    const depth = P.reduce((s, p) => s + p[1], 0) + z * 0;   // painter's order: far (higher on screen) first
+    quads.push({ P, z, depth: (i - n / 2) * Math.sin(rot) + (j - n / 2) * Math.cos(rot) });
+  }
+  quads.sort((p, q) => p.depth - q.depth);
+  ctx.save(); ctx.lineJoin = 'round';
+  for (const q of quads) {
+    const u = Math.pow(q.z / ZMAX, 0.6), c = heightColor(u);
+    ctx.beginPath(); q.P.forEach(([x, y], i) => (i ? ctx.lineTo(x, y) : ctx.moveTo(x, y))); ctx.closePath();
+    ctx.globalAlpha = clamp(a * 0.85); ctx.fillStyle = bpMix(c, BP.ground, 0.55); ctx.fill();
+    ctx.globalAlpha = clamp(a * 0.9); ctx.strokeStyle = c; ctx.lineWidth = 1.3; ctx.stroke();
+  }
+  ctx.restore();
+}
+// =====================================================================
+//  S1 — the cat, only numbers, one neuron, the layers, random weights and the error
+// =====================================================================
+const NEU = { x: [-0.58, 0.31] };                       // the two inputs shown (a real data point's scale)
+const NEU_W = [NN.W0[0].m[0][0], NN.W0[0].m[0][1]], NEU_B = NN.W0[0].b[0];
+const NEU_Z = NEU.x[0] * NEU_W[0] + NEU.x[1] * NEU_W[1] + NEU_B, NEU_A = Math.tanh(NEU_Z);
+const NET_X = NN.X[3];                                   // the example pushed through the network
+const NET_OUT0 = NN.predict(NN.W0, NET_X[0], NET_X[1]), NET_Y = NN.Y[3];
+
+// 1 — a pixel cat assembles; CAT ✓
+function beatCat() {
+  const a = fadeOut(VW('numbers', 'only') - 0.2, 0.5); if (a <= 0) return;
+  const build = seg(TT, 0.1, VL('open').t1);
+  // "only numbers": every cell turns into its pixel value, then the cat dissolves into the neuron's two inputs
+  const toNum = EZ.io(seg(TT, VL('numbers').t0, VW('numbers', 'numbers') + 0.2));
+  const blink = [3.6, 5.2, 7.4, 8.6].some((b) => TT > b && TT < b + 0.16) ? 1 : 0;
+  if (toNum < 1) drawCat(CAT_A, 540, 820, 46, a * (1 - toNum), { build, blink, bob: 6 * fadeIn(VL('open').t1, 0.5) });
+  if (toNum > 0) catCells(CAT_A).forEach((c, i) => {
+    const v = c.k === 'X' ? 0.62 + 0.3 * RNG('px', i).f() : c.k === 'M' ? 0.18 : 0.94;
+    bpText(v.toFixed(2), 540 + c.x * 46, 820 + c.y * 46 + 7, 17, catColor(c.k), { font: BP.mono, alpha: a * toNum });
+  });
+  const ca = win(VW('rules', 'still') - 0.2, VW('numbers', 'only'), 0.3);
+  if (ca > 0) OV(() => {
+    bpText('CAT', 520, 1260, 92, BP.mint, { font: BP.mono, weight: 700, alpha: ca, spacing: 8 });
+    const k = EZ.back(seg(TT, VW('rules', 'right') - 0.1, VW('rules', 'right') + 0.25));
+    if (k > 0) { ctx.save(); ctx.globalAlpha = ca; ctx.strokeStyle = BP.mint; ctx.lineWidth = 9; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.beginPath(); ctx.moveTo(650, 1232); ctx.lineTo(650 + 18 * k, 1252 * 1 + 0 * k); ctx.lineTo(650 + 18 * k + 34 * k, 1252 - 46 * k); ctx.stroke(); ctx.restore(); }
+  });
+  caption([{ t: 'No rules.', c: BP.text }, { t: 'Still right.', c: BP.mint, i: true }], win(VW('rules', 'no'), VL('inside').t0 - 0.1), 1440, 70);
+  caption([{ t: 'only numbers', c: BP.yellow, i: true }], win(VW('numbers', 'only') - 0.1, B0('neuron') + 0.6), 1430, 76);
+}
+
+// 2 — one neuron: inputs x weights, add, squash
+function beatNeuron() {
+  const a = win(VW('numbers', 'only') + 0.1, S_NET + 0.5, 0.5); if (a <= 0) return;
+  const tIn = VW('neuron', 'inputs'), tW = VW('neuron', 'weight'), tAdd = VW('neuron', 'adds'), tSq = VW('neuron', 'squashes'), tCv = VW('neuron', 'curve');
+  const n = [720, 860], i1 = [270, 660], i2 = [270, 1060];
+  ctx.save(); ctx.globalAlpha = a;
+  // edges with their weights (yellow)
+  [[i1, NEU_W[0], -1], [i2, NEU_W[1], 1]].forEach(([p, w, s], k) => {
+    const f = EZ.io(seg(TT, tIn + k * 0.15, tIn + 0.6 + k * 0.15));
+    ctx.strokeStyle = BP.yellow; ctx.lineWidth = 3 + 3 * clamp(Math.abs(w) / 2); ctx.globalAlpha = a * 0.8;
+    ctx.beginPath(); ctx.moveTo(p[0] + 54, p[1]); ctx.lineTo(lerp(p[0] + 54, n[0] - 74, f), lerp(p[1], n[1], f)); ctx.stroke();
+    const wa = fadeIn(tW + k * 0.2, 0.3);
+    if (wa > 0) bpPill(`w${k + 1} ${fmt(w)}`, (p[0] + n[0]) / 2 - 10, (p[1] + n[1]) / 2 + s * 70, 40, BP.yellow, a * wa);
+    // the input value travelling along its edge on "multiplies"
+    const u = TT < tAdd ? seg(TT, tW + 0.3, tAdd) : mod((TT - tAdd) / 0.9 + k * 0.5, 1); if (TT > tW + 0.3 && u > 0 && u < 1) bpDot(lerp(p[0] + 54, n[0] - 74, u), lerp(p[1], n[1], u), 11, BP.yellow, a);
+  });
+  ctx.restore();
+  // numbers streaming in from the left into the two inputs, until they are weighed
+  if (TT > VL('numbers').t1 - 0.3 && TT < tAdd + 0.3) for (let q = 0; q < 6; q++) {
+    const u = mod((TT - VL('numbers').t1) / 1.4 + q / 6, 1), p = q % 2 ? i2 : i1, R = RNG('strm', q);
+    bpText(R.r(-1, 1).toFixed(2), lerp(70, p[0] - 64, u), p[1] + (q % 3 - 1) * 26 + 8, 30, BP.mint, { font: BP.mono, alpha: a * Math.sin(u * Math.PI) * 0.8 * win(VL('numbers').t1 - 0.3, tAdd + 0.3, 0.3) });
+  }
+  // the neuron's output keeps flowing out once it exists
+  if (TT > tCv + 0.8) { const u = mod((TT - tCv) / 0.8, 1); bpDot(lerp(n[0] + 76, n[0] + 150, u), n[1], 8, BP.mint, a); }
+  // inputs
+  [[i1, NEU.x[0]], [i2, NEU.x[1]]].forEach(([p, x], k) => {
+    const s = EZ.back(seg(TT, VW('numbers', 'only') + 0.3 + k * 0.1, VW('numbers', 'only') + 0.6 + k * 0.1));
+    ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = BP.ground; ctx.strokeStyle = BP.mint; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.arc(p[0], p[1], 54 * s, 0, TAU); ctx.fill(); ctx.stroke(); ctx.restore();
+    if (s > 0.5) bpText(fmt(x), p[0], p[1] + 11, 30, BP.mint, { font: BP.mono, alpha: a });
+    if (s > 0.5) bpText(`x${k + 1}`, p[0], p[1] - 76, 38, BP.soft, { font: BP.mono, alpha: a });
+  });
+  // the neuron: Σ then the curve
+  const ns = EZ.back(seg(TT, VW('neuron', 'neuron') - 0.1, VW('neuron', 'neuron') + 0.3)), lit = fadeIn(tAdd, 0.3);
+  bpGlow(n[0], n[1], 170, BP.mint, a * (0.2 + 0.4 * lit));
+  ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = BP.ground; ctx.strokeStyle = BP.mint; ctx.lineWidth = 4;
+  ctx.beginPath(); ctx.arc(n[0], n[1], 74 * ns, 0, TAU); ctx.fill(); ctx.stroke(); ctx.restore();
+  if (ns > 0.5) bpText('Σ', n[0], n[1] + 28, 80, BP.mint, { alpha: a });
+  // the formula and its value
+  const fa = fadeIn(tAdd - 0.1, 0.3);
+  if (fa > 0) OV(() => {
+    bpText('z = x₁w₁ + x₂w₂ + b', 540, 1240, 54, BP.text, { font: BP.mono, alpha: a * fa });
+    bpText(`z = ${fmt(NEU_Z)}`, 540, 1315, 60, BP.yellow, { font: BP.mono, weight: 700, alpha: a * fadeIn(tAdd + 0.4, 0.3) });
+  });
+  // the curve: tanh, the dot sliding to z, the output
+  const ca = fadeIn(tSq - 0.1, 0.35);
+  if (ca > 0) {
+    const gx = 540, gy = 1440, gw = 300, gh = 80, map = (z) => [gx + clamp(z / 3, -1, 1) * gw, gy - Math.tanh(z) * gh];
+    ctx.save(); ctx.globalAlpha = a * ca; ctx.strokeStyle = BP.dim; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(gx - gw, gy); ctx.lineTo(gx + gw, gy); ctx.moveTo(gx, gy - gh - 20); ctx.lineTo(gx, gy + gh + 20); ctx.stroke();
+    ctx.strokeStyle = BP.mint; ctx.lineWidth = 5; ctx.beginPath();
+    const fr = EZ.io(seg(TT, tSq - 0.1, tCv + 0.3));
+    for (let i = 0; i <= 60 * fr; i++) { const [x, y] = map(-3 + 6 * i / 60); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }
+    ctx.stroke(); ctx.restore();
+    const d = EZ.io(seg(TT, tCv, tCv + 0.6)), [px, py] = map(lerp(-3, NEU_Z, d));
+    if (d > 0) { bpGlow(px, py, 40, BP.mint, a * 0.6); bpDot(px, py, 12, BP.mint, a); }
+    const oa = fadeIn(tCv + 0.6, 0.3);
+    if (oa > 0) {
+      ctx.save(); ctx.globalAlpha = a * oa; ctx.strokeStyle = BP.mint; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(n[0] + 76, n[1]); ctx.lineTo(n[0] + 150, n[1]); ctx.stroke(); ctx.restore();
+      bpText(fmt(NEU_A), n[0] + 160, n[1] - 30, 44, BP.mint, { font: BP.mono, weight: 700, alpha: a * oa });
+      OV(() => bpText('squashed between −1 and 1', 540, 1560, 40, BP.soft, { font: BP.mono, alpha: a * oa }));
+    }
+  }
+  caption([{ t: 'That’s all', c: BP.text }, { t: 'the intelligence in a neuron.', c: BP.soft, i: true }], win(VW('thatsall', 'all') - 0.1, S_NET + 0.2), 420, 64);
+}
+
+// 3 — stacked: 2-10-10-1, signals forward; two numbers in; thousands of pixels
+function beatNetwork() {
+  const a = win(S_NET + 0.2, S_LAND + 0.6, 0.5); if (a <= 0) return;
+  const t0 = VW('stack', 'stacking') - 0.2, show = [0, 1, 2, 3].map((l) => EZ.o2(seg(TT, t0 + l * 0.45, t0 + 0.6 + l * 0.45)));
+  const fwdT = (t) => seg(t, VW('layers', 'layer', 2) - 0.2, VL('layers').t1);
+  const flick = win(VL('random').t0, VW('compare', 'compares'), 0.4) * (1 - seg(TT, VW('random', 'lost'), VW('compare', 'compares')) * 0.6);
+  // "thousands of pixels": the input row widens into a grid of pixels for a moment
+  const px = win(VW('pixels', 'thousands') - 0.2, VL('pixels').t1 + 0.2, 0.35);
+  const fw = TT < VW('twoin', 'two') ? (TT < VL('layers').t1 ? mod(fwdT(TT) * 2.5, 1) : fwdT(TT)) : TT < VL('random').t0 ? seg(TT, VW('twoin', 'go'), VW('twoin', 'go') + 1.4) : (TT > VW('compare', 'compares') - 1.4 && TT < VW('compare', 'compares') + 0.2 ? seg(TT, VW('compare', 'compares') - 1.4, VW('compare', 'compares')) : null);
+  const P = drawNet({ a: a * (1 - px * 0.8), show, Wt: NN.W0, flick, fwd: fw != null && fw > 0 && fw < 1 ? fw : null, x: TT > VW('twoin', 'two') ? NET_X : null, cy: 900, gapY: 260, outC: TT > VW('compare', 'compares') ? BP.magenta : null });
+  if (px > 0) for (let j = 0; j < 28; j++) for (let i = 0; i < 28; i++) {
+    const R = RNG('pix', i, j), v = R.f();
+    ctx.save(); ctx.globalAlpha = a * px * (0.35 + 0.65 * v); ctx.fillStyle = v > 0.6 ? BP.mint : bpMix(BP.mint, BP.ground, 0.6);
+    ctx.fillRect(540 - 14 * 28 + i * 28, 900 - 14 * 28 + j * 28, 24, 24); ctx.restore();
+  }
+  if (px > 0) OV(() => bpText('784 pixels → 784 inputs', 540, 1460, 50, BP.mint, { font: BP.mono, alpha: a * px }));
+  // labels
+  const la = fadeIn(t0 + 1.8, 0.4) * (1 - px);
+  if (la > 0) OV(() => {
+    bpText('input', 860, P[0][1][1] + 14, 36, BP.soft, { font: BP.mono, align: 'left', alpha: a * la * 0 });
+    
+  });
+  // two numbers go in
+  const ia = win(VW('twoin', 'two') - 0.1, VL('pixels').t0 + 0.4, 0.3);
+  if (ia > 0) OV(() => P[0].forEach(([x, y], i) => bpPill(fmt(NET_X[i]), x, y - 70, 34, BP.mint, a * ia)));
+  caption([{ t: 'layer by layer,', c: BP.text }, { t: 'more complex shapes', c: BP.mint, i: true }], win(VW('layers', 'layer', 2) - 0.1, VL('twoin').t0 - 0.1), 1440, 66);
+  // 4 — the answer vs the right one, the error, the coin
+  const sa = win(VW('compare', 'answer') - 0.2, S_LAND + 0.3, 0.3);
+  if (sa > 0) OV(() => {
+    bpText(`says ${NET_OUT0.toFixed(2)}`, 360, 1430, 46, BP.magenta, { font: BP.mono, alpha: a * sa });
+    bpText(`should be ${NET_Y.toFixed(2)}`, 720, 1430, 46, BP.mint, { font: BP.mono, alpha: a * sa * fadeIn(VW('compare', 'right') - 0.1, 0.25) });
+  });
+  const ea = win(VW('compare', 'single') - 0.3, S_LAND + 0.3, 0.3);
+  if (ea > 0) OV(() => {
+    const e0 = NN.err[0], bw = 640, u = EZ.io(seg(TT, VW('compare', 'single') - 0.3, VW('compare', 'number') + 0.4));
+    bpText('ERROR', 540, 1520, 34, BP.magenta, { font: BP.mono, alpha: a * ea, spacing: 6 });
+    ctx.save(); ctx.globalAlpha = a * ea; ctx.fillStyle = BP.panel; ctx.fillRect(540 - bw / 2, 1540, bw, 26);
+    ctx.fillStyle = BP.magenta; ctx.fillRect(540 - bw / 2, 1540, bw * Math.min(1, e0 / 1.2) * u, 26);
+    ctx.strokeStyle = BP.soft; ctx.lineWidth = 3; const cx = 540 - bw / 2 + bw * Math.log(2) / 1.2; ctx.beginPath(); ctx.moveTo(cx, 1532); ctx.lineTo(cx, 1574); ctx.stroke(); ctx.restore();
+    bpText('a coin flip: 0.69', 540 - bw / 2 + bw * Math.log(2) / 1.2, 1612, 32, BP.soft, { font: BP.mono, alpha: a * ea * fadeIn(VW('random', 'coin'), 0.3) });
+  });
+  // "The error." — the number, big
+  const big = win(VL('error').t0 - 0.1, S_LAND + 0.5, 0.25);
+  if (big > 0) OV(() => bpText(NN.err[0].toFixed(2), 540, 430, 150, BP.magenta, { font: BP.mono, weight: 700, alpha: a * big, glow: 30 }));
+  caption([{ t: 'completely lost', c: BP.magenta, i: true }], win(VW('random', 'lost') - 0.2, VW('compare', 'compares') - 0.2), 430, 80);
+}
+// =====================================================================
+//  S2 — the landscape and the descent, backpropagation, the boundary bending
+// =====================================================================
+const STEPS = NN.path.length - 1;
+// the descent clock: steps start on "down", most happen by the end of "step", the last tiny ones through "flat"
+function stepAt(t) {
+  const a = VW('down', 'down'), b = VL('step').t1, c = VL('flat').t1;
+  if (t < a) return 0;
+  if (t < b) return 40 * EZ.io(seg(t, a, b));
+  return 40 + (STEPS - 40) * EZ.o2(seg(t, b, c));
+}
+function ballAt(t, rot, k = 1) {
+  const s = stepAt(t), i = Math.min(STEPS - 1, Math.floor(s)), u = s - i, p = NN.path[i], q = NN.path[i + 1];
+  const g0 = pathGrid(p), g1 = pathGrid(q), z = lerp(p[2], q[2], u);
+  return { xy: surfProj(lerp(g0[0], g1[0], u), lerp(g0[1], g1[1], u), z, rot, k), s, z, i };
+}
+const landRot = () => -0.75 + 0.05 * (TT - S_LAND) + (TT > S_END ? 0.22 * (TT - S_END) : 0);
+
+function beatLand() {
+  const a = win(S_LAND + 0.2, S_BACK + 0.4, 0.6), aEnd = win(S_END + 0.1, DURATION + 1, 0.6);
+  if (a <= 0 && aEnd <= 0) return;
+  const endMode = aEnd > 0 && a <= 0, A = endMode ? aEnd : a;
+  const rot = landRot(), k = endMode ? 0.7 : 1;
+  const grow = endMode ? 1 : EZ.io(seg(TT, VL('landscape').t0, VL('landscape').t1 + 0.4));
+  SURF.cy = endMode ? 1080 : 1060;
+  drawSurface(A, rot, k, Math.max(0.02, grow));
+  // axes labels
+  const la = fadeIn(VW('directions', 'direction') - 0.1, 0.3) * (endMode ? 0 : 1);
+  if (la > 0) {
+    const p1 = surfProj(NN.NG + 2, NN.NG / 2, 0, rot), p2 = surfProj(NN.NG / 2, NN.NG + 2, 0, rot);
+    bpText('weight 1', p1[0], p1[1] + 40, 36, BP.yellow, { font: BP.mono, alpha: a * la });
+    bpText('weight 2', p2[0], p2[1] + 40, 36, BP.yellow, { font: BP.mono, alpha: a * la });
+    const ha = fadeIn(VW('directions', 'height') - 0.1, 0.3);
+    if (ha > 0) { const top = [180, 760]; ctx.save(); ctx.globalAlpha = a * ha; ctx.strokeStyle = BP.magenta; ctx.lineWidth = 4; ctx.beginPath(); ctx.moveTo(top[0] - 40, top[1] + 60); ctx.lineTo(top[0] - 40, top[1] - 60); ctx.lineTo(top[0] - 54, top[1] - 40); ctx.moveTo(top[0] - 40, top[1] - 60); ctx.lineTo(top[0] - 26, top[1] - 40); ctx.stroke(); ctx.restore();
+      bpText('error', top[0] - 40, top[1] - 80, 38, BP.magenta, { font: BP.mono, alpha: a * ha }); }
+  }
+  // the ball and its trail (in the end: rolling down again, slowly)
+  const t = endMode ? VW('down', 'down') + (TT - S_END) * 1.6 : TT;
+  const ba = endMode ? aEnd : fadeIn(VL('training').t0, 0.4) * a;
+  if (ba > 0) {
+    const b = ballAt(t, rot, k);
+    ctx.save(); ctx.globalAlpha = ba; ctx.strokeStyle = BP.yellow; ctx.lineWidth = 4; ctx.beginPath();
+    for (let i = 0; i <= b.i; i++) { const g = pathGrid(NN.path[i]), p = surfProj(g[0], g[1], NN.path[i][2], rot, k); i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]); }
+    ctx.lineTo(b.xy[0], b.xy[1]); ctx.stroke(); ctx.restore();
+    // the slope under your feet: an arrow pointing downhill
+    const sa = win(VL('slope').t0, VL('step').t1, 0.3) * (endMode ? 0 : 1);
+    if (sa > 0) { const n = ballAt(t + 0.5, rot, k).xy, dx = n[0] - b.xy[0], dy = n[1] - b.xy[1], L = Math.hypot(dx, dy) || 1, ax = b.xy[0] + dx / L * 110, ay = b.xy[1] + dy / L * 110;
+      ctx.save(); ctx.globalAlpha = a * sa; ctx.strokeStyle = BP.text; ctx.lineWidth = 5; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(b.xy[0], b.xy[1]); ctx.lineTo(ax, ay);
+      const an = Math.atan2(ay - b.xy[1], ax - b.xy[0]); ctx.lineTo(ax - 22 * Math.cos(an - 0.5), ay - 22 * Math.sin(an - 0.5)); ctx.moveTo(ax, ay); ctx.lineTo(ax - 22 * Math.cos(an + 0.5), ay - 22 * Math.sin(an + 0.5)); ctx.stroke(); ctx.restore(); }
+    bpGlow(b.xy[0], b.xy[1], 46, BP.text, ba * 0.6);
+    ctx.save(); ctx.globalAlpha = ba; ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.arc(b.xy[0], b.xy[1] - 4, 15 * k, 0, TAU); ctx.fill();
+    ctx.lineWidth = 4; ctx.strokeStyle = BP.ground; ctx.stroke(); ctx.restore();
+    if (!endMode) {
+      const ca = fadeIn(VW('down', 'down'), 0.3) * a;
+      if (ca > 0) OV(() => {
+        bpText(`step ${String(Math.round(b.s)).padStart(3, ' ')}`, 300, 1520, 48, BP.soft, { font: BP.mono, alpha: ca });
+        bpText(`error ${b.z.toFixed(3)}`, 760, 1520, 48, BP.magenta, { font: BP.mono, alpha: ca });
+      });
+    }
+  }
+  caption([{ t: 'the error,', c: BP.text }, { t: 'as a landscape', c: BP.yellow, i: true }], win(VL('landscape').t0, VL('directions').t0 + 0.4), 420, 72);
+  caption([{ t: 'Going down.', c: BP.mint, i: true }], win(VL('down').t0 - 0.05, VL('slope').t0 + 0.6), 420, 92);
+  caption([{ t: 'tiny steps', c: BP.text, i: true }], win(VW('flat', 'steps') - 0.2, VL('gd').t0 - 0.4), 420, 80);
+  caption([{ t: 'gradient descent', c: BP.mint }], win(VW('gd', 'gradient') - 0.1, S_BACK + 0.2), 420, 92);
+}
+
+// 6 — backpropagation: the error at the output, pushed back, blame per weight
+function beatBack() {
+  const a = win(S_BACK + 0.3, S_BND + 0.5, 0.5); if (a <= 0) return;
+  const show = [1, 1, 1, 1].map((v, l) => EZ.o2(seg(TT, S_BACK + 0.3 + (3 - l) * 0.15, S_BACK + 0.9 + (3 - l) * 0.15)));
+  const tb0 = VW('back', 'backwards') - 0.4, tb1 = VL('back').t1 + 0.2, back = TT < tb0 ? null : TT < tb1 ? seg(TT, tb0, tb1) : 1 + mod((TT - tb1) / 1.6, 1) * 0.999;
+  const P = drawNet({ a, show, Wt: NN.W0, blame: NN.G0, back, x: NET_X, cy: 920, gapY: 260, outC: BP.magenta });
+  const ea = win(VW('back', 'error') - 0.2, S_BND, 0.3);
+  if (ea > 0) OV(() => bpPill(`error ${NN.err[0].toFixed(2)}`, P[3][0][0], P[3][0][1] + 80, 40, BP.magenta, a * ea));
+  caption([{ t: 'millions of weights', c: BP.yellow, i: true }], win(VW('how', 'millions') - 0.2, VL('back').t0 + 0.6), 420, 76);
+  caption([{ t: 'handing out blame', c: BP.magenta, i: true }], win(VW('back', 'blame') - 0.2, VL('blame').t0 - 0.4), 420, 80);
+  const qa = win(VL('blame').t0 - 0.1, VL('bp').t0 + 0.3, 0.3);
+  if (qa > 0) OV(() => bpPill('how much blame does each weight carry?', 540, 430, 36, BP.magenta, a * qa));
+  caption([{ t: 'backpropagation', c: BP.mint }], win(VW('bp', 'backpropagation') - 0.1, S_BND + 0.2), 400, 88);
+  topTag('1986 · RUMELHART, HINTON & WILLIAMS', win(VW('bp', 'nineteen') - 0.1, S_BND + 0.2) * a);
+}
+
+// 7 — the boundary bends: the real network, snapshot by snapshot
+const PLANE = { cx: 540, cy: 800, s: 760 };
+const planeXY = (x, y) => [PLANE.cx + x / 2.15 * PLANE.s / 2, PLANE.cy - y / 2.15 * PLANE.s / 2];
+let FIELD = null, FIELD_K = -1;
+function fieldCanvas(Wt, key) {
+  if (FIELD_K === key && FIELD) return FIELD;
+  const N = 120; if (!FIELD) { FIELD = document.createElement('canvas'); FIELD.width = N; FIELD.height = N; }
+  const g = FIELD.getContext('2d'), img = g.createImageData(N, N), cm = bpHex('#0e6a4a'), cb = bpHex('#1d3f6e'), cl = bpHex('#e4e3dc');
+  for (let j = 0; j < N; j++) for (let i = 0; i < N; i++) {
+    const x = (i / (N - 1) - 0.5) * 4.3, y = -(j / (N - 1) - 0.5) * 4.3, p = NN.predict(Wt, x, y), e = Math.exp(-Math.pow((p - 0.5) / 0.06, 2));
+    const c = p > 0.5 ? cm : cb, o = (j * N + i) * 4;
+    img.data[o] = lerp(c[0], cl[0], e * 0.8); img.data[o + 1] = lerp(c[1], cl[1], e * 0.8); img.data[o + 2] = lerp(c[2], cl[2], e * 0.8); img.data[o + 3] = 255;
+  }
+  g.putImageData(img, 0, 0); FIELD_K = key; return FIELD;
+}
+const epochAt = (t) => Math.round(NN.EPOCHS * 0.5 * Math.pow(seg(t, VL('learning').t0, VL('nobody').t1), 3.4) / NN.SNAP) * NN.SNAP;
+function drawPlane(a, Wt, key, o = {}) {
+  const f = fieldCanvas(Wt, key), s = PLANE.s;
+  ctx.save(); ctx.globalAlpha = clamp(a); ctx.imageSmoothingEnabled = true;
+  trace(rrectPts(PLANE.cx - s / 2, PLANE.cy - s / 2, s, s, 18, 6), true); ctx.clip();
+  ctx.drawImage(f, PLANE.cx - s / 2, PLANE.cy - s / 2, s, s); ctx.restore();
+  ctx.save(); ctx.globalAlpha = clamp(a); ctx.strokeStyle = BP.line; ctx.lineWidth = 3; trace(rrectPts(PLANE.cx - s / 2, PLANE.cy - s / 2, s, s, 18, 6), true); ctx.stroke(); ctx.restore();
+  if (o.dots !== false) NN.X.forEach(([x, y], k) => {
+    const [px, py] = planeXY(x, y), R = RNG('dot', k), da = o.dotA ? o.dotA(k, R) : 1; if (da <= 0) return;
+    const dx = o.burst ? Math.cos(R.r(0, TAU)) * o.burst * R.r(200, 700) : 0, dy = o.burst ? Math.sin(R.r(0, TAU)) * o.burst * R.r(200, 700) : 0;
+    const c = NN.Y[k] ? BP.mint : BP.azure, wrong = (NN.predict(Wt, x, y) > 0.5) !== !!NN.Y[k];
+    bpDot(px + dx, py + dy, 9, c, a * da);
+    if (wrong && o.wrong !== false) { ctx.save(); ctx.globalAlpha = a * da; ctx.strokeStyle = BP.magenta; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(px, py, 15, 0, TAU); ctx.stroke(); ctx.restore(); }
+  });
+}
+function beatBoundary() {
+  const a = win(S_BND + 0.3, S_SCALE + 0.4, 0.5); if (a <= 0) return;
+  const e = epochAt(TT), Wt = NN.snaps[e / NN.SNAP];
+  drawPlane(a, Wt, e, { dotA: (k, R) => EZ.back(seg(TT, VL('learning').t0 - 0.3 + R.r(0, 0.6), VL('learning').t0 + R.r(0.2, 0.9))) });
+  // the error curve under the plane
+  const ca = fadeIn(VL('learning').t0, 0.4) * a;
+  if (ca > 0) {
+    const x0 = 160, x1 = 920, y0 = 1350, h = 120, n = Math.max(1, e);
+    ctx.save(); ctx.globalAlpha = ca; ctx.strokeStyle = BP.dim; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(x0, y0 - h); ctx.lineTo(x0, y0); ctx.lineTo(x1, y0); ctx.stroke();
+    ctx.strokeStyle = BP.magenta; ctx.lineWidth = 4; ctx.beginPath();
+    for (let i = 0; i <= n; i += 2) { const x = x0 + (x1 - x0) * i / (NN.EPOCHS * 0.5), y = y0 - h * Math.min(1, NN.err[i] / NN.err[0]); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }
+    ctx.stroke(); ctx.restore();
+    OV(() => {
+      bpText('error', 180, 1250, 34, BP.magenta, { font: BP.mono, align: 'left', alpha: ca });
+      bpText(`epoch ${e}`, 330, 1440, 50, BP.soft, { font: BP.mono, alpha: ca });
+      bpText(`${Math.round(NN.acc(Wt) * 100)}% right`, 750, 1440, 50, BP.mint, { font: BP.mono, weight: 700, alpha: ca });
+    });
+  }
+  caption([{ t: 'the decision boundary', c: BP.text, i: true }], win(VW('boundary', 'decision') - 0.2, VL('nobody').t0 + 0.4), 360, 70);
+  caption([{ t: 'nobody drew this curve', c: BP.mint, i: true }], win(VW('nobody', 'curve') - 0.3, S_SCALE + 0.1), 360, 70);
+}
+// =====================================================================
+//  S3 — the scale, the strangest part, a cat never seen, downhill; the stage, the camera and the sound cues
+// =====================================================================
+const commas = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+function beatScale() {
+  const a = win(S_SCALE + 0.2, VL('strange').t0 - 0.3, 0.4); if (a <= 0) return;
+  const tB = VW('llm', 'hundreds') - 0.1, tT = VW('llm', 'trillions') - 0.1, tS = VL('size').t0;
+  // a field of dots that multiplies: 151, then far too many to count
+  const nDots = Math.round(151 * Math.pow(30, EZ.i2(seg(TT, tB, tB + 2.2))));
+  for (let i = 0; i < Math.min(nDots, 4500); i++) {
+    const R = RNG('fld', i), x = R.r(60, 1020), y = R.r(260, 1660), tw = 0.35 + 0.35 * Math.sin(TT * R.r(1, 3) + i);
+    bpDot(x, y, i < 151 ? 4.5 : 2.6, i < 151 ? BP.yellow : bpMix(BP.yellow, BP.ground, 0.45), a * tw * (i < 151 ? 1 : 0.8) * fadeIn(S_SCALE + 0.2 + (i % 151) * 0.018, 0.2));
+  }
+  OV(() => {
+    const big = TT < tB ? Math.round(151 * EZ.o2(seg(TT, S_SCALE + 0.3, VL('count').t1))) : Math.round(lerp(151, 175e9, EZ.i2(seg(TT, tB, tB + 1.6))));
+    ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = bpA(BP.ground, 0.82); ctx.fillRect(40, 690, 1000, 330); ctx.restore();
+    bpText(big <= 151 ? String(big) : commas(big), 540, 860, big <= 151 ? 200 : 104, BP.yellow, { font: BP.mono, weight: 700, alpha: a, glow: 24 });
+    bpText('weights', 540, 940, 50, BP.soft, { font: BP.mono, alpha: a });
+    const ga = fadeIn(VW('llm', 'billions'), 0.3);
+    if (ga > 0) bpText('GPT-3 (2020): 175 billion', 540, 1000, 38, BP.soft, { font: BP.mono, alpha: a * ga });
+    const wa = fadeIn(tT, 0.35);
+    if (wa > 0) { bpText('15,000,000,000,000+', 540, 1250, 76, BP.mint, { font: BP.mono, weight: 700, alpha: a * wa }); bpText('tokens read · Llama 3 (2024)', 540, 1320, 38, BP.soft, { font: BP.mono, alpha: a * wa }); }
+    const sa = fadeIn(tS, 0.3);
+    if (sa > 0) bpLines([{ t: 'Change the size.', c: BP.text }, { t: 'Same operation.', c: BP.mint, i: true }], 540, 420, 76, BP.text, a * sa);
+  });
+  caption([{ t: '2 × 10 + 10 + 10 × 10 + 10 + 10 + 1', c: BP.soft }], win(VW('count', 'hundred') - 0.2, tB - 0.1) * 1, 1180, 40, { font: BP.mono });
+}
+
+function beatStrange() {
+  const a = win(VL('strange').t0 - 0.05, HIT, 0.25); if (a <= 0) return;
+  OV(() => bpText('the strangest part', 540, 960, 86, BP.magenta, { italic: true, alpha: a, glow: 18 }));
+}
+
+// the payoff: the trained field without its examples; numbers carved into it; unseen points, all right; a new cat
+function beatUnseen() {
+  const a = win(HIT, S_END + 0.5, 0.15); if (a <= 0) return;
+  const Wt = NN.WF, tM = VL('moved').t0, tC = VL('cat').t0;
+  const burst = EZ.i2(seg(TT, HIT + 0.05, HIT + 1.1)), fieldA = a * (1 - fadeIn(tC + 0.2, 0.5) * 0.92);
+  drawPlane(fieldA, Wt, 'final', { burst, dotA: () => 1 - burst, wrong: false });
+  if (burst < 1) OV(() => bpText('0 examples kept', 540, 360, 64, BP.magenta, { font: BP.mono, weight: 700, alpha: a * fadeIn(HIT + 0.3, 0.3) }));
+  else OV(() => bpText('0 examples kept', 540, 360, 64, BP.magenta, { font: BP.mono, weight: 700, alpha: a * fadeOut(tM + 1.2, 0.4) }));
+  // the 151 weights, as numbers, falling into the field
+  const W = NN.flat(Wt), mu = seg(TT, tM, tM + 3.2);
+  if (mu > 0 && mu < 1) W.forEach((w, i) => {
+    const R = RNG('wfall', i), u = clamp((mu - R.r(0, 0.6)) / 0.4); if (u <= 0 || u >= 1) return;
+    const x0 = R.r(120, 960), y0 = R.r(-40, 240), [x1, y1] = planeXY(R.r(-1.6, 1.6), R.r(-1.6, 1.6));
+    bpText(w.toFixed(2), lerp(x0, x1, EZ.i2(u)), lerp(y0, y1, EZ.i2(u)), 26, BP.yellow, { font: BP.mono, alpha: a * (1 - u * 0.7) });
+  });
+  OV(() => bpText('151 numbers', 540, 1340, 56, BP.yellow, { font: BP.mono, alpha: a * win(tM + 0.3, VW('cat', 'recognizes') - 0.95, 0.3) }));
+  // unseen points land, each one judged right
+  const ua = fadeIn(VW('cat', 'recognizes') - 0.6, 0.3);
+  let right = 0;
+  NN.XT.forEach(([x, y, c], i) => {
+    const t0 = VW('cat', 'recognizes') - 0.6 + i * 0.06, s = EZ.back(seg(TT, t0, t0 + 0.25)); if (s <= 0) return;
+    const [px, py] = planeXY(x, y), ok = (NN.predict(Wt, x, y) > 0.5) === !!c; if (ok && s >= 1) right++;
+    bpDot(px, py, 12 * s, '#ffffff', fieldA); ctx.save(); ctx.globalAlpha = fieldA; ctx.strokeStyle = ok ? BP.mint : BP.magenta; ctx.lineWidth = 4; ctx.beginPath(); ctx.arc(px, py, 20 * s, 0, TAU); ctx.stroke(); ctx.restore();
+  });
+  if (ua > 0) OV(() => { bpText('points it has never seen', 540, 1340, 44, BP.text, { font: BP.mono, alpha: a * ua * fadeOut(tC + 0.3) }); bpText(`${right} / ${NN.XT.length}`, 540, 1440, 84, BP.mint, { font: BP.mono, weight: 700, alpha: a * ua * fadeOut(tC + 0.4) }); });
+  // a new cat, never seen, assembling over the field; CAT ✓
+  const cb = seg(TT, tC + 0.1, VW('cat', 'seen') + 0.2);
+  if (cb > 0) {
+    drawCat(CAT_B, 540, 900, 44, a, { build: cb });
+    const k = EZ.back(seg(TT, VW('cat', 'seen'), VW('cat', 'seen') + 0.3));
+    OV(() => { bpText('CAT', 520, 1300, 92, BP.mint, { font: BP.mono, weight: 700, alpha: a * fadeIn(VW('cat', 'seen') - 0.2, 0.25), spacing: 8 });
+      if (k > 0) { ctx.save(); ctx.globalAlpha = a; ctx.strokeStyle = BP.mint; ctx.lineWidth = 9; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.beginPath(); ctx.moveTo(650, 1272); ctx.lineTo(650 + 18 * k, 1292); ctx.lineTo(650 + 52 * k, 1292 - 46 * k); ctx.stroke(); ctx.restore(); } });
+  }
+}
+
+// the end: downhill, blindfolded; Bitstory
+function beatEnd() {
+  if (TT < S_END) return;
+  caption([{ t: 'Learning is walking downhill,', c: BP.text }, { t: 'blindfolded, millions of times.', c: BP.mint, i: true }], fadeIn(VL('end').t0, 0.4), 380, 58);
+  const tS = VL('end').t1 + 0.1, sa = fadeIn(tS, 0.2);
+  if (sa > 0) OV(() => {
+    ctx.save(); ctx.font = `700 72px ${BP.mono}`; const w1 = ctx.measureText('Bit').width, w = ctx.measureText('Bitstory').width; ctx.restore();
+    const n = Math.round(8 * seg(TT, tS, tS + 0.6)), x0 = 540 - w / 2;
+    bpText('Bit'.slice(0, n), x0, 1482, 72, BP.mint, { font: BP.mono, weight: 700, align: 'left', alpha: sa, glow: 18 });
+    if (n > 3) bpText('story'.slice(0, n - 3), x0 + w1, 1482, 72, BP.magenta, { font: BP.mono, weight: 700, align: 'left', alpha: sa, glow: 18 });
+    if (n < 8 || Math.floor(TT * 2.5) % 2) { ctx.save(); ctx.globalAlpha = sa; ctx.fillStyle = BP.text; ctx.font = `700 72px ${BP.mono}`; const cw = ctx.measureText('Bitstory'.slice(0, n)).width; ctx.fillRect(x0 + cw + 6, 1426, 30, 64); ctx.restore(); }
+  });
+}
+
+// =====================================================================
+//  the stage and the camera
+// =====================================================================
+function sceneStage() {
+  bpGround();
+  for (let i = 0; i < 26; i++) {   // motes: slow drifting dust
+    const R = RNG('mote', i), x = mod(R.r(0, W) + TT * R.r(-8, 8), W), y = mod(R.r(0, H) - TT * R.r(4, 14), H);
+    bpDot(x, y, R.r(1.5, 3), BP.dim, 0.35 + 0.25 * Math.sin(TT * R.r(0.5, 1.5) + i));
+  }
+  beatCat(); beatNeuron(); beatNetwork(); beatLand(); beatBack(); beatBoundary(); beatScale(); beatStrange(); beatUnseen(); beatEnd();
+  const fl = 1 - seg(TT, HIT, HIT + 0.3);   // the hit: a mint flash
+  if (fl > 0 && fl < 1) OV(() => { ctx.save(); ctx.globalAlpha = 0.5 * fl * fl; ctx.fillStyle = BP.mint; ctx.fillRect(-100, 0, W + 200, H); ctx.restore(); });
+}
+function pieceCam(era, t) {
+  // slow push on the cat, a push toward the bottom of the bowl on "flat", a slow drift everywhere
+  const slow = 1 + 0.07 * EZ.io(seg(t, VL('neuron').t0, S_NET)) * (1 - seg(t, S_NET, S_NET + 0.8)) + 0.06 * EZ.io(seg(t, VL('compare').t0, S_LAND)) * (1 - seg(t, S_LAND, S_LAND + 0.6))
+    + 0.08 * EZ.io(seg(t, VL('blame').t0, S_BND)) * (1 - seg(t, S_BND, S_BND + 0.6)) + 0.08 * EZ.io(seg(t, VL('nobody').t0, S_SCALE)) * (1 - seg(t, S_SCALE, S_SCALE + 0.6));
+  const z = slow * springTrack([[0, 1.0], [0.3, 1.05], [S_NEU, 1.0], [VL('flat').t0, 1.12], [VL('gd').t0 + 0.3, 1.0], [S_BND, 1.0], [VL('nobody').t0, 1.06], [S_SCALE, 1.0]], SPRING.heavy) * (1 + 0.01 * Math.sin(t * 0.4));
+  const py = springTrack([[0, 960], [VL('flat').t0, 1150], [VL('gd').t0 + 0.3, 960]], SPRING.heavy);
+  return camOf({ z, p: [540, py], to: [540 + SHIFT, py] });
+}
+
+// =====================================================================
+//  the sound-effect cues (synthesized in src/score.js)
+// =====================================================================
+window.SFX_CUES = (() => {
+  const C = [], q = (t) => +t.toFixed(3), add = (id, t, pan = 0) => C.push({ id, t: q(t), pan });
+  for (let i = 0; i < 12; i++) add('pix' + i, 0.15 + i * 0.16, (i % 5 - 2) * 0.15);       // the cat's pixels landing
+  add('check', VW('rules', 'right') - 0.05);
+  add('numbers', VL('numbers').t0 + 0.1);
+  ['inputs', 'weight', 'adds', 'squashes'].forEach((w, i) => add('op' + i, VW('neuron', w), -0.2 + i * 0.13));
+  add('curve', VW('neuron', 'curve') + 0.6);
+  for (let l = 0; l < 4; l++) add('layer' + l, VW('stack', 'stacking') - 0.2 + l * 0.45, (l - 1.5) * 0.2);
+  add('flow', VW('layers', 'layer', 2) - 0.2); add('flow2', VW('twoin', 'go'));
+  add('pixels', VW('pixels', 'thousands') - 0.2);
+  add('flicker', VL('random').t0 + 0.2);
+  add('says', VW('compare', 'answer') - 0.2); add('should', VW('compare', 'right') - 0.1);
+  add('err', VL('error').t0 - 0.05);
+  add('rise', VL('landscape').t0);
+  let last = -9; for (let t = VW('down', 'down'); t < VL('flat').t1; t += 0.02) {   // a soft step per visible descent step
+    const s = Math.floor(stepAt(t)); if (s > (C._s ?? -1) && t - last > 0.14) { C._s = s; last = t; add('step', t, 0.1); } }
+  add('gd', VW('gd', 'gradient') - 0.1);
+  add('back', VW('back', 'backwards') - 0.4); add('back2', VW('back', 'layer') - 0.1);
+  add('y1986', VW('bp', 'nineteen') - 0.1);
+  for (let k = 0; k < 14; k++) add('epoch', lerp(VL('learning').t0, VL('nobody').t1, Math.pow(k / 13, 0.7)), 0.15);
+  add('count', VW('count', 'hundred') - 0.2);
+  add('swell', VW('llm', 'hundreds') - 0.1); add('tokens', VW('llm', 'trillions') - 0.1);
+  add('size', VL('size').t0);
+  add('hit', HIT);
+  add('burst', HIT + 0.1);
+  add('fall', VL('moved').t0 + 0.4);
+  for (let i = 0; i < NN.XT.length; i += 2) add('unseen', VW('cat', 'recognizes') - 0.6 + i * 0.06, 0.2);
+  add('check2', VW('cat', 'seen'));
+  const tS = VL('end').t1 + 0.1; for (let i = 0; i < 8; i++) add('key' + i, tS + (i + 0.5) * 0.6 / 8, -0.2 + i * 0.05);
+  delete C._s;
+  return C.sort((a, b) => a.t - b.t);
+})();
+// no bridges: one continuous stage; the transitions (planks -> dots -> word -> ship) are drawn in the scene
+const ERA_BG = ['#0b1014'];
+const BRIDGES = [];
+
+// =====================================================================
+//  kit/morph.js — the renderer for pieces built from ERAS (scenes) joined by SHAPE MORPHS.
+//
+//  At each bridge time tc:
+//    shrink [tc-d, tc-m]      the old era is seen through a window shaped like the bridge object (STYLE.window),
+//                             shrinking onto the object while the backdrop fades to blank paper
+//    morph  [tc-m, tc+m]      on blank paper, the object's outline blends into its counterpart's
+//                             (both resampled by angle around their centroids; colour lerped). Hero-to-hero
+//                             bridges draw the hero itself with blended position, size and ray count.
+//    grow   [tc+m, tc+d]      the new era opens out of a window shaped like the counterpart
+//    d = the bridge's half-length (default 0.6s, so a bridge costs 1.2s), m = the morph's half (default 0.2s, or d/3 when d is set).
+//    Short pieces: { tc, d: 0.4 } (0.8s) or fewer bridges — see craft.md -> Transitions.
+//  Era boundaries WITHOUT a bridge are hard cuts (keep at most one: the slam).
+//
+//  The piece defines (in its head / src):
+//    ERA_LIST = [[t0, t1, () => drawScene()], ...]      scenes draw in world coords, call yearTag()/capStrip()
+//    ERA_BG   = ['#hex', ...]                          each era's dominant colour (for the fade to paper)
+//    BRIDGES  = [{ tc, A: () => shape, B: () => shape, d?, m? }]   shape = { P: points, c: '#hex' } or SP(x, y, r, rays)
+//    function pieceCam(era, t) { return null | CAM }   optional; use push() / bump() below
+//  Shapes are in each era's world coords; the bridge object must be in frame at tc (pull push-ins back first).
+//  The look comes from the style kit's STYLE hooks (paper, backdrop, window, blob, hero, post, ones):
+//  this file draws nothing itself, so the same piece structure works in any style.
+// =====================================================================
+// ---- cameras: CAM = { z, tx, ty }; camOf({ z, p, to }) puts world point p on screen point to
+const CAM0 = { z: 1, tx: 0, ty: 0 };
+const camOf = (c) => ({ z: c.z, tx: c.to[0] - c.z * c.p[0], ty: c.to[1] - c.z * c.p[1] });
+const camMix = (a, b, u) => ({ z: lerp(a.z, b.z, u), tx: lerp(a.tx, b.tx, u), ty: lerp(a.ty, b.ty, u) });
+// an eased push-in over [a, b] to cam, optionally pulled back over [oa, ob]
+function push(t, a, b, cam, oa, ob) { let u = EZ.io(seg(t, a, b)); if (oa != null) u *= 1 - EZ.io(seg(t, oa, ob)); return u > 0 ? camMix(CAM0, camOf(cam), u) : null; }
+// a zoom bump on every beat from t0, centred on point p (the hero keeps its screen spot)
+function bump(t, t0, p, amt = 0.3, every = 0.5) { return camOf({ z: 1 + amt * Math.exp(-mod(t - t0, every) * 7), p, to: p }); }
+function camAt(era, t) { return (typeof pieceCam === 'function' && pieceCam(era, t)) || CAM0; }
+const camPts = (P, c) => P.map(([x, y]) => [c.z * x + c.tx, c.z * y + c.ty]);
+// ---- bridge shapes
+function starPts(x, y, r, n, r0 = -Math.PI / 2, m = 96) {
+  const P = []; for (let i = 0; i < m; i++) { const a = i / m * TAU, k = 0.42 + 0.58 * (0.5 + 0.5 * Math.cos(n * (a - r0))) ** 3; P.push([x + Math.cos(a) * r * k, y + Math.sin(a) * r * k]); }
+  return P;
+}
+const SP = (x, y, r, n) => ({ spark: [x, y, r, n] });
+const shapeOf = (s) => (s.spark ? { P: (STYLE.heroPts || starPts)(...s.spark), c: STYLE.heroColor, spark: s.spark } : s);
+function byAngle(P, m = 96) {   // resample a closed outline to m points by angle around its centroid
+  const c = P.reduce((a, p) => [a[0] + p[0] / P.length, a[1] + p[1] / P.length], [0, 0]), Q = resample(P, true, 4), out = [];
+  for (let i = 0; i < m; i++) {
+    const a = -Math.PI + i / m * TAU; let best = null, bd = 1e9;
+    for (const q of Q) { let d = Math.atan2(q[1] - c[1], q[0] - c[0]) - a; d = Math.abs(Math.atan2(Math.sin(d), Math.cos(d))); const r = Math.hypot(q[0] - c[0], q[1] - c[1]); if (d < bd - 1e-4 || (Math.abs(d - bd) < 1e-4 && r > best[2])) { bd = d; best = [q[0], q[1], r]; } }
+    out.push([best[0], best[1]]);
+  }
+  return { P: out, c };
+}
+const mixHex = (a, b, u) => { const p = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16)); const x = p(a), y = p(b); return `rgb(${x.map((v, i) => Math.round(lerp(v, y[i], u))).join(',')})`; };
+function maskK(P) {   // how far the window must scale about its centroid to cover the frame
+  const c = P.reduce((a, p) => [a[0] + p[0] / P.length, a[1] + p[1] / P.length], [0, 0]);
+  const rmin = Math.max(8, Math.min(...byAngle(P, 48).P.map((p) => Math.hypot(p[0] - c[0], p[1] - c[1]))));
+  const far = Math.max(...[[0, 0], [W, 0], [0, H], [W, H]].map((q) => Math.hypot(q[0] - c[0], q[1] - c[1])));
+  return { c, kmax: far / rmin * 1.1 };
+}
+const scaled = (P, c, k) => P.map(([x, y]) => [c[0] + (x - c[0]) * k, c[1] + (y - c[1]) * k]);
+// ---- layers and windows
+const LAYER = [];
+function layer(i) { if (!LAYER[i]) { const c = document.createElement('canvas'); c.width = W; c.height = H; LAYER[i] = c; } return LAYER[i]; }
+function renderEra(e, target) {   // draws era e into target; returns its overlay queue (year tag, caption)
+  const saved = ctx; ctx = target.getContext('2d');
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ctx.filter = 'none'; ctx.setLineDash([]);
+  ctx.fillStyle = STYLE.paper; ctx.fillRect(0, 0, W, H);   // a clean sheet every frame: nothing carries over between frames
+  const cam = camAt(e, TT); ctx.setTransform(cam.z, 0, 0, cam.z, cam.tx, cam.ty);
+  DEFER = []; ERA_LIST[e][2](); const q = DEFER; DEFER = null;
+  ctx.restore(); ctx = saved;
+  return q;
+}
+function flush(q, e) { const keep = E0; E0 = ERA_LIST[e][0]; ctx.setTransform(1, 0, 0, 1, 0, 0); q.forEach((f) => f()); E0 = keep; }
+function shotAtFrame(fr) {
+  for (const s of TIMELINE.shots) if (fr >= Math.round(s.t0 * FPS) && fr < Math.round(s.t1 * FPS)) return s;
+  return TIMELINE.shots[TIMELINE.shots.length - 1];
+}
+const eraAt = (t) => ERA_LIST.findIndex(([a, b]) => t >= a - 1e-6 && t < b - 1e-6);
+// renderFrame(t, canvas, sub): sub = true draws the exact time t between frames (motion blur sub-frames, styles on 1s)
+function renderFrame(t, canvas, sub) {
+  const cv = canvas || document.getElementById('c');
+  ctx = cv.getContext('2d');
+  F = ((Math.floor(sub ? t * FPS + 1e-6 : Math.round(t * FPS)) % NFRAMES) + NFRAMES) % NFRAMES;
+  B = Math.floor(F / 2);
+  TT = (STYLE.ones ? (sub ? F + (t * FPS - Math.floor(t * FPS + 1e-6)) : F) : B * 2) / FPS;
+  // the era is picked by the real frame, so a cut on an odd frame (a 16th at 24fps) lands on that frame;
+  // on its first frame the new era is drawn at its own start time (motion stays on 2s inside it)
+  const s = shotAtFrame(F), e = Math.max(0, eraAt(F / FPS));
+  E0 = ERA_LIST[e][0];
+  if (TT < E0 - 1e-6) TT = E0;
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over'; ctx.setLineDash([]); ctx.filter = 'none';
+  SPARK_AT = null;
+  const bd = (r) => r.d ?? 0.6, bm = (r) => r.m ?? (r.d != null ? r.d / 3 : 0.2);
+  const tr = BRIDGES.find((r) => TT >= r.tc - bd(r) - 1e-6 && TT < r.tc + bd(r) - 1e-6);
+  if (!tr) {
+    const q = renderEra(e, layer(0)); ctx.drawImage(layer(0), 0, 0); flush(q, e);
+  } else {
+    const ea = eraAt(tr.tc - 0.01), eb = eraAt(tr.tc + 0.01);
+    const sa = shapeOf(tr.A()), sb = shapeOf(tr.B());
+    const PA = camPts(sa.P, camAt(ea, TT)), PB = camPts(sb.P, camAt(eb, TT));
+    const D = bd(tr), M = bm(tr);
+    if (TT < tr.tc - M) {
+      const u = EZ.i2(seg(TT, tr.tc - D, tr.tc - M)), { c, kmax } = maskK(PA), k = Math.exp(lerp(Math.log(kmax), 0, u));
+      STYLE.backdrop(mixHex(ERA_BG[ea], STYLE.paper, 0.5 + u * 0.5), { eraA: ea, eraB: eb, u, phase: 'shrink' });
+      const q = renderEra(ea, layer(0));
+      STYLE.window(scaled(PA, c, k), 'mA' + tr.tc, layer(0), { c: sa.c, u, phase: 'shrink', eraA: ea, eraB: eb });
+      flush(q, ea);
+    } else if (TT < tr.tc + M) {
+      const u = EZ.io(seg(TT, tr.tc - M, tr.tc + M));
+      STYLE.backdrop(STYLE.paper, { eraA: ea, eraB: eb, u, phase: 'morph' });
+      if (sa.spark && sb.spark) {
+        const ca = camAt(ea, TT), cb = camAt(eb, TT), [ax, ay] = camPts([sa.spark.slice(0, 2)], ca)[0], [bx, by] = camPts([sb.spark.slice(0, 2)], cb)[0];
+        STYLE.hero(lerp(ax, bx, u), lerp(ay, by, u), lerp(sa.spark[2] * ca.z, sb.spark[2] * cb.z, u), { rays: Math.round(lerp(sa.spark[3], sb.spark[3], u)), mood: 'wow', key: 'morphspark' });
+      } else {
+        const A2 = byAngle(PA), B2 = byAngle(PB), M = A2.P.map((p, i) => [lerp(p[0], B2.P[i][0], u), lerp(p[1], B2.P[i][1], u)]);
+        STYLE.blob(M, mixHex(sa.c, sb.c, u), 'morph' + tr.tc, u, { eraA: ea, eraB: eb, phase: 'morph' });
+        if (sb.spark && u > 0.6) STYLE.hero(...camPts([sb.spark.slice(0, 2)], camAt(eb, TT))[0], sb.spark[2] * clamp((u - 0.6) / 0.4), { rays: sb.spark[3], mood: 'wow', key: 'morphspark2' });
+      }
+    } else {
+      const u = EZ.o2(seg(TT, tr.tc + M, tr.tc + D)), { c, kmax } = maskK(PB), k = Math.exp(lerp(0, Math.log(kmax), u));
+      STYLE.backdrop(mixHex(STYLE.paper, ERA_BG[eb], u * 0.5), { eraA: ea, eraB: eb, u, phase: 'grow' });
+      const q = renderEra(eb, layer(0));
+      STYLE.window(scaled(PB, c, k), 'mB' + tr.tc, layer(0), { c: sb.c, u, phase: 'grow', eraA: ea, eraB: eb });
+      flush(q, eb);
+    }
+  }
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  if (STYLE.post) STYLE.post();
+  ctx.restore();
+  return s.id;
+}
+window.renderFrame = renderFrame;
+window.anchorAt = () => (SPARK_AT ? { x: SPARK_AT[0], y: SPARK_AT[1] } : null);
+
+// =====================================================================
+//  kit/board.js — the storyboard: every beat in TIMELINE.board drawn as a 9:16 key frame with its notes.
+//  The panels ARE the piece: each one is renderFrame(t) at the beat's key time, so an approved board
+//  carries straight into the video.  TIMELINE.board = [{ t, title, sound, next }]
+//  Render: node tools/storyboard.mjs <piece dir> [out.png] [panel numbers...]
+// =====================================================================
+function drawPanel(k) { renderFrame(TIMELINE.board[k].t, ctx.canvas); }
+function renderBoard() {
+  const BD = TIMELINE.board || [], COLS = 5, PW = 360, PH = Math.round(PW * H / W), GAP = 30, NOTE = 130, HEAD = 150;
+  const rows = Math.ceil(BD.length / COLS), bc = document.createElement('canvas');
+  bc.width = GAP + COLS * (PW + GAP); bc.height = HEAD + rows * (PH + NOTE + GAP);
+  const g = bc.getContext('2d'), SANS = '"Segoe UI", Arial, sans-serif';
+  g.fillStyle = '#2a211b'; g.fillRect(0, 0, bc.width, bc.height);
+  g.fillStyle = '#efe5cf'; g.font = `400 60px ${HAND}`; g.fillText(`${document.title}: storyboard`, GAP, 80);
+  g.font = `600 22px ${SANS}`; g.fillStyle = '#d9c9a8';
+  g.fillText(`${TIMELINE.duration}s · ${W}×${H} · ${TIMELINE.bpm} BPM · ${BD.length} beats. Thumbs up or down by panel number.`, GAP, 122);
+  const wrap = (str, x, y, maxW, lh) => { let line = ''; for (const w of str.split(' ')) { const t = line ? line + ' ' + w : w; if (g.measureText(t).width > maxW && line) { g.fillText(line, x, y); y += lh; line = w; } else line = t; } if (line) g.fillText(line, x, y); return y + lh; };
+  const pc = document.createElement('canvas'); pc.width = W; pc.height = H;
+  BD.forEach((b, k) => {
+    renderFrame(b.t, pc);
+    const x = GAP + (k % COLS) * (PW + GAP), y = HEAD + Math.floor(k / COLS) * (PH + NOTE + GAP);
+    g.drawImage(pc, x, y, PW, PH);
+    g.fillStyle = '#f0b27c'; g.font = `700 26px ${SANS}`; g.fillText(`${k + 1}`, x, y + PH + 32);
+    g.fillStyle = '#efe5cf'; g.font = `600 20px ${SANS}`;
+    let ttl = `${b.t.toFixed(1)}s · ${b.title || ''}`; while (ttl.length > 4 && g.measureText(ttl).width > PW - 44) ttl = ttl.slice(0, -2) + '…';   // fits the panel
+    g.fillText(ttl, x + 40, y + PH + 30);
+    g.font = `400 18px ${SANS}`; g.fillStyle = '#cdbd9c';
+    const yy = b.sound ? wrap('sound: ' + b.sound, x, y + PH + 58, PW, 22) : y + PH + 58;
+    if (b.next) { g.fillStyle = '#a8977a'; wrap('→ ' + b.next, x, yy + 2, PW, 22); }
+  });
+  return bc;
+}
+window.renderBoard = renderBoard; window.drawPanel = drawPanel;
+// =====================================================================
+//  kit/score-head.js — live preview (click to hear), noise/impulse/WAV helpers, and the synth.
+//  buildScore() opens here; the piece's score body follows (src/score.js), then kit/score-tail.js closes it.
+//  Helpers inside buildScore: pluck, noiseHit, sub, sweep, riser, chime, bass, blip, pad, drone, out, osc, env.
+//  Set `to = 'm'` (music bus) or `to = 's'` (sfx bus) before calling them. Notes: nz('D4').
+// =====================================================================
+// live preview: rAF on the 24fps grid; click to hear the score (?t=1.5 freezes a frame)
+const QS = new URLSearchParams(location.search);
+const LIVE = { audio: null, t0: 0, start: performance.now() };
+if (!QS.has('export')) {
+  const cv = document.getElementById('c');
+  if (QS.has('t')) renderFrame(parseFloat(QS.get('t')));
+  else {
+    const tick = () => {
+      const sec = LIVE.audio ? LIVE.audio.currentTime - LIVE.t0 : (performance.now() - LIVE.start) / 1000;
+      const t = ((sec % LOOP_T) + LOOP_T) % LOOP_T;
+      renderFrame(Math.floor(t * FPS) / FPS);
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+  cv.addEventListener('click', async () => {
+    if (LIVE.audio || typeof buildScore !== 'function') return;
+    const ac = new AudioContext(), score = await buildScore(ac.sampleRate);
+    const buf = ac.createBuffer(2, score.left.length, score.sampleRate);
+    buf.copyToChannel(score.left, 0); buf.copyToChannel(score.right, 1);
+    const src = ac.createBufferSource(); src.buffer = buf; src.loop = true; src.connect(ac.destination);
+    LIVE.t0 = ac.currentTime + 0.05; src.start(LIVE.t0); LIVE.audio = ac;
+  });
+}
+
+const HZ = {
+  A1: 55.0, D2: 73.42, F2: 87.31, A2: 110.0, D3: 146.83, F3: 174.61, A3: 220.0, C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23,
+  Fs4: 369.99, A4: 440.0, B4: 493.88, C5: 523.25, D5: 587.33, E5: 659.25, Fs5: 739.99, A5: 880.0, D6: 1174.66, A6: 1760.0,
+};
+function makeNoise(ac, sec) {
+  const b = ac.createBuffer(1, Math.floor(sec * ac.sampleRate), ac.sampleRate), d = b.getChannelData(0), R = RNG('noise');
+  for (let i = 0; i < d.length; i++) d[i] = R.f() * 2 - 1;
+  return b;
+}
+function makeImpulse(ac, sec, decay) {
+  const n = Math.floor(sec * ac.sampleRate), b = ac.createBuffer(2, n, ac.sampleRate);
+  for (let c = 0; c < 2; c++) { const d = b.getChannelData(c), R = RNG('ir', c); for (let i = 0; i < n; i++) d[i] = (R.f() * 2 - 1) * Math.pow(1 - i / n, decay); }
+  return b;
+}
+function encodeWav(left, right, sr) {
+  const n = left.length, buf = new ArrayBuffer(44 + n * 4), v = new DataView(buf);
+  const ws = (o, s) => { for (let i = 0; i < s.length; i++) v.setUint8(o + i, s.charCodeAt(i)); };
+  ws(0, 'RIFF'); v.setUint32(4, 36 + n * 4, true); ws(8, 'WAVE'); ws(12, 'fmt ');
+  v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 2, true); v.setUint32(24, sr, true);
+  v.setUint32(28, sr * 4, true); v.setUint16(32, 4, true); v.setUint16(34, 16, true);
+  ws(36, 'da' + 'ta'); v.setUint32(40, n * 4, true);
+  let o = 44;
+  for (let i = 0; i < n; i++) { v.setInt16(o, Math.round(clamp(left[i], -1, 1) * 32767), true); v.setInt16(o + 2, Math.round(clamp(right[i], -1, 1) * 32767), true); o += 4; }
+  return new Uint8Array(buf);
+}
+
+
+const MIDI = (m) => 440 * 2 ** ((m - 69) / 12);
+const NOTE = { D2: 38, A2: 45, D3: 50, E3: 52, Fs3: 54, A3: 57, D4: 62, E4: 64, Fs4: 66, G4: 67, A4: 69, B4: 71, Cs5: 73, D5: 74, E5: 76, Fs5: 78, A5: 81, B5: 83, D6: 86, E6: 88, Fs6: 90, A6: 93 };
+// any note name: 'D4', 'Fs4' / 'F#4' (sharp), 'Bb3' (flat); the table above is the fast path
+function noteNum(n) {
+  if (NOTE[n] != null) return NOTE[n];
+  const m = /^([A-G])(s|#|b)?(-?\d)$/.exec(n); if (!m) throw new Error(`unknown note "${n}"`);
+  return 12 * (Number(m[3]) + 1) + { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 }[m[1]] + (m[2] === 'b' ? -1 : m[2] ? 1 : 0);
+}
+const nz = (n) => MIDI(noteNum(n));
+async function buildScore(sampleRate = 48000, part = 'mix', normIn = null) {
+  const TAIL = 3.0, len = Math.ceil((LOOP_T + TAIL) * sampleRate);
+  const ac = new OfflineAudioContext(2, len, sampleRate);
+  const master = ac.createGain(); master.gain.value = 0.8;
+  const comp = ac.createDynamicsCompressor();
+  comp.threshold.value = -16; comp.knee.value = 10; comp.ratio.value = 3.5; comp.attack.value = 0.004; comp.release.value = 0.2;
+  master.connect(comp); comp.connect(ac.destination);
+  const musicBus = ac.createGain(), sfxBus = ac.createGain();
+  musicBus.gain.value = part === 'sfx' ? 0 : 1; sfxBus.gain.value = part === 'music' ? 0 : 1;
+  musicBus.connect(master); sfxBus.connect(master);
+  // ducking + presence dip, driven by the narration (lines closer than 0.29s are merged)
+  const duck = ac.createGain(), dip = ac.createBiquadFilter();
+  dip.type = 'peaking'; dip.frequency.value = 2500; dip.Q.value = 1;
+  duck.connect(dip); dip.connect(musicBus);
+  const lines = [];
+  for (const n of TIMELINE.narration) { const L = lines[lines.length - 1]; if (L && n.t0 - L.t1 < 0.29) L.t1 = n.t1; else lines.push({ t0: n.t0, t1: n.t1 }); }
+  const DUCK = 10 ** (-3 / 20);
+  duck.gain.setValueAtTime(1, 0); dip.gain.setValueAtTime(0, 0);
+  for (const L of lines) {
+    duck.gain.setValueAtTime(1, Math.max(0, L.t0 - 0.1)); duck.gain.linearRampToValueAtTime(DUCK, L.t0);
+    duck.gain.setValueAtTime(DUCK, L.t1 + 0.03); duck.gain.linearRampToValueAtTime(1, L.t1 + 0.18);
+    dip.gain.setValueAtTime(0, Math.max(0, L.t0 - 0.1)); dip.gain.linearRampToValueAtTime(-6, L.t0);
+    dip.gain.setValueAtTime(-6, L.t1 + 0.03); dip.gain.linearRampToValueAtTime(0, L.t1 + 0.18);
+  }
+  const mkVerb = (dest, sec = 1.6, decay = 2.8, level = 0.3) => { const v = ac.createConvolver(); v.buffer = makeImpulse(ac, sec, decay); const g = ac.createGain(); g.gain.value = level; v.connect(g); g.connect(dest); return v; };
+  const verbs = { m: mkVerb(duck), s: mkVerb(sfxBus) }, shortVerb = verbs.m, longVerb = mkVerb(duck, 3.6, 1.6, 0.55);
+  const noise = makeNoise(ac, 3.0);
+  let to = 'm';   // which bus the helpers below write to
+
+  // the gain is silent until the envelope starts (a GainNode defaults to 1: a note whose oscillator starts first would click)
+  const env = (g, t, a, peak, d) => { g.gain.value = 0.0001; g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(Math.max(0.0002, peak), t + a); g.gain.exponentialRampToValueAtTime(0.0001, t + a + d); };
+  const out = (node, pan = 0, send = 0) => {
+    const p = ac.createStereoPanner(); p.pan.value = clamp(pan, -1, 1); node.connect(p); p.connect(to === 'm' ? duck : sfxBus);
+    if (send) { const s = ac.createGain(); s.gain.value = send; node.connect(s); s.connect(verbs[to]); }
+  };
+  const osc = (type, f, t, stop) => { const o = ac.createOscillator(); o.type = type; o.frequency.setValueAtTime(f, t); o.start(t); o.stop(stop); return o; };
+  function pluck(t, f, vel, pan = 0, dur = 0.32, bright = 3200, send = 0.25) {
+    const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 2.5;
+    lp.frequency.setValueAtTime(bright, t); lp.frequency.exponentialRampToValueAtTime(380, t + dur);
+    const g = ac.createGain(); env(g, t, 0.003, vel, dur);
+    const g2 = ac.createGain(); g2.gain.value = 0.3;
+    osc('triangle', f, t, t + dur + 0.05).connect(lp);
+    osc('sine', f * 2.004, t, t + dur + 0.05).connect(g2); g2.connect(lp);
+    lp.connect(g); out(g, pan, send);
+  }
+  function noiseHit(t, dur, type, freq, q, vel, pan = 0, send = 0, sweepTo = 0) {
+    const src = ac.createBufferSource(); src.buffer = noise;
+    const f = ac.createBiquadFilter(); f.type = type; f.Q.value = q; f.frequency.setValueAtTime(freq, t);
+    if (sweepTo) f.frequency.exponentialRampToValueAtTime(sweepTo, t + dur);
+    const g = ac.createGain(); env(g, t, Math.min(0.004, dur * 0.3), vel, dur);
+    src.connect(f); f.connect(g); out(g, pan, send);
+    src.start(t, (t * 7.31) % 2.0); src.stop(t + dur + 0.05);
+  }
+  function sub(t, vel) {
+    const o = osc('sine', 120, t, t + 0.8); o.frequency.exponentialRampToValueAtTime(36, t + 0.3);
+    const g = ac.createGain(); env(g, t, 0.004, vel, 0.6); o.connect(g); out(g);
+    noiseHit(t, 0.07, 'lowpass', 1100, 0.7, vel * 0.45);
+  }
+  function sweep(t0, t1, vel, f0, f1, pan = 0) {
+    const src = ac.createBufferSource(); src.buffer = noise; src.loop = true;
+    const f = ac.createBiquadFilter(); f.type = 'bandpass'; f.Q.value = 1.1;
+    f.frequency.setValueAtTime(f0, t0); f.frequency.exponentialRampToValueAtTime(f1, t1);
+    const g = ac.createGain(); g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(vel, t1 - 0.03); g.gain.linearRampToValueAtTime(0.0001, t1 + 0.005);
+    src.connect(f); f.connect(g); out(g, pan, 0.2); src.start(t0, (t0 * 3.1) % 1.0); src.stop(t1 + 0.05);
+  }
+  function riser(t0, t1, vel) {
+    const o = osc('sawtooth', 110, t0, t1 + 0.02); o.frequency.exponentialRampToValueAtTime(1320, t1);
+    const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 6; lp.frequency.setValueAtTime(300, t0); lp.frequency.exponentialRampToValueAtTime(5000, t1);
+    const g = ac.createGain(); g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(vel, t1 - 0.01); g.gain.linearRampToValueAtTime(0.0001, t1 + 0.01);
+    o.connect(lp); lp.connect(g); out(g, 0, 0.3);
+    sweep(t0, t1, vel * 0.9, 400, 7000);
+  }
+  function chime(t, freqs, vel, pan = 0) {
+    freqs.forEach((f, i) => { const g = ac.createGain(), ti = t + i * 0.012; env(g, ti, 0.002, vel / (1 + i * 0.4), 1.3); osc('sine', f, ti, ti + 1.5).connect(g); out(g, pan + (i - 1) * 0.25, 0.6); });
+  }
+  function bass(t, f, vel) { const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 320; const g = ac.createGain(); env(g, t, 0.006, vel, 0.28); osc('triangle', f, t, t + 0.35).connect(lp); lp.connect(g); out(g); }
+  function blip(t, f0, f1, dur, vel, pan = 0) { const o = osc('sine', f0, t, t + dur + 0.05); o.frequency.exponentialRampToValueAtTime(f1, t + dur); const g = ac.createGain(); env(g, t, 0.002, vel, dur); o.connect(g); out(g, pan, 0.2); }
+
+  // ---- v2 instruments built from the helpers above
+  function pad(t0, t1, notes, peak, o = {}) {
+    const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = o.cut ?? 1200; lp.Q.value = 0.7;
+    const g = ac.createGain(), hold = o.swellTo ?? peak;
+    g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(peak, t0 + (o.att ?? 0.4));
+    if (o.swellTo) g.gain.linearRampToValueAtTime(o.swellTo, o.swellAt);
+    g.gain.setValueAtTime(hold, t1 - (o.rel ?? 0.3)); g.gain.exponentialRampToValueAtTime(0.0001, t1);
+    notes.forEach((n, i) => { for (const det of [-7, 7]) { const oo = osc(o.type ?? 'sawtooth', nz(n), t0, t1 + 0.05); oo.detune.value = det + i; oo.connect(lp); } });
+    lp.connect(g); out(g, o.pan ?? 0, o.send ?? 0.4);
+  }
+  function drone(t0, t1, f, peak, o = {}) {
+    const g = ac.createGain(); g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(peak, t0 + (o.att ?? 0.5));
+    g.gain.setValueAtTime(peak, t1 - (o.rel ?? 0.4)); g.gain.exponentialRampToValueAtTime(0.0001, t1);
+    osc('sine', f, t0, t1 + 0.05).connect(g); out(g, 0, 0);
+  }
+  const claudeMotif = (t, notes, vel) => notes.forEach(([n, dt], i) => pluck(t + dt, nz(n), vel, -0.15 + i * 0.1, 0.6, 1300, 0.35));
+  const childMotif = (t, notes, vel, bright = 5200, send = 0.3) => notes.forEach(([n, dt], i) => pluck(t + dt, nz(n), vel, 0.2 - i * 0.1, 0.32, bright, send));
+  // SCORE BODY — How a Machine Learns. Music = the user's track (piece.json "music", shaped by
+  // styles/bitpix/tools/shape_track.py); this body synthesizes only the sound effects, one per cue in window.SFX_CUES.
+  to = 's';
+  const tick = (t, f, v, pan = 0) => { blip(t, f, f * 0.8, 0.035, v, pan); noiseHit(t, 0.015, 'highpass', 4000, 1, v * 0.5, pan); };
+  const whoosh = (t, v, pan = 0, d = 0.45, f0 = 350, f1 = 2600) => sweep(t - d, t + 0.05, v, f0, f1, pan);
+  const rev = (t, v, d = 0.6) => sweep(t, t + d, v, 3000, 300, 0);                 // a reverse sweep: the blame going back
+  for (const c of window.SFX_CUES) {
+    const t = c.t, pan = c.pan ?? 0, id = c.id;
+    if (id.startsWith('pix')) tick(t, 1200 + (t * 977 % 900), 0.03, pan);
+    else if (id === 'check' || id === 'check2') { chime(t, [1318.5, 1975.5], 0.05, 0); if (id === 'check2') chime(t + 0.08, [2637], 0.03, 0.2); }
+    else if (id === 'numbers') for (let i = 0; i < 10; i++) tick(t + i * 0.05, 1800 + i * 90, 0.018, (i % 3 - 1) * 0.3);
+    else if (id.startsWith('op')) tick(t, 900 + Number(id[2]) * 180, 0.045, pan);
+    else if (id === 'curve') { blip(t, 500, 1100, 0.4, 0.03); }
+    else if (id.startsWith('layer')) { pluck(t, 220 + Number(id[5]) * 55, 0.1, pan, 0.18, 1600, 0.2); tick(t, 1400, 0.025, pan); }
+    else if (id === 'flow' || id === 'flow2') for (let i = 0; i < 9; i++) tick(t + i * 0.12, 1500 + i * 60, 0.016, (i % 3 - 1) * 0.35);
+    else if (id === 'pixels') for (let i = 0; i < 24; i++) { const R = RNG('pxs', i); tick(t + R.r(0, 0.9), R.r(1800, 3600), 0.012, R.r(-0.5, 0.5)); }
+    else if (id === 'flicker') for (let i = 0; i < 20; i++) { const R = RNG('flk', i); blip(t + i * 0.16, R.r(300, 1400), R.r(300, 1400), 0.05, 0.016, R.r(-0.4, 0.4)); }
+    else if (id === 'says') tick(t, 700, 0.05, -0.3);
+    else if (id === 'should') tick(t, 1050, 0.05, 0.3);
+    else if (id === 'err') { sub(t, 0.05); noiseHit(t, 0.15, 'lowpass', 600, 0.7, 0.03); }
+    else if (id === 'rise') riser(t, t + 1.4, 0.025);
+    else if (id === 'step') { pluck(t, 330, 0.05, pan, 0.08, 1200, 0.15); noiseHit(t, 0.02, 'bandpass', 2500, 3, 0.02, pan); }
+    else if (id === 'gd') chime(t, [880, 1318.5], 0.04, 0);
+    else if (id === 'back' || id === 'back2') rev(t, id === 'back' ? 0.05 : 0.035);
+    else if (id === 'y1986') tick(t, 1100, 0.04, 0);
+    else if (id === 'epoch') tick(t, 1500, 0.025, pan);
+    else if (id === 'count') pluck(t, 440, 0.1, 0, 0.3, 2000, 0.3);
+    else if (id === 'swell') riser(t, t + 1.6, 0.02);
+    else if (id === 'tokens') for (let i = 0; i < 16; i++) tick(t + i * 0.05, 2000 + i * 80, 0.012, (i % 3 - 1) * 0.4);
+    else if (id === 'size') whoosh(t + 0.3, 0.03, 0, 0.5);
+    else if (id === 'hit') {                                      // the payoff: a sub, a wide noise body and a bright stab
+      sub(t, 1.2); sub(t + 0.09, 0.6);
+      noiseHit(t, 0.8, 'lowpass', 2600, 0.7, 0.42, 0, 0.5, 300);
+      [['D3', 0], ['A3', 0.004], ['D4', 0.008], ['Fs4', 0.012], ['A4', 0.016]].forEach(([n, dt], i) => pluck(t + dt, nz(n), 0.2 - i * 0.02, (i - 2) * 0.2, 0.5, 3200, 0.5));
+    }
+    else if (id === 'burst') whoosh(t + 0.5, 0.045, 0, 0.5, 2600, 400);
+    else if (id === 'fall') for (let i = 0; i < 14; i++) { const R = RNG('fal', i); blip(t + R.r(0, 2.6), R.r(1400, 2400), R.r(500, 900), 0.12, 0.012, R.r(-0.5, 0.5)); }
+    else if (id === 'unseen') tick(t, 1300 + (t * 731 % 600), 0.035, pan);
+    else if (id.startsWith('key')) { noiseHit(t, 0.025, 'highpass', 3200, 1, 0.12, pan); blip(t, 1500, 1200, 0.02, 0.03, pan); }
+  }
+  // =====================================================================
+  //  kit/score-tail.js — render, fold the tail over the loop point, loudness stage
+  //  (RMS-normalise to -17 dBFS, look-ahead limiter at -1 dBFS; stems share the mix gain curve)
+  // =====================================================================
+  const buf = await ac.startRendering();
+  // fold the tail over the loop point so the loop is seamless
+  const N = Math.round(LOOP_T * sampleRate), L = new Float32Array(N), Rr = new Float32Array(N);
+  const c0 = buf.getChannelData(0), c1 = buf.getChannelData(1);
+  for (let i = 0; i < N; i++) { L[i] = c0[i] + (i + N < len ? c0[i + N] : 0); Rr[i] = c1[i] + (i + N < len ? c1[i + N] : 0); }
+  // loudness for a phone (subagents-short): RMS-normalise to -17 dBFS, then a look-ahead limiter at -1 dBFS.
+  // Stems reuse the mix's gain and gain curve, so they sum back to the mix.
+  let k = normIn?.k, g = normIn?.g;
+  if (!g) {
+    let sum = 0; for (let i = 0; i < N; i++) sum += (L[i] * L[i] + Rr[i] * Rr[i]) / 2;
+    k = 10 ** (-17 / 20) / Math.sqrt(sum / N || 1e-12);
+    const ceil = 0.89; g = new Float32Array(N);
+    for (let i = 0; i < N; i++) { const p = Math.max(Math.abs(L[i]), Math.abs(Rr[i])) * k; g[i] = p > ceil ? ceil / p : 1; }
+    const att = Math.exp(-1 / (0.0015 * sampleRate)), rel = Math.exp(-1 / (0.09 * sampleRate));
+    for (let i = N - 2; i >= 0; i--) g[i] = Math.min(g[i], 1 - (1 - g[i + 1]) * att);
+    let r = 1; for (let i = 0; i < N; i++) { r = Math.min(g[i], 1 - (1 - r) * rel); g[i] = r; }
+  }
+  for (let i = 0; i < N; i++) { L[i] *= k * g[i]; Rr[i] *= k * g[i]; }
+  return { left: L, right: Rr, sampleRate, norm: { k, g } };
+}
+function wavB64(s) {
+  const bytes = encodeWav(s.left, s.right, s.sampleRate);
+  let bin = '';
+  for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+  return btoa(bin);
+}
+async function renderAudioWav() { return wavB64(await buildScore(48000, 'mix')); }
+async function renderAudioStems() {
+  const mix = await buildScore(48000, 'mix');
+  const music = await buildScore(48000, 'music', mix.norm), sfx = await buildScore(48000, 'sfx', mix.norm);
+  return { music: wavB64(music), sfx: wavB64(sfx) };
+}
+window.renderAudioWav = renderAudioWav;
+window.renderAudioStems = renderAudioStems;
+</script>
+</body>
+</html>

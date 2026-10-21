@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sin electrones</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0d14; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  ¿QUÉ PASARÍA SI LOS ELECTRONES DESAPARECIERAN DURANTE 5 SEGUNDOS? — 9:16, 75 s, 24 fps.
+//  A rooftop barbecue at sunset. Every electron vanishes for 5 s (x12 slow): light passes through everything (x-ray blue),
+//  the stars show through your hands, every atom is bare positive charge and pushes apart; the Earth glows white;
+//  the electrons come back — but with nothing to hold them, they explode too.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 75.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 75, () => sceneMain()]];
+const SHOTS = [
+  ['roof',   0,    10,   'azotea al atardecer: barbacoa, amigos, la ciudad; miras tus manos'],
+  ['ghost',  10,   27,   'la luz atraviesa todo: rayos X azules; estrellas a través de tus manos; gente de cristal'],
+  ['burst',  27,   41,   'las cargas se repelen: todo se deshace en chispas; tus manos estallan en luz'],
+  ['earth',  41,   56,   'desde el espacio: la Tierra brilla; la Luna pasa; caes al blanco'],
+  ['back',   56,   66,   'vuelven los electrones; silencio; también explotan'],
+  ['card',   66,   75,   'tarjeta final'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, t0, t1, title], i) => ({ id: i + 1, key, era: 0, t0, t1, title })),
+  cuts: [], morphs: [],
+  cues: { gone: 10.0, back: 56.0, boom: 61.4 },
+  acts: [
+    { name: '1 Azotea', role: 'build', t0: 0, t1: 10 },
+    { name: '2 Rayos X', role: 'journey', t0: 10, t1: 27 },
+    { name: '3 Estallido', role: 'peak', t0: 27, t1: 56 },
+    { name: '4 Vuelven', role: 'journey', t0: 56, t1: 60.6 },
+    { name: '5 Silencio', role: 'silence', t0: 60.6, t1: 61.3 },
+    { name: '6 Explosión', role: 'gift', t0: 61.3, t1: 66 },
+    { name: '7 Final', role: 'goodbye', t0: 66, t1: 75 },
+  ],
+  board: [[3, 'título, la azotea'], [6.5, 'amigos, la parrilla'], [9.2, 'tus manos'], [12, 'la luz atraviesa todo'], [16, 'estrellas a través de las manos'], [23, 'gente de cristal'], [30, 'se repelen'], [37, 'tus manos estallan'], [44, 'la Tierra brilla'], [48, 'la Luna pasa'], [53, 'blanco'], [58, 'vuelven los electrones'], [62.5, 'explotan'], [70, 'tarjeta']].map(([t, title]) => ({ t, title, sound: '', next: '' })),
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

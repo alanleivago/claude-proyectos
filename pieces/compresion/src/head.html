@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cómo se comprime un video</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0c0a08; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  CÓMO SE COMPRIME UN VIDEO — scroll3d, 9:16, 30fps, voice-led (the user's Spanish take).
+//  A Spanish remake of reference 4 (video compression): the same shots and camera moves, re-timed to the voice.
+//  Every shot is authored in REFERENCE time R; refT(TT) maps the Spanish voice back onto the reference's clock
+//  through anchors at matching words, so each move lands on the same word it lands on in the reference.
+// =====================================================================
+const FPS = 30, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const VL = (id) => VOICE.lines.find((l) => l.id === id);
+const DURATION = Math.round(VOICE.duration * FPS) / FPS;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 0 };
+const HAND = '"FreeSans", Helvetica, Arial, sans-serif';
+const CX = 540;
+
+// [reference time, Spanish time] — line starts/ends and the words both voices share
+const ANCH = [
+  [0, 0], [0.70, 0.78], [3.82, 4.04], [5.0, 5.08],
+  [5.5, 5.3], [7.1, 6.56],
+  [7.88, 7.02], [8.86, 8.68], [9.60, 9.52], [10.22, 10.02],
+  [10.9, 10.46], [12.94, 12.72], [13.18, 13.08], [14.3, 14.1],
+  [14.9, 14.52], [15.34, 15.02], [17.4, 17.38],
+  [17.98, 17.76], [18.08, 17.92], [18.92, 19.06], [19.64, 20.14], [20.40, 21.10], [20.8, 21.38],
+  [21.44, 21.6], [22.14, 22.58], [23.94, 24.6],
+  [24.54, 24.98], [26.84, 27.90], [29.26, 30.58], [29.66, 31.24],
+  [30.24, 31.40], [32.52, 34.00], [33.92, 35.72],
+  [34.52, 35.88], [36.88, 38.12], [38.20, 39.30], [38.70, 39.92], [40.20, 41.48], [40.48, 42.34], [41.32, 43.08],
+  [42.06, 43.64], [43.60, 45.32], [44.28, 46.36],
+  [44.92, 47.18], [46.08, 48.86], [47.88, 51.08], [49.76, 52.94],
+  [50.38, 53.38], [52.28, 55.44],
+  [53.20, 56.18], [55.76, 59.02], [56.22, 59.80],
+  [56.82, 60.18], [57.98, 61.06], [58.38, 61.6],
+  [58.88, 61.84], [60.96, 64.62], [61.54, 65.74],
+  [62.24, 65.90], [63.88, 68.08], [65.92, 70.00], [66.74, 71.0],
+  [67.28, 71.12], [68.88, 72.98],
+  [69.58, 73.44], [71.62, 75.54], [73.12, 77.58], [74.44, 79.44],
+  [75.10, 79.56], [76.84, 81.58], [77.72, 82.38], [79.22, 84.06], [80.30, 85.58],
+  [80.46, 85.82], [81.54, 87.04], [84.12, 89.74], [84.70, 90.22],
+  [85.38, 90.26], [86.06, 91.34], [86.50, 92.04], [87.76, 93.56], [89.46, 94.96], [90.48, 96.30], [91.42, 97.30], [91.82, DURATION],
+];
+function refT(t) {
+  if (t <= 0) return 0;
+  for (let i = 1; i < ANCH.length; i++) { const [r0, s0] = ANCH[i - 1], [r1, s1] = ANCH[i]; if (t <= s1) return r0 + (r1 - r0) * (t - s0) / (s1 - s0); }
+  return ANCH[ANCH.length - 1][0];
+}
+function esT(r) {   // the inverse: a reference time on the Spanish clock
+  for (let i = 1; i < ANCH.length; i++) { const [r0, s0] = ANCH[i - 1], [r1, s1] = ANCH[i]; if (r <= r1) return s0 + (s1 - s0) * (r - r0) / (r1 - r0); }
+  return DURATION;
+}
+
+const ERA_LIST = [[0, DURATION, () => sceneMain()]];
+// the shots, in reference time (cuts in the reference: 10.9, 18.07, 19.07, 19.8, 50.5, 52.3, 58.9, 62.37, 69.67)
+const SHOTS_R = [
+  ['pila',      0.0,   5.4,  'fotograma clave + 3 fantasmas: solo lo que se movió'],
+  ['torre',     5.4,   10.6, 'una torre de fotogramas completos: carísimo; se vuelven fantasmas'],
+  ['cuarto',    10.6,  14.9, 'dentro del cuarto: ella quieta, el carrito cruza'],
+  ['diorama',   14.9,  18.0, 'la cámara sale: el cuarto es un fotograma; rejilla blanca'],
+  ['detalles',  18.0,  21.0, 'la persona, el cuarto, el carrito'],
+  ['dos',       21.0,  30.2, 'fotograma clave + 1 fotograma después; solo esto se movió'],
+  ['bloques',   30.2,  34.5, 'rejilla negra de bloques sobre los dos'],
+  ['vector',    34.5,  44.9, 'se inclinan; el bloque salta: vector de movimiento'],
+  ['pixeles',   44.9,  50.4, 'columna de píxeles vs una instrucción pequeña'],
+  ['suéter',    50.4,  52.3, 'ella otra vez; la cámara entra al suéter'],
+  ['voxeles',   52.3,  58.9, 'el tejido en bloques: original | simplificado; color 1 por 4'],
+  ['diferencias', 58.9, 62.3, 'diferencias diminutas en la pared, a la basura'],
+  ['reinicio',  62.3,  69.6, 'cada cierto tiempo otro fotograma clave'],
+  ['montón',    69.6,  75.0, 'no es una pila de imágenes completas'],
+  ['recibes',   75.0,  80.4, 'completos, cambios, instrucciones'],
+  ['continuo',  80.4,  85.3, 'tu dispositivo lo reconstruye: el teléfono'],
+  ['final',     85.3,  91.82, '11 GB sin comprimir → unos 40 MB'],
+];
+const SHOTS = SHOTS_R.map(([k, a, b, title]) => [k, 0, esT(a), esT(b), title]);
+const CUTS_R = [10.6, 18.08, 18.92, 19.64, 50.5, 52.3, 58.9, 62.3, 69.6];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F3 voice-led explainer (scroll3d remake of reference 4)',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: CUTS_R.map(esT),
+  morphs: [],
+  cues: { vector: esT(43.6), pixels: esT(46.08), raw: esT(86.5), small: esT(87.76) },
+  acts: [
+    { name: '1 El problema', role: 'build',   t0: 0,          t1: esT(10.6) },
+    { name: '2 Un fotograma', role: 'journey',   t0: esT(10.6),  t1: esT(30.2) },
+    { name: '3 Bloques',     role: 'journey', t0: esT(30.2),  t1: esT(50.4) },
+    { name: '4 Más lejos',   role: 'peak',    t0: esT(50.4),  t1: esT(75.0) },
+    { name: '5 Lo que llega', role: 'gift',    t0: esT(75.0),  t1: DURATION },
+  ],
+  board: [
+    { t: esT(2.2),  title: 'fotograma clave + fantasmas', sound: 'cama suave', next: 'la torre' },
+    { t: esT(6.5),  title: 'carísimo', sound: 'sube', next: 'fantasmas' },
+    { t: esT(12.8), title: 'el carrito cruza', sound: 'rodar', next: 'salimos' },
+    { t: esT(16.6), title: 'la imagen completa', sound: 'tic de rejilla', next: 'detalles' },
+    { t: esT(26.5), title: '1 fotograma después', sound: 'tic', next: 'bloques' },
+    { t: esT(40.5), title: 'el bloque salta', sound: 'swoosh', next: 'vector' },
+    { t: esT(43.6), title: 'vector de movimiento', sound: 'golpe suave', next: 'píxeles' },
+    { t: esT(47.0), title: '57.600 píxeles', sound: 'clics que suben', next: 'instrucción' },
+    { t: esT(54.0), title: 'original | simplificado', sound: 'barrido', next: 'basura' },
+    { t: esT(60.5), title: 'diferencias diminutas', sound: 'pops', next: 'reinicio' },
+    { t: esT(64.5), title: 'otro fotograma clave', sound: 'tic', next: 'el montón' },
+    { t: esT(77.5), title: 'completos, cambios, instrucciones', sound: 'tics', next: 'teléfono' },
+    { t: esT(83.5), title: 'continuo', sound: 'calma', next: 'final' },
+    { t: esT(89.5), title: '11 GB → 40 MB', sound: 'el golpe final', next: 'fin' },
+  ],
+  narration: VOICE.lines.map((l) => ({ id: l.id, t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;

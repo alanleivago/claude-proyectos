@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cómo vuela el Roadster</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0c0a08; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  CÓMO VUELA EL ROADSTER — scroll3d, 9:16, 30fps, voice-led (the user's Spanish take).
+//  A Spanish remake of reference 6 (Tesla Roadster upside down, suction fans, cold-gas thrusters) in the scroll3d look
+//  (reference 7's dusk test track, HUD pill, readout, labels). Shots authored in REFERENCE time R = refT(TT).
+// =====================================================================
+const FPS = 30, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const VL = (id) => VOICE.lines.find((l) => l.id === id);
+const DURATION = Math.round(VOICE.duration * FPS) / FPS;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 0 };
+const HAND = '"FreeSans", Helvetica, Arial, sans-serif';
+const CX = 540;
+
+// [reference time, Spanish time] — line starts/ends and the words both voices share
+const ANCH = [
+  [0, 0], [1.82, 2.00], [2.32, 2.44], [3.46, 3.40], [4.76, 5.40], [5.28, 6.10],
+  [5.40, 6.22], [6.76, 7.62],
+  [7.00, 8.06], [7.62, 9.04], [8.96, 10.72], [9.92, 12.02], [11.14, 12.82], [12.34, 13.60],
+  [12.54, 13.76], [12.62, 13.96], [14.42, 15.44], [14.66, 16.28], [15.82, 17.38],
+  [16.00, 17.98], [16.96, 18.90], [17.78, 19.50], [18.44, 20.12],
+  [18.52, 20.64], [19.22, 21.86], [19.60, 22.24],
+  [19.84, 22.84], [20.42, 23.62], [21.24, 24.58], [22.76, 25.88], [23.64, 27.20], [23.90, 27.86],
+  [24.14, 27.88], [24.84, 28.60], [25.40, 29.16],
+  [25.42, 29.22], [26.56, 30.06], [26.96, 30.50], [27.64, 31.56],
+  [27.88, 32.04], [28.50, 32.76], [29.12, 33.66], [30.42, 34.76], [31.38, 35.64], [31.74, 36.24],
+  [31.98, 36.46], [32.74, 37.00], [33.52, 38.16], [34.48, 38.92], [35.82, 40.04], [36.52, 41.04], [37.40, 41.80],
+  [37.72, 41.92], [38.24, 42.84], [38.88, 43.46], [40.40, 44.68], [41.42, 45.76], [42.18, 46.82],
+  [42.32, 47.24], [43.02, 47.84], [43.98, 48.78],
+  [44.22, 49.14], [45.02, 49.84], [46.50, 51.12], [47.30, 52.08], [48.12, 52.78],
+  [48.32, 53.16], [49.94, 55.14], [50.60, 55.50],
+  [50.78, 55.62], [51.66, 56.68], [52.02, 57.32], [53.82, 59.18], [55.66, 61.24], [55.96, 61.72],
+  [56.30, 61.84], [56.38, 62.02], [57.14, 62.92], [57.42, 63.24],
+  [57.64, 63.70], [58.48, 64.72], [59.30, 65.28],
+  [59.56, 65.50], [61.32, 67.12], [62.38, 68.56], [63.52, 70.22], [63.86, 71.70],
+  [64.04, 72.08], [64.72, 72.76], [65.82, 74.18], [66.24, 74.62],
+  [66.50, 74.76], [67.18, 75.76], [68.52, 76.62], [69.06, 77.38], [70.34, 78.44], [70.92, 79.04], [71.54, 79.56],
+  [71.70, 79.74], [72.18, 80.40], [73.06, 81.24],
+  [73.36, 81.64], [73.92, 83.46], [75.60, 84.80],
+  [75.78, 84.86], [76.46, 86.32],
+  [76.62, 86.50], [77.48, 87.72], [78.48, 88.38], [78.69, DURATION],
+];
+function refT(t) {
+  if (t <= 0) return 0;
+  for (let i = 1; i < ANCH.length; i++) { const [r0, s0] = ANCH[i - 1], [r1, s1] = ANCH[i]; if (t <= s1) return r0 + (r1 - r0) * (t - s0) / (s1 - s0); }
+  return ANCH[ANCH.length - 1][0];
+}
+function esT(r) {
+  for (let i = 1; i < ANCH.length; i++) { const [r0, s0] = ANCH[i - 1], [r1, s1] = ANCH[i]; if (r <= r1) return s0 + (s1 - s0) * (r - r0) / (r1 - r0); }
+  return DURATION;
+}
+
+const ERA_LIST = [[0, DURATION, () => sceneMain()]];
+const SHOTS_R = [
+  ['intro',     0.0,  5.4,  'el Roadster entra al loop, boca abajo, enciende propulsores y vuela'],
+  ['como',      5.4,  7.0,  'barrido a la vista general de la pista'],
+  ['corolla',   7.0,  12.5, 'el Corolla sube a medio loop y cae de techo'],
+  ['agarre',    12.5, 18.5, 'auto fantasma: el peso empuja las llantas; boca abajo las aleja'],
+  ['electrico', 18.5, 25.4, 'chasis: fuera el motor de gasolina; motores eléctricos y batería'],
+  ['rampa',     25.4, 31.9, 'entra rápido al loop; arriba casi se detiene'],
+  ['succion',   31.9, 44.2, 'ventiladores y faldones; el aire empuja; sistema de succión'],
+  ['atorado',   44.2, 50.7, 'boca abajo sin caer, atorado; las llantas no bastan'],
+  ['gasfrio',   50.7, 59.5, 'tanque, boquillas, globo: gas frío'],
+  ['lanza',     59.5, 64.0, 'sale disparado: 0–100 en menos de 1 s'],
+  ['actitud',   64.0, 73.3, 'da vueltas; mini propulsores lo nivelan'],
+  ['aterriza',  73.3, 78.69, 'aterriza y se va; vista final'],
+];
+const SHOTS = SHOTS_R.map(([k, a, b, title]) => [k, 0, esT(a), esT(b), title]);
+const CUTS_R = [5.4, 7.0, 12.5, 18.5, 25.4, 50.7];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F4 mission, voice-led explainer (scroll3d remake of reference 6)',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: CUTS_R.map(esT),
+  morphs: [],
+  cues: { launch: esT(59.6), flip: esT(67.5) },
+  acts: [
+    { name: '1 El truco',    role: 'peak',   t0: 0,          t1: esT(12.5) },
+    { name: '2 Agarre',      role: 'journey', t0: esT(12.5),  t1: esT(31.9) },
+    { name: '3 Succión',     role: 'journey', t0: esT(31.9),  t1: esT(50.7) },
+    { name: '4 Gas frío',    role: 'journey', t0: esT(50.7),  t1: esT(59.5) },
+    { name: '5 Despega',     role: 'gift',    t0: esT(59.5),  t1: esT(64.0) },
+    { name: '6 En el aire',  role: 'end',     t0: esT(64.0),  t1: DURATION },
+  ],
+  board: [
+    { t: esT(2.6),  title: 'boca abajo', sound: 'motor + viento', next: 'vuela' },
+    { t: esT(4.6),  title: 'enciende propulsores', sound: 'soplido', next: 'vista general' },
+    { t: esT(6.3),  title: 'la pista', sound: 'ambiente', next: 'Corolla' },
+    { t: esT(10.6), title: 'el Corolla no llega', sound: 'motor que se ahoga', next: 'cae' },
+    { t: esT(14.8), title: 'el peso empuja', sound: 'tic', next: 'boca abajo' },
+    { t: esT(17.4), title: 'boca abajo se aleja', sound: 'tic grave', next: 'eléctrico' },
+    { t: esT(22.8), title: 'batería', sound: 'clics', next: 'rampa' },
+    { t: esT(30.6), title: 'arriba casi no se mueve', sound: 'silencio', next: 'ventiladores' },
+    { t: esT(35.4), title: 'ventiladores y faldones', sound: 'zumbido', next: 'el aire' },
+    { t: esT(40.0), title: 'como una ventosa', sound: 'presión', next: 'atorado' },
+    { t: esT(49.4), title: 'las llantas no bastan', sound: 'patina', next: 'tanque' },
+    { t: esT(53.9), title: 'boquillas atrás', sound: 'siseo', next: 'disparo' },
+    { t: esT(61.0), title: 'menos de 1 s', sound: 'el golpe', next: 'vueltas' },
+    { t: esT(69.0), title: 'control de actitud', sound: 'soplidos', next: 'aterriza' },
+    { t: esT(77.5), title: 'acabas de construir…', sound: 'cierre', next: 'fin' },
+  ],
+  narration: VOICE.lines.map((l) => ({ id: l.id, t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;

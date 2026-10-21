@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Regreso</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0d14; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  ¿QUÉ PASARÍA SI JESÚS REGRESARA? — 9:16, 79 s, 24 fps.
+//  A café terrace on a town plaza at sunset. A lightning bolt crosses the sky east to west; the sky opens in light;
+//  people kneel or film; one is taken, the other left; a man drops his crutches; the sun goes dark and the stars fall;
+//  a hillside cemetery rises in columns of light; the powerful try to fly away; over the night city the light descends.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 79.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 79, () => sceneMain()]];
+const SHOTS = [
+  ['cafe',   0,    12.5, 'terraza en la plaza al atardecer; tu amiga enfrente'],
+  ['bolt',   12.5, 17,   'un relámpago de este a oeste; caras iluminadas'],
+  ['light',  17,   24,   'el cielo se abre'],
+  ['kneel',  24,   30,   'de rodillas, grabando; la bandeja cae'],
+  ['watch',  30,   34,   'el reloj: ¿lo estás viendo?'],
+  ['rise',   34,   40,   'la gente sube al cielo'],
+  ['crutch', 40,   46,   'suelta las muletas y camina'],
+  ['sun',    46,   50.5, 'el sol se oscurece'],
+  ['sun2',   50.5, 54,   'el sol negro de cerca; caen las estrellas'],
+  ['grave',  54,   57.5, 'cementerio: columnas de luz'],
+  ['grave2', 57.5, 61,   'entre las tumbas, mirando arriba'],
+  ['jets',   61,   66.5, 'los poderosos intentan huir'],
+  ['city',   66.5, 72,   'la luz desciende sobre la ciudad'],
+  ['card',   72,   79,   'tarjeta final'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, t0, t1, title], i) => ({ id: i + 1, key, era: 0, t0, t1, title })),
+  cuts: SHOTS.slice(1).map((s) => s[1]), morphs: [],
+  cues: { bolt: 12.5, open: 17.0, rise: 34.0, sun: 46.0, dark: 65.5, descend: 66.5 },
+  acts: [
+    { name: '1 Plaza', role: 'build', t0: 0, t1: 12.5 },
+    { name: '2 Señal', role: 'journey', t0: 12.5, t1: 46 },
+    { name: '3 Oscuridad', role: 'peak', t0: 46, t1: 65.5 },
+    { name: '4 Silencio', role: 'silence', t0: 65.5, t1: 66.5 },
+    { name: '5 Desciende', role: 'gift', t0: 66.5, t1: 72 },
+    { name: '6 Tarjeta', role: 'goodbye', t0: 72, t1: 79 },
+  ],
+  board: [[2.5, 'título, la terraza'], [7, 'la plaza'], [13, 'relámpago'], [15.5, 'caras iluminadas'], [20.5, 'el cielo se abre'], [28.6, 'de rodillas'], [32, 'el reloj'], [37.5, 'suben'], [43, 'muletas'], [50, 'sol negro'], [57.5, 'cementerio'], [63.5, 'jets'], [69.5, 'la luz desciende'], [76, 'tarjeta']].map(([t, title]) => ({ t, title, sound: '', next: '' })),
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

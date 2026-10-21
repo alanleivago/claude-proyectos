@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El límite del Roadster</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0c0a08; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  EL LÍMITE DEL ROADSTER — scroll3d, 9:16, 30fps, voice-led (the user's Spanish take).
+//  A Spanish remake of reference 8 (thrust vs tire grip) in the scroll3d look
+//  (reference 7's dusk test track, HUD pill, readout, labels). Shots authored in REFERENCE time R = refT(TT).
+// =====================================================================
+const FPS = 30, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const VL = (id) => VOICE.lines.find((l) => l.id === id);
+const DURATION = Math.round(VOICE.duration * FPS) / FPS;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 0 };
+const HAND = '"FreeSans", Helvetica, Arial, sans-serif';
+const CX = 540;
+
+// [reference time, Spanish time] — line starts and ends of both voices
+const ANCH = [
+  [0.0, 0.0],
+  [4.66, 5.62],
+  [5.24, 6.36],
+  [7.12, 8.9],
+  [7.68, 9.46],
+  [9.04, 11.58],
+  [9.72, 12.1],
+  [12.32, 14.74],
+  [13.2, 15.06],
+  [15.6, 18.7],
+  [16.16, 19.14],
+  [17.86, 21.2],
+  [18.38, 21.6],
+  [20.78, 24.78],
+  [21.36, 25.14],
+  [24.62, 29.12],
+  [27.32, 32.38],
+  [27.96, 32.58],
+  [31.08, 36.82],
+  [31.48, 37.26],
+  [35.76, 41.66],
+  [36.36, 42.06],
+  [38.58, 45.38],
+  [39.24, 45.52],
+  [40.6, 46.86],
+  [41.26, 47.18],
+  [43.48, 49.2],
+  [44.04, 49.58],
+  [47.2, 53.28],
+  [47.84, 53.72],
+  [53.0, 58.72],
+  [56.56, 62.8],
+  [57.32, 63.04],
+  [60.8, 66.16],
+  [61.4, 66.78],
+  [65.8, 71.5],
+  [66.32, 71.68],
+  [69.94, 75.48],
+  [70.6, 75.92],
+  [74.8, 80.66],
+  [75.36, 81.04],
+  [76.52, 81.98],
+  [77.16, 82.32],
+  [78.7, 83.76],
+  [79.24, 83.92],
+  [82.84, 87.62],
+  [86.48, 90.98],
+  [87.16, 91.56],
+  [91.36, 96.18],
+  [91.94, 96.3],
+  [93.5, 98.18],
+  [94.1, 98.46],
+  [95.76, 100.44],
+  [96.5, 100.78],
+  [98.52, 103.24],
+  [98.9, 103.76],
+  [100.82, 105.36],
+  [101.5, 105.8],
+  [102.92, 107.6],
+  [103.56, 108.06],
+  [105.32, 110.12],
+  [105.93, DURATION]
+];
+function refT(t) {
+  if (t <= 0) return 0;
+  for (let i = 1; i < ANCH.length; i++) { const [r0, s0] = ANCH[i - 1], [r1, s1] = ANCH[i]; if (t <= s1) return r0 + (r1 - r0) * (t - s0) / (s1 - s0); }
+  return ANCH[ANCH.length - 1][0];
+}
+function esT(r) {
+  for (let i = 1; i < ANCH.length; i++) { const [r0, s0] = ANCH[i - 1], [r1, s1] = ANCH[i]; if (r <= r1) return s0 + (s1 - s0) * (r - r0) / (r1 - r0); }
+  return DURATION;
+}
+
+const ERA_LIST = [[0, DURATION, () => sceneMain()]];
+const SHOTS_R = [
+  ['arranque', 0, 3.0, 'el Roadster acelera con propulsores'],
+  ['piedra', 3.0, 5.1, 'la piedra cae desde la torre'],
+  ['solas', 5.1, 7.6, 'llantas ~1 g vs necesario ~3,5 g'],
+  ['quien', 7.6, 9.6, 'vista trasera: el chorro, ¿qué empuja?'],
+  ['rueda', 9.6, 11.0, 'la rueda: el camino'],
+  ['tanques0', 11.0, 13.1, 'rayos X: tanques de aire'],
+  ['semaforo', 13.1, 18.3, 'el Corolla primero en el semáforo'],
+  ['agarre', 18.3, 21.2, 'la llanta empuja el camino, el camino te empuja'],
+  ['gravedad', 21.2, 24.6, 'empuje máx de llantas = gravedad'],
+  ['patina', 24.6, 27.8, 'la llanta patina'],
+  ['carrera', 27.8, 32.0, 'tu auto vs la piedra'],
+  ['plaid', 32.0, 35.8, 'Model S Plaid: 2 s'],
+  ['motor', 35.8, 38.8, 'motor más grande: más giro'],
+  ['revela', 38.8, 41.1, 'aparece el Roadster'],
+  ['camino', 41.1, 43.9, 'no solo empuja el camino'],
+  ['tanques', 43.9, 47.6, 'tanques de aire comprimido'],
+  ['boquillas', 47.6, 50.2, 'propulsores atrás'],
+  ['tercera', 50.2, 53.5, 'aire atrás, auto adelante'],
+  ['globo', 53.5, 57.2, 'el globo sale disparado'],
+  ['empuje', 57.2, 61.4, 'propulsión: agarre 0'],
+  ['veces', 61.4, 66.2, '4–5× las llantas'],
+  ['versiones', 66.2, 70.4, 'las tres versiones'],
+  ['vivo', 70.4, 75.3, 'la prueba en vivo: 0,81 s'],
+  ['problema', 75.3, 78.9, 'otro problema'],
+  ['debil', 78.9, 81.0, 'el aire, cohete débil'],
+  ['kilos', 81.0, 84.6, '≈ 250 kg de aire'],
+  ['vacio', 84.6, 87.5, 'a todo lo que da: vacío'],
+  ['rellena', 87.5, 91.9, 'rellena con aire de afuera'],
+  ['gasolinera', 91.9, 94.1, 'sin gasolinera'],
+  ['respira', 94.1, 96.5, 'el aire que respiras'],
+  ['agarro', 96.5, 98.9, '¿más agarre que el camino?'],
+  ['lanzo', 98.9, 101.5, 'lanzó su propio aire'],
+  ['tulimite', 101.5, 103.5, 'tu límite: las llantas'],
+  ['limite', 103.5, 105.93, 'su límite: el aire']
+];
+const SHOTS = SHOTS_R.map(([k, a, b, title]) => [k, 0, esT(a), esT(b), title]);
+const CUTS_R = SHOTS_R.slice(1).map((s) => s[1]);
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'voice-led explainer (scroll3d remake of reference 8)',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: CUTS_R.map(esT),
+  morphs: [],
+  cues: { live: esT(70.9) },
+  acts: [
+    { name: '1 El gancho',   role: 'build',   t0: 0,          t1: esT(13.1) },
+    { name: '2 Las llantas', role: 'journey', t0: esT(13.1),  t1: esT(38.8) },
+    { name: '3 El aire',     role: 'journey',    t0: esT(38.8),  t1: esT(70.4) },
+    { name: '4 En vivo',     role: 'gift',    t0: esT(70.4),  t1: esT(75.3) },
+    { name: '5 El problema', role: 'journey', t0: esT(75.3),  t1: esT(96.5) },
+    { name: '6 El límite',   role: 'peak',     t0: esT(96.5),  t1: DURATION },
+  ],
+  board: [
+    { t: esT(1.5), title: 'acelera', sound: '', next: '' },
+    { t: esT(4.2), title: 'la piedra', sound: '', next: '' },
+    { t: esT(6.4), title: '1 g vs 3,5 g', sound: '', next: '' },
+    { t: esT(10.3), title: 'el camino', sound: '', next: '' },
+    { t: esT(12.0), title: 'tanques', sound: '', next: '' },
+    { t: esT(15.0), title: 'semáforo', sound: '', next: '' },
+    { t: esT(19.8), title: 'el camino te empuja', sound: '', next: '' },
+    { t: esT(23.5), title: '= gravedad', sound: '', next: '' },
+    { t: esT(26.5), title: 'patina', sound: '', next: '' },
+    { t: esT(30.0), title: 'tu auto vs la piedra', sound: '', next: '' },
+    { t: esT(34.5), title: 'Plaid 2 s', sound: '', next: '' },
+    { t: esT(37.5), title: 'motor grande', sound: '', next: '' },
+    { t: esT(42.5), title: '+ ?', sound: '', next: '' },
+    { t: esT(45.5), title: 'tanques', sound: '', next: '' },
+    { t: esT(51.8), title: 'aire atrás', sound: '', next: '' },
+    { t: esT(55.0), title: 'globo', sound: '', next: '' },
+    { t: esT(59.5), title: 'propulsión', sound: '', next: '' },
+    { t: esT(64.0), title: '4–5×', sound: '', next: '' },
+    { t: esT(68.5), title: 'versiones', sound: '', next: '' },
+    { t: esT(73.5), title: '0,81 s', sound: '', next: '' },
+    { t: esT(77.5), title: 'problema', sound: '', next: '' },
+    { t: esT(83.0), title: '250 kg', sound: '', next: '' },
+    { t: esT(86.5), title: 'vacío', sound: '', next: '' },
+    { t: esT(89.5), title: 'rellena', sound: '', next: '' },
+    { t: esT(93.0), title: 'gasolinera', sound: '', next: '' },
+    { t: esT(95.3), title: 'respiras', sound: '', next: '' },
+    { t: esT(100.0), title: 'su propio aire', sound: '', next: '' },
+    { t: esT(102.5), title: 'tu límite', sound: '', next: '' },
+    { t: esT(105.5), title: 'su límite', sound: '', next: '' }
+  ],
+  narration: VOICE.lines.map((l) => ({ id: l.id, t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;

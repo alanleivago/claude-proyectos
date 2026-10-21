@@ -4,7 +4,7 @@ One fixed, high camera on a busy real-world place (a beach in the first piece); 
 
 **Proven on:** `pieces/sol-explota` (60s, "¿Qué pasaría si el Sol explotara?", approved by the user for quality). Start every new piece in this style from `template/` — it is that piece's full source.
 
-**Current quality bar (2026-10-10): `template-ola/`** (pieces/ola-700, the 65s tsunami). Its visuals and its sound design are the minimum for every new pov3d piece. Start from it, not from `template/`.
+**Current quality bar (2026-10-13): `pieces/oxigeno` (ES) + `pieces/oxygen-en` (EN), one shared `src/oxy.js` with an `OX_EN` flag.** Start new pieces from it; the full list of the user's standing rules is in the auto-memory note pov3d-style. Earlier bar: `template-ola/` (pieces/ola-700, the 65s tsunami). Its visuals and its sound design are the minimum for every new pov3d piece. Start from it, not from `template/`.
 
 **Sound rule (2026-10-11): REAL RECORDINGS, NO MUSIC, NO SYNTH.** The user approved "option B": every ambience bed and every hit is a CC0 recording, never synthesized. Workflow and scripts: `pieces/luna/sound/` (gen.py → layers.json → bed.py → audio/bed.wav in the "voice" slot of `sound-layer/scripts/mix.py`, hits as cues from `sound-layer/kit`, then `qa.py`, `levels.py`). Find recordings with `sound-layer/scripts/sfx.py search` (Openverse, slow: run queries in parallel) and look at their spectrograms (`look.py`) before choosing. Trim hit tails so they die before planned silences; put a loud bed (water burst) under the hero hit so the mixer sizes it as the loudest moment. Write CREDITS.md and LISTEN.md per piece. The score.js synth score is no longer the sound. Still:
 - ambience beds

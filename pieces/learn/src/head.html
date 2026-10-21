@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How a Machine Learns</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #05080a; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  HOW A MACHINE LEARNS — Bitstory #2. 9:16, voice-led (~2:15), 24fps, style bitpix. One stage (F2).
+//  A real 2-10-10-1 network (151 weights, src/net.js) trained in code: the cat, the neuron, the layers,
+//  the error, the landscape and the descent, backpropagation, the bending boundary, the scale, a cat never seen.
+//  Mint = the network and its right answers; yellow = the weights; magenta = the error and the blame.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4, GRID0 = 0;
+const VL = (id) => VOICE.lines.find((l) => l.id === id);
+const VW = (id, w, n = 1) => { const L = VL(id); let k = 0; for (const x of L.words) if (x.w.toLowerCase().replace(/[^a-z0-9']/g, '') === w.toLowerCase() && ++k === n) return x.t0; return L.t0; };
+const DURATION = Math.round(VOICE.duration * FPS) / FPS;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", "DejaVu Serif", serif';
+const CX = 540;
+const onBeat = (t) => t;
+
+// sections: each starts ~0.3s before its first line
+const B0 = (id) => VL(id).t0 - 0.3;
+const S_CAT = 0, S_NEU = B0('numbers'), S_NET = B0('stack'), S_ERR = B0('random'), S_LAND = B0('idea'), S_BACK = B0('how'),
+  S_BND = B0('repeat'), S_SCALE = B0('count'), S_STR = B0('strange');
+const HIT = VL('kept').t0 - 0.32;                       // the payoff hit, in the pause before "This network never kept a single example"
+const S_END = B0('end');
+const ERA_LIST = [[0, DURATION, () => sceneStage()]];
+const SHOTS = [
+  ['cat',       0, S_CAT,   S_NEU,   'a pixel cat; CAT ✓'],
+  ['neuron',    0, S_NEU,   S_NET,   'only numbers: one neuron multiplies, adds, squashes'],
+  ['network',   0, S_NET,   S_ERR,   'stacked: 2-10-10-1; two numbers in; thousands of pixels'],
+  ['error',     0, S_ERR,   S_LAND,  'random weights; says / should be; the error'],
+  ['landscape', 0, S_LAND,  S_BACK,  'the error as a landscape; the ball goes down'],
+  ['backprop',  0, S_BACK,  S_BND,   'blame flows backwards; 1986'],
+  ['boundary',  0, S_BND,   S_SCALE, 'the real boundary bends, epoch by epoch'],
+  ['scale',     0, S_SCALE, S_STR,   '151 -> hundreds of billions; trillions of words'],
+  ['strange',   0, S_STR,   HIT,     'the strangest part; silence'],
+  ['unseen',    0, HIT,     S_END,   'no examples kept; a cat never seen'],
+  ['end',       0, S_END,   DURATION, 'downhill, blindfolded; Bitstory'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, gridOffset: GRID0, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE, aspect: '9:16',
+  format: 'morph-chain',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { hit: HIT },
+  acts: [
+    { name: '1 Inside',    role: 'build',   t0: 0, t1: S_LAND },
+    { name: '2 Descent',   role: 'peak',    t0: S_LAND, t1: VL('strange').t1 },
+    { name: '3 Silence',   role: 'silence', t0: VL('strange').t1 + 0.1, t1: HIT },
+    { name: '4 Unseen',    role: 'gift',    t0: HIT, t1: S_END },
+    { name: '5 Downhill',  role: 'goodbye', t0: S_END, t1: DURATION },
+  ],
+  board: [
+    { t: VL('rules').t1 - 0.2, title: 'CAT ✓', sound: 'soft ticks as the pixels land', next: 'pixels turn into numbers' },
+    { t: VL('neuron').t1 - 0.3, title: 'one neuron', sound: 'a tick per operation', next: 'it clones into layers' },
+    { t: VL('layers').t1 - 0.3, title: 'stacked layers', sound: 'signals flowing', next: 'random weights' },
+    { t: VL('error').t1, title: 'the error', sound: 'a low thud', next: 'the number becomes height' },
+    { t: VL('step').t1 - 0.2, title: 'going down', sound: 'a step per step', next: 'the ball becomes the output' },
+    { t: VL('bp').t1 - 0.4, title: 'backpropagation', sound: 'reverse whooshes', next: 'the plane of dots' },
+    { t: VL('nobody').t1 - 0.4, title: 'the boundary bends', sound: 'ticks per epoch', next: 'the number of weights' },
+    { t: VL('llm').t1 - 0.3, title: 'hundreds of billions', sound: 'swelling', next: 'silence' },
+    { t: VL('cat').t1 - 0.2, title: 'a cat never seen', sound: 'the loudest hit', next: 'downhill' },
+    { t: DURATION - 0.6, title: 'Bitstory', sound: 'resolve', next: 'loops' },
+  ],
+  narration: VOICE.lines.map((l) => ({ id: l.id, t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;

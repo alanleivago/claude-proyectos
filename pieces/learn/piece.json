@@ -1,0 +1,46 @@
+{
+  "name": "learn",
+  "title": "How a Machine Learns",
+  "format": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 24,
+    "bpm": 120,
+    "duration": 131.0,
+    "frames": 3144
+  },
+  "storyFormat": "F2 fixed stage, voice-led (cat -> neuron -> network -> landscape -> boundary -> cat)",
+  "style": "bitpix",
+  "scenes": [
+    "src/net.js",
+    "src/common.js",
+    "src/s1.js",
+    "src/s2.js",
+    "src/s3.js"
+  ],
+  "voice": {
+    "file": "voice/voice.wav",
+    "music": -7
+  },
+  "music": {
+    "file": "audio/track-shaped.wav",
+    "start": 0,
+    "gain": 0,
+    "fade": 1.5
+  },
+  "review": {
+    "safe": {
+      "top": 240,
+      "bottom": 420,
+      "right": 0
+    },
+    "refs": {},
+    "textIgnore": [
+      [
+        115.3,
+        119.9,
+        "the 151 weights rain into the field as numbers: overlapping on purpose"
+      ]
+    ]
+  }
+}

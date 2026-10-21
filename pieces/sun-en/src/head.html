@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sunless</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0d14; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  ¿QUE PASARÍA SI EL SOL DESAPARECIERA? — 9:16, 70s, 24fps, motion on 1s.
+//  F5: a balcony over a seaside plaza on a sunny afternoon. The Sun is gone; its last light is still 8 min 20 s away.
+//  Blackout, the Moon goes dark, the stars, the Earth flies off in a straight line; then the cold: frost, snow,
+//  the sea freezes from the shore, the grid fails, −73 °C in a year; frost covers the lens and cracks.
+// =====================================================================
+const SUN_EN = true;   // English version: dusk-violet sky, mirrored square, sun on the left, other people, English text
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 70.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 70, () => sceneSun()]];
+const SHOTS = [
+  ['plaza',    0, 0.0,  5.0,  'balcón sobre una plaza junto al mar, tarde de sol'],
+  ['luz',      0, 5.0,  11.0, 'el Sol ya no existe; su última luz aún viaja'],
+  ['apagon',   0, 11.0, 12.5, 'apagón total, silencio'],
+  ['luna',     0, 12.5, 19.0, 'gritos, luces, la Luna se apaga'],
+  ['estrellas',0, 19.0, 25.0, 'estrellas, Vía Láctea; la Tierra sale disparada'],
+  ['frio',     0, 25.0, 33.0, 'el frío: escarcha, aliento, la fuente se congela'],
+  ['mar',      0, 33.0, 41.0, 'nieve; el mar se congela desde la orilla'],
+  ['red',      0, 41.0, 49.0, 'la red eléctrica falla; barriles con fuego'],
+  ['ano',      0, 49.0, 57.0, '−73 °C al año; las palmeras mueren'],
+  ['hielo',    0, 57.0, 63.0, 'la escarcha cubre el cristal y cruje'],
+  ['final',    0, 63.0, 70.0, 'la luz del Sol tarda 8 min 20 s'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { gone: 5.0, black: 11.0, moon: 12.4, stars: 19.0, cold: 25.0, sea: 33.0, grid: 41.0, year: 49.0, crack: 60.0, card: 63.5 },
+  acts: [
+    { name: '1 Plaza',     role: 'build',   t0: 0.0,  t1: 5.0 },
+    { name: '2 Última luz', role: 'journey', t0: 5.0,  t1: 11.0 },
+    { name: '3 Apagón',    role: 'peak',    t0: 11.0, t1: 12.5 },
+    { name: '4 Luna',      role: 'journey', t0: 12.5, t1: 19.0 },
+    { name: '5 Estrellas', role: 'journey', t0: 19.0, t1: 25.0 },
+    { name: '6 Frío',      role: 'journey', t0: 25.0, t1: 33.0 },
+    { name: '7 Mar',       role: 'journey', t0: 33.0, t1: 41.0 },
+    { name: '8 Red',       role: 'journey', t0: 41.0, t1: 49.0 },
+    { name: '9 Año',       role: 'silence', t0: 49.0, t1: 60.0 },
+    { name: '10 Hielo',    role: 'gift',    t0: 60.0, t1: 63.0 },
+    { name: '11 Final',    role: 'goodbye', t0: 63.0, t1: 70.0 },
+  ],
+  board: [
+    { t: 2.5,  title: 'What if the Sun just disappeared?', sound: 'plaza, fuente, gaviotas, mar', next: 'la cuenta' },
+    { t: 8.5,  title: 'Its last light is still on its way (8:20)', sound: 'tic, zumbido que crece', next: 'apagón' },
+    { t: 13.2, title: 'The Moon goes dark too', sound: 'silencio, luego gritos', next: 'estrellas' },
+    { t: 22.0, title: 'Earth flies off in a straight line', sound: 'viento, murmullo', next: 'el frío' },
+    { t: 30.0, title: 'Then the cold sets in (0 °F in a week)', sound: 'viento helado, hielo que cruje', next: 'el mar' },
+    { t: 38.0, title: 'The sea freezes over', sound: 'hielo, cascos atrapados', next: 'la red' },
+    { t: 45.0, title: 'The power grid fails', sound: 'zumbidos que mueren, fuego en barriles', next: 'el año' },
+    { t: 53.0, title: '−100 °F after one year', sound: 'viento solo, silencio', next: 'el cristal' },
+    { t: 60.3, title: 'Frost covers the glass and cracks', sound: 'EL GOLPE (60 s) tras silencio', next: 'final' },
+    { t: 67.0, title: 'Sunlight takes 8 min 20 s', sound: 'un grave que se apaga', next: 'fin' },
+  ],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

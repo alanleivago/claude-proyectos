@@ -1,0 +1,66 @@
+shot 1 (terraza en la plaza al atardecer; tu amiga enfrente): 50 frames [0,6,12,18,24,30,36,42,48,54,60,66,72,78,84,90,96,102,108,114,120,126,132,138,144,150,156,162,168,174,180,186,192,198,204,210,216,222,228,234,240,246,252,258,264,270,276,282,288,294] -> review/shot01-sheet.jpg
+shot 2 (un relámpago de este a oeste; caras iluminadas): 18 frames [300,306,312,318,324,330,336,342,348,354,360,366,372,378,384,390,396,402] -> review/shot02-sheet.jpg
+shot 3 (el cielo se abre): 28 frames [408,414,420,426,432,438,444,450,456,462,468,474,480,486,492,498,504,510,516,522,528,534,540,546,552,558,564,570] -> review/shot03-sheet.jpg
+shot 4 (de rodillas, grabando; la bandeja cae): 24 frames [576,582,588,594,600,606,612,618,624,630,636,642,648,654,660,666,672,678,684,690,696,702,708,714] -> review/shot04-sheet.jpg
+shot 5 (el reloj: ¿lo estás viendo?): 16 frames [720,726,732,738,744,750,756,762,768,774,780,786,792,798,804,810] -> review/shot05-sheet.jpg
+shot 6 (la gente sube al cielo): 24 frames [816,822,828,834,840,846,852,858,864,870,876,882,888,894,900,906,912,918,924,930,936,942,948,954] -> review/shot06-sheet.jpg
+shot 7 (suelta las muletas y camina): 24 frames [960,966,972,978,984,990,996,1002,1008,1014,1020,1026,1032,1038,1044,1050,1056,1062,1068,1074,1080,1086,1092,1098] -> review/shot07-sheet.jpg
+shot 8 (el sol se oscurece): 18 frames [1104,1110,1116,1122,1128,1134,1140,1146,1152,1158,1164,1170,1176,1182,1188,1194,1200,1206] -> review/shot08-sheet.jpg
+shot 9 (el sol negro de cerca; caen las estrellas): 14 frames [1212,1218,1224,1230,1236,1242,1248,1254,1260,1266,1272,1278,1284,1290] -> review/shot09-sheet.jpg
+shot 10 (cementerio: columnas de luz): 14 frames [1296,1302,1308,1314,1320,1326,1332,1338,1344,1350,1356,1362,1368,1374] -> review/shot10-sheet.jpg
+shot 11 (entre las tumbas, mirando arriba): 14 frames [1380,1386,1392,1398,1404,1410,1416,1422,1428,1434,1440,1446,1452,1458] -> review/shot11-sheet.jpg
+shot 12 (los poderosos intentan huir): 22 frames [1464,1470,1476,1482,1488,1494,1500,1506,1512,1518,1524,1530,1536,1542,1548,1554,1560,1566,1572,1578,1584,1590] -> review/shot12-sheet.jpg
+shot 13 (la luz desciende sobre la ciudad): 22 frames [1596,1602,1608,1614,1620,1626,1632,1638,1644,1650,1656,1662,1668,1674,1680,1686,1692,1698,1704,1710,1716,1722] -> review/shot13-sheet.jpg
+shot 14 (tarjeta final): 28 frames [1728,1734,1740,1746,1752,1758,1764,1770,1776,1782,1788,1794,1800,1806,1812,1818,1824,1830,1836,1842,1848,1854,1860,1866,1872,1878,1884,1890] -> review/shot14-sheet.jpg
+
+CUTS vs beat grid @ 120 BPM, 24fps (8ths = 0.25s)
+ #   cut t     grid  grid#   nominal f  cut f   cut f t     err(f)  Δ@cut  peak(±2f)          shot change           result
+ 1   12.500s   8th    50      300.0    300   12.5000s  +0.0    63.1  f300 ok            shot 1 -> 2           PASS
+ 2   17.000s   8th    68      408.0    408   17.0000s  +0.0    57.8  f408 ok            shot 2 -> 3           PASS
+ 3   24.000s   8th    96      576.0    576   24.0000s  +0.0    61.7  f576 ok            shot 3 -> 4           PASS
+ 4   30.000s   8th   120      720.0    720   30.0000s  +0.0    64.6  f720 ok            shot 4 -> 5           PASS
+ 5   34.000s   8th   136      816.0    816   34.0000s  +0.0    57.6  f816 ok            shot 5 -> 6           PASS
+ 6   40.000s   8th   160      960.0    960   40.0000s  +0.0    35.0  f960 ok            shot 6 -> 7           PASS
+ 7   46.000s   8th   184     1104.0   1104   46.0000s  +0.0    49.9  f1104 ok           shot 7 -> 8           PASS
+ 8   50.500s   8th   202     1212.0   1212   50.5000s  +0.0    28.5  f1212 ok           shot 8 -> 9           PASS
+ 9   54.000s   8th   216     1296.0   1296   54.0000s  +0.0    80.1  f1296 ok           shot 9 -> 10          PASS
+10   57.500s   8th   230     1380.0   1380   57.5000s  +0.0    78.5  f1380 ok           shot 10 -> 11         PASS
+11   61.000s   8th   244     1464.0   1464   61.0000s  +0.0    79.5  f1464 ok           shot 11 -> 12         PASS
+12   66.500s   8th   266     1596.0   1596   66.5000s  +0.0   192.8  f1596 ok           shot 12 -> 13         PASS
+13   72.000s   8th   288     1728.0   1728   72.0000s  +0.0   160.8  f1728 ok           shot 13 -> 14         PASS
+all cuts on grid within 1 frame: PASS
+
+PACING: 13 hard cuts (0 in the last 5s), mean segment 5.64s, shortest 3.50s, plus 0 on-2s montage steps
+FLAT FRAMES (contrast < 6/255): 1728, 1729, 1730, 1731, 1732, 1733, 1734, 1735, 1736, 1737
+LOOP: diff(last=1895, first=0) = 127.57; typical consecutive diff in the first 40 frames = 1.95 (info: F4/F6 loop pixel-exactly and F4 checks it; other formats return to the opening image, changed)
+
+STORY ARC (loudness in dBFS over 100ms windows: median / 90th percentile; music = music stem median)
+ act          role       t0-t1         cuts  cuts/s  motion   mix med  mix p90  music
+ 1 Plaza      build      0.00-12.50s      0    0.00    11.4    -26.7    -24.9     -  
+ 2 Señal      journey    12.50-46.00s      6    0.18     8.7    -24.0    -17.6     -  
+ 3 Oscuridad  peak       46.00-65.50s      5    0.26     3.7    -21.6    -18.2     -  
+ 4 Silencio   silence    65.50-66.50s      0    0.00     0.6   -120.0   -120.0     -  
+ 5 Desciende  gift       66.50-72.00s      1    0.18     4.5     -9.8     -8.7     -  
+ 6 Tarjeta    goodbye    72.00-79.00s      1    0.14     0.0    -35.9    -27.2     -  
+  PASS  gift is the loudest act (p90 -8.7 vs next -17.6)
+  PASS  gift p90 >= peak p90 + 1 dB (-8.7 vs -18.2): the busiest moment is not the loudest
+  PASS  silence median <= peak median - 15 dB (-120.0 vs -21.6)
+  PASS  peak has the highest cut rate (0.26/s)
+  PASS  gift is held: <= 0.5 cuts/s (0.18)
+  PASS  goodbye decays: median <= gift median - 6 dB (-35.9 vs -9.8)
+story arc: PASS (6/6 rules)
+
+TEXT (every string drawn, traced to screen; 330 frames sampled, morph windows skipped)
+text: PASS (0 cut-off/overlap, 0 in the safe zone)
+
+SOUND (mix: renders/audio.wav)
+  loudest 100ms window: 66.5s (-5.7 dBFS) - in the payoff act 66.5-72s
+  silence before it: 1.2s at <= -40 dBFS ending 66.5s in the 2s before (craft.md wants 0.5-4s when the story has a turn)
+  loudness: -15.5 LUFS integrated, range 15.5 LU, true peak -2.5 dBFS (phone target about -16 to -14 LUFS, peak <= -1)
+
+DEAD BEATS (the picture's change over 0.5s, every 0.25s; median 24.89, "still" below 6.22; silence acts are exempt)
+  WARN  72.50-79.00s: 6.5s with nothing new on screen (deadMax 3s) — add a move, a reveal or a cut
+dead beats: WARN (1 stretch over 3s)
+PHONE SHEET: review\phone.jpg (one frame a second at 360px wide — read every caption at this size)
+
+video: 1080x1920, 1896 frames decoded

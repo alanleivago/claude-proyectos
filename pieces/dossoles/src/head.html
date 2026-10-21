@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dos soles</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0d14; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  ¿QUÉ PASARÍA SI LA TIERRA TUVIERA DOS SOLES? — 9:16, 76 s, 24 fps.
+//  One day from a ranch porch in the desert, as a time-lapse: a small orange sun rises, then a big white one; two shadows;
+//  the stock tank holds two suns; at noon one passes in front of the other; two sunsets, gold then red.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 76.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 76, () => sceneMain()]];
+const SHOTS = [
+  ['day',  0,  24, 'amanecer: el sol pequeño, luego el grande; dos sombras'],
+  ['noon', 24, 46, 'mañana y mediodía: el tanque, el eclipse'],
+  ['eve',  46, 68, 'tarde y dos atardeceres'],
+  ['card', 68, 76, 'tarjeta final'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, t0, t1, title], i) => ({ id: i + 1, key, era: 0, t0, t1, title })),
+  cuts: [], morphs: [],
+  cues: { eclipse: 36.0 },
+  acts: [
+    { name: '1 Amanecer', role: 'build', t0: 0, t1: 24 },
+    { name: '2 Mañana', role: 'journey', t0: 24, t1: 34.6 },
+    { name: '3 Silencio', role: 'silence', t0: 34.6, t1: 35.9 },
+    { name: '4 Eclipse', role: 'gift', t0: 35.9, t1: 46 },
+    { name: '5 Tarde', role: 'peak', t0: 46, t1: 60 },
+    { name: '6 Final', role: 'goodbye', t0: 60, t1: 76 },
+  ],
+  board: [[2.5, 'título, madrugada'], [7, 'amanece'], [12, 'el primer sol, pequeño y naranja'], [18, 'el segundo sol'], [22, 'dos sombras'], [29, 'el tanque refleja dos soles'], [37.5, 'un sol tapa al otro'], [41, 'la luz baja; miran arriba'], [48, 'se separan'], [55, 'el grande se pone, dorado'], [61, 'el pequeño, rojo'], [65, 'atardecer dos veces'], [72, 'tarjeta']].map(([t, title]) => ({ t, title, sound: '', next: '' })),
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

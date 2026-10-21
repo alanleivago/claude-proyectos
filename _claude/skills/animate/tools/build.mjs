@@ -72,13 +72,13 @@ if (fs.existsSync(voiceFile)) { const V = JSON.parse(fs.readFileSync(voiceFile, 
 const VOICE = ${JSON.stringify(V)};`); }
 // the user's own assets: screenshots and logos in <piece>/assets/, embedded so the piece stays one file and
 // the canvas stays readable (an image loaded from a file:// URL would taint it and break every check)
-const ASSET_DIR = path.join(ROOT, 'assets'), MIME = { png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg', webp: 'image/webp', gif: 'image/gif', svg: 'image/svg+xml' };
+const ASSET_DIR = path.join(ROOT, 'assets'), MIME = { png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg', webp: 'image/webp', gif: 'image/gif', svg: 'image/svg+xml', ttf: 'font/ttf', otf: 'font/otf' };
 const assetFiles = fs.existsSync(ASSET_DIR) ? fs.readdirSync(ASSET_DIR).filter((n) => MIME[n.split('.').pop().toLowerCase()]) : [];
 let assetBytes = 0;
 if (assetFiles.length) {
   const src = {};
   for (const n of assetFiles) { const b = fs.readFileSync(path.join(ASSET_DIR, n)); assetBytes += b.length; src[n] = `data:${MIME[n.split('.').pop().toLowerCase()]};base64,` + b.toString('base64'); }
-  inject.push(`// ---- assets/ (embedded by tools/build.mjs): ${assetFiles.join(', ')}\nconst ASSETS = {};\nwindow.ASSETS_READY = Promise.all(Object.entries(${JSON.stringify(src)}).map(([k, u]) => { const i = new Image(); i.src = u; ASSETS[k] = i; return i.decode(); }));`);
+  inject.push(`// ---- assets/ (embedded by tools/build.mjs): ${assetFiles.join(', ')}\nconst ASSETS = {};\nwindow.ASSETS_READY = Promise.all(Object.entries(${JSON.stringify(src)}).map(([k, u]) => { if (u.startsWith('data:font/')) return new FontFace(k.replace(/\\.[^.]+$/, ''), 'url(' + u + ')').load().then((f) => document.fonts.add(f)); const i = new Image(); i.src = u; ASSETS[k] = i; return i.decode(); }));`);
 }
 if (inject.length) {
   const at = out.indexOf('"use strict";') >= 0 ? out.indexOf('"use strict";') + '"use strict";'.length : out.indexOf('<script>') + '<script>'.length;

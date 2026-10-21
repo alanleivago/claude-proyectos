@@ -1,0 +1,58 @@
+{
+ "cues_file": "F:\\Claude Proyectos\\pieces\\sun-en\\sound\\audio\\cues.json",
+ "fps": 24,
+ "duration_s": 70.0,
+ "target_lufs": -15,
+ "master_lufs": -15.08,
+ "master_true_peak_db": -2.0,
+ "master_gain_db": 3.29,
+ "events": [
+  {
+   "id": "blackout",
+   "sound": "thump",
+   "files": [
+    "F:/Claude Proyectos/sound-layer/kit\\thump/fs-389665-thump-close-wav-2.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 11.0,
+   "peak_s": 11.0,
+   "pan": 0.0,
+   "gain_db": -29.16,
+   "limited_by": "best-band target",
+   "band_hz": [
+    500,
+    1000
+   ],
+   "win_s": [
+    10.99,
+    11.1064
+   ],
+   "visual": null
+  },
+  {
+   "id": "IMPACT",
+   "sound": "audio/own/hero-hit.wav+hit/fs-113748-kl-ex1c-wav-3",
+   "files": [
+    "audio/own/hero-hit.wav",
+    "F:/Claude Proyectos/sound-layer/kit\\hit/fs-113748-kl-ex1c-wav-3.wav"
+   ],
+   "weight": "hero",
+   "align": "peak",
+   "cue_s": 60.0,
+   "peak_s": 60.0,
+   "pan": 0.0,
+   "gain_db": -4.01,
+   "limited_by": "main-band target (hero)",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    59.99,
+    60.15
+   ],
+   "visual": "cut"
+  }
+ ]
+}

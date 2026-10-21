@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>¿Te roban con un lector?</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0c0a08; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  ¿TE ROBAN CON UN LECTOR? — scroll3d, 9:16, 30fps, voice-led (the user's Spanish take).
+//  A Spanish remake of reference 10 (contactless card skimming), extended in the scroll3d look
+//  (reference 7's dusk test track, HUD pill, readout, labels). Shots authored in REFERENCE time R = refT(TT).
+// =====================================================================
+const FPS = 30, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const VL = (id) => VOICE.lines.find((l) => l.id === id);
+const DURATION = Math.round(VOICE.duration * FPS) / FPS;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 0 };
+const HAND = '"FreeSans", Helvetica, Arial, sans-serif';
+const CX = 540;
+
+// [reference time, Spanish time] — line starts and ends of both voices
+const ANCH = [
+  [0.0, 0.0],
+  [3.8, 4.5],
+  [4.14, 4.94],
+  [5.6, 6.44],
+  [6.54, 6.9],
+  [9.2, 10.18],
+  [9.42, 10.5],
+  [10.5, 11.84],
+  [11.4, 12.0],
+  [15.3, 16.74],
+  [15.88, 17.1],
+  [18.1, 19.7],
+  [18.58, 20.1],
+  [20.96, 22.7],
+  [21.42, 22.84],
+  [23.2, 24.86],
+  [23.64, 25.1],
+  [28.4, 30.36],
+  [28.94, 30.94],
+  [32.6, 34.58],
+  [33.56, 34.88],
+  [37.2, 39.56],
+  [38.04, 40.0],
+  [39.9, 42.46],
+  [40.18, 42.6],
+  [41.5, 44.08],
+  [42.04, 44.54],
+  [43.0, 47.6],
+  [43.44, 48.3],
+  [44.4, 50.12],
+  [45.2, 50.5],
+  [46.8, 52.36],
+  [46.88, 52.72],
+  [48.9, 55.04],
+  [49.1, 55.7],
+  [49.7, 57.32],
+  [52.3, 60.94],
+  [52.4, 61.14],
+  [54.8, 64.4],
+  [55.3, 64.66],
+  [56.4, 65.52],
+  [56.7, 65.82],
+  [57.4, 66.48],
+  [59.0, DURATION]
+];
+function refT(t) {
+  if (t <= 0) return 0;
+  for (let i = 1; i < ANCH.length; i++) { const [r0, s0] = ANCH[i - 1], [r1, s1] = ANCH[i]; if (t <= s1) return r0 + (r1 - r0) * (t - s0) / (s1 - s0); }
+  return ANCH[ANCH.length - 1][0];
+}
+function esT(r) {
+  for (let i = 1; i < ANCH.length; i++) { const [r0, s0] = ANCH[i - 1], [r1, s1] = ANCH[i]; if (r <= r1) return s0 + (s1 - s0) * (r - r0) / (r1 - r0); }
+  return DURATION;
+}
+
+const ERA_LIST = [[0, DURATION, () => sceneMain()]];
+const SHOTS_R = [
+  ['skim', 0, 5.0, 'en el metro: un lector se acerca'],
+  ['feed', 5.0, 6.4, 'los videos que asustan'],
+  ['card', 6.4, 11.2, 'la tarjeta: sin batería, dormida'],
+  ['terminal', 11.2, 21.2, 'el campo de la terminal la despierta'],
+  ['chip', 21.2, 28.8, 'la llave secreta nunca sale del chip'],
+  ['code', 28.8, 33.4, 'un código de un solo uso'],
+  ['thief', 33.4, 38.8, 'el ladrón a unos centímetros'],
+  ['list', 38.8, 45.0, 'lo que se lleva'],
+  ['copy', 45.0, 49.75, 'la copia: rechazada'],
+  ['tap', 49.75, 52.3, 'acercar la tarjeta no es lo peligroso'],
+  ['pin', 52.3, 55.2, 'el que te ve escribir el PIN'],
+  ['cover', 55.2, 59.0, 'tápalo con la mano']
+];
+const SHOTS = SHOTS_R.map(([k, a, b, title]) => [k, 0, esT(a), esT(b), title]);
+const CUTS_R = [];   // no hard cuts: every boundary is a dissolve (shots.js)
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'voice-led explainer (scroll3d remake of reference 10)',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: CUTS_R.map(esT),
+  morphs: SHOTS_R.slice(1).map((s) => esT(s[1])),
+  cues: { hit: esT(47.9) },
+  acts: [
+    { name: '1 El miedo',    role: 'build',   t0: 0,          t1: esT(11.2) },
+    { name: '2 Cómo paga',   role: 'peak',    t0: esT(11.2),  t1: esT(33.4) },
+    { name: '3 El ladrón',   role: 'journey', t0: esT(33.4),  t1: esT(45.0) },
+    { name: '4 Rechazada',   role: 'gift',    t0: esT(45.0),  t1: esT(49.75) },
+    { name: '5 El PIN',      role: 'end',     t0: esT(49.75), t1: DURATION },
+  ],
+  board: [
+    { t: esT(3.0), title: 'en el metro: un lector se acerca', sound: '', next: '' },
+    { t: esT(5.84), title: 'los videos que asustan', sound: '', next: '' },
+    { t: esT(9.28), title: 'la tarjeta: sin batería, dormida', sound: '', next: '' },
+    { t: esT(17.2), title: 'el campo de la terminal la despierta', sound: '', next: '' },
+    { t: esT(25.76), title: 'la llave secreta nunca sale del chip', sound: '', next: '' },
+    { t: esT(31.56), title: 'un código de un solo uso', sound: '', next: '' },
+    { t: esT(36.64), title: 'el ladrón a unos centímetros', sound: '', next: '' },
+    { t: esT(42.52), title: 'lo que se lleva', sound: '', next: '' },
+    { t: esT(47.85), title: 'la copia: rechazada', sound: '', next: '' },
+    { t: esT(51.28), title: 'acercar la tarjeta no es lo peligroso', sound: '', next: '' },
+    { t: esT(54.04), title: 'el que te ve escribir el PIN', sound: '', next: '' },
+    { t: esT(57.48), title: 'tápalo con la mano', sound: '', next: '' }
+  ],
+  narration: VOICE.lines.map((l) => ({ id: l.id, t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;

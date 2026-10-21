@@ -1,0 +1,45 @@
+{
+ "passed": false,
+ "results": [
+  {
+   "check": "offset",
+   "status": "FAIL",
+   "detail": "encoded audio vs mix.wav: worst 11782 samples (245.46 ms), lags [-11782, 0, 0]"
+  },
+  {
+   "check": "loudness",
+   "status": "pass",
+   "detail": "integrated -15.30 LUFS, target -15"
+  },
+  {
+   "check": "true peak",
+   "status": "pass",
+   "detail": "-1.78 dBTP (limit -1.0)"
+  },
+  {
+   "check": "picture IMPACT",
+   "status": "pass",
+   "detail": "cut at frame 240: largest change at frame 240 (59.8 vs local 2.8)"
+  },
+  {
+   "check": "sync IMPACT",
+   "status": "pass",
+   "detail": "peak 0.00 frames from its cue"
+  },
+  {
+   "check": "audible IMPACT",
+   "status": "pass",
+   "detail": "stands out by 16.9 dB in 4000-8000 Hz over music+voice"
+  },
+  {
+   "check": "hero body IMPACT",
+   "status": "pass",
+   "detail": "main band 125-250 Hz lifted 4.0 dB (needs 3)"
+  },
+  {
+   "check": "silence",
+   "status": "pass",
+   "detail": "none"
+  }
+ ]
+}

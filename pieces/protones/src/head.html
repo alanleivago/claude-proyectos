@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sin protones</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0d14; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  ¿QUÉ PASARÍA SI LOS PROTONES DESAPARECIERAN DURANTE 5 SEGUNDOS? — 9:16, 75 s, 24 fps.
+//  Your own hands by a park lake. Every proton vanishes for 5 s (shown ×12 slow): the world inverts to magenta, a zoom
+//  into the atom, a rise to the Earth, back to the hands as they crack; then every proton returns.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 75.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 75, () => sceneMain()]];
+const SHOTS = [
+  ['lake',   0,    10,   'lago del parque; la cuenta atrás; bajas la vista a tus manos'],
+  ['hands',  10,   20,   'todo se invierte: tus manos translúcidas, huesos y venas'],
+  ['zoom',   20,   30,   'piel → células → molécula → átomo → núcleo sin protones'],
+  ['crack',  30,   38,   'las manos empiezan a agrietarse; la gente congelada'],
+  ['rise',   38,   48,   'subes: parque, ciudad, la Tierra'],
+  ['fall',   48,   56.5, 'caes de vuelta a tus manos; los últimos 100 ms'],
+  ['back',   56.5, 66,   'vuelven los protones'],
+  ['card',   66,   75,   'tarjeta final'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, t0, t1, title], i) => ({ id: i + 1, key, era: 0, t0, t1, title })),
+  cuts: [], morphs: [],
+  cues: { gone: 10.0, back: 56.5 },
+  acts: [
+    { name: '1 Lago', role: 'build', t0: 0, t1: 10 },
+    { name: '2 Sin protones', role: 'journey', t0: 10, t1: 30 },
+    { name: '3 Se rompe', role: 'peak', t0: 30, t1: 56 },
+    { name: '4 Silencio', role: 'silence', t0: 56, t1: 56.4 },
+    { name: '5 Vuelven', role: 'gift', t0: 56.4, t1: 66 },
+    { name: '6 Final', role: 'goodbye', t0: 66, t1: 75 },
+  ],
+  board: [[3, 'título, lago'], [8.5, 'tus manos, cuenta a 0'], [13, 'manos magenta'], [17, 'gente congelada'], [22, 'células'], [25, 'átomo'], [28, 'núcleo sin protones'], [34, 'manos agrietadas'], [41, 'la ciudad desde arriba'], [45, 'la Tierra'], [53, 'últimos 100 ms'], [58, 'vuelven'], [63, 'parque normal'], [71, 'tarjeta']].map(([t, title]) => ({ t, title, sound: '', next: '' })),
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

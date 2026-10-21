@@ -1,0 +1,16 @@
+{
+  "fps": 24,
+  "duration_s": 70.0,
+  "energy": "punchy",
+  "lufs": -15,
+  "kit": "F:/Claude Proyectos/sound-layer/kit",
+  "room": {"decay_s": 0.5, "wet_db": -16},
+  "voice": [{"file": "audio/bed.wav", "start_s": 0}],
+  "silence_ok": [[53.0, 55.0], [69.6, 70.0]],
+  "cues": [
+    {"id": "pop",    "t": 5.0,  "sound": "thump", "weight": "support"},
+    {"id": "fall",   "t": 37.6, "sound": "hit/fs-113748-kl-ex1c-wav-3", "weight": "support"},
+    {"id": "riser",  "t": 52.95, "sound": "reverse/fs-503817-gated-riser-wav-1", "weight": "support", "align": "end"},
+    {"id": "IMPACT", "t": 55.0, "sound": "audio/own/hero-hit.wav+audio/own/hero-boom.wav", "weight": "hero", "visual": "cut", "stop_before": true}
+  ]
+}

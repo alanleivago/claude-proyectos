@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Why Steel Ships Float</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #05080a; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  WHY STEEL SHIPS FLOAT — Bitstory #5. 9:16, voice-led (~70s), 24fps, style bitpix. One stage (F2): the sea in section.
+//  A 1 m steel cube sinks (7,850 kg vs 1,025 kg of seawater); the same steel as an 8 x 8 m tray floats 12 cm deep and
+//  carries ~66 t before the water reaches the rim (real numbers, 100 px = 1 m); a ship, its load line, floating on air.
+//  Mint = water pushed aside / buoyancy; yellow = numbers, cargo; magenta = weight.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4, GRID0 = 0;
+const VL = (id) => VOICE.lines.find((l) => l.id === id);
+const VW = (id, w, n = 1) => { const L = VL(id); let k = 0; for (const x of L.words) if (x.w.toLowerCase().replace(/[^a-z0-9']/g, '') === w.toLowerCase() && ++k === n) return x.t0; return L.t0; };
+const DURATION = Math.round(VOICE.duration * FPS) / FPS;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", "DejaVu Serif", serif';
+const CX = 540;
+const onBeat = (t) => t;
+
+// sections
+const B0 = (id) => VL(id).t0 - 0.3;
+const HIT = VL('air').t0 - 0.32;                        // the payoff hit: the tray lands on the water and floats
+const ERA_LIST = [[0, DURATION, () => sceneStage()]];
+const SHOTS = [
+  ['open',   0, 0,             B0('push'),   'a cube sinks, a ship floats'],
+  ['push',   0, B0('push'),    B0('solid'),  'pushing water aside; pushed back up; Archimedes'],
+  ['cube',   0, B0('solid'),   B0('roll'),   'the solid cube: 7,850 kg vs 1,025 kg; sinks'],
+  ['roll',   0, B0('roll'),    HIT,          'the same steel rolled into a tray'],
+  ['tray',   0, HIT,           B0('equal'),  'it floats 12 cm deep; 66 t of cargo'],
+  ['ship',   0, B0('equal'),   B0('end'),    'weight = water pushed aside; the load line'],
+  ['end',    0, B0('end'),     DURATION,     'floating on air; Bitstory'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, gridOffset: GRID0, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE, aspect: '9:16',
+  format: 'morph-chain',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [], morphs: [],
+  cues: { hit: HIT },
+  acts: [
+    { name: '1 Sink',    role: 'build',   t0: 0, t1: B0('roll') },
+    { name: '2 Roll',    role: 'peak',    t0: B0('roll'), t1: VL('roll').t1 },
+    { name: '3 Silence', role: 'silence', t0: VL('roll').t1 + 0.1, t1: HIT - 0.1 },
+    { name: '4 Float',   role: 'gift',    t0: HIT, t1: B0('equal') },
+    { name: '5 Ship',    role: 'goodbye', t0: B0('equal'), t1: DURATION },
+  ],
+  board: [
+    { t: VL('open').t1 - 0.3, title: 'steel sinks, steel floats', sound: 'a splash, a gurgle', next: 'the shape' },
+    { t: VL('back').t1 - 0.3, title: 'pushed back up', sound: 'a rising tone', next: 'Archimedes' },
+    { t: VL('solid').t1 - 0.3, title: '7,850 vs 1,025', sound: 'a low thud', next: 'to the bottom' },
+    { t: VL('roll').t1 - 0.2, title: 'rolled into a tray', sound: 'metal bending', next: 'silence' },
+    { t: VL('floats').t1 - 0.2, title: '12 cm deep', sound: 'the loudest hit', next: 'cargo' },
+    { t: VL('cargo').t1 - 0.2, title: '66 t to the rim', sound: 'container clanks', next: 'the ship' },
+    { t: VL('line').t1 - 0.3, title: 'the load line', sound: 'a chime', next: 'air' },
+    { t: DURATION - 0.6, title: 'Bitstory', sound: 'keys', next: 'loops' },
+  ],
+  narration: VOICE.lines.map((l) => ({ id: l.id, t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;
