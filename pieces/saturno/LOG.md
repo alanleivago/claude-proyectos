@@ -1,0 +1,10 @@
+# saturno — log
+
+## 2026-10-15 — story, look, storyboard, build, sound, export
+- User: "like What if the moon crashed into earth but with Saturn; adapt everything (gravity, what would happen, the setting)", English, paraphrased + new texts. Story approved; signature ALTERBASE.
+- Built new (scenes/world/run): fjord geography, Saturn (band texture from noise, ring texture), terrain with snow and lava cracks, fjord water, wooden houses with lit windows, ice rain, the lift.
+- Bugs: the terrain never drew — `flat` is a reserved word in GLSL ES 3.0 (renamed); snow mixed before the vertex colours (moved after color_fragment); the terrain mesh was centred 8 km away (coarse near the camera, water showing through); pines placed before the houses existed (moved; a grid hash instead of HL.some).
+- Look rounds: the fjord too wide (walls cut by the frame) → narrower, jagged ridges; our terrace's deck filled the bottom → a float over the rooftops.
+- User notes on the storyboard: more houses and trees along the shores, boats moored at the quay, more things on the quay, a lighthouse, lamp posts lighting the lower houses, more debris/particles from the ring impacts, show gravity pulling everything up → quay props (crates, barrels, crane, shed, bollards), 9 moored boats, a lighthouse with a sweeping beam, 60 lamp posts with light pools, 1,900 houses / 22,000 pines, rock and ice chunks + 2,400 sparks per the impacts, houses/boats/trees/water lifting from 52.4 s with the camera kept low to show it; a lower flood so the town stays visible.
+- Sound: Commons recordings + synth (Saturn's hum, meteor whistles and impacts, ground tears, the lift's roar, the inside howl). −15.1 LUFS, TP −2.0; loudest 100 ms 61.0 s −7.8 dBFS; silence 59.0–60.16 gated to zero.
+- Review: story arc 5/5 PASS; text PASS (0/0/0); loudest 61.0 s −7.8 dBFS in the payoff act, 1.1 s ≤ −40 dBFS before it; −15.0 LUFS, TP −2.0. WARN dead beats 1.5–4.75 s (the title over a still dusk) and 64–70 s (the card). Flat 1499–1505 = fade to the card (intended). Deterministic tile check: true.

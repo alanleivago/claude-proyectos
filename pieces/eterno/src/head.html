@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vivir para siempre</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0d14; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  ¿QUÉ PASARÍA SI TODOS VIVIÉRAMOS PARA SIEMPRE? — 9:16, 70s, 24fps, motion on 1s.
+//  F5 fixed place: a floating POV from a balcony on a pine headland over a fishing town in a bay. Nobody dies; births go on;
+//  forests become farms, the town climbs every hill, the stars fade; an underwater interlude with the immortal jellyfish;
+//  18 billion by 2100; towers on the land, then on the sea, then on the last green hill — until one rises at the balcony.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 70.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 70, () => sceneForever()]];
+const SHOTS = [
+  ['town',    0, 0.0,  4.0,  'the bay town in the morning; deaths today 3 → 0'],
+  ['nobody',  0, 4.0,  7.0,  'nobody dies'],
+  ['old',     0, 7.0,  10.0, 'not even of old age'],
+  ['stop',    0, 10.0, 14.0, '62 million deaths a year stop'],
+  ['births',  0, 14.0, 17.0, '132 million births a year; cranes'],
+  ['farms',   0, 17.0, 21.0, 'every forest becomes a farm'],
+  ['hills',   0, 21.0, 25.0, 'the town climbs every hill'],
+  ['stars',   0, 25.0, 29.0, 'night: the stars disappear'],
+  ['animal',  0, 29.0, 31.0, 'one animal already lives forever; down into the water'],
+  ['jelly',   0, 31.0, 35.0, 'the immortal jellyfish'],
+  ['ageing',  0, 35.0, 37.5, 'when it gets old…'],
+  ['polyp',   0, 37.5, 41.0, '…it turns back into a baby'],
+  ['2100',    0, 41.0, 45.0, '18 billion by 2100'],
+  ['climb',   0, 45.0, 49.0, 'the towers never stop climbing'],
+  ['land',    0, 49.0, 52.0, 'we run out of land'],
+  ['sea',     0, 52.0, 56.0, 'we build on the sea'],
+  ['hill',    0, 56.0, 59.8, 'then on the last green hill'],
+  ['here',    0, 59.8, 64.5, 'until the city reaches you'],
+  ['card',    0, 64.5, 70.0, 'card'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { nobody: 4.0, births: 14.0, night: 25.0, dive: 30.2, jelly: 31.0, surface: 41.0, sea: 52.0, here: 60.4, card: 64.5 },
+  acts: [
+    { name: '1 Pueblo',   role: 'build',   t0: 0.0,  t1: 4.0 },
+    { name: '2 Nadie',    role: 'turn',    t0: 4.0,  t1: 29.0 },
+    { name: '3 Medusa',   role: 'journey', t0: 29.0, t1: 41.0 },
+    { name: '4 Torres',   role: 'peak',    t0: 41.0, t1: 59.8 },
+    { name: '5 Silencio', role: 'silence', t0: 59.8, t1: 60.4 },
+    { name: '6 Aquí',     role: 'gift',    t0: 60.4, t1: 64.0 },
+    { name: '7 Final',    role: 'goodbye', t0: 64.0, t1: 70.0 },
+  ],
+  board: [
+    { t: 2.0,  title: '¿Qué pasaría si todos viviéramos para siempre?', sound: 'pueblo, gaviotas, campanas', next: 'nadie' },
+    { t: 5.5,  title: 'Nadie en la Tierra muere más.', sound: 'tono suave', next: 'viejo' },
+    { t: 8.6,  title: 'Ni siquiera de viejo.', sound: 'pueblo', next: 'muertes' },
+    { t: 12.0, title: '62 millones de muertes al año... se detienen.', sound: 'campana', next: 'bebés' },
+    { t: 15.6, title: 'Y siguen naciendo 132 millones de bebés.', sound: 'obras', next: 'granjas' },
+    { t: 19.4, title: 'Cada bosque se vuelve granja.', sound: 'tractores, motosierras', next: 'colinas' },
+    { t: 23.4, title: 'El pueblo trepa por cada colina.', sound: 'ciudad creciendo', next: 'noche' },
+    { t: 27.4, title: 'Las estrellas desaparecen.', sound: 'grillos, zumbido urbano', next: 'animal' },
+    { t: 29.8, title: 'Un animal ya vive para siempre.', sound: 'chapuzón', next: 'medusa' },
+    { t: 33.4, title: 'La medusa inmortal.', sound: 'submarino', next: 'vejez' },
+    { t: 36.4, title: 'Cuando envejece...', sound: 'latido lento', next: 'pólipo' },
+    { t: 39.6, title: '...vuelve a ser un bebé.', sound: 'burbujas', next: '2100' },
+    { t: 43.4, title: 'En 2100: 18.000 millones.', sound: 'ciudad', next: 'torres' },
+    { t: 47.4, title: 'Las torres no dejan de subir.', sound: 'grúas, obras', next: 'tierra' },
+    { t: 50.8, title: 'Hasta que se acaba la tierra.', sound: 'obras', next: 'mar' },
+    { t: 54.4, title: 'Entonces construimos sobre el mar.', sound: 'pilotes', next: 'colina' },
+    { t: 58.4, title: 'Después, en la última colina verde.', sound: 'motosierras, grúas', next: 'aquí' },
+    { t: 62.4, title: 'Hasta que la ciudad llega a ti.', sound: 'EL GOLPE (60,4 s) tras 0,6 s de silencio', next: 'final' },
+    { t: 67.6, title: 'La persona más longeva...', sound: 'cola', next: 'fin' },
+  ],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

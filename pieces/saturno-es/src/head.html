@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Saturno cae</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0d14; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  WHAT IF SATURN CRASHED INTO EARTH? — 9:16, 70s, 24fps, motion on 1s.
+//  F5 fixed place: a rooftop terrace over a wooden fjord town at dusk. A golden star grows into a ringed planet that fills
+//  the sky; the fjord drains and floods; the icy rings arrive first as a rain of blue meteors; Saturn's tides crack the
+//  ground; we fall into its clouds (60.2 s). Saturn never comes closer than 746 million miles.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 70.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 70, () => sceneSaturn()]];
+const SHOTS = [
+  ['fjord',   0, 0.0,  5.0,  'the fjord at dusk, the first stars'],
+  ['star',    0, 5.0,  14.0, 'a golden star grows rings'],
+  ['heavy',   0, 14.0, 22.0, 'Saturn fills a quarter of the sky'],
+  ['tide',    0, 22.0, 30.0, 'the fjord drains, then floods'],
+  ['rings',   0, 30.0, 38.0, 'the rings fill the sky; ice falls'],
+  ['ice',     0, 38.0, 46.0, 'ice impacts, steam, avalanches'],
+  ['roche',   0, 46.0, 53.0, 'the ground cracks, mountains split'],
+  ['clouds',  0, 53.0, 59.0, 'the sky becomes Saturn; everything lifts'],
+  ['silence', 0, 59.0, 60.2, 'silence'],
+  ['inside',  0, 60.2, 62.5, 'inside Saturn'],
+  ['card',    0, 62.5, 70.0, 'Saturn never comes closer'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { star: 5.0, heavy: 14.0, tide: 22.0, rings: 30.0, ice: 38.0, roche: 46.0, clouds: 53.0, hit: 60.2, card: 62.5 },
+  acts: [
+    { name: '1 Dusk',    role: 'build',   t0: 0.0,  t1: 14.0 },
+    { name: '2 Pull',    role: 'turn',    t0: 14.0, t1: 30.0 },
+    { name: '3 Rings',   role: 'peak',    t0: 30.0, t1: 46.0 },
+    { name: '4 Roche',   role: 'journey', t0: 46.0, t1: 59.0 },
+    { name: '5 Silence', role: 'silence', t0: 59.0, t1: 60.2 },
+    { name: '6 Inside',  role: 'gift',    t0: 60.2, t1: 62.5 },
+    { name: '7 Card',    role: 'goodbye', t0: 62.5, t1: 70.0 },
+  ],
+  board: [
+    { t: 2.5,  title: 'What if Saturn crashed into Earth?', sound: 'water, wind, a far bell', next: 'a golden star' },
+    { t: 10.0, title: 'A ringed planet is heading our way.', sound: 'calm, low hum', next: '95 times' },
+    { t: 18.0, title: 'It is 95 times heavier than Earth.', sound: 'hum rising', next: 'the tide' },
+    { t: 26.0, title: "It isn't falling toward us. We're falling toward it.", sound: 'water rushing, creaking', next: 'the rings' },
+    { t: 34.0, title: 'The rings get here first. They are made of ice.', sound: 'whooshes', next: 'impacts' },
+    { t: 42.0, title: 'Billions of chunks. Some as big as houses.', sound: 'impacts, steam, avalanche', next: 'Roche' },
+    { t: 49.5, title: 'Its tides start pulling Earth apart.', sound: 'deep cracking, rumble', next: 'the clouds' },
+    { t: 56.5, title: "We're falling into its clouds.", sound: 'roaring wind', next: 'silence' },
+    { t: 61.0, title: 'Inside Saturn', sound: 'THE HIT (60.2 s) after 1.2 s of silence', next: 'card' },
+    { t: 67.0, title: 'Saturn never comes closer than 746 million miles', sound: 'low tail', next: 'end' },
+  ],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

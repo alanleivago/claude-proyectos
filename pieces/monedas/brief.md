@@ -1,0 +1,6 @@
+# brief — monedas (Bitstory, video 8)
+- Ref: `Ref bit y pixels/8.mp4` (coin rotation paradox, 170 s, ES) → EN paraphrase, every step kept, 35 lines, 147 s, title spoken first.
+- Style: `bitstory`. 9:16, 24 fps. Coins at a tilt (KY 0.58), flat (KY 1) for the unrolled line, the Earth and the SAT sheet.
+- Beats: title → roll → question → 1982 stamp → "1 turn" + same edge bars → silence → HIT "2 turns" (fast re-roll) → slow roll with the arrow (1 at halfway, 2 at the end) → contact point ✗, centre ✓, 2 radii, centre's path ×2 → edge unrolled into a line, one turn → curled back, +360° → 1 + 1 = 2 → Sun/Earth 366 spins / 365 days / +1 → SAT 1982: B = 3r, 4 turns, R/r + 1, choices 3/2 3 9/2 6 9 without 4, three students, VOID, ≈300,000 rescored → pocket test → end.
+- Sound: documentary track extended to 148 s with a 5 s crossfade (124 s + 8–60 s), dip in the 0.7 s silence before HIT, tail fade; code SFX (clinks, rim purr, stamps, dings per turn).
+- Claims: coin rotation paradox, R/r + 1 (Wikipedia "Coin rotation paradox"; sciencenotes.org); 1982 SAT, choices 3/2, 3, 9/2, 6, 9, three students (Jungreis, Kartha, Taub), ~300,000 rescored (Wikipedia; Scientific American "The SAT Problem That Everybody Got Wrong"); ~366 rotations vs ~365 solar days a year (Wikipedia "Sidereal time"; ScienceAlert).

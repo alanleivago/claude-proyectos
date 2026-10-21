@@ -75,7 +75,7 @@ heroes: "hit+boom" (or "thump+tap" for soft), a "riser" or "reverse"
 peaking on the same frame. Types: hit boom riser reverse transition whoosh
 swish glitch ui click key tick tap pop thump paper chime shimmer zap.
 frame or t (seconds); weight hero|support (default support); align
-peak|end|start (default peak); pan -1..1 (clamped to +-0.6); visual
+peak|end|start (default peak); pan -1..1 (clamped to +-0.6); lift dB over the bed (default 3.5, hero 5); visual
 cut|move|land is what qa.py checks against the picture."""
 
 
@@ -340,12 +340,13 @@ def main():
         e_b = band_levels(xs[w0:w1]); m_b = np.maximum(band_levels(bed_mono[w0:w1]), undb(-60))
         share = e_b ** 2 / (np.sum(e_b ** 2) + 1e-20)
         weight = c.get("weight", "support")
-        need = np.where(share >= 0.1, m_b * np.sqrt(10 ** (lift[weight] / 10) - 1) / (e_b + 1e-12), np.inf)
+        lw = float(c.get("lift", lift[weight]))   # optional per-cue lift over the bed, dB
+        need = np.where(share >= 0.1, m_b * np.sqrt(10 ** (lw / 10) - 1) / (e_b + 1e-12), np.inf)
         if weight == "hero":     # a hero hit must stand out where most of its energy is
             k = int(np.argmax(share)); why = "main-band target (hero)"
         else:                    # support sounds: just clearly audible, in their easiest band
             k = int(np.argmin(need)); why = "best-band target"
-        g = float(m_b[k] * np.sqrt(10 ** (lift[weight] / 10) - 1) / (e_b[k] + 1e-12))
+        g = float(m_b[k] * np.sqrt(10 ** (lw / 10) - 1) / (e_b[k] + 1e-12))
         lo, hi = BANDS[k]
         bed_rms = float(np.sqrt(np.mean(bed_mono[w0:w1] ** 2))) if w1 > w0 else 0.0
         e28 = band_rms(xs[w0:w1], 2000, 8000)

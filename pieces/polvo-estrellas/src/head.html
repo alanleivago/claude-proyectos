@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Polvo de estrellas</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #05060f; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; image-rendering: pixelated; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  POLVO DE ESTRELLAS — 9:16, 60s @ 120 BPM, 24fps, style pixdoc (space variant: 360x640, box captions).
+//  The iron in your blood was forged in a massive star and thrown out by its supernova. Every element keeps one
+//  colour for the whole piece (Fe = rust red, like blood). One continuous zoom: beats are joined by mosaic zooms.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 60.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = '"Helvetica Neue", Arial, sans-serif';   // storyboard sheet only
+const CX = 540;
+const SP_RES = [360, 640];
+
+// [t0, scene, title, o0, oDur, k] (story time = video time here; k = 1 everywhere, the warp machinery is kept for pacing)
+const SHOT_LIST = [
+  [0.0,  'blood',    '1 la gota de sangre: el átomo de hierro', 0.0, 4.0, 1],
+  [4.0,  'nebula',   '2 una nube de hidrógeno del Big Bang',    4.0, 4.0, 1],
+  [8.0,  'ignite',   '3 la gravedad la aprieta y se enciende',  8.0, 4.0, 1],
+  [12.0, 'blue',     '4 más de 8 veces la masa del Sol',        12.0, 4.0, 1],
+  [16.0, 'giant',    '5 supergigante roja; se abre en corte',   16.0, 4.0, 1],
+  [20.0, 'onion',    '6 las capas: helio … silicio, hierro',    20.0, 13.5, 1],
+  [33.5, 'collapse', '8 el núcleo colapsa',                     33.5, 1.5, 1],
+  [35.0, 'nova',     '9 supernova',                             35.0, 5.0, 1],
+  [40.0, 'remnant',  '10 los restos siembran nubes',            40.0, 4.0, 1],
+  [44.0, 'sun',      '11 hace 4.600 millones de años: el Sol',  44.0, 4.0, 1],
+  [48.0, 'earth',    '12 la Tierra; 90 % de tu masa',           48.0, 4.0, 1],
+  [52.0, 'body',     '13 tu oxígeno y tu hierro',               52.0, 4.0, 1],
+  [56.0, 'end',      '14 la gota; eres polvo de estrellas',     56.0, 4.0, 1],
+];
+let CUR_SHOT = 0;
+function warp(i, fn) {
+  const [t0, , , o0, , k] = SHOT_LIST[i], st = o0 + (TT - t0) * k, keepT = TT, keepE = E0, n0 = DEFER ? DEFER.length : 0;
+  CUR_SHOT = i; TT = st; E0 = o0;
+  try { fn(); } finally { TT = keepT; E0 = keepE; }
+  if (DEFER) for (let j = n0; j < DEFER.length; j++) { const f = DEFER[j]; DEFER[j] = () => { const a = TT, e = E0; TT = st; E0 = o0; try { f(); } finally { TT = a; E0 = e; } }; }
+}
+function NT(t) { for (let i = SHOT_LIST.length - 1; i >= 0; i--) { const [t0, , , o0, oDur, k] = SHOT_LIST[i]; if (t >= o0 - 1e-6 && t < o0 + oDur + (i === SHOT_LIST.length - 1 ? 1e9 : 0)) return t0 + (t - o0) / k; } return t; }
+const ERA_LIST = SHOT_LIST.map(([t0, sc], i) => [t0, i + 1 < SHOT_LIST.length ? SHOT_LIST[i + 1][0] : DURATION, () => warp(i, () => SCENES[sc](i))]);
+const SHOTS = SHOT_LIST.map(([t0, sc, title], i) => [sc, i, t0, ERA_LIST[i][1], title]);
+
+// the element colours (one meaning each, for the whole piece)
+const EL = { H: '#5a8cff', He: '#a46ae8', C: '#ff5a9e', Ne: '#ff8c3a', O: '#3ae0c0', Si: '#e8e050', Fe: '#d2482a', blood: '#b0141e' };
+// captions: [t0, lines, o]. A line is a string or [[text, colour], ...]. o.big = the large outlined hook/title text
+const CAPS = [
+  [0.4,  ['¿DE DÓNDE', 'VIENE EL', 'HIERRO DE', 'TU SANGRE?'], { big: true }],
+  [3.6,  null],
+  [4.3,  ['CASI TODO ERA HIDRÓGENO', 'DEL BIG BANG']],
+  [8.3,  ['LA GRAVEDAD LA APRETÓ...']], [10.1, ['...Y SE ENCENDIÓ.']],
+  [12.3, ['MÁS DE 8 VECES', 'LA MASA DEL SOL']],
+  [16.3, ['SE AGOTA EL HIDRÓGENO', 'DEL CENTRO']],
+  [20.3, [[['HELIO', EL.He]], 'CIENTOS DE MILES DE AÑOS']],
+  [22.6, [[['CARBONO', EL.C]], 'SIGLOS']],
+  [24.8, [[['NEÓN', EL.Ne]], 'UN AÑO']],
+  [26.8, [[['OXÍGENO', EL.O]], 'MESES']],
+  [28.6, [[['SILICIO', EL.Si]], 'DÍAS']],
+  [30.4, [[['HIERRO', EL.Fe]], 'NO DA ENERGÍA']],
+  [33.5, ['EL NÚCLEO COLAPSA', 'EN MENOS DE UN SEGUNDO'], { cps: 60, open: 0.05 }],
+  [35.0, null],
+  [40.3, ['SUS RESTOS SEMBRARON', 'NUEVAS NUBES']],
+  [44.3, ['HACE 4.600 MILLONES DE AÑOS', 'UNA SE CONVIRTIÓ EN EL SOL']],
+  [48.3, ['CERCA DEL 90 % DE TU MASA', 'SE FORJÓ EN ESTRELLAS']],
+  [52.3, [[['TU ', '#eef0ea'], ['OXÍGENO', EL.O], [' Y TU ', '#eef0ea'], ['HIERRO', EL.Fe]], 'DE ESTRELLAS QUE EXPLOTARON']],
+  [56.0, null],
+  [57.0, ['ERES POLVO', 'DE ESTRELLAS'], { big: true }],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'morph-chain',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: SHOT_LIST.slice(1).map(([t0]) => t0),
+  morphs: [],
+  cues: { hook: 0.4, atom: 1.6, zoomOut: 3.4, swirl: 5.0, shock: 9.2, ignite: 10.0, sunIcon: 13.0, swell: 16.4, slice: 18.6,
+          He: 20.3, C: 22.6, Ne: 24.8, O: 26.8, Si: 28.6, Fe: 30.4, beat: 31.5, collapse: 33.6, drop: 34.0, nova: 35.0,
+          seed: 40.3, disk: 44.3, sunOn: 45.6, earth: 48.0, bar: 48.8, body: 52.0, blood: 54.0, title: 57.0 },
+  acts: [
+    { name: '1 El origen', role: 'build',   t0: 0.0,  t1: 20.0 },
+    { name: '2 Las capas', role: 'journey', t0: 20.0, t1: 30.4 },
+    { name: '3 El hierro', role: 'peak',    t0: 30.4, t1: 34.0 },
+    { name: '4 Silencio',  role: 'silence', t0: 34.0, t1: 35.0 },
+    { name: '5 Supernova', role: 'gift',    t0: 35.0, t1: 48.0 },
+    { name: '6 Tú',        role: 'goodbye', t0: 48.0, t1: 60.0 },
+  ],
+  board: [
+    { t: 2.6, title: '1 el átomo de hierro de tu sangre', sound: 'música desde 0; zap', next: 'zoom a un punto de luz' },
+    { t: 6.2, title: '2 una nube de hidrógeno', sound: 'colchón + arpegio', next: 'colapsa' },
+    { t: 10.7, title: '3 se enciende', sound: 'golpe suave', next: 'estrella azul' },
+    { t: 14.2, title: '4 más de 8 soles', sound: 'pops de los soles', next: 'se hincha' },
+    { t: 19.1, title: '5 supergigante roja, en corte', sound: 'groove', next: 'zoom al corte' },
+    { t: 21.6, title: '6a helio', sound: 'reloj', next: '' },
+    { t: 27.6, title: '6b oxígeno: meses', sound: 'el reloj acelera', next: '' },
+    { t: 31.4, title: '7 hierro: no da energía', sound: 'lo más denso; latido', next: 'colapso' },
+    { t: 34.4, title: '8 colapso; silencio', sound: 'SILENCIO 34–35', next: 'destello' },
+    { t: 37.0, title: '9 supernova', sound: 'EL GOLPE MÁS FUERTE', next: 'se dispersa' },
+    { t: 42.2, title: '10 nuevas nubes', sound: 'pad', next: 'disco' },
+    { t: 46.6, title: '11 el Sol', sound: 'tema', next: 'zoom a la Tierra' },
+    { t: 50.6, title: '12 la Tierra; tu masa', sound: 'groove', next: 'una persona' },
+    { t: 54.4, title: '13 tu oxígeno y tu hierro', sound: 'latido', next: 'a la sangre' },
+    { t: 58.0, title: '14 eres polvo de estrellas', sound: 'cierre', next: 'loop' },
+  ],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dos millones de años de lluvia</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0d14; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  ¿QUÉ PASARÍA SI LLOVIERA DURANTE 2 MILLONES DE AÑOS? — 9:16, 70s, 24fps, motion on 1s.
+//  F5 fixed place: a hillside balcony over a lakeside village in a mountain valley. A storm comes in and never stops: the
+//  streets become rivers, the lake swallows the village, a jungle grows; then the Carnian, 232 million years ago: a volcano,
+//  the rain stops, and a Herrerasaurus climbs up to the balcony (its roar at 63.3 s). The Carnian Pluvial Episode.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 70.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 70, () => sceneRain()]];
+const SHOTS = [
+  ['storm',   0, 0.0,  5.0,  'the storm arrives'],
+  ['starts',  0, 5.0,  10.0, 'it starts raining'],
+  ['wont',    0, 10.0, 15.0, 'it will not stop'],
+  ['rivers',  0, 15.0, 20.0, 'the streets become rivers'],
+  ['lake',    0, 20.0, 25.0, 'the lake swallows the village'],
+  ['roofs',   0, 25.0, 30.0, 'only the roofs are left'],
+  ['gone',    0, 30.0, 34.0, 'the village is gone'],
+  ['jungle',  0, 34.0, 39.0, 'the jungle takes over'],
+  ['ferns',   0, 39.0, 43.0, 'ferns taller than houses'],
+  ['carnian', 0, 43.0, 48.0, '232 million years ago'],
+  ['volcano', 0, 48.0, 53.0, 'giant volcanoes'],
+  ['stops',   0, 53.0, 57.0, 'the rain stops'],
+  ['dino',    0, 57.0, 63.3, 'a dinosaur climbs to the balcony'],
+  ['roar',    0, 63.3, 64.5, 'the roar'],
+  ['card',    0, 64.5, 70.0, 'the Carnian Pluvial Episode'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { rain: 5.0, flood: 15.0, gone: 30.0, jungle: 34.0, carnian: 43.0, volcano: 48.0, stops: 53.0, dino: 57.0, hit: 63.3, card: 64.5 },
+  acts: [
+    { name: '1 Tormenta', role: 'build',   t0: 0.0,  t1: 15.0 },
+    { name: '2 Diluvio',  role: 'journey', t0: 15.0, t1: 34.0 },
+    { name: '3 Selva',    role: 'journey', t0: 34.0, t1: 43.0 },
+    { name: '4 Carniense',role: 'turn',    t0: 43.0, t1: 57.0 },
+    { name: '5 Dinosaurio', role: 'peak',  t0: 57.0, t1: 62.6 },
+    { name: '6 Silencio', role: 'silence', t0: 62.6, t1: 63.3 },
+    { name: '7 Rugido',   role: 'gift',    t0: 63.3, t1: 64.5 },
+    { name: '8 Final',    role: 'goodbye', t0: 64.5, t1: 70.0 },
+  ],
+  board: [
+    { t: 2.5,  title: '¿Qué pasaría si lloviera durante 2 millones de años?', sound: 'trueno lejano, viento', next: 'empieza a llover' },
+    { t: 7.5,  title: 'Empieza a llover.', sound: 'primeras gotas', next: 'no parará' },
+    { t: 12.5, title: 'Y no parará en 2 millones de años.', sound: 'lluvia fuerte', next: 'los ríos' },
+    { t: 17.5, title: 'Semana 1: las calles son ríos.', sound: 'agua corriendo', next: 'el lago' },
+    { t: 22.5, title: 'Día 40: el lago se traga el pueblo.', sound: 'agua, campanas', next: 'los tejados' },
+    { t: 27.5, title: 'Año 1: solo quedan los tejados.', sound: 'lluvia sobre agua', next: 'desaparece' },
+    { t: 32.0, title: 'Año 100: el pueblo ha desaparecido.', sound: 'lluvia', next: 'la selva' },
+    { t: 36.5, title: 'Año 10.000: la selva lo cubre todo.', sound: 'lluvia, ranas, insectos', next: 'helechos' },
+    { t: 41.0, title: 'Helechos más altos que casas.', sound: 'selva', next: 'el Carniense' },
+    { t: 45.5, title: 'La Tierra vivió algo así de verdad.', sound: 'un barrido en el tiempo', next: 'el volcán' },
+    { t: 50.5, title: 'Volcanes gigantes la habrían desatado.', sound: 'retumbo del volcán', next: 'para' },
+    { t: 55.0, title: 'Cuando por fin paró...', sound: 'goteo, pájaros', next: 'el dinosaurio' },
+    { t: 60.5, title: '...algo nuevo había llegado.', sound: 'pasos, respiración', next: 'silencio' },
+    { t: 63.6, title: 'Los dinosaurios.', sound: 'EL RUGIDO (63,3 s) tras 0,7 s de silencio', next: 'final' },
+    { t: 68.0, title: 'Hace 234–232 millones de años', sound: 'cola', next: 'fin' },
+  ],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

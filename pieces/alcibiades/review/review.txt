@@ -1,0 +1,108 @@
+shot 1 (hook): 27 frames [0,6,12,18,24,30,36,42,48,54,60,66,72,78,84,90,96,102,108,114,120,126,132,138,144,150,156] -> review/shot01-sheet.jpg
+shot 2 (pericles): 16 frames [158,164,170,176,182,188,194,200,206,212,218,224,230,236,242,248] -> review/shot02-sheet.jpg
+shot 3 (socrates): 12 frames [251,257,263,269,275,281,287,293,299,305,311,317] -> review/shot03-sheet.jpg
+shot 4 (sicily): 16 frames [318,324,330,336,342,348,354,360,366,372,378,384,390,396,402,407] -> review/shot04-sheet.jpg
+shot 5 (fleet): 9 frames [408,414,420,426,432,438,444,450,456] -> review/shot05-sheet.jpg
+shot 6 (herms): 28 frames [458,464,470,476,482,488,494,500,506,512,518,524,530,536,542,548,554,560,566,572,578,584,590,596,602,608,614,620] -> review/shot06-sheet.jpg
+shot 7 (flee): 25 frames [621,627,633,639,645,651,657,663,669,675,681,687,693,699,705,711,717,723,729,735,741,747,753,759,765] -> review/shot07-sheet.jpg
+shot 8 (advice): 24 frames [767,773,779,785,791,797,803,809,815,821,827,833,839,845,851,857,863,869,875,881,887,893,899,905] -> review/shot08-sheet.jpg
+shot 9 (queen): 11 frames [908,914,920,926,932,938,944,950,956,962,968] -> review/shot09-sheet.jpg
+shot 10 (persia): 11 frames [969,975,981,987,993,999,1005,1011,1017,1023,1029] -> review/shot10-sheet.jpg
+shot 11 (gold): 22 frames [1034,1040,1046,1052,1058,1064,1070,1076,1082,1088,1094,1100,1106,1112,1118,1124,1130,1136,1142,1148,1154,1160] -> review/shot11-sheet.jpg
+shot 12 (general): 16 frames [1163,1169,1175,1181,1187,1193,1199,1205,1211,1217,1223,1229,1235,1241,1247,1252] -> review/shot12-sheet.jpg
+shot 13 (hero): 13 frames [1253,1259,1265,1271,1277,1283,1289,1295,1301,1307,1313,1319,1325] -> review/shot13-sheet.jpg
+shot 14 (fire): 28 frames [1326,1332,1338,1344,1350,1356,1362,1368,1374,1380,1386,1392,1398,1404,1410,1416,1422,1428,1434,1440,1446,1452,1458,1464,1470,1476,1482,1488] -> review/shot14-sheet.jpg
+shot 15 (name): 19 frames [1491,1497,1503,1509,1515,1521,1527,1533,1539,1545,1551,1557,1563,1569,1575,1581,1587,1593,1599] -> review/shot15-sheet.jpg
+shot 16 (sign): 15 frames [1605,1611,1617,1623,1629,1635,1641,1647,1653,1659,1665,1671,1677,1683,1689] -> review/shot16-sheet.jpg
+
+CUTS vs beat grid @ 120 BPM, 24fps (8ths = 0.25s)
+ #   cut t     grid  grid#   nominal f  cut f   cut f t     err(f)  Δ@cut  peak(±2f)          shot change           result
+ 1    6.580s   8th    26      157.9    158   6.5833s  +0.1    11.1  f158 ok            shot 1 -> 2           FAIL
+ 2   10.474s   8th    42      251.4    251   10.4583s  -0.4     0.0  f252 ok            shot 2 -> 3           FAIL
+ 3   13.235s   8th    53      317.6    318   13.2500s  +0.4    12.7  f318 ok            shot 3 -> 4           PASS
+ 4   17.013s   8th    68      408.3    408   17.0000s  -0.3     3.5  f410 CHECK         shot 4 -> 5           PASS
+ 5   19.067s   8th    76      457.6    458   19.0833s  +0.4    30.0  f458 ok            shot 5 -> 6           FAIL
+ 6   25.884s   8th   104      621.2    621   25.8750s  -0.2     1.4  f622 ok            shot 6 -> 7           FAIL
+ 7   31.979s   8th   128      767.5    767   31.9583s  -0.5     0.0  f768 ok            shot 7 -> 8           FAIL
+ 8   37.843s   8th   151      908.2    908   37.8333s  -0.2     2.0  f910 CHECK         shot 8 -> 9           FAIL
+ 9   40.360s   8th   161      968.6    969   40.3750s  +0.4     1.5  f970 ok            shot 9 -> 10          FAIL
+10   43.100s   8th   172     1034.4   1034   43.0833s  -0.4     1.5  f1036 CHECK        shot 10 -> 11         FAIL
+11   48.459s   8th   194     1163.0   1163   48.4583s  -0.0     0.0  f1164 ok           shot 11 -> 12         FAIL
+12   52.214s   8th   209     1253.1   1253   52.2083s  -0.1     0.0  f1254 ok           shot 12 -> 13         FAIL
+13   55.263s   8th   221     1326.3   1326   55.2500s  -0.3     4.0  f1328 CHECK        shot 13 -> 14         PASS
+14   62.143s   8th   249     1491.4   1491   62.1250s  -0.4     1.3  f1492 ok           shot 14 -> 15         FAIL
+15   66.856s   8th   267     1604.5   1605   66.8750s  +0.5     1.7  f1606 ok           shot 15 -> 16         FAIL
+all cuts on grid within 1 frame: FAIL
+
+PACING: 15 hard cuts (1 in the last 5s), mean segment 4.41s, shortest 2.05s, plus 0 on-2s montage steps
+FLAT FRAMES (contrast < 6/255): none
+LOOP: diff(last=1691, first=0) = 9.89; typical consecutive diff in the first 40 frames = 0.77 (info: F4/F6 loop pixel-exactly and F4 checks it; other formats return to the opening image, changed)
+
+NARRATION (voice-over added outside; checks density and word hits)
+ #   t0-t1          words  wps   shot  line
+ 1  0.60-6.48s     16  2.72     1  "He turned on Athens. Then on Sparta. Then on Persia. And Athens still welcomed him home."
+ 2  6.83-10.72s     13  3.34     2  "He was raised in the household of Pericles, the man who ran Athens."
+ 3  10.72-13.48s      6  2.17     3  "Wealthy, gorgeous, and Socrates' favourite pupil."
+ 4  13.48-17.26s     13  3.44     4  "He sold the city on its boldest gamble yet: the conquest of Sicily."
+ 5  17.26-19.02s      6  3.42     5  "And Athens handed him the fleet."
+ 6  19.32-25.83s     23  3.53     6  "But the night before it sailed, someone smashed the sacred statues of Hermes all over the city, and the blame fell on him."  <-- too dense / overlapping
+ 7  26.13-32.03s     16  2.71     7  "Called home to stand trial, he slipped away, and sailed straight to Athens' worst enemy: Sparta."
+ 8  32.23-38.09s     17  2.90     8  "There, he showed the Spartans exactly where to strike: save Syracuse, and build a fort outside Athens."
+ 9  38.09-40.46s      9  3.80     9  "Then he seduced the wife of a Spartan king."  <-- too dense / overlapping
+10  40.61-43.35s     10  3.65    10  "Now Sparta wanted him dead. So he ran to Persia."  <-- too dense / overlapping
+11  43.35-48.51s     19  3.68    11  "At the satrap's court, he played the Greeks against each other, and dangled Persian gold in front of Athens."  <-- too dense / overlapping
+12  48.71-52.46s     12  3.20    12  "Losing the war, Athens did the unthinkable. It made him general again."
+13  52.46-55.06s     10  3.85    13  "He won battle after battle, and sailed home a hero."  <-- too dense / overlapping
+14  55.51-61.69s     21  3.40    14  "Years later, assassins set his house on fire. He ran out, dagger in hand, and they shot him down with arrows."
+15  62.59-66.51s     11  2.81    15  "His name was Alcibiades. The man who switched sides three times."
+narration: 202 words, density FAIL (<= 3.5 words/s, no overlaps), word hits PASS (<= 2 frames from a cut)
+
+STORY ARC (loudness in dBFS over 100ms windows: median / 90th percentile; music = music stem median)
+ act          role       t0-t1         cuts  cuts/s  motion   mix med  mix p90  music
+ 1 Hook       build      0.00-6.58s      0    0.00     1.1    -17.4    -15.4   -11.0
+ 2 Athens     build      6.58-19.07s      4    0.32     1.3    -19.0    -14.6   -12.8
+ 3 Turns      peak       19.07-55.26s      8    0.22     1.3    -17.6    -13.6   -11.3
+ 4 Fire       build      55.26-61.74s      1    0.15     1.5    -17.1    -14.5   -10.2
+ 5 Silence    silence    61.74-62.14s      0    0.00     1.4    -47.1    -45.2   -40.1
+ 6 Name       gift       62.14-66.86s      1    0.21     1.3    -16.1    -14.3   -11.1
+ 7 Sign       goodbye    66.86-70.50s      1    0.27     0.8    -17.1    -14.6   -10.0
+  FAIL  gift is the loudest act (p90 -14.3 vs next -13.6)
+  FAIL  gift p90 >= peak p90 + 1 dB (-14.3 vs -13.6): the busiest moment is not the loudest
+  PASS  silence median <= peak median - 15 dB (-47.1 vs -17.6)
+  FAIL  peak has the highest cut rate (0.22/s)
+  PASS  gift is held: <= 0.5 cuts/s (0.21)
+  FAIL  goodbye decays: median <= gift median - 6 dB (-17.1 vs -16.1)
+story arc: FAIL (2/6 rules)
+
+TEXT (every string drawn, traced to screen; 310 frames sampled, morph windows skipped)
+  FAIL  cut off by the frame edge: Aegean Sea  at 26.00–30.25s (18 frames)
+  FAIL  cut off by the frame edge: ATTICA  at 26.00–28.75s (12 frames)
+  FAIL  cut off by the frame edge: PELOPONNESE  at 26.00–28.50s (11 frames)
+  FAIL  cut off by the frame edge: ASIA  at 26.00–42.25s (52 frames)
+  FAIL  cut off by the frame edge: Athens  at 26.00–28.75s (12 frames)
+  FAIL  cut off by the frame edge: Sparta  at 26.75–28.50s (8 frames)
+  FAIL  cut off by the frame edge: SICILY  at 29.00–43.08s (39 frames)
+  FAIL  cut off by the frame edge: Ionian Sea  at 32.00–43.08s (31 frames)
+  FAIL  cut off by the frame edge: ITALY  at 32.00–43.08s (33 frames)
+  FAIL  cut off by the frame edge: Syracuse  at 32.00–37.83s (20 frames)
+  FAIL  cut off by the frame edge: Mediterranean  at 37.25–43.08s (18 frames)
+  WARN  under the phone UI (safe zone): Sparta  at 26.00–28.75s (4 frames)
+  WARN  under the phone UI (safe zone): PELOPONNESE  at 28.75s (1 frames)
+  WARN  under the phone UI (safe zone): ATTICA  at 29.00–36.75s (13 frames)
+  WARN  under the phone UI (safe zone): Athens  at 29.00–30.25s (6 frames)
+  WARN  under the phone UI (safe zone): Aegean Sea  at 35.00–37.00s (9 frames)
+  WARN  under the phone UI (safe zone): QUEEN TIMAEA  at 39.50–40.38s (6 frames)
+  WARN  under the phone UI (safe zone): ASIA  at 42.50–43.08s (5 frames)
+  WARN  under the phone UI (safe zone): PERSIA  at 42.75–43.08s (4 frames)
+text: FAIL (11 cut-off/overlap, 8 in the safe zone)
+
+SOUND (the payoff window on the score without the voice: renders/audio-score.wav; loudness on the mix)
+  loudest 100ms window: 36.4s (-10.8 dBFS) - NOT in the payoff act 62.143-66.856s
+  silence before it: 0.1s at <= -40 dBFS ending 36.1s in the 2s before (craft.md wants 0.5-4s when the story has a turn)
+  loudness: -13.8 LUFS integrated, range 3.4 LU, true peak -1.4 dBFS (phone target about -16 to -14 LUFS, peak <= -1)
+
+DEAD BEATS (the picture's change over 0.5s, every 0.25s; median 2.76, "still" below 0.80; silence acts are exempt)
+dead beats: PASS (0 stretches over 3s)
+PHONE SHEET: review/phone.jpg (one frame a second at 360px wide — read every caption at this size)
+
+video: 1080x1920, 1692 frames decoded

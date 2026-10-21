@@ -1,0 +1,34 @@
+# Sound credits — tsunami-ny
+
+Recordings from Wikimedia Commons, all CC0 or public domain (credited though not required). Impacts from the sound-layer kit (CC0, see sound-layer/kit/CREDITS.md). Synth layer made in code (synth.py); the hero boom/sub and lens crack from pieces/asteroide/sound/synth.py and the kit's "Huge Explosion - Thunder - Exploding" by dmstudio (CC0).
+
+## Recordings
+- Garden_at_Pioneer_Works.wav — CC0 — https://upload.wikimedia.org/wikipedia/commons/2/25/Garden_at_Pioneer_Works.wav
+- Gulls_above_the_street_at_dawn.ogg — Public domain — https://upload.wikimedia.org/wikipedia/commons/4/4e/Gulls_above_the_street_at_dawn.ogg
+- Car_Horn.wav — CC0 — https://upload.wikimedia.org/wikipedia/commons/8/8c/Car_Horn.wav
+- Horn_02_L.wav — CC0 — https://upload.wikimedia.org/wikipedia/commons/d/da/Horn_02_L.wav
+- Horn_03_R.wav — CC0 — https://upload.wikimedia.org/wikipedia/commons/d/d4/Horn_03_R.wav
+- American_police_siren_i.ogg — Public domain — https://upload.wikimedia.org/wikipedia/commons/a/ae/American_police_siren_i.ogg
+- Civil-defense-siren-waver.ogg — Public domain — https://upload.wikimedia.org/wikipedia/commons/6/69/Civil-defense-siren-waver.ogg
+- Helicopter_over_quiet_neighbourhood.ogg — Public domain — https://upload.wikimedia.org/wikipedia/commons/d/d9/Helicopter_over_quiet_neighbourhood.ogg
+- Gull_1.ogg — Public domain — https://upload.wikimedia.org/wikipedia/commons/4/43/Gull_1.ogg
+- Western_Gull_Golden_Gate_National_Recreation_Area.ogg — Public domain — https://upload.wikimedia.org/wikipedia/commons/9/96/Western_Gull_Golden_Gate_National_Recreation_Area.ogg
+- Ocean_Waves_on_a_Tropical_Beach.ogg — CC0 — https://upload.wikimedia.org/wikipedia/commons/6/64/Ocean_Waves_on_a_Tropical_Beach.ogg
+- Kitchen_sink_draining_water.ogg — Public domain — https://upload.wikimedia.org/wikipedia/commons/b/b9/Kitchen_sink_draining_water.ogg
+- Bubbles.wav — CC0 — https://upload.wikimedia.org/wikipedia/commons/6/65/Bubbles.wav
+- Water_bubbles_chortling.ogg — Public domain — https://upload.wikimedia.org/wikipedia/commons/4/4b/Water_bubbles_chortling.ogg
+- Rusty_metal_door_clasp.ogg — Public domain — https://upload.wikimedia.org/wikipedia/commons/0/04/Rusty_metal_door_clasp.ogg
+- Metal_cabinet_door_jarring.ogg — Public domain — https://upload.wikimedia.org/wikipedia/commons/2/23/Metal_cabinet_door_jarring.ogg
+- Howling_wind.ogg — CC0 — https://upload.wikimedia.org/wikipedia/commons/2/2d/Howling_wind.ogg
+- Shallow_small_river_with_stony_riverbed.ogg — Public domain — https://upload.wikimedia.org/wikipedia/commons/2/21/Shallow_small_river_with_stony_riverbed.ogg
+- Bark__avk_.wav — CC0 — https://upload.wikimedia.org/wikipedia/commons/d/dd/Bark_%28avk%29.wav
+- Earthquake.ogg — Public domain — https://upload.wikimedia.org/wikipedia/commons/5/57/Earthquake.ogg
+- Explosion_10.ogg — Public domain — https://upload.wikimedia.org/wikipedia/commons/3/37/Explosion_10.ogg
+- Explosions-LS100152.ogg — Public domain — https://upload.wikimedia.org/wikipedia/commons/e/e9/Explosions-LS100152.ogg
+- Storm_in_Quebec_on_August_10__2023.flac — CC0 — https://upload.wikimedia.org/wikipedia/commons/4/4b/Storm_in_Quebec_on_August_10%2C_2023.flac
+- NOW_screaming.ogg — CC0 — https://upload.wikimedia.org/wikipedia/commons/0/0d/NOW_screaming.ogg
+- UncleSigmund_-_ahhh__cc0___freesound_.mp3 — CC0 — https://upload.wikimedia.org/wikipedia/commons/3/32/UncleSigmund_-_ahhh_%28cc0%29_%28freesound%29.mp3
+- Nick121087_-_Demonic_Woman_Scream__cc0___freesound_.mp3 — CC0 — https://upload.wikimedia.org/wikipedia/commons/e/e6/Nick121087_-_Demonic_Woman_Scream_%28cc0%29_%28freesound%29.mp3
+- Street_parade_carnival_people_yelling_kamelle_kamelle.ogg — Public domain — https://upload.wikimedia.org/wikipedia/commons/8/86/Street_parade_carnival_people_yelling_kamelle_kamelle.ogg
+- 360703_eguobyte_large-crowd-medium-distance-stereo.wav — CC0 — https://upload.wikimedia.org/wikipedia/commons/a/a9/360703_eguobyte_large-crowd-medium-distance-stereo.wav
+- Cri_Wilhelm__Joseph_SARDIN_.wav — CC0 — https://upload.wikimedia.org/wikipedia/commons/5/5c/Cri_Wilhelm_%28Joseph_SARDIN%29.wav

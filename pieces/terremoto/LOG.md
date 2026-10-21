@@ -1,0 +1,10 @@
+# terremoto — log
+
+## 2026-10-15 — story, look, storyboard (2 rounds), build, sound, export
+- Reference: `What if the biggest earthquake ever recorded hit your city?.mp4` (80 s). Story approved; title "¿Qué pasaría si el mayor terremoto de la historia golpeara tu ciudad?", 70 s.
+- New world (scenes.js / world.js / run.js) with tsunami-ny's wave, sea shader, underwater and cracked lens.
+- Look fixes: pans pointed away from the building across (yaw −126° from a corner balcony); our own building filled the frame when turning (ended before the balcony); dust sprites in front of the lens (pulled back, faded near the camera); the facade texture flipped (shops on top); rubble too big and too colourful; the sun's glare (moved left); cone palms (real fronds); the mosaic too bold.
+- User round 1: a much higher POV (8th floor), detailed people (legs, arms, head, hair) and cars (extruded bodywork, glass, wheels), distant buildings, a cruise ship, more people and umbrellas, more debris, a brown haze like the reference, a road that makes sense (avenue/sidewalk/promenade follow the coast's bend). Bugs: ribbons faced down (winding); the promenade sank under the ground; the hill houses vanished (the loop shared a cap with the rows).
+- User round 2: more car colours (palette by index, less metallic); the houses in panel 8 break with debris — the street buildings in that shot and the hill houses collapse, throwing pieces and dust (33–44 s).
+- Sound: Commons recordings (surf, gulls, city, the earthquake rumble, wind, steel, sirens, dogs, screams, crowds, collapses, suction, the roar) — no recordings under water (the bubble and storm recordings carried voices) — + synth (tremor, rattling, collapse rumbles, debris, the wave, the underwater churn and bubbles). −15.1 LUFS, TP −2.0; loudest 100 ms 62.0 s −7.0 dBFS; silence 60.0–60.76 gated to zero.
+- Review: story arc 5/5 PASS; text PASS (0/0/0); loudest 62.0 s −7.0 dBFS in the payoff act, 0.7 s ≤ −40 dBFS before it; −15.1 LUFS, TP −2.0. WARN dead beat 65.5–70 s (end card). Flat 1535–1539 = fade to the card (intended). Deterministic tile check: true.

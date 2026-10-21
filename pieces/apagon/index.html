@@ -1,0 +1,1627 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blackout Surge</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #04031a; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// ---- voice.json (tools/voice.mjs): the voice-over's lines and word times
+const VOICE = {"duration":75.34,"lead":0.5,"tail":2.8,"lines":[{"id":"title","text":"Why do appliances break right when the power comes back?","t0":0.5,"t1":3.224,"words":[{"w":"Why","t0":0.5,"t1":0.68,"est":true},{"w":"do","t0":0.68,"t1":0.84},{"w":"appliances","t0":0.84,"t1":1.32},{"w":"break","t0":1.32,"t1":1.7},{"w":"right","t0":1.7,"t1":1.98},{"w":"when","t0":1.98,"t1":2.14},{"w":"the","t0":2.14,"t1":2.3},{"w":"power","t0":2.3,"t1":2.48},{"w":"comes","t0":2.48,"t1":2.76},{"w":"back?","t0":2.76,"t1":3.12}]},{"id":"blackout","text":"The blackout itself breaks nothing. While the power's out, your devices are off and still.","t0":3.824,"t1":8.267,"words":[{"w":"The","t0":3.8,"t1":3.96},{"w":"blackout","t0":3.96,"t1":4.32},{"w":"itself","t0":4.32,"t1":4.76},{"w":"breaks","t0":4.76,"t1":5.1},{"w":"nothing.","t0":5.1,"t1":5.5},{"w":"While","t0":5.66,"t1":5.8},{"w":"the","t0":5.8,"t1":5.98},{"w":"power's","t0":5.98,"t1":6.34},{"w":"out,","t0":6.34,"t1":6.54},{"w":"your","t0":6.76,"t1":6.82},{"w":"devices","t0":6.82,"t1":7.24},{"w":"are","t0":7.24,"t1":7.46},{"w":"off","t0":7.46,"t1":7.68},{"w":"and","t0":7.68,"t1":7.84},{"w":"still.","t0":7.84,"t1":8.16}]},{"id":"instant","text":"What breaks them is the instant the power returns.","t0":8.667,"t1":11.095,"words":[{"w":"What","t0":8.66,"t1":8.78},{"w":"breaks","t0":8.78,"t1":9.04},{"w":"them","t0":9.04,"t1":9.32},{"w":"is","t0":9.32,"t1":9.5},{"w":"the","t0":9.5,"t1":9.64},{"w":"instant","t0":9.64,"t1":9.92},{"w":"the","t0":9.92,"t1":10.2},{"w":"power","t0":10.2,"t1":10.44},{"w":"returns.","t0":10.44,"t1":10.9}]},{"id":"all","text":"And it doesn't come back just for you. It comes back for the whole neighborhood at once.","t0":11.595,"t1":15.472,"words":[{"w":"And","t0":11.48,"t1":11.7},{"w":"it","t0":11.7,"t1":11.82},{"w":"doesn't","t0":11.82,"t1":12.1},{"w":"come","t0":12.1,"t1":12.24},{"w":"back","t0":12.24,"t1":12.48},{"w":"just","t0":12.48,"t1":12.64},{"w":"for","t0":12.64,"t1":12.88},{"w":"you.","t0":12.88,"t1":13.12},{"w":"It","t0":13.4,"t1":13.56},{"w":"comes","t0":13.56,"t1":13.76},{"w":"back","t0":13.76,"t1":14.04},{"w":"for","t0":14.04,"t1":14.22},{"w":"the","t0":14.22,"t1":14.34},{"w":"whole","t0":14.34,"t1":14.54},{"w":"neighborhood","t0":14.54,"t1":14.8},{"w":"at","t0":14.8,"t1":15.04},{"w":"once.","t0":15.04,"t1":15.36}]},{"id":"turns","text":"Normally, fridges and air conditioners take turns. A blackout erases the turns, and when power returns, they all start together.","t0":15.872,"t1":23.135,"words":[{"w":"Normally,","t0":15.94,"t1":16.28},{"w":"fridges","t0":16.46,"t1":16.74},{"w":"and","t0":16.74,"t1":17},{"w":"air","t0":17,"t1":17.2},{"w":"conditioners","t0":17.2,"t1":17.78},{"w":"take","t0":17.78,"t1":18},{"w":"turns.","t0":18,"t1":18.38},{"w":"A","t0":18.86,"t1":18.98},{"w":"blackout","t0":18.98,"t1":19.32},{"w":"erases","t0":19.32,"t1":19.78},{"w":"the","t0":19.78,"t1":20.02},{"w":"turns,","t0":20.02,"t1":20.36},{"w":"and","t0":20.78,"t1":20.96},{"w":"when","t0":20.96,"t1":21.12},{"w":"power","t0":21.12,"t1":21.44},{"w":"returns,","t0":21.44,"t1":21.9},{"w":"they","t0":22.04,"t1":22.14},{"w":"all","t0":22.14,"t1":22.34},{"w":"start","t0":22.34,"t1":22.62},{"w":"together.","t0":22.62,"t1":23.02}]},{"id":"five","text":"The line can see up to five times its normal current.","t0":23.535,"t1":26.391,"words":[{"w":"The","t0":23.44,"t1":23.64},{"w":"line","t0":23.64,"t1":23.86},{"w":"can","t0":23.86,"t1":24.04},{"w":"see","t0":24.04,"t1":24.32},{"w":"up","t0":24.32,"t1":24.52},{"w":"to","t0":24.52,"t1":24.7},{"w":"five","t0":24.7,"t1":24.96},{"w":"times","t0":24.96,"t1":25.36},{"w":"its","t0":25.36,"t1":25.56},{"w":"normal","t0":25.56,"t1":25.88},{"w":"current.","t0":25.88,"t1":26.28}]},{"id":"retry","text":"And in a neighborhood outage, the power doesn't come back once. The line's automatic switch tries to close up to four times, seconds apart.","t0":26.891,"t1":35.074,"words":[{"w":"And","t0":26.891,"t1":26.98,"est":true},{"w":"in","t0":26.98,"t1":27.1},{"w":"a","t0":27.1,"t1":27.24,"est":true},{"w":"neighborhood","t0":27.24,"t1":27.54},{"w":"outage,","t0":27.54,"t1":28.12},{"w":"the","t0":28.64,"t1":28.74},{"w":"power","t0":28.74,"t1":29},{"w":"doesn't","t0":29,"t1":29.36},{"w":"come","t0":29.36,"t1":29.52},{"w":"back","t0":29.52,"t1":29.82},{"w":"once.","t0":29.82,"t1":30.18},{"w":"The","t0":30.7,"t1":30.88},{"w":"line's","t0":30.88,"t1":31.26},{"w":"automatic","t0":31.26,"t1":31.6},{"w":"switch","t0":31.6,"t1":32.02},{"w":"tries","t0":32.02,"t1":32.3},{"w":"to","t0":32.3,"t1":32.48},{"w":"close","t0":32.48,"t1":32.7},{"w":"up","t0":32.7,"t1":32.88},{"w":"to","t0":32.88,"t1":33.06},{"w":"four","t0":33.06,"t1":33.3},{"w":"times,","t0":33.3,"t1":33.78},{"w":"seconds","t0":34.36,"t1":34.6},{"w":"apart.","t0":34.6,"t1":35.06}]},{"id":"cap","text":"Behind your plug sits a big, empty capacitor. An empty capacitor, when connected, acts almost like a short circuit.","t0":35.574,"t1":41.526,"words":[{"w":"Behind","t0":35.6,"t1":35.9},{"w":"your","t0":35.9,"t1":36.12},{"w":"plug","t0":36.12,"t1":36.4,"est":true},{"w":"sits","t0":36.4,"t1":36.64},{"w":"a","t0":36.64,"t1":36.8},{"w":"big,","t0":36.8,"t1":37},{"w":"empty","t0":37,"t1":37.34},{"w":"capacitor.","t0":37.34,"t1":37.9},{"w":"An","t0":38.14,"t1":38.26},{"w":"empty","t0":38.26,"t1":38.48},{"w":"capacitor,","t0":38.48,"t1":39.08},{"w":"when","t0":39.24,"t1":39.36},{"w":"connected,","t0":39.36,"t1":39.9},{"w":"acts","t0":40.04,"t1":40.28},{"w":"almost","t0":40.28,"t1":40.52},{"w":"like","t0":40.52,"t1":40.76},{"w":"a","t0":40.76,"t1":40.9},{"w":"short","t0":40.9,"t1":41.1},{"w":"circuit.","t0":41.1,"t1":41.5}]},{"id":"ntc","text":"Against that spike, there's one part: an NTC thermistor.","t0":42.026,"t1":45.272,"words":[{"w":"Against","t0":42.06,"t1":42.3},{"w":"that","t0":42.3,"t1":42.54},{"w":"spike,","t0":42.54,"t1":42.92},{"w":"there's","t0":43.02,"t1":43.3},{"w":"one","t0":43.3,"t1":43.52},{"w":"part:","t0":43.52,"t1":43.86},{"w":"an","t0":44.14,"t1":44.18},{"w":"NTC","t0":44.18,"t1":44.6},{"w":"thermistor.","t0":44.6,"t1":45.18}]},{"id":"cold","text":"Cold, it's about ten ohms, and it holds the rush back.","t0":45.672,"t1":48.876,"words":[{"w":"Cold,","t0":45.66,"t1":46},{"w":"it's","t0":46.28,"t1":46.44},{"w":"about","t0":46.44,"t1":46.64},{"w":"ten","t0":46.64,"t1":46.96,"est":true},{"w":"ohms,","t0":46.96,"t1":47.36},{"w":"and","t0":47.5,"t1":47.68},{"w":"it","t0":47.68,"t1":47.82},{"w":"holds","t0":47.82,"t1":48.08},{"w":"the","t0":48.08,"t1":48.28},{"w":"rush","t0":48.28,"t1":48.46},{"w":"back.","t0":48.46,"t1":48.78}]},{"id":"hot","text":"But the current heats it, and hot, it drops to a few tenths of an ohm. Thirty to fifty times lower.","t0":49.276,"t1":54.159,"words":[{"w":"But","t0":49.18,"t1":49.38},{"w":"the","t0":49.38,"t1":49.52},{"w":"current","t0":49.52,"t1":49.78},{"w":"heats","t0":49.78,"t1":50.06},{"w":"it,","t0":50.06,"t1":50.3},{"w":"and","t0":50.44,"t1":50.56},{"w":"hot,","t0":50.56,"t1":50.86},{"w":"it","t0":51.04,"t1":51.1},{"w":"drops","t0":51.1,"t1":51.3},{"w":"to","t0":51.3,"t1":51.54},{"w":"a","t0":51.54,"t1":51.64},{"w":"few","t0":51.64,"t1":51.82},{"w":"tenths","t0":51.82,"t1":52.16},{"w":"of","t0":52.16,"t1":52.2},{"w":"an","t0":52.2,"t1":52.36},{"w":"ohm.","t0":52.36,"t1":52.52},{"w":"Thirty","t0":52.52,"t1":52.92,"est":true},{"w":"to","t0":52.92,"t1":53.12},{"w":"fifty","t0":53.12,"t1":53.38,"est":true},{"w":"times","t0":53.38,"t1":53.74},{"w":"lower.","t0":53.74,"t1":54.04}]},{"id":"must","text":"It has to drop, or it would eat the device's power.","t0":54.559,"t1":57.29,"words":[{"w":"It","t0":54.559,"t1":54.64,"est":true},{"w":"has","t0":54.64,"t1":54.9},{"w":"to","t0":54.9,"t1":55.1},{"w":"drop,","t0":55.1,"t1":55.42},{"w":"or","t0":55.78,"t1":55.8},{"w":"it","t0":55.8,"t1":55.92},{"w":"would","t0":55.92,"t1":56.02},{"w":"eat","t0":56.02,"t1":56.26},{"w":"the","t0":56.26,"t1":56.4},{"w":"device's","t0":56.4,"t1":56.88},{"w":"power.","t0":56.88,"t1":57.22}]},{"id":"cool","text":"And cooling back down takes it thirty seconds to two minutes.","t0":57.69,"t1":60.778,"words":[{"w":"And","t0":57.74,"t1":57.84},{"w":"cooling","t0":57.84,"t1":58.08},{"w":"back","t0":58.08,"t1":58.36},{"w":"down","t0":58.36,"t1":58.72},{"w":"takes","t0":58.72,"t1":58.98},{"w":"it","t0":58.98,"t1":59.2},{"w":"thirty","t0":59.2,"t1":59.48,"est":true},{"w":"seconds","t0":59.48,"t1":59.82},{"w":"to","t0":59.82,"t1":60.08},{"w":"two","t0":60.08,"t1":60.3},{"w":"minutes.","t0":60.3,"t1":60.58}]},{"id":"seconds","text":"The power comes back in seconds.","t0":61.278,"t1":62.879,"words":[{"w":"The","t0":61.26,"t1":61.38},{"w":"power","t0":61.38,"t1":61.64},{"w":"comes","t0":61.64,"t1":61.92},{"w":"back","t0":61.92,"t1":62.16},{"w":"in","t0":62.16,"t1":62.34},{"w":"seconds.","t0":62.34,"t1":62.76}]},{"id":"tip","text":"Unplug during a blackout, and wait a couple of minutes before plugging back in.","t0":63.879,"t1":67.622,"words":[{"w":"Unplug","t0":63.82,"t1":64.22},{"w":"during","t0":64.22,"t1":64.5},{"w":"a","t0":64.5,"t1":64.66},{"w":"blackout,","t0":64.66,"t1":65},{"w":"and","t0":65.36,"t1":65.46},{"w":"wait","t0":65.46,"t1":65.64},{"w":"a","t0":65.64,"t1":65.78},{"w":"couple","t0":65.78,"t1":65.96},{"w":"of","t0":65.96,"t1":66.12},{"w":"minutes","t0":66.12,"t1":66.34},{"w":"before","t0":66.34,"t1":66.7},{"w":"plugging","t0":66.7,"t1":67.08},{"w":"back","t0":67.08,"t1":67.28},{"w":"in.","t0":67.28,"t1":67.54}]},{"id":"end","text":"It's not superstition. It's the two minutes the part that protected you needs to cool down.","t0":68.122,"t1":72.54,"words":[{"w":"It's","t0":68.02,"t1":68.3},{"w":"not","t0":68.3,"t1":68.44},{"w":"superstition.","t0":68.44,"t1":69.16},{"w":"It's","t0":69.5,"t1":69.7},{"w":"the","t0":69.7,"t1":69.84},{"w":"two","t0":69.84,"t1":70.06},{"w":"minutes","t0":70.06,"t1":70.32},{"w":"the","t0":70.32,"t1":70.56},{"w":"part","t0":70.56,"t1":70.76},{"w":"that","t0":70.76,"t1":70.94},{"w":"protected","t0":70.94,"t1":71.32},{"w":"you","t0":71.32,"t1":71.56},{"w":"needs","t0":71.56,"t1":71.74},{"w":"to","t0":71.74,"t1":71.94},{"w":"cool","t0":71.94,"t1":72.14},{"w":"down.","t0":72.14,"t1":72.4}]}]};
+// =====================================================================
+//  WHY DO APPLIANCES BREAK RIGHT WHEN THE POWER COMES BACK? — 9:16, voice-led (~75s), 24fps, style voltamps.
+//  One stage (F5): the grid, a plug and a TV; the whole street switching back on at once; the automatic
+//  reclosings; inside the plug, an empty capacitor and the NTC thermistor that is still hot when the power returns.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4, GRID0 = 0;
+const VL = (id) => VOICE.lines.find((l) => l.id === id);
+const VW = (id, w, n = 1) => { const L = VL(id); let k = 0; for (const x of L.words) if (x.w.toLowerCase().replace(/[^a-z0-9']/g, '') === w.toLowerCase() && ++k === n) return x.t0; return L.t0; };
+const DURATION = Math.round(VOICE.duration * FPS) / FPS;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const VMONO = '"SF Mono", Menlo, "JetBrains Mono", "DejaVu Sans Mono", Consolas, monospace';
+const HAND = VMONO;
+const CX = 520;
+const onBeat = (t) => t;
+
+const S = (id) => VL(id).t0 - 0.3;                    // a beat starts ~0.3s before its line
+const HIT = VL('tip').t0 - 0.2;                        // the payoff: the power snaps back while the thermistor is still hot
+const IDS = ['title', 'blackout', 'instant', 'all', 'turns', 'five', 'retry', 'cap', 'ntc', 'cold', 'hot', 'must', 'cool', 'seconds', 'tip', 'end'];
+const TB = IDS.map((id, i) => (i === 0 ? 0 : id === 'tip' ? HIT : S(id)));
+const SUB = (id) => TB[IDS.indexOf(id)], SUBEND = (id) => (IDS.indexOf(id) + 1 < IDS.length ? TB[IDS.indexOf(id) + 1] : DURATION);
+const ERA_LIST = [[0, DURATION, () => sceneStage()]];
+const SHOTS = IDS.map((id, i) => [id, 0, TB[i], i + 1 < IDS.length ? TB[i + 1] : DURATION, id]);
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, gridOffset: GRID0, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE, aspect: '9:16',
+  format: 'fixed-stage',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { hit: HIT },
+  acts: [
+    { name: '1 Hook',    role: 'build',   t0: 0, t1: S('all') },
+    { name: '2 Street',  role: 'build',   t0: S('all'), t1: S('cap') },
+    { name: '3 Inside',  role: 'peak',    t0: S('cap'), t1: VL('seconds').t1 },
+    { name: '4 Silence', role: 'silence', t0: VL('seconds').t1 + 0.05, t1: HIT },
+    { name: '5 Snap',    role: 'gift',    t0: HIT, t1: VL('tip').t1 + 0.3 },
+    { name: '6 End',     role: 'goodbye', t0: VL('tip').t1 + 0.3, t1: DURATION },
+  ],
+  board: IDS.map((id, i) => ({ t: i + 1 === IDS.length ? DURATION - 0.4 : Math.min(VL(id).t1 - 0.2, TB[i + 1] - 0.1), title: id, sound: '', next: '' })),
+  narration: VOICE.lines.map((l) => ({ id: l.id, t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;
+// =====================================================================
+//  kit/core.js — seeded RNG, math, easing, palette, geometry, the hand-drawn drawing kit
+//  (wobble on the boil, ink, paint, hatch, pencil, stipple, grain), cameras, mono text.
+//  Needs from the piece head: FPS, W, H. Render state: ctx, F (frame), B (boil = floor(F/2)).
+// =====================================================================
+
+// ---------------------------------------------------------------------
+//  seeded RNG
+// ---------------------------------------------------------------------
+function mulberry32(a) {
+  return function () {
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+function hash(...xs) {
+  let h = 2166136261 >>> 0;
+  for (const x of xs) {
+    const s = String(x);
+    for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+    h ^= 124; h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+function RNG(...xs) {
+  const f = mulberry32(hash(...xs));
+  return {
+    f,
+    r: (a, b) => a + (b - a) * f(),
+    n: (amt) => (f() * 2 - 1) * amt,
+    i: (a, b) => a + Math.floor(f() * (b - a + 1)),
+    pick: (arr) => arr[Math.floor(f() * arr.length)],
+  };
+}
+
+// ---------------------------------------------------------------------
+//  math
+// ---------------------------------------------------------------------
+const TAU = Math.PI * 2, DEG = Math.PI / 180;
+const clamp = (x, a = 0, b = 1) => (x < a ? a : x > b ? b : x);
+const lerp = (a, b, t) => a + (b - a) * t;
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+// has absolute time t reached cut time c? (cuts snap to the nearest frame, like shot boundaries)
+const past = (t, c) => Math.round(t * FPS + 1e-6) >= Math.round(c * FPS);
+const dist = (a, b) => Math.hypot(b[0] - a[0], b[1] - a[1]);
+const EZ = {
+  o2: (t) => 1 - (1 - clamp(t)) ** 2,
+  o3: (t) => 1 - (1 - clamp(t)) ** 3,
+  i2: (t) => clamp(t) ** 2,
+  i3: (t) => clamp(t) ** 3,
+  io: (t) => { t = clamp(t); return t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2; },
+  back: (t) => { t = clamp(t) - 1; return 1 + 2.70158 * t * t * t + 1.70158 * t * t; },
+};
+
+// ---------------------------------------------------------------------
+//  render state
+// ---------------------------------------------------------------------
+let ctx = null;   // current 2d context
+let F = 0;        // absolute frame index
+let B = 0;        // boil index — reseeds every 2 frames (Math.floor(t*12))
+
+const C = {
+  ink: '#3a2417', cream: '#efe5cf', paper: '#f4ecd9', paperLine: 'rgba(90,130,190,0.32)',
+  orange: '#e58a4e', orangeD: '#c3622e', orangeL: '#f4b27c', terra: '#d97757',
+  rose: '#d98b8b', roseD: '#b0616a', roseL: '#efb9b0',
+  wood: '#d6a466', woodD: '#a8773f', woodL: '#e9c48f',
+  sky: '#9cc4d6', skyD: '#6f9fb8', skyL: '#c9e1ea',
+  teal: '#3d9f96', tealL: '#86c9be',
+  yellow: '#f0c55a', yellowL: '#f7dd92',
+  green: '#5f9c5c', greenL: '#a3cf92',
+  red: '#d4382c', redL: '#ea7a6c',
+  skin: '#ebb68f', skinD: '#c7815d', skinL: '#f7d4b4',
+  lav: 'rgba(104,112,214,0.7)', lavS: 'rgba(104,112,214,0.42)',
+  navy: '#0c0d1c', navy2: '#15173a', peri: '#c8d0f0', periD: '#7c86c4', periS: 'rgba(150,164,230,0.20)',
+  cyan: '#52d6c4', mag: '#e0368f', glow: '#5de37a', white: '#f4f6ff',
+};
+const RAINBOW = ['#f0d042', '#e050b8', '#46cde0', '#7ad866', '#a47ef0'];
+const MONO = 'Consolas, "Cascadia Mono", Menlo, "DejaVu Sans Mono", "Courier New", monospace';   // Windows first, then macOS / Linux
+
+// ---------------------------------------------------------------------
+//  geometry
+// ---------------------------------------------------------------------
+function ellipsePts(cx, cy, rx, ry, rot = 0, n = 64, a0 = 0, a1 = TAU) {
+  const P = [], c = Math.cos(rot), s = Math.sin(rot), full = Math.abs(a1 - a0 - TAU) < 1e-6;
+  for (let i = 0; i < n; i++) {
+    const a = a0 + (a1 - a0) * i / (full ? n : n - 1);
+    const x = Math.cos(a) * rx, y = Math.sin(a) * ry;
+    P.push([cx + x * c - y * s, cy + x * s + y * c]);
+  }
+  return P;
+}
+function rrectPts(x, y, w, h, r, n = 6) {
+  r = Math.min(r, w / 2, h / 2);
+  const P = [], cs = [[x + w - r, y + r, -Math.PI / 2], [x + w - r, y + h - r, 0], [x + r, y + h - r, Math.PI / 2], [x + r, y + r, Math.PI]];
+  for (const [cx, cy, a0] of cs) for (let i = 0; i <= n; i++) { const a = a0 + (Math.PI / 2) * i / n; P.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r]); }
+  return P;
+}
+function arcPts(cx, cy, r, a0, a1, n = 18, sy = 1) {
+  const P = [];
+  for (let i = 0; i <= n; i++) { const a = a0 + (a1 - a0) * i / n; P.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r * sy]); }
+  return P;
+}
+function xform(P, tx, ty, rot = 0, sx = 1, sy = sx) {
+  const c = Math.cos(rot), s = Math.sin(rot);
+  return P.map(([x, y]) => [tx + x * sx * c - y * sy * s, ty + x * sx * s + y * sy * c]);
+}
+function bbox(P, pad = 0) {
+  let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+  for (const [x, y] of P) { if (x < x0) x0 = x; if (y < y0) y0 = y; if (x > x1) x1 = x; if (y > y1) y1 = y; }
+  return { x0: x0 - pad, y0: y0 - pad, x1: x1 + pad, y1: y1 + pad };
+}
+function resample(P, closed, step) {
+  const out = [], n = P.length, m = closed ? n : n - 1;
+  for (let i = 0; i < m; i++) {
+    const a = P[i], b = P[(i + 1) % n], k = Math.max(1, Math.ceil(dist(a, b) / step));
+    for (let j = 0; j < k; j++) out.push([a[0] + (b[0] - a[0]) * j / k, a[1] + (b[1] - a[1]) * j / k]);
+  }
+  if (!closed) out.push(P[n - 1]);
+  return out;
+}
+function pathLen(P) { let L = 0; for (let i = 1; i < P.length; i++) L += dist(P[i - 1], P[i]); return L; }
+function subPath(P, frac) {
+  let want = pathLen(P) * clamp(frac);
+  const out = [P[0]];
+  for (let i = 1; i < P.length; i++) {
+    const d = dist(P[i - 1], P[i]);
+    if (want >= d) { out.push(P[i]); want -= d; }
+    else { const k = want / (d || 1); out.push([lerp(P[i - 1][0], P[i][0], k), lerp(P[i - 1][1], P[i][1], k)]); break; }
+  }
+  return out;
+}
+function pointAt(P, frac) { const S = subPath(P, frac); return S[S.length - 1]; }
+
+// ---------------------------------------------------------------------
+//  drawing kit — boil, sketchy lines, hatching, stipple, pencil, grain
+// ---------------------------------------------------------------------
+// smooth hand wobble along the normal; reseeded every boil step
+function wobble(P, closed, amt, key, step = 7) {
+  const Q = resample(P, closed, step), n = Q.length;
+  const R = RNG('wob', key, B);
+  const f1 = R.r(0.012, 0.03), f2 = R.r(0.05, 0.1), p1 = R.r(0, TAU), p2 = R.r(0, TAU);
+  const sx = R.n(amt * 0.5), sy = R.n(amt * 0.5);
+  const out = new Array(n); let s = 0;
+  for (let i = 0; i < n; i++) {
+    const a = Q[closed ? (i - 1 + n) % n : Math.max(0, i - 1)], b = Q[closed ? (i + 1) % n : Math.min(n - 1, i + 1)];
+    const nx = a[1] - b[1], ny = b[0] - a[0], l = Math.hypot(nx, ny) || 1;
+    if (i) s += dist(Q[i - 1], Q[i]);
+    const o = amt * (0.75 * Math.sin(s * f1 + p1) + 0.35 * Math.sin(s * f2 + p2));
+    out[i] = [Q[i][0] + nx / l * o + sx, Q[i][1] + ny / l * o + sy];
+  }
+  return out;
+}
+function trace(P, closed) {
+  ctx.beginPath();
+  const n = P.length; if (n < 2) return;
+  if (closed) {
+    ctx.moveTo((P[n - 1][0] + P[0][0]) / 2, (P[n - 1][1] + P[0][1]) / 2);
+    for (let i = 0; i < n; i++) { const p = P[i], q = P[(i + 1) % n]; ctx.quadraticCurveTo(p[0], p[1], (p[0] + q[0]) / 2, (p[1] + q[1]) / 2); }
+    ctx.closePath();
+  } else {
+    ctx.moveTo(P[0][0], P[0][1]);
+    for (let i = 1; i < n - 1; i++) { const p = P[i], q = P[i + 1]; ctx.quadraticCurveTo(p[0], p[1], (p[0] + q[0]) / 2, (p[1] + q[1]) / 2); }
+    ctx.lineTo(P[n - 1][0], P[n - 1][1]);
+  }
+}
+// sketchy stroke. o: closed, color, w, amt, key, alpha, frac (write-on), double
+function ink(P, o = {}) {
+  const closed = !!o.closed, key = o.key ?? 'ink';
+  let Q = o.raw ? P : wobble(P, closed, o.amt ?? 1.8, key);
+  let cl = closed;
+  if (o.frac != null && o.frac < 1) { if (o.frac <= 0) return Q; Q = subPath(closed ? [...Q, Q[0]] : Q, o.frac); cl = false; }
+  ctx.strokeStyle = o.color || C.ink; ctx.lineWidth = o.w ?? 3; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  ctx.globalAlpha = o.alpha ?? 1;
+  trace(Q, cl); ctx.stroke();
+  if (o.double) {
+    let Q2 = wobble(P, closed, (o.amt ?? 1.8) * 1.6 + 0.8, key + '~');
+    if (!cl && closed) Q2 = subPath([...Q2, Q2[0]], o.frac ?? 1);
+    ctx.lineWidth = (o.w ?? 3) * 0.4; ctx.globalAlpha = (o.alpha ?? 1) * 0.55; trace(Q2, cl); ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
+  return Q;
+}
+// filled shape + textures (clipped) + ink outline
+function paint(P, o = {}) {
+  const key = o.key || 'paint';
+  const Q = o.raw ? P : wobble(P, true, o.amt ?? 1.6, key);
+  ctx.save();
+  trace(Q, true);
+  if (o.fill) { ctx.globalAlpha = o.fillAl ?? 1; ctx.fillStyle = o.fill; ctx.fill(); ctx.globalAlpha = 1; }
+  if (o.tex) { ctx.clip(); const bb = bbox(Q, 6); o.tex.forEach((t, i) => texture(bb, { key: key + ':' + i, ...t })); }
+  ctx.restore();
+  if (o.line !== false) {
+    ctx.strokeStyle = o.line || C.ink; ctx.lineWidth = o.w ?? 3; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    ctx.globalAlpha = o.lineAl ?? 1; trace(Q, true); ctx.stroke(); ctx.globalAlpha = 1;
+  }
+  return Q;
+}
+function texture(bb, t) {
+  if (t.k === 'hatch') hatch(bb, t);
+  else if (t.k === 'cross') { hatch(bb, t); hatch(bb, { ...t, a: (t.a ?? 0.7) + (t.a2 ?? 1.25), key: t.key + 'x' }); }
+  else if (t.k === 'pencil') pencil(bb, t);
+  else if (t.k === 'stipple') stipple(bb, t);
+  else if (t.k === 'fn') t.fn(bb);
+}
+// parallel hatching inside current clip. t: a angle, gap, c, w, al, dash [min,max], skip, dens(x,y)
+function hatch(bb, t) {
+  const a = t.a ?? 0.7, gap = t.gap ?? 7, S = RNG('hs', t.key), R = RNG('hj', t.key, B);
+  const cx = (bb.x0 + bb.x1) / 2, cy = (bb.y0 + bb.y1) / 2, rad = Math.hypot(bb.x1 - bb.x0, bb.y1 - bb.y0) / 2 + 4;
+  const ca = Math.cos(a), sa = Math.sin(a), dens = t.dens, jit = t.jit ?? 0.9, dash = t.dash;
+  ctx.beginPath();
+  for (let d = -rad; d <= rad; d += gap) {
+    const dd = d + S.n(gap * 0.3);
+    let u = -rad + (dash ? S.r(0, dash[1]) : 0);
+    while (u < rad) {
+      const len = dash ? S.r(dash[0], dash[1]) : rad * 2, u2 = Math.min(rad, u + len);
+      const mu = (u + u2) / 2, mx = cx + ca * mu - sa * dd, my = cy + sa * mu + ca * dd, p = S.f();
+      if (!dens || p < dens(mx, my)) {
+        const e1 = R.n(jit), e2 = R.n(jit);
+        ctx.moveTo(cx + ca * u - sa * (dd + e1), cy + sa * u + ca * (dd + e1));
+        ctx.lineTo(cx + ca * u2 - sa * (dd + e2), cy + sa * u2 + ca * (dd + e2));
+      }
+      u = u2 + (dash ? S.r(t.skip?.[0] ?? 3, t.skip?.[1] ?? 12) : 0);
+    }
+  }
+  ctx.strokeStyle = t.c || C.ink; ctx.lineWidth = t.w ?? 1.2; ctx.globalAlpha = t.al ?? 0.5; ctx.lineCap = 'round';
+  ctx.stroke(); ctx.globalAlpha = 1;
+}
+// colored-pencil diagonal strokes
+function pencil(bb, t) {
+  const S = RNG('ps', t.key), R = RNG('pj', t.key, B);
+  const area = (bb.x1 - bb.x0) * (bb.y1 - bb.y0);
+  const n = Math.min(t.max ?? 6000, t.n ?? Math.floor(area / (t.per ?? 700)));
+  const a = t.a ?? -0.95, L = t.len ?? 14, dens = t.dens;
+  ctx.beginPath();
+  for (let i = 0; i < n; i++) {
+    const x = S.r(bb.x0, bb.x1), y = S.r(bb.y0, bb.y1), p = S.f(), aa = a + S.n(0.22), l = L * (0.5 + S.f() * 0.7);
+    if (dens && p > dens(x, y)) continue;
+    const jx = R.n(1.1), jy = R.n(1.1), dx = Math.cos(aa) * l / 2, dy = Math.sin(aa) * l / 2;
+    ctx.moveTo(x - dx + jx, y - dy + jy); ctx.lineTo(x + dx + jx, y + dy + jy);
+  }
+  ctx.strokeStyle = t.c; ctx.lineWidth = t.w ?? 1.4; ctx.globalAlpha = t.al ?? 0.45; ctx.lineCap = 'round';
+  ctx.stroke(); ctx.globalAlpha = 1;
+}
+// square stipple dots
+function stipple(bb, t) {
+  const S = RNG('ss', t.key), R = RNG('sj', t.key, B);
+  const n = t.n ?? 400, sz = t.s ?? 2.2, dens = t.dens, jit = t.jit ?? 0.8;
+  ctx.fillStyle = t.c; ctx.globalAlpha = t.al ?? 1; ctx.beginPath();
+  for (let i = 0; i < n; i++) {
+    const x = S.r(bb.x0, bb.x1), y = S.r(bb.y0, bb.y1), p = S.f(), s = sz * (0.6 + S.f() * 0.8);
+    if (dens && p > dens(x, y)) continue;
+    ctx.rect(x + R.n(jit), y + R.n(jit), s, s);
+  }
+  ctx.fill(); ctx.globalAlpha = 1;
+}
+// screen-space paper grain, reseeded with the boil
+function grain(o = {}) {
+  ctx.save(); screen();
+  const R = RNG('grain', B), n = o.n ?? 2600;
+  ctx.fillStyle = o.dark || 'rgba(70,45,25,0.13)'; ctx.beginPath();
+  for (let i = 0; i < n; i++) ctx.rect(R.r(0, W), R.r(0, H), 1.7, 1.7);
+  ctx.fill();
+  ctx.fillStyle = o.light || 'rgba(255,250,236,0.20)'; ctx.beginPath();
+  for (let i = 0; i < n; i++) ctx.rect(R.r(0, W), R.r(0, H), 1.9, 1.9);
+  ctx.fill();
+  // a few paper fibres
+  ctx.strokeStyle = 'rgba(80,55,35,0.07)'; ctx.lineWidth = 1; ctx.beginPath();
+  for (let i = 0; i < 90; i++) { const x = R.r(0, W), y = R.r(0, H), a = R.r(0, TAU), l = R.r(6, 22); ctx.moveTo(x, y); ctx.lineTo(x + Math.cos(a) * l, y + Math.sin(a) * l); }
+  ctx.stroke();
+  ctx.restore();
+}
+
+// ---------------------------------------------------------------------
+//  construction lines, rulers, sparks, bursts, rainbow contours
+// ---------------------------------------------------------------------
+function construct(cx, cy, r, o = {}) {
+  const R = RNG('con', o.key ?? 'c', B);
+  ctx.save();
+  ctx.strokeStyle = o.c || C.lav; ctx.lineWidth = o.w ?? 1.4; ctx.globalAlpha = o.al ?? 1; ctx.lineCap = 'round';
+  const a0 = (o.a0 ?? R.r(0, TAU)), sw = o.sweep ?? 1.05;
+  ctx.beginPath(); ctx.ellipse(cx + R.n(1.2), cy + R.n(1.2), r, r * (o.sq ?? 1), o.rot ?? 0, a0, a0 + TAU * sw); ctx.stroke();
+  if (o.cross) { const k = o.cross; ctx.beginPath(); ctx.moveTo(cx - k, cy); ctx.lineTo(cx + k, cy); ctx.moveTo(cx, cy - k); ctx.lineTo(cx, cy + k); ctx.stroke(); }
+  if (o.ticks) {
+    ctx.beginPath();
+    for (let i = 0; i < o.ticks; i++) { const a = i / o.ticks * TAU + (o.rot ?? 0); ctx.moveTo(cx + Math.cos(a) * (r - 6), cy + Math.sin(a) * (r - 6)); ctx.lineTo(cx + Math.cos(a) * (r + 6), cy + Math.sin(a) * (r + 6)); }
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+function cline(x1, y1, x2, y2, o = {}) {
+  const R = RNG('cl', o.key ?? 'l', B);
+  ctx.save(); ctx.strokeStyle = o.c || C.lavS; ctx.lineWidth = o.w ?? 1.2; ctx.globalAlpha = o.al ?? 1;
+  ctx.beginPath(); ctx.moveTo(x1 + R.n(1), y1 + R.n(1)); ctx.lineTo(x2 + R.n(1), y2 + R.n(1)); ctx.stroke(); ctx.restore();
+}
+function ruler(x1, y1, x2, y2, o = {}) {
+  const R = RNG('rul', o.key ?? 'r', B);
+  const L = Math.hypot(x2 - x1, y2 - y1) || 1, ux = (x2 - x1) / L, uy = (y2 - y1) / L, nx = -uy, ny = ux;
+  const frac = clamp(o.frac ?? 1), step = o.step ?? 16, tk = o.tick ?? 7, side = o.side ?? 1;
+  ctx.save(); ctx.strokeStyle = o.c || C.periD; ctx.lineWidth = o.w ?? 1.5; ctx.globalAlpha = o.al ?? 1; ctx.lineCap = 'round';
+  const jx = R.n(0.8), jy = R.n(0.8);
+  ctx.beginPath(); ctx.moveTo(x1 + jx, y1 + jy); ctx.lineTo(x1 + ux * L * frac + jx, y1 + uy * L * frac + jy);
+  const n = Math.floor(L * frac / step);
+  for (let i = 0; i <= n; i++) {
+    const k = i % 5 === 0 ? tk * 1.9 : tk, px = x1 + ux * i * step + jx, py = y1 + uy * i * step + jy;
+    ctx.moveTo(px, py); ctx.lineTo(px + nx * k * side, py + ny * k * side);
+  }
+  ctx.moveTo(x1 - nx * tk * 1.6, y1 - ny * tk * 1.6); ctx.lineTo(x1 + nx * tk * 2.2, y1 + ny * tk * 2.2);
+  if (frac >= 1) { ctx.moveTo(x2 - nx * tk * 1.6, y2 - ny * tk * 1.6); ctx.lineTo(x2 + nx * tk * 2.2, y2 + ny * tk * 2.2); }
+  ctx.stroke(); ctx.restore();
+}
+// glowing radial spark (dark world)
+function sparkBurst(cx, cy, r, o = {}) {
+  if (r <= 0.5) return;
+  const R = RNG('spk', o.key ?? 's', B), n = o.n ?? 18, rays = [];
+  for (let i = 0; i < n; i++) { const a = i / n * TAU + R.n(0.14); rays.push([a, r * R.r(0.28, 0.5), r * R.r(0.72, 1.15)]); }
+  const path = () => { ctx.beginPath(); for (const [a, r0, r1] of rays) { ctx.moveTo(cx + Math.cos(a) * r0, cy + Math.sin(a) * r0); ctx.lineTo(cx + Math.cos(a) * r1, cy + Math.sin(a) * r1); } };
+  ctx.save(); ctx.lineCap = 'round';
+  path(); ctx.strokeStyle = o.glow || 'rgba(82,214,196,0.22)'; ctx.lineWidth = (o.w ?? 2.4) * 3.4; ctx.stroke();
+  path(); ctx.strokeStyle = o.c || '#8ff5e6'; ctx.lineWidth = o.w ?? 2.4; ctx.stroke();
+  if (o.core !== false) {
+    const cr = Math.max(2.5, r * (o.coreR ?? 0.15));
+    ctx.beginPath(); ctx.arc(cx, cy, cr * 2.2, 0, TAU); ctx.fillStyle = 'rgba(190,215,255,0.16)'; ctx.fill();
+    ctx.beginPath(); ctx.arc(cx, cy, cr, 0, TAU); ctx.fillStyle = C.white; ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = C.periD; ctx.stroke();
+  }
+  if (o.specks) { ctx.fillStyle = o.c || '#8ff5e6'; for (let i = 0; i < o.specks; i++) { const a = R.r(0, TAU), d = r * R.r(0.2, 1.4); ctx.fillRect(cx + Math.cos(a) * d, cy + Math.sin(a) * d, 2, 2); } }
+  ctx.restore();
+}
+// radial tick burst (warm world impact)
+function burst(cx, cy, r0, r1, o = {}) {
+  const R = RNG('bur', o.key ?? 'b', B), n = o.n ?? 12;
+  ctx.save(); ctx.strokeStyle = o.c || C.ink; ctx.lineWidth = o.w ?? 3; ctx.lineCap = 'round'; ctx.globalAlpha = o.al ?? 1; ctx.beginPath();
+  for (let i = 0; i < n; i++) {
+    const a = i / n * TAU + R.n(0.15) + (o.rot ?? 0), a1 = r0 * R.r(0.85, 1.1), b1 = r1 * R.r(0.75, 1.15);
+    ctx.moveTo(cx + Math.cos(a) * a1, cy + Math.sin(a) * a1); ctx.lineTo(cx + Math.cos(a) * b1, cy + Math.sin(a) * b1);
+  }
+  ctx.stroke(); ctx.restore();
+}
+function star4(x, y, s, c) {
+  ctx.save(); ctx.fillStyle = c; ctx.beginPath();
+  ctx.moveTo(x, y - s); ctx.quadraticCurveTo(x, y, x + s, y); ctx.quadraticCurveTo(x, y, x, y + s);
+  ctx.quadraticCurveTo(x, y, x - s, y); ctx.quadraticCurveTo(x, y, x, y - s); ctx.fill(); ctx.restore();
+}
+// rainbow contour strokes around a moving part
+function rainbow(P, o = {}) {
+  const bb = bbox(P), cx = o.cx ?? (bb.x0 + bb.x1) / 2, cy = o.cy ?? (bb.y0 + bb.y1) / 2, n = o.n ?? 3;
+  for (let i = 0; i < n; i++) {
+    const S = RNG('rb', o.key, i, B), sc = 1 + (o.spread ?? 0.07) * (i + 1) + S.n(0.02);
+    const Q = P.map(([x, y]) => [cx + (x - cx) * sc + S.n(o.drift ?? 3), cy + (y - cy) * sc + S.n(o.drift ?? 3)]);
+    ink(Q, { closed: o.closed ?? true, color: RAINBOW[(i + (o.off ?? 0)) % RAINBOW.length], w: o.w ?? 1.6, amt: o.amt ?? 3.5, key: o.key + 'rb' + i, alpha: o.al ?? 0.85 });
+  }
+}
+// hex cell grid inside current clip
+function hexGrid(bb, size, o = {}) {
+  const h = size * Math.sqrt(3), R = RNG('hex', o.key ?? 'h', B);
+  ctx.save(); ctx.strokeStyle = o.c || C.periS; ctx.lineWidth = o.w ?? 1.2; ctx.globalAlpha = o.al ?? 1; ctx.beginPath();
+  let row = 0;
+  for (let y = bb.y0 - h; y < bb.y1 + h; y += h * 0.5, row++) {
+    for (let x = bb.x0 - size * 3 + (row % 2) * size * 1.5; x < bb.x1 + size * 3; x += size * 3) {
+      const jx = R.n(0.6), jy = R.n(0.6);
+      for (let k = 0; k < 6; k++) {
+        const a = k / 6 * TAU, b = (k + 1) / 6 * TAU;
+        if (k === 0) ctx.moveTo(x + Math.cos(a) * size + jx, y + Math.sin(a) * size + jy);
+        ctx.lineTo(x + Math.cos(b) * size + jx, y + Math.sin(b) * size + jy);
+      }
+    }
+  }
+  ctx.stroke(); ctx.restore();
+}
+
+// ---------------------------------------------------------------------
+//  iris, camera, text
+// ---------------------------------------------------------------------
+// ragged hatched rim; dir=+1 strokes reach outward, -1 inward
+function irisRim(cx, cy, r, dir, o = {}) {
+  const R = RNG('irisR', o.key ?? 'i', B), n = Math.min(1600, Math.floor(r * TAU / 2.0));
+  ctx.strokeStyle = o.c || '#0b0c17'; ctx.lineWidth = o.w ?? 1.6; ctx.lineCap = 'round'; ctx.beginPath();
+  for (let i = 0; i < n; i++) {
+    const a = R.r(0, TAU), L = R.r(3, 11) + (R.f() < 0.28 ? R.r(10, 34) : 0), sl = R.n(0.4);
+    const r0 = r - dir * R.r(2, 6), r1 = r + dir * L, ax = Math.cos(a), ay = Math.sin(a);
+    ctx.moveTo(cx + ax * r0, cy + ay * r0); ctx.lineTo(cx + ax * r1 - ay * L * sl, cy + ay * r1 + ax * L * sl);
+  }
+  ctx.stroke();
+}
+// iris into a black hole (screen space)
+function irisHole(cx, cy, r, o = {}) {
+  if (r <= 0.5) return;
+  ctx.save(); screen();
+  const col = o.c || '#0b0c17';
+  const P = wobble(ellipsePts(cx, cy, r, r, 0, 140), true, Math.min(4, 0.6 + r * 0.02), 'ih' + (o.key ?? ''), 9);
+  trace(P, true); ctx.fillStyle = col; ctx.fill();
+  irisRim(cx, cy, r, +1, { c: col, key: o.key });
+  if (o.inner) { ctx.save(); trace(P, true); ctx.clip(); o.inner(r); ctx.restore(); }
+  ctx.restore();
+}
+// world point (cx,cy) lands at screen centre
+function camera(cx, cy, zoom = 1, rot = 0, sx = 0, sy = 0) {
+  const c = Math.cos(rot) * zoom, s = Math.sin(rot) * zoom;
+  ctx.setTransform(c, s, -s, c, W / 2 + sx - (c * cx - s * cy), H / 2 + sy - (s * cx + c * cy));
+}
+function screen() { ctx.setTransform(1, 0, 0, 1, 0, 0); }
+function toScreen(x, y) { const p = ctx.getTransform().transformPoint(new DOMPoint(x, y)); return [p.x, p.y]; }
+function fillAll(color) { ctx.save(); screen(); ctx.fillStyle = color; ctx.fillRect(0, 0, W, H); ctx.restore(); }
+
+// monospace text with per-glyph hand jitter
+function monoText(str, x, y, size, color, o = {}) {
+  ctx.save();
+  ctx.font = `${o.weight ?? 700} ${size}px ${MONO}`; ctx.fillStyle = color; ctx.textBaseline = 'alphabetic';
+  const cw = ctx.measureText('M').width, R = RNG('txt', o.key ?? str, B), jit = o.jit ?? 0.9;
+  const n = Math.min(o.count ?? str.length, str.length);
+  ctx.globalAlpha = o.al ?? 1;
+  for (let i = 0; i < n; i++) {
+    const ch = str[i]; if (ch === ' ') continue;
+    ctx.save(); ctx.translate(x + i * cw + R.n(jit), y + R.n(jit)); ctx.rotate(R.n(0.045)); ctx.fillText(ch, 0, 0); ctx.restore();
+  }
+  ctx.restore();
+  return cw;
+}
+function monoW(size) { ctx.save(); ctx.font = `700 ${size}px ${MONO}`; const w = ctx.measureText('M').width; ctx.restore(); return w; }
+
+// single-stroke hand lettering (x-height 0.5, ascender 1.0, baseline 0)
+const GLYPHS = {
+  ' ': { w: 0.26, s: [] },
+  c: { w: 0.5, s: [arcPts(0.26, -0.25, 0.25, -35 * DEG, -322 * DEG, 22)] },
+  o: { w: 0.52, s: [arcPts(0.26, -0.25, 0.25, -95 * DEG, -460 * DEG, 30)] },
+  a: { w: 0.54, s: [[...arcPts(0.25, -0.25, 0.235, -28 * DEG, -335 * DEG, 24)], [[0.49, -0.5], [0.49, -0.05], [0.55, 0.0]]] },
+  d: { w: 0.56, s: [[...arcPts(0.25, -0.25, 0.235, -28 * DEG, -335 * DEG, 24)], [[0.49, -1.0], [0.49, -0.05], [0.56, 0.0]]] },
+  l: { w: 0.24, s: [[[0.08, -1.0], [0.08, -0.1], [0.12, -0.01], [0.2, 0.0]]] },
+  u: { w: 0.54, s: [[[0.03, -0.5], [0.03, -0.22], ...arcPts(0.255, -0.22, 0.225, 180 * DEG, 0, 14), [0.48, -0.5]], [[0.48, -0.5], [0.48, -0.04], [0.54, 0.0]]] },
+  e: { w: 0.52, s: [[[0.03, -0.26], [0.5, -0.26], ...arcPts(0.265, -0.25, 0.245, -4 * DEG, -318 * DEG, 26)]] },
+};
+function handwrite(str, x, y, size, o = {}) {
+  const strokes = []; let pen = 0;
+  for (const ch of str) {
+    const g = GLYPHS[ch] || GLYPHS[' '];
+    for (const s of g.s) strokes.push(s.map(([u, v]) => [x + (pen + u) * size, y + v * size]));
+    pen += g.w + 0.1;
+  }
+  const lens = strokes.map(pathLen), total = lens.reduce((a, b) => a + b, 0);
+  let budget = clamp(o.frac ?? 1) * total;
+  for (let i = 0; i < strokes.length && budget > 0; i++) {
+    const f = Math.min(1, budget / lens[i]); budget -= lens[i];
+    if (o.glow) ink(strokes[i], { color: o.glow, w: (o.w ?? size * 0.06) * 3, amt: o.amt ?? 1.0, key: 'hw' + i + str, frac: f });
+    ink(strokes[i], { color: o.c, w: o.w ?? size * 0.06, amt: o.amt ?? 1.0, key: 'hw' + i + str, frac: f });
+  }
+  return pen * size;
+}
+
+// =====================================================================
+// ---- small props and helpers
+function drawPencil(tx, ty, ang, len, k = 1, key = 'pencil') {
+  ctx.save(); ctx.translate(tx, ty); ctx.rotate(ang); ctx.scale(k, k);
+  paint([[46, -16], [len, -16], [len, 16], [46, 16]], {
+    fill: C.yellow, key: key + 'b', w: 3,
+    tex: [{ k: 'hatch', a: 0.05, gap: 5, c: '#a8741d', al: 0.55, w: 1.1, dash: [20, 90], dens: (x, y) => (y > 5 ? 1 : 0.08) }, { k: 'pencil', c: '#fff1b8', al: 0.5, a: 0.05, len: 30, per: 120, dens: (x, y) => (y < -4 ? 1 : 0.1) }],
+  });
+  ink([[50, -5], [len, -5]], { w: 1.6, key: key + 'f1', alpha: 0.7 });
+  ink([[50, 6], [len, 6]], { w: 1.6, key: key + 'f2', alpha: 0.7 });
+  paint([[1, 0], [46, -15], [46, 15]], { fill: '#efcf9f', key: key + 'c', w: 2.6, tex: [{ k: 'hatch', a: 1.2, gap: 4, al: 0.35, dens: (x, y) => (y > 2 ? 1 : 0.1) }] });
+  paint([[0, 0], [15, -5], [15, 5]], { fill: '#3b3438', key: key + 't', w: 2 });
+  paint([[len, -17], [len + 26, -17], [len + 26, 17], [len, 17]], { fill: '#bcb7ab', key: key + 'fe', w: 2.6, tex: [{ k: 'hatch', a: Math.PI / 2, gap: 5, al: 0.5 }] });
+  paint(rrectPts(len + 24, -16, 34, 32, 10), { fill: '#e58f8c', key: key + 'e', w: 2.6, tex: [{ k: 'pencil', c: C.roseD, al: 0.5, per: 60 }] });
+  ctx.restore();
+}
+// smoothstep of x between a and b (NOT manim's `smooth` rate function — the math style calls that smoothM)
+const smooth = (a, b, x) => { const u = clamp((x - a) / (b - a)); return u * u * (3 - 2 * u); };
+const mod = (a, n) => ((a % n) + n) % n;
+function asterisk(x, y, r0, r1, n, rot, color, w) {
+  ctx.save(); ctx.strokeStyle = color; ctx.lineWidth = w; ctx.lineCap = 'round'; ctx.beginPath();
+  for (let i = 0; i < n; i++) { const a = i / n * TAU + rot; ctx.moveTo(x + Math.cos(a) * r0, y + Math.sin(a) * r0); ctx.lineTo(x + Math.cos(a) * r1, y + Math.sin(a) * r1); }
+  ctx.stroke(); ctx.restore();
+}
+
+// ---------------------------------------------------------------------
+//  time (set by the renderer): TT = absolute time on the motion step (on 2s unless STYLE.ones);
+//  E0 = the current era's start; DEFER = overlay queue (captions drawn after the camera); SPARK_AT = the hero's screen spot
+//  ev(t, d) = 0..1 progress of an event at t over d seconds; popS(t) = back-eased pop-in scale
+// ---------------------------------------------------------------------
+let TT = 0, E0 = 0, DEFER = null, SPARK_AT = null;
+const ev = (t, d = 0.25) => clamp((TT - t) / d);
+const popS = (t) => (TT < t ? 0 : EZ.back(clamp((TT - t) / 0.25)));
+
+// ---------------------------------------------------------------------
+//  springs: closed-form, so any frame can be drawn on its own (deterministic, no state)
+//  springEase(t, k, d)       0 -> 1 over time t >= 0 (stiffness k, damping d): accelerates, overshoots a hair, settles
+//  springMove(t0, a, b, p)   a value moving from a to b, starting at time t0 (p = a SPRING preset)
+//  springTrack(keys, p)      a value with many targets: keys = [[t, value], ...] sorted by t. One spring per change,
+//                            added up, so a target change mid-move stays continuous (cursors, widths, positions)
+// ---------------------------------------------------------------------
+const SPRING = {
+  snappy: { k: 320, d: 30 },    // UI: buttons, toggles, leading edges
+  smooth: { k: 170, d: 26 },    // cards, containers, the camera
+  heavy: { k: 90, d: 19 },      // big type, logos, large objects
+  playful: { k: 260, d: 14 },   // mascots, stickers: visible overshoot
+};
+function springEase(t, k = 170, d = 26) {
+  if (t <= 0) return 0;
+  const w0 = Math.sqrt(k), z = d / (2 * w0);
+  if (z < 1) { const wd = w0 * Math.sqrt(1 - z * z); return 1 - Math.exp(-z * w0 * t) * (Math.cos(wd * t) + (z * w0 / wd) * Math.sin(wd * t)); }
+  return 1 - Math.exp(-w0 * t) * (1 + w0 * t);
+}
+const springMove = (t0, a, b, p = SPRING.smooth) => a + (b - a) * springEase(TT - t0, p.k, p.d);
+function springTrack(keys, p = SPRING.smooth) {
+  let v = keys[0][1];
+  for (let i = 1; i < keys.length; i++) v += (keys[i][1] - keys[i - 1][1]) * springEase(TT - keys[i][0], p.k, p.d);
+  return v;
+}
+
+// ---------------------------------------------------------------------
+//  layout for several formats (9:16, 1:1, 16:9, 4:5 from one piece): place things by fractions of the frame,
+//  size them by UNIT (1 at 1080 on the short side). LX(0.5), LY(0.62), 120 * UNIT. PORTRAIT / WIDE pick layouts.
+// ---------------------------------------------------------------------
+const LX = (f) => f * W, LY = (f) => f * H, UNIT = Math.min(W, H) / 1080, PORTRAIT = H > W * 1.2, WIDE = W > H * 1.2;
+
+// ---------------------------------------------------------------------
+//  the user's own assets (screenshots, logos): files in <piece>/assets/ that tools/build.mjs embeds in the page.
+//  asset('logo.png') -> the Image (or null); drawAsset(name, x, y, w, h, { fit: 'contain'|'cover', r, alpha })
+//  Real product UI only: never redraw a product screen from imagination when a screenshot exists.
+// ---------------------------------------------------------------------
+const asset = (name) => (typeof ASSETS !== 'undefined' && ASSETS[name] && ASSETS[name].complete ? ASSETS[name] : null);
+function drawAsset(name, x, y, w, h, o = {}) {
+  const img = asset(name); if (!img) return false;
+  const iw = img.naturalWidth || img.width, ih = img.naturalHeight || img.height;
+  const s = (o.fit === 'cover' ? Math.max : Math.min)(w / iw, h / ih), dw = iw * s, dh = ih * s;
+  ctx.save(); ctx.globalAlpha *= o.alpha ?? 1;
+  if (o.r || o.fit === 'cover') { ctx.beginPath(); ctx.roundRect(x, y, w, h, o.r || 0); ctx.clip(); }
+  ctx.drawImage(img, x + (w - dw) / 2, y + (h - dh) / 2, dw, dh);
+  ctx.restore(); return true;
+}
+// =====================================================================
+//  styles/voltamps/kit.js — night-schematic line art (measured from local refs, references/voltamps/).
+//  Near-black navy ground, indigo fills with violet outlines, thin lavender line art, charge glyphs
+//  (+ magenta, − cyan), cyan leaders, amber return strokes with a warm wash, small monospace labels.
+//  Rigid vector lines (no boil), motion on 1s, glow only on what carries current.
+//  Needs from the piece head: VMONO (a font stack), W, H.
+// =====================================================================
+const VA_SERIF = 'Georgia, Cambria, "Times New Roman", "DejaVu Serif", serif';   // titles and big type (shared with pov3d)
+const VA = {
+  sky0: '#04031a', sky1: '#000006',          // the ground: navy at the top, near-black at the bottom
+  fill: '#1b1653', fill2: '#16123f',          // indigo fills (cloud, house)
+  edge: '#3d3394', line: '#8b82d6', dim: '#4a4288',   // outlines, line art, faint art
+  plus: '#d462f2', minus: '#12b6e8', amber: '#ffbd3a', cream: '#fff4d6', warm: '#2a1806',
+  text: '#cfc9ff', red: '#ff5a6a',
+};
+
+// ---- the ground of the frame: a navy fall-off, an optional warm wash (the return stroke lights the sky)
+function vaBg(warm = 0) {
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+  const g = ctx.createLinearGradient(0, 0, 0, H);
+  g.addColorStop(0, VA.sky0); g.addColorStop(1, VA.sky1);
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  const hz = ctx.createLinearGradient(0, H * 0.62, 0, H * 0.78);   // a low violet haze on the horizon
+  hz.addColorStop(0, 'rgba(60,40,140,0)'); hz.addColorStop(0.7, 'rgba(60,40,140,0.10)'); hz.addColorStop(1, 'rgba(60,40,140,0)');
+  ctx.fillStyle = hz; ctx.fillRect(0, H * 0.6, W, H * 0.2);
+  if (warm > 0) {
+    const r = ctx.createRadialGradient(W / 2, H * 0.55, 50, W / 2, H * 0.55, H * 0.8);
+    r.addColorStop(0, `rgba(70,42,10,${0.85 * warm})`); r.addColorStop(1, `rgba(30,18,4,${0.6 * warm})`);
+    ctx.fillStyle = r; ctx.fillRect(0, 0, W, H);
+  }
+  ctx.restore();
+}
+// depth: far ridges and a far storm bank, drawn in screen space with a parallax share of the camera
+function vaFar(cam, a = 1, flash = 0, gyW = 1440) {
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = a;
+  const px = (cam ? (cam.cx - 540) * 0.25 : 0), pz = cam ? 1 + (cam.z - 1) * 0.2 : 1;
+  const gy = H / 2 + (gyW - (cam ? cam.cy : 960)) * (cam ? cam.z : 1) + (cam ? cam.sy : 0);
+  // a far storm bank: soft dark domes, lit from inside now and then
+  for (let i = 0; i < 9; i++) {
+    const R = RNG('bank', i), bx = mod(R.r(-200, W + 200) - px * 0.6 + TT * R.r(2, 5), W + 400) - 200, by = gy - R.r(120, 330) * pz, r = R.r(90, 170) * pz;
+    const lit = flash * (i % 3 === 0 ? 1 : 0.3) + 0.5 * Math.max(0, Math.sin(TT * 0.7 + i * 2.1)) ** 40;
+    ctx.fillStyle = `rgba(${18 + 50 * lit | 0},${14 + 36 * lit | 0},${46 + 90 * lit | 0},0.35)`;
+    for (const [ox, oy, k] of [[-0.8, 0.15, 0.7], [0, 0, 1], [0.85, 0.2, 0.65]]) { ctx.beginPath(); ctx.ellipse(bx + ox * r, by + oy * r, r * k, r * 0.55 * k, 0, 0, TAU); ctx.fill(); }
+  }
+  // two ridge lines
+  for (const [k, c, amp, base] of [[0.35, '#0b0928', 120, 40], [0.6, '#0f0c33', 70, 0]]) {
+    ctx.fillStyle = c; ctx.beginPath(); ctx.moveTo(0, H);
+    for (let x = 0; x <= W; x += 20) { const u = (x + px * k * 2) / 260; ctx.lineTo(x, gy - base * pz - amp * pz * (0.5 + 0.35 * Math.sin(u) + 0.15 * Math.sin(u * 2.7 + 1))); }
+    ctx.lineTo(W, H); ctx.closePath(); ctx.fill();
+  }
+  ctx.globalAlpha = 1; ctx.fillStyle = '#020109'; ctx.fillRect(0, gy, W, H - gy);   // the earth below the ground line
+  ctx.restore();
+}
+// rain: fine slanted streaks, two depths
+function vaRain(a = 1, key = 'rain') {
+  if (a <= 0) return;
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.lineCap = 'round';
+  for (let i = 0; i < 110; i++) {
+    const R = RNG(key, i), near = i % 3 === 0, sp = near ? 1500 : 900, len = near ? 46 : 26;
+    const x = mod(R.r(0, W + 300) - TT * sp * 0.22, W + 300) - 150, y = mod(R.r(0, H) + TT * sp, H + 100) - 50;
+    ctx.globalAlpha = a * (near ? 0.22 : 0.12); ctx.strokeStyle = near ? '#6e66c0' : '#3d3690'; ctx.lineWidth = near ? 2 : 1.4;
+    ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x - len * 0.22, y + len); ctx.stroke();
+  }
+  ctx.restore();
+}
+// grain + vignette, deterministic per frame (STYLE.post)
+let VA_NOISE = null;
+function vaGrain(k = 1) {
+  if (!VA_NOISE) { VA_NOISE = document.createElement('canvas'); VA_NOISE.width = VA_NOISE.height = 256; const g = VA_NOISE.getContext('2d'), im = g.createImageData(256, 256), R = RNG('grain');
+    for (let i = 0; i < im.data.length; i += 4) { const v = R.f() * 255 | 0; im.data[i] = im.data[i + 1] = im.data[i + 2] = v; im.data[i + 3] = 255; } g.putImageData(im, 0, 0); }
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+  const R = RNG('gf', F), ox = R.r(0, 256) | 0, oy = R.r(0, 256) | 0;
+  ctx.globalAlpha = 0.045 * k; ctx.globalCompositeOperation = 'overlay';
+  for (let x = -ox; x < W; x += 256) for (let y = -oy; y < H; y += 256) ctx.drawImage(VA_NOISE, x, y);
+  ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
+  const v = ctx.createRadialGradient(W / 2, H * 0.48, H * 0.3, W / 2, H * 0.48, H * 0.75);
+  v.addColorStop(0, 'rgba(0,0,0,0)'); v.addColorStop(1, 'rgba(0,0,6,0.55)'); ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
+  ctx.restore();
+}
+// a squared-paper ground: fine cells and stronger every 4th line, with a parallax share of the camera
+function vaGridBg(cam, a = 1, cell = 60) {
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+  const k = 0.4, z = cam ? 1 + (cam.z - 1) * 0.35 : 1, st = cell * z;
+  const ox = cam ? -(cam.cx - 540) * k * z : 0, oy = cam ? -(cam.cy - 960) * k * z : 0;
+  const i0x = Math.floor(-ox / st) - 1, i0y = Math.floor(-oy / st) - 1;
+  const fade = ctx.createRadialGradient(W / 2, H * 0.45, 0, W / 2, H * 0.45, H * 0.62);
+  for (let i = i0x; i * st + ox < W + st; i++) { const x = i * st + ox, maj = mod(i, 4) === 0; ctx.globalAlpha = a * (maj ? 0.26 : 0.12); ctx.fillStyle = '#5a50b8'; ctx.fillRect(Math.round(x), 0, maj ? 2 : 1, H); }
+  for (let j = i0y; j * st + oy < H + st; j++) { const y = j * st + oy, maj = mod(j, 4) === 0; ctx.globalAlpha = a * (maj ? 0.26 : 0.12); ctx.fillStyle = '#5a50b8'; ctx.fillRect(0, Math.round(y), W, maj ? 2 : 1); }
+  // let the grid sink into the dark at the edges
+  ctx.globalAlpha = 1; fade.addColorStop(0, 'rgba(2,2,14,0)'); fade.addColorStop(1, 'rgba(2,2,14,0.85)'); ctx.fillStyle = fade; ctx.fillRect(0, 0, W, H);
+  ctx.restore();
+}
+// faint drifting specks (rain-fine air dust) so a held frame still breathes
+function vaSpecks(n = 40, a = 0.25, key = 'sp') {
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+  for (let i = 0; i < n; i++) {
+    const R = RNG(key, i), x = mod(R.r(0, W) + TT * R.r(-6, 6), W), y = mod(R.r(0, H) + TT * R.r(4, 18), H);
+    ctx.globalAlpha = a * (0.5 + 0.5 * Math.sin(TT * R.r(0.6, 1.6) + i));
+    ctx.fillStyle = VA.dim; ctx.fillRect(x, y, 2, 2);
+  }
+  ctx.restore();
+}
+
+// ---- strokes
+function vaStroke(P, c, w = 3, o = {}) {
+  if (P.length < 2) return;
+  ctx.save(); ctx.globalAlpha *= o.a ?? 1;
+  ctx.lineWidth = w; ctx.strokeStyle = c; ctx.lineJoin = o.join ?? 'round'; ctx.lineCap = o.cap ?? 'round';
+  if (o.dash) ctx.setLineDash(o.dash);
+  vaTrace(P, !!o.closed); ctx.stroke(); ctx.restore();
+}
+function vaLine(x0, y0, x1, y1, c, w = 3, o = {}) { vaStroke([[x0, y0], [x1, y1]], c, w, o); }
+// a glowing current line: a wide soft halo, a mid glow, a bright core
+function vaGlow(P, c, w = 4, k = 1, o = {}) {
+  if (P.length < 2 || k <= 0) return;
+  ctx.save(); ctx.globalAlpha *= o.a ?? 1; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+  vaTrace(P, false);
+  ctx.globalCompositeOperation = 'lighter';
+  ctx.strokeStyle = c; ctx.globalAlpha *= 0.16 * k; ctx.lineWidth = w * 7; ctx.stroke();
+  ctx.globalAlpha /= 0.16; ctx.globalAlpha *= 0.35; ctx.lineWidth = w * 2.6; ctx.stroke();
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.globalAlpha /= 0.35; ctx.lineWidth = w; ctx.strokeStyle = o.core ?? c; ctx.stroke();
+  ctx.restore();
+}
+// partial polyline: the first `frac` of P's length (write-on for paths and bolts)
+function vaPart(P, frac) {
+  frac = clamp(frac); if (frac >= 1) return P; if (frac <= 0) return [P[0]];
+  let L = 0; const d = [0];
+  for (let i = 1; i < P.length; i++) { L += Math.hypot(P[i][0] - P[i - 1][0], P[i][1] - P[i - 1][1]); d.push(L); }
+  const s = L * frac, out = [P[0]];
+  for (let i = 1; i < P.length; i++) {
+    if (d[i] <= s) { out.push(P[i]); continue; }
+    const u = (s - d[i - 1]) / (d[i] - d[i - 1]); out.push([lerp(P[i - 1][0], P[i][0], u), lerp(P[i - 1][1], P[i][1], u)]); break;
+  }
+  return out;
+}
+// a point on a polyline at fraction u (for travelling pulses)
+function vaAt(P, u) { const Q = vaPart(P, clamp(u)); return Q[Q.length - 1]; }
+
+// ---- type: monospace labels, typed on one character at a time
+function vaText(str, x, y, size, c, o = {}) {
+  ctx.save(); ctx.globalAlpha *= o.a ?? 1;
+  ctx.font = `${o.italic ? 'italic ' : ''}${o.weight ?? (o.serif ? 400 : 500)} ${size}px ${o.serif ? VA_SERIF : VMONO}`; ctx.fillStyle = c; ctx.textAlign = o.align ?? 'left'; ctx.textBaseline = 'alphabetic';
+  const n = Math.ceil(str.length * clamp(o.frac ?? 1));
+  if (o.glow) { ctx.shadowColor = c; ctx.shadowBlur = o.glow; }
+  if (n > 0) {
+    const full = ctx.measureText(str).width, sub = str.slice(0, n);
+    const dx = o.align === 'center' ? -full / 2 + ctx.measureText(sub).width / 2 : o.align === 'right' ? -full + ctx.measureText(sub).width : 0;
+    ctx.fillText(sub, x + dx, y);
+  }
+  ctx.restore();
+  ctx.save(); ctx.font = `${o.italic ? 'italic ' : ''}${o.weight ?? (o.serif ? 400 : 500)} ${size}px ${o.serif ? VA_SERIF : VMONO}`; const w = ctx.measureText(str).width; ctx.restore(); return w;
+}
+const vaType = (t0, str, cps = 28) => clamp((TT - t0) * cps / Math.max(1, str.length));   // typing progress
+
+// ---- charge glyphs
+function vaPlus(x, y, s, a = 1, c = VA.plus) { ctx.save(); ctx.globalAlpha *= a; ctx.shadowColor = c; ctx.shadowBlur = s * 0.6; ctx.strokeStyle = c; ctx.lineWidth = Math.max(2.5, s * 0.2); ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(x - s / 2, y); ctx.lineTo(x + s / 2, y); ctx.moveTo(x, y - s / 2); ctx.lineTo(x, y + s / 2); ctx.stroke(); ctx.restore(); }
+function vaMinus(x, y, s, a = 1, c = VA.minus) { ctx.save(); ctx.globalAlpha *= a; ctx.shadowColor = c; ctx.shadowBlur = s * 0.6; ctx.strokeStyle = c; ctx.lineWidth = Math.max(2.5, s * 0.2); ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(x - s / 2, y); ctx.lineTo(x + s / 2, y); ctx.stroke(); ctx.restore(); }
+function vaDot(x, y, r, c, a = 1) { ctx.save(); ctx.globalAlpha *= a; ctx.fillStyle = c; ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.fill(); ctx.restore(); }
+function vaRing(x, y, r, c, w = 3, a = 1, dash) { ctx.save(); ctx.globalAlpha *= a; ctx.strokeStyle = c; ctx.lineWidth = w; if (dash) ctx.setLineDash(dash); ctx.beginPath(); ctx.arc(x, y, Math.max(0.1, r), 0, TAU); ctx.stroke(); ctx.restore(); }
+function vaArrow(x0, y0, x1, y1, c, w = 4, a = 1, head = 18) {
+  if (Math.hypot(x1 - x0, y1 - y0) < 1) return;
+  const ang = Math.atan2(y1 - y0, x1 - x0);
+  vaLine(x0, y0, x1, y1, c, w, { a });
+  vaStroke([[x1 - head * Math.cos(ang - 0.45), y1 - head * Math.sin(ang - 0.45)], [x1, y1], [x1 - head * Math.cos(ang + 0.45), y1 - head * Math.sin(ang + 0.45)]], c, w, { a });
+}
+// a chevron (an updraft mark), pointing up
+function vaChevron(x, y, s, c, a = 1) { vaStroke([[x - s, y + s * 0.6], [x, y - s * 0.4], [x + s, y + s * 0.6]], c, 2.5, { a }); }
+// a horizontal bar meter
+function vaBar(x, y, w, h, frac, c, a = 1) { ctx.save(); ctx.globalAlpha *= a; ctx.fillStyle = c; ctx.fillRect(x, y, w * clamp(frac), h); ctx.restore(); }
+// a dimension rule: |——| with a label
+function vaRule(x0, y0, x1, y1, label, c = VA.text, size = 34, a = 1) {
+  const ang = Math.atan2(y1 - y0, x1 - x0), nx = -Math.sin(ang) * 12, ny = Math.cos(ang) * 12;
+  vaLine(x0, y0, x1, y1, c, 2.5, { a });
+  vaLine(x0 - nx, y0 - ny, x0 + nx, y0 + ny, c, 2.5, { a }); vaLine(x1 - nx, y1 - ny, x1 + nx, y1 + ny, c, 2.5, { a });
+  if (label) vaText(label, (x0 + x1) / 2 - nx * 3, (y0 + y1) / 2 - ny * 3 + 8, size, c, { align: 'center', a });
+}
+
+// ---- the cloud: a cumulonimbus — a cauliflower dome, bulging sides, a scalloped flat base,
+//      and a pointed lens-shaped anvil drawn across its top (the dome's bumps rise above it)
+function vaTrace(P, closed) { ctx.beginPath(); ctx.moveTo(P[0][0], P[0][1]); for (let i = 1; i < P.length; i++) ctx.lineTo(P[i][0], P[i][1]); if (closed) ctx.closePath(); }
+function vaArcPts(cx, cy, r, a0, a1, n = 10) { const P = []; for (let i = 0; i <= n; i++) { const a = lerp(a0, a1, i / n); P.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r]); } return P; }
+function vaCloudBody(x, y, s) {
+  // a clean union: the top edge is the envelope of the dome's bumps; the sides bulge gently; the base is scalloped
+  const hw = 330 * s, base = y + 170 * s, sh = y - 150 * s, P = [];
+  const br = (i) => 1 + 0.035 * Math.sin(TT * 0.9 + i * 1.7);   // the dome boils, slowly
+  const bumps = [[x - 235 * s, y - 175 * s, 95 * s * br(0)], [x - 130 * s, y - 255 * s, 100 * s * br(1)], [x + 5 * s, y - 300 * s, 105 * s * br(2)], [x + 140 * s, y - 260 * s, 98 * s * br(3)], [x + 240 * s, y - 180 * s, 92 * s * br(4)]];
+  const topAt = (px) => { let m = sh; for (const [bx, by, r] of bumps) { const d = px - bx; if (Math.abs(d) < r) m = Math.min(m, by - Math.sqrt(r * r - d * d)); } return m; };
+  for (let i = 0; i <= 16; i++) { const u = i / 16; P.push([x - hw + 2 * hw * u, base + 9 * s * Math.abs(Math.sin(u * Math.PI * 8))]); }
+  for (let i = 1; i <= 12; i++) { const u = i / 12; P.push([x + hw + 24 * s * Math.sin(Math.PI * u) + 8 * s * Math.sin(u * TAU * 2), lerp(base, sh, u)]); }
+  for (let i = 0; i <= 80; i++) { const px = x + hw - 2 * hw * i / 80; P.push([px, topAt(px)]); }
+  for (let i = 1; i < 12; i++) { const u = i / 12; P.push([x - hw - 24 * s * Math.sin(Math.PI * u) - 8 * s * Math.sin(u * TAU * 2), lerp(sh, base, u)]); }
+  return P;
+}
+function vaAnvil(x, y, s) {   // a lens: two arcs meeting in points
+  const hw = 470 * s, cy = y - 230 * s, up = 62 * s, dn = 40 * s, P = [];
+  for (let i = 0; i <= 30; i++) { const u = i / 30; P.push([x - hw + 2 * hw * u, cy - up * Math.sin(Math.PI * u) ** 0.7]); }
+  for (let i = 30; i >= 0; i--) { const u = i / 30; P.push([x - hw + 2 * hw * u, cy + dn * Math.sin(Math.PI * u) ** 0.9]); }
+  return P;
+}
+function vaCloudLattice(x, y, s, P) {
+  ctx.save(); vaTrace(P, true); ctx.clip();
+  ctx.strokeStyle = 'rgba(120,110,220,0.055)'; ctx.lineWidth = 1.5;
+  for (let gx = x - 500 * s; gx < x + 500 * s; gx += 26 * s) { ctx.beginPath(); ctx.moveTo(gx, y - 420 * s); ctx.lineTo(gx, y + 220 * s); ctx.stroke(); }
+  for (let gy = y - 420 * s; gy < y + 220 * s; gy += 26 * s) { ctx.beginPath(); ctx.moveTo(x - 500 * s, gy); ctx.lineTo(x + 500 * s, gy); ctx.stroke(); }
+  ctx.restore();
+}
+function vaCloud(x, y, s = 1, o = {}) {
+  const a = o.a ?? 1, lw = Math.max(2.5, 4 * s);
+  ctx.save(); ctx.globalAlpha *= a; ctx.lineJoin = 'round';
+  for (const P of [vaCloudBody(x, y, s), ...(o.anvil === false ? [] : [vaAnvil(x, y, s)])]) {
+    const gr = ctx.createLinearGradient(0, y - 400 * s, 0, y + 180 * s);
+    gr.addColorStop(0, '#2b2378'); gr.addColorStop(0.55, o.fill ?? VA.fill); gr.addColorStop(1, '#120e3a');
+    vaTrace(P, true); ctx.fillStyle = gr; ctx.fill();
+    vaCloudLattice(x, y, s, P);
+    if (o.lit) {   // lit from inside by a flash: a soft bloom clipped to the shape
+      ctx.save(); vaTrace(P, true); ctx.clip(); ctx.globalCompositeOperation = 'lighter';
+      const [lx, ly, lc] = o.litAt ?? [x, y, '#7d6cff'];
+      const rg = ctx.createRadialGradient(lx, ly, 10, lx, ly, 420 * s); rg.addColorStop(0, lc); rg.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.globalAlpha = 0.5 * o.lit; ctx.fillStyle = rg; ctx.fillRect(x - 600 * s, y - 500 * s, 1200 * s, 800 * s); ctx.restore();
+    }
+    ctx.lineWidth = lw; ctx.strokeStyle = o.edge ?? VA.edge; vaTrace(P, true); ctx.stroke();
+  }
+  ctx.restore();
+  if (o.inner) { ctx.save(); ctx.globalAlpha *= a; o.inner(); ctx.restore(); }
+  return { top: y - 300 * s, anvil: y - 230 * s, base: y + 170 * s, half: 330 * s };
+}
+
+// ---- the ground line, a hatch below it, grass tufts
+function vaGround(y, x0 = -200, x1 = W + 200, a = 1) {
+  vaLine(x0, y, x1, y, VA.line, 3, { a });
+  for (let x = x0; x < x1; x += 30) vaLine(x, y + 10, x - 14, y + 26, VA.dim, 2, { a });
+}
+function vaTuft(x, y, s = 1, a = 1) { vaStroke([[x - 9 * s, y - 16 * s], [x, y], [x + 9 * s, y - 16 * s]], VA.line, 2.2, { a }); vaLine(x, y, x, y - 18 * s, VA.line, 2.2, { a }); }
+// lattice tower (pylon): base at (x, y), height h
+function vaTower(x, y, h, a = 1) {
+  const w = h * 0.22, top = y - h;
+  vaStroke([[x - w, y], [x - 4, top + 20], [x + 4, top + 20], [x + w, y]], VA.line, 3, { a });
+  vaLine(x, top + 20, x, top, VA.line, 3, { a });
+  for (let i = 1; i <= 4; i++) {
+    const u0 = (i - 1) / 4, u1 = i / 4, ya = lerp(y, top + 20, u0), yb = lerp(y, top + 20, u1);
+    const wa = lerp(w, 4, u0), wb = lerp(w, 4, u1);
+    vaLine(x - wa, ya, x + wb, yb, VA.line, 2, { a }); vaLine(x + wa, ya, x - wb, yb, VA.line, 2, { a });
+  }
+  return [x, top];
+}
+function vaHouse(x, y, s = 1, a = 1, o = {}) {
+  const w = 90 * s, h = 82 * s;
+  ctx.save(); ctx.globalAlpha *= a;
+  ctx.fillStyle = VA.fill2; ctx.fillRect(x - w, y - h, w * 2, h);
+  ctx.fillStyle = '#3a2f8e'; ctx.fillRect(x - 18 * s, y - 52 * s, 36 * s, 52 * s);
+  ctx.restore();
+  vaStroke([[x - w, y], [x - w, y - h], [x + w, y - h], [x + w, y]], VA.line, 3, { a });
+  vaStroke([[x - w - 14 * s, y - h], [x, y - h - 62 * s], [x + w + 14 * s, y - h], [x - w - 14 * s, y - h]], VA.line, 3, { a, closed: true });
+  if (o.rod) {   // a lightning rod on the ridge and its down-conductor to an earth rod
+    const rx = x, ry = y - h - 62 * s;
+    vaLine(rx, ry, rx, ry - 70 * s, o.rodC ?? VA.cream, 4, { a });
+    vaDot(rx, ry - 70 * s, 5, o.rodC ?? VA.cream, a);
+    vaStroke([[rx, ry], [x + w + 10 * s, y - h + 4 * s], [x + w + 10 * s, y + 70 * s]], o.rodC ?? VA.cream, 3, { a: a * (o.cond ?? 1) });
+    for (let i = 0; i < 3; i++) vaLine(x + w + 10 * s - (16 - i * 5) * s, y + (70 + i * 9) * s, x + w + 10 * s + (16 - i * 5) * s, y + (70 + i * 9) * s, o.rodC ?? VA.cream, 3, { a: a * (o.cond ?? 1) });
+  }
+  return [x, y - h - 62 * s];
+}
+// a tree: three overlapping circles on a trunk
+function vaTree(x, y, s = 1, a = 1) {
+  vaLine(x, y, x, y - 70 * s, VA.line, 3, { a });
+  ctx.save(); ctx.globalAlpha *= a;
+  for (const [dx, dy, r] of [[-22, -95, 40], [22, -88, 38], [0, -135, 40]]) {
+    ctx.fillStyle = VA.fill2; ctx.beginPath(); ctx.arc(x + dx * s, y + dy * s, r * s, 0, TAU); ctx.fill();
+  }
+  ctx.restore();
+  for (const [dx, dy, r] of [[-22, -95, 40], [22, -88, 38], [0, -135, 40]]) vaRing(x + dx * s, y + dy * s, r * s, VA.line, 3, a);
+  return [x, y - 175 * s];
+}
+function vaLamp(x, y, h = 170, a = 1) {
+  vaStroke([[x, y], [x, y - h], [x + 34, y - h]], VA.line, 3, { a });
+  vaStroke([[x + 22, y - h + 2], [x + 46, y - h + 2], [x + 40, y - h + 14], [x + 28, y - h + 14]], VA.line, 2.5, { a, closed: true });
+  return [x, y - h];
+}
+function vaSun(x, y, r, c = VA.line, a = 1) {
+  vaRing(x, y, r, c, 3, a);
+  for (let i = 0; i < 8; i++) { const an = i / 8 * TAU; vaLine(x + Math.cos(an) * r * 1.35, y + Math.sin(an) * r * 1.35, x + Math.cos(an) * r * 1.7, y + Math.sin(an) * r * 1.7, c, 3, { a }); }
+}
+function vaHill(x0, x1, y, h, a = 1) {
+  const P = []; for (let i = 0; i <= 30; i++) { const u = i / 30; P.push([lerp(x0, x1, u), y - h * Math.pow(Math.sin(Math.PI * Math.pow(u, 0.8)), 1.6)]); }
+  vaStroke(P, VA.line, 3, { a }); return P;
+}
+
+// ---- bolts: a seeded stepped path from (x0,y0) toward (x1,y1); each step drifts a little, branches split off
+function vaBoltPath(key, x0, y0, x1, y1, steps = 14, o = {}) {
+  const R = RNG('bolt', key), main = [[x0, y0]], branches = [];
+  const jit = o.jit ?? 0.55, bp = o.branch ?? 0.35;
+  for (let i = 1; i <= steps; i++) {
+    const u = i / steps, px = lerp(x0, x1, u), py = lerp(y0, y1, u);
+    const spread = (1 - Math.pow(u, 3)) * Math.abs(y1 - y0) / steps * jit * 2.2;
+    main.push(i === steps ? [x1, y1] : [px + R.r(-1, 1) * spread * 1.4, py + R.r(-0.25, 0.25) * spread]);
+    if (i < steps - 1 && R.f() < bp) {   // a branch: 2–5 steps sideways and down, then it dies
+      const n = 2 + Math.floor(R.f() * 4), side = R.f() < 0.5 ? -1 : 1, B = [main[i]];
+      let [bx, by] = main[i];
+      for (let k = 0; k < n; k++) { bx += side * R.r(14, 46); by += R.r(18, 52); B.push([bx, by]); }
+      branches.push({ at: i, pts: B });
+    }
+  }
+  return { main, branches, steps };
+}
+// draw a bolt grown to step k (fractional), with branches growing alongside
+function vaBolt(bolt, k, c, w = 4, glow = 1, o = {}) {
+  const n = bolt.main.length - 1, kk = clamp(k / n);
+  const P = vaPart(bolt.main, kk);
+  if (o.branches !== false) for (const b of bolt.branches) {
+    const g = clamp((k - b.at) / 3);
+    if (g <= 0) continue;
+    const fade = o.branchFade ?? 1;
+    if (glow) vaGlow(vaPart(b.pts, g), c, w * 0.6, glow * 0.6, { a: 0.75 * fade }); else vaStroke(vaPart(b.pts, g), c, w * 0.6, { a: 0.75 * fade });
+  }
+  if (glow) vaGlow(P, c, w, glow, o); else vaStroke(P, c, w, o);
+  return P[P.length - 1];
+}
+
+// ---- captions & tags, at screen size (DEFER)
+const vaOverlay = (f) => { if (DEFER) DEFER.push(f); else f(); };
+
+// =====================================================================
+//  STYLE — the renderer's hooks
+// =====================================================================
+const STYLE = {
+  name: 'voltamps',
+  paper: '#04031a',
+  backdrop(c) { vaBg(0); },
+  window(P, key, src) { ctx.save(); trace(P, true); ctx.clip(); ctx.drawImage(src, 0, 0); ctx.restore(); vaStroke(P, VA.edge, 4, { closed: true }); },
+  blob(P, c, key) { ctx.save(); trace(P, true); ctx.fillStyle = c; ctx.fill(); ctx.restore(); vaStroke(P, VA.edge, 4, { closed: true }); },
+  hero(x, y, r, o) { vaDot(x, y, r * 0.3, VA.minus); },
+  heroColor: VA.minus,
+  post() { vaGrain(1); },
+  ones: true,
+};
+// =====================================================================
+//  SCENES — Why do appliances break right when the power comes back? (voltamps). World 1080x1920, TT on 1s.
+//  cyan = power on the line, magenta = the inrush spike, amber/orange = load and heat (the hot thermistor).
+//  Every free text is centred (x 540); titles and big text in serif.
+// =====================================================================
+const CXT = 540;
+const fadeIn = (t, d = 0.35) => EZ.o2(ev(t, d));
+const fadeOut = (t, d = 0.35) => 1 - EZ.i2(ev(t, d));
+const win = (t0, t1, d = 0.35) => fadeIn(t0, d) * fadeOut(t1, d);
+const OV = vaOverlay;
+const flashK = (t, d = 0.6) => (TT < t ? 0 : TT < t + 0.08 ? (TT - t) / 0.08 : Math.exp(-(TT - t - 0.08) / d * 3));
+const BW = (from, to = from, d = 0.3) => win(SUB(from) + 0.05, SUBEND(to) - 0.05, d);   // visible across beats from..to
+let CAMZ = 1;
+
+// ---- text helpers: centred serif captions, typed on their word
+function cap(str, y, t0, c = VA.cream, size = 60, o = {}) {
+  const a = (o.a ?? 1) * fadeIn(t0 - 0.05, 0.25);
+  if (a <= 0) return;
+  OV(() => vaText(str, CXT, y, size, c, { align: 'center', serif: o.mono ? false : true, italic: o.italic, weight: o.weight, a, frac: vaType(t0, str, o.cps ?? 26), glow: o.glow ?? 8 }));
+}
+function label(str, x, y, c = VA.text, size = 30, a = 1) { vaText(str, x, y, size, c, { align: 'center', a }); }
+
+// ---- the camera: a slow float (the zooms are drawn locally)
+function camAtT() {
+  // each beat drifts the other way: push in on one, ease out on the next (continuous across the boundaries)
+  let i = 0; while (i + 1 < TB.length && TT >= TB[i + 1]) i++;
+  const u = EZ.io(clamp((TT - TB[i]) / Math.max(0.5, (i + 1 < TB.length ? TB[i + 1] : DURATION) - TB[i])));
+  const push = 0.13 * (i % 2 ? 1 - u : u);
+  return { cx: 540 + 30 * Math.sin(TT * 0.29), cy: 960 + 20 * Math.sin(TT * 0.23 + 1), z: (1 + push) * (1 + 0.03 * Math.sin(TT * 0.41)), sx: 0, sy: 0 };
+}
+function setCam(c) { ctx.setTransform(c.z, 0, 0, c.z, W / 2 + c.sx - c.z * c.cx, H / 2 + c.sy - c.z * c.cy); }
+// current running along the major grid lines: short cyan pulses, in screen space with the grid's parallax
+function gridPulses(c) {
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+  const z = 1 + (c.z - 1) * 0.35, st = 240 * z, ox = -(c.cx - 540) * 0.4 * z, oy = -(c.cy - 960) * 0.4 * z;
+  for (let k = 0; k < 9; k++) {
+    const R = RNG('gp', k), horiz = k % 2 === 0, line = Math.floor(R.r(0, 8)), sp = R.r(120, 260), ph = R.r(0, 3000);
+    const pos = mod(TT * sp + ph, (horiz ? W : H) + 400) - 200;
+    const x = horiz ? pos : mod(line * st + ox, W), y = horiz ? mod(line * st + oy, H) : pos;
+    const g = ctx.createLinearGradient(horiz ? x - 120 : x, horiz ? y : y - 120, x, y);
+    g.addColorStop(0, 'rgba(18,182,232,0)'); g.addColorStop(1, 'rgba(18,182,232,0.55)');
+    ctx.strokeStyle = g; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.moveTo(horiz ? x - 120 : x, horiz ? y : y - 120); ctx.lineTo(x, y); ctx.stroke();
+    ctx.fillStyle = 'rgba(160,235,255,0.8)'; ctx.fillRect(x - 2, y - 2, 4, 4);
+  }
+  ctx.restore();
+}
+function zoomAbout(x, y, z, f) { ctx.save(); ctx.translate(x, y); ctx.scale(z, z); ctx.translate(-x, -y); f(); ctx.restore(); }
+
+
+
+// =====================================================================
+//  parts: the line, a plug, a TV, a house, the recloser, the circuit inside the plug
+// =====================================================================
+function line(y, on, a = 1, x0 = 60, x1 = 1020) {
+  if (on > 0.05) vaGlow([[x0, y], [x1, y]], VA.minus, 3, on * a, { a }); else vaLine(x0, y, x1, y, '#25306a', 3, { a });
+}
+function plugBox(x, y, a = 1, s = 1) {
+  ctx.save(); ctx.globalAlpha *= a; ctx.fillStyle = VA.fill2; ctx.beginPath(); ctx.roundRect(x - 40 * s, y - 28 * s, 80 * s, 56 * s, 10 * s); ctx.fill(); ctx.restore();
+  ctx.save(); ctx.globalAlpha *= a; ctx.strokeStyle = VA.line; ctx.lineWidth = 3; ctx.beginPath(); ctx.roundRect(x - 40 * s, y - 28 * s, 80 * s, 56 * s, 10 * s); ctx.stroke(); ctx.restore();
+  vaDot(x - 13 * s, y, 4 * s, VA.dim, a); vaDot(x + 13 * s, y, 4 * s, VA.dim, a);
+}
+function tv(x, y, on, a = 1, o = {}) {
+  const w = (o.w ?? 260), h = (o.h ?? 170);
+  ctx.save(); ctx.globalAlpha *= a; ctx.fillStyle = '#0d0b2a'; ctx.beginPath(); ctx.roundRect(x - w / 2, y - h / 2, w, h, 14); ctx.fill();
+  if (on > 0.02) { ctx.fillStyle = `rgba(18,182,232,${0.85 * on})`; ctx.shadowColor = VA.minus; ctx.shadowBlur = 40 * on; ctx.fillRect(x - w / 2 + 14, y - h / 2 + 14, w - 28, h - 28); }
+  ctx.restore();
+  ctx.save(); ctx.globalAlpha *= a; ctx.strokeStyle = VA.line; ctx.lineWidth = 3; ctx.beginPath(); ctx.roundRect(x - w / 2, y - h / 2, w, h, 14); ctx.stroke(); ctx.restore();
+  vaLine(x - w * 0.3, y + h / 2, x - w * 0.36, y + h / 2 + 18, VA.line, 3, { a }); vaLine(x + w * 0.3, y + h / 2, x + w * 0.36, y + h / 2 + 18, VA.line, 3, { a });
+  if (o.crack) { const k = o.crack; vaGlow([[x - w * 0.35, y - h * 0.3], [x - w * 0.05, y + h * 0.05], [x + w * 0.1, y - h * 0.08], [x + w * 0.36, y + h * 0.32]], VA.plus, 3, k * a, { a: a * k }); vaGlow([[x + w * 0.1, y - h * 0.08], [x + w * 0.2, y - h * 0.34]], VA.plus, 2.5, k * a, { a: a * k }); }
+}
+function house(x, y, lit, a = 1, s = 1) {
+  const P = [[x - 34 * s, y + 40 * s], [x - 34 * s, y], [x, y - 30 * s], [x + 34 * s, y], [x + 34 * s, y + 40 * s]];
+  ctx.save(); ctx.globalAlpha *= a; ctx.fillStyle = VA.fill2; vaTrace(P, true); ctx.fill(); ctx.restore();
+  vaStroke(P, VA.line, 2.5, { a, closed: true });
+  ctx.save(); ctx.globalAlpha *= a; ctx.fillStyle = lit > 0.05 ? `rgba(18,182,232,${0.3 + 0.7 * lit})` : '#1a1650'; if (lit > 0.05) { ctx.shadowColor = VA.minus; ctx.shadowBlur = 18 * lit; } ctx.fillRect(x - 12 * s, y + 8 * s, 24 * s, 22 * s); ctx.restore();
+}
+function recloser(x, y, closed, a = 1) {   // two contacts and a blade that swings shut
+  vaDot(x - 40, y, 7, VA.line, a); vaDot(x + 40, y, 7, VA.line, a);
+  const ang = lerp(-0.6, 0, closed);
+  vaLine(x - 40, y, x - 40 + 80 * Math.cos(ang), y + 80 * Math.sin(ang), closed > 0.95 ? VA.minus : VA.line, 4, { a });
+}
+// inside the plug: a box, the capacitor in the middle, the thermistor on the input lead
+const BOX = { x0: 380, x1: 700, y0: 720, y1: 1100 };
+function ntcBody(x, y, heat, a = 1) {
+  if (heat > 0.05) { const g = ctx.createRadialGradient(x, y, 4, x, y, 80); g.addColorStop(0, `rgba(255,140,40,${0.6 * heat})`); g.addColorStop(1, 'rgba(255,140,40,0)'); ctx.save(); ctx.globalAlpha *= a; ctx.fillStyle = g; ctx.fillRect(x - 80, y - 80, 160, 160); ctx.restore(); }
+  ctx.save(); ctx.globalAlpha *= a; ctx.fillStyle = heat > 0.05 ? `rgb(${80 + 175 * heat | 0},${70 + 70 * heat | 0},${110 - 80 * heat | 0})` : '#3a3480'; ctx.beginPath(); ctx.arc(x, y, 30, 0, TAU); ctx.fill(); ctx.restore();
+  vaRing(x, y, 30, heat > 0.5 ? VA.amber : VA.line, 3, a);
+}
+function circuit(a, o = {}) {
+  if (a <= 0) return;
+  const { x0, x1, y0, y1 } = BOX, cy = 910, nx = x0, ny = 810;
+  plugBox(540, 640, a, 1.2);
+  vaLine(540, 674, 540, y0, VA.line, 3, { a });
+  vaStroke([[x0, y0], [x1, y0], [x1, y1], [x0, y1]], VA.line, 3, { a, closed: true });
+  vaLine(540, y1, 540, 1165, VA.line, 3, { a });
+  tv(540, 1235, o.tvOn ?? 0, a, { w: 220, h: 140, crack: o.crack });
+  // the capacitor: two plates across the box's middle; its charge as a fill between them
+  vaLine(x0, cy, 516, cy, VA.line, 3, { a }); vaLine(564, cy, x1, cy, VA.line, 3, { a });
+  vaLine(516, cy - 50, 516, cy + 50, VA.text, 5, { a }); vaLine(564, cy - 50, 564, cy + 50, VA.text, 5, { a });
+  if (o.charge) { ctx.save(); ctx.globalAlpha *= a * 0.8; ctx.fillStyle = VA.minus; ctx.fillRect(520, cy + 48 - 96 * o.charge, 40, 96 * o.charge); ctx.restore(); }
+  // the inrush: the left lead lights magenta from the plug to the capacitor
+  if (o.spike) vaGlow([[540, 674], [540, y0], [x0, y0], [x0, cy], [516, cy]], VA.plus, 5, o.spike * a, { a: a * o.spike });
+  if (o.flow) vaGlow([[540, 674], [540, y0], [x0, y0], [x0, cy], [516, cy]], VA.minus, 3, o.flow * a * 0.7, { a: a * o.flow });
+  // the thermistor on the input lead
+  if (o.ntc > 0) ntcBody(nx, ny, o.heat ?? 0, a * o.ntc);
+}
+
+// =====================================================================
+//  the beats
+// =====================================================================
+function beatTitle() {
+  const a = fadeOut(VW('blackout', 'blackout') - 0.1, 0.3);
+  if (a <= 0) return;
+  OV(() => {
+    vaText('Why do appliances break', CXT, 300, 66, VA.cream, { align: 'center', serif: true, a, frac: vaType(VL('title').t0, 'Why do appliances break', 26), glow: 8 });
+    vaText('right when the power', CXT, 384, 66, VA.cream, { align: 'center', serif: true, a, frac: vaType(VW('title', 'right') - 0.05, 'right when the power', 24), glow: 8 });
+    vaText('comes back?', CXT, 468, 66, VA.minus, { align: 'center', serif: true, italic: true, a, frac: vaType(VW('title', 'comes') - 0.05, 'comes back?', 20), glow: 18 });
+  });
+}
+function stageA() {   // title .. instant: one TV on the grid
+  const a = BW('title', 'instant');
+  if (a <= 0) return;
+  const tOff = VW('blackout', 'blackout') - 0.1, tRet = VW('instant', 'returns') - 0.1;
+  const on = TT < tOff ? 1 : TT < tRet ? 0 : 1;
+  const surge = flashK(tRet, 0.6);
+  line(620, on * (1 + surge), a);
+  vaLine(540, 620, 540, 760, VA.line, 3, { a }); plugBox(540, 790, a);
+  vaLine(540, 818, 540, 945, on ? VA.minus : VA.line, 3, { a });
+  tv(540, 1060, on * (1 - 0.6 * surge), a, { w: 360, h: 230, crack: TT > tRet ? Math.min(1, surge * 1.5 + 0.4 * clamp((TT - tRet) / 0.3)) : 0 });
+  if (surge > 0.05) vaGlow([[540, 620], [540, 760], [540, 818], [540, 945]], VA.plus, 5, surge * a, { a: a * surge });
+  cap('the blackout breaks nothing', 1380, VW('blackout', 'nothing') - 0.1, VA.text, 48, { a: a * fadeOut(SUB('instant') + 0.1, 0.3), italic: true });
+  cap('the instant it returns', 1380, VW('instant', 'instant') - 0.1, VA.plus, 56, { a, italic: true });
+}
+const HX = [150, 280, 410, 540, 670, 800, 930];
+function stageB() {   // all .. retry: the street
+  const a = BW('all', 'retry');
+  if (a <= 0) return;
+  const tN = VW('turns', 'normally') - 0.1, tOff = VW('turns', 'blackout') - 0.1, tTog = VW('turns', 'together') - 0.2;
+  const tR = [VW('retry', 'switch') - 0.1, VW('retry', 'four') - 0.4, VW('retry', 'four') + 0.2, VW('retry', 'apart')];
+  // power state: on, (blackout), all on at once; during retry the switch opens and recloses four times
+  let on = TT < tOff ? 1 : TT < tTog ? 0 : 1, closed = 1, rk = 0;
+  tR.forEach((t, i) => { if (TT >= t && TT < t + 0.35) { on = 0; closed = clamp((TT - t) / 0.35); } if (TT >= t + 0.35) rk = i + 1; });
+  const flick = tR.reduce((m, t) => Math.max(m, flashK(t + 0.35, 0.4)), 0);
+  line(760, on * (1 + flick), a, 60, 1020);
+  if (TT >= SUB('retry')) { recloser(280, 660, closed, a); vaLine(320, 660, 320, 760, VA.line, 2.5, { a }); label('automatic switch', 280, 610, VA.text, 26, a * fadeIn(VW('retry', 'switch') - 0.2, 0.3)); }
+  HX.forEach((x, i) => {
+    vaLine(x, 760, x, 920, on ? '#1d6f96' : VA.dim, 2, { a });
+    // taking turns: one or two houses lit at a time; after the blackout all of them
+    let lit = 0;
+    if (TT < tOff) lit = TT < tN ? 0.5 : (Math.floor(TT * 1.6 + i * 0.7) % 3 === 0 ? 1 : 0.15);
+    else if (TT >= tTog) lit = on;
+    house(x, 975, lit, a, 1.4);
+  });
+  // the load meter
+  const mult = TT < tOff ? 1 : TT < tTog ? 0 : Math.max(1, 5 * Math.exp(-(TT - tTog - 0.6) * 0.05) * EZ.o3(clamp((TT - tTog) / 0.6)));
+  const ma = fadeIn(SUB('all') + 0.5, 0.3) * a * fadeOut(SUB('retry') + 0.2, 0.3);
+  if (ma > 0) {
+    const shown = TT >= VW('five', 'five') - 0.1 ? 5 : mult;
+    OV(() => { vaText('×' + shown.toFixed(1), CXT, 520, 110, shown > 2 ? VA.amber : VA.cream, { align: 'center', serif: true, a: ma, glow: 12 }); vaText("the line's load", CXT, 590, 32, VA.text, { align: 'center', a: ma }); });
+  }
+  cap('the whole street, at once', 1380, VW('all', 'neighborhood') - 0.2, VA.minus, 54, { a: a * fadeOut(SUB('turns'), 0.3), italic: true });
+  cap('normally they take turns', 1380, VW('turns', 'turns') - 0.2, VA.text, 50, { a: a * fadeOut(tOff, 0.3), italic: true });
+  cap('all start together', 1380, tTog, VA.amber, 56, { a: a * fadeOut(SUB('five'), 0.3), italic: true });
+  cap('up to five times normal', 1380, VW('five', 'five') - 0.1, VA.amber, 56, { a: a * fadeOut(SUB('retry'), 0.3), italic: true });
+  if (rk > 0) cap('×' + rk, 1380, tR[0] + 0.35, VA.cream, 80, { a, cps: 80 });
+}
+function stageC() {   // cap .. seconds, the hit, tip, end: inside the plug
+  const a = BW('cap', 'end');
+  if (a <= 0) return;
+  const tC = VW('cap', 'capacitor', 1) - 0.2, tS = VW('cap', 'short') - 0.2, tN = VW('ntc', 'ntc') - 0.2, tCold = VW('cold', 'ten') - 0.2;
+  const tH = VW('hot', 'heats') - 0.1, tT = VW('hot', 'tenths') - 0.2, tCool = VW('cool', 'cooling') - 0.1, tSec = VW('seconds', 'seconds') - 0.3;
+  const tU = VW('tip', 'unplug') - 0.1, tW = VW('tip', 'wait') - 0.1, tPl = VW('tip', 'plugging') - 0.1;
+  // the thermistor's heat: warms on "heats", stays hot through cool (cooling takes minutes), hot at the hit; cools on "wait"
+  let heat = TT < tH ? 0 : TT < tW ? EZ.io(clamp((TT - tH) / 1.2)) : 1 - EZ.io(clamp((TT - tW) / 3.0));
+  const spike = TT < tS ? 0 : TT < tN ? flashK(tS, 1.5) * 0.9 + 0.1 * (TT < tN) : 0;
+  const hitK = flashK(HIT, 1.0);
+  const unplug = TT >= tU ? EZ.io(clamp((TT - tU) / 0.5)) * (1 - EZ.io(clamp((TT - VL('end').t0 - 0.3) / 0.6))) : 0;
+  ctx.save(); ctx.translate(0, -60 * unplug);   // the plug lifts out of the wall
+  circuit(a, {
+    ntc: fadeIn(tN, 0.3), heat,
+    charge: TT >= tS ? EZ.o3(clamp((TT - tS) / 0.5)) : 0,
+    spike: Math.max(spike, TT >= tCold && TT < tH ? 0 : 0, hitK),
+    flow: TT >= tCold && TT < HIT ? 0.6 : TT >= VL('end').t0 + 0.6 ? 0.6 : 0,
+    tvOn: TT >= HIT ? (TT >= VL('end').t0 + 0.9 ? 1 : 0) : TT >= tCold ? 1 : 0,
+    crack: TT >= HIT && TT < VL('end').t0 + 0.6 ? Math.min(1, hitK * 1.4 + 0.5) : 0,
+  });
+  ctx.restore();
+  // the wall socket the plug comes out of
+  vaStroke([[490, 602], [590, 602]], VA.line, 3, { a: a * unplug }); 
+  // labels on the thermistor
+  const nx = BOX.x0, ny = 810, la = fadeIn(tCold, 0.3) * a;
+  if (la > 0) {
+    const ohm = heat < 0.5 ? '10 Ω' : '0.3 Ω';
+    vaText(ohm, nx - 50, ny + 12, 36, heat < 0.5 ? VA.text : VA.amber, { align: 'right', a: la, weight: 700 });
+  }
+  // captions
+  cap('an empty capacitor', 400, tC, VA.minus, 56, { a: a * fadeOut(tS - 0.3, 0.25), italic: true });
+  cap('≈ a short circuit', 400, tS, VA.plus, 60, { a: a * fadeOut(tN - 0.3, 0.25), italic: true });
+  cap('NTC thermistor', 400, tN, VA.cream, 60, { a: a * fadeOut(SUB('cold'), 0.3) });
+  cap('cold: it holds the rush back', 400, tCold, VA.text, 48, { a: a * fadeOut(SUB('hot'), 0.3), italic: true });
+  cap('hot: 30–50× lower', 400, tT, VA.amber, 60, { a: a * fadeOut(SUB('must'), 0.3), italic: true });
+  cap('it has to drop', 400, VW('must', 'drop') - 0.2, VA.amber, 56, { a: a * fadeOut(SUB('cool'), 0.3), italic: true });
+  // the race (screen space, top): cooling takes 30 s – 2 min, the power comes back in seconds
+  const ra = fadeIn(tCool, 0.3) * a * fadeOut(VL('seconds').t1 + 0.2, 0.25);
+  if (ra > 0) OV(() => {
+    vaText('to cool down', 170, 318, 30, VA.amber, { a: ra }); vaText('30 s – 2 min', 910, 318, 30, VA.amber, { align: 'right', a: ra });
+    vaBar(170, 332, 740, 22, EZ.o3(clamp((TT - tCool) / 1.2)), VA.amber, ra);
+    const sa = fadeIn(tSec, 0.25) * ra;
+    if (sa > 0) { vaText('power back', 170, 408, 30, VA.minus, { a: sa }); vaText('seconds', 910, 408, 30, VA.minus, { align: 'right', a: sa }); vaBar(170, 422, 740, 22, 0.06 * EZ.o3(clamp((TT - tSec) / 0.3)), VA.minus, sa); }
+  });
+  cap('unplug, and wait two minutes', 400, tU, VA.cream, 52, { a: a * fadeOut(VL('end').t0, 0.3), italic: true });
+  const wa = fadeIn(tW, 0.3) * a * fadeOut(VL('end').t0 + 0.4, 0.3);
+  if (wa > 0) OV(() => vaBar(300, 450, 480, 18, EZ.io(clamp((TT - tW) / (VL('tip').t1 + 0.6 - tW))), VA.amber, wa));
+}
+function beatEnd() {
+  if (TT < VL('end').t0 - 0.2) return;
+  OV(() => {
+    const t1 = VW('end', 'superstition') - 0.3, t2 = VW('end', 'two') - 0.3;
+    vaText("It's not superstition.", CXT, 300, 60, VA.cream, { align: 'center', serif: true, a: fadeIn(t1, 0.3), frac: vaType(t1, "It's not superstition.", 24), glow: 8 });
+    vaText("It's two minutes of cooling.", CXT, 384, 56, VA.amber, { align: 'center', serif: true, italic: true, a: fadeIn(t2, 0.3), frac: vaType(t2, "It's two minutes of cooling.", 26), glow: 16 });
+    const na = fadeIn(VL('end').t1 + 0.2, 0.5);
+    if (na > 0) {
+      ctx.save(); ctx.font = `700 46px ${VMONO}`; const wB = ctx.measureText('Bit').width, wV = ctx.measureText('volts').width; ctx.restore();
+      const x0 = CXT - (wB + wV) / 2;
+      vaText('Bit', x0, 1475, 46, VA.minus, { weight: 700, a: na, glow: 12 }); vaText('volts', x0 + wB, 1475, 46, VA.plus, { weight: 700, a: na, glow: 12 });
+    }
+  });
+}
+
+// =====================================================================
+//  the stage
+// =====================================================================
+function sceneStage() {
+  const c = camAtT(); CAMZ = c.z;
+  const warm = TT >= HIT ? flashK(HIT, 1.2) * 0.7 : 0;
+  vaBg(warm);
+  vaGridBg(c);
+  gridPulses(c);
+  vaSpecks(40, 0.3);
+  setCam(c);
+  stageA(); stageB(); stageC(); beatTitle(); beatEnd();
+}
+// no bridges: one continuous stage; the later small stages are cross-faded inside the scene
+const ERA_BG = ['#04031a'];
+const BRIDGES = [];
+
+// =====================================================================
+//  kit/morph.js — the renderer for pieces built from ERAS (scenes) joined by SHAPE MORPHS.
+//
+//  At each bridge time tc:
+//    shrink [tc-d, tc-m]      the old era is seen through a window shaped like the bridge object (STYLE.window),
+//                             shrinking onto the object while the backdrop fades to blank paper
+//    morph  [tc-m, tc+m]      on blank paper, the object's outline blends into its counterpart's
+//                             (both resampled by angle around their centroids; colour lerped). Hero-to-hero
+//                             bridges draw the hero itself with blended position, size and ray count.
+//    grow   [tc+m, tc+d]      the new era opens out of a window shaped like the counterpart
+//    d = the bridge's half-length (default 0.6s, so a bridge costs 1.2s), m = the morph's half (default 0.2s, or d/3 when d is set).
+//    Short pieces: { tc, d: 0.4 } (0.8s) or fewer bridges — see craft.md -> Transitions.
+//  Era boundaries WITHOUT a bridge are hard cuts (keep at most one: the slam).
+//
+//  The piece defines (in its head / src):
+//    ERA_LIST = [[t0, t1, () => drawScene()], ...]      scenes draw in world coords, call yearTag()/capStrip()
+//    ERA_BG   = ['#hex', ...]                          each era's dominant colour (for the fade to paper)
+//    BRIDGES  = [{ tc, A: () => shape, B: () => shape, d?, m? }]   shape = { P: points, c: '#hex' } or SP(x, y, r, rays)
+//    function pieceCam(era, t) { return null | CAM }   optional; use push() / bump() below
+//  Shapes are in each era's world coords; the bridge object must be in frame at tc (pull push-ins back first).
+//  The look comes from the style kit's STYLE hooks (paper, backdrop, window, blob, hero, post, ones):
+//  this file draws nothing itself, so the same piece structure works in any style.
+// =====================================================================
+// ---- cameras: CAM = { z, tx, ty }; camOf({ z, p, to }) puts world point p on screen point to
+const CAM0 = { z: 1, tx: 0, ty: 0 };
+const camOf = (c) => ({ z: c.z, tx: c.to[0] - c.z * c.p[0], ty: c.to[1] - c.z * c.p[1] });
+const camMix = (a, b, u) => ({ z: lerp(a.z, b.z, u), tx: lerp(a.tx, b.tx, u), ty: lerp(a.ty, b.ty, u) });
+// an eased push-in over [a, b] to cam, optionally pulled back over [oa, ob]
+function push(t, a, b, cam, oa, ob) { let u = EZ.io(seg(t, a, b)); if (oa != null) u *= 1 - EZ.io(seg(t, oa, ob)); return u > 0 ? camMix(CAM0, camOf(cam), u) : null; }
+// a zoom bump on every beat from t0, centred on point p (the hero keeps its screen spot)
+function bump(t, t0, p, amt = 0.3, every = 0.5) { return camOf({ z: 1 + amt * Math.exp(-mod(t - t0, every) * 7), p, to: p }); }
+function camAt(era, t) { return (typeof pieceCam === 'function' && pieceCam(era, t)) || CAM0; }
+const camPts = (P, c) => P.map(([x, y]) => [c.z * x + c.tx, c.z * y + c.ty]);
+// ---- bridge shapes
+function starPts(x, y, r, n, r0 = -Math.PI / 2, m = 96) {
+  const P = []; for (let i = 0; i < m; i++) { const a = i / m * TAU, k = 0.42 + 0.58 * (0.5 + 0.5 * Math.cos(n * (a - r0))) ** 3; P.push([x + Math.cos(a) * r * k, y + Math.sin(a) * r * k]); }
+  return P;
+}
+const SP = (x, y, r, n) => ({ spark: [x, y, r, n] });
+const shapeOf = (s) => (s.spark ? { P: (STYLE.heroPts || starPts)(...s.spark), c: STYLE.heroColor, spark: s.spark } : s);
+function byAngle(P, m = 96) {   // resample a closed outline to m points by angle around its centroid
+  const c = P.reduce((a, p) => [a[0] + p[0] / P.length, a[1] + p[1] / P.length], [0, 0]), Q = resample(P, true, 4), out = [];
+  for (let i = 0; i < m; i++) {
+    const a = -Math.PI + i / m * TAU; let best = null, bd = 1e9;
+    for (const q of Q) { let d = Math.atan2(q[1] - c[1], q[0] - c[0]) - a; d = Math.abs(Math.atan2(Math.sin(d), Math.cos(d))); const r = Math.hypot(q[0] - c[0], q[1] - c[1]); if (d < bd - 1e-4 || (Math.abs(d - bd) < 1e-4 && r > best[2])) { bd = d; best = [q[0], q[1], r]; } }
+    out.push([best[0], best[1]]);
+  }
+  return { P: out, c };
+}
+const mixHex = (a, b, u) => { const p = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16)); const x = p(a), y = p(b); return `rgb(${x.map((v, i) => Math.round(lerp(v, y[i], u))).join(',')})`; };
+function maskK(P) {   // how far the window must scale about its centroid to cover the frame
+  const c = P.reduce((a, p) => [a[0] + p[0] / P.length, a[1] + p[1] / P.length], [0, 0]);
+  const rmin = Math.max(8, Math.min(...byAngle(P, 48).P.map((p) => Math.hypot(p[0] - c[0], p[1] - c[1]))));
+  const far = Math.max(...[[0, 0], [W, 0], [0, H], [W, H]].map((q) => Math.hypot(q[0] - c[0], q[1] - c[1])));
+  return { c, kmax: far / rmin * 1.1 };
+}
+const scaled = (P, c, k) => P.map(([x, y]) => [c[0] + (x - c[0]) * k, c[1] + (y - c[1]) * k]);
+// ---- layers and windows
+const LAYER = [];
+function layer(i) { if (!LAYER[i]) { const c = document.createElement('canvas'); c.width = W; c.height = H; LAYER[i] = c; } return LAYER[i]; }
+function renderEra(e, target) {   // draws era e into target; returns its overlay queue (year tag, caption)
+  const saved = ctx; ctx = target.getContext('2d');
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ctx.filter = 'none'; ctx.setLineDash([]);
+  ctx.fillStyle = STYLE.paper; ctx.fillRect(0, 0, W, H);   // a clean sheet every frame: nothing carries over between frames
+  const cam = camAt(e, TT); ctx.setTransform(cam.z, 0, 0, cam.z, cam.tx, cam.ty);
+  DEFER = []; ERA_LIST[e][2](); const q = DEFER; DEFER = null;
+  ctx.restore(); ctx = saved;
+  return q;
+}
+function flush(q, e) { const keep = E0; E0 = ERA_LIST[e][0]; ctx.setTransform(1, 0, 0, 1, 0, 0); q.forEach((f) => f()); E0 = keep; }
+function shotAtFrame(fr) {
+  for (const s of TIMELINE.shots) if (fr >= Math.round(s.t0 * FPS) && fr < Math.round(s.t1 * FPS)) return s;
+  return TIMELINE.shots[TIMELINE.shots.length - 1];
+}
+const eraAt = (t) => ERA_LIST.findIndex(([a, b]) => t >= a - 1e-6 && t < b - 1e-6);
+// renderFrame(t, canvas, sub): sub = true draws the exact time t between frames (motion blur sub-frames, styles on 1s)
+function renderFrame(t, canvas, sub) {
+  const cv = canvas || document.getElementById('c');
+  ctx = cv.getContext('2d');
+  F = ((Math.floor(sub ? t * FPS + 1e-6 : Math.round(t * FPS)) % NFRAMES) + NFRAMES) % NFRAMES;
+  B = Math.floor(F / 2);
+  TT = (STYLE.ones ? (sub ? F + (t * FPS - Math.floor(t * FPS + 1e-6)) : F) : B * 2) / FPS;
+  // the era is picked by the real frame, so a cut on an odd frame (a 16th at 24fps) lands on that frame;
+  // on its first frame the new era is drawn at its own start time (motion stays on 2s inside it)
+  const s = shotAtFrame(F), e = Math.max(0, eraAt(F / FPS));
+  E0 = ERA_LIST[e][0];
+  if (TT < E0 - 1e-6) TT = E0;
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over'; ctx.setLineDash([]); ctx.filter = 'none';
+  SPARK_AT = null;
+  const bd = (r) => r.d ?? 0.6, bm = (r) => r.m ?? (r.d != null ? r.d / 3 : 0.2);
+  const tr = BRIDGES.find((r) => TT >= r.tc - bd(r) - 1e-6 && TT < r.tc + bd(r) - 1e-6);
+  if (!tr) {
+    const q = renderEra(e, layer(0)); ctx.drawImage(layer(0), 0, 0); flush(q, e);
+  } else {
+    const ea = eraAt(tr.tc - 0.01), eb = eraAt(tr.tc + 0.01);
+    const sa = shapeOf(tr.A()), sb = shapeOf(tr.B());
+    const PA = camPts(sa.P, camAt(ea, TT)), PB = camPts(sb.P, camAt(eb, TT));
+    const D = bd(tr), M = bm(tr);
+    if (TT < tr.tc - M) {
+      const u = EZ.i2(seg(TT, tr.tc - D, tr.tc - M)), { c, kmax } = maskK(PA), k = Math.exp(lerp(Math.log(kmax), 0, u));
+      STYLE.backdrop(mixHex(ERA_BG[ea], STYLE.paper, 0.5 + u * 0.5), { eraA: ea, eraB: eb, u, phase: 'shrink' });
+      const q = renderEra(ea, layer(0));
+      STYLE.window(scaled(PA, c, k), 'mA' + tr.tc, layer(0), { c: sa.c, u, phase: 'shrink', eraA: ea, eraB: eb });
+      flush(q, ea);
+    } else if (TT < tr.tc + M) {
+      const u = EZ.io(seg(TT, tr.tc - M, tr.tc + M));
+      STYLE.backdrop(STYLE.paper, { eraA: ea, eraB: eb, u, phase: 'morph' });
+      if (sa.spark && sb.spark) {
+        const ca = camAt(ea, TT), cb = camAt(eb, TT), [ax, ay] = camPts([sa.spark.slice(0, 2)], ca)[0], [bx, by] = camPts([sb.spark.slice(0, 2)], cb)[0];
+        STYLE.hero(lerp(ax, bx, u), lerp(ay, by, u), lerp(sa.spark[2] * ca.z, sb.spark[2] * cb.z, u), { rays: Math.round(lerp(sa.spark[3], sb.spark[3], u)), mood: 'wow', key: 'morphspark' });
+      } else {
+        const A2 = byAngle(PA), B2 = byAngle(PB), M = A2.P.map((p, i) => [lerp(p[0], B2.P[i][0], u), lerp(p[1], B2.P[i][1], u)]);
+        STYLE.blob(M, mixHex(sa.c, sb.c, u), 'morph' + tr.tc, u, { eraA: ea, eraB: eb, phase: 'morph' });
+        if (sb.spark && u > 0.6) STYLE.hero(...camPts([sb.spark.slice(0, 2)], camAt(eb, TT))[0], sb.spark[2] * clamp((u - 0.6) / 0.4), { rays: sb.spark[3], mood: 'wow', key: 'morphspark2' });
+      }
+    } else {
+      const u = EZ.o2(seg(TT, tr.tc + M, tr.tc + D)), { c, kmax } = maskK(PB), k = Math.exp(lerp(0, Math.log(kmax), u));
+      STYLE.backdrop(mixHex(STYLE.paper, ERA_BG[eb], u * 0.5), { eraA: ea, eraB: eb, u, phase: 'grow' });
+      const q = renderEra(eb, layer(0));
+      STYLE.window(scaled(PB, c, k), 'mB' + tr.tc, layer(0), { c: sb.c, u, phase: 'grow', eraA: ea, eraB: eb });
+      flush(q, eb);
+    }
+  }
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  if (STYLE.post) STYLE.post();
+  ctx.restore();
+  return s.id;
+}
+window.renderFrame = renderFrame;
+window.anchorAt = () => (SPARK_AT ? { x: SPARK_AT[0], y: SPARK_AT[1] } : null);
+
+// =====================================================================
+//  kit/board.js — the storyboard: every beat in TIMELINE.board drawn as a 9:16 key frame with its notes.
+//  The panels ARE the piece: each one is renderFrame(t) at the beat's key time, so an approved board
+//  carries straight into the video.  TIMELINE.board = [{ t, title, sound, next }]
+//  Render: node tools/storyboard.mjs <piece dir> [out.png] [panel numbers...]
+// =====================================================================
+function drawPanel(k) { renderFrame(TIMELINE.board[k].t, ctx.canvas); }
+function renderBoard() {
+  const BD = TIMELINE.board || [], COLS = 5, PW = 360, PH = Math.round(PW * H / W), GAP = 30, NOTE = 130, HEAD = 150;
+  const rows = Math.ceil(BD.length / COLS), bc = document.createElement('canvas');
+  bc.width = GAP + COLS * (PW + GAP); bc.height = HEAD + rows * (PH + NOTE + GAP);
+  const g = bc.getContext('2d'), SANS = '"Segoe UI", Arial, sans-serif';
+  g.fillStyle = '#2a211b'; g.fillRect(0, 0, bc.width, bc.height);
+  g.fillStyle = '#efe5cf'; g.font = `400 60px ${HAND}`; g.fillText(`${document.title}: storyboard`, GAP, 80);
+  g.font = `600 22px ${SANS}`; g.fillStyle = '#d9c9a8';
+  g.fillText(`${TIMELINE.duration}s · ${W}×${H} · ${TIMELINE.bpm} BPM · ${BD.length} beats. Thumbs up or down by panel number.`, GAP, 122);
+  const wrap = (str, x, y, maxW, lh) => { let line = ''; for (const w of str.split(' ')) { const t = line ? line + ' ' + w : w; if (g.measureText(t).width > maxW && line) { g.fillText(line, x, y); y += lh; line = w; } else line = t; } if (line) g.fillText(line, x, y); return y + lh; };
+  const pc = document.createElement('canvas'); pc.width = W; pc.height = H;
+  BD.forEach((b, k) => {
+    renderFrame(b.t, pc);
+    const x = GAP + (k % COLS) * (PW + GAP), y = HEAD + Math.floor(k / COLS) * (PH + NOTE + GAP);
+    g.drawImage(pc, x, y, PW, PH);
+    g.fillStyle = '#f0b27c'; g.font = `700 26px ${SANS}`; g.fillText(`${k + 1}`, x, y + PH + 32);
+    g.fillStyle = '#efe5cf'; g.font = `600 20px ${SANS}`;
+    let ttl = `${b.t.toFixed(1)}s · ${b.title || ''}`; while (ttl.length > 4 && g.measureText(ttl).width > PW - 44) ttl = ttl.slice(0, -2) + '…';   // fits the panel
+    g.fillText(ttl, x + 40, y + PH + 30);
+    g.font = `400 18px ${SANS}`; g.fillStyle = '#cdbd9c';
+    const yy = b.sound ? wrap('sound: ' + b.sound, x, y + PH + 58, PW, 22) : y + PH + 58;
+    if (b.next) { g.fillStyle = '#a8977a'; wrap('→ ' + b.next, x, yy + 2, PW, 22); }
+  });
+  return bc;
+}
+window.renderBoard = renderBoard; window.drawPanel = drawPanel;
+// =====================================================================
+//  kit/score-head.js — live preview (click to hear), noise/impulse/WAV helpers, and the synth.
+//  buildScore() opens here; the piece's score body follows (src/score.js), then kit/score-tail.js closes it.
+//  Helpers inside buildScore: pluck, noiseHit, sub, sweep, riser, chime, bass, blip, pad, drone, out, osc, env.
+//  Set `to = 'm'` (music bus) or `to = 's'` (sfx bus) before calling them. Notes: nz('D4').
+// =====================================================================
+// live preview: rAF on the 24fps grid; click to hear the score (?t=1.5 freezes a frame)
+const QS = new URLSearchParams(location.search);
+const LIVE = { audio: null, t0: 0, start: performance.now() };
+if (!QS.has('export')) {
+  const cv = document.getElementById('c');
+  if (QS.has('t')) renderFrame(parseFloat(QS.get('t')));
+  else {
+    const tick = () => {
+      const sec = LIVE.audio ? LIVE.audio.currentTime - LIVE.t0 : (performance.now() - LIVE.start) / 1000;
+      const t = ((sec % LOOP_T) + LOOP_T) % LOOP_T;
+      renderFrame(Math.floor(t * FPS) / FPS);
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+  cv.addEventListener('click', async () => {
+    if (LIVE.audio || typeof buildScore !== 'function') return;
+    const ac = new AudioContext(), score = await buildScore(ac.sampleRate);
+    const buf = ac.createBuffer(2, score.left.length, score.sampleRate);
+    buf.copyToChannel(score.left, 0); buf.copyToChannel(score.right, 1);
+    const src = ac.createBufferSource(); src.buffer = buf; src.loop = true; src.connect(ac.destination);
+    LIVE.t0 = ac.currentTime + 0.05; src.start(LIVE.t0); LIVE.audio = ac;
+  });
+}
+
+const HZ = {
+  A1: 55.0, D2: 73.42, F2: 87.31, A2: 110.0, D3: 146.83, F3: 174.61, A3: 220.0, C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23,
+  Fs4: 369.99, A4: 440.0, B4: 493.88, C5: 523.25, D5: 587.33, E5: 659.25, Fs5: 739.99, A5: 880.0, D6: 1174.66, A6: 1760.0,
+};
+function makeNoise(ac, sec) {
+  const b = ac.createBuffer(1, Math.floor(sec * ac.sampleRate), ac.sampleRate), d = b.getChannelData(0), R = RNG('noise');
+  for (let i = 0; i < d.length; i++) d[i] = R.f() * 2 - 1;
+  return b;
+}
+function makeImpulse(ac, sec, decay) {
+  const n = Math.floor(sec * ac.sampleRate), b = ac.createBuffer(2, n, ac.sampleRate);
+  for (let c = 0; c < 2; c++) { const d = b.getChannelData(c), R = RNG('ir', c); for (let i = 0; i < n; i++) d[i] = (R.f() * 2 - 1) * Math.pow(1 - i / n, decay); }
+  return b;
+}
+function encodeWav(left, right, sr) {
+  const n = left.length, buf = new ArrayBuffer(44 + n * 4), v = new DataView(buf);
+  const ws = (o, s) => { for (let i = 0; i < s.length; i++) v.setUint8(o + i, s.charCodeAt(i)); };
+  ws(0, 'RIFF'); v.setUint32(4, 36 + n * 4, true); ws(8, 'WAVE'); ws(12, 'fmt ');
+  v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 2, true); v.setUint32(24, sr, true);
+  v.setUint32(28, sr * 4, true); v.setUint16(32, 4, true); v.setUint16(34, 16, true);
+  ws(36, 'da' + 'ta'); v.setUint32(40, n * 4, true);
+  let o = 44;
+  for (let i = 0; i < n; i++) { v.setInt16(o, Math.round(clamp(left[i], -1, 1) * 32767), true); v.setInt16(o + 2, Math.round(clamp(right[i], -1, 1) * 32767), true); o += 4; }
+  return new Uint8Array(buf);
+}
+
+
+const MIDI = (m) => 440 * 2 ** ((m - 69) / 12);
+const NOTE = { D2: 38, A2: 45, D3: 50, E3: 52, Fs3: 54, A3: 57, D4: 62, E4: 64, Fs4: 66, G4: 67, A4: 69, B4: 71, Cs5: 73, D5: 74, E5: 76, Fs5: 78, A5: 81, B5: 83, D6: 86, E6: 88, Fs6: 90, A6: 93 };
+// any note name: 'D4', 'Fs4' / 'F#4' (sharp), 'Bb3' (flat); the table above is the fast path
+function noteNum(n) {
+  if (NOTE[n] != null) return NOTE[n];
+  const m = /^([A-G])(s|#|b)?(-?\d)$/.exec(n); if (!m) throw new Error(`unknown note "${n}"`);
+  return 12 * (Number(m[3]) + 1) + { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 }[m[1]] + (m[2] === 'b' ? -1 : m[2] ? 1 : 0);
+}
+const nz = (n) => MIDI(noteNum(n));
+async function buildScore(sampleRate = 48000, part = 'mix', normIn = null) {
+  const TAIL = 3.0, len = Math.ceil((LOOP_T + TAIL) * sampleRate);
+  const ac = new OfflineAudioContext(2, len, sampleRate);
+  const master = ac.createGain(); master.gain.value = 0.8;
+  const comp = ac.createDynamicsCompressor();
+  comp.threshold.value = -16; comp.knee.value = 10; comp.ratio.value = 3.5; comp.attack.value = 0.004; comp.release.value = 0.2;
+  master.connect(comp); comp.connect(ac.destination);
+  const musicBus = ac.createGain(), sfxBus = ac.createGain();
+  musicBus.gain.value = part === 'sfx' ? 0 : 1; sfxBus.gain.value = part === 'music' ? 0 : 1;
+  musicBus.connect(master); sfxBus.connect(master);
+  // ducking + presence dip, driven by the narration (lines closer than 0.29s are merged)
+  const duck = ac.createGain(), dip = ac.createBiquadFilter();
+  dip.type = 'peaking'; dip.frequency.value = 2500; dip.Q.value = 1;
+  duck.connect(dip); dip.connect(musicBus);
+  const lines = [];
+  for (const n of TIMELINE.narration) { const L = lines[lines.length - 1]; if (L && n.t0 - L.t1 < 0.29) L.t1 = n.t1; else lines.push({ t0: n.t0, t1: n.t1 }); }
+  const DUCK = 10 ** (-3 / 20);
+  duck.gain.setValueAtTime(1, 0); dip.gain.setValueAtTime(0, 0);
+  for (const L of lines) {
+    duck.gain.setValueAtTime(1, Math.max(0, L.t0 - 0.1)); duck.gain.linearRampToValueAtTime(DUCK, L.t0);
+    duck.gain.setValueAtTime(DUCK, L.t1 + 0.03); duck.gain.linearRampToValueAtTime(1, L.t1 + 0.18);
+    dip.gain.setValueAtTime(0, Math.max(0, L.t0 - 0.1)); dip.gain.linearRampToValueAtTime(-6, L.t0);
+    dip.gain.setValueAtTime(-6, L.t1 + 0.03); dip.gain.linearRampToValueAtTime(0, L.t1 + 0.18);
+  }
+  const mkVerb = (dest, sec = 1.6, decay = 2.8, level = 0.3) => { const v = ac.createConvolver(); v.buffer = makeImpulse(ac, sec, decay); const g = ac.createGain(); g.gain.value = level; v.connect(g); g.connect(dest); return v; };
+  const verbs = { m: mkVerb(duck), s: mkVerb(sfxBus) }, shortVerb = verbs.m, longVerb = mkVerb(duck, 3.6, 1.6, 0.55);
+  const noise = makeNoise(ac, 3.0);
+  let to = 'm';   // which bus the helpers below write to
+
+  // the gain is silent until the envelope starts (a GainNode defaults to 1: a note whose oscillator starts first would click)
+  const env = (g, t, a, peak, d) => { g.gain.value = 0.0001; g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(Math.max(0.0002, peak), t + a); g.gain.exponentialRampToValueAtTime(0.0001, t + a + d); };
+  const out = (node, pan = 0, send = 0) => {
+    const p = ac.createStereoPanner(); p.pan.value = clamp(pan, -1, 1); node.connect(p); p.connect(to === 'm' ? duck : sfxBus);
+    if (send) { const s = ac.createGain(); s.gain.value = send; node.connect(s); s.connect(verbs[to]); }
+  };
+  const osc = (type, f, t, stop) => { const o = ac.createOscillator(); o.type = type; o.frequency.setValueAtTime(f, t); o.start(t); o.stop(stop); return o; };
+  function pluck(t, f, vel, pan = 0, dur = 0.32, bright = 3200, send = 0.25) {
+    const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 2.5;
+    lp.frequency.setValueAtTime(bright, t); lp.frequency.exponentialRampToValueAtTime(380, t + dur);
+    const g = ac.createGain(); env(g, t, 0.003, vel, dur);
+    const g2 = ac.createGain(); g2.gain.value = 0.3;
+    osc('triangle', f, t, t + dur + 0.05).connect(lp);
+    osc('sine', f * 2.004, t, t + dur + 0.05).connect(g2); g2.connect(lp);
+    lp.connect(g); out(g, pan, send);
+  }
+  function noiseHit(t, dur, type, freq, q, vel, pan = 0, send = 0, sweepTo = 0) {
+    const src = ac.createBufferSource(); src.buffer = noise;
+    const f = ac.createBiquadFilter(); f.type = type; f.Q.value = q; f.frequency.setValueAtTime(freq, t);
+    if (sweepTo) f.frequency.exponentialRampToValueAtTime(sweepTo, t + dur);
+    const g = ac.createGain(); env(g, t, Math.min(0.004, dur * 0.3), vel, dur);
+    src.connect(f); f.connect(g); out(g, pan, send);
+    src.start(t, (t * 7.31) % 2.0); src.stop(t + dur + 0.05);
+  }
+  function sub(t, vel) {
+    const o = osc('sine', 120, t, t + 0.8); o.frequency.exponentialRampToValueAtTime(36, t + 0.3);
+    const g = ac.createGain(); env(g, t, 0.004, vel, 0.6); o.connect(g); out(g);
+    noiseHit(t, 0.07, 'lowpass', 1100, 0.7, vel * 0.45);
+  }
+  function sweep(t0, t1, vel, f0, f1, pan = 0) {
+    const src = ac.createBufferSource(); src.buffer = noise; src.loop = true;
+    const f = ac.createBiquadFilter(); f.type = 'bandpass'; f.Q.value = 1.1;
+    f.frequency.setValueAtTime(f0, t0); f.frequency.exponentialRampToValueAtTime(f1, t1);
+    const g = ac.createGain(); g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(vel, t1 - 0.03); g.gain.linearRampToValueAtTime(0.0001, t1 + 0.005);
+    src.connect(f); f.connect(g); out(g, pan, 0.2); src.start(t0, (t0 * 3.1) % 1.0); src.stop(t1 + 0.05);
+  }
+  function riser(t0, t1, vel) {
+    const o = osc('sawtooth', 110, t0, t1 + 0.02); o.frequency.exponentialRampToValueAtTime(1320, t1);
+    const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 6; lp.frequency.setValueAtTime(300, t0); lp.frequency.exponentialRampToValueAtTime(5000, t1);
+    const g = ac.createGain(); g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(vel, t1 - 0.01); g.gain.linearRampToValueAtTime(0.0001, t1 + 0.01);
+    o.connect(lp); lp.connect(g); out(g, 0, 0.3);
+    sweep(t0, t1, vel * 0.9, 400, 7000);
+  }
+  function chime(t, freqs, vel, pan = 0) {
+    freqs.forEach((f, i) => { const g = ac.createGain(), ti = t + i * 0.012; env(g, ti, 0.002, vel / (1 + i * 0.4), 1.3); osc('sine', f, ti, ti + 1.5).connect(g); out(g, pan + (i - 1) * 0.25, 0.6); });
+  }
+  function bass(t, f, vel) { const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 320; const g = ac.createGain(); env(g, t, 0.006, vel, 0.28); osc('triangle', f, t, t + 0.35).connect(lp); lp.connect(g); out(g); }
+  function blip(t, f0, f1, dur, vel, pan = 0) { const o = osc('sine', f0, t, t + dur + 0.05); o.frequency.exponentialRampToValueAtTime(f1, t + dur); const g = ac.createGain(); env(g, t, 0.002, vel, dur); o.connect(g); out(g, pan, 0.2); }
+
+  // ---- v2 instruments built from the helpers above
+  function pad(t0, t1, notes, peak, o = {}) {
+    const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = o.cut ?? 1200; lp.Q.value = 0.7;
+    const g = ac.createGain(), hold = o.swellTo ?? peak;
+    g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(peak, t0 + (o.att ?? 0.4));
+    if (o.swellTo) g.gain.linearRampToValueAtTime(o.swellTo, o.swellAt);
+    g.gain.setValueAtTime(hold, t1 - (o.rel ?? 0.3)); g.gain.exponentialRampToValueAtTime(0.0001, t1);
+    notes.forEach((n, i) => { for (const det of [-7, 7]) { const oo = osc(o.type ?? 'sawtooth', nz(n), t0, t1 + 0.05); oo.detune.value = det + i; oo.connect(lp); } });
+    lp.connect(g); out(g, o.pan ?? 0, o.send ?? 0.4);
+  }
+  function drone(t0, t1, f, peak, o = {}) {
+    const g = ac.createGain(); g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(peak, t0 + (o.att ?? 0.5));
+    g.gain.setValueAtTime(peak, t1 - (o.rel ?? 0.4)); g.gain.exponentialRampToValueAtTime(0.0001, t1);
+    osc('sine', f, t0, t1 + 0.05).connect(g); out(g, 0, 0);
+  }
+  const claudeMotif = (t, notes, vel) => notes.forEach(([n, dt], i) => pluck(t + dt, nz(n), vel, -0.15 + i * 0.1, 0.6, 1300, 0.35));
+  const childMotif = (t, notes, vel, bright = 5200, send = 0.3) => notes.forEach(([n, dt], i) => pluck(t + dt, nz(n), vel, 0.2 - i * 0.1, 0.32, bright, send));
+  // SCORE BODY — Why do appliances break right when the power comes back? Music = the user's track (piece.json "music");
+  // this body is the sound effects only (sfx bus), loud and present: switches, heat, electrons and photons.
+  to = 's';
+  // ---- instruments
+  const rumble = (t, dur, vel, pan = 0, cut = 180) => {   // a long low roll of thunder: looped noise, lowpassed, slow swells
+    const src = ac.createBufferSource(); src.buffer = noise; src.loop = true;
+    const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 0.9; lp.frequency.setValueAtTime(cut * 2.5, t); lp.frequency.exponentialRampToValueAtTime(cut, t + dur);
+    const g = ac.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vel, t + 0.08);
+    const R = RNG('rum', t);
+    for (let k = 1; k <= 6; k++) g.gain.linearRampToValueAtTime(vel * R.r(0.35, 1), t + dur * k / 7);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    src.connect(lp); lp.connect(g); out(g, pan, 0.5); src.start(t, (t * 1.7) % 2); src.stop(t + dur + 0.05);
+  };
+  const crackle = (t, dur, vel, pan = 0, key = 'c') => {   // dry electric crackle: a burst of tiny high clicks
+    const R = RNG('crk', key, t), n = Math.max(3, Math.round(dur * 60));
+    for (let i = 0; i < n; i++) noiseHit(t + R.r(0, dur), 0.012, 'highpass', 2500 + R.r(0, 4000), 0.8, vel * R.r(0.4, 1), pan + R.r(-0.2, 0.2), 0.05);
+  };
+  const zap = (t, vel, pan = 0, f0 = 2600, f1 = 300) => {   // an electric zap: a fast falling buzz + crackle
+    const o = osc('sawtooth', f0, t, t + 0.2); o.frequency.exponentialRampToValueAtTime(f1, t + 0.16);
+    const bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1800; bp.Q.value = 0.8;
+    const g = ac.createGain(); env(g, t, 0.002, vel * 0.5, 0.16); o.connect(bp); bp.connect(g); out(g, pan, 0.15);
+    crackle(t, 0.12, vel * 0.7, pan, 'z');
+  };
+  const crack = (t, vel, pan = 0) => {   // the strike itself: a sharp broadband crack, a sub punch, a roll
+    noiseHit(t, 0.05, 'highpass', 1200, 0.6, vel, pan, 0.4);
+    noiseHit(t + 0.01, 0.22, 'bandpass', 2400, 0.7, vel * 0.7, pan, 0.5, 600);
+    crackle(t, 0.2, vel * 0.8, pan, 'k');
+    sub(t, vel * 0.9);
+  };
+  const tick = (t, vel = 0.12, pan = 0, f = 3000) => { noiseHit(t, 0.015, 'bandpass', f, 4, vel, pan); blip(t, f * 0.7, f * 0.5, 0.03, vel * 0.25, pan); };
+  const ice = (t, vel, pan = 0) => { blip(t, 3400, 2600, 0.05, vel * 0.5, pan); noiseHit(t, 0.03, 'highpass', 5000, 1, vel * 0.6, pan, 0.2); };
+  const pop = (t, vel, pan = 0, f = 900) => blip(t, f, f * 1.6, 0.06, vel, pan);
+  const typing = (t0, n, cps, vel = 0.05, pan = 0) => { for (let i = 0; i < n; i++) tick(t0 + i / cps, vel, pan, 2200 + (i % 3) * 400); };
+  const hum = (t0, t1, vel) => {   // a mains-like buzz: 100 Hz saw, bandpassed, tremolo
+    const o = osc('sawtooth', 100, t0, t1 + 0.05), bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 400; bp.Q.value = 1.5;
+    const g = ac.createGain(); g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(vel, t0 + 0.4); g.gain.setValueAtTime(vel, t1 - 0.4); g.gain.exponentialRampToValueAtTime(0.0001, t1);
+    o.connect(bp); bp.connect(g); out(g, 0, 0.1);
+  };
+  const whoosh = (t, d, vel, f0 = 300, f1 = 3000, pan = 0) => sweep(t - d, t, vel, f0, f1, pan);
+
+  // (no rain bed: a constant hiss pumps audibly in every pause of the voice)
+
+
+  const drop = (t, vel, f = 900, pan = 0.2) => blip(t, f * 1.6, f * 0.5, 0.18, vel, pan);
+  const pew = (t, vel, f = 1800, pan = 0.4) => { blip(t, f * 0.6, f * 1.8, 0.22, vel, pan); noiseHit(t, 0.08, 'highpass', 5000, 0.8, vel * 0.3, pan, 0.3); };
+
+  const sub2 = (t, v) => sub(t, v * 0.4);   // every other low hit sits well under the payoff
+  const click = (t, vel, pan = 0) => { tick(t, vel, pan, 1600); noiseHit(t, 0.04, 'bandpass', 800, 2, vel * 0.7, pan); };
+
+  const sizzle = (t, dur, vel, pan = 0) => { crackle(t, dur, vel, pan, 'sz' + t); noiseHit(t, Math.min(1.2, dur), 'bandpass', 3500, 0.8, vel * 1.4, pan, 0.2); };
+  const buzz = (t0, t1, vel) => hum(t0, t1, vel);
+
+  const thunk = (t, vel, pan = 0) => { noiseHit(t, 0.12, 'lowpass', 500, 1, vel, pan, 0.3); sub2(t, vel * 1.5); };   // a breaker / power cut
+  // ---- title, one TV
+  pop(VL('title').t0, 0.08, 0, 420);
+  typing(VL('title').t0, 23, 26, 0.03, -0.2); typing(VW('title', 'right') - 0.05, 20, 24, 0.03, 0); typing(VW('title', 'comes') - 0.05, 11, 20, 0.03, 0.2);
+  hum(0.3, VW('blackout', 'blackout') - 0.1, 0.03);
+  { const t = VW('blackout', 'blackout') - 0.1; thunk(t, 0.25, 0); sweep(t, t + 0.6, 0.05, 2000, 200, 0); }
+  { const t = VW('instant', 'returns') - 0.1; crack(t, 0.45, 0); hum(t + 0.05, SUB('all'), 0.03); noiseHit(t + 0.1, 0.25, 'bandpass', 2500, 1.5, 0.08, 0.2); }
+  // ---- the street: turns, the blackout, all at once, five times the load
+  { const tN = VW('turns', 'normally') - 0.1, tOff = VW('turns', 'blackout') - 0.1; for (let t = tN; t < tOff; t += 1 / 1.6) click(t, 0.12, Math.sin(t * 5) * 0.6); thunk(tOff, 0.2, 0); }
+  { const t = VW('turns', 'together') - 0.2; for (let i = 0; i < 7; i++) click(t + i * 0.02, 0.14, -0.6 + i * 0.2); crack(t + 0.15, 0.28, 0); hum(t + 0.2, SUB('retry'), 0.05); riser(t, VW('five', 'five') - 0.1, 0.035); }
+  { const t = VW('five', 'five') - 0.1; sub2(t, 0.35); chime(t, [880, 1174.66], 0.05, 0); }
+  // ---- the recloser: four snaps, seconds apart
+  [VW('retry', 'switch') - 0.1, VW('retry', 'four') - 0.4, VW('retry', 'four') + 0.2, VW('retry', 'apart')].forEach((t, i) => { thunk(t, 0.2, -0.3); crack(t + 0.35, 0.2 + i * 0.02, -0.2); });
+  // ---- inside the plug
+  whoosh(SUB('cap') + 0.6, 0.6, 0.1, 3000, 400, 0);
+  pop(VW('cap', 'capacitor', 1) - 0.2, 0.08, 0, 600);
+  { const t = VW('cap', 'short') - 0.2; zap(t, 0.25, 0, 3200, 300); sweep(t, t + 0.5, 0.07, 400, 4000, 0); }
+  { const t = VW('ntc', 'ntc') - 0.2; pop(t, 0.1, -0.3, 500); chime(t, [1046.5, 1568], 0.05, -0.3); }
+  { const t = VW('cold', 'ten') - 0.2; for (let i = 0; i < 3; i++) tick(t + i * 0.08, 0.06, -0.3, 2400); hum(t + 0.3, VL('seconds').t1, 0.025); }
+  { const t = VW('hot', 'heats') - 0.1; sizzle(t, 2.2, 0.06, -0.3); riser(t, t + 1.4, 0.03); }
+  { const t = VW('hot', 'tenths') - 0.2; for (let i = 0; i < 6; i++) blip(t + i * 0.08, 1400 - i * 150, 1300 - i * 150, 0.06, 0.04, -0.3); }
+  pop(VW('must', 'drop') - 0.2, 0.08, 0, 500);
+  { const t = VW('cool', 'cooling') - 0.1; sweep(t, t + 1.2, 0.05, 300, 1600, 0); }
+  { const t = VW('seconds', 'seconds') - 0.3; tick(t, 0.12, 0.3, 3000); }
+  // ---- THE HIT: the power snaps back while the part is still hot (the loudest moment, after the silence)
+  sub(HIT, 1.0); sub(HIT + 0.03, 0.7); crack(HIT, 0.8, 0); noiseHit(HIT, 0.9, 'lowpass', 3200, 0.7, 0.75, 0, 0.6, 180);
+  zap(HIT + 0.05, 0.4, 0.2, 4000, 200); crackle(HIT + 0.1, 2.4, 0.1, 0, 'break');
+  rumble(HIT + 0.15, 3.6, 0.32, 0, 260);   // the street's transformers groaning
+  for (let k = 0; k < 6; k++) noiseHit(HIT + 0.3 + k * 0.45, 0.5, 'bandpass', 3000 + k * 200, 0.6, 0.1 * (1 - k / 7), (k % 2 ? 0.3 : -0.3), 0.2);   // the broken TV's static
+  // ---- the tip and the end
+  { const t = VW('tip', 'unplug') - 0.1; noiseHit(t + 0.2, 0.06, 'bandpass', 1800, 2, 0.2, 0); tick(t + 0.2, 0.2, 0, 2600); }
+  { const t = VW('tip', 'wait') - 0.1; for (let i = 0; i < 8; i++) tick(t + i * 0.45, 0.04, 0, 1800); }
+  { const t = VL('end').t0 + 0.3; click(t + 0.3, 0.3, 0); chime(t + 0.9, [1318.5, 1975.5], 0.05, 0); }
+  chime(VL('end').t1 + 0.2, [1760, 2637, 3520], 0.06, 0);   // Bitvolts
+  // =====================================================================
+  //  kit/score-tail.js — render, fold the tail over the loop point, loudness stage
+  //  (RMS-normalise to -17 dBFS, look-ahead limiter at -1 dBFS; stems share the mix gain curve)
+  // =====================================================================
+  const buf = await ac.startRendering();
+  // fold the tail over the loop point so the loop is seamless
+  const N = Math.round(LOOP_T * sampleRate), L = new Float32Array(N), Rr = new Float32Array(N);
+  const c0 = buf.getChannelData(0), c1 = buf.getChannelData(1);
+  for (let i = 0; i < N; i++) { L[i] = c0[i] + (i + N < len ? c0[i + N] : 0); Rr[i] = c1[i] + (i + N < len ? c1[i + N] : 0); }
+  // loudness for a phone (subagents-short): RMS-normalise to -17 dBFS, then a look-ahead limiter at -1 dBFS.
+  // Stems reuse the mix's gain and gain curve, so they sum back to the mix.
+  let k = normIn?.k, g = normIn?.g;
+  if (!g) {
+    let sum = 0; for (let i = 0; i < N; i++) sum += (L[i] * L[i] + Rr[i] * Rr[i]) / 2;
+    k = 10 ** (-17 / 20) / Math.sqrt(sum / N || 1e-12);
+    const ceil = 0.89; g = new Float32Array(N);
+    for (let i = 0; i < N; i++) { const p = Math.max(Math.abs(L[i]), Math.abs(Rr[i])) * k; g[i] = p > ceil ? ceil / p : 1; }
+    const att = Math.exp(-1 / (0.0015 * sampleRate)), rel = Math.exp(-1 / (0.09 * sampleRate));
+    for (let i = N - 2; i >= 0; i--) g[i] = Math.min(g[i], 1 - (1 - g[i + 1]) * att);
+    let r = 1; for (let i = 0; i < N; i++) { r = Math.min(g[i], 1 - (1 - r) * rel); g[i] = r; }
+  }
+  for (let i = 0; i < N; i++) { L[i] *= k * g[i]; Rr[i] *= k * g[i]; }
+  return { left: L, right: Rr, sampleRate, norm: { k, g } };
+}
+function wavB64(s) {
+  const bytes = encodeWav(s.left, s.right, s.sampleRate);
+  let bin = '';
+  for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+  return btoa(bin);
+}
+async function renderAudioWav() { return wavB64(await buildScore(48000, 'mix')); }
+async function renderAudioStems() {
+  const mix = await buildScore(48000, 'mix');
+  const music = await buildScore(48000, 'music', mix.norm), sfx = await buildScore(48000, 'sfx', mix.norm);
+  return { music: wavB64(music), sfx: wavB64(sfx) };
+}
+window.renderAudioWav = renderAudioWav;
+window.renderAudioStems = renderAudioStems;
+</script>
+</body>
+</html>

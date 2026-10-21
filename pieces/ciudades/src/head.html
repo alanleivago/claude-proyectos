@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ciudades sin humanos</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0d14; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  ¿QUÉ PASARÍA CON LAS CIUDADES SI TODOS LOS HUMANOS DESAPARECIERAN? — 9:16, 70s, 24fps, motion on 1s.
+//  F5 fixed place: a floating POV above an avenue that runs to a cable-stayed bridge over a river, a skyline behind. The
+//  people vanish at 4 s; the cars drift and crash; the lights go out; nature takes the city back; the bridge falls (45.2 s);
+//  the towers fall; a forest, an ice age, a million years. The time without humans speeds up the whole way.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 70.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 70, () => sceneCity()]];
+const SHOTS = [
+  ['busy',    0, 0.0,  4.0,  'the city at its busiest; a countdown'],
+  ['gone',    0, 4.0,  7.0,  'everyone vanishes; the cars crash'],
+  ['drift',   0, 7.0,  11.0, 'cars with nobody at the wheel'],
+  ['dark',    0, 11.0, 17.0, 'night: the lights go out'],
+  ['dogs',    0, 17.0, 21.0, 'dogs on the avenue'],
+  ['leaves',  0, 21.0, 26.0, 'leaves, puddles, the river rises'],
+  ['weeds',   0, 26.0, 31.0, 'weeds in the cracks'],
+  ['grass',   0, 31.0, 36.0, 'grass on the roads; deer'],
+  ['rust',    0, 36.0, 42.0, 'trees, rust, broken windows'],
+  ['bridge',  0, 42.0, 48.0, 'the metro, then the bridge falls'],
+  ['towers',  0, 48.0, 54.0, 'the towers fall'],
+  ['forest',  0, 54.0, 59.0, 'a forest; wolves'],
+  ['ice',     0, 59.0, 63.0, 'an ice age'],
+  ['million', 0, 63.0, 66.0, 'a million years; a bear'],
+  ['card',    0, 66.0, 70.0, 'card'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { vanish: 4.0, crash: 5.6, dark: 11.0, dogs: 17.0, grass: 31.0, metro: 43.0, bridge: 45.2, towers: 48.0, ice: 59.0, card: 66.0 },
+  acts: [
+    { name: '1 Ciudad',   role: 'build',   t0: 0.0,  t1: 4.0 },
+    { name: '2 Vacío',    role: 'turn',    t0: 4.0,  t1: 17.0 },
+    { name: '3 Naturaleza', role: 'journey', t0: 17.0, t1: 44.4 },
+    { name: '4 Silencio', role: 'silence', t0: 44.4, t1: 45.2 },
+    { name: '5 Puente',   role: 'gift',    t0: 45.2, t1: 48.0 },
+    { name: '6 Ruinas',   role: 'peak',    t0: 48.0, t1: 59.0 },
+    { name: '7 Eras',     role: 'journey', t0: 59.0, t1: 66.0 },
+    { name: '8 Final',    role: 'goodbye', t0: 66.0, t1: 70.0 },
+  ],
+  board: [
+    { t: 2.0,  title: '¿Qué pasaría con las ciudades si todos los humanos desaparecieran?', sound: 'ciudad, tráfico, metro', next: '0' },
+    { t: 5.8,  title: 'En un instante, 8.200 millones de personas ya no están.', sound: 'el ruido se corta; choque', next: 'autos' },
+    { t: 9.0,  title: 'Los autos siguen andando sin nadie al volante.', sound: 'alarmas de autos', next: 'noche' },
+    { t: 14.5, title: 'Sin nadie que las opere, las centrales se apagan.', sound: 'zumbido que se apaga', next: 'perros' },
+    { t: 19.0, title: 'Los perros vagan buscando comida.', sound: 'ladridos, viento', next: 'hojas' },
+    { t: 23.5, title: 'Las hojas tapan los desagües. Nadie los limpia.', sound: 'lluvia, agua', next: 'maleza' },
+    { t: 28.5, title: 'La maleza rompe el asfalto.', sound: 'pájaros', next: 'pasto' },
+    { t: 33.5, title: 'El pasto cubre las calles. Llegan los ciervos.', sound: 'pájaros, insectos', next: 'óxido' },
+    { t: 39.0, title: 'El acero se oxida y los vidrios estallan.', sound: 'crujidos, vidrios', next: 'el puente' },
+    { t: 46.0, title: 'Tras unos 300 años, cae el puente.', sound: 'EL GOLPE (45,2 s) tras 0,8 s de silencio', next: 'torres' },
+    { t: 51.0, title: 'Los rascacielos caen uno a uno.', sound: 'derrumbes lejanos', next: 'bosque' },
+    { t: 56.5, title: 'Un bosque se traga las ruinas.', sound: 'lobos, bosque', next: 'hielo' },
+    { t: 61.0, title: 'Llegan las glaciaciones y lo muelen todo.', sound: 'viento helado', next: 'millón' },
+    { t: 64.5, title: 'Tras un millón de años, casi no queda rastro de nosotros.', sound: 'bosque, pájaros', next: 'final' },
+    { t: 68.0, title: 'Las últimas señales', sound: 'cola', next: 'fin' },
+  ],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

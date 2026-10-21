@@ -1,0 +1,26 @@
+warning: The `UV_NATIVE_TLS` environment variable is deprecated and will be removed in a future release. Use `UV_SYSTEM_CERTS` instead.
+Traceback (most recent call last):
+  File "/Users/alanleiva/Documents/claude-proyectos/sound-layer/scripts/sfx.py", line 522, in <module>
+    main()
+    ~~~~^^
+  File "/Users/alanleiva/Documents/claude-proyectos/sound-layer/scripts/sfx.py", line 502, in main
+    res = openverse(args.query, args.n)
+  File "/Users/alanleiva/Documents/claude-proyectos/sound-layer/scripts/sfx.py", line 283, in openverse
+    with urllib.request.urlopen(req, timeout=60) as r:
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/alanleiva/.local/share/uv/python/cpython-3.15.0-macos-aarch64-none/lib/python3.15/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/Users/alanleiva/.local/share/uv/python/cpython-3.15.0-macos-aarch64-none/lib/python3.15/urllib/request.py", line 495, in open
+    response = meth(req, response)
+  File "/Users/alanleiva/.local/share/uv/python/cpython-3.15.0-macos-aarch64-none/lib/python3.15/urllib/request.py", line 604, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "/Users/alanleiva/.local/share/uv/python/cpython-3.15.0-macos-aarch64-none/lib/python3.15/urllib/request.py", line 533, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/alanleiva/.local/share/uv/python/cpython-3.15.0-macos-aarch64-none/lib/python3.15/urllib/request.py", line 466, in _call_chain
+    result = func(*args)
+  File "/Users/alanleiva/.local/share/uv/python/cpython-3.15.0-macos-aarch64-none/lib/python3.15/urllib/request.py", line 613, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 403: Forbidden

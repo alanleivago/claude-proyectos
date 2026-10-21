@@ -1,0 +1,81 @@
+{
+ "cues_file": "/Users/alanleiva/Documents/claude-proyectos/pieces/saturno/sound/audio/cues.json",
+ "fps": 24,
+ "duration_s": 70.0,
+ "target_lufs": -15,
+ "master_lufs": -15.07,
+ "master_true_peak_db": -2.0,
+ "master_gain_db": 1.46,
+ "events": [
+  {
+   "id": "IMPACT",
+   "sound": "audio/own/hero-boom.wav+audio/own/hero-sub.wav",
+   "files": [
+    "audio/own/hero-boom.wav",
+    "audio/own/hero-sub.wav"
+   ],
+   "weight": "hero",
+   "align": "start",
+   "cue_s": 60.18,
+   "peak_s": 60.4595,
+   "pan": 0.0,
+   "gain_db": 11.81,
+   "limited_by": "peak cap",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    60.4495,
+    60.6095
+   ],
+   "visual": "cut"
+  },
+  {
+   "id": "frost1",
+   "sound": "audio/own/glass.wav",
+   "files": [
+    "audio/own/glass.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 60.4,
+   "peak_s": 60.4,
+   "pan": 0.1,
+   "gain_db": -14.34,
+   "limited_by": "best-band target",
+   "band_hz": [
+    8000,
+    16000
+   ],
+   "win_s": [
+    60.39,
+    60.55
+   ],
+   "visual": null
+  },
+  {
+   "id": "frost2",
+   "sound": "audio/own/glass.wav",
+   "files": [
+    "audio/own/glass.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 61.05,
+   "peak_s": 61.05,
+   "pan": -0.4,
+   "gain_db": -18.34,
+   "limited_by": "best-band target",
+   "band_hz": [
+    8000,
+    16000
+   ],
+   "win_s": [
+    61.04,
+    61.2
+   ],
+   "visual": null
+  }
+ ]
+}

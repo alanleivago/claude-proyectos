@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tsunami en Nueva York</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0d14; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  ¿QUÉ PASARÍA SI UN TSUNAMI MÁS ALTO QUE UN RASCACIELOS GOLPEARA NUEVA YORK? — 9:16, 70s, 24fps, motion on 1s.
+//  F5 fixed place: a rooftop in Manhattan at sunset, looking south over downtown and the harbour. The harbour drains,
+//  a line on the horizon becomes a 524 m wall; it swallows the Verrazzano, passes the Statue (93 m), reaches the Battery,
+//  the towers fall; it hits the roof (62.8) and the camera is under water, its lens cracked. Lituya Bay, 1958.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 70.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 70, () => sceneNY()]];
+const SHOTS = [
+  ['tarde',   0, 0.0,  11.0, 'atardecer sobre Manhattan desde una azotea'],
+  ['vacia',   0, 11.0, 18.0, 'el puerto se vacía'],
+  ['retira',  0, 18.0, 24.0, 'la bahía es un campo de barro'],
+  ['linea',   0, 24.0, 31.0, 'una línea en el horizonte'],
+  ['muro',    0, 31.0, 37.0, 'es un muro'],
+  ['puente',  0, 37.0, 43.0, 'se traga el Verrazzano'],
+  ['estatua', 0, 43.0, 49.0, 'pasa la Estatua de la Libertad'],
+  ['524',     0, 49.0, 53.0, 'la ola mide 524 m'],
+  ['battery', 0, 53.0, 58.0, 'llega a Battery Park'],
+  ['torres',  0, 58.0, 62.0, 'caen las torres'],
+  ['silencio',0, 62.0, 62.8, 'silencio'],
+  ['agua',    0, 62.8, 65.5, 'bajo el agua, el lente roto'],
+  ['final',   0, 65.5, 70.0, 'bahía Lituya, 1958'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { drain: 11.0, line: 24.0, wall: 31.0, bridge: 39.0, statue: 46.0, battery: 55.5, towers: 58.0, hit: 62.8, card: 65.5 },
+  acts: [
+    { name: '1 Tarde',    role: 'build',   t0: 0.0,  t1: 11.0 },
+    { name: '2 Vacía',    role: 'journey', t0: 11.0, t1: 24.0 },
+    { name: '3 Línea',    role: 'turn',    t0: 24.0, t1: 37.0 },
+    { name: '4 Escala',   role: 'journey', t0: 37.0, t1: 53.0 },
+    { name: '5 Ciudad',   role: 'peak',    t0: 53.0, t1: 62.0 },
+    { name: '6 Silencio', role: 'silence', t0: 62.0, t1: 62.8 },
+    { name: '7 Golpe',    role: 'gift',    t0: 62.8, t1: 65.5 },
+    { name: '8 Final',    role: 'goodbye', t0: 65.5, t1: 70.0 },
+  ],
+  board: [
+    { t: 2.5,  title: '¿Qué pasaría si un tsunami más alto que un rascacielos golpeara Nueva York?', sound: 'ciudad, bocinas lejanas, viento', next: 'una tarde normal' },
+    { t: 8.0,  title: 'Una tarde cualquiera en Nueva York.', sound: 'ciudad', next: 'el puerto' },
+    { t: 15.0, title: 'Entonces el puerto empieza a vaciarse.', sound: 'succión, gaviotas', next: 'el mar se retira' },
+    { t: 21.0, title: 'El mar se retira.', sound: 'calma extraña', next: 'la línea' },
+    { t: 28.0, title: 'Aparece una línea en el horizonte.', sound: 'sirenas, un retumbo', next: 'el muro' },
+    { t: 34.0, title: 'No es una línea. Es un muro.', sound: 'rugido creciente', next: 'el puente' },
+    { t: 40.0, title: 'Se traga el puente entero.', sound: 'metal crujiendo', next: 'la estatua' },
+    { t: 46.0, title: 'La Estatua de la Libertad mide 93 metros.', sound: 'rugido', next: '524' },
+    { t: 51.0, title: 'La ola mide 524.', sound: 'rugido', next: 'Battery' },
+    { t: 55.5, title: 'Llega a Battery Park.', sound: 'gritos, alarmas', next: 'las torres' },
+    { t: 60.0, title: 'Las torres no la frenan.', sound: 'derrumbes', next: 'silencio' },
+    { t: 63.8, title: 'Nada queda en pie.', sound: 'EL GOLPE (62,8 s) tras 0,8 s de silencio; bajo el agua', next: 'final' },
+    { t: 68.0, title: 'Bahía Lituya, Alaska, 1958', sound: 'cola grave', next: 'fin' },
+  ],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tierra plana</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0d14; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  ¿QUÉ PASARÍA SI LA TIERRA FUERA PLANA? — 9:16, 70s, 24fps, motion on 1s.
+//  F5 fixed place: a floating POV from a lodge balcony over a turquoise Patagonian lake, granite spires, golden steppe.
+//  The Earth turns into a disc: the horizon goes flat and far ranges rise into view; "down" tilts toward the centre — the lake
+//  runs, everything rolls, the air drains; an interlude at the rim; then the rim curls up all around until it reaches us.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 70.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 70, () => sceneFlat()]];
+const SHOTS = [
+  ['lake',    0, 0.0,  4.0,  'the Patagonian lake at sunset'],
+  ['flat',    0, 4.0,  8.0,  'the horizon goes flat'],
+  ['disc',    0, 8.0,  11.0, 'Earth is a disc'],
+  ['ranges',  0, 11.0, 15.0, 'ranges thousands of km away'],
+  ['gone',    0, 15.0, 18.0, 'the old horizon is gone'],
+  ['tilt',    0, 18.0, 22.0, 'down starts to tilt'],
+  ['lakerun', 0, 22.0, 25.0, 'the lake runs toward the centre'],
+  ['roll',    0, 25.0, 28.0, 'everything rolls the same way'],
+  ['air',     0, 28.0, 31.0, 'even the air drains'],
+  ['steep',   0, 31.0, 34.0, 'farther out, steeper'],
+  ['edge',    0, 34.0, 44.0, 'at the rim: the oceans held back; down points sideways'],
+  ['hates',   0, 44.0, 47.0, 'gravity hates flat things'],
+  ['rise',    0, 47.0, 51.0, 'the edges rise'],
+  ['pour',    0, 51.0, 55.0, 'the oceans pour toward us'],
+  ['crush',   0, 55.0, 58.8, 'it crushes itself into a ball'],
+  ['here',    0, 58.8, 64.5, 'the wall arrives: Earth wants to be round'],
+  ['card',    0, 64.5, 70.0, 'card'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { flat: 4.0, tilt: 18.0, roll: 25.0, edge: 34.0, back: 44.0, rise: 47.0, here: 59.4, card: 64.5 },
+  acts: [
+    { name: '1 Lago',     role: 'build',   t0: 0.0,  t1: 4.0 },
+    { name: '2 Disco',    role: 'turn',    t0: 4.0,  t1: 34.0 },
+    { name: '3 Borde',    role: 'journey', t0: 34.0, t1: 44.0 },
+    { name: '4 Bordes',   role: 'peak',    t0: 44.0, t1: 58.8 },
+    { name: '5 Silencio', role: 'silence', t0: 58.8, t1: 59.4 },
+    { name: '6 Aquí',     role: 'gift',    t0: 59.4, t1: 64.0 },
+    { name: '7 Final',    role: 'goodbye', t0: 64.0, t1: 70.0 },
+  ],
+  board: [
+    { t: 2.0,  title: '¿Qué pasaría si la Tierra fuera plana?', sound: 'viento, agua, cóndores', next: 'plano' },
+    { t: 6.4,  title: 'El horizonte se vuelve plano.', sound: 'un tono que se abre', next: 'disco' },
+    { t: 9.6,  title: 'La Tierra ahora es un disco.', sound: 'viento', next: 'cordilleras' },
+    { t: 13.4, title: 'Aparecen montañas a miles de kilómetros.', sound: 'cóndores', next: 'horizonte' },
+    { t: 16.6, title: 'El horizonte de siempre desapareció.', sound: 'calma', next: 'inclina' },
+    { t: 20.4, title: 'Pero "abajo" empieza a inclinarse.', sound: 'crujido grave', next: 'lago' },
+    { t: 23.6, title: 'El lago corre hacia el centro.', sound: 'agua que corre', next: 'rueda' },
+    { t: 26.6, title: 'Todo rueda hacia el mismo lado.', sound: 'rocas rodando', next: 'aire' },
+    { t: 29.6, title: 'Hasta el aire se escurre.', sound: 'viento fuerte', next: 'empinado' },
+    { t: 33.0, title: 'Cuanto más lejos del centro, más empinado.', sound: 'viento', next: 'borde' },
+    { t: 37.0, title: 'Mientras tanto, en el borde...', sound: 'vacío, oleaje lejano', next: 'océanos' },
+    { t: 41.6, title: '"Abajo" apunta hacia el costado.', sound: 'rugido del mar', next: 'odia' },
+    { t: 45.6, title: 'La gravedad odia las cosas planas.', sound: 'rumor grave', next: 'bordes' },
+    { t: 49.4, title: 'Los bordes empiezan a levantarse.', sound: 'rumor creciente', next: 'océanos' },
+    { t: 53.4, title: 'Los océanos se vienen hacia nosotros.', sound: 'rugido de agua', next: 'bola' },
+    { t: 57.4, title: 'Se aplasta a sí misma hasta formar una bola.', sound: 'crescendo', next: 'aquí' },
+    { t: 61.4, title: 'La Tierra quiere ser redonda.', sound: 'EL GOLPE (59,4 s) tras 0,6 s de silencio', next: 'final' },
+    { t: 68.0, title: 'Pero tranquilo...', sound: 'cola', next: 'fin' },
+  ],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

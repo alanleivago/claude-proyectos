@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diez grados por segundo</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0d14; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  ¿QUÉ PASARÍA SI LA TEMPERATURA SUBIERA 10 GRADOS CADA SEGUNDO? — 9:16, 70s, 24fps, motion on 1s.
+//  F5 fixed place: a floating POV along a beach at golden hour — the sea on the left, the boardwalk, the road, a gas station,
+//  a fair with a Ferris wheel, a steel pier, a port with gantry cranes far ahead. From 4 s the air gains 10 °C every second:
+//  asphalt softens, sealed things burst, the sea boils at the shore, plastic melts, a cloud whose rain never lands, popcorn,
+//  paper, petrol, wood ignite on their own; hotter than Venus; everything glows; the steel gives way (56.6 s).
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 70.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 70, () => sceneHeat()]];
+const SHOTS = [
+  ['beach',   0, 0.0,  4.0,  'a summer evening on the beach; the fair turning'],
+  ['flee',    0, 4.0,  6.6,  '10 °C a second: everyone runs'],
+  ['asphalt', 0, 6.6,  10.0, 'the asphalt softens, cars sink'],
+  ['burst',   0, 10.0, 11.6, 'sealed things burst'],
+  ['boil',    0, 11.6, 14.6, 'the sea boils at the shore'],
+  ['melt',    0, 14.6, 16.5, 'plastic melts'],
+  ['cloud',   0, 16.5, 19.6, 'a cloud; rain that never lands'],
+  ['popcorn', 0, 19.6, 21.8, 'popcorn pops by itself'],
+  ['still',   0, 21.8, 25.3, 'nothing has burned yet'],
+  ['paper',   0, 25.3, 27.5, 'paper lights itself'],
+  ['petrol',  0, 27.5, 31.6, 'petrol fumes ignite; the gas station'],
+  ['wood',    0, 31.6, 42.0, 'every tree at once'],
+  ['venus',   0, 42.0, 52.5, 'hotter than Venus'],
+  ['glow',    0, 52.5, 56.6, 'everything glows red'],
+  ['steel',   0, 56.6, 64.5, 'the steel gives way'],
+  ['card',    0, 64.5, 70.0, 'card'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { heat: 4.0, boil: 11.6, paper: 25.3, station: 29.6, wood: 31.6, venus: 48.0, glow: 52.5, steel: 56.6, card: 64.5 },
+  acts: [
+    { name: '1 Playa',    role: 'build',   t0: 0.0,  t1: 4.0 },
+    { name: '2 Calor',    role: 'turn',    t0: 4.0,  t1: 25.3 },
+    { name: '3 Fuego',    role: 'peak',    t0: 25.3, t1: 48.0 },
+    { name: '4 Brasas',   role: 'journey', t0: 48.0, t1: 56.0 },
+    { name: '5 Silencio', role: 'silence', t0: 56.0, t1: 56.6 },
+    { name: '6 Acero',    role: 'gift',    t0: 56.6, t1: 60.0 },
+    { name: '7 Sigue',    role: 'journey', t0: 60.0, t1: 64.5 },
+    { name: '8 Final',    role: 'goodbye', t0: 64.5, t1: 70.0 },
+  ],
+  board: [
+    { t: 2.0,  title: '¿Qué pasaría si la temperatura subiera 10 grados cada segundo?', sound: 'playa, feria, gaviotas', next: 'calor' },
+    { t: 5.6,  title: 'Sube 10 grados cada segundo. Todos corren.', sound: 'gritos lejanos, pasos', next: 'asfalto' },
+    { t: 8.6,  title: 'El asfalto se ablanda.', sound: 'zumbido de calor', next: 'revienta' },
+    { t: 11.0, title: 'Lo que está cerrado revienta.', sound: 'estallidos', next: 'hierve' },
+    { t: 13.6, title: 'A 100 °C, el mar hierve en la orilla.', sound: 'hervor', next: 'plástico' },
+    { t: 15.8, title: 'El plástico se derrite.', sound: 'crujidos', next: 'nube' },
+    { t: 18.6, title: 'El vapor forma una nube. Llueve, pero nada llega.', sound: 'trueno lejano', next: 'palomitas' },
+    { t: 20.8, title: '180 °C: las palomitas revientan solas.', sound: 'pop pop pop', next: 'quieto' },
+    { t: 23.8, title: 'Nada se ha quemado todavía.', sound: 'calma tensa', next: 'papel' },
+    { t: 26.4, title: 'A 233 °C, el papel arde solo.', sound: 'fuego que prende', next: 'gasolina' },
+    { t: 30.4, title: 'Los vapores de gasolina se encienden solos.', sound: 'explosión de la gasolinera', next: 'madera' },
+    { t: 35.0, title: 'A 300 °C arde la madera. Todo a la vez.', sound: 'incendio', next: 'Venus' },
+    { t: 49.5, title: 'A 464 °C, más calor que en Venus.', sound: 'brasas, viento', next: 'brillo' },
+    { t: 54.5, title: 'A 525 °C, todo brilla en rojo.', sound: 'crujidos del acero', next: 'acero' },
+    { t: 58.0, title: 'A 550 °C, el acero cede.', sound: 'EL GOLPE (56,6 s) tras 0,6 s de silencio', next: 'sigue' },
+    { t: 62.0, title: 'Y sigue subiendo...', sound: 'vapor, brasas', next: 'final' },
+    { t: 67.5, title: 'Pero tranquilo...', sound: 'cola', next: 'fin' },
+  ],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

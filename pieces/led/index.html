@@ -1,0 +1,1742 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LED vs Bulb</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #04031a; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// ---- voice.json (tools/voice.mjs): the voice-over's lines and word times
+const VOICE = {"duration":72.659,"lead":0.5,"tail":2.6,"lines":[{"id":"title","text":"Why do LED lights use so little electricity?","t0":0.5,"t1":3.51,"words":[{"w":"Why","t0":0,"t1":0.72},{"w":"do","t0":0.72,"t1":0.98},{"w":"LED","t0":0.98,"t1":1.4},{"w":"lights","t0":1.4,"t1":1.88},{"w":"use","t0":1.88,"t1":2.1},{"w":"so","t0":2.1,"t1":2.36},{"w":"little","t0":2.36,"t1":2.66},{"w":"electricity?","t0":2.66,"t1":3.2}]},{"id":"same","text":"These two bulbs give the same light: eight hundred lumens. One burns sixty watts. The other, eight.","t0":4.11,"t1":10.432,"words":[{"w":"These","t0":4.22,"t1":4.4},{"w":"two","t0":4.4,"t1":4.68},{"w":"bulbs","t0":4.68,"t1":4.98},{"w":"give","t0":4.98,"t1":5.22},{"w":"the","t0":5.22,"t1":5.42},{"w":"same","t0":5.42,"t1":5.62},{"w":"light:","t0":5.62,"t1":5.92},{"w":"eight","t0":5.92,"t1":6.33,"est":true},{"w":"hundred","t0":6.33,"t1":6.74,"est":true},{"w":"lumens.","t0":6.74,"t1":7.42},{"w":"One","t0":7.96,"t1":8.06},{"w":"burns","t0":8.06,"t1":8.32},{"w":"sixty","t0":8.32,"t1":8.82,"est":true},{"w":"watts.","t0":8.82,"t1":9.1},{"w":"The","t0":9.68,"t1":9.82},{"w":"other,","t0":9.82,"t1":10.04},{"w":"eight.","t0":10.04,"t1":10.36}]},{"id":"question","text":"The real question isn't how the LED saves energy. It's where the other fifty-two watts went.","t0":10.932,"t1":15.913,"words":[{"w":"The","t0":10.88,"t1":11.04},{"w":"real","t0":11.04,"t1":11.26},{"w":"question","t0":11.26,"t1":11.62},{"w":"isn't","t0":11.62,"t1":12.1},{"w":"how","t0":12.1,"t1":12.3},{"w":"the","t0":12.3,"t1":12.46},{"w":"LED","t0":12.46,"t1":12.72},{"w":"saves","t0":12.72,"t1":13.12},{"w":"energy.","t0":13.12,"t1":13.56},{"w":"It's","t0":13.96,"t1":14.22},{"w":"where","t0":14.22,"t1":14.4},{"w":"the","t0":14.4,"t1":14.56},{"w":"other","t0":14.56,"t1":14.76},{"w":"fifty-two","t0":14.76,"t1":15.28,"est":true},{"w":"watts","t0":15.28,"t1":15.54},{"w":"went.","t0":15.54,"t1":15.86}]},{"id":"heat","text":"They went into heat. And that wasn't a flaw. It was the method.","t0":16.413,"t1":20.164,"words":[{"w":"They","t0":16.38,"t1":16.58},{"w":"went","t0":16.58,"t1":16.78},{"w":"into","t0":16.78,"t1":17.02},{"w":"heat.","t0":17.02,"t1":17.34},{"w":"And","t0":17.34,"t1":17.94},{"w":"that","t0":17.94,"t1":18.1},{"w":"wasn't","t0":18.1,"t1":18.38},{"w":"a","t0":18.38,"t1":18.58},{"w":"flaw.","t0":18.58,"t1":18.86},{"w":"It","t0":19.24,"t1":19.38},{"w":"was","t0":19.38,"t1":19.52},{"w":"the","t0":19.52,"t1":19.7},{"w":"method.","t0":19.7,"t1":20.08}]},{"id":"filament","text":"To make a filament glow, you heat it white-hot, past two thousand degrees.","t0":20.664,"t1":24.761,"words":[{"w":"To","t0":20.66,"t1":20.78},{"w":"make","t0":20.78,"t1":20.94},{"w":"a","t0":20.94,"t1":21.1},{"w":"filament","t0":21.1,"t1":21.42},{"w":"glow,","t0":21.42,"t1":21.84},{"w":"you","t0":21.84,"t1":22.16},{"w":"heat","t0":22.16,"t1":22.42},{"w":"it","t0":22.42,"t1":22.56},{"w":"white-hot,","t0":22.56,"t1":23.12,"est":true},{"w":"past","t0":23.12,"t1":23.52},{"w":"two","t0":23.52,"t1":23.87,"est":true},{"w":"thousand","t0":23.87,"t1":24.22,"est":true},{"w":"degrees.","t0":24.22,"t1":24.5}]},{"id":"infrared","text":"At that temperature, almost everything it gives off is invisible infrared. Less than five percent was ever light.","t0":25.161,"t1":31.44,"words":[{"w":"At","t0":25.06,"t1":25.34},{"w":"that","t0":25.34,"t1":25.52},{"w":"temperature,","t0":25.52,"t1":26.04},{"w":"almost","t0":26.04,"t1":26.5},{"w":"everything","t0":26.5,"t1":26.98},{"w":"it","t0":26.98,"t1":27.18},{"w":"gives","t0":27.18,"t1":27.38},{"w":"off","t0":27.38,"t1":27.66},{"w":"is","t0":27.66,"t1":27.86},{"w":"invisible","t0":27.86,"t1":28.34},{"w":"infrared.","t0":28.34,"t1":28.94},{"w":"Less","t0":29.6,"t1":29.7},{"w":"than","t0":29.7,"t1":29.96},{"w":"five","t0":29.96,"t1":30.26,"est":true},{"w":"percent","t0":30.26,"t1":30.56,"est":true},{"w":"was","t0":30.56,"t1":30.76},{"w":"ever","t0":30.76,"t1":31},{"w":"light.","t0":31,"t1":31.24}]},{"id":"method","text":"An LED doesn't make light by heating anything.","t0":32.04,"t1":34.613,"words":[{"w":"An","t0":32.04,"t1":32.22},{"w":"LED","t0":32.22,"t1":32.5},{"w":"doesn't","t0":32.5,"t1":33.08},{"w":"make","t0":33.08,"t1":33.28},{"w":"light","t0":33.28,"t1":33.52},{"w":"by","t0":33.52,"t1":33.74},{"w":"heating","t0":33.74,"t1":34.02},{"w":"anything.","t0":34.02,"t1":34.48}]},{"id":"step","text":"Inside, there's an energy step. When an electron drops down it, it lets go of a photon.","t0":35.013,"t1":40.445,"words":[{"w":"Inside,","t0":35.04,"t1":35.42},{"w":"there's","t0":35.42,"t1":35.8},{"w":"an","t0":35.8,"t1":35.92},{"w":"energy","t0":35.92,"t1":36.24},{"w":"step.","t0":36.24,"t1":36.62},{"w":"When","t0":37.1,"t1":37.26},{"w":"an","t0":37.26,"t1":37.4},{"w":"electron","t0":37.4,"t1":37.88},{"w":"drops","t0":37.88,"t1":38.22},{"w":"down","t0":38.22,"t1":38.56},{"w":"it,","t0":38.56,"t1":38.92},{"w":"it","t0":39,"t1":39.22},{"w":"lets","t0":39.22,"t1":39.36},{"w":"go","t0":39.36,"t1":39.62},{"w":"of","t0":39.62,"t1":39.74},{"w":"a","t0":39.74,"t1":39.86},{"w":"photon.","t0":39.86,"t1":40.26}]},{"id":"color","text":"The height of the step sets the color.","t0":40.845,"t1":42.568,"words":[{"w":"The","t0":40.78,"t1":41.02},{"w":"height","t0":41.02,"t1":41.2},{"w":"of","t0":41.2,"t1":41.36},{"w":"the","t0":41.36,"t1":41.52},{"w":"step","t0":41.52,"t1":41.74},{"w":"sets","t0":41.74,"t1":41.96},{"w":"the","t0":41.96,"t1":42.2},{"w":"color.","t0":42.2,"t1":42.46}]},{"id":"math","text":"There's no wasted infrared, because nothing is hot enough to give it off. And that changes the math.","t0":43.068,"t1":48.326,"words":[{"w":"There's","t0":43,"t1":43.28},{"w":"no","t0":43.28,"t1":43.46},{"w":"wasted","t0":43.46,"t1":43.82},{"w":"infrared,","t0":43.82,"t1":44.34},{"w":"because","t0":44.34,"t1":44.82},{"w":"nothing","t0":44.82,"t1":45.12},{"w":"is","t0":45.12,"t1":45.36},{"w":"hot","t0":45.36,"t1":45.56},{"w":"enough","t0":45.56,"t1":45.8},{"w":"to","t0":45.8,"t1":45.98},{"w":"give","t0":45.98,"t1":46.1},{"w":"it","t0":46.1,"t1":46.22},{"w":"off.","t0":46.22,"t1":46.48},{"w":"And","t0":47.08,"t1":47.2},{"w":"that","t0":47.2,"t1":47.36},{"w":"changes","t0":47.36,"t1":47.72},{"w":"the","t0":47.72,"t1":47.94},{"w":"math.","t0":47.94,"t1":48.22}]},{"id":"lmw","text":"The old bulb gave about fifteen lumens per watt. A good LED tops a hundred.","t0":48.826,"t1":53.327,"words":[{"w":"The","t0":48.8,"t1":48.98},{"w":"old","t0":48.98,"t1":49.2},{"w":"bulb","t0":49.2,"t1":49.42},{"w":"gave","t0":49.42,"t1":49.64},{"w":"about","t0":49.64,"t1":49.94},{"w":"fifteen","t0":49.94,"t1":50.42,"est":true},{"w":"lumens","t0":50.42,"t1":50.84},{"w":"per","t0":50.84,"t1":51.06},{"w":"watt.","t0":51.06,"t1":51.32},{"w":"A","t0":51.54,"t1":51.72},{"w":"good","t0":51.72,"t1":51.9},{"w":"LED","t0":51.9,"t1":52.34},{"w":"tops","t0":52.34,"t1":52.74},{"w":"a","t0":52.74,"t1":53.034,"est":true},{"w":"hundred.","t0":53.034,"t1":53.327,"est":true}]},{"id":"hundred","text":"For every hundred watts, around thirty come out as light, instead of five.","t0":53.827,"t1":57.807,"words":[{"w":"For","t0":54.98,"t1":55.5},{"w":"every","t0":55.5,"t1":55.5,"est":true},{"w":"hundred","t0":55.5,"t1":55.5,"est":true},{"w":"watts,","t0":55.5,"t1":55.5,"est":true},{"w":"around","t0":55.5,"t1":55.64},{"w":"thirty","t0":55.64,"t1":55.94,"est":true},{"w":"come","t0":55.94,"t1":56.1},{"w":"out","t0":56.1,"t1":56.28},{"w":"as","t0":56.28,"t1":56.42},{"w":"light,","t0":56.42,"t1":56.74},{"w":"instead","t0":56.74,"t1":57.3},{"w":"of","t0":57.3,"t1":57.48},{"w":"five.","t0":57.48,"t1":57.807,"est":true}]},{"id":"losses","text":"An LED gets warm too, but from losses, not from the method.","t0":58.307,"t1":62.278,"words":[{"w":"An","t0":58.24,"t1":58.5},{"w":"LED","t0":58.5,"t1":58.82},{"w":"gets","t0":58.82,"t1":59.22},{"w":"warm","t0":59.22,"t1":59.5},{"w":"too,","t0":59.5,"t1":59.84},{"w":"but","t0":59.84,"t1":60.14},{"w":"from","t0":60.14,"t1":60.32},{"w":"losses,","t0":60.32,"t1":60.74},{"w":"not","t0":61.28,"t1":61.48},{"w":"from","t0":61.48,"t1":61.7},{"w":"the","t0":61.7,"t1":61.84},{"w":"method.","t0":61.84,"t1":62.14}]},{"id":"never","text":"So an LED isn't a bulb that uses less.","t0":62.778,"t1":65.257,"words":[{"w":"So","t0":62.8,"t1":62.96},{"w":"an","t0":62.96,"t1":63.1},{"w":"LED","t0":63.1,"t1":63.5},{"w":"isn't","t0":63.5,"t1":63.88},{"w":"a","t0":63.88,"t1":64.02},{"w":"bulb","t0":64.02,"t1":64.2},{"w":"that","t0":64.2,"t1":64.4},{"w":"uses","t0":64.4,"t1":64.66},{"w":"less.","t0":64.66,"t1":65.04}]},{"id":"heater","text":"The bulb was never really a lamp. It was a heater that happened to glow.","t0":66.057,"t1":70.059,"words":[{"w":"The","t0":65.96,"t1":66.18},{"w":"bulb","t0":66.18,"t1":66.4},{"w":"was","t0":66.4,"t1":66.58},{"w":"never","t0":66.58,"t1":66.82},{"w":"really","t0":66.82,"t1":67.16},{"w":"a","t0":67.16,"t1":67.34},{"w":"lamp.","t0":67.34,"t1":67.64},{"w":"It","t0":68.16,"t1":68.28},{"w":"was","t0":68.28,"t1":68.4},{"w":"a","t0":68.4,"t1":68.56},{"w":"heater","t0":68.56,"t1":68.84},{"w":"that","t0":68.84,"t1":69.1},{"w":"happened","t0":69.1,"t1":69.38},{"w":"to","t0":69.38,"t1":69.64},{"w":"glow.","t0":69.64,"t1":69.9}]}]};
+// =====================================================================
+//  WHY DO LED LIGHTS USE SO LITTLE ELECTRICITY? — 9:16, voice-led (~73s), 24fps, style voltamps.
+//  One fixed stage (F5): a filament bulb and an LED side by side. The camera pushes into the filament
+//  (white-hot, the infrared curve) and into the LED (the energy step, the photon), then pulls back for the
+//  accounts; the turn: the old bulb was a heater that happened to glow.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4, GRID0 = 0;
+const VL = (id) => VOICE.lines.find((l) => l.id === id);
+const VW = (id, w, n = 1) => { const L = VL(id); let k = 0; for (const x of L.words) if (x.w.toLowerCase().replace(/[^a-z0-9']/g, '') === w.toLowerCase() && ++k === n) return x.t0; return L.t0; };
+const DURATION = Math.round(VOICE.duration * FPS) / FPS;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const VMONO = '"SF Mono", Menlo, "JetBrains Mono", "DejaVu Sans Mono", Consolas, monospace';
+const HAND = VMONO;
+const CX = 520;
+const onBeat = (t) => t;
+
+const S = (id) => VL(id).t0 - 0.3;                    // a beat starts ~0.3s before its line
+const HIT = VL('heater').t0 - 0.32;                    // the turn: in the pause after "a bulb that uses less"
+const IDS = ['title', 'same', 'question', 'heat', 'filament', 'infrared', 'method', 'step', 'color', 'math', 'lmw', 'hundred', 'losses', 'never', 'heater'];
+const TB = IDS.map((id, i) => (i === 0 ? 0 : id === 'heater' ? HIT : S(id)));
+const SUB = (id) => TB[IDS.indexOf(id)], SUBEND = (id) => (IDS.indexOf(id) + 1 < IDS.length ? TB[IDS.indexOf(id) + 1] : DURATION);
+const ERA_LIST = [[0, DURATION, () => sceneStage()]];
+const SHOTS = IDS.map((id, i) => [id, 0, TB[i], i + 1 < IDS.length ? TB[i + 1] : DURATION, id]);
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, gridOffset: GRID0, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE, aspect: '9:16',
+  format: 'fixed-stage',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { hit: HIT },
+  acts: [
+    { name: '1 Hook',    role: 'build',   t0: 0, t1: S('filament') },
+    { name: '2 Heat',    role: 'build',   t0: S('filament'), t1: S('method') },
+    { name: '3 LED',     role: 'peak',    t0: S('method'), t1: S('never') },
+    { name: '4 Silence', role: 'silence', t0: VL('never').t1 + 0.05, t1: HIT },
+    { name: '5 Heater',  role: 'gift',    t0: HIT, t1: VL('heater').t1 + 0.4 },
+    { name: '6 End',     role: 'goodbye', t0: VL('heater').t1 + 0.4, t1: DURATION },
+  ],
+  board: IDS.map((id, i) => ({ t: i + 1 === IDS.length ? DURATION - 0.4 : Math.min(VL(id).t1 - 0.2, TB[i + 1] - 0.1), title: id, sound: '', next: '' })),
+  narration: VOICE.lines.map((l) => ({ id: l.id, t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;
+// =====================================================================
+//  kit/core.js — seeded RNG, math, easing, palette, geometry, the hand-drawn drawing kit
+//  (wobble on the boil, ink, paint, hatch, pencil, stipple, grain), cameras, mono text.
+//  Needs from the piece head: FPS, W, H. Render state: ctx, F (frame), B (boil = floor(F/2)).
+// =====================================================================
+
+// ---------------------------------------------------------------------
+//  seeded RNG
+// ---------------------------------------------------------------------
+function mulberry32(a) {
+  return function () {
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+function hash(...xs) {
+  let h = 2166136261 >>> 0;
+  for (const x of xs) {
+    const s = String(x);
+    for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+    h ^= 124; h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+function RNG(...xs) {
+  const f = mulberry32(hash(...xs));
+  return {
+    f,
+    r: (a, b) => a + (b - a) * f(),
+    n: (amt) => (f() * 2 - 1) * amt,
+    i: (a, b) => a + Math.floor(f() * (b - a + 1)),
+    pick: (arr) => arr[Math.floor(f() * arr.length)],
+  };
+}
+
+// ---------------------------------------------------------------------
+//  math
+// ---------------------------------------------------------------------
+const TAU = Math.PI * 2, DEG = Math.PI / 180;
+const clamp = (x, a = 0, b = 1) => (x < a ? a : x > b ? b : x);
+const lerp = (a, b, t) => a + (b - a) * t;
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+// has absolute time t reached cut time c? (cuts snap to the nearest frame, like shot boundaries)
+const past = (t, c) => Math.round(t * FPS + 1e-6) >= Math.round(c * FPS);
+const dist = (a, b) => Math.hypot(b[0] - a[0], b[1] - a[1]);
+const EZ = {
+  o2: (t) => 1 - (1 - clamp(t)) ** 2,
+  o3: (t) => 1 - (1 - clamp(t)) ** 3,
+  i2: (t) => clamp(t) ** 2,
+  i3: (t) => clamp(t) ** 3,
+  io: (t) => { t = clamp(t); return t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2; },
+  back: (t) => { t = clamp(t) - 1; return 1 + 2.70158 * t * t * t + 1.70158 * t * t; },
+};
+
+// ---------------------------------------------------------------------
+//  render state
+// ---------------------------------------------------------------------
+let ctx = null;   // current 2d context
+let F = 0;        // absolute frame index
+let B = 0;        // boil index — reseeds every 2 frames (Math.floor(t*12))
+
+const C = {
+  ink: '#3a2417', cream: '#efe5cf', paper: '#f4ecd9', paperLine: 'rgba(90,130,190,0.32)',
+  orange: '#e58a4e', orangeD: '#c3622e', orangeL: '#f4b27c', terra: '#d97757',
+  rose: '#d98b8b', roseD: '#b0616a', roseL: '#efb9b0',
+  wood: '#d6a466', woodD: '#a8773f', woodL: '#e9c48f',
+  sky: '#9cc4d6', skyD: '#6f9fb8', skyL: '#c9e1ea',
+  teal: '#3d9f96', tealL: '#86c9be',
+  yellow: '#f0c55a', yellowL: '#f7dd92',
+  green: '#5f9c5c', greenL: '#a3cf92',
+  red: '#d4382c', redL: '#ea7a6c',
+  skin: '#ebb68f', skinD: '#c7815d', skinL: '#f7d4b4',
+  lav: 'rgba(104,112,214,0.7)', lavS: 'rgba(104,112,214,0.42)',
+  navy: '#0c0d1c', navy2: '#15173a', peri: '#c8d0f0', periD: '#7c86c4', periS: 'rgba(150,164,230,0.20)',
+  cyan: '#52d6c4', mag: '#e0368f', glow: '#5de37a', white: '#f4f6ff',
+};
+const RAINBOW = ['#f0d042', '#e050b8', '#46cde0', '#7ad866', '#a47ef0'];
+const MONO = 'Consolas, "Cascadia Mono", Menlo, "DejaVu Sans Mono", "Courier New", monospace';   // Windows first, then macOS / Linux
+
+// ---------------------------------------------------------------------
+//  geometry
+// ---------------------------------------------------------------------
+function ellipsePts(cx, cy, rx, ry, rot = 0, n = 64, a0 = 0, a1 = TAU) {
+  const P = [], c = Math.cos(rot), s = Math.sin(rot), full = Math.abs(a1 - a0 - TAU) < 1e-6;
+  for (let i = 0; i < n; i++) {
+    const a = a0 + (a1 - a0) * i / (full ? n : n - 1);
+    const x = Math.cos(a) * rx, y = Math.sin(a) * ry;
+    P.push([cx + x * c - y * s, cy + x * s + y * c]);
+  }
+  return P;
+}
+function rrectPts(x, y, w, h, r, n = 6) {
+  r = Math.min(r, w / 2, h / 2);
+  const P = [], cs = [[x + w - r, y + r, -Math.PI / 2], [x + w - r, y + h - r, 0], [x + r, y + h - r, Math.PI / 2], [x + r, y + r, Math.PI]];
+  for (const [cx, cy, a0] of cs) for (let i = 0; i <= n; i++) { const a = a0 + (Math.PI / 2) * i / n; P.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r]); }
+  return P;
+}
+function arcPts(cx, cy, r, a0, a1, n = 18, sy = 1) {
+  const P = [];
+  for (let i = 0; i <= n; i++) { const a = a0 + (a1 - a0) * i / n; P.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r * sy]); }
+  return P;
+}
+function xform(P, tx, ty, rot = 0, sx = 1, sy = sx) {
+  const c = Math.cos(rot), s = Math.sin(rot);
+  return P.map(([x, y]) => [tx + x * sx * c - y * sy * s, ty + x * sx * s + y * sy * c]);
+}
+function bbox(P, pad = 0) {
+  let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+  for (const [x, y] of P) { if (x < x0) x0 = x; if (y < y0) y0 = y; if (x > x1) x1 = x; if (y > y1) y1 = y; }
+  return { x0: x0 - pad, y0: y0 - pad, x1: x1 + pad, y1: y1 + pad };
+}
+function resample(P, closed, step) {
+  const out = [], n = P.length, m = closed ? n : n - 1;
+  for (let i = 0; i < m; i++) {
+    const a = P[i], b = P[(i + 1) % n], k = Math.max(1, Math.ceil(dist(a, b) / step));
+    for (let j = 0; j < k; j++) out.push([a[0] + (b[0] - a[0]) * j / k, a[1] + (b[1] - a[1]) * j / k]);
+  }
+  if (!closed) out.push(P[n - 1]);
+  return out;
+}
+function pathLen(P) { let L = 0; for (let i = 1; i < P.length; i++) L += dist(P[i - 1], P[i]); return L; }
+function subPath(P, frac) {
+  let want = pathLen(P) * clamp(frac);
+  const out = [P[0]];
+  for (let i = 1; i < P.length; i++) {
+    const d = dist(P[i - 1], P[i]);
+    if (want >= d) { out.push(P[i]); want -= d; }
+    else { const k = want / (d || 1); out.push([lerp(P[i - 1][0], P[i][0], k), lerp(P[i - 1][1], P[i][1], k)]); break; }
+  }
+  return out;
+}
+function pointAt(P, frac) { const S = subPath(P, frac); return S[S.length - 1]; }
+
+// ---------------------------------------------------------------------
+//  drawing kit — boil, sketchy lines, hatching, stipple, pencil, grain
+// ---------------------------------------------------------------------
+// smooth hand wobble along the normal; reseeded every boil step
+function wobble(P, closed, amt, key, step = 7) {
+  const Q = resample(P, closed, step), n = Q.length;
+  const R = RNG('wob', key, B);
+  const f1 = R.r(0.012, 0.03), f2 = R.r(0.05, 0.1), p1 = R.r(0, TAU), p2 = R.r(0, TAU);
+  const sx = R.n(amt * 0.5), sy = R.n(amt * 0.5);
+  const out = new Array(n); let s = 0;
+  for (let i = 0; i < n; i++) {
+    const a = Q[closed ? (i - 1 + n) % n : Math.max(0, i - 1)], b = Q[closed ? (i + 1) % n : Math.min(n - 1, i + 1)];
+    const nx = a[1] - b[1], ny = b[0] - a[0], l = Math.hypot(nx, ny) || 1;
+    if (i) s += dist(Q[i - 1], Q[i]);
+    const o = amt * (0.75 * Math.sin(s * f1 + p1) + 0.35 * Math.sin(s * f2 + p2));
+    out[i] = [Q[i][0] + nx / l * o + sx, Q[i][1] + ny / l * o + sy];
+  }
+  return out;
+}
+function trace(P, closed) {
+  ctx.beginPath();
+  const n = P.length; if (n < 2) return;
+  if (closed) {
+    ctx.moveTo((P[n - 1][0] + P[0][0]) / 2, (P[n - 1][1] + P[0][1]) / 2);
+    for (let i = 0; i < n; i++) { const p = P[i], q = P[(i + 1) % n]; ctx.quadraticCurveTo(p[0], p[1], (p[0] + q[0]) / 2, (p[1] + q[1]) / 2); }
+    ctx.closePath();
+  } else {
+    ctx.moveTo(P[0][0], P[0][1]);
+    for (let i = 1; i < n - 1; i++) { const p = P[i], q = P[i + 1]; ctx.quadraticCurveTo(p[0], p[1], (p[0] + q[0]) / 2, (p[1] + q[1]) / 2); }
+    ctx.lineTo(P[n - 1][0], P[n - 1][1]);
+  }
+}
+// sketchy stroke. o: closed, color, w, amt, key, alpha, frac (write-on), double
+function ink(P, o = {}) {
+  const closed = !!o.closed, key = o.key ?? 'ink';
+  let Q = o.raw ? P : wobble(P, closed, o.amt ?? 1.8, key);
+  let cl = closed;
+  if (o.frac != null && o.frac < 1) { if (o.frac <= 0) return Q; Q = subPath(closed ? [...Q, Q[0]] : Q, o.frac); cl = false; }
+  ctx.strokeStyle = o.color || C.ink; ctx.lineWidth = o.w ?? 3; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  ctx.globalAlpha = o.alpha ?? 1;
+  trace(Q, cl); ctx.stroke();
+  if (o.double) {
+    let Q2 = wobble(P, closed, (o.amt ?? 1.8) * 1.6 + 0.8, key + '~');
+    if (!cl && closed) Q2 = subPath([...Q2, Q2[0]], o.frac ?? 1);
+    ctx.lineWidth = (o.w ?? 3) * 0.4; ctx.globalAlpha = (o.alpha ?? 1) * 0.55; trace(Q2, cl); ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
+  return Q;
+}
+// filled shape + textures (clipped) + ink outline
+function paint(P, o = {}) {
+  const key = o.key || 'paint';
+  const Q = o.raw ? P : wobble(P, true, o.amt ?? 1.6, key);
+  ctx.save();
+  trace(Q, true);
+  if (o.fill) { ctx.globalAlpha = o.fillAl ?? 1; ctx.fillStyle = o.fill; ctx.fill(); ctx.globalAlpha = 1; }
+  if (o.tex) { ctx.clip(); const bb = bbox(Q, 6); o.tex.forEach((t, i) => texture(bb, { key: key + ':' + i, ...t })); }
+  ctx.restore();
+  if (o.line !== false) {
+    ctx.strokeStyle = o.line || C.ink; ctx.lineWidth = o.w ?? 3; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    ctx.globalAlpha = o.lineAl ?? 1; trace(Q, true); ctx.stroke(); ctx.globalAlpha = 1;
+  }
+  return Q;
+}
+function texture(bb, t) {
+  if (t.k === 'hatch') hatch(bb, t);
+  else if (t.k === 'cross') { hatch(bb, t); hatch(bb, { ...t, a: (t.a ?? 0.7) + (t.a2 ?? 1.25), key: t.key + 'x' }); }
+  else if (t.k === 'pencil') pencil(bb, t);
+  else if (t.k === 'stipple') stipple(bb, t);
+  else if (t.k === 'fn') t.fn(bb);
+}
+// parallel hatching inside current clip. t: a angle, gap, c, w, al, dash [min,max], skip, dens(x,y)
+function hatch(bb, t) {
+  const a = t.a ?? 0.7, gap = t.gap ?? 7, S = RNG('hs', t.key), R = RNG('hj', t.key, B);
+  const cx = (bb.x0 + bb.x1) / 2, cy = (bb.y0 + bb.y1) / 2, rad = Math.hypot(bb.x1 - bb.x0, bb.y1 - bb.y0) / 2 + 4;
+  const ca = Math.cos(a), sa = Math.sin(a), dens = t.dens, jit = t.jit ?? 0.9, dash = t.dash;
+  ctx.beginPath();
+  for (let d = -rad; d <= rad; d += gap) {
+    const dd = d + S.n(gap * 0.3);
+    let u = -rad + (dash ? S.r(0, dash[1]) : 0);
+    while (u < rad) {
+      const len = dash ? S.r(dash[0], dash[1]) : rad * 2, u2 = Math.min(rad, u + len);
+      const mu = (u + u2) / 2, mx = cx + ca * mu - sa * dd, my = cy + sa * mu + ca * dd, p = S.f();
+      if (!dens || p < dens(mx, my)) {
+        const e1 = R.n(jit), e2 = R.n(jit);
+        ctx.moveTo(cx + ca * u - sa * (dd + e1), cy + sa * u + ca * (dd + e1));
+        ctx.lineTo(cx + ca * u2 - sa * (dd + e2), cy + sa * u2 + ca * (dd + e2));
+      }
+      u = u2 + (dash ? S.r(t.skip?.[0] ?? 3, t.skip?.[1] ?? 12) : 0);
+    }
+  }
+  ctx.strokeStyle = t.c || C.ink; ctx.lineWidth = t.w ?? 1.2; ctx.globalAlpha = t.al ?? 0.5; ctx.lineCap = 'round';
+  ctx.stroke(); ctx.globalAlpha = 1;
+}
+// colored-pencil diagonal strokes
+function pencil(bb, t) {
+  const S = RNG('ps', t.key), R = RNG('pj', t.key, B);
+  const area = (bb.x1 - bb.x0) * (bb.y1 - bb.y0);
+  const n = Math.min(t.max ?? 6000, t.n ?? Math.floor(area / (t.per ?? 700)));
+  const a = t.a ?? -0.95, L = t.len ?? 14, dens = t.dens;
+  ctx.beginPath();
+  for (let i = 0; i < n; i++) {
+    const x = S.r(bb.x0, bb.x1), y = S.r(bb.y0, bb.y1), p = S.f(), aa = a + S.n(0.22), l = L * (0.5 + S.f() * 0.7);
+    if (dens && p > dens(x, y)) continue;
+    const jx = R.n(1.1), jy = R.n(1.1), dx = Math.cos(aa) * l / 2, dy = Math.sin(aa) * l / 2;
+    ctx.moveTo(x - dx + jx, y - dy + jy); ctx.lineTo(x + dx + jx, y + dy + jy);
+  }
+  ctx.strokeStyle = t.c; ctx.lineWidth = t.w ?? 1.4; ctx.globalAlpha = t.al ?? 0.45; ctx.lineCap = 'round';
+  ctx.stroke(); ctx.globalAlpha = 1;
+}
+// square stipple dots
+function stipple(bb, t) {
+  const S = RNG('ss', t.key), R = RNG('sj', t.key, B);
+  const n = t.n ?? 400, sz = t.s ?? 2.2, dens = t.dens, jit = t.jit ?? 0.8;
+  ctx.fillStyle = t.c; ctx.globalAlpha = t.al ?? 1; ctx.beginPath();
+  for (let i = 0; i < n; i++) {
+    const x = S.r(bb.x0, bb.x1), y = S.r(bb.y0, bb.y1), p = S.f(), s = sz * (0.6 + S.f() * 0.8);
+    if (dens && p > dens(x, y)) continue;
+    ctx.rect(x + R.n(jit), y + R.n(jit), s, s);
+  }
+  ctx.fill(); ctx.globalAlpha = 1;
+}
+// screen-space paper grain, reseeded with the boil
+function grain(o = {}) {
+  ctx.save(); screen();
+  const R = RNG('grain', B), n = o.n ?? 2600;
+  ctx.fillStyle = o.dark || 'rgba(70,45,25,0.13)'; ctx.beginPath();
+  for (let i = 0; i < n; i++) ctx.rect(R.r(0, W), R.r(0, H), 1.7, 1.7);
+  ctx.fill();
+  ctx.fillStyle = o.light || 'rgba(255,250,236,0.20)'; ctx.beginPath();
+  for (let i = 0; i < n; i++) ctx.rect(R.r(0, W), R.r(0, H), 1.9, 1.9);
+  ctx.fill();
+  // a few paper fibres
+  ctx.strokeStyle = 'rgba(80,55,35,0.07)'; ctx.lineWidth = 1; ctx.beginPath();
+  for (let i = 0; i < 90; i++) { const x = R.r(0, W), y = R.r(0, H), a = R.r(0, TAU), l = R.r(6, 22); ctx.moveTo(x, y); ctx.lineTo(x + Math.cos(a) * l, y + Math.sin(a) * l); }
+  ctx.stroke();
+  ctx.restore();
+}
+
+// ---------------------------------------------------------------------
+//  construction lines, rulers, sparks, bursts, rainbow contours
+// ---------------------------------------------------------------------
+function construct(cx, cy, r, o = {}) {
+  const R = RNG('con', o.key ?? 'c', B);
+  ctx.save();
+  ctx.strokeStyle = o.c || C.lav; ctx.lineWidth = o.w ?? 1.4; ctx.globalAlpha = o.al ?? 1; ctx.lineCap = 'round';
+  const a0 = (o.a0 ?? R.r(0, TAU)), sw = o.sweep ?? 1.05;
+  ctx.beginPath(); ctx.ellipse(cx + R.n(1.2), cy + R.n(1.2), r, r * (o.sq ?? 1), o.rot ?? 0, a0, a0 + TAU * sw); ctx.stroke();
+  if (o.cross) { const k = o.cross; ctx.beginPath(); ctx.moveTo(cx - k, cy); ctx.lineTo(cx + k, cy); ctx.moveTo(cx, cy - k); ctx.lineTo(cx, cy + k); ctx.stroke(); }
+  if (o.ticks) {
+    ctx.beginPath();
+    for (let i = 0; i < o.ticks; i++) { const a = i / o.ticks * TAU + (o.rot ?? 0); ctx.moveTo(cx + Math.cos(a) * (r - 6), cy + Math.sin(a) * (r - 6)); ctx.lineTo(cx + Math.cos(a) * (r + 6), cy + Math.sin(a) * (r + 6)); }
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+function cline(x1, y1, x2, y2, o = {}) {
+  const R = RNG('cl', o.key ?? 'l', B);
+  ctx.save(); ctx.strokeStyle = o.c || C.lavS; ctx.lineWidth = o.w ?? 1.2; ctx.globalAlpha = o.al ?? 1;
+  ctx.beginPath(); ctx.moveTo(x1 + R.n(1), y1 + R.n(1)); ctx.lineTo(x2 + R.n(1), y2 + R.n(1)); ctx.stroke(); ctx.restore();
+}
+function ruler(x1, y1, x2, y2, o = {}) {
+  const R = RNG('rul', o.key ?? 'r', B);
+  const L = Math.hypot(x2 - x1, y2 - y1) || 1, ux = (x2 - x1) / L, uy = (y2 - y1) / L, nx = -uy, ny = ux;
+  const frac = clamp(o.frac ?? 1), step = o.step ?? 16, tk = o.tick ?? 7, side = o.side ?? 1;
+  ctx.save(); ctx.strokeStyle = o.c || C.periD; ctx.lineWidth = o.w ?? 1.5; ctx.globalAlpha = o.al ?? 1; ctx.lineCap = 'round';
+  const jx = R.n(0.8), jy = R.n(0.8);
+  ctx.beginPath(); ctx.moveTo(x1 + jx, y1 + jy); ctx.lineTo(x1 + ux * L * frac + jx, y1 + uy * L * frac + jy);
+  const n = Math.floor(L * frac / step);
+  for (let i = 0; i <= n; i++) {
+    const k = i % 5 === 0 ? tk * 1.9 : tk, px = x1 + ux * i * step + jx, py = y1 + uy * i * step + jy;
+    ctx.moveTo(px, py); ctx.lineTo(px + nx * k * side, py + ny * k * side);
+  }
+  ctx.moveTo(x1 - nx * tk * 1.6, y1 - ny * tk * 1.6); ctx.lineTo(x1 + nx * tk * 2.2, y1 + ny * tk * 2.2);
+  if (frac >= 1) { ctx.moveTo(x2 - nx * tk * 1.6, y2 - ny * tk * 1.6); ctx.lineTo(x2 + nx * tk * 2.2, y2 + ny * tk * 2.2); }
+  ctx.stroke(); ctx.restore();
+}
+// glowing radial spark (dark world)
+function sparkBurst(cx, cy, r, o = {}) {
+  if (r <= 0.5) return;
+  const R = RNG('spk', o.key ?? 's', B), n = o.n ?? 18, rays = [];
+  for (let i = 0; i < n; i++) { const a = i / n * TAU + R.n(0.14); rays.push([a, r * R.r(0.28, 0.5), r * R.r(0.72, 1.15)]); }
+  const path = () => { ctx.beginPath(); for (const [a, r0, r1] of rays) { ctx.moveTo(cx + Math.cos(a) * r0, cy + Math.sin(a) * r0); ctx.lineTo(cx + Math.cos(a) * r1, cy + Math.sin(a) * r1); } };
+  ctx.save(); ctx.lineCap = 'round';
+  path(); ctx.strokeStyle = o.glow || 'rgba(82,214,196,0.22)'; ctx.lineWidth = (o.w ?? 2.4) * 3.4; ctx.stroke();
+  path(); ctx.strokeStyle = o.c || '#8ff5e6'; ctx.lineWidth = o.w ?? 2.4; ctx.stroke();
+  if (o.core !== false) {
+    const cr = Math.max(2.5, r * (o.coreR ?? 0.15));
+    ctx.beginPath(); ctx.arc(cx, cy, cr * 2.2, 0, TAU); ctx.fillStyle = 'rgba(190,215,255,0.16)'; ctx.fill();
+    ctx.beginPath(); ctx.arc(cx, cy, cr, 0, TAU); ctx.fillStyle = C.white; ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = C.periD; ctx.stroke();
+  }
+  if (o.specks) { ctx.fillStyle = o.c || '#8ff5e6'; for (let i = 0; i < o.specks; i++) { const a = R.r(0, TAU), d = r * R.r(0.2, 1.4); ctx.fillRect(cx + Math.cos(a) * d, cy + Math.sin(a) * d, 2, 2); } }
+  ctx.restore();
+}
+// radial tick burst (warm world impact)
+function burst(cx, cy, r0, r1, o = {}) {
+  const R = RNG('bur', o.key ?? 'b', B), n = o.n ?? 12;
+  ctx.save(); ctx.strokeStyle = o.c || C.ink; ctx.lineWidth = o.w ?? 3; ctx.lineCap = 'round'; ctx.globalAlpha = o.al ?? 1; ctx.beginPath();
+  for (let i = 0; i < n; i++) {
+    const a = i / n * TAU + R.n(0.15) + (o.rot ?? 0), a1 = r0 * R.r(0.85, 1.1), b1 = r1 * R.r(0.75, 1.15);
+    ctx.moveTo(cx + Math.cos(a) * a1, cy + Math.sin(a) * a1); ctx.lineTo(cx + Math.cos(a) * b1, cy + Math.sin(a) * b1);
+  }
+  ctx.stroke(); ctx.restore();
+}
+function star4(x, y, s, c) {
+  ctx.save(); ctx.fillStyle = c; ctx.beginPath();
+  ctx.moveTo(x, y - s); ctx.quadraticCurveTo(x, y, x + s, y); ctx.quadraticCurveTo(x, y, x, y + s);
+  ctx.quadraticCurveTo(x, y, x - s, y); ctx.quadraticCurveTo(x, y, x, y - s); ctx.fill(); ctx.restore();
+}
+// rainbow contour strokes around a moving part
+function rainbow(P, o = {}) {
+  const bb = bbox(P), cx = o.cx ?? (bb.x0 + bb.x1) / 2, cy = o.cy ?? (bb.y0 + bb.y1) / 2, n = o.n ?? 3;
+  for (let i = 0; i < n; i++) {
+    const S = RNG('rb', o.key, i, B), sc = 1 + (o.spread ?? 0.07) * (i + 1) + S.n(0.02);
+    const Q = P.map(([x, y]) => [cx + (x - cx) * sc + S.n(o.drift ?? 3), cy + (y - cy) * sc + S.n(o.drift ?? 3)]);
+    ink(Q, { closed: o.closed ?? true, color: RAINBOW[(i + (o.off ?? 0)) % RAINBOW.length], w: o.w ?? 1.6, amt: o.amt ?? 3.5, key: o.key + 'rb' + i, alpha: o.al ?? 0.85 });
+  }
+}
+// hex cell grid inside current clip
+function hexGrid(bb, size, o = {}) {
+  const h = size * Math.sqrt(3), R = RNG('hex', o.key ?? 'h', B);
+  ctx.save(); ctx.strokeStyle = o.c || C.periS; ctx.lineWidth = o.w ?? 1.2; ctx.globalAlpha = o.al ?? 1; ctx.beginPath();
+  let row = 0;
+  for (let y = bb.y0 - h; y < bb.y1 + h; y += h * 0.5, row++) {
+    for (let x = bb.x0 - size * 3 + (row % 2) * size * 1.5; x < bb.x1 + size * 3; x += size * 3) {
+      const jx = R.n(0.6), jy = R.n(0.6);
+      for (let k = 0; k < 6; k++) {
+        const a = k / 6 * TAU, b = (k + 1) / 6 * TAU;
+        if (k === 0) ctx.moveTo(x + Math.cos(a) * size + jx, y + Math.sin(a) * size + jy);
+        ctx.lineTo(x + Math.cos(b) * size + jx, y + Math.sin(b) * size + jy);
+      }
+    }
+  }
+  ctx.stroke(); ctx.restore();
+}
+
+// ---------------------------------------------------------------------
+//  iris, camera, text
+// ---------------------------------------------------------------------
+// ragged hatched rim; dir=+1 strokes reach outward, -1 inward
+function irisRim(cx, cy, r, dir, o = {}) {
+  const R = RNG('irisR', o.key ?? 'i', B), n = Math.min(1600, Math.floor(r * TAU / 2.0));
+  ctx.strokeStyle = o.c || '#0b0c17'; ctx.lineWidth = o.w ?? 1.6; ctx.lineCap = 'round'; ctx.beginPath();
+  for (let i = 0; i < n; i++) {
+    const a = R.r(0, TAU), L = R.r(3, 11) + (R.f() < 0.28 ? R.r(10, 34) : 0), sl = R.n(0.4);
+    const r0 = r - dir * R.r(2, 6), r1 = r + dir * L, ax = Math.cos(a), ay = Math.sin(a);
+    ctx.moveTo(cx + ax * r0, cy + ay * r0); ctx.lineTo(cx + ax * r1 - ay * L * sl, cy + ay * r1 + ax * L * sl);
+  }
+  ctx.stroke();
+}
+// iris into a black hole (screen space)
+function irisHole(cx, cy, r, o = {}) {
+  if (r <= 0.5) return;
+  ctx.save(); screen();
+  const col = o.c || '#0b0c17';
+  const P = wobble(ellipsePts(cx, cy, r, r, 0, 140), true, Math.min(4, 0.6 + r * 0.02), 'ih' + (o.key ?? ''), 9);
+  trace(P, true); ctx.fillStyle = col; ctx.fill();
+  irisRim(cx, cy, r, +1, { c: col, key: o.key });
+  if (o.inner) { ctx.save(); trace(P, true); ctx.clip(); o.inner(r); ctx.restore(); }
+  ctx.restore();
+}
+// world point (cx,cy) lands at screen centre
+function camera(cx, cy, zoom = 1, rot = 0, sx = 0, sy = 0) {
+  const c = Math.cos(rot) * zoom, s = Math.sin(rot) * zoom;
+  ctx.setTransform(c, s, -s, c, W / 2 + sx - (c * cx - s * cy), H / 2 + sy - (s * cx + c * cy));
+}
+function screen() { ctx.setTransform(1, 0, 0, 1, 0, 0); }
+function toScreen(x, y) { const p = ctx.getTransform().transformPoint(new DOMPoint(x, y)); return [p.x, p.y]; }
+function fillAll(color) { ctx.save(); screen(); ctx.fillStyle = color; ctx.fillRect(0, 0, W, H); ctx.restore(); }
+
+// monospace text with per-glyph hand jitter
+function monoText(str, x, y, size, color, o = {}) {
+  ctx.save();
+  ctx.font = `${o.weight ?? 700} ${size}px ${MONO}`; ctx.fillStyle = color; ctx.textBaseline = 'alphabetic';
+  const cw = ctx.measureText('M').width, R = RNG('txt', o.key ?? str, B), jit = o.jit ?? 0.9;
+  const n = Math.min(o.count ?? str.length, str.length);
+  ctx.globalAlpha = o.al ?? 1;
+  for (let i = 0; i < n; i++) {
+    const ch = str[i]; if (ch === ' ') continue;
+    ctx.save(); ctx.translate(x + i * cw + R.n(jit), y + R.n(jit)); ctx.rotate(R.n(0.045)); ctx.fillText(ch, 0, 0); ctx.restore();
+  }
+  ctx.restore();
+  return cw;
+}
+function monoW(size) { ctx.save(); ctx.font = `700 ${size}px ${MONO}`; const w = ctx.measureText('M').width; ctx.restore(); return w; }
+
+// single-stroke hand lettering (x-height 0.5, ascender 1.0, baseline 0)
+const GLYPHS = {
+  ' ': { w: 0.26, s: [] },
+  c: { w: 0.5, s: [arcPts(0.26, -0.25, 0.25, -35 * DEG, -322 * DEG, 22)] },
+  o: { w: 0.52, s: [arcPts(0.26, -0.25, 0.25, -95 * DEG, -460 * DEG, 30)] },
+  a: { w: 0.54, s: [[...arcPts(0.25, -0.25, 0.235, -28 * DEG, -335 * DEG, 24)], [[0.49, -0.5], [0.49, -0.05], [0.55, 0.0]]] },
+  d: { w: 0.56, s: [[...arcPts(0.25, -0.25, 0.235, -28 * DEG, -335 * DEG, 24)], [[0.49, -1.0], [0.49, -0.05], [0.56, 0.0]]] },
+  l: { w: 0.24, s: [[[0.08, -1.0], [0.08, -0.1], [0.12, -0.01], [0.2, 0.0]]] },
+  u: { w: 0.54, s: [[[0.03, -0.5], [0.03, -0.22], ...arcPts(0.255, -0.22, 0.225, 180 * DEG, 0, 14), [0.48, -0.5]], [[0.48, -0.5], [0.48, -0.04], [0.54, 0.0]]] },
+  e: { w: 0.52, s: [[[0.03, -0.26], [0.5, -0.26], ...arcPts(0.265, -0.25, 0.245, -4 * DEG, -318 * DEG, 26)]] },
+};
+function handwrite(str, x, y, size, o = {}) {
+  const strokes = []; let pen = 0;
+  for (const ch of str) {
+    const g = GLYPHS[ch] || GLYPHS[' '];
+    for (const s of g.s) strokes.push(s.map(([u, v]) => [x + (pen + u) * size, y + v * size]));
+    pen += g.w + 0.1;
+  }
+  const lens = strokes.map(pathLen), total = lens.reduce((a, b) => a + b, 0);
+  let budget = clamp(o.frac ?? 1) * total;
+  for (let i = 0; i < strokes.length && budget > 0; i++) {
+    const f = Math.min(1, budget / lens[i]); budget -= lens[i];
+    if (o.glow) ink(strokes[i], { color: o.glow, w: (o.w ?? size * 0.06) * 3, amt: o.amt ?? 1.0, key: 'hw' + i + str, frac: f });
+    ink(strokes[i], { color: o.c, w: o.w ?? size * 0.06, amt: o.amt ?? 1.0, key: 'hw' + i + str, frac: f });
+  }
+  return pen * size;
+}
+
+// =====================================================================
+// ---- small props and helpers
+function drawPencil(tx, ty, ang, len, k = 1, key = 'pencil') {
+  ctx.save(); ctx.translate(tx, ty); ctx.rotate(ang); ctx.scale(k, k);
+  paint([[46, -16], [len, -16], [len, 16], [46, 16]], {
+    fill: C.yellow, key: key + 'b', w: 3,
+    tex: [{ k: 'hatch', a: 0.05, gap: 5, c: '#a8741d', al: 0.55, w: 1.1, dash: [20, 90], dens: (x, y) => (y > 5 ? 1 : 0.08) }, { k: 'pencil', c: '#fff1b8', al: 0.5, a: 0.05, len: 30, per: 120, dens: (x, y) => (y < -4 ? 1 : 0.1) }],
+  });
+  ink([[50, -5], [len, -5]], { w: 1.6, key: key + 'f1', alpha: 0.7 });
+  ink([[50, 6], [len, 6]], { w: 1.6, key: key + 'f2', alpha: 0.7 });
+  paint([[1, 0], [46, -15], [46, 15]], { fill: '#efcf9f', key: key + 'c', w: 2.6, tex: [{ k: 'hatch', a: 1.2, gap: 4, al: 0.35, dens: (x, y) => (y > 2 ? 1 : 0.1) }] });
+  paint([[0, 0], [15, -5], [15, 5]], { fill: '#3b3438', key: key + 't', w: 2 });
+  paint([[len, -17], [len + 26, -17], [len + 26, 17], [len, 17]], { fill: '#bcb7ab', key: key + 'fe', w: 2.6, tex: [{ k: 'hatch', a: Math.PI / 2, gap: 5, al: 0.5 }] });
+  paint(rrectPts(len + 24, -16, 34, 32, 10), { fill: '#e58f8c', key: key + 'e', w: 2.6, tex: [{ k: 'pencil', c: C.roseD, al: 0.5, per: 60 }] });
+  ctx.restore();
+}
+// smoothstep of x between a and b (NOT manim's `smooth` rate function — the math style calls that smoothM)
+const smooth = (a, b, x) => { const u = clamp((x - a) / (b - a)); return u * u * (3 - 2 * u); };
+const mod = (a, n) => ((a % n) + n) % n;
+function asterisk(x, y, r0, r1, n, rot, color, w) {
+  ctx.save(); ctx.strokeStyle = color; ctx.lineWidth = w; ctx.lineCap = 'round'; ctx.beginPath();
+  for (let i = 0; i < n; i++) { const a = i / n * TAU + rot; ctx.moveTo(x + Math.cos(a) * r0, y + Math.sin(a) * r0); ctx.lineTo(x + Math.cos(a) * r1, y + Math.sin(a) * r1); }
+  ctx.stroke(); ctx.restore();
+}
+
+// ---------------------------------------------------------------------
+//  time (set by the renderer): TT = absolute time on the motion step (on 2s unless STYLE.ones);
+//  E0 = the current era's start; DEFER = overlay queue (captions drawn after the camera); SPARK_AT = the hero's screen spot
+//  ev(t, d) = 0..1 progress of an event at t over d seconds; popS(t) = back-eased pop-in scale
+// ---------------------------------------------------------------------
+let TT = 0, E0 = 0, DEFER = null, SPARK_AT = null;
+const ev = (t, d = 0.25) => clamp((TT - t) / d);
+const popS = (t) => (TT < t ? 0 : EZ.back(clamp((TT - t) / 0.25)));
+
+// ---------------------------------------------------------------------
+//  springs: closed-form, so any frame can be drawn on its own (deterministic, no state)
+//  springEase(t, k, d)       0 -> 1 over time t >= 0 (stiffness k, damping d): accelerates, overshoots a hair, settles
+//  springMove(t0, a, b, p)   a value moving from a to b, starting at time t0 (p = a SPRING preset)
+//  springTrack(keys, p)      a value with many targets: keys = [[t, value], ...] sorted by t. One spring per change,
+//                            added up, so a target change mid-move stays continuous (cursors, widths, positions)
+// ---------------------------------------------------------------------
+const SPRING = {
+  snappy: { k: 320, d: 30 },    // UI: buttons, toggles, leading edges
+  smooth: { k: 170, d: 26 },    // cards, containers, the camera
+  heavy: { k: 90, d: 19 },      // big type, logos, large objects
+  playful: { k: 260, d: 14 },   // mascots, stickers: visible overshoot
+};
+function springEase(t, k = 170, d = 26) {
+  if (t <= 0) return 0;
+  const w0 = Math.sqrt(k), z = d / (2 * w0);
+  if (z < 1) { const wd = w0 * Math.sqrt(1 - z * z); return 1 - Math.exp(-z * w0 * t) * (Math.cos(wd * t) + (z * w0 / wd) * Math.sin(wd * t)); }
+  return 1 - Math.exp(-w0 * t) * (1 + w0 * t);
+}
+const springMove = (t0, a, b, p = SPRING.smooth) => a + (b - a) * springEase(TT - t0, p.k, p.d);
+function springTrack(keys, p = SPRING.smooth) {
+  let v = keys[0][1];
+  for (let i = 1; i < keys.length; i++) v += (keys[i][1] - keys[i - 1][1]) * springEase(TT - keys[i][0], p.k, p.d);
+  return v;
+}
+
+// ---------------------------------------------------------------------
+//  layout for several formats (9:16, 1:1, 16:9, 4:5 from one piece): place things by fractions of the frame,
+//  size them by UNIT (1 at 1080 on the short side). LX(0.5), LY(0.62), 120 * UNIT. PORTRAIT / WIDE pick layouts.
+// ---------------------------------------------------------------------
+const LX = (f) => f * W, LY = (f) => f * H, UNIT = Math.min(W, H) / 1080, PORTRAIT = H > W * 1.2, WIDE = W > H * 1.2;
+
+// ---------------------------------------------------------------------
+//  the user's own assets (screenshots, logos): files in <piece>/assets/ that tools/build.mjs embeds in the page.
+//  asset('logo.png') -> the Image (or null); drawAsset(name, x, y, w, h, { fit: 'contain'|'cover', r, alpha })
+//  Real product UI only: never redraw a product screen from imagination when a screenshot exists.
+// ---------------------------------------------------------------------
+const asset = (name) => (typeof ASSETS !== 'undefined' && ASSETS[name] && ASSETS[name].complete ? ASSETS[name] : null);
+function drawAsset(name, x, y, w, h, o = {}) {
+  const img = asset(name); if (!img) return false;
+  const iw = img.naturalWidth || img.width, ih = img.naturalHeight || img.height;
+  const s = (o.fit === 'cover' ? Math.max : Math.min)(w / iw, h / ih), dw = iw * s, dh = ih * s;
+  ctx.save(); ctx.globalAlpha *= o.alpha ?? 1;
+  if (o.r || o.fit === 'cover') { ctx.beginPath(); ctx.roundRect(x, y, w, h, o.r || 0); ctx.clip(); }
+  ctx.drawImage(img, x + (w - dw) / 2, y + (h - dh) / 2, dw, dh);
+  ctx.restore(); return true;
+}
+// =====================================================================
+//  styles/voltamps/kit.js — night-schematic line art (measured from local refs, references/voltamps/).
+//  Near-black navy ground, indigo fills with violet outlines, thin lavender line art, charge glyphs
+//  (+ magenta, − cyan), cyan leaders, amber return strokes with a warm wash, small monospace labels.
+//  Rigid vector lines (no boil), motion on 1s, glow only on what carries current.
+//  Needs from the piece head: VMONO (a font stack), W, H.
+// =====================================================================
+const VA_SERIF = 'Georgia, Cambria, "Times New Roman", "DejaVu Serif", serif';   // titles and big type (shared with pov3d)
+const VA = {
+  sky0: '#04031a', sky1: '#000006',          // the ground: navy at the top, near-black at the bottom
+  fill: '#1b1653', fill2: '#16123f',          // indigo fills (cloud, house)
+  edge: '#3d3394', line: '#8b82d6', dim: '#4a4288',   // outlines, line art, faint art
+  plus: '#d462f2', minus: '#12b6e8', amber: '#ffbd3a', cream: '#fff4d6', warm: '#2a1806',
+  text: '#cfc9ff', red: '#ff5a6a',
+};
+
+// ---- the ground of the frame: a navy fall-off, an optional warm wash (the return stroke lights the sky)
+function vaBg(warm = 0) {
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+  const g = ctx.createLinearGradient(0, 0, 0, H);
+  g.addColorStop(0, VA.sky0); g.addColorStop(1, VA.sky1);
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  const hz = ctx.createLinearGradient(0, H * 0.62, 0, H * 0.78);   // a low violet haze on the horizon
+  hz.addColorStop(0, 'rgba(60,40,140,0)'); hz.addColorStop(0.7, 'rgba(60,40,140,0.10)'); hz.addColorStop(1, 'rgba(60,40,140,0)');
+  ctx.fillStyle = hz; ctx.fillRect(0, H * 0.6, W, H * 0.2);
+  if (warm > 0) {
+    const r = ctx.createRadialGradient(W / 2, H * 0.55, 50, W / 2, H * 0.55, H * 0.8);
+    r.addColorStop(0, `rgba(70,42,10,${0.85 * warm})`); r.addColorStop(1, `rgba(30,18,4,${0.6 * warm})`);
+    ctx.fillStyle = r; ctx.fillRect(0, 0, W, H);
+  }
+  ctx.restore();
+}
+// depth: far ridges and a far storm bank, drawn in screen space with a parallax share of the camera
+function vaFar(cam, a = 1, flash = 0, gyW = 1440) {
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = a;
+  const px = (cam ? (cam.cx - 540) * 0.25 : 0), pz = cam ? 1 + (cam.z - 1) * 0.2 : 1;
+  const gy = H / 2 + (gyW - (cam ? cam.cy : 960)) * (cam ? cam.z : 1) + (cam ? cam.sy : 0);
+  // a far storm bank: soft dark domes, lit from inside now and then
+  for (let i = 0; i < 9; i++) {
+    const R = RNG('bank', i), bx = mod(R.r(-200, W + 200) - px * 0.6 + TT * R.r(2, 5), W + 400) - 200, by = gy - R.r(120, 330) * pz, r = R.r(90, 170) * pz;
+    const lit = flash * (i % 3 === 0 ? 1 : 0.3) + 0.5 * Math.max(0, Math.sin(TT * 0.7 + i * 2.1)) ** 40;
+    ctx.fillStyle = `rgba(${18 + 50 * lit | 0},${14 + 36 * lit | 0},${46 + 90 * lit | 0},0.35)`;
+    for (const [ox, oy, k] of [[-0.8, 0.15, 0.7], [0, 0, 1], [0.85, 0.2, 0.65]]) { ctx.beginPath(); ctx.ellipse(bx + ox * r, by + oy * r, r * k, r * 0.55 * k, 0, 0, TAU); ctx.fill(); }
+  }
+  // two ridge lines
+  for (const [k, c, amp, base] of [[0.35, '#0b0928', 120, 40], [0.6, '#0f0c33', 70, 0]]) {
+    ctx.fillStyle = c; ctx.beginPath(); ctx.moveTo(0, H);
+    for (let x = 0; x <= W; x += 20) { const u = (x + px * k * 2) / 260; ctx.lineTo(x, gy - base * pz - amp * pz * (0.5 + 0.35 * Math.sin(u) + 0.15 * Math.sin(u * 2.7 + 1))); }
+    ctx.lineTo(W, H); ctx.closePath(); ctx.fill();
+  }
+  ctx.globalAlpha = 1; ctx.fillStyle = '#020109'; ctx.fillRect(0, gy, W, H - gy);   // the earth below the ground line
+  ctx.restore();
+}
+// rain: fine slanted streaks, two depths
+function vaRain(a = 1, key = 'rain') {
+  if (a <= 0) return;
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.lineCap = 'round';
+  for (let i = 0; i < 110; i++) {
+    const R = RNG(key, i), near = i % 3 === 0, sp = near ? 1500 : 900, len = near ? 46 : 26;
+    const x = mod(R.r(0, W + 300) - TT * sp * 0.22, W + 300) - 150, y = mod(R.r(0, H) + TT * sp, H + 100) - 50;
+    ctx.globalAlpha = a * (near ? 0.22 : 0.12); ctx.strokeStyle = near ? '#6e66c0' : '#3d3690'; ctx.lineWidth = near ? 2 : 1.4;
+    ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x - len * 0.22, y + len); ctx.stroke();
+  }
+  ctx.restore();
+}
+// grain + vignette, deterministic per frame (STYLE.post)
+let VA_NOISE = null;
+function vaGrain(k = 1) {
+  if (!VA_NOISE) { VA_NOISE = document.createElement('canvas'); VA_NOISE.width = VA_NOISE.height = 256; const g = VA_NOISE.getContext('2d'), im = g.createImageData(256, 256), R = RNG('grain');
+    for (let i = 0; i < im.data.length; i += 4) { const v = R.f() * 255 | 0; im.data[i] = im.data[i + 1] = im.data[i + 2] = v; im.data[i + 3] = 255; } g.putImageData(im, 0, 0); }
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+  const R = RNG('gf', F), ox = R.r(0, 256) | 0, oy = R.r(0, 256) | 0;
+  ctx.globalAlpha = 0.045 * k; ctx.globalCompositeOperation = 'overlay';
+  for (let x = -ox; x < W; x += 256) for (let y = -oy; y < H; y += 256) ctx.drawImage(VA_NOISE, x, y);
+  ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
+  const v = ctx.createRadialGradient(W / 2, H * 0.48, H * 0.3, W / 2, H * 0.48, H * 0.75);
+  v.addColorStop(0, 'rgba(0,0,0,0)'); v.addColorStop(1, 'rgba(0,0,6,0.55)'); ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
+  ctx.restore();
+}
+// a squared-paper ground: fine cells and stronger every 4th line, with a parallax share of the camera
+function vaGridBg(cam, a = 1, cell = 60) {
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+  const k = 0.4, z = cam ? 1 + (cam.z - 1) * 0.35 : 1, st = cell * z;
+  const ox = cam ? -(cam.cx - 540) * k * z : 0, oy = cam ? -(cam.cy - 960) * k * z : 0;
+  const i0x = Math.floor(-ox / st) - 1, i0y = Math.floor(-oy / st) - 1;
+  const fade = ctx.createRadialGradient(W / 2, H * 0.45, 0, W / 2, H * 0.45, H * 0.62);
+  for (let i = i0x; i * st + ox < W + st; i++) { const x = i * st + ox, maj = mod(i, 4) === 0; ctx.globalAlpha = a * (maj ? 0.26 : 0.12); ctx.fillStyle = '#5a50b8'; ctx.fillRect(Math.round(x), 0, maj ? 2 : 1, H); }
+  for (let j = i0y; j * st + oy < H + st; j++) { const y = j * st + oy, maj = mod(j, 4) === 0; ctx.globalAlpha = a * (maj ? 0.26 : 0.12); ctx.fillStyle = '#5a50b8'; ctx.fillRect(0, Math.round(y), W, maj ? 2 : 1); }
+  // let the grid sink into the dark at the edges
+  ctx.globalAlpha = 1; fade.addColorStop(0, 'rgba(2,2,14,0)'); fade.addColorStop(1, 'rgba(2,2,14,0.85)'); ctx.fillStyle = fade; ctx.fillRect(0, 0, W, H);
+  ctx.restore();
+}
+// faint drifting specks (rain-fine air dust) so a held frame still breathes
+function vaSpecks(n = 40, a = 0.25, key = 'sp') {
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+  for (let i = 0; i < n; i++) {
+    const R = RNG(key, i), x = mod(R.r(0, W) + TT * R.r(-6, 6), W), y = mod(R.r(0, H) + TT * R.r(4, 18), H);
+    ctx.globalAlpha = a * (0.5 + 0.5 * Math.sin(TT * R.r(0.6, 1.6) + i));
+    ctx.fillStyle = VA.dim; ctx.fillRect(x, y, 2, 2);
+  }
+  ctx.restore();
+}
+
+// ---- strokes
+function vaStroke(P, c, w = 3, o = {}) {
+  if (P.length < 2) return;
+  ctx.save(); ctx.globalAlpha *= o.a ?? 1;
+  ctx.lineWidth = w; ctx.strokeStyle = c; ctx.lineJoin = o.join ?? 'round'; ctx.lineCap = o.cap ?? 'round';
+  if (o.dash) ctx.setLineDash(o.dash);
+  vaTrace(P, !!o.closed); ctx.stroke(); ctx.restore();
+}
+function vaLine(x0, y0, x1, y1, c, w = 3, o = {}) { vaStroke([[x0, y0], [x1, y1]], c, w, o); }
+// a glowing current line: a wide soft halo, a mid glow, a bright core
+function vaGlow(P, c, w = 4, k = 1, o = {}) {
+  if (P.length < 2 || k <= 0) return;
+  ctx.save(); ctx.globalAlpha *= o.a ?? 1; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+  vaTrace(P, false);
+  ctx.globalCompositeOperation = 'lighter';
+  ctx.strokeStyle = c; ctx.globalAlpha *= 0.16 * k; ctx.lineWidth = w * 7; ctx.stroke();
+  ctx.globalAlpha /= 0.16; ctx.globalAlpha *= 0.35; ctx.lineWidth = w * 2.6; ctx.stroke();
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.globalAlpha /= 0.35; ctx.lineWidth = w; ctx.strokeStyle = o.core ?? c; ctx.stroke();
+  ctx.restore();
+}
+// partial polyline: the first `frac` of P's length (write-on for paths and bolts)
+function vaPart(P, frac) {
+  frac = clamp(frac); if (frac >= 1) return P; if (frac <= 0) return [P[0]];
+  let L = 0; const d = [0];
+  for (let i = 1; i < P.length; i++) { L += Math.hypot(P[i][0] - P[i - 1][0], P[i][1] - P[i - 1][1]); d.push(L); }
+  const s = L * frac, out = [P[0]];
+  for (let i = 1; i < P.length; i++) {
+    if (d[i] <= s) { out.push(P[i]); continue; }
+    const u = (s - d[i - 1]) / (d[i] - d[i - 1]); out.push([lerp(P[i - 1][0], P[i][0], u), lerp(P[i - 1][1], P[i][1], u)]); break;
+  }
+  return out;
+}
+// a point on a polyline at fraction u (for travelling pulses)
+function vaAt(P, u) { const Q = vaPart(P, clamp(u)); return Q[Q.length - 1]; }
+
+// ---- type: monospace labels, typed on one character at a time
+function vaText(str, x, y, size, c, o = {}) {
+  ctx.save(); ctx.globalAlpha *= o.a ?? 1;
+  ctx.font = `${o.italic ? 'italic ' : ''}${o.weight ?? (o.serif ? 400 : 500)} ${size}px ${o.serif ? VA_SERIF : VMONO}`; ctx.fillStyle = c; ctx.textAlign = o.align ?? 'left'; ctx.textBaseline = 'alphabetic';
+  const n = Math.ceil(str.length * clamp(o.frac ?? 1));
+  if (o.glow) { ctx.shadowColor = c; ctx.shadowBlur = o.glow; }
+  if (n > 0) {
+    const full = ctx.measureText(str).width, sub = str.slice(0, n);
+    const dx = o.align === 'center' ? -full / 2 + ctx.measureText(sub).width / 2 : o.align === 'right' ? -full + ctx.measureText(sub).width : 0;
+    ctx.fillText(sub, x + dx, y);
+  }
+  ctx.restore();
+  ctx.save(); ctx.font = `${o.italic ? 'italic ' : ''}${o.weight ?? (o.serif ? 400 : 500)} ${size}px ${o.serif ? VA_SERIF : VMONO}`; const w = ctx.measureText(str).width; ctx.restore(); return w;
+}
+const vaType = (t0, str, cps = 28) => clamp((TT - t0) * cps / Math.max(1, str.length));   // typing progress
+
+// ---- charge glyphs
+function vaPlus(x, y, s, a = 1, c = VA.plus) { ctx.save(); ctx.globalAlpha *= a; ctx.shadowColor = c; ctx.shadowBlur = s * 0.6; ctx.strokeStyle = c; ctx.lineWidth = Math.max(2.5, s * 0.2); ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(x - s / 2, y); ctx.lineTo(x + s / 2, y); ctx.moveTo(x, y - s / 2); ctx.lineTo(x, y + s / 2); ctx.stroke(); ctx.restore(); }
+function vaMinus(x, y, s, a = 1, c = VA.minus) { ctx.save(); ctx.globalAlpha *= a; ctx.shadowColor = c; ctx.shadowBlur = s * 0.6; ctx.strokeStyle = c; ctx.lineWidth = Math.max(2.5, s * 0.2); ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(x - s / 2, y); ctx.lineTo(x + s / 2, y); ctx.stroke(); ctx.restore(); }
+function vaDot(x, y, r, c, a = 1) { ctx.save(); ctx.globalAlpha *= a; ctx.fillStyle = c; ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.fill(); ctx.restore(); }
+function vaRing(x, y, r, c, w = 3, a = 1, dash) { ctx.save(); ctx.globalAlpha *= a; ctx.strokeStyle = c; ctx.lineWidth = w; if (dash) ctx.setLineDash(dash); ctx.beginPath(); ctx.arc(x, y, Math.max(0.1, r), 0, TAU); ctx.stroke(); ctx.restore(); }
+function vaArrow(x0, y0, x1, y1, c, w = 4, a = 1, head = 18) {
+  if (Math.hypot(x1 - x0, y1 - y0) < 1) return;
+  const ang = Math.atan2(y1 - y0, x1 - x0);
+  vaLine(x0, y0, x1, y1, c, w, { a });
+  vaStroke([[x1 - head * Math.cos(ang - 0.45), y1 - head * Math.sin(ang - 0.45)], [x1, y1], [x1 - head * Math.cos(ang + 0.45), y1 - head * Math.sin(ang + 0.45)]], c, w, { a });
+}
+// a chevron (an updraft mark), pointing up
+function vaChevron(x, y, s, c, a = 1) { vaStroke([[x - s, y + s * 0.6], [x, y - s * 0.4], [x + s, y + s * 0.6]], c, 2.5, { a }); }
+// a horizontal bar meter
+function vaBar(x, y, w, h, frac, c, a = 1) { ctx.save(); ctx.globalAlpha *= a; ctx.fillStyle = c; ctx.fillRect(x, y, w * clamp(frac), h); ctx.restore(); }
+// a dimension rule: |——| with a label
+function vaRule(x0, y0, x1, y1, label, c = VA.text, size = 34, a = 1) {
+  const ang = Math.atan2(y1 - y0, x1 - x0), nx = -Math.sin(ang) * 12, ny = Math.cos(ang) * 12;
+  vaLine(x0, y0, x1, y1, c, 2.5, { a });
+  vaLine(x0 - nx, y0 - ny, x0 + nx, y0 + ny, c, 2.5, { a }); vaLine(x1 - nx, y1 - ny, x1 + nx, y1 + ny, c, 2.5, { a });
+  if (label) vaText(label, (x0 + x1) / 2 - nx * 3, (y0 + y1) / 2 - ny * 3 + 8, size, c, { align: 'center', a });
+}
+
+// ---- the cloud: a cumulonimbus — a cauliflower dome, bulging sides, a scalloped flat base,
+//      and a pointed lens-shaped anvil drawn across its top (the dome's bumps rise above it)
+function vaTrace(P, closed) { ctx.beginPath(); ctx.moveTo(P[0][0], P[0][1]); for (let i = 1; i < P.length; i++) ctx.lineTo(P[i][0], P[i][1]); if (closed) ctx.closePath(); }
+function vaArcPts(cx, cy, r, a0, a1, n = 10) { const P = []; for (let i = 0; i <= n; i++) { const a = lerp(a0, a1, i / n); P.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r]); } return P; }
+function vaCloudBody(x, y, s) {
+  // a clean union: the top edge is the envelope of the dome's bumps; the sides bulge gently; the base is scalloped
+  const hw = 330 * s, base = y + 170 * s, sh = y - 150 * s, P = [];
+  const br = (i) => 1 + 0.035 * Math.sin(TT * 0.9 + i * 1.7);   // the dome boils, slowly
+  const bumps = [[x - 235 * s, y - 175 * s, 95 * s * br(0)], [x - 130 * s, y - 255 * s, 100 * s * br(1)], [x + 5 * s, y - 300 * s, 105 * s * br(2)], [x + 140 * s, y - 260 * s, 98 * s * br(3)], [x + 240 * s, y - 180 * s, 92 * s * br(4)]];
+  const topAt = (px) => { let m = sh; for (const [bx, by, r] of bumps) { const d = px - bx; if (Math.abs(d) < r) m = Math.min(m, by - Math.sqrt(r * r - d * d)); } return m; };
+  for (let i = 0; i <= 16; i++) { const u = i / 16; P.push([x - hw + 2 * hw * u, base + 9 * s * Math.abs(Math.sin(u * Math.PI * 8))]); }
+  for (let i = 1; i <= 12; i++) { const u = i / 12; P.push([x + hw + 24 * s * Math.sin(Math.PI * u) + 8 * s * Math.sin(u * TAU * 2), lerp(base, sh, u)]); }
+  for (let i = 0; i <= 80; i++) { const px = x + hw - 2 * hw * i / 80; P.push([px, topAt(px)]); }
+  for (let i = 1; i < 12; i++) { const u = i / 12; P.push([x - hw - 24 * s * Math.sin(Math.PI * u) - 8 * s * Math.sin(u * TAU * 2), lerp(sh, base, u)]); }
+  return P;
+}
+function vaAnvil(x, y, s) {   // a lens: two arcs meeting in points
+  const hw = 470 * s, cy = y - 230 * s, up = 62 * s, dn = 40 * s, P = [];
+  for (let i = 0; i <= 30; i++) { const u = i / 30; P.push([x - hw + 2 * hw * u, cy - up * Math.sin(Math.PI * u) ** 0.7]); }
+  for (let i = 30; i >= 0; i--) { const u = i / 30; P.push([x - hw + 2 * hw * u, cy + dn * Math.sin(Math.PI * u) ** 0.9]); }
+  return P;
+}
+function vaCloudLattice(x, y, s, P) {
+  ctx.save(); vaTrace(P, true); ctx.clip();
+  ctx.strokeStyle = 'rgba(120,110,220,0.055)'; ctx.lineWidth = 1.5;
+  for (let gx = x - 500 * s; gx < x + 500 * s; gx += 26 * s) { ctx.beginPath(); ctx.moveTo(gx, y - 420 * s); ctx.lineTo(gx, y + 220 * s); ctx.stroke(); }
+  for (let gy = y - 420 * s; gy < y + 220 * s; gy += 26 * s) { ctx.beginPath(); ctx.moveTo(x - 500 * s, gy); ctx.lineTo(x + 500 * s, gy); ctx.stroke(); }
+  ctx.restore();
+}
+function vaCloud(x, y, s = 1, o = {}) {
+  const a = o.a ?? 1, lw = Math.max(2.5, 4 * s);
+  ctx.save(); ctx.globalAlpha *= a; ctx.lineJoin = 'round';
+  for (const P of [vaCloudBody(x, y, s), ...(o.anvil === false ? [] : [vaAnvil(x, y, s)])]) {
+    const gr = ctx.createLinearGradient(0, y - 400 * s, 0, y + 180 * s);
+    gr.addColorStop(0, '#2b2378'); gr.addColorStop(0.55, o.fill ?? VA.fill); gr.addColorStop(1, '#120e3a');
+    vaTrace(P, true); ctx.fillStyle = gr; ctx.fill();
+    vaCloudLattice(x, y, s, P);
+    if (o.lit) {   // lit from inside by a flash: a soft bloom clipped to the shape
+      ctx.save(); vaTrace(P, true); ctx.clip(); ctx.globalCompositeOperation = 'lighter';
+      const [lx, ly, lc] = o.litAt ?? [x, y, '#7d6cff'];
+      const rg = ctx.createRadialGradient(lx, ly, 10, lx, ly, 420 * s); rg.addColorStop(0, lc); rg.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.globalAlpha = 0.5 * o.lit; ctx.fillStyle = rg; ctx.fillRect(x - 600 * s, y - 500 * s, 1200 * s, 800 * s); ctx.restore();
+    }
+    ctx.lineWidth = lw; ctx.strokeStyle = o.edge ?? VA.edge; vaTrace(P, true); ctx.stroke();
+  }
+  ctx.restore();
+  if (o.inner) { ctx.save(); ctx.globalAlpha *= a; o.inner(); ctx.restore(); }
+  return { top: y - 300 * s, anvil: y - 230 * s, base: y + 170 * s, half: 330 * s };
+}
+
+// ---- the ground line, a hatch below it, grass tufts
+function vaGround(y, x0 = -200, x1 = W + 200, a = 1) {
+  vaLine(x0, y, x1, y, VA.line, 3, { a });
+  for (let x = x0; x < x1; x += 30) vaLine(x, y + 10, x - 14, y + 26, VA.dim, 2, { a });
+}
+function vaTuft(x, y, s = 1, a = 1) { vaStroke([[x - 9 * s, y - 16 * s], [x, y], [x + 9 * s, y - 16 * s]], VA.line, 2.2, { a }); vaLine(x, y, x, y - 18 * s, VA.line, 2.2, { a }); }
+// lattice tower (pylon): base at (x, y), height h
+function vaTower(x, y, h, a = 1) {
+  const w = h * 0.22, top = y - h;
+  vaStroke([[x - w, y], [x - 4, top + 20], [x + 4, top + 20], [x + w, y]], VA.line, 3, { a });
+  vaLine(x, top + 20, x, top, VA.line, 3, { a });
+  for (let i = 1; i <= 4; i++) {
+    const u0 = (i - 1) / 4, u1 = i / 4, ya = lerp(y, top + 20, u0), yb = lerp(y, top + 20, u1);
+    const wa = lerp(w, 4, u0), wb = lerp(w, 4, u1);
+    vaLine(x - wa, ya, x + wb, yb, VA.line, 2, { a }); vaLine(x + wa, ya, x - wb, yb, VA.line, 2, { a });
+  }
+  return [x, top];
+}
+function vaHouse(x, y, s = 1, a = 1, o = {}) {
+  const w = 90 * s, h = 82 * s;
+  ctx.save(); ctx.globalAlpha *= a;
+  ctx.fillStyle = VA.fill2; ctx.fillRect(x - w, y - h, w * 2, h);
+  ctx.fillStyle = '#3a2f8e'; ctx.fillRect(x - 18 * s, y - 52 * s, 36 * s, 52 * s);
+  ctx.restore();
+  vaStroke([[x - w, y], [x - w, y - h], [x + w, y - h], [x + w, y]], VA.line, 3, { a });
+  vaStroke([[x - w - 14 * s, y - h], [x, y - h - 62 * s], [x + w + 14 * s, y - h], [x - w - 14 * s, y - h]], VA.line, 3, { a, closed: true });
+  if (o.rod) {   // a lightning rod on the ridge and its down-conductor to an earth rod
+    const rx = x, ry = y - h - 62 * s;
+    vaLine(rx, ry, rx, ry - 70 * s, o.rodC ?? VA.cream, 4, { a });
+    vaDot(rx, ry - 70 * s, 5, o.rodC ?? VA.cream, a);
+    vaStroke([[rx, ry], [x + w + 10 * s, y - h + 4 * s], [x + w + 10 * s, y + 70 * s]], o.rodC ?? VA.cream, 3, { a: a * (o.cond ?? 1) });
+    for (let i = 0; i < 3; i++) vaLine(x + w + 10 * s - (16 - i * 5) * s, y + (70 + i * 9) * s, x + w + 10 * s + (16 - i * 5) * s, y + (70 + i * 9) * s, o.rodC ?? VA.cream, 3, { a: a * (o.cond ?? 1) });
+  }
+  return [x, y - h - 62 * s];
+}
+// a tree: three overlapping circles on a trunk
+function vaTree(x, y, s = 1, a = 1) {
+  vaLine(x, y, x, y - 70 * s, VA.line, 3, { a });
+  ctx.save(); ctx.globalAlpha *= a;
+  for (const [dx, dy, r] of [[-22, -95, 40], [22, -88, 38], [0, -135, 40]]) {
+    ctx.fillStyle = VA.fill2; ctx.beginPath(); ctx.arc(x + dx * s, y + dy * s, r * s, 0, TAU); ctx.fill();
+  }
+  ctx.restore();
+  for (const [dx, dy, r] of [[-22, -95, 40], [22, -88, 38], [0, -135, 40]]) vaRing(x + dx * s, y + dy * s, r * s, VA.line, 3, a);
+  return [x, y - 175 * s];
+}
+function vaLamp(x, y, h = 170, a = 1) {
+  vaStroke([[x, y], [x, y - h], [x + 34, y - h]], VA.line, 3, { a });
+  vaStroke([[x + 22, y - h + 2], [x + 46, y - h + 2], [x + 40, y - h + 14], [x + 28, y - h + 14]], VA.line, 2.5, { a, closed: true });
+  return [x, y - h];
+}
+function vaSun(x, y, r, c = VA.line, a = 1) {
+  vaRing(x, y, r, c, 3, a);
+  for (let i = 0; i < 8; i++) { const an = i / 8 * TAU; vaLine(x + Math.cos(an) * r * 1.35, y + Math.sin(an) * r * 1.35, x + Math.cos(an) * r * 1.7, y + Math.sin(an) * r * 1.7, c, 3, { a }); }
+}
+function vaHill(x0, x1, y, h, a = 1) {
+  const P = []; for (let i = 0; i <= 30; i++) { const u = i / 30; P.push([lerp(x0, x1, u), y - h * Math.pow(Math.sin(Math.PI * Math.pow(u, 0.8)), 1.6)]); }
+  vaStroke(P, VA.line, 3, { a }); return P;
+}
+
+// ---- bolts: a seeded stepped path from (x0,y0) toward (x1,y1); each step drifts a little, branches split off
+function vaBoltPath(key, x0, y0, x1, y1, steps = 14, o = {}) {
+  const R = RNG('bolt', key), main = [[x0, y0]], branches = [];
+  const jit = o.jit ?? 0.55, bp = o.branch ?? 0.35;
+  for (let i = 1; i <= steps; i++) {
+    const u = i / steps, px = lerp(x0, x1, u), py = lerp(y0, y1, u);
+    const spread = (1 - Math.pow(u, 3)) * Math.abs(y1 - y0) / steps * jit * 2.2;
+    main.push(i === steps ? [x1, y1] : [px + R.r(-1, 1) * spread * 1.4, py + R.r(-0.25, 0.25) * spread]);
+    if (i < steps - 1 && R.f() < bp) {   // a branch: 2–5 steps sideways and down, then it dies
+      const n = 2 + Math.floor(R.f() * 4), side = R.f() < 0.5 ? -1 : 1, B = [main[i]];
+      let [bx, by] = main[i];
+      for (let k = 0; k < n; k++) { bx += side * R.r(14, 46); by += R.r(18, 52); B.push([bx, by]); }
+      branches.push({ at: i, pts: B });
+    }
+  }
+  return { main, branches, steps };
+}
+// draw a bolt grown to step k (fractional), with branches growing alongside
+function vaBolt(bolt, k, c, w = 4, glow = 1, o = {}) {
+  const n = bolt.main.length - 1, kk = clamp(k / n);
+  const P = vaPart(bolt.main, kk);
+  if (o.branches !== false) for (const b of bolt.branches) {
+    const g = clamp((k - b.at) / 3);
+    if (g <= 0) continue;
+    const fade = o.branchFade ?? 1;
+    if (glow) vaGlow(vaPart(b.pts, g), c, w * 0.6, glow * 0.6, { a: 0.75 * fade }); else vaStroke(vaPart(b.pts, g), c, w * 0.6, { a: 0.75 * fade });
+  }
+  if (glow) vaGlow(P, c, w, glow, o); else vaStroke(P, c, w, o);
+  return P[P.length - 1];
+}
+
+// ---- captions & tags, at screen size (DEFER)
+const vaOverlay = (f) => { if (DEFER) DEFER.push(f); else f(); };
+
+// =====================================================================
+//  STYLE — the renderer's hooks
+// =====================================================================
+const STYLE = {
+  name: 'voltamps',
+  paper: '#04031a',
+  backdrop(c) { vaBg(0); },
+  window(P, key, src) { ctx.save(); trace(P, true); ctx.clip(); ctx.drawImage(src, 0, 0); ctx.restore(); vaStroke(P, VA.edge, 4, { closed: true }); },
+  blob(P, c, key) { ctx.save(); trace(P, true); ctx.fillStyle = c; ctx.fill(); ctx.restore(); vaStroke(P, VA.edge, 4, { closed: true }); },
+  hero(x, y, r, o) { vaDot(x, y, r * 0.3, VA.minus); },
+  heroColor: VA.minus,
+  post() { vaGrain(1); },
+  ones: true,
+};
+// =====================================================================
+//  SCENES — Why do LED lights use so little electricity? (voltamps). World 1080x1920, TT on 1s.
+//  amber = heat / the filament, magenta = visible light, cyan = the LED and its electrons, cream = white-hot.
+// =====================================================================
+const BL = [310, 620], BR = [770, 620], BRAD = 140;      // the two bulbs (filament left, LED right)
+const CXT = 540;                                        // every free text is centred on the frame
+const fadeIn = (t, d = 0.35) => EZ.o2(ev(t, d));
+const fadeOut = (t, d = 0.35) => 1 - EZ.i2(ev(t, d));
+const win = (t0, t1, d = 0.35) => fadeIn(t0, d) * fadeOut(t1, d);
+const OV = vaOverlay;
+const flashK = (t, d = 0.6) => (TT < t ? 0 : TT < t + 0.08 ? (TT - t) / 0.08 : Math.exp(-(TT - t - 0.08) / d * 3));
+const LT = (id, u) => lerp(VL(id).t0, VL(id).t1, u);    // a point inside a line (for lines whose word times are unsure)
+let CAMZ = 1;
+
+// ---- the camera
+function camAtT() {
+  const cx = springTrack([[0, 540], [S('filament'), BL[0]], [S('infrared'), 540], [S('method'), BR[0]], [S('step'), 540], [S('losses'), 620], [S('never'), 540]], SPRING.smooth);
+  const cy = springTrack([[0, 900], [S('filament'), BL[1] - 10], [S('infrared'), 1000], [S('method'), BR[1] - 10], [S('step'), 1000], [S('losses'), 860], [S('never'), 900], [HIT, 880]], SPRING.smooth);
+  const z = springTrack([[0, 1], [S('filament'), 2.3], [S('infrared'), 1], [S('method'), 2.3], [S('step'), 1], [S('losses'), 1.25], [S('never'), 1], [HIT, 1.08]], SPRING.smooth);
+  const sh = TT > HIT ? Math.exp(-(TT - HIT) * 6) * 12 : 0;
+  return { cx: cx + 26 * Math.sin(TT * 0.31), cy: cy + 16 * Math.sin(TT * 0.23 + 1), z: z * (1 + 0.045 * Math.sin(TT * 0.42)), sx: sh * Math.sin(TT * 91), sy: sh * Math.cos(TT * 77) };
+}
+function setCam(c) { ctx.setTransform(c.z, 0, 0, c.z, W / 2 + c.sx - c.z * c.cx, H / 2 + c.sy - c.z * c.cy); }
+
+// ---- depth: a faint dotted lab grid behind everything, with parallax
+function ledGridBack(c) {
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+  const k = 0.35, z = 1 + (c.z - 1) * 0.3, ox = -(c.cx - 540) * k * z, oy = -(c.cy - 960) * k * z, step = 64 * z;
+  for (let gx = mod(ox, step) - step; gx < W + step; gx += step) for (let gy = mod(oy, step) - step; gy < H + step; gy += step) {
+    const d = Math.hypot(gx - W / 2, gy - H * 0.45) / (H * 0.6);
+    ctx.globalAlpha = 0.16 * (1 - clamp(d)); ctx.fillStyle = VA.dim; ctx.fillRect(gx, gy, 2.5, 2.5);
+  }
+  ctx.restore();
+}
+
+// =====================================================================
+//  the bulbs
+// =====================================================================
+function ledHeatWaves(x, y, k, n = 5, h = 220) {   // wavy lines rising off something hot
+  if (k <= 0) return;
+  for (let i = 0; i < n; i++) {
+    const R = RNG('hw', i, x), u = mod(TT * 0.45 + R.f(), 1), bx = x + (i - (n - 1) / 2) * 34;
+    const P = []; for (let j = 0; j <= 14; j++) { const v = j / 14; P.push([bx + Math.sin(v * 9 + TT * 4 + i) * 9, y - u * 60 - v * h * 0.6]); }
+    vaStroke(P, VA.amber, 3, { a: k * 0.7 * Math.sin(Math.PI * u) });
+  }
+}
+// a bulb: glass, neck, screw base; inside a coil (filament) or a row of chips (LED); lit = 0..1
+function ledBulb(x, y, kind, lit = 0, o = {}) {
+  const r = BRAD, hot = kind === 'fil', a = o.a ?? 1;
+  ctx.save(); ctx.globalAlpha *= a;
+  // glow outside: concentric soft rings
+  if (lit > 0) {
+    const c = hot ? (o.white ? '255,238,200' : '255,176,60') : '120,200,255';
+    const g = ctx.createRadialGradient(x, y, r * 0.3, x, y, r * (2.6 + (o.bloom ?? 0)));
+    g.addColorStop(0, `rgba(${c},${0.45 * lit})`); g.addColorStop(1, `rgba(${c},0)`); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r * (2.6 + (o.bloom ?? 0)), 0, TAU); ctx.fill();
+    for (let i = 1; i <= 3; i++) vaRing(x, y, r * (1 + i * 0.2) + 6 * Math.sin(TT * 2 + i), hot ? VA.amber : VA.minus, 2, lit * 0.35 / i);
+  }
+  // glass
+  ctx.fillStyle = '#100c30'; ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.fill();
+  if (lit > 0) { const g = ctx.createRadialGradient(x, y, 4, x, y, r); g.addColorStop(0, hot ? `rgba(255,214,140,${0.55 * lit})` : `rgba(170,230,255,${0.5 * lit})`); g.addColorStop(1, 'rgba(0,0,0,0)'); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.fill(); }
+  vaRing(x, y, r, VA.line, 3);
+  vaStroke(vaArcPts(x, y, r * 0.78, -2.5, -1.9, 8), VA.text, 3, { a: 0.35 });   // a highlight on the glass
+  // neck and base
+  const ny = y + r * 0.86;
+  vaStroke([[x - r * 0.5, ny - 8], [x - r * 0.38, y + r * 1.32], [x + r * 0.38, y + r * 1.32], [x + r * 0.5, ny - 8]], VA.line, 3);
+  ctx.fillStyle = VA.fill2; ctx.fillRect(x - r * 0.38, y + r * 1.32, r * 0.76, r * 0.5);
+  for (let i = 0; i < 4; i++) vaLine(x - r * 0.38, y + r * (1.32 + i * 0.13), x + r * 0.38, y + r * (1.38 + i * 0.13), VA.line, 2.5);
+  vaStroke([[x - r * 0.38, y + r * 1.82], [x - r * 0.16, y + r * 1.98], [x + r * 0.16, y + r * 1.98], [x + r * 0.38, y + r * 1.82]], VA.line, 3);
+  // inside
+  if (hot) {
+    vaLine(x - 40, y + r * 0.9, x - 40, y + 4, VA.dim, 2.5); vaLine(x + 40, y + r * 0.9, x + 40, y + 4, VA.dim, 2.5);
+    const P = []; for (let i = 0; i <= 60; i++) { const u = i / 60; P.push([x - 40 + 80 * u, y + 4 - 14 - 12 * Math.sin(u * TAU * 7)]); }
+    const cc = lit > 0.05 ? (o.white ? VA.cream : VA.amber) : VA.dim;
+    if (lit > 0.05) vaGlow(P, cc, 3, lit, { core: o.white ? '#ffffff' : VA.cream }); else vaStroke(P, cc, 3);
+  } else {
+    vaLine(x - 46, y + 18, x + 46, y + 18, VA.dim, 3); vaLine(x, y + 18, x, y + r * 0.9, VA.dim, 2.5);
+    for (let i = 0; i < 4; i++) {
+      const cx = x - 36 + i * 24;
+      ctx.fillStyle = lit > 0.05 ? VA.minus : '#2b2470'; ctx.shadowColor = VA.minus; ctx.shadowBlur = 18 * lit;
+      ctx.fillRect(cx - 8, y + 2, 16, 14); ctx.shadowBlur = 0;
+      if (lit > 0.05) { ctx.fillStyle = '#e8fbff'; ctx.globalAlpha *= lit; ctx.fillRect(cx - 4, y + 5, 8, 7); ctx.globalAlpha /= lit; }
+    }
+  }
+  ctx.restore();
+}
+
+// =====================================================================
+//  the charts and diagrams (lower area, world y ~1020–1460)
+// =====================================================================
+const CH = { x0: 150, x1: 900, y0: 1430, h: 330 };
+const LMIN = 0.2, LMAX = 3.2;
+const lx = (lam) => lerp(CH.x0, CH.x1, (lam - LMIN) / (LMAX - LMIN));
+function planck(lam, T = 2700) { const c2 = 14388; return 1 / (Math.pow(lam, 5) * (Math.exp(c2 / (lam * T)) - 1)); }
+const PMAX = planck(2898 / 2700);
+function chartAxes(a) {
+  vaLine(CH.x0, CH.y0, CH.x1 + 10, CH.y0, VA.line, 2.5, { a });
+  vaLine(CH.x0, CH.y0, CH.x0, CH.y0 - CH.h - 20, VA.line, 2.5, { a });
+  vaText('λ (µm)', CH.x1, CH.y0 + 44, 26, VA.dim, { align: 'right', a });
+  for (const l of [0.5, 1, 2]) { vaLine(lx(l), CH.y0, lx(l), CH.y0 + 10, VA.line, 2, { a }); vaText(String(l), lx(l), CH.y0 + 40, 24, VA.dim, { align: 'center', a }); }
+}
+// the filament's spectrum: a 2,700 K black body, drawn on with u
+function chartFilament(a, u, o = {}) {
+  if (a <= 0) return;
+  chartAxes(a * (o.axes ?? 1));
+  const pts = []; for (let i = 0; i <= 120; i++) { const l = LMIN + (LMAX - LMIN) * i / 120; pts.push([lx(l), CH.y0 - CH.h * planck(l) / PMAX]); }
+  const P = vaPart(pts, u), last = P[P.length - 1];
+  ctx.save(); ctx.globalAlpha *= a * (o.ghost ? 0.35 : 1);
+  // fills: visible (magenta), infrared (amber)
+  const fill = (lo, hi, c) => { ctx.beginPath(); ctx.moveTo(lx(lo), CH.y0); for (const [x, y] of P) if (x >= lx(lo) && x <= lx(hi)) ctx.lineTo(x, y); ctx.lineTo(Math.min(lx(hi), last[0]), CH.y0); ctx.closePath(); ctx.fillStyle = c; ctx.fill(); };
+  fill(0.38, 0.75, 'rgba(212,98,242,0.75)');
+  if (last[0] > lx(0.75)) fill(0.75, LMAX, 'rgba(255,189,58,0.28)');
+  ctx.restore();
+  vaGlow(P, VA.amber, 3, 0.6 * a, { a: a * (o.ghost ? 0.35 : 1), dash: o.ghost ? [8, 10] : null });
+}
+// the LED's spectrum: a narrow blue spike and a broad phosphor hump, all inside the visible band
+function chartLED(a, u) {
+  if (a <= 0) return;
+  const g = (l, m, s) => Math.exp(-((l - m) ** 2) / (2 * s * s));
+  const pts = []; for (let i = 0; i <= 120; i++) { const l = LMIN + (LMAX - LMIN) * i / 120; pts.push([lx(l), CH.y0 - CH.h * 0.95 * (0.9 * g(l, 0.45, 0.012) + 0.62 * g(l, 0.57, 0.05))]); }
+  const P = vaPart(pts, u);
+  ctx.save(); ctx.globalAlpha *= a; ctx.beginPath(); ctx.moveTo(P[0][0], CH.y0); for (const [x, y] of P) ctx.lineTo(x, y); ctx.lineTo(P[P.length - 1][0], CH.y0); ctx.closePath(); ctx.fillStyle = 'rgba(212,98,242,0.55)'; ctx.fill(); ctx.restore();
+  vaGlow(P, VA.plus, 3, 0.8 * a, { a });
+}
+// the energy step: two levels, electrons that drop, photons that leave (the gap sets the colour)
+const STP = { x0: 200, x1: 880, top: 1080 };
+const gapAt = () => {   // the step's height: steady, then (colour) small -> mid -> large
+  const t = VW('color', 'height') - 0.2;
+  return springTrack([[0, 240], [t, 150], [t + 0.75, 250], [t + 1.5, 340], [VL('color').t1 + 0.3, 250]], SPRING.smooth);
+};
+const gapColor = (g) => (g < 190 ? '#ff4d5e' : g < 290 ? '#4dff9a' : '#4d8dff');
+function stepDiagram(a) {
+  if (a <= 0) return;
+  const g = gapAt(), bot = STP.top + g;
+  vaGlow([[STP.x0, STP.top], [STP.x1, STP.top]], VA.minus, 3, 0.5 * a, { a });
+  vaGlow([[STP.x0, bot], [STP.x1, bot]], VA.minus, 3, 0.5 * a, { a });
+  vaArrow(STP.x0 + 30, bot - 6, STP.x0 + 30, STP.top + 8, VA.text, 2.5, a, 14); vaArrow(STP.x0 + 30, STP.top + 8, STP.x0 + 30, bot - 6, VA.text, 2.5, a, 14);
+  vaText('energy step', STP.x0 + 50, (STP.top + bot) / 2 + 10, 30, VA.text, { a });
+  // electrons: each falls on its own clock; the first one on the words
+  const t0 = VW('step', 'electron') - 0.1, tDrop = VW('step', 'drops') - 0.05;
+  const drops = [tDrop]; for (let k = 1; k < 30; k++) drops.push(VW('step', 'photon') + 0.4 + k * 0.62);
+  drops.forEach((td, i) => {
+    if (TT < td - 0.9 || TT > td + 1.8) return;
+    const ex = 420 + ((i * 137) % 380), app = fadeIn(i === 0 ? t0 : td - 0.9, 0.3);
+    const fall = EZ.i2(clamp((TT - td) / 0.28)), ey = lerp(STP.top - 14, bot - 14, fall);
+    vaDot(ex, ey, 11, VA.minus, a * app * (1 - clamp((TT - td - 1.2) / 0.5))); vaRing(ex, ey, 18, VA.minus, 2, a * app * 0.4);
+    // the photon: a wiggle leaving to the right, in the gap's colour
+    const pu = clamp((TT - td - 0.28) / 1.1);
+    if (pu > 0 && pu < 1) {
+      const c = gapColor(g), P = []; const px = ex + pu * 520;
+      for (let j = 0; j <= 30; j++) { const v = j / 30; P.push([px - 120 + v * 120, bot - 40 - pu * 160 + Math.sin(v * TAU * 3 - TT * 20) * 14 * Math.sin(Math.PI * v)]); }
+      vaGlow(P, c, 3, a * (1 - pu * 0.6), { a: a * (1 - pu) });
+    }
+  });
+  const ta = fadeIn(VW('step', 'photon') - 0.1, 0.3) * fadeOut(S('color'), 0.3) * a;
+  if (ta > 0) vaText('photon', CXT, STP.top - 50, 52, VA.plus, { align: 'center', serif: true, italic: true, a: ta, frac: vaType(VW('step', 'photon') - 0.1, 'photon', 20) });
+  const ca = win(VW('color', 'height') - 0.2, S('math') + 0.2, 0.3) * a;
+  if (ca > 0) { vaText('height → colour', CXT, STP.top - 50, 52, gapColor(g), { align: 'center', serif: true, italic: true, a: ca }); }
+}
+function ledBars(rows, a) {   // rows: [label, value text, frac, colour, y, split?]
+  for (const r of rows) {
+    const [lab, val, frac, c, y, split] = r, x0 = 150, w = 740;
+    vaText(lab, x0, y - 16, 30, VA.text, { a });
+    vaText(val, x0 + w, y - 16, 30, c, { align: 'right', a, weight: 700 });
+    ctx.save(); ctx.globalAlpha *= a * 0.25; ctx.fillStyle = VA.dim; ctx.fillRect(x0, y, w, 46); ctx.restore();
+    if (split) { const [lf, hf, g] = split; vaBar(x0, y, w, 46, lf * g, VA.plus, a); vaBar(x0 + w * lf * g, y, w, 46, hf * g, VA.amber, a * 0.85); }
+    else vaBar(x0, y, w, 46, frac, c, a);
+  }
+}
+
+// =====================================================================
+//  the beats
+// =====================================================================
+function drawTitle() {
+  const a = fadeOut(VW('same', 'same') - 0.2, 0.4);
+  if (a <= 0) return;
+  OV(() => {
+    vaText('Why do LED lights', CXT, 290, 76, VA.cream, { align: 'center', serif: true, frac: vaType(VL('title').t0 - 0.05, 'Why do LED lights', 22), a, glow: 8 });
+    vaText('use so little', CXT, 376, 76, VA.cream, { align: 'center', serif: true, frac: vaType(VW('title', 'use') - 0.05, 'use so little', 22), a, glow: 8 });
+    vaText('electricity?', CXT, 462, 76, VA.minus, { align: 'center', serif: true, italic: true, frac: vaType(VW('title', 'electricity') - 0.05, 'electricity?', 18), a, glow: 18 });
+  });
+}
+function beatSame() {   // same light, 800 lm; 60 W against 8 W; where did 52 W go?
+  const t0 = VW('same', 'eight') - 0.1, a = fadeOut(S('filament') - 0.4, 0.3);
+  const la = fadeIn(t0, 0.3) * a;
+  if (la > 0) {
+    vaText('800 lm', CXT, 395, 52, VA.plus, { align: 'center', serif: true, a: la, frac: vaType(t0, '800 lm', 14), glow: 8 });
+    vaLine(510, 412, BL[0] + 40, BL[1] - BRAD - 20, VA.plus, 2, { a: la * 0.7 }); vaLine(570, 412, BR[0] - 40, BR[1] - BRAD - 20, VA.plus, 2, { a: la * 0.7 });
+  }
+  const t60 = VW('same', 'sixty') - 0.1, t8 = VW('same', 'eight', 2) - 0.1, tq = VW('question', 'fiftytwo') - 0.1;
+  const b = fadeIn(t60, 0.2) * a;
+  if (b > 0) {
+    const x0 = 150, w = 650, y = 1080;
+    vaText('filament', x0, y - 18, 30, VA.text, { a: b });
+    const g = EZ.o3(clamp((TT - t60) / 0.7));
+    vaBar(x0, y, w * 8 / 60, 46, g > 0.13 ? 1 : g / 0.13, VA.plus, b);
+    vaBar(x0 + w * 8 / 60, y, w * 52 / 60, 46, clamp((g - 0.13) / 0.87), VA.amber, b);
+    vaText('60 W', x0 + w + 16, y + 36, 34, VA.amber, { a: b, weight: 700 });
+    const c = fadeIn(t8, 0.2) * a;
+    vaText('LED', x0, y + 120, 30, VA.text, { a: c });
+    vaBar(x0, y + 138, w * 8 / 60, 46, EZ.o3(clamp((TT - t8) / 0.4)), VA.plus, c);
+    vaText('8 W', x0 + w * 8 / 60 + 16, y + 174, 34, VA.plus, { a: c, weight: 700 });
+    // the bracket over the missing 52
+    const q = fadeIn(tq, 0.3) * a;
+    if (q > 0) {
+      const xa = x0 + w * 8 / 60, xb = x0 + w;
+      vaStroke([[xa, y - 60], [xa, y - 72], [xb, y - 72], [xb, y - 60]], VA.amber, 2.5, { a: q });
+      vaText('52 W ?', CXT, y - 92, 56, VA.amber, { align: 'center', serif: true, a: q, frac: vaType(tq, '52 W ?', 14), glow: 10 });
+    }
+    // heat: the 52 W segment shimmers, a label
+    const th = VW('heat', 'heat') - 0.1, h = fadeIn(th, 0.3) * a;
+    if (h > 0) {
+      for (let i = 0; i < 9; i++) { const xx = x0 + w * 8 / 60 + 30 + i * 60, yy = y - 6 - mod(TT * 40 + i * 13, 50); vaStroke([[xx, yy], [xx + 6, yy - 10], [xx, yy - 20]], VA.amber, 2.5, { a: h * 0.6 }); }
+      vaText('heat', x0 + w * 0.6, y + 120, 34, VA.amber, { a: h, weight: 700, frac: vaType(th, 'heat', 12) });
+      const tm = VW('heat', 'method') - 0.15, m = fadeIn(tm, 0.3) * a;
+      vaText('not a flaw: the method', CXT, y + 280, 44, VA.cream, { align: 'center', serif: true, italic: true, a: m, frac: vaType(tm, 'not a flaw: the method', 30) });
+    }
+  }
+}
+function beatFilament() {   // white-hot coil, rays out: mostly infrared (amber), a few visible (magenta)
+  const t0 = S('filament'), a = win(t0 + 0.3, S('method'), 0.4);
+  if (a <= 0) return;
+  const tw = VW('filament', 'whitehot') - 0.1, td = VW('filament', 'thousand') - 0.3;
+  OV(() => {
+    const k = fadeIn(td, 0.3) * fadeOut(S('infrared') + 0.2, 0.3);
+    if (k > 0) { vaText('> 2,000 °C', CXT, 360, 80, VA.cream, { align: 'center', serif: true, a: k, frac: vaType(td, '> 2,000 °C', 20), glow: 14 }); vaText('≈ 2,700 K', CXT, 430, 32, VA.amber, { align: 'center', a: k }); }
+  });
+  // rays from the coil: amber long ones (infrared), magenta short ones (light)
+  const ra = fadeIn(tw, 0.4) * a;
+  if (ra > 0) for (let i = 0; i < 16; i++) {
+    const an = -Math.PI / 2 + (i - 7.5) * 0.19, vis = i % 6 === 2, u = mod(TT * 0.9 + i * 0.37, 1);
+    const r0 = 40 + u * 30, r1 = r0 + 34;
+    vaArrow(BL[0] + Math.cos(an) * r0, BL[1] - 14 + Math.sin(an) * r0, BL[0] + Math.cos(an) * r1, BL[1] - 14 + Math.sin(an) * r1, vis ? VA.plus : VA.amber, 2.5, ra * Math.sin(Math.PI * u), 8);
+  }
+}
+function beatInfrared() {
+  const a = win(S('infrared') + 0.7, S('method') - 0.35, 0.3);
+  if (a <= 0) return;
+  const tc = VW('infrared', 'temperature') - 0.2, u = EZ.io(clamp((TT - tc) / 1.6));
+  chartFilament(a, u);
+  const vi = fadeIn(VW('infrared', 'gives'), 0.3) * a;
+  if (vi > 0) {
+    vaLine(lx(0.55), CH.y0 - 60, lx(0.55) - 10, CH.y0 - CH.h - 10, VA.plus, 2, { a: vi });
+    vaText('visible', lx(0.55) - 12, CH.y0 - CH.h - 24, 30, VA.plus, { a: vi });
+    vaText('infrared', lx(2.0), CH.y0 - CH.h * 0.75, 32, VA.amber, { a: fadeIn(VW('infrared', 'infrared') - 0.1, 0.3) * a, weight: 700 });
+    const pk = lx(2898 / 2700); vaLine(pk, CH.y0, pk, CH.y0 - CH.h, VA.amber, 1.5, { a: vi * 0.6, dash: [6, 8] });
+    vaText('1.07 µm', pk + 10, CH.y0 - 14, 24, VA.amber, { a: vi });
+  }
+  const tl = VW('infrared', 'less') - 0.1, l = fadeIn(tl, 0.3) * a;
+  if (l > 0) vaText('< 5 % light', CXT, CH.y0 - CH.h - 90, 64, VA.plus, { align: 'center', serif: true, a: l, frac: vaType(tl, '< 5 % light', 18), glow: 12 });
+}
+function beatStep() {
+  const a = win(S('step') + 0.7, S('math') + 0.2, 0.4);
+  if (a <= 0) return;
+  // an inset: dashed lines from the LED chip down to the diagram
+  vaLine(BR[0] - 40, BR[1] + 20, STP.x0, STP.top - 70, VA.minus, 2, { a: a * 0.4, dash: [6, 8] });
+  vaLine(BR[0] + 40, BR[1] + 20, STP.x1, STP.top - 70, VA.minus, 2, { a: a * 0.4, dash: [6, 8] });
+  stepDiagram(a);
+}
+function beatMath() {
+  const a = win(S('math'), S('lmw') + 0.1, 0.4);
+  if (a <= 0) return;
+  chartFilament(a, 1, { ghost: true });
+  chartLED(a, EZ.io(clamp((TT - S('math') - 0.3) / 1.0)));
+  const n = fadeIn(VW('math', 'infrared') - 0.1, 0.3) * a;
+  if (n > 0) vaText('no infrared', CXT, CH.y0 - CH.h - 40, 60, VA.minus, { align: 'center', serif: true, italic: true, a: n, frac: vaType(VW('math', 'infrared') - 0.1, 'no infrared', 22), glow: 10 });
+}
+function beatLmw() {
+  const a = win(S('lmw') + 0.1, S('hundred') - 0.3, 0.3);
+  if (a <= 0) return;
+  const t1 = VW('lmw', 'fifteen') - 0.1, t2 = VW('lmw', 'hundred') - 0.4;
+  const n1 = Math.round(15 * EZ.o3(clamp((TT - t1) / 0.6))), n2 = Math.round(100 * EZ.o3(clamp((TT - t2) / 0.7)));
+  ledBars([['old bulb', `${n1} lm/W`, 0.15 * EZ.o3(clamp((TT - t1) / 0.6)), VA.amber, 1100], ['LED', `${n2}${n2 >= 100 ? '+' : ''} lm/W`, 1.0 * EZ.o3(clamp((TT - t2) / 0.7)), VA.minus, 1280]], a);
+}
+function beatHundred() {
+  const a = win(S('hundred') + 0.1, S('losses') - 0.35, 0.3);
+  if (a <= 0) return;
+  const t0 = LT('hundred', 0.05), t1 = VW('hundred', 'thirty') - 0.1, t2 = VW('hundred', 'five') - 0.2;
+  vaText('of every 100 W', CXT, 1010, 46, VA.text, { align: 'center', serif: true, a, frac: vaType(t0, 'of every 100 W', 26) });
+  const g1 = EZ.o3(clamp((TT - t2) / 0.6)), g2 = EZ.o3(clamp((TT - t1) / 0.6));
+  ledBars([['old bulb', '5 % light', 0, VA.plus, 1110, [0.05, 0.95, Math.max(g1, fadeIn(t0, 0.4))]], ['LED', '30 % light', 0, VA.plus, 1290, [0.3, 0.7, g2]]], a);
+  const x6 = popS(VW('hundred', 'instead') - 0.1) * a;
+  if (x6 > 0) vaText('×6 light', CXT, 1440, 64 * x6, VA.plus, { align: 'center', serif: true, a, glow: 12 });
+}
+function beatLosses() {
+  const a = win(S('losses') + 0.2, S('never') + 0.2, 0.35);
+  if (a <= 0) return;
+  // a heat sink under the LED's base, faint warmth
+  const y = BR[1] + BRAD * 2.05, x = BR[0];
+  ctx.save(); ctx.globalAlpha *= a;
+  for (let i = 0; i < 7; i++) vaLine(x - 54 + i * 18, y, x - 54 + i * 18, y + 54, VA.minus, 3);
+  vaLine(x - 64, y, x + 64, y, VA.minus, 3);
+  ctx.restore();
+  ledHeatWaves(x, y + 70, 0.5 * a, 3, 140);
+  const tl = VW('losses', 'losses') - 0.1;
+  vaText('losses,', CXT, y + 150, 48, VA.minus, { align: 'center', serif: true, italic: true, a: fadeIn(tl, 0.25) * a, frac: vaType(tl, 'losses,', 20) });
+  vaText('not method', CXT, y + 210, 48, VA.text, { align: 'center', serif: true, a: fadeIn(VW('losses', 'method') - 0.2, 0.25) * a, frac: vaType(VW('losses', 'method') - 0.2, 'not method', 22) });
+}
+function beatEnd() {
+  const tl = VW('heater', 'lamp') - 0.2, th = VW('heater', 'heater') - 0.15, tF = VL('heater').t1 + 0.4;
+  const la = fadeIn(tl, 0.3);
+  if (la > 0) vaText('never a lamp', CXT, BL[1] + BRAD * 2 + 120, 52, VA.text, { align: 'center', serif: true, italic: true, a: la * fadeOut(th, 0.3), frac: vaType(tl, 'never a lamp', 24) });
+  const ha = fadeIn(th, 0.3);
+  if (ha > 0) OV(() => {
+    vaText('It was a heater', CXT, 1270, 80, VA.amber, { align: 'center', serif: true, a: ha, frac: vaType(th, 'It was a heater', 22), glow: 16 });
+    vaText('that happened to glow.', CXT, 1352, 60, VA.cream, { align: 'center', serif: true, italic: true, a: ha, frac: vaType(VW('heater', 'happened') - 0.1, 'that happened to glow.', 26), glow: 10 });
+    const na = fadeIn(VW('heater', 'heater') + 0.5, 0.5);
+    if (na > 0) {
+      ctx.save(); ctx.font = `700 46px ${VMONO}`; const wB = ctx.measureText('Bit').width, wV = ctx.measureText('volts').width; ctx.restore();
+      const x0 = CXT - (wB + wV) / 2;
+      vaText('Bit', x0, 1475, 46, VA.minus, { weight: 700, a: na, glow: 12 }); vaText('volts', x0 + wB, 1475, 46, VA.plus, { weight: 700, a: na, glow: 12 });
+    }
+  });
+}
+
+// =====================================================================
+//  the stage
+// =====================================================================
+function sceneStage() {
+  const c = camAtT(); CAMZ = c.z;
+  const warm = TT >= HIT ? Math.max(0.35, flashK(HIT, 1.4)) * 0.9 : TT >= S('filament') && TT < S('method') ? 0.25 * win(S('filament'), S('method'), 0.5) : 0;
+  vaBg(warm);
+  vaGridBg(c);
+  vaSpecks(40, 0.3);
+  setCam(c);
+  // the bulbs: off during the title, on at "same light"; the filament goes white-hot; dims at "LED doesn't"; the end blooms
+  const on = fadeIn(VW('same', 'same') - 0.1, 0.25);
+  const filLit = on * (TT >= S('method') && TT < S('never') ? 0.55 : 1) * (TT >= S('step') && TT < S('never') ? 0.6 : 1);
+  const ledLit = on * (TT >= S('filament') && TT < S('method') ? 0.5 : 1);
+  const white = TT >= VW('filament', 'whitehot') - 0.1 && TT < S('method');
+  const bloom = TT >= HIT ? 1.6 * EZ.o3(clamp((TT - HIT) / 0.8)) : 0;
+  const ba = EZ.o2(clamp((TT - 0.2) / 1.2));
+  ledBulb(BL[0], BL[1], 'fil', Math.max(filLit, TT >= HIT ? 1 : 0), { a: ba, white, bloom });
+  ledBulb(BR[0], BR[1], 'led', ledLit * (TT >= HIT ? 0.6 : 1), { a: ba });
+  // the filament's heat: always rising, much more at the end
+  ledHeatWaves(BL[0], BL[1] - BRAD - 30, on * (TT >= HIT ? 1 : TT >= VW('heat', 'heat') - 0.2 ? 0.7 : 0.3), TT >= HIT ? 7 : 5, TT >= HIT ? 320 : 220);
+  const lab = on * fadeOut(S('filament') - 0.4, 0.3) + fadeIn(S('never') + 0.5, 0.4) * fadeOut(HIT, 0.3);
+  if (lab > 0) { vaText('filament', BL[0], BL[1] + BRAD * 2 + 50, 30, VA.text, { align: 'center', a: lab }); vaText('LED', BR[0], BR[1] + BRAD * 2 + 50, 30, VA.minus, { align: 'center', a: lab }); }
+  beatSame(); beatFilament(); beatInfrared(); beatStep(); beatMath(); beatLmw(); beatHundred(); beatLosses(); beatEnd();
+  drawTitle();
+}
+// no bridges: one continuous stage; the later small stages are cross-faded inside the scene
+const ERA_BG = ['#04031a'];
+const BRIDGES = [];
+
+// =====================================================================
+//  kit/morph.js — the renderer for pieces built from ERAS (scenes) joined by SHAPE MORPHS.
+//
+//  At each bridge time tc:
+//    shrink [tc-d, tc-m]      the old era is seen through a window shaped like the bridge object (STYLE.window),
+//                             shrinking onto the object while the backdrop fades to blank paper
+//    morph  [tc-m, tc+m]      on blank paper, the object's outline blends into its counterpart's
+//                             (both resampled by angle around their centroids; colour lerped). Hero-to-hero
+//                             bridges draw the hero itself with blended position, size and ray count.
+//    grow   [tc+m, tc+d]      the new era opens out of a window shaped like the counterpart
+//    d = the bridge's half-length (default 0.6s, so a bridge costs 1.2s), m = the morph's half (default 0.2s, or d/3 when d is set).
+//    Short pieces: { tc, d: 0.4 } (0.8s) or fewer bridges — see craft.md -> Transitions.
+//  Era boundaries WITHOUT a bridge are hard cuts (keep at most one: the slam).
+//
+//  The piece defines (in its head / src):
+//    ERA_LIST = [[t0, t1, () => drawScene()], ...]      scenes draw in world coords, call yearTag()/capStrip()
+//    ERA_BG   = ['#hex', ...]                          each era's dominant colour (for the fade to paper)
+//    BRIDGES  = [{ tc, A: () => shape, B: () => shape, d?, m? }]   shape = { P: points, c: '#hex' } or SP(x, y, r, rays)
+//    function pieceCam(era, t) { return null | CAM }   optional; use push() / bump() below
+//  Shapes are in each era's world coords; the bridge object must be in frame at tc (pull push-ins back first).
+//  The look comes from the style kit's STYLE hooks (paper, backdrop, window, blob, hero, post, ones):
+//  this file draws nothing itself, so the same piece structure works in any style.
+// =====================================================================
+// ---- cameras: CAM = { z, tx, ty }; camOf({ z, p, to }) puts world point p on screen point to
+const CAM0 = { z: 1, tx: 0, ty: 0 };
+const camOf = (c) => ({ z: c.z, tx: c.to[0] - c.z * c.p[0], ty: c.to[1] - c.z * c.p[1] });
+const camMix = (a, b, u) => ({ z: lerp(a.z, b.z, u), tx: lerp(a.tx, b.tx, u), ty: lerp(a.ty, b.ty, u) });
+// an eased push-in over [a, b] to cam, optionally pulled back over [oa, ob]
+function push(t, a, b, cam, oa, ob) { let u = EZ.io(seg(t, a, b)); if (oa != null) u *= 1 - EZ.io(seg(t, oa, ob)); return u > 0 ? camMix(CAM0, camOf(cam), u) : null; }
+// a zoom bump on every beat from t0, centred on point p (the hero keeps its screen spot)
+function bump(t, t0, p, amt = 0.3, every = 0.5) { return camOf({ z: 1 + amt * Math.exp(-mod(t - t0, every) * 7), p, to: p }); }
+function camAt(era, t) { return (typeof pieceCam === 'function' && pieceCam(era, t)) || CAM0; }
+const camPts = (P, c) => P.map(([x, y]) => [c.z * x + c.tx, c.z * y + c.ty]);
+// ---- bridge shapes
+function starPts(x, y, r, n, r0 = -Math.PI / 2, m = 96) {
+  const P = []; for (let i = 0; i < m; i++) { const a = i / m * TAU, k = 0.42 + 0.58 * (0.5 + 0.5 * Math.cos(n * (a - r0))) ** 3; P.push([x + Math.cos(a) * r * k, y + Math.sin(a) * r * k]); }
+  return P;
+}
+const SP = (x, y, r, n) => ({ spark: [x, y, r, n] });
+const shapeOf = (s) => (s.spark ? { P: (STYLE.heroPts || starPts)(...s.spark), c: STYLE.heroColor, spark: s.spark } : s);
+function byAngle(P, m = 96) {   // resample a closed outline to m points by angle around its centroid
+  const c = P.reduce((a, p) => [a[0] + p[0] / P.length, a[1] + p[1] / P.length], [0, 0]), Q = resample(P, true, 4), out = [];
+  for (let i = 0; i < m; i++) {
+    const a = -Math.PI + i / m * TAU; let best = null, bd = 1e9;
+    for (const q of Q) { let d = Math.atan2(q[1] - c[1], q[0] - c[0]) - a; d = Math.abs(Math.atan2(Math.sin(d), Math.cos(d))); const r = Math.hypot(q[0] - c[0], q[1] - c[1]); if (d < bd - 1e-4 || (Math.abs(d - bd) < 1e-4 && r > best[2])) { bd = d; best = [q[0], q[1], r]; } }
+    out.push([best[0], best[1]]);
+  }
+  return { P: out, c };
+}
+const mixHex = (a, b, u) => { const p = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16)); const x = p(a), y = p(b); return `rgb(${x.map((v, i) => Math.round(lerp(v, y[i], u))).join(',')})`; };
+function maskK(P) {   // how far the window must scale about its centroid to cover the frame
+  const c = P.reduce((a, p) => [a[0] + p[0] / P.length, a[1] + p[1] / P.length], [0, 0]);
+  const rmin = Math.max(8, Math.min(...byAngle(P, 48).P.map((p) => Math.hypot(p[0] - c[0], p[1] - c[1]))));
+  const far = Math.max(...[[0, 0], [W, 0], [0, H], [W, H]].map((q) => Math.hypot(q[0] - c[0], q[1] - c[1])));
+  return { c, kmax: far / rmin * 1.1 };
+}
+const scaled = (P, c, k) => P.map(([x, y]) => [c[0] + (x - c[0]) * k, c[1] + (y - c[1]) * k]);
+// ---- layers and windows
+const LAYER = [];
+function layer(i) { if (!LAYER[i]) { const c = document.createElement('canvas'); c.width = W; c.height = H; LAYER[i] = c; } return LAYER[i]; }
+function renderEra(e, target) {   // draws era e into target; returns its overlay queue (year tag, caption)
+  const saved = ctx; ctx = target.getContext('2d');
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ctx.filter = 'none'; ctx.setLineDash([]);
+  ctx.fillStyle = STYLE.paper; ctx.fillRect(0, 0, W, H);   // a clean sheet every frame: nothing carries over between frames
+  const cam = camAt(e, TT); ctx.setTransform(cam.z, 0, 0, cam.z, cam.tx, cam.ty);
+  DEFER = []; ERA_LIST[e][2](); const q = DEFER; DEFER = null;
+  ctx.restore(); ctx = saved;
+  return q;
+}
+function flush(q, e) { const keep = E0; E0 = ERA_LIST[e][0]; ctx.setTransform(1, 0, 0, 1, 0, 0); q.forEach((f) => f()); E0 = keep; }
+function shotAtFrame(fr) {
+  for (const s of TIMELINE.shots) if (fr >= Math.round(s.t0 * FPS) && fr < Math.round(s.t1 * FPS)) return s;
+  return TIMELINE.shots[TIMELINE.shots.length - 1];
+}
+const eraAt = (t) => ERA_LIST.findIndex(([a, b]) => t >= a - 1e-6 && t < b - 1e-6);
+// renderFrame(t, canvas, sub): sub = true draws the exact time t between frames (motion blur sub-frames, styles on 1s)
+function renderFrame(t, canvas, sub) {
+  const cv = canvas || document.getElementById('c');
+  ctx = cv.getContext('2d');
+  F = ((Math.floor(sub ? t * FPS + 1e-6 : Math.round(t * FPS)) % NFRAMES) + NFRAMES) % NFRAMES;
+  B = Math.floor(F / 2);
+  TT = (STYLE.ones ? (sub ? F + (t * FPS - Math.floor(t * FPS + 1e-6)) : F) : B * 2) / FPS;
+  // the era is picked by the real frame, so a cut on an odd frame (a 16th at 24fps) lands on that frame;
+  // on its first frame the new era is drawn at its own start time (motion stays on 2s inside it)
+  const s = shotAtFrame(F), e = Math.max(0, eraAt(F / FPS));
+  E0 = ERA_LIST[e][0];
+  if (TT < E0 - 1e-6) TT = E0;
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over'; ctx.setLineDash([]); ctx.filter = 'none';
+  SPARK_AT = null;
+  const bd = (r) => r.d ?? 0.6, bm = (r) => r.m ?? (r.d != null ? r.d / 3 : 0.2);
+  const tr = BRIDGES.find((r) => TT >= r.tc - bd(r) - 1e-6 && TT < r.tc + bd(r) - 1e-6);
+  if (!tr) {
+    const q = renderEra(e, layer(0)); ctx.drawImage(layer(0), 0, 0); flush(q, e);
+  } else {
+    const ea = eraAt(tr.tc - 0.01), eb = eraAt(tr.tc + 0.01);
+    const sa = shapeOf(tr.A()), sb = shapeOf(tr.B());
+    const PA = camPts(sa.P, camAt(ea, TT)), PB = camPts(sb.P, camAt(eb, TT));
+    const D = bd(tr), M = bm(tr);
+    if (TT < tr.tc - M) {
+      const u = EZ.i2(seg(TT, tr.tc - D, tr.tc - M)), { c, kmax } = maskK(PA), k = Math.exp(lerp(Math.log(kmax), 0, u));
+      STYLE.backdrop(mixHex(ERA_BG[ea], STYLE.paper, 0.5 + u * 0.5), { eraA: ea, eraB: eb, u, phase: 'shrink' });
+      const q = renderEra(ea, layer(0));
+      STYLE.window(scaled(PA, c, k), 'mA' + tr.tc, layer(0), { c: sa.c, u, phase: 'shrink', eraA: ea, eraB: eb });
+      flush(q, ea);
+    } else if (TT < tr.tc + M) {
+      const u = EZ.io(seg(TT, tr.tc - M, tr.tc + M));
+      STYLE.backdrop(STYLE.paper, { eraA: ea, eraB: eb, u, phase: 'morph' });
+      if (sa.spark && sb.spark) {
+        const ca = camAt(ea, TT), cb = camAt(eb, TT), [ax, ay] = camPts([sa.spark.slice(0, 2)], ca)[0], [bx, by] = camPts([sb.spark.slice(0, 2)], cb)[0];
+        STYLE.hero(lerp(ax, bx, u), lerp(ay, by, u), lerp(sa.spark[2] * ca.z, sb.spark[2] * cb.z, u), { rays: Math.round(lerp(sa.spark[3], sb.spark[3], u)), mood: 'wow', key: 'morphspark' });
+      } else {
+        const A2 = byAngle(PA), B2 = byAngle(PB), M = A2.P.map((p, i) => [lerp(p[0], B2.P[i][0], u), lerp(p[1], B2.P[i][1], u)]);
+        STYLE.blob(M, mixHex(sa.c, sb.c, u), 'morph' + tr.tc, u, { eraA: ea, eraB: eb, phase: 'morph' });
+        if (sb.spark && u > 0.6) STYLE.hero(...camPts([sb.spark.slice(0, 2)], camAt(eb, TT))[0], sb.spark[2] * clamp((u - 0.6) / 0.4), { rays: sb.spark[3], mood: 'wow', key: 'morphspark2' });
+      }
+    } else {
+      const u = EZ.o2(seg(TT, tr.tc + M, tr.tc + D)), { c, kmax } = maskK(PB), k = Math.exp(lerp(0, Math.log(kmax), u));
+      STYLE.backdrop(mixHex(STYLE.paper, ERA_BG[eb], u * 0.5), { eraA: ea, eraB: eb, u, phase: 'grow' });
+      const q = renderEra(eb, layer(0));
+      STYLE.window(scaled(PB, c, k), 'mB' + tr.tc, layer(0), { c: sb.c, u, phase: 'grow', eraA: ea, eraB: eb });
+      flush(q, eb);
+    }
+  }
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  if (STYLE.post) STYLE.post();
+  ctx.restore();
+  return s.id;
+}
+window.renderFrame = renderFrame;
+window.anchorAt = () => (SPARK_AT ? { x: SPARK_AT[0], y: SPARK_AT[1] } : null);
+
+// =====================================================================
+//  kit/board.js — the storyboard: every beat in TIMELINE.board drawn as a 9:16 key frame with its notes.
+//  The panels ARE the piece: each one is renderFrame(t) at the beat's key time, so an approved board
+//  carries straight into the video.  TIMELINE.board = [{ t, title, sound, next }]
+//  Render: node tools/storyboard.mjs <piece dir> [out.png] [panel numbers...]
+// =====================================================================
+function drawPanel(k) { renderFrame(TIMELINE.board[k].t, ctx.canvas); }
+function renderBoard() {
+  const BD = TIMELINE.board || [], COLS = 5, PW = 360, PH = Math.round(PW * H / W), GAP = 30, NOTE = 130, HEAD = 150;
+  const rows = Math.ceil(BD.length / COLS), bc = document.createElement('canvas');
+  bc.width = GAP + COLS * (PW + GAP); bc.height = HEAD + rows * (PH + NOTE + GAP);
+  const g = bc.getContext('2d'), SANS = '"Segoe UI", Arial, sans-serif';
+  g.fillStyle = '#2a211b'; g.fillRect(0, 0, bc.width, bc.height);
+  g.fillStyle = '#efe5cf'; g.font = `400 60px ${HAND}`; g.fillText(`${document.title}: storyboard`, GAP, 80);
+  g.font = `600 22px ${SANS}`; g.fillStyle = '#d9c9a8';
+  g.fillText(`${TIMELINE.duration}s · ${W}×${H} · ${TIMELINE.bpm} BPM · ${BD.length} beats. Thumbs up or down by panel number.`, GAP, 122);
+  const wrap = (str, x, y, maxW, lh) => { let line = ''; for (const w of str.split(' ')) { const t = line ? line + ' ' + w : w; if (g.measureText(t).width > maxW && line) { g.fillText(line, x, y); y += lh; line = w; } else line = t; } if (line) g.fillText(line, x, y); return y + lh; };
+  const pc = document.createElement('canvas'); pc.width = W; pc.height = H;
+  BD.forEach((b, k) => {
+    renderFrame(b.t, pc);
+    const x = GAP + (k % COLS) * (PW + GAP), y = HEAD + Math.floor(k / COLS) * (PH + NOTE + GAP);
+    g.drawImage(pc, x, y, PW, PH);
+    g.fillStyle = '#f0b27c'; g.font = `700 26px ${SANS}`; g.fillText(`${k + 1}`, x, y + PH + 32);
+    g.fillStyle = '#efe5cf'; g.font = `600 20px ${SANS}`;
+    let ttl = `${b.t.toFixed(1)}s · ${b.title || ''}`; while (ttl.length > 4 && g.measureText(ttl).width > PW - 44) ttl = ttl.slice(0, -2) + '…';   // fits the panel
+    g.fillText(ttl, x + 40, y + PH + 30);
+    g.font = `400 18px ${SANS}`; g.fillStyle = '#cdbd9c';
+    const yy = b.sound ? wrap('sound: ' + b.sound, x, y + PH + 58, PW, 22) : y + PH + 58;
+    if (b.next) { g.fillStyle = '#a8977a'; wrap('→ ' + b.next, x, yy + 2, PW, 22); }
+  });
+  return bc;
+}
+window.renderBoard = renderBoard; window.drawPanel = drawPanel;
+// =====================================================================
+//  kit/score-head.js — live preview (click to hear), noise/impulse/WAV helpers, and the synth.
+//  buildScore() opens here; the piece's score body follows (src/score.js), then kit/score-tail.js closes it.
+//  Helpers inside buildScore: pluck, noiseHit, sub, sweep, riser, chime, bass, blip, pad, drone, out, osc, env.
+//  Set `to = 'm'` (music bus) or `to = 's'` (sfx bus) before calling them. Notes: nz('D4').
+// =====================================================================
+// live preview: rAF on the 24fps grid; click to hear the score (?t=1.5 freezes a frame)
+const QS = new URLSearchParams(location.search);
+const LIVE = { audio: null, t0: 0, start: performance.now() };
+if (!QS.has('export')) {
+  const cv = document.getElementById('c');
+  if (QS.has('t')) renderFrame(parseFloat(QS.get('t')));
+  else {
+    const tick = () => {
+      const sec = LIVE.audio ? LIVE.audio.currentTime - LIVE.t0 : (performance.now() - LIVE.start) / 1000;
+      const t = ((sec % LOOP_T) + LOOP_T) % LOOP_T;
+      renderFrame(Math.floor(t * FPS) / FPS);
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+  cv.addEventListener('click', async () => {
+    if (LIVE.audio || typeof buildScore !== 'function') return;
+    const ac = new AudioContext(), score = await buildScore(ac.sampleRate);
+    const buf = ac.createBuffer(2, score.left.length, score.sampleRate);
+    buf.copyToChannel(score.left, 0); buf.copyToChannel(score.right, 1);
+    const src = ac.createBufferSource(); src.buffer = buf; src.loop = true; src.connect(ac.destination);
+    LIVE.t0 = ac.currentTime + 0.05; src.start(LIVE.t0); LIVE.audio = ac;
+  });
+}
+
+const HZ = {
+  A1: 55.0, D2: 73.42, F2: 87.31, A2: 110.0, D3: 146.83, F3: 174.61, A3: 220.0, C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23,
+  Fs4: 369.99, A4: 440.0, B4: 493.88, C5: 523.25, D5: 587.33, E5: 659.25, Fs5: 739.99, A5: 880.0, D6: 1174.66, A6: 1760.0,
+};
+function makeNoise(ac, sec) {
+  const b = ac.createBuffer(1, Math.floor(sec * ac.sampleRate), ac.sampleRate), d = b.getChannelData(0), R = RNG('noise');
+  for (let i = 0; i < d.length; i++) d[i] = R.f() * 2 - 1;
+  return b;
+}
+function makeImpulse(ac, sec, decay) {
+  const n = Math.floor(sec * ac.sampleRate), b = ac.createBuffer(2, n, ac.sampleRate);
+  for (let c = 0; c < 2; c++) { const d = b.getChannelData(c), R = RNG('ir', c); for (let i = 0; i < n; i++) d[i] = (R.f() * 2 - 1) * Math.pow(1 - i / n, decay); }
+  return b;
+}
+function encodeWav(left, right, sr) {
+  const n = left.length, buf = new ArrayBuffer(44 + n * 4), v = new DataView(buf);
+  const ws = (o, s) => { for (let i = 0; i < s.length; i++) v.setUint8(o + i, s.charCodeAt(i)); };
+  ws(0, 'RIFF'); v.setUint32(4, 36 + n * 4, true); ws(8, 'WAVE'); ws(12, 'fmt ');
+  v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 2, true); v.setUint32(24, sr, true);
+  v.setUint32(28, sr * 4, true); v.setUint16(32, 4, true); v.setUint16(34, 16, true);
+  ws(36, 'da' + 'ta'); v.setUint32(40, n * 4, true);
+  let o = 44;
+  for (let i = 0; i < n; i++) { v.setInt16(o, Math.round(clamp(left[i], -1, 1) * 32767), true); v.setInt16(o + 2, Math.round(clamp(right[i], -1, 1) * 32767), true); o += 4; }
+  return new Uint8Array(buf);
+}
+
+
+const MIDI = (m) => 440 * 2 ** ((m - 69) / 12);
+const NOTE = { D2: 38, A2: 45, D3: 50, E3: 52, Fs3: 54, A3: 57, D4: 62, E4: 64, Fs4: 66, G4: 67, A4: 69, B4: 71, Cs5: 73, D5: 74, E5: 76, Fs5: 78, A5: 81, B5: 83, D6: 86, E6: 88, Fs6: 90, A6: 93 };
+// any note name: 'D4', 'Fs4' / 'F#4' (sharp), 'Bb3' (flat); the table above is the fast path
+function noteNum(n) {
+  if (NOTE[n] != null) return NOTE[n];
+  const m = /^([A-G])(s|#|b)?(-?\d)$/.exec(n); if (!m) throw new Error(`unknown note "${n}"`);
+  return 12 * (Number(m[3]) + 1) + { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 }[m[1]] + (m[2] === 'b' ? -1 : m[2] ? 1 : 0);
+}
+const nz = (n) => MIDI(noteNum(n));
+async function buildScore(sampleRate = 48000, part = 'mix', normIn = null) {
+  const TAIL = 3.0, len = Math.ceil((LOOP_T + TAIL) * sampleRate);
+  const ac = new OfflineAudioContext(2, len, sampleRate);
+  const master = ac.createGain(); master.gain.value = 0.8;
+  const comp = ac.createDynamicsCompressor();
+  comp.threshold.value = -16; comp.knee.value = 10; comp.ratio.value = 3.5; comp.attack.value = 0.004; comp.release.value = 0.2;
+  master.connect(comp); comp.connect(ac.destination);
+  const musicBus = ac.createGain(), sfxBus = ac.createGain();
+  musicBus.gain.value = part === 'sfx' ? 0 : 1; sfxBus.gain.value = part === 'music' ? 0 : 1;
+  musicBus.connect(master); sfxBus.connect(master);
+  // ducking + presence dip, driven by the narration (lines closer than 0.29s are merged)
+  const duck = ac.createGain(), dip = ac.createBiquadFilter();
+  dip.type = 'peaking'; dip.frequency.value = 2500; dip.Q.value = 1;
+  duck.connect(dip); dip.connect(musicBus);
+  const lines = [];
+  for (const n of TIMELINE.narration) { const L = lines[lines.length - 1]; if (L && n.t0 - L.t1 < 0.29) L.t1 = n.t1; else lines.push({ t0: n.t0, t1: n.t1 }); }
+  const DUCK = 10 ** (-3 / 20);
+  duck.gain.setValueAtTime(1, 0); dip.gain.setValueAtTime(0, 0);
+  for (const L of lines) {
+    duck.gain.setValueAtTime(1, Math.max(0, L.t0 - 0.1)); duck.gain.linearRampToValueAtTime(DUCK, L.t0);
+    duck.gain.setValueAtTime(DUCK, L.t1 + 0.03); duck.gain.linearRampToValueAtTime(1, L.t1 + 0.18);
+    dip.gain.setValueAtTime(0, Math.max(0, L.t0 - 0.1)); dip.gain.linearRampToValueAtTime(-6, L.t0);
+    dip.gain.setValueAtTime(-6, L.t1 + 0.03); dip.gain.linearRampToValueAtTime(0, L.t1 + 0.18);
+  }
+  const mkVerb = (dest, sec = 1.6, decay = 2.8, level = 0.3) => { const v = ac.createConvolver(); v.buffer = makeImpulse(ac, sec, decay); const g = ac.createGain(); g.gain.value = level; v.connect(g); g.connect(dest); return v; };
+  const verbs = { m: mkVerb(duck), s: mkVerb(sfxBus) }, shortVerb = verbs.m, longVerb = mkVerb(duck, 3.6, 1.6, 0.55);
+  const noise = makeNoise(ac, 3.0);
+  let to = 'm';   // which bus the helpers below write to
+
+  // the gain is silent until the envelope starts (a GainNode defaults to 1: a note whose oscillator starts first would click)
+  const env = (g, t, a, peak, d) => { g.gain.value = 0.0001; g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(Math.max(0.0002, peak), t + a); g.gain.exponentialRampToValueAtTime(0.0001, t + a + d); };
+  const out = (node, pan = 0, send = 0) => {
+    const p = ac.createStereoPanner(); p.pan.value = clamp(pan, -1, 1); node.connect(p); p.connect(to === 'm' ? duck : sfxBus);
+    if (send) { const s = ac.createGain(); s.gain.value = send; node.connect(s); s.connect(verbs[to]); }
+  };
+  const osc = (type, f, t, stop) => { const o = ac.createOscillator(); o.type = type; o.frequency.setValueAtTime(f, t); o.start(t); o.stop(stop); return o; };
+  function pluck(t, f, vel, pan = 0, dur = 0.32, bright = 3200, send = 0.25) {
+    const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 2.5;
+    lp.frequency.setValueAtTime(bright, t); lp.frequency.exponentialRampToValueAtTime(380, t + dur);
+    const g = ac.createGain(); env(g, t, 0.003, vel, dur);
+    const g2 = ac.createGain(); g2.gain.value = 0.3;
+    osc('triangle', f, t, t + dur + 0.05).connect(lp);
+    osc('sine', f * 2.004, t, t + dur + 0.05).connect(g2); g2.connect(lp);
+    lp.connect(g); out(g, pan, send);
+  }
+  function noiseHit(t, dur, type, freq, q, vel, pan = 0, send = 0, sweepTo = 0) {
+    const src = ac.createBufferSource(); src.buffer = noise;
+    const f = ac.createBiquadFilter(); f.type = type; f.Q.value = q; f.frequency.setValueAtTime(freq, t);
+    if (sweepTo) f.frequency.exponentialRampToValueAtTime(sweepTo, t + dur);
+    const g = ac.createGain(); env(g, t, Math.min(0.004, dur * 0.3), vel, dur);
+    src.connect(f); f.connect(g); out(g, pan, send);
+    src.start(t, (t * 7.31) % 2.0); src.stop(t + dur + 0.05);
+  }
+  function sub(t, vel) {
+    const o = osc('sine', 120, t, t + 0.8); o.frequency.exponentialRampToValueAtTime(36, t + 0.3);
+    const g = ac.createGain(); env(g, t, 0.004, vel, 0.6); o.connect(g); out(g);
+    noiseHit(t, 0.07, 'lowpass', 1100, 0.7, vel * 0.45);
+  }
+  function sweep(t0, t1, vel, f0, f1, pan = 0) {
+    const src = ac.createBufferSource(); src.buffer = noise; src.loop = true;
+    const f = ac.createBiquadFilter(); f.type = 'bandpass'; f.Q.value = 1.1;
+    f.frequency.setValueAtTime(f0, t0); f.frequency.exponentialRampToValueAtTime(f1, t1);
+    const g = ac.createGain(); g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(vel, t1 - 0.03); g.gain.linearRampToValueAtTime(0.0001, t1 + 0.005);
+    src.connect(f); f.connect(g); out(g, pan, 0.2); src.start(t0, (t0 * 3.1) % 1.0); src.stop(t1 + 0.05);
+  }
+  function riser(t0, t1, vel) {
+    const o = osc('sawtooth', 110, t0, t1 + 0.02); o.frequency.exponentialRampToValueAtTime(1320, t1);
+    const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 6; lp.frequency.setValueAtTime(300, t0); lp.frequency.exponentialRampToValueAtTime(5000, t1);
+    const g = ac.createGain(); g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(vel, t1 - 0.01); g.gain.linearRampToValueAtTime(0.0001, t1 + 0.01);
+    o.connect(lp); lp.connect(g); out(g, 0, 0.3);
+    sweep(t0, t1, vel * 0.9, 400, 7000);
+  }
+  function chime(t, freqs, vel, pan = 0) {
+    freqs.forEach((f, i) => { const g = ac.createGain(), ti = t + i * 0.012; env(g, ti, 0.002, vel / (1 + i * 0.4), 1.3); osc('sine', f, ti, ti + 1.5).connect(g); out(g, pan + (i - 1) * 0.25, 0.6); });
+  }
+  function bass(t, f, vel) { const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 320; const g = ac.createGain(); env(g, t, 0.006, vel, 0.28); osc('triangle', f, t, t + 0.35).connect(lp); lp.connect(g); out(g); }
+  function blip(t, f0, f1, dur, vel, pan = 0) { const o = osc('sine', f0, t, t + dur + 0.05); o.frequency.exponentialRampToValueAtTime(f1, t + dur); const g = ac.createGain(); env(g, t, 0.002, vel, dur); o.connect(g); out(g, pan, 0.2); }
+
+  // ---- v2 instruments built from the helpers above
+  function pad(t0, t1, notes, peak, o = {}) {
+    const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = o.cut ?? 1200; lp.Q.value = 0.7;
+    const g = ac.createGain(), hold = o.swellTo ?? peak;
+    g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(peak, t0 + (o.att ?? 0.4));
+    if (o.swellTo) g.gain.linearRampToValueAtTime(o.swellTo, o.swellAt);
+    g.gain.setValueAtTime(hold, t1 - (o.rel ?? 0.3)); g.gain.exponentialRampToValueAtTime(0.0001, t1);
+    notes.forEach((n, i) => { for (const det of [-7, 7]) { const oo = osc(o.type ?? 'sawtooth', nz(n), t0, t1 + 0.05); oo.detune.value = det + i; oo.connect(lp); } });
+    lp.connect(g); out(g, o.pan ?? 0, o.send ?? 0.4);
+  }
+  function drone(t0, t1, f, peak, o = {}) {
+    const g = ac.createGain(); g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(peak, t0 + (o.att ?? 0.5));
+    g.gain.setValueAtTime(peak, t1 - (o.rel ?? 0.4)); g.gain.exponentialRampToValueAtTime(0.0001, t1);
+    osc('sine', f, t0, t1 + 0.05).connect(g); out(g, 0, 0);
+  }
+  const claudeMotif = (t, notes, vel) => notes.forEach(([n, dt], i) => pluck(t + dt, nz(n), vel, -0.15 + i * 0.1, 0.6, 1300, 0.35));
+  const childMotif = (t, notes, vel, bright = 5200, send = 0.3) => notes.forEach(([n, dt], i) => pluck(t + dt, nz(n), vel, 0.2 - i * 0.1, 0.32, bright, send));
+  // SCORE BODY — Why do LED lights use so little electricity? Music = the user's track (piece.json "music");
+  // this body is the sound effects only (sfx bus), loud and present: switches, heat, electrons and photons.
+  to = 's';
+  // ---- instruments
+  const rumble = (t, dur, vel, pan = 0, cut = 180) => {   // a long low roll of thunder: looped noise, lowpassed, slow swells
+    const src = ac.createBufferSource(); src.buffer = noise; src.loop = true;
+    const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 0.9; lp.frequency.setValueAtTime(cut * 2.5, t); lp.frequency.exponentialRampToValueAtTime(cut, t + dur);
+    const g = ac.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vel, t + 0.08);
+    const R = RNG('rum', t);
+    for (let k = 1; k <= 6; k++) g.gain.linearRampToValueAtTime(vel * R.r(0.35, 1), t + dur * k / 7);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    src.connect(lp); lp.connect(g); out(g, pan, 0.5); src.start(t, (t * 1.7) % 2); src.stop(t + dur + 0.05);
+  };
+  const crackle = (t, dur, vel, pan = 0, key = 'c') => {   // dry electric crackle: a burst of tiny high clicks
+    const R = RNG('crk', key, t), n = Math.max(3, Math.round(dur * 60));
+    for (let i = 0; i < n; i++) noiseHit(t + R.r(0, dur), 0.012, 'highpass', 2500 + R.r(0, 4000), 0.8, vel * R.r(0.4, 1), pan + R.r(-0.2, 0.2), 0.05);
+  };
+  const zap = (t, vel, pan = 0, f0 = 2600, f1 = 300) => {   // an electric zap: a fast falling buzz + crackle
+    const o = osc('sawtooth', f0, t, t + 0.2); o.frequency.exponentialRampToValueAtTime(f1, t + 0.16);
+    const bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1800; bp.Q.value = 0.8;
+    const g = ac.createGain(); env(g, t, 0.002, vel * 0.5, 0.16); o.connect(bp); bp.connect(g); out(g, pan, 0.15);
+    crackle(t, 0.12, vel * 0.7, pan, 'z');
+  };
+  const crack = (t, vel, pan = 0) => {   // the strike itself: a sharp broadband crack, a sub punch, a roll
+    noiseHit(t, 0.05, 'highpass', 1200, 0.6, vel, pan, 0.4);
+    noiseHit(t + 0.01, 0.22, 'bandpass', 2400, 0.7, vel * 0.7, pan, 0.5, 600);
+    crackle(t, 0.2, vel * 0.8, pan, 'k');
+    sub(t, vel * 0.9);
+  };
+  const tick = (t, vel = 0.12, pan = 0, f = 3000) => { noiseHit(t, 0.015, 'bandpass', f, 4, vel, pan); blip(t, f * 0.7, f * 0.5, 0.03, vel * 0.25, pan); };
+  const ice = (t, vel, pan = 0) => { blip(t, 3400, 2600, 0.05, vel * 0.5, pan); noiseHit(t, 0.03, 'highpass', 5000, 1, vel * 0.6, pan, 0.2); };
+  const pop = (t, vel, pan = 0, f = 900) => blip(t, f, f * 1.6, 0.06, vel, pan);
+  const typing = (t0, n, cps, vel = 0.05, pan = 0) => { for (let i = 0; i < n; i++) tick(t0 + i / cps, vel, pan, 2200 + (i % 3) * 400); };
+  const hum = (t0, t1, vel) => {   // a mains-like buzz: 100 Hz saw, bandpassed, tremolo
+    const o = osc('sawtooth', 100, t0, t1 + 0.05), bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 400; bp.Q.value = 1.5;
+    const g = ac.createGain(); g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(vel, t0 + 0.4); g.gain.setValueAtTime(vel, t1 - 0.4); g.gain.exponentialRampToValueAtTime(0.0001, t1);
+    o.connect(bp); bp.connect(g); out(g, 0, 0.1);
+  };
+  const whoosh = (t, d, vel, f0 = 300, f1 = 3000, pan = 0) => sweep(t - d, t, vel, f0, f1, pan);
+
+  // (no rain bed: a constant hiss pumps audibly in every pause of the voice)
+
+
+  const drop = (t, vel, f = 900, pan = 0.2) => blip(t, f * 1.6, f * 0.5, 0.18, vel, pan);
+  const pew = (t, vel, f = 1800, pan = 0.4) => { blip(t, f * 0.6, f * 1.8, 0.22, vel, pan); noiseHit(t, 0.08, 'highpass', 5000, 0.8, vel * 0.3, pan, 0.3); };
+  // ---- title and the two bulbs
+  pop(VL('title').t0, 0.08, 0, 420);
+  typing(VL('title').t0 - 0.05, 17, 22, 0.03, -0.2); typing(VW('title', 'use') - 0.05, 13, 22, 0.03, 0); typing(VW('title', 'electricity') - 0.05, 12, 18, 0.03, 0.2);
+  { const t = VW('same', 'same') - 0.1; tick(t, 0.3, -0.4, 1800); noiseHit(t, 0.05, 'bandpass', 900, 2, 0.2, -0.4); tick(t + 0.09, 0.3, 0.4, 1800); noiseHit(t + 0.09, 0.05, 'bandpass', 900, 2, 0.2, 0.4);   // two switches
+    hum(t + 0.05, S('method'), 0.03); sweep(t, t + 0.6, 0.05, 600, 3000, 0.4); }
+  chime(VW('same', 'eight') - 0.1, [1046.5, 1568], 0.05, 0);
+  whoosh(VW('same', 'sixty') + 0.6, 0.6, 0.09, 300, 2600, -0.2); whoosh(VW('same', 'eight', 2) + 0.35, 0.4, 0.07, 500, 3000, 0.2);
+  pop(VW('question', 'fiftytwo') - 0.1, 0.12, 0, 500); chime(VW('question', 'fiftytwo'), [880, 1174.66], 0.05, 0);
+  // heat
+  crackle(VW('heat', 'heat') - 0.1, 1.6, 0.08, -0.3, 'heat'); noiseHit(VW('heat', 'heat') - 0.1, 1.2, 'lowpass', 900, 0.7, 0.12, -0.3, 0.3);
+  sub(VW('heat', 'method') - 0.15, 0.18); typing(VW('heat', 'method') - 0.15, 22, 30, 0.03);
+  // into the filament: white-hot
+  whoosh(S('filament') + 0.7, 0.8, 0.14, 200, 4000, -0.3);
+  riser(S('filament') + 0.6, VW('filament', 'whitehot') + 0.2, 0.05);
+  crackle(VW('filament', 'whitehot'), 2.4, 0.07, -0.2, 'fil');
+  { const t = VW('filament', 'thousand') - 0.3; sub(t, 0.22); noiseHit(t, 0.4, 'lowpass', 2400, 0.7, 0.14, 0, 0.5, 300); }
+  // the infrared curve
+  whoosh(S('infrared') + 0.7, 0.6, 0.1, 3000, 400, 0.2);
+  sweep(VW('infrared', 'temperature') - 0.2, VW('infrared', 'temperature') + 1.4, 0.05, 300, 2200, 0);
+  pop(VW('infrared', 'gives'), 0.07, -0.3, 900); pop(VW('infrared', 'infrared') - 0.1, 0.08, 0.4, 600);
+  { const t = VW('infrared', 'less') - 0.1; sub(t, 0.18); chime(t, [1318.5, 1975.5], 0.06, 0); }
+  // into the LED: cool
+  whoosh(S('method') + 0.7, 0.8, 0.14, 200, 5000, 0.3);
+  chime(S('method') + 0.8, [1760, 2637], 0.05, 0.3);
+  // the energy step: every electron drops and lets go of a photon (pitch follows the step's colour)
+  whoosh(S('step') + 0.7, 0.6, 0.08, 4000, 600, 0);
+  { const tDrop = VW('step', 'drops') - 0.05, drops = [tDrop]; for (let k = 1; k < 30; k++) drops.push(VW('step', 'photon') + 0.4 + k * 0.62);
+    const tc = VW('color', 'height') - 0.2;
+    drops.filter((t) => t < S('math') + 0.1).forEach((t, i) => {
+      const f = t < tc + 0.4 ? 1800 : t < tc + 1.1 ? 1200 : t < tc + 1.9 ? 1700 : t < VL('color').t1 + 0.4 ? 2400 : 1800;
+      drop(t, i === 0 ? 0.16 : 0.08, 700, -0.2 + (i % 3) * 0.2); pew(t + 0.28, i === 0 ? 0.16 : 0.09, f, 0.4);
+    });
+    chime(tc, [523.25], 0.06, -0.3); chime(tc + 0.75, [783.99], 0.06, 0); chime(tc + 1.5, [1174.66], 0.06, 0.3); }
+  // the LED's spectrum: no infrared
+  sweep(S('math') + 0.3, S('math') + 1.3, 0.05, 400, 1800, 0);
+  { const t = VW('math', 'infrared') - 0.1; pop(t, 0.12, 0, 700); chime(t, [1567.98, 2349.32], 0.05, 0); }
+  // lumens per watt: counters
+  { const t1 = VW('lmw', 'fifteen') - 0.1, t2 = VW('lmw', 'hundred') - 0.4;
+    for (let i = 0; i < 6; i++) tick(t1 + i * 0.1, 0.06, -0.3, 2000 + i * 80);
+    for (let i = 0; i < 14; i++) tick(t2 + i * 0.05, 0.06, 0.3, 2200 + i * 90);
+    whoosh(t2 + 0.7, 0.7, 0.08, 400, 4000, 0.3); pop(t2 + 0.75, 0.1, 0.3, 1200); }
+  // of every 100 W
+  whoosh(LT('hundred', 0.05) + 0.5, 0.5, 0.07, 400, 2400, -0.2);
+  whoosh(VW('hundred', 'thirty') + 0.5, 0.5, 0.08, 400, 3000, 0.2);
+  { const t = VW('hundred', 'instead') - 0.1; sub(t, 0.18); chime(t, [1046.5, 1318.5, 1568], 0.07, 0); }
+  // losses
+  whoosh(S('losses') + 0.6, 0.6, 0.07, 300, 2000, 0.3);
+  crackle(VW('losses', 'losses') - 0.1, 0.8, 0.05, 0.4, 'loss'); pop(VW('losses', 'method') - 0.2, 0.07, 0, 500);
+  whoosh(S('never') + 0.6, 0.6, 0.07, 2000, 300, 0);
+  // THE TURN: the old bulb blooms into a heater (the loudest moment, after a silence)
+  sub(HIT, 1.0); noiseHit(HIT, 1.0, 'lowpass', 3200, 0.7, 0.55, 0, 0.6, 180);
+  [['D3', 0], ['A3', 0.01], ['D4', 0.02], ['Fs4', 0.03], ['A4', 0.04]].forEach(([n, dt], i) => pluck(HIT + dt, nz(n), 0.22 - i * 0.02, (i - 2) * 0.2, 0.9, 3000, 0.6));
+  rumble(HIT + 0.2, VL('heater').t1 - HIT + 0.2, 0.22, 0, 220);
+  crackle(HIT + 0.3, VL('heater').t1 - HIT - 0.3, 0.05, -0.2, 'heater');
+  pop(VW('heater', 'lamp') - 0.2, 0.08, 0, 500);
+  { const t = VW('heater', 'heater') - 0.15; chime(t, [880, 1318.5], 0.05, 0); }
+  chime(VW('heater', 'heater') + 0.5, [1760, 2637, 3520], 0.06, 0);   // Bitvolts
+  // =====================================================================
+  //  kit/score-tail.js — render, fold the tail over the loop point, loudness stage
+  //  (RMS-normalise to -17 dBFS, look-ahead limiter at -1 dBFS; stems share the mix gain curve)
+  // =====================================================================
+  const buf = await ac.startRendering();
+  // fold the tail over the loop point so the loop is seamless
+  const N = Math.round(LOOP_T * sampleRate), L = new Float32Array(N), Rr = new Float32Array(N);
+  const c0 = buf.getChannelData(0), c1 = buf.getChannelData(1);
+  for (let i = 0; i < N; i++) { L[i] = c0[i] + (i + N < len ? c0[i + N] : 0); Rr[i] = c1[i] + (i + N < len ? c1[i + N] : 0); }
+  // loudness for a phone (subagents-short): RMS-normalise to -17 dBFS, then a look-ahead limiter at -1 dBFS.
+  // Stems reuse the mix's gain and gain curve, so they sum back to the mix.
+  let k = normIn?.k, g = normIn?.g;
+  if (!g) {
+    let sum = 0; for (let i = 0; i < N; i++) sum += (L[i] * L[i] + Rr[i] * Rr[i]) / 2;
+    k = 10 ** (-17 / 20) / Math.sqrt(sum / N || 1e-12);
+    const ceil = 0.89; g = new Float32Array(N);
+    for (let i = 0; i < N; i++) { const p = Math.max(Math.abs(L[i]), Math.abs(Rr[i])) * k; g[i] = p > ceil ? ceil / p : 1; }
+    const att = Math.exp(-1 / (0.0015 * sampleRate)), rel = Math.exp(-1 / (0.09 * sampleRate));
+    for (let i = N - 2; i >= 0; i--) g[i] = Math.min(g[i], 1 - (1 - g[i + 1]) * att);
+    let r = 1; for (let i = 0; i < N; i++) { r = Math.min(g[i], 1 - (1 - r) * rel); g[i] = r; }
+  }
+  for (let i = 0; i < N; i++) { L[i] *= k * g[i]; Rr[i] *= k * g[i]; }
+  return { left: L, right: Rr, sampleRate, norm: { k, g } };
+}
+function wavB64(s) {
+  const bytes = encodeWav(s.left, s.right, s.sampleRate);
+  let bin = '';
+  for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+  return btoa(bin);
+}
+async function renderAudioWav() { return wavB64(await buildScore(48000, 'mix')); }
+async function renderAudioStems() {
+  const mix = await buildScore(48000, 'mix');
+  const music = await buildScore(48000, 'music', mix.norm), sfx = await buildScore(48000, 'sfx', mix.norm);
+  return { music: wavB64(music), sfx: wavB64(sfx) };
+}
+window.renderAudioWav = renderAudioWav;
+window.renderAudioStems = renderAudioStems;
+</script>
+</body>
+</html>

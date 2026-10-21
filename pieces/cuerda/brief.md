@@ -1,0 +1,6 @@
+# brief — cuerda (Bitstory, video 7)
+- Ref: `Ref bit y pixels/7.mp4` (rope around the Earth, 104 s, ES) → EN paraphrase, every step kept, 26 lines, 98.8 s, title spoken first.
+- Style: `bitstory` (voltamps kit recoloured: night + mint rope/formula, amber numbers, magenta accent). 9:16, 24 fps. Sign-off "Bitstory".
+- Beats: title → rope wraps (40,000 km counter) → +1 m spliced, pulled tight → guesses → silence → HIT: rope jumps out, 16 cm, everywhere → dive to the surface (phone to scale) → rope straightens to one line, curls into the circle → L = 2πr, ΔL = 2πΔr, Δr = ΔL/2π, 2π ≈ 6.28 (six radii round the circle), 1 m/6.28 ≈ 0.159 m = 16 cm → formula alone, Earth bounces off → Earth/tennis ball/marble same gap → no percentage (0.0000025 %) → what you add → rule → Sun/Earth/wrist → wrist test to scale → end question.
+- Sound: user's documentary track (shaped: dip through the 0.76 s silence before HIT, 7 s tail fade) + code SFX; HIT = loudest.
+- Claims: Δr = 1/(2π) m ≈ 0.159 m independent of size (MathWorks, Physics Forums, awesci.com/?p=1278); equator ≈ 40,075 km (Omni calculator); 1 m / 40,000,000 m = 2.5×10⁻⁸ = 0.0000025 % (arithmetic). Wrist to scale: 16 cm circumference → r 2.55 cm.

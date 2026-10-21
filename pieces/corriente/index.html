@@ -1,0 +1,1570 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Current Not Used Up</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #04031a; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// ---- voice.json (tools/voice.mjs): the voice-over's lines and word times
+const VOICE = {"duration":61.638,"lead":0.6,"tail":3,"lines":[{"id":"title","text":"Does electric current get used up?","t0":0.6,"t1":2.472,"words":[{"w":"Does","t0":0.6,"t1":0.72,"est":true},{"w":"electric","t0":0.72,"t1":1.16},{"w":"current","t0":1.16,"t1":1.54},{"w":"get","t0":1.54,"t1":1.78},{"w":"used","t0":1.78,"t1":2.08},{"w":"up?","t0":2.08,"t1":2.36}]},{"id":"lie","text":"You've been told it does. It doesn't, and two meters can prove it.","t0":3.372,"t1":7.163,"words":[{"w":"You've","t0":3.32,"t1":3.56},{"w":"been","t0":3.56,"t1":3.7},{"w":"told","t0":3.7,"t1":3.88},{"w":"it","t0":3.88,"t1":4.1},{"w":"does.","t0":4.1,"t1":4.46},{"w":"It","t0":4.94,"t1":5.08},{"w":"doesn't,","t0":5.08,"t1":5.54},{"w":"and","t0":5.76,"t1":5.96},{"w":"two","t0":5.96,"t1":6.16},{"w":"meters","t0":6.16,"t1":6.34},{"w":"can","t0":6.34,"t1":6.68},{"w":"prove","t0":6.68,"t1":6.92},{"w":"it.","t0":6.92,"t1":7.26}]},{"id":"picture","text":"Most of us picture the same thing. Current leaves the battery full, the bulb drinks some, and only a little makes it back.","t0":7.763,"t1":14.5,"words":[{"w":"Most","t0":7.78,"t1":7.98},{"w":"of","t0":7.98,"t1":8.16},{"w":"us","t0":8.16,"t1":8.32},{"w":"picture","t0":8.32,"t1":8.58},{"w":"the","t0":8.58,"t1":8.8},{"w":"same","t0":8.8,"t1":9.04},{"w":"thing.","t0":9.04,"t1":9.36},{"w":"Current","t0":9.88,"t1":10.02},{"w":"leaves","t0":10.02,"t1":10.32},{"w":"the","t0":10.32,"t1":10.46},{"w":"battery","t0":10.46,"t1":10.78},{"w":"full,","t0":10.78,"t1":11.12},{"w":"the","t0":11.6,"t1":11.68},{"w":"bulb","t0":11.68,"t1":11.9},{"w":"drinks","t0":11.9,"t1":12.18},{"w":"some,","t0":12.18,"t1":12.52},{"w":"and","t0":12.96,"t1":13.12},{"w":"only","t0":13.12,"t1":13.36},{"w":"a","t0":13.36,"t1":13.52},{"w":"little","t0":13.52,"t1":13.64},{"w":"makes","t0":13.64,"t1":13.92},{"w":"it","t0":13.92,"t1":14.12},{"w":"back.","t0":14.12,"t1":14.38}]},{"id":"false","text":"It sounds logical. It's wrong. Put one meter right before the bulb, and another right after.","t0":15.1,"t1":20.695,"words":[{"w":"It","t0":15.04,"t1":15.22},{"w":"sounds","t0":15.22,"t1":15.48},{"w":"logical.","t0":15.48,"t1":15.94},{"w":"It's","t0":16.52,"t1":16.76},{"w":"wrong.","t0":16.76,"t1":16.98},{"w":"Put","t0":17.52,"t1":17.64},{"w":"one","t0":17.64,"t1":17.9},{"w":"meter","t0":17.9,"t1":18.14},{"w":"right","t0":18.14,"t1":18.4},{"w":"before","t0":18.4,"t1":18.7},{"w":"the","t0":18.7,"t1":18.88},{"w":"bulb,","t0":18.88,"t1":19.18},{"w":"and","t0":19.62,"t1":19.76},{"w":"another","t0":19.76,"t1":19.98},{"w":"right","t0":19.98,"t1":20.22},{"w":"after.","t0":20.22,"t1":20.56}]},{"id":"same","text":"They read exactly the same. Half an amp in, half an amp out. Not a single electron is lost along the way.","t0":21.295,"t1":27.128,"words":[{"w":"They","t0":21.16,"t1":21.46},{"w":"read","t0":21.46,"t1":21.68},{"w":"exactly","t0":21.68,"t1":22.06},{"w":"the","t0":22.06,"t1":22.34},{"w":"same.","t0":22.34,"t1":22.58},{"w":"Half","t0":22.84,"t1":22.96},{"w":"an","t0":22.96,"t1":23.16},{"w":"amp","t0":23.16,"t1":23.32},{"w":"in,","t0":23.32,"t1":23.58},{"w":"half","t0":23.72,"t1":23.88},{"w":"an","t0":23.88,"t1":24.08},{"w":"amp","t0":24.08,"t1":24.24},{"w":"out.","t0":24.24,"t1":24.52},{"w":"Not","t0":24.76,"t1":24.88},{"w":"a","t0":24.88,"t1":25.04},{"w":"single","t0":25.04,"t1":25.32},{"w":"electron","t0":25.32,"t1":25.82},{"w":"is","t0":25.82,"t1":26.04},{"w":"lost","t0":26.04,"t1":26.34},{"w":"along","t0":26.34,"t1":26.68},{"w":"the","t0":26.68,"t1":26.86},{"w":"way.","t0":26.86,"t1":27.06}]},{"id":"energy","text":"So what gets used up? Energy. Electrons go in pushed hard, and come out tired.","t0":27.928,"t1":32.702,"words":[{"w":"So","t0":27.82,"t1":28.08},{"w":"what","t0":28.08,"t1":28.24},{"w":"gets","t0":28.24,"t1":28.46},{"w":"used","t0":28.46,"t1":28.76},{"w":"up?","t0":28.76,"t1":29.08},{"w":"Energy.","t0":29.08,"t1":30.04,"est":true},{"w":"Electrons","t0":30.04,"t1":30.4},{"w":"go","t0":30.4,"t1":30.62},{"w":"in","t0":30.62,"t1":30.84},{"w":"pushed","t0":30.84,"t1":31.1},{"w":"hard,","t0":31.1,"t1":31.52},{"w":"and","t0":31.76,"t1":31.88},{"w":"come","t0":31.88,"t1":32.02},{"w":"out","t0":32.02,"t1":32.26},{"w":"tired.","t0":32.26,"t1":32.56}]},{"id":"voltage","text":"Same electrons, less energy. What drops is the voltage, not the current.","t0":33.302,"t1":37.666,"words":[{"w":"Same","t0":33.3,"t1":33.54},{"w":"electrons,","t0":33.54,"t1":34.12},{"w":"less","t0":34.46,"t1":34.66},{"w":"energy.","t0":34.66,"t1":35.1},{"w":"What","t0":35.32,"t1":35.48},{"w":"drops","t0":35.48,"t1":35.76},{"w":"is","t0":35.76,"t1":36.02},{"w":"the","t0":36.02,"t1":36.16},{"w":"voltage,","t0":36.16,"t1":36.54},{"w":"not","t0":36.88,"t1":37.02},{"w":"the","t0":37.02,"t1":37.22},{"w":"current.","t0":37.22,"t1":37.46}]},{"id":"kirchhoff","text":"This has a name: Kirchhoff's current law. Wherever wires meet, everything that goes in has to come out.","t0":38.466,"t1":44.033,"words":[{"w":"This","t0":38.34,"t1":38.6},{"w":"has","t0":38.6,"t1":38.78},{"w":"a","t0":38.78,"t1":38.98},{"w":"name:","t0":38.98,"t1":39.18},{"w":"Kirchhoff's","t0":39.52,"t1":40.08},{"w":"current","t0":40.08,"t1":40.28},{"w":"law.","t0":40.28,"t1":40.6},{"w":"Wherever","t0":40.84,"t1":41.1},{"w":"wires","t0":41.1,"t1":41.38},{"w":"meet,","t0":41.38,"t1":41.8},{"w":"everything","t0":42,"t1":42.24},{"w":"that","t0":42.24,"t1":42.54},{"w":"goes","t0":42.54,"t1":42.78},{"w":"in","t0":42.78,"t1":43.08},{"w":"has","t0":43.08,"t1":43.4},{"w":"to","t0":43.4,"t1":43.6},{"w":"come","t0":43.6,"t1":43.76},{"w":"out.","t0":43.76,"t1":44.04}]},{"id":"split","text":"If three amps arrive and the circuit splits in two, two go one way and one goes the other.","t0":44.633,"t1":49.427,"words":[{"w":"If","t0":44.58,"t1":44.76},{"w":"three","t0":44.76,"t1":45.02},{"w":"amps","t0":45.02,"t1":45.22},{"w":"arrive","t0":45.22,"t1":45.58},{"w":"and","t0":45.58,"t1":45.8},{"w":"the","t0":45.8,"t1":45.96},{"w":"circuit","t0":45.96,"t1":46.22},{"w":"splits","t0":46.22,"t1":46.54},{"w":"in","t0":46.54,"t1":46.78},{"w":"two,","t0":46.78,"t1":47.08},{"w":"two","t0":47.34,"t1":47.42},{"w":"go","t0":47.42,"t1":47.62},{"w":"one","t0":47.62,"t1":47.88},{"w":"way","t0":47.88,"t1":48.16},{"w":"and","t0":48.38,"t1":48.52},{"w":"one","t0":48.52,"t1":48.7},{"w":"goes","t0":48.7,"t1":48.94},{"w":"the","t0":48.94,"t1":49.12},{"w":"other.","t0":49.12,"t1":49.34}]},{"id":"round","text":"Three in, three out. Like a roundabout: no car disappears.","t0":50.027,"t1":53.687,"words":[{"w":"Three","t0":49.96,"t1":50.26},{"w":"in,","t0":50.26,"t1":50.52},{"w":"three","t0":50.86,"t1":50.96},{"w":"out.","t0":50.96,"t1":51.22},{"w":"Like","t0":51.38,"t1":51.5},{"w":"a","t0":51.5,"t1":51.66},{"w":"roundabout:","t0":51.66,"t1":52.18},{"w":"no","t0":52.44,"t1":52.62},{"w":"car","t0":52.62,"t1":52.86},{"w":"disappears.","t0":52.86,"t1":53.4}]},{"id":"end","text":"Current isn't used up. It's shared. What gets used up is energy.","t0":54.787,"t1":58.638,"words":[{"w":"Current","t0":54.4,"t1":54.96},{"w":"isn't","t0":54.96,"t1":55.38},{"w":"used","t0":55.38,"t1":55.58},{"w":"up.","t0":55.58,"t1":55.88},{"w":"It's","t0":56.22,"t1":56.38},{"w":"shared.","t0":56.38,"t1":56.62},{"w":"What","t0":57.06,"t1":57.14},{"w":"gets","t0":57.14,"t1":57.34},{"w":"used","t0":57.34,"t1":57.6},{"w":"up","t0":57.6,"t1":57.86},{"w":"is","t0":57.86,"t1":58.14},{"w":"energy.","t0":58.14,"t1":58.48}]}]};
+// =====================================================================
+//  DOES ELECTRIC CURRENT GET USED UP? — 9:16, voice-led (~62s), 24fps, style voltamps.
+//  One stage (F5): a battery and a bulb with two ammeters (same reading), a strip where the electrons keep their
+//  number but lose their energy (the voltage step), and a junction where current splits and adds up (Kirchhoff).
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4, GRID0 = 0;
+const VL = (id) => VOICE.lines.find((l) => l.id === id);
+const VW = (id, w, n = 1) => { const L = VL(id); let k = 0; for (const x of L.words) if (x.w.toLowerCase().replace(/[^a-z0-9']/g, '') === w.toLowerCase() && ++k === n) return x.t0; return L.t0; };
+const DURATION = Math.round(VOICE.duration * FPS) / FPS;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const VMONO = '"SF Mono", Menlo, "JetBrains Mono", "DejaVu Sans Mono", Consolas, monospace';
+const HAND = VMONO;
+const CX = 520;
+const onBeat = (t) => t;
+
+const S = (id) => VL(id).t0 - 0.3;                    // a beat starts ~0.3s before its line
+const HIT = VL('end').t0 - 0.3;                        // the payoff: in the pause after "no car disappears"
+const IDS = ['title', 'lie', 'picture', 'false', 'same', 'energy', 'voltage', 'kirchhoff', 'split', 'round', 'end'];
+const TB = IDS.map((id, i) => (i === 0 ? 0 : id === 'end' ? HIT : S(id)));
+const SUB = (id) => TB[IDS.indexOf(id)], SUBEND = (id) => (IDS.indexOf(id) + 1 < IDS.length ? TB[IDS.indexOf(id) + 1] : DURATION);
+const ERA_LIST = [[0, DURATION, () => sceneStage()]];
+const SHOTS = IDS.map((id, i) => [id, 0, TB[i], i + 1 < IDS.length ? TB[i + 1] : DURATION, id]);
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, gridOffset: GRID0, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE, aspect: '9:16',
+  format: 'fixed-stage',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { hit: HIT },
+  acts: [
+    { name: '1 Myth',    role: 'build',   t0: 0, t1: S('same') },
+    { name: '2 Proof',   role: 'build',   t0: S('same'), t1: S('kirchhoff') },
+    { name: '3 Law',     role: 'peak',    t0: S('kirchhoff'), t1: VL('round').t1 },
+    { name: '4 Silence', role: 'silence', t0: VL('round').t1 + 0.05, t1: HIT },
+    { name: '5 Shared',  role: 'gift',    t0: HIT, t1: VL('end').t1 + 0.3 },
+    { name: '6 End',     role: 'goodbye', t0: VL('end').t1 + 0.3, t1: DURATION },
+  ],
+  board: IDS.map((id, i) => ({ t: i + 1 === IDS.length ? DURATION - 0.4 : Math.min(VL(id).t1 - 0.2, TB[i + 1] - 0.1), title: id, sound: '', next: '' })),
+  narration: VOICE.lines.map((l) => ({ id: l.id, t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;
+// =====================================================================
+//  kit/core.js — seeded RNG, math, easing, palette, geometry, the hand-drawn drawing kit
+//  (wobble on the boil, ink, paint, hatch, pencil, stipple, grain), cameras, mono text.
+//  Needs from the piece head: FPS, W, H. Render state: ctx, F (frame), B (boil = floor(F/2)).
+// =====================================================================
+
+// ---------------------------------------------------------------------
+//  seeded RNG
+// ---------------------------------------------------------------------
+function mulberry32(a) {
+  return function () {
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+function hash(...xs) {
+  let h = 2166136261 >>> 0;
+  for (const x of xs) {
+    const s = String(x);
+    for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+    h ^= 124; h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+function RNG(...xs) {
+  const f = mulberry32(hash(...xs));
+  return {
+    f,
+    r: (a, b) => a + (b - a) * f(),
+    n: (amt) => (f() * 2 - 1) * amt,
+    i: (a, b) => a + Math.floor(f() * (b - a + 1)),
+    pick: (arr) => arr[Math.floor(f() * arr.length)],
+  };
+}
+
+// ---------------------------------------------------------------------
+//  math
+// ---------------------------------------------------------------------
+const TAU = Math.PI * 2, DEG = Math.PI / 180;
+const clamp = (x, a = 0, b = 1) => (x < a ? a : x > b ? b : x);
+const lerp = (a, b, t) => a + (b - a) * t;
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+// has absolute time t reached cut time c? (cuts snap to the nearest frame, like shot boundaries)
+const past = (t, c) => Math.round(t * FPS + 1e-6) >= Math.round(c * FPS);
+const dist = (a, b) => Math.hypot(b[0] - a[0], b[1] - a[1]);
+const EZ = {
+  o2: (t) => 1 - (1 - clamp(t)) ** 2,
+  o3: (t) => 1 - (1 - clamp(t)) ** 3,
+  i2: (t) => clamp(t) ** 2,
+  i3: (t) => clamp(t) ** 3,
+  io: (t) => { t = clamp(t); return t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2; },
+  back: (t) => { t = clamp(t) - 1; return 1 + 2.70158 * t * t * t + 1.70158 * t * t; },
+};
+
+// ---------------------------------------------------------------------
+//  render state
+// ---------------------------------------------------------------------
+let ctx = null;   // current 2d context
+let F = 0;        // absolute frame index
+let B = 0;        // boil index — reseeds every 2 frames (Math.floor(t*12))
+
+const C = {
+  ink: '#3a2417', cream: '#efe5cf', paper: '#f4ecd9', paperLine: 'rgba(90,130,190,0.32)',
+  orange: '#e58a4e', orangeD: '#c3622e', orangeL: '#f4b27c', terra: '#d97757',
+  rose: '#d98b8b', roseD: '#b0616a', roseL: '#efb9b0',
+  wood: '#d6a466', woodD: '#a8773f', woodL: '#e9c48f',
+  sky: '#9cc4d6', skyD: '#6f9fb8', skyL: '#c9e1ea',
+  teal: '#3d9f96', tealL: '#86c9be',
+  yellow: '#f0c55a', yellowL: '#f7dd92',
+  green: '#5f9c5c', greenL: '#a3cf92',
+  red: '#d4382c', redL: '#ea7a6c',
+  skin: '#ebb68f', skinD: '#c7815d', skinL: '#f7d4b4',
+  lav: 'rgba(104,112,214,0.7)', lavS: 'rgba(104,112,214,0.42)',
+  navy: '#0c0d1c', navy2: '#15173a', peri: '#c8d0f0', periD: '#7c86c4', periS: 'rgba(150,164,230,0.20)',
+  cyan: '#52d6c4', mag: '#e0368f', glow: '#5de37a', white: '#f4f6ff',
+};
+const RAINBOW = ['#f0d042', '#e050b8', '#46cde0', '#7ad866', '#a47ef0'];
+const MONO = 'Consolas, "Cascadia Mono", Menlo, "DejaVu Sans Mono", "Courier New", monospace';   // Windows first, then macOS / Linux
+
+// ---------------------------------------------------------------------
+//  geometry
+// ---------------------------------------------------------------------
+function ellipsePts(cx, cy, rx, ry, rot = 0, n = 64, a0 = 0, a1 = TAU) {
+  const P = [], c = Math.cos(rot), s = Math.sin(rot), full = Math.abs(a1 - a0 - TAU) < 1e-6;
+  for (let i = 0; i < n; i++) {
+    const a = a0 + (a1 - a0) * i / (full ? n : n - 1);
+    const x = Math.cos(a) * rx, y = Math.sin(a) * ry;
+    P.push([cx + x * c - y * s, cy + x * s + y * c]);
+  }
+  return P;
+}
+function rrectPts(x, y, w, h, r, n = 6) {
+  r = Math.min(r, w / 2, h / 2);
+  const P = [], cs = [[x + w - r, y + r, -Math.PI / 2], [x + w - r, y + h - r, 0], [x + r, y + h - r, Math.PI / 2], [x + r, y + r, Math.PI]];
+  for (const [cx, cy, a0] of cs) for (let i = 0; i <= n; i++) { const a = a0 + (Math.PI / 2) * i / n; P.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r]); }
+  return P;
+}
+function arcPts(cx, cy, r, a0, a1, n = 18, sy = 1) {
+  const P = [];
+  for (let i = 0; i <= n; i++) { const a = a0 + (a1 - a0) * i / n; P.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r * sy]); }
+  return P;
+}
+function xform(P, tx, ty, rot = 0, sx = 1, sy = sx) {
+  const c = Math.cos(rot), s = Math.sin(rot);
+  return P.map(([x, y]) => [tx + x * sx * c - y * sy * s, ty + x * sx * s + y * sy * c]);
+}
+function bbox(P, pad = 0) {
+  let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+  for (const [x, y] of P) { if (x < x0) x0 = x; if (y < y0) y0 = y; if (x > x1) x1 = x; if (y > y1) y1 = y; }
+  return { x0: x0 - pad, y0: y0 - pad, x1: x1 + pad, y1: y1 + pad };
+}
+function resample(P, closed, step) {
+  const out = [], n = P.length, m = closed ? n : n - 1;
+  for (let i = 0; i < m; i++) {
+    const a = P[i], b = P[(i + 1) % n], k = Math.max(1, Math.ceil(dist(a, b) / step));
+    for (let j = 0; j < k; j++) out.push([a[0] + (b[0] - a[0]) * j / k, a[1] + (b[1] - a[1]) * j / k]);
+  }
+  if (!closed) out.push(P[n - 1]);
+  return out;
+}
+function pathLen(P) { let L = 0; for (let i = 1; i < P.length; i++) L += dist(P[i - 1], P[i]); return L; }
+function subPath(P, frac) {
+  let want = pathLen(P) * clamp(frac);
+  const out = [P[0]];
+  for (let i = 1; i < P.length; i++) {
+    const d = dist(P[i - 1], P[i]);
+    if (want >= d) { out.push(P[i]); want -= d; }
+    else { const k = want / (d || 1); out.push([lerp(P[i - 1][0], P[i][0], k), lerp(P[i - 1][1], P[i][1], k)]); break; }
+  }
+  return out;
+}
+function pointAt(P, frac) { const S = subPath(P, frac); return S[S.length - 1]; }
+
+// ---------------------------------------------------------------------
+//  drawing kit — boil, sketchy lines, hatching, stipple, pencil, grain
+// ---------------------------------------------------------------------
+// smooth hand wobble along the normal; reseeded every boil step
+function wobble(P, closed, amt, key, step = 7) {
+  const Q = resample(P, closed, step), n = Q.length;
+  const R = RNG('wob', key, B);
+  const f1 = R.r(0.012, 0.03), f2 = R.r(0.05, 0.1), p1 = R.r(0, TAU), p2 = R.r(0, TAU);
+  const sx = R.n(amt * 0.5), sy = R.n(amt * 0.5);
+  const out = new Array(n); let s = 0;
+  for (let i = 0; i < n; i++) {
+    const a = Q[closed ? (i - 1 + n) % n : Math.max(0, i - 1)], b = Q[closed ? (i + 1) % n : Math.min(n - 1, i + 1)];
+    const nx = a[1] - b[1], ny = b[0] - a[0], l = Math.hypot(nx, ny) || 1;
+    if (i) s += dist(Q[i - 1], Q[i]);
+    const o = amt * (0.75 * Math.sin(s * f1 + p1) + 0.35 * Math.sin(s * f2 + p2));
+    out[i] = [Q[i][0] + nx / l * o + sx, Q[i][1] + ny / l * o + sy];
+  }
+  return out;
+}
+function trace(P, closed) {
+  ctx.beginPath();
+  const n = P.length; if (n < 2) return;
+  if (closed) {
+    ctx.moveTo((P[n - 1][0] + P[0][0]) / 2, (P[n - 1][1] + P[0][1]) / 2);
+    for (let i = 0; i < n; i++) { const p = P[i], q = P[(i + 1) % n]; ctx.quadraticCurveTo(p[0], p[1], (p[0] + q[0]) / 2, (p[1] + q[1]) / 2); }
+    ctx.closePath();
+  } else {
+    ctx.moveTo(P[0][0], P[0][1]);
+    for (let i = 1; i < n - 1; i++) { const p = P[i], q = P[i + 1]; ctx.quadraticCurveTo(p[0], p[1], (p[0] + q[0]) / 2, (p[1] + q[1]) / 2); }
+    ctx.lineTo(P[n - 1][0], P[n - 1][1]);
+  }
+}
+// sketchy stroke. o: closed, color, w, amt, key, alpha, frac (write-on), double
+function ink(P, o = {}) {
+  const closed = !!o.closed, key = o.key ?? 'ink';
+  let Q = o.raw ? P : wobble(P, closed, o.amt ?? 1.8, key);
+  let cl = closed;
+  if (o.frac != null && o.frac < 1) { if (o.frac <= 0) return Q; Q = subPath(closed ? [...Q, Q[0]] : Q, o.frac); cl = false; }
+  ctx.strokeStyle = o.color || C.ink; ctx.lineWidth = o.w ?? 3; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  ctx.globalAlpha = o.alpha ?? 1;
+  trace(Q, cl); ctx.stroke();
+  if (o.double) {
+    let Q2 = wobble(P, closed, (o.amt ?? 1.8) * 1.6 + 0.8, key + '~');
+    if (!cl && closed) Q2 = subPath([...Q2, Q2[0]], o.frac ?? 1);
+    ctx.lineWidth = (o.w ?? 3) * 0.4; ctx.globalAlpha = (o.alpha ?? 1) * 0.55; trace(Q2, cl); ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
+  return Q;
+}
+// filled shape + textures (clipped) + ink outline
+function paint(P, o = {}) {
+  const key = o.key || 'paint';
+  const Q = o.raw ? P : wobble(P, true, o.amt ?? 1.6, key);
+  ctx.save();
+  trace(Q, true);
+  if (o.fill) { ctx.globalAlpha = o.fillAl ?? 1; ctx.fillStyle = o.fill; ctx.fill(); ctx.globalAlpha = 1; }
+  if (o.tex) { ctx.clip(); const bb = bbox(Q, 6); o.tex.forEach((t, i) => texture(bb, { key: key + ':' + i, ...t })); }
+  ctx.restore();
+  if (o.line !== false) {
+    ctx.strokeStyle = o.line || C.ink; ctx.lineWidth = o.w ?? 3; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    ctx.globalAlpha = o.lineAl ?? 1; trace(Q, true); ctx.stroke(); ctx.globalAlpha = 1;
+  }
+  return Q;
+}
+function texture(bb, t) {
+  if (t.k === 'hatch') hatch(bb, t);
+  else if (t.k === 'cross') { hatch(bb, t); hatch(bb, { ...t, a: (t.a ?? 0.7) + (t.a2 ?? 1.25), key: t.key + 'x' }); }
+  else if (t.k === 'pencil') pencil(bb, t);
+  else if (t.k === 'stipple') stipple(bb, t);
+  else if (t.k === 'fn') t.fn(bb);
+}
+// parallel hatching inside current clip. t: a angle, gap, c, w, al, dash [min,max], skip, dens(x,y)
+function hatch(bb, t) {
+  const a = t.a ?? 0.7, gap = t.gap ?? 7, S = RNG('hs', t.key), R = RNG('hj', t.key, B);
+  const cx = (bb.x0 + bb.x1) / 2, cy = (bb.y0 + bb.y1) / 2, rad = Math.hypot(bb.x1 - bb.x0, bb.y1 - bb.y0) / 2 + 4;
+  const ca = Math.cos(a), sa = Math.sin(a), dens = t.dens, jit = t.jit ?? 0.9, dash = t.dash;
+  ctx.beginPath();
+  for (let d = -rad; d <= rad; d += gap) {
+    const dd = d + S.n(gap * 0.3);
+    let u = -rad + (dash ? S.r(0, dash[1]) : 0);
+    while (u < rad) {
+      const len = dash ? S.r(dash[0], dash[1]) : rad * 2, u2 = Math.min(rad, u + len);
+      const mu = (u + u2) / 2, mx = cx + ca * mu - sa * dd, my = cy + sa * mu + ca * dd, p = S.f();
+      if (!dens || p < dens(mx, my)) {
+        const e1 = R.n(jit), e2 = R.n(jit);
+        ctx.moveTo(cx + ca * u - sa * (dd + e1), cy + sa * u + ca * (dd + e1));
+        ctx.lineTo(cx + ca * u2 - sa * (dd + e2), cy + sa * u2 + ca * (dd + e2));
+      }
+      u = u2 + (dash ? S.r(t.skip?.[0] ?? 3, t.skip?.[1] ?? 12) : 0);
+    }
+  }
+  ctx.strokeStyle = t.c || C.ink; ctx.lineWidth = t.w ?? 1.2; ctx.globalAlpha = t.al ?? 0.5; ctx.lineCap = 'round';
+  ctx.stroke(); ctx.globalAlpha = 1;
+}
+// colored-pencil diagonal strokes
+function pencil(bb, t) {
+  const S = RNG('ps', t.key), R = RNG('pj', t.key, B);
+  const area = (bb.x1 - bb.x0) * (bb.y1 - bb.y0);
+  const n = Math.min(t.max ?? 6000, t.n ?? Math.floor(area / (t.per ?? 700)));
+  const a = t.a ?? -0.95, L = t.len ?? 14, dens = t.dens;
+  ctx.beginPath();
+  for (let i = 0; i < n; i++) {
+    const x = S.r(bb.x0, bb.x1), y = S.r(bb.y0, bb.y1), p = S.f(), aa = a + S.n(0.22), l = L * (0.5 + S.f() * 0.7);
+    if (dens && p > dens(x, y)) continue;
+    const jx = R.n(1.1), jy = R.n(1.1), dx = Math.cos(aa) * l / 2, dy = Math.sin(aa) * l / 2;
+    ctx.moveTo(x - dx + jx, y - dy + jy); ctx.lineTo(x + dx + jx, y + dy + jy);
+  }
+  ctx.strokeStyle = t.c; ctx.lineWidth = t.w ?? 1.4; ctx.globalAlpha = t.al ?? 0.45; ctx.lineCap = 'round';
+  ctx.stroke(); ctx.globalAlpha = 1;
+}
+// square stipple dots
+function stipple(bb, t) {
+  const S = RNG('ss', t.key), R = RNG('sj', t.key, B);
+  const n = t.n ?? 400, sz = t.s ?? 2.2, dens = t.dens, jit = t.jit ?? 0.8;
+  ctx.fillStyle = t.c; ctx.globalAlpha = t.al ?? 1; ctx.beginPath();
+  for (let i = 0; i < n; i++) {
+    const x = S.r(bb.x0, bb.x1), y = S.r(bb.y0, bb.y1), p = S.f(), s = sz * (0.6 + S.f() * 0.8);
+    if (dens && p > dens(x, y)) continue;
+    ctx.rect(x + R.n(jit), y + R.n(jit), s, s);
+  }
+  ctx.fill(); ctx.globalAlpha = 1;
+}
+// screen-space paper grain, reseeded with the boil
+function grain(o = {}) {
+  ctx.save(); screen();
+  const R = RNG('grain', B), n = o.n ?? 2600;
+  ctx.fillStyle = o.dark || 'rgba(70,45,25,0.13)'; ctx.beginPath();
+  for (let i = 0; i < n; i++) ctx.rect(R.r(0, W), R.r(0, H), 1.7, 1.7);
+  ctx.fill();
+  ctx.fillStyle = o.light || 'rgba(255,250,236,0.20)'; ctx.beginPath();
+  for (let i = 0; i < n; i++) ctx.rect(R.r(0, W), R.r(0, H), 1.9, 1.9);
+  ctx.fill();
+  // a few paper fibres
+  ctx.strokeStyle = 'rgba(80,55,35,0.07)'; ctx.lineWidth = 1; ctx.beginPath();
+  for (let i = 0; i < 90; i++) { const x = R.r(0, W), y = R.r(0, H), a = R.r(0, TAU), l = R.r(6, 22); ctx.moveTo(x, y); ctx.lineTo(x + Math.cos(a) * l, y + Math.sin(a) * l); }
+  ctx.stroke();
+  ctx.restore();
+}
+
+// ---------------------------------------------------------------------
+//  construction lines, rulers, sparks, bursts, rainbow contours
+// ---------------------------------------------------------------------
+function construct(cx, cy, r, o = {}) {
+  const R = RNG('con', o.key ?? 'c', B);
+  ctx.save();
+  ctx.strokeStyle = o.c || C.lav; ctx.lineWidth = o.w ?? 1.4; ctx.globalAlpha = o.al ?? 1; ctx.lineCap = 'round';
+  const a0 = (o.a0 ?? R.r(0, TAU)), sw = o.sweep ?? 1.05;
+  ctx.beginPath(); ctx.ellipse(cx + R.n(1.2), cy + R.n(1.2), r, r * (o.sq ?? 1), o.rot ?? 0, a0, a0 + TAU * sw); ctx.stroke();
+  if (o.cross) { const k = o.cross; ctx.beginPath(); ctx.moveTo(cx - k, cy); ctx.lineTo(cx + k, cy); ctx.moveTo(cx, cy - k); ctx.lineTo(cx, cy + k); ctx.stroke(); }
+  if (o.ticks) {
+    ctx.beginPath();
+    for (let i = 0; i < o.ticks; i++) { const a = i / o.ticks * TAU + (o.rot ?? 0); ctx.moveTo(cx + Math.cos(a) * (r - 6), cy + Math.sin(a) * (r - 6)); ctx.lineTo(cx + Math.cos(a) * (r + 6), cy + Math.sin(a) * (r + 6)); }
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+function cline(x1, y1, x2, y2, o = {}) {
+  const R = RNG('cl', o.key ?? 'l', B);
+  ctx.save(); ctx.strokeStyle = o.c || C.lavS; ctx.lineWidth = o.w ?? 1.2; ctx.globalAlpha = o.al ?? 1;
+  ctx.beginPath(); ctx.moveTo(x1 + R.n(1), y1 + R.n(1)); ctx.lineTo(x2 + R.n(1), y2 + R.n(1)); ctx.stroke(); ctx.restore();
+}
+function ruler(x1, y1, x2, y2, o = {}) {
+  const R = RNG('rul', o.key ?? 'r', B);
+  const L = Math.hypot(x2 - x1, y2 - y1) || 1, ux = (x2 - x1) / L, uy = (y2 - y1) / L, nx = -uy, ny = ux;
+  const frac = clamp(o.frac ?? 1), step = o.step ?? 16, tk = o.tick ?? 7, side = o.side ?? 1;
+  ctx.save(); ctx.strokeStyle = o.c || C.periD; ctx.lineWidth = o.w ?? 1.5; ctx.globalAlpha = o.al ?? 1; ctx.lineCap = 'round';
+  const jx = R.n(0.8), jy = R.n(0.8);
+  ctx.beginPath(); ctx.moveTo(x1 + jx, y1 + jy); ctx.lineTo(x1 + ux * L * frac + jx, y1 + uy * L * frac + jy);
+  const n = Math.floor(L * frac / step);
+  for (let i = 0; i <= n; i++) {
+    const k = i % 5 === 0 ? tk * 1.9 : tk, px = x1 + ux * i * step + jx, py = y1 + uy * i * step + jy;
+    ctx.moveTo(px, py); ctx.lineTo(px + nx * k * side, py + ny * k * side);
+  }
+  ctx.moveTo(x1 - nx * tk * 1.6, y1 - ny * tk * 1.6); ctx.lineTo(x1 + nx * tk * 2.2, y1 + ny * tk * 2.2);
+  if (frac >= 1) { ctx.moveTo(x2 - nx * tk * 1.6, y2 - ny * tk * 1.6); ctx.lineTo(x2 + nx * tk * 2.2, y2 + ny * tk * 2.2); }
+  ctx.stroke(); ctx.restore();
+}
+// glowing radial spark (dark world)
+function sparkBurst(cx, cy, r, o = {}) {
+  if (r <= 0.5) return;
+  const R = RNG('spk', o.key ?? 's', B), n = o.n ?? 18, rays = [];
+  for (let i = 0; i < n; i++) { const a = i / n * TAU + R.n(0.14); rays.push([a, r * R.r(0.28, 0.5), r * R.r(0.72, 1.15)]); }
+  const path = () => { ctx.beginPath(); for (const [a, r0, r1] of rays) { ctx.moveTo(cx + Math.cos(a) * r0, cy + Math.sin(a) * r0); ctx.lineTo(cx + Math.cos(a) * r1, cy + Math.sin(a) * r1); } };
+  ctx.save(); ctx.lineCap = 'round';
+  path(); ctx.strokeStyle = o.glow || 'rgba(82,214,196,0.22)'; ctx.lineWidth = (o.w ?? 2.4) * 3.4; ctx.stroke();
+  path(); ctx.strokeStyle = o.c || '#8ff5e6'; ctx.lineWidth = o.w ?? 2.4; ctx.stroke();
+  if (o.core !== false) {
+    const cr = Math.max(2.5, r * (o.coreR ?? 0.15));
+    ctx.beginPath(); ctx.arc(cx, cy, cr * 2.2, 0, TAU); ctx.fillStyle = 'rgba(190,215,255,0.16)'; ctx.fill();
+    ctx.beginPath(); ctx.arc(cx, cy, cr, 0, TAU); ctx.fillStyle = C.white; ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = C.periD; ctx.stroke();
+  }
+  if (o.specks) { ctx.fillStyle = o.c || '#8ff5e6'; for (let i = 0; i < o.specks; i++) { const a = R.r(0, TAU), d = r * R.r(0.2, 1.4); ctx.fillRect(cx + Math.cos(a) * d, cy + Math.sin(a) * d, 2, 2); } }
+  ctx.restore();
+}
+// radial tick burst (warm world impact)
+function burst(cx, cy, r0, r1, o = {}) {
+  const R = RNG('bur', o.key ?? 'b', B), n = o.n ?? 12;
+  ctx.save(); ctx.strokeStyle = o.c || C.ink; ctx.lineWidth = o.w ?? 3; ctx.lineCap = 'round'; ctx.globalAlpha = o.al ?? 1; ctx.beginPath();
+  for (let i = 0; i < n; i++) {
+    const a = i / n * TAU + R.n(0.15) + (o.rot ?? 0), a1 = r0 * R.r(0.85, 1.1), b1 = r1 * R.r(0.75, 1.15);
+    ctx.moveTo(cx + Math.cos(a) * a1, cy + Math.sin(a) * a1); ctx.lineTo(cx + Math.cos(a) * b1, cy + Math.sin(a) * b1);
+  }
+  ctx.stroke(); ctx.restore();
+}
+function star4(x, y, s, c) {
+  ctx.save(); ctx.fillStyle = c; ctx.beginPath();
+  ctx.moveTo(x, y - s); ctx.quadraticCurveTo(x, y, x + s, y); ctx.quadraticCurveTo(x, y, x, y + s);
+  ctx.quadraticCurveTo(x, y, x - s, y); ctx.quadraticCurveTo(x, y, x, y - s); ctx.fill(); ctx.restore();
+}
+// rainbow contour strokes around a moving part
+function rainbow(P, o = {}) {
+  const bb = bbox(P), cx = o.cx ?? (bb.x0 + bb.x1) / 2, cy = o.cy ?? (bb.y0 + bb.y1) / 2, n = o.n ?? 3;
+  for (let i = 0; i < n; i++) {
+    const S = RNG('rb', o.key, i, B), sc = 1 + (o.spread ?? 0.07) * (i + 1) + S.n(0.02);
+    const Q = P.map(([x, y]) => [cx + (x - cx) * sc + S.n(o.drift ?? 3), cy + (y - cy) * sc + S.n(o.drift ?? 3)]);
+    ink(Q, { closed: o.closed ?? true, color: RAINBOW[(i + (o.off ?? 0)) % RAINBOW.length], w: o.w ?? 1.6, amt: o.amt ?? 3.5, key: o.key + 'rb' + i, alpha: o.al ?? 0.85 });
+  }
+}
+// hex cell grid inside current clip
+function hexGrid(bb, size, o = {}) {
+  const h = size * Math.sqrt(3), R = RNG('hex', o.key ?? 'h', B);
+  ctx.save(); ctx.strokeStyle = o.c || C.periS; ctx.lineWidth = o.w ?? 1.2; ctx.globalAlpha = o.al ?? 1; ctx.beginPath();
+  let row = 0;
+  for (let y = bb.y0 - h; y < bb.y1 + h; y += h * 0.5, row++) {
+    for (let x = bb.x0 - size * 3 + (row % 2) * size * 1.5; x < bb.x1 + size * 3; x += size * 3) {
+      const jx = R.n(0.6), jy = R.n(0.6);
+      for (let k = 0; k < 6; k++) {
+        const a = k / 6 * TAU, b = (k + 1) / 6 * TAU;
+        if (k === 0) ctx.moveTo(x + Math.cos(a) * size + jx, y + Math.sin(a) * size + jy);
+        ctx.lineTo(x + Math.cos(b) * size + jx, y + Math.sin(b) * size + jy);
+      }
+    }
+  }
+  ctx.stroke(); ctx.restore();
+}
+
+// ---------------------------------------------------------------------
+//  iris, camera, text
+// ---------------------------------------------------------------------
+// ragged hatched rim; dir=+1 strokes reach outward, -1 inward
+function irisRim(cx, cy, r, dir, o = {}) {
+  const R = RNG('irisR', o.key ?? 'i', B), n = Math.min(1600, Math.floor(r * TAU / 2.0));
+  ctx.strokeStyle = o.c || '#0b0c17'; ctx.lineWidth = o.w ?? 1.6; ctx.lineCap = 'round'; ctx.beginPath();
+  for (let i = 0; i < n; i++) {
+    const a = R.r(0, TAU), L = R.r(3, 11) + (R.f() < 0.28 ? R.r(10, 34) : 0), sl = R.n(0.4);
+    const r0 = r - dir * R.r(2, 6), r1 = r + dir * L, ax = Math.cos(a), ay = Math.sin(a);
+    ctx.moveTo(cx + ax * r0, cy + ay * r0); ctx.lineTo(cx + ax * r1 - ay * L * sl, cy + ay * r1 + ax * L * sl);
+  }
+  ctx.stroke();
+}
+// iris into a black hole (screen space)
+function irisHole(cx, cy, r, o = {}) {
+  if (r <= 0.5) return;
+  ctx.save(); screen();
+  const col = o.c || '#0b0c17';
+  const P = wobble(ellipsePts(cx, cy, r, r, 0, 140), true, Math.min(4, 0.6 + r * 0.02), 'ih' + (o.key ?? ''), 9);
+  trace(P, true); ctx.fillStyle = col; ctx.fill();
+  irisRim(cx, cy, r, +1, { c: col, key: o.key });
+  if (o.inner) { ctx.save(); trace(P, true); ctx.clip(); o.inner(r); ctx.restore(); }
+  ctx.restore();
+}
+// world point (cx,cy) lands at screen centre
+function camera(cx, cy, zoom = 1, rot = 0, sx = 0, sy = 0) {
+  const c = Math.cos(rot) * zoom, s = Math.sin(rot) * zoom;
+  ctx.setTransform(c, s, -s, c, W / 2 + sx - (c * cx - s * cy), H / 2 + sy - (s * cx + c * cy));
+}
+function screen() { ctx.setTransform(1, 0, 0, 1, 0, 0); }
+function toScreen(x, y) { const p = ctx.getTransform().transformPoint(new DOMPoint(x, y)); return [p.x, p.y]; }
+function fillAll(color) { ctx.save(); screen(); ctx.fillStyle = color; ctx.fillRect(0, 0, W, H); ctx.restore(); }
+
+// monospace text with per-glyph hand jitter
+function monoText(str, x, y, size, color, o = {}) {
+  ctx.save();
+  ctx.font = `${o.weight ?? 700} ${size}px ${MONO}`; ctx.fillStyle = color; ctx.textBaseline = 'alphabetic';
+  const cw = ctx.measureText('M').width, R = RNG('txt', o.key ?? str, B), jit = o.jit ?? 0.9;
+  const n = Math.min(o.count ?? str.length, str.length);
+  ctx.globalAlpha = o.al ?? 1;
+  for (let i = 0; i < n; i++) {
+    const ch = str[i]; if (ch === ' ') continue;
+    ctx.save(); ctx.translate(x + i * cw + R.n(jit), y + R.n(jit)); ctx.rotate(R.n(0.045)); ctx.fillText(ch, 0, 0); ctx.restore();
+  }
+  ctx.restore();
+  return cw;
+}
+function monoW(size) { ctx.save(); ctx.font = `700 ${size}px ${MONO}`; const w = ctx.measureText('M').width; ctx.restore(); return w; }
+
+// single-stroke hand lettering (x-height 0.5, ascender 1.0, baseline 0)
+const GLYPHS = {
+  ' ': { w: 0.26, s: [] },
+  c: { w: 0.5, s: [arcPts(0.26, -0.25, 0.25, -35 * DEG, -322 * DEG, 22)] },
+  o: { w: 0.52, s: [arcPts(0.26, -0.25, 0.25, -95 * DEG, -460 * DEG, 30)] },
+  a: { w: 0.54, s: [[...arcPts(0.25, -0.25, 0.235, -28 * DEG, -335 * DEG, 24)], [[0.49, -0.5], [0.49, -0.05], [0.55, 0.0]]] },
+  d: { w: 0.56, s: [[...arcPts(0.25, -0.25, 0.235, -28 * DEG, -335 * DEG, 24)], [[0.49, -1.0], [0.49, -0.05], [0.56, 0.0]]] },
+  l: { w: 0.24, s: [[[0.08, -1.0], [0.08, -0.1], [0.12, -0.01], [0.2, 0.0]]] },
+  u: { w: 0.54, s: [[[0.03, -0.5], [0.03, -0.22], ...arcPts(0.255, -0.22, 0.225, 180 * DEG, 0, 14), [0.48, -0.5]], [[0.48, -0.5], [0.48, -0.04], [0.54, 0.0]]] },
+  e: { w: 0.52, s: [[[0.03, -0.26], [0.5, -0.26], ...arcPts(0.265, -0.25, 0.245, -4 * DEG, -318 * DEG, 26)]] },
+};
+function handwrite(str, x, y, size, o = {}) {
+  const strokes = []; let pen = 0;
+  for (const ch of str) {
+    const g = GLYPHS[ch] || GLYPHS[' '];
+    for (const s of g.s) strokes.push(s.map(([u, v]) => [x + (pen + u) * size, y + v * size]));
+    pen += g.w + 0.1;
+  }
+  const lens = strokes.map(pathLen), total = lens.reduce((a, b) => a + b, 0);
+  let budget = clamp(o.frac ?? 1) * total;
+  for (let i = 0; i < strokes.length && budget > 0; i++) {
+    const f = Math.min(1, budget / lens[i]); budget -= lens[i];
+    if (o.glow) ink(strokes[i], { color: o.glow, w: (o.w ?? size * 0.06) * 3, amt: o.amt ?? 1.0, key: 'hw' + i + str, frac: f });
+    ink(strokes[i], { color: o.c, w: o.w ?? size * 0.06, amt: o.amt ?? 1.0, key: 'hw' + i + str, frac: f });
+  }
+  return pen * size;
+}
+
+// =====================================================================
+// ---- small props and helpers
+function drawPencil(tx, ty, ang, len, k = 1, key = 'pencil') {
+  ctx.save(); ctx.translate(tx, ty); ctx.rotate(ang); ctx.scale(k, k);
+  paint([[46, -16], [len, -16], [len, 16], [46, 16]], {
+    fill: C.yellow, key: key + 'b', w: 3,
+    tex: [{ k: 'hatch', a: 0.05, gap: 5, c: '#a8741d', al: 0.55, w: 1.1, dash: [20, 90], dens: (x, y) => (y > 5 ? 1 : 0.08) }, { k: 'pencil', c: '#fff1b8', al: 0.5, a: 0.05, len: 30, per: 120, dens: (x, y) => (y < -4 ? 1 : 0.1) }],
+  });
+  ink([[50, -5], [len, -5]], { w: 1.6, key: key + 'f1', alpha: 0.7 });
+  ink([[50, 6], [len, 6]], { w: 1.6, key: key + 'f2', alpha: 0.7 });
+  paint([[1, 0], [46, -15], [46, 15]], { fill: '#efcf9f', key: key + 'c', w: 2.6, tex: [{ k: 'hatch', a: 1.2, gap: 4, al: 0.35, dens: (x, y) => (y > 2 ? 1 : 0.1) }] });
+  paint([[0, 0], [15, -5], [15, 5]], { fill: '#3b3438', key: key + 't', w: 2 });
+  paint([[len, -17], [len + 26, -17], [len + 26, 17], [len, 17]], { fill: '#bcb7ab', key: key + 'fe', w: 2.6, tex: [{ k: 'hatch', a: Math.PI / 2, gap: 5, al: 0.5 }] });
+  paint(rrectPts(len + 24, -16, 34, 32, 10), { fill: '#e58f8c', key: key + 'e', w: 2.6, tex: [{ k: 'pencil', c: C.roseD, al: 0.5, per: 60 }] });
+  ctx.restore();
+}
+// smoothstep of x between a and b (NOT manim's `smooth` rate function — the math style calls that smoothM)
+const smooth = (a, b, x) => { const u = clamp((x - a) / (b - a)); return u * u * (3 - 2 * u); };
+const mod = (a, n) => ((a % n) + n) % n;
+function asterisk(x, y, r0, r1, n, rot, color, w) {
+  ctx.save(); ctx.strokeStyle = color; ctx.lineWidth = w; ctx.lineCap = 'round'; ctx.beginPath();
+  for (let i = 0; i < n; i++) { const a = i / n * TAU + rot; ctx.moveTo(x + Math.cos(a) * r0, y + Math.sin(a) * r0); ctx.lineTo(x + Math.cos(a) * r1, y + Math.sin(a) * r1); }
+  ctx.stroke(); ctx.restore();
+}
+
+// ---------------------------------------------------------------------
+//  time (set by the renderer): TT = absolute time on the motion step (on 2s unless STYLE.ones);
+//  E0 = the current era's start; DEFER = overlay queue (captions drawn after the camera); SPARK_AT = the hero's screen spot
+//  ev(t, d) = 0..1 progress of an event at t over d seconds; popS(t) = back-eased pop-in scale
+// ---------------------------------------------------------------------
+let TT = 0, E0 = 0, DEFER = null, SPARK_AT = null;
+const ev = (t, d = 0.25) => clamp((TT - t) / d);
+const popS = (t) => (TT < t ? 0 : EZ.back(clamp((TT - t) / 0.25)));
+
+// ---------------------------------------------------------------------
+//  springs: closed-form, so any frame can be drawn on its own (deterministic, no state)
+//  springEase(t, k, d)       0 -> 1 over time t >= 0 (stiffness k, damping d): accelerates, overshoots a hair, settles
+//  springMove(t0, a, b, p)   a value moving from a to b, starting at time t0 (p = a SPRING preset)
+//  springTrack(keys, p)      a value with many targets: keys = [[t, value], ...] sorted by t. One spring per change,
+//                            added up, so a target change mid-move stays continuous (cursors, widths, positions)
+// ---------------------------------------------------------------------
+const SPRING = {
+  snappy: { k: 320, d: 30 },    // UI: buttons, toggles, leading edges
+  smooth: { k: 170, d: 26 },    // cards, containers, the camera
+  heavy: { k: 90, d: 19 },      // big type, logos, large objects
+  playful: { k: 260, d: 14 },   // mascots, stickers: visible overshoot
+};
+function springEase(t, k = 170, d = 26) {
+  if (t <= 0) return 0;
+  const w0 = Math.sqrt(k), z = d / (2 * w0);
+  if (z < 1) { const wd = w0 * Math.sqrt(1 - z * z); return 1 - Math.exp(-z * w0 * t) * (Math.cos(wd * t) + (z * w0 / wd) * Math.sin(wd * t)); }
+  return 1 - Math.exp(-w0 * t) * (1 + w0 * t);
+}
+const springMove = (t0, a, b, p = SPRING.smooth) => a + (b - a) * springEase(TT - t0, p.k, p.d);
+function springTrack(keys, p = SPRING.smooth) {
+  let v = keys[0][1];
+  for (let i = 1; i < keys.length; i++) v += (keys[i][1] - keys[i - 1][1]) * springEase(TT - keys[i][0], p.k, p.d);
+  return v;
+}
+
+// ---------------------------------------------------------------------
+//  layout for several formats (9:16, 1:1, 16:9, 4:5 from one piece): place things by fractions of the frame,
+//  size them by UNIT (1 at 1080 on the short side). LX(0.5), LY(0.62), 120 * UNIT. PORTRAIT / WIDE pick layouts.
+// ---------------------------------------------------------------------
+const LX = (f) => f * W, LY = (f) => f * H, UNIT = Math.min(W, H) / 1080, PORTRAIT = H > W * 1.2, WIDE = W > H * 1.2;
+
+// ---------------------------------------------------------------------
+//  the user's own assets (screenshots, logos): files in <piece>/assets/ that tools/build.mjs embeds in the page.
+//  asset('logo.png') -> the Image (or null); drawAsset(name, x, y, w, h, { fit: 'contain'|'cover', r, alpha })
+//  Real product UI only: never redraw a product screen from imagination when a screenshot exists.
+// ---------------------------------------------------------------------
+const asset = (name) => (typeof ASSETS !== 'undefined' && ASSETS[name] && ASSETS[name].complete ? ASSETS[name] : null);
+function drawAsset(name, x, y, w, h, o = {}) {
+  const img = asset(name); if (!img) return false;
+  const iw = img.naturalWidth || img.width, ih = img.naturalHeight || img.height;
+  const s = (o.fit === 'cover' ? Math.max : Math.min)(w / iw, h / ih), dw = iw * s, dh = ih * s;
+  ctx.save(); ctx.globalAlpha *= o.alpha ?? 1;
+  if (o.r || o.fit === 'cover') { ctx.beginPath(); ctx.roundRect(x, y, w, h, o.r || 0); ctx.clip(); }
+  ctx.drawImage(img, x + (w - dw) / 2, y + (h - dh) / 2, dw, dh);
+  ctx.restore(); return true;
+}
+// =====================================================================
+//  styles/voltamps/kit.js — night-schematic line art (measured from local refs, references/voltamps/).
+//  Near-black navy ground, indigo fills with violet outlines, thin lavender line art, charge glyphs
+//  (+ magenta, − cyan), cyan leaders, amber return strokes with a warm wash, small monospace labels.
+//  Rigid vector lines (no boil), motion on 1s, glow only on what carries current.
+//  Needs from the piece head: VMONO (a font stack), W, H.
+// =====================================================================
+const VA_SERIF = 'Georgia, Cambria, "Times New Roman", "DejaVu Serif", serif';   // titles and big type (shared with pov3d)
+const VA = {
+  sky0: '#04031a', sky1: '#000006',          // the ground: navy at the top, near-black at the bottom
+  fill: '#1b1653', fill2: '#16123f',          // indigo fills (cloud, house)
+  edge: '#3d3394', line: '#8b82d6', dim: '#4a4288',   // outlines, line art, faint art
+  plus: '#d462f2', minus: '#12b6e8', amber: '#ffbd3a', cream: '#fff4d6', warm: '#2a1806',
+  text: '#cfc9ff', red: '#ff5a6a',
+};
+
+// ---- the ground of the frame: a navy fall-off, an optional warm wash (the return stroke lights the sky)
+function vaBg(warm = 0) {
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+  const g = ctx.createLinearGradient(0, 0, 0, H);
+  g.addColorStop(0, VA.sky0); g.addColorStop(1, VA.sky1);
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  const hz = ctx.createLinearGradient(0, H * 0.62, 0, H * 0.78);   // a low violet haze on the horizon
+  hz.addColorStop(0, 'rgba(60,40,140,0)'); hz.addColorStop(0.7, 'rgba(60,40,140,0.10)'); hz.addColorStop(1, 'rgba(60,40,140,0)');
+  ctx.fillStyle = hz; ctx.fillRect(0, H * 0.6, W, H * 0.2);
+  if (warm > 0) {
+    const r = ctx.createRadialGradient(W / 2, H * 0.55, 50, W / 2, H * 0.55, H * 0.8);
+    r.addColorStop(0, `rgba(70,42,10,${0.85 * warm})`); r.addColorStop(1, `rgba(30,18,4,${0.6 * warm})`);
+    ctx.fillStyle = r; ctx.fillRect(0, 0, W, H);
+  }
+  ctx.restore();
+}
+// depth: far ridges and a far storm bank, drawn in screen space with a parallax share of the camera
+function vaFar(cam, a = 1, flash = 0, gyW = 1440) {
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = a;
+  const px = (cam ? (cam.cx - 540) * 0.25 : 0), pz = cam ? 1 + (cam.z - 1) * 0.2 : 1;
+  const gy = H / 2 + (gyW - (cam ? cam.cy : 960)) * (cam ? cam.z : 1) + (cam ? cam.sy : 0);
+  // a far storm bank: soft dark domes, lit from inside now and then
+  for (let i = 0; i < 9; i++) {
+    const R = RNG('bank', i), bx = mod(R.r(-200, W + 200) - px * 0.6 + TT * R.r(2, 5), W + 400) - 200, by = gy - R.r(120, 330) * pz, r = R.r(90, 170) * pz;
+    const lit = flash * (i % 3 === 0 ? 1 : 0.3) + 0.5 * Math.max(0, Math.sin(TT * 0.7 + i * 2.1)) ** 40;
+    ctx.fillStyle = `rgba(${18 + 50 * lit | 0},${14 + 36 * lit | 0},${46 + 90 * lit | 0},0.35)`;
+    for (const [ox, oy, k] of [[-0.8, 0.15, 0.7], [0, 0, 1], [0.85, 0.2, 0.65]]) { ctx.beginPath(); ctx.ellipse(bx + ox * r, by + oy * r, r * k, r * 0.55 * k, 0, 0, TAU); ctx.fill(); }
+  }
+  // two ridge lines
+  for (const [k, c, amp, base] of [[0.35, '#0b0928', 120, 40], [0.6, '#0f0c33', 70, 0]]) {
+    ctx.fillStyle = c; ctx.beginPath(); ctx.moveTo(0, H);
+    for (let x = 0; x <= W; x += 20) { const u = (x + px * k * 2) / 260; ctx.lineTo(x, gy - base * pz - amp * pz * (0.5 + 0.35 * Math.sin(u) + 0.15 * Math.sin(u * 2.7 + 1))); }
+    ctx.lineTo(W, H); ctx.closePath(); ctx.fill();
+  }
+  ctx.globalAlpha = 1; ctx.fillStyle = '#020109'; ctx.fillRect(0, gy, W, H - gy);   // the earth below the ground line
+  ctx.restore();
+}
+// rain: fine slanted streaks, two depths
+function vaRain(a = 1, key = 'rain') {
+  if (a <= 0) return;
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.lineCap = 'round';
+  for (let i = 0; i < 110; i++) {
+    const R = RNG(key, i), near = i % 3 === 0, sp = near ? 1500 : 900, len = near ? 46 : 26;
+    const x = mod(R.r(0, W + 300) - TT * sp * 0.22, W + 300) - 150, y = mod(R.r(0, H) + TT * sp, H + 100) - 50;
+    ctx.globalAlpha = a * (near ? 0.22 : 0.12); ctx.strokeStyle = near ? '#6e66c0' : '#3d3690'; ctx.lineWidth = near ? 2 : 1.4;
+    ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x - len * 0.22, y + len); ctx.stroke();
+  }
+  ctx.restore();
+}
+// grain + vignette, deterministic per frame (STYLE.post)
+let VA_NOISE = null;
+function vaGrain(k = 1) {
+  if (!VA_NOISE) { VA_NOISE = document.createElement('canvas'); VA_NOISE.width = VA_NOISE.height = 256; const g = VA_NOISE.getContext('2d'), im = g.createImageData(256, 256), R = RNG('grain');
+    for (let i = 0; i < im.data.length; i += 4) { const v = R.f() * 255 | 0; im.data[i] = im.data[i + 1] = im.data[i + 2] = v; im.data[i + 3] = 255; } g.putImageData(im, 0, 0); }
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+  const R = RNG('gf', F), ox = R.r(0, 256) | 0, oy = R.r(0, 256) | 0;
+  ctx.globalAlpha = 0.045 * k; ctx.globalCompositeOperation = 'overlay';
+  for (let x = -ox; x < W; x += 256) for (let y = -oy; y < H; y += 256) ctx.drawImage(VA_NOISE, x, y);
+  ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
+  const v = ctx.createRadialGradient(W / 2, H * 0.48, H * 0.3, W / 2, H * 0.48, H * 0.75);
+  v.addColorStop(0, 'rgba(0,0,0,0)'); v.addColorStop(1, 'rgba(0,0,6,0.55)'); ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
+  ctx.restore();
+}
+// a squared-paper ground: fine cells and stronger every 4th line, with a parallax share of the camera
+function vaGridBg(cam, a = 1, cell = 60) {
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+  const k = 0.4, z = cam ? 1 + (cam.z - 1) * 0.35 : 1, st = cell * z;
+  const ox = cam ? -(cam.cx - 540) * k * z : 0, oy = cam ? -(cam.cy - 960) * k * z : 0;
+  const i0x = Math.floor(-ox / st) - 1, i0y = Math.floor(-oy / st) - 1;
+  const fade = ctx.createRadialGradient(W / 2, H * 0.45, 0, W / 2, H * 0.45, H * 0.62);
+  for (let i = i0x; i * st + ox < W + st; i++) { const x = i * st + ox, maj = mod(i, 4) === 0; ctx.globalAlpha = a * (maj ? 0.26 : 0.12); ctx.fillStyle = '#5a50b8'; ctx.fillRect(Math.round(x), 0, maj ? 2 : 1, H); }
+  for (let j = i0y; j * st + oy < H + st; j++) { const y = j * st + oy, maj = mod(j, 4) === 0; ctx.globalAlpha = a * (maj ? 0.26 : 0.12); ctx.fillStyle = '#5a50b8'; ctx.fillRect(0, Math.round(y), W, maj ? 2 : 1); }
+  // let the grid sink into the dark at the edges
+  ctx.globalAlpha = 1; fade.addColorStop(0, 'rgba(2,2,14,0)'); fade.addColorStop(1, 'rgba(2,2,14,0.85)'); ctx.fillStyle = fade; ctx.fillRect(0, 0, W, H);
+  ctx.restore();
+}
+// faint drifting specks (rain-fine air dust) so a held frame still breathes
+function vaSpecks(n = 40, a = 0.25, key = 'sp') {
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+  for (let i = 0; i < n; i++) {
+    const R = RNG(key, i), x = mod(R.r(0, W) + TT * R.r(-6, 6), W), y = mod(R.r(0, H) + TT * R.r(4, 18), H);
+    ctx.globalAlpha = a * (0.5 + 0.5 * Math.sin(TT * R.r(0.6, 1.6) + i));
+    ctx.fillStyle = VA.dim; ctx.fillRect(x, y, 2, 2);
+  }
+  ctx.restore();
+}
+
+// ---- strokes
+function vaStroke(P, c, w = 3, o = {}) {
+  if (P.length < 2) return;
+  ctx.save(); ctx.globalAlpha *= o.a ?? 1;
+  ctx.lineWidth = w; ctx.strokeStyle = c; ctx.lineJoin = o.join ?? 'round'; ctx.lineCap = o.cap ?? 'round';
+  if (o.dash) ctx.setLineDash(o.dash);
+  vaTrace(P, !!o.closed); ctx.stroke(); ctx.restore();
+}
+function vaLine(x0, y0, x1, y1, c, w = 3, o = {}) { vaStroke([[x0, y0], [x1, y1]], c, w, o); }
+// a glowing current line: a wide soft halo, a mid glow, a bright core
+function vaGlow(P, c, w = 4, k = 1, o = {}) {
+  if (P.length < 2 || k <= 0) return;
+  ctx.save(); ctx.globalAlpha *= o.a ?? 1; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+  vaTrace(P, false);
+  ctx.globalCompositeOperation = 'lighter';
+  ctx.strokeStyle = c; ctx.globalAlpha *= 0.16 * k; ctx.lineWidth = w * 7; ctx.stroke();
+  ctx.globalAlpha /= 0.16; ctx.globalAlpha *= 0.35; ctx.lineWidth = w * 2.6; ctx.stroke();
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.globalAlpha /= 0.35; ctx.lineWidth = w; ctx.strokeStyle = o.core ?? c; ctx.stroke();
+  ctx.restore();
+}
+// partial polyline: the first `frac` of P's length (write-on for paths and bolts)
+function vaPart(P, frac) {
+  frac = clamp(frac); if (frac >= 1) return P; if (frac <= 0) return [P[0]];
+  let L = 0; const d = [0];
+  for (let i = 1; i < P.length; i++) { L += Math.hypot(P[i][0] - P[i - 1][0], P[i][1] - P[i - 1][1]); d.push(L); }
+  const s = L * frac, out = [P[0]];
+  for (let i = 1; i < P.length; i++) {
+    if (d[i] <= s) { out.push(P[i]); continue; }
+    const u = (s - d[i - 1]) / (d[i] - d[i - 1]); out.push([lerp(P[i - 1][0], P[i][0], u), lerp(P[i - 1][1], P[i][1], u)]); break;
+  }
+  return out;
+}
+// a point on a polyline at fraction u (for travelling pulses)
+function vaAt(P, u) { const Q = vaPart(P, clamp(u)); return Q[Q.length - 1]; }
+
+// ---- type: monospace labels, typed on one character at a time
+function vaText(str, x, y, size, c, o = {}) {
+  ctx.save(); ctx.globalAlpha *= o.a ?? 1;
+  ctx.font = `${o.italic ? 'italic ' : ''}${o.weight ?? (o.serif ? 400 : 500)} ${size}px ${o.serif ? VA_SERIF : VMONO}`; ctx.fillStyle = c; ctx.textAlign = o.align ?? 'left'; ctx.textBaseline = 'alphabetic';
+  const n = Math.ceil(str.length * clamp(o.frac ?? 1));
+  if (o.glow) { ctx.shadowColor = c; ctx.shadowBlur = o.glow; }
+  if (n > 0) {
+    const full = ctx.measureText(str).width, sub = str.slice(0, n);
+    const dx = o.align === 'center' ? -full / 2 + ctx.measureText(sub).width / 2 : o.align === 'right' ? -full + ctx.measureText(sub).width : 0;
+    ctx.fillText(sub, x + dx, y);
+  }
+  ctx.restore();
+  ctx.save(); ctx.font = `${o.italic ? 'italic ' : ''}${o.weight ?? (o.serif ? 400 : 500)} ${size}px ${o.serif ? VA_SERIF : VMONO}`; const w = ctx.measureText(str).width; ctx.restore(); return w;
+}
+const vaType = (t0, str, cps = 28) => clamp((TT - t0) * cps / Math.max(1, str.length));   // typing progress
+
+// ---- charge glyphs
+function vaPlus(x, y, s, a = 1, c = VA.plus) { ctx.save(); ctx.globalAlpha *= a; ctx.shadowColor = c; ctx.shadowBlur = s * 0.6; ctx.strokeStyle = c; ctx.lineWidth = Math.max(2.5, s * 0.2); ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(x - s / 2, y); ctx.lineTo(x + s / 2, y); ctx.moveTo(x, y - s / 2); ctx.lineTo(x, y + s / 2); ctx.stroke(); ctx.restore(); }
+function vaMinus(x, y, s, a = 1, c = VA.minus) { ctx.save(); ctx.globalAlpha *= a; ctx.shadowColor = c; ctx.shadowBlur = s * 0.6; ctx.strokeStyle = c; ctx.lineWidth = Math.max(2.5, s * 0.2); ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(x - s / 2, y); ctx.lineTo(x + s / 2, y); ctx.stroke(); ctx.restore(); }
+function vaDot(x, y, r, c, a = 1) { ctx.save(); ctx.globalAlpha *= a; ctx.fillStyle = c; ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.fill(); ctx.restore(); }
+function vaRing(x, y, r, c, w = 3, a = 1, dash) { ctx.save(); ctx.globalAlpha *= a; ctx.strokeStyle = c; ctx.lineWidth = w; if (dash) ctx.setLineDash(dash); ctx.beginPath(); ctx.arc(x, y, Math.max(0.1, r), 0, TAU); ctx.stroke(); ctx.restore(); }
+function vaArrow(x0, y0, x1, y1, c, w = 4, a = 1, head = 18) {
+  if (Math.hypot(x1 - x0, y1 - y0) < 1) return;
+  const ang = Math.atan2(y1 - y0, x1 - x0);
+  vaLine(x0, y0, x1, y1, c, w, { a });
+  vaStroke([[x1 - head * Math.cos(ang - 0.45), y1 - head * Math.sin(ang - 0.45)], [x1, y1], [x1 - head * Math.cos(ang + 0.45), y1 - head * Math.sin(ang + 0.45)]], c, w, { a });
+}
+// a chevron (an updraft mark), pointing up
+function vaChevron(x, y, s, c, a = 1) { vaStroke([[x - s, y + s * 0.6], [x, y - s * 0.4], [x + s, y + s * 0.6]], c, 2.5, { a }); }
+// a horizontal bar meter
+function vaBar(x, y, w, h, frac, c, a = 1) { ctx.save(); ctx.globalAlpha *= a; ctx.fillStyle = c; ctx.fillRect(x, y, w * clamp(frac), h); ctx.restore(); }
+// a dimension rule: |——| with a label
+function vaRule(x0, y0, x1, y1, label, c = VA.text, size = 34, a = 1) {
+  const ang = Math.atan2(y1 - y0, x1 - x0), nx = -Math.sin(ang) * 12, ny = Math.cos(ang) * 12;
+  vaLine(x0, y0, x1, y1, c, 2.5, { a });
+  vaLine(x0 - nx, y0 - ny, x0 + nx, y0 + ny, c, 2.5, { a }); vaLine(x1 - nx, y1 - ny, x1 + nx, y1 + ny, c, 2.5, { a });
+  if (label) vaText(label, (x0 + x1) / 2 - nx * 3, (y0 + y1) / 2 - ny * 3 + 8, size, c, { align: 'center', a });
+}
+
+// ---- the cloud: a cumulonimbus — a cauliflower dome, bulging sides, a scalloped flat base,
+//      and a pointed lens-shaped anvil drawn across its top (the dome's bumps rise above it)
+function vaTrace(P, closed) { ctx.beginPath(); ctx.moveTo(P[0][0], P[0][1]); for (let i = 1; i < P.length; i++) ctx.lineTo(P[i][0], P[i][1]); if (closed) ctx.closePath(); }
+function vaArcPts(cx, cy, r, a0, a1, n = 10) { const P = []; for (let i = 0; i <= n; i++) { const a = lerp(a0, a1, i / n); P.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r]); } return P; }
+function vaCloudBody(x, y, s) {
+  // a clean union: the top edge is the envelope of the dome's bumps; the sides bulge gently; the base is scalloped
+  const hw = 330 * s, base = y + 170 * s, sh = y - 150 * s, P = [];
+  const br = (i) => 1 + 0.035 * Math.sin(TT * 0.9 + i * 1.7);   // the dome boils, slowly
+  const bumps = [[x - 235 * s, y - 175 * s, 95 * s * br(0)], [x - 130 * s, y - 255 * s, 100 * s * br(1)], [x + 5 * s, y - 300 * s, 105 * s * br(2)], [x + 140 * s, y - 260 * s, 98 * s * br(3)], [x + 240 * s, y - 180 * s, 92 * s * br(4)]];
+  const topAt = (px) => { let m = sh; for (const [bx, by, r] of bumps) { const d = px - bx; if (Math.abs(d) < r) m = Math.min(m, by - Math.sqrt(r * r - d * d)); } return m; };
+  for (let i = 0; i <= 16; i++) { const u = i / 16; P.push([x - hw + 2 * hw * u, base + 9 * s * Math.abs(Math.sin(u * Math.PI * 8))]); }
+  for (let i = 1; i <= 12; i++) { const u = i / 12; P.push([x + hw + 24 * s * Math.sin(Math.PI * u) + 8 * s * Math.sin(u * TAU * 2), lerp(base, sh, u)]); }
+  for (let i = 0; i <= 80; i++) { const px = x + hw - 2 * hw * i / 80; P.push([px, topAt(px)]); }
+  for (let i = 1; i < 12; i++) { const u = i / 12; P.push([x - hw - 24 * s * Math.sin(Math.PI * u) - 8 * s * Math.sin(u * TAU * 2), lerp(sh, base, u)]); }
+  return P;
+}
+function vaAnvil(x, y, s) {   // a lens: two arcs meeting in points
+  const hw = 470 * s, cy = y - 230 * s, up = 62 * s, dn = 40 * s, P = [];
+  for (let i = 0; i <= 30; i++) { const u = i / 30; P.push([x - hw + 2 * hw * u, cy - up * Math.sin(Math.PI * u) ** 0.7]); }
+  for (let i = 30; i >= 0; i--) { const u = i / 30; P.push([x - hw + 2 * hw * u, cy + dn * Math.sin(Math.PI * u) ** 0.9]); }
+  return P;
+}
+function vaCloudLattice(x, y, s, P) {
+  ctx.save(); vaTrace(P, true); ctx.clip();
+  ctx.strokeStyle = 'rgba(120,110,220,0.055)'; ctx.lineWidth = 1.5;
+  for (let gx = x - 500 * s; gx < x + 500 * s; gx += 26 * s) { ctx.beginPath(); ctx.moveTo(gx, y - 420 * s); ctx.lineTo(gx, y + 220 * s); ctx.stroke(); }
+  for (let gy = y - 420 * s; gy < y + 220 * s; gy += 26 * s) { ctx.beginPath(); ctx.moveTo(x - 500 * s, gy); ctx.lineTo(x + 500 * s, gy); ctx.stroke(); }
+  ctx.restore();
+}
+function vaCloud(x, y, s = 1, o = {}) {
+  const a = o.a ?? 1, lw = Math.max(2.5, 4 * s);
+  ctx.save(); ctx.globalAlpha *= a; ctx.lineJoin = 'round';
+  for (const P of [vaCloudBody(x, y, s), ...(o.anvil === false ? [] : [vaAnvil(x, y, s)])]) {
+    const gr = ctx.createLinearGradient(0, y - 400 * s, 0, y + 180 * s);
+    gr.addColorStop(0, '#2b2378'); gr.addColorStop(0.55, o.fill ?? VA.fill); gr.addColorStop(1, '#120e3a');
+    vaTrace(P, true); ctx.fillStyle = gr; ctx.fill();
+    vaCloudLattice(x, y, s, P);
+    if (o.lit) {   // lit from inside by a flash: a soft bloom clipped to the shape
+      ctx.save(); vaTrace(P, true); ctx.clip(); ctx.globalCompositeOperation = 'lighter';
+      const [lx, ly, lc] = o.litAt ?? [x, y, '#7d6cff'];
+      const rg = ctx.createRadialGradient(lx, ly, 10, lx, ly, 420 * s); rg.addColorStop(0, lc); rg.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.globalAlpha = 0.5 * o.lit; ctx.fillStyle = rg; ctx.fillRect(x - 600 * s, y - 500 * s, 1200 * s, 800 * s); ctx.restore();
+    }
+    ctx.lineWidth = lw; ctx.strokeStyle = o.edge ?? VA.edge; vaTrace(P, true); ctx.stroke();
+  }
+  ctx.restore();
+  if (o.inner) { ctx.save(); ctx.globalAlpha *= a; o.inner(); ctx.restore(); }
+  return { top: y - 300 * s, anvil: y - 230 * s, base: y + 170 * s, half: 330 * s };
+}
+
+// ---- the ground line, a hatch below it, grass tufts
+function vaGround(y, x0 = -200, x1 = W + 200, a = 1) {
+  vaLine(x0, y, x1, y, VA.line, 3, { a });
+  for (let x = x0; x < x1; x += 30) vaLine(x, y + 10, x - 14, y + 26, VA.dim, 2, { a });
+}
+function vaTuft(x, y, s = 1, a = 1) { vaStroke([[x - 9 * s, y - 16 * s], [x, y], [x + 9 * s, y - 16 * s]], VA.line, 2.2, { a }); vaLine(x, y, x, y - 18 * s, VA.line, 2.2, { a }); }
+// lattice tower (pylon): base at (x, y), height h
+function vaTower(x, y, h, a = 1) {
+  const w = h * 0.22, top = y - h;
+  vaStroke([[x - w, y], [x - 4, top + 20], [x + 4, top + 20], [x + w, y]], VA.line, 3, { a });
+  vaLine(x, top + 20, x, top, VA.line, 3, { a });
+  for (let i = 1; i <= 4; i++) {
+    const u0 = (i - 1) / 4, u1 = i / 4, ya = lerp(y, top + 20, u0), yb = lerp(y, top + 20, u1);
+    const wa = lerp(w, 4, u0), wb = lerp(w, 4, u1);
+    vaLine(x - wa, ya, x + wb, yb, VA.line, 2, { a }); vaLine(x + wa, ya, x - wb, yb, VA.line, 2, { a });
+  }
+  return [x, top];
+}
+function vaHouse(x, y, s = 1, a = 1, o = {}) {
+  const w = 90 * s, h = 82 * s;
+  ctx.save(); ctx.globalAlpha *= a;
+  ctx.fillStyle = VA.fill2; ctx.fillRect(x - w, y - h, w * 2, h);
+  ctx.fillStyle = '#3a2f8e'; ctx.fillRect(x - 18 * s, y - 52 * s, 36 * s, 52 * s);
+  ctx.restore();
+  vaStroke([[x - w, y], [x - w, y - h], [x + w, y - h], [x + w, y]], VA.line, 3, { a });
+  vaStroke([[x - w - 14 * s, y - h], [x, y - h - 62 * s], [x + w + 14 * s, y - h], [x - w - 14 * s, y - h]], VA.line, 3, { a, closed: true });
+  if (o.rod) {   // a lightning rod on the ridge and its down-conductor to an earth rod
+    const rx = x, ry = y - h - 62 * s;
+    vaLine(rx, ry, rx, ry - 70 * s, o.rodC ?? VA.cream, 4, { a });
+    vaDot(rx, ry - 70 * s, 5, o.rodC ?? VA.cream, a);
+    vaStroke([[rx, ry], [x + w + 10 * s, y - h + 4 * s], [x + w + 10 * s, y + 70 * s]], o.rodC ?? VA.cream, 3, { a: a * (o.cond ?? 1) });
+    for (let i = 0; i < 3; i++) vaLine(x + w + 10 * s - (16 - i * 5) * s, y + (70 + i * 9) * s, x + w + 10 * s + (16 - i * 5) * s, y + (70 + i * 9) * s, o.rodC ?? VA.cream, 3, { a: a * (o.cond ?? 1) });
+  }
+  return [x, y - h - 62 * s];
+}
+// a tree: three overlapping circles on a trunk
+function vaTree(x, y, s = 1, a = 1) {
+  vaLine(x, y, x, y - 70 * s, VA.line, 3, { a });
+  ctx.save(); ctx.globalAlpha *= a;
+  for (const [dx, dy, r] of [[-22, -95, 40], [22, -88, 38], [0, -135, 40]]) {
+    ctx.fillStyle = VA.fill2; ctx.beginPath(); ctx.arc(x + dx * s, y + dy * s, r * s, 0, TAU); ctx.fill();
+  }
+  ctx.restore();
+  for (const [dx, dy, r] of [[-22, -95, 40], [22, -88, 38], [0, -135, 40]]) vaRing(x + dx * s, y + dy * s, r * s, VA.line, 3, a);
+  return [x, y - 175 * s];
+}
+function vaLamp(x, y, h = 170, a = 1) {
+  vaStroke([[x, y], [x, y - h], [x + 34, y - h]], VA.line, 3, { a });
+  vaStroke([[x + 22, y - h + 2], [x + 46, y - h + 2], [x + 40, y - h + 14], [x + 28, y - h + 14]], VA.line, 2.5, { a, closed: true });
+  return [x, y - h];
+}
+function vaSun(x, y, r, c = VA.line, a = 1) {
+  vaRing(x, y, r, c, 3, a);
+  for (let i = 0; i < 8; i++) { const an = i / 8 * TAU; vaLine(x + Math.cos(an) * r * 1.35, y + Math.sin(an) * r * 1.35, x + Math.cos(an) * r * 1.7, y + Math.sin(an) * r * 1.7, c, 3, { a }); }
+}
+function vaHill(x0, x1, y, h, a = 1) {
+  const P = []; for (let i = 0; i <= 30; i++) { const u = i / 30; P.push([lerp(x0, x1, u), y - h * Math.pow(Math.sin(Math.PI * Math.pow(u, 0.8)), 1.6)]); }
+  vaStroke(P, VA.line, 3, { a }); return P;
+}
+
+// ---- bolts: a seeded stepped path from (x0,y0) toward (x1,y1); each step drifts a little, branches split off
+function vaBoltPath(key, x0, y0, x1, y1, steps = 14, o = {}) {
+  const R = RNG('bolt', key), main = [[x0, y0]], branches = [];
+  const jit = o.jit ?? 0.55, bp = o.branch ?? 0.35;
+  for (let i = 1; i <= steps; i++) {
+    const u = i / steps, px = lerp(x0, x1, u), py = lerp(y0, y1, u);
+    const spread = (1 - Math.pow(u, 3)) * Math.abs(y1 - y0) / steps * jit * 2.2;
+    main.push(i === steps ? [x1, y1] : [px + R.r(-1, 1) * spread * 1.4, py + R.r(-0.25, 0.25) * spread]);
+    if (i < steps - 1 && R.f() < bp) {   // a branch: 2–5 steps sideways and down, then it dies
+      const n = 2 + Math.floor(R.f() * 4), side = R.f() < 0.5 ? -1 : 1, B = [main[i]];
+      let [bx, by] = main[i];
+      for (let k = 0; k < n; k++) { bx += side * R.r(14, 46); by += R.r(18, 52); B.push([bx, by]); }
+      branches.push({ at: i, pts: B });
+    }
+  }
+  return { main, branches, steps };
+}
+// draw a bolt grown to step k (fractional), with branches growing alongside
+function vaBolt(bolt, k, c, w = 4, glow = 1, o = {}) {
+  const n = bolt.main.length - 1, kk = clamp(k / n);
+  const P = vaPart(bolt.main, kk);
+  if (o.branches !== false) for (const b of bolt.branches) {
+    const g = clamp((k - b.at) / 3);
+    if (g <= 0) continue;
+    const fade = o.branchFade ?? 1;
+    if (glow) vaGlow(vaPart(b.pts, g), c, w * 0.6, glow * 0.6, { a: 0.75 * fade }); else vaStroke(vaPart(b.pts, g), c, w * 0.6, { a: 0.75 * fade });
+  }
+  if (glow) vaGlow(P, c, w, glow, o); else vaStroke(P, c, w, o);
+  return P[P.length - 1];
+}
+
+// ---- captions & tags, at screen size (DEFER)
+const vaOverlay = (f) => { if (DEFER) DEFER.push(f); else f(); };
+
+// =====================================================================
+//  STYLE — the renderer's hooks
+// =====================================================================
+const STYLE = {
+  name: 'voltamps',
+  paper: '#04031a',
+  backdrop(c) { vaBg(0); },
+  window(P, key, src) { ctx.save(); trace(P, true); ctx.clip(); ctx.drawImage(src, 0, 0); ctx.restore(); vaStroke(P, VA.edge, 4, { closed: true }); },
+  blob(P, c, key) { ctx.save(); trace(P, true); ctx.fillStyle = c; ctx.fill(); ctx.restore(); vaStroke(P, VA.edge, 4, { closed: true }); },
+  hero(x, y, r, o) { vaDot(x, y, r * 0.3, VA.minus); },
+  heroColor: VA.minus,
+  post() { vaGrain(1); },
+  ones: true,
+};
+// =====================================================================
+//  SCENES — Does electric current get used up? (voltamps). World 1080x1920, TT on 1s.
+//  cyan = electrons / current, amber = energy and voltage (the bulb), magenta = the myth and the second branch.
+//  Every free text is centred (x 540); titles and big text in serif.
+// =====================================================================
+const CXT = 540;
+const fadeIn = (t, d = 0.35) => EZ.o2(ev(t, d));
+const fadeOut = (t, d = 0.35) => 1 - EZ.i2(ev(t, d));
+const win = (t0, t1, d = 0.35) => fadeIn(t0, d) * fadeOut(t1, d);
+const OV = vaOverlay;
+const flashK = (t, d = 0.6) => (TT < t ? 0 : TT < t + 0.08 ? (TT - t) / 0.08 : Math.exp(-(TT - t - 0.08) / d * 3));
+const BW = (from, to = from, d = 0.3) => win(SUB(from) + 0.05, SUBEND(to) - 0.05, d);   // visible across beats from..to
+let CAMZ = 1;
+
+// ---- text helpers: centred serif captions, typed on their word
+function cap(str, y, t0, c = VA.cream, size = 60, o = {}) {
+  const a = (o.a ?? 1) * fadeIn(t0 - 0.05, 0.25);
+  if (a <= 0) return;
+  OV(() => vaText(str, CXT, y, size, c, { align: 'center', serif: o.mono ? false : true, italic: o.italic, weight: o.weight, a, frac: vaType(t0, str, o.cps ?? 26), glow: o.glow ?? 8 }));
+}
+function label(str, x, y, c = VA.text, size = 30, a = 1) { vaText(str, x, y, size, c, { align: 'center', a }); }
+
+// ---- the camera: a slow float (the zooms are drawn locally)
+function camAtT() {
+  // each beat drifts the other way: push in on one, ease out on the next (continuous across the boundaries)
+  let i = 0; while (i + 1 < TB.length && TT >= TB[i + 1]) i++;
+  const u = EZ.io(clamp((TT - TB[i]) / Math.max(0.5, (i + 1 < TB.length ? TB[i + 1] : DURATION) - TB[i])));
+  const push = 0.13 * (i % 2 ? 1 - u : u);
+  return { cx: 540 + 30 * Math.sin(TT * 0.29), cy: 960 + 20 * Math.sin(TT * 0.23 + 1), z: (1 + push) * (1 + 0.03 * Math.sin(TT * 0.41)), sx: 0, sy: 0 };
+}
+function setCam(c) { ctx.setTransform(c.z, 0, 0, c.z, W / 2 + c.sx - c.z * c.cx, H / 2 + c.sy - c.z * c.cy); }
+// current running along the major grid lines: short cyan pulses, in screen space with the grid's parallax
+function gridPulses(c) {
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+  const z = 1 + (c.z - 1) * 0.35, st = 240 * z, ox = -(c.cx - 540) * 0.4 * z, oy = -(c.cy - 960) * 0.4 * z;
+  for (let k = 0; k < 9; k++) {
+    const R = RNG('gp', k), horiz = k % 2 === 0, line = Math.floor(R.r(0, 8)), sp = R.r(120, 260), ph = R.r(0, 3000);
+    const pos = mod(TT * sp + ph, (horiz ? W : H) + 400) - 200;
+    const x = horiz ? pos : mod(line * st + ox, W), y = horiz ? mod(line * st + oy, H) : pos;
+    const g = ctx.createLinearGradient(horiz ? x - 120 : x, horiz ? y : y - 120, x, y);
+    g.addColorStop(0, 'rgba(18,182,232,0)'); g.addColorStop(1, 'rgba(18,182,232,0.55)');
+    ctx.strokeStyle = g; ctx.lineWidth = 2.5; ctx.beginPath(); ctx.moveTo(horiz ? x - 120 : x, horiz ? y : y - 120); ctx.lineTo(x, y); ctx.stroke();
+    ctx.fillStyle = 'rgba(160,235,255,0.8)'; ctx.fillRect(x - 2, y - 2, 4, 4);
+  }
+  ctx.restore();
+}
+function zoomAbout(x, y, z, f) { ctx.save(); ctx.translate(x, y); ctx.scale(z, z); ctx.translate(-x, -y); f(); ctx.restore(); }
+
+
+
+
+// =====================================================================
+//  parts: the loop, the bulb, the battery, an ammeter
+// =====================================================================
+const LOOP = [[300, 700], [780, 700], [780, 1250], [300, 1250]];   // clockwise: top-left → top-right → bottom-right → bottom-left
+const LOOPP = [...LOOP, LOOP[0]];
+function bulb(x, y, k, a = 1, s = 1) {
+  if (k > 0.02) { const g = ctx.createRadialGradient(x, y, 10, x, y, 180 * s); g.addColorStop(0, `rgba(255,189,58,${0.5 * k})`); g.addColorStop(1, 'rgba(255,189,58,0)'); ctx.save(); ctx.globalAlpha *= a; ctx.fillStyle = g; ctx.fillRect(x - 200 * s, y - 200 * s, 400 * s, 400 * s); ctx.restore(); }
+  ctx.save(); ctx.globalAlpha *= a; ctx.fillStyle = k > 0.02 ? `rgb(${120 + 135 * k | 0},${100 + 89 * k | 0},${80 - 22 * k | 0})` : '#2a2470'; ctx.beginPath(); ctx.arc(x, y, 44 * s, 0, TAU); ctx.fill(); ctx.restore();
+  vaRing(x, y, 44 * s, k > 0.3 ? VA.amber : VA.line, 3, a);
+  vaStroke([[x - 16 * s, y + 42 * s], [x - 14 * s, y + 62 * s], [x + 14 * s, y + 62 * s], [x + 16 * s, y + 42 * s]], VA.line, 3, { a });
+  if (k > 0.2) for (let i = 0; i < 8; i++) { const an = -Math.PI / 2 + (i - 3.5) * 0.36, r0 = 60 * s, r1 = r0 + 20 * s * k; vaLine(x + Math.cos(an) * r0, y + Math.sin(an) * r0, x + Math.cos(an) * r1, y + Math.sin(an) * r1, VA.amber, 3, { a: a * k }); }
+}
+function battery(x, y, a = 1) {
+  ctx.save(); ctx.globalAlpha *= a; ctx.fillStyle = '#04031a'; ctx.fillRect(x - 50, y - 40, 100, 80); ctx.restore();
+  [[-30, 34], [-10, 20], [10, 34], [30, 20]].forEach(([dx, h], i) => vaLine(x + dx, y - h, x + dx, y + h, i % 2 ? VA.text : VA.cream, i % 2 ? 4 : 6, { a }));
+}
+function ammeter(x, y, read, a = 1, c = VA.minus) {
+  if (a <= 0) return;
+  ctx.save(); ctx.globalAlpha *= a; ctx.fillStyle = '#04031a'; ctx.beginPath(); ctx.arc(x, y, 34, 0, TAU); ctx.fill(); ctx.restore();
+  vaRing(x, y, 34, c, 3, a); vaText('A', x, y + 12, 34, c, { align: 'center', a, weight: 700 });
+  if (read) vaText(read, x, y + 82, 40, c, { align: 'center', a, serif: true, glow: 8 });
+}
+// electrons along a path: n dots moving at speed v; dim(u) gives each dot's brightness by its position (0..1)
+function flow(P, n, v, a, o = {}) {
+  vaStroke(P, o.wire ?? '#1d6f96', 4, { a });
+  for (let i = 0; i < n; i++) {
+    const u = mod(i / n + TT * v, 1), p = vaAt(P, u), b = o.dim ? o.dim(u) : 1;
+    if (b <= 0.02) continue;
+    if (o.halo && b > 0.6) vaDot(p[0], p[1], 14, VA.minus, a * 0.25 * b);
+    vaDot(p[0], p[1], 7, b > 0.6 ? VA.minus : '#3f7c9a', a * Math.max(0.35, b));
+  }
+}
+
+// =====================================================================
+//  the beats
+// =====================================================================
+function beatTitle() {
+  const a = fadeOut(VW('lie', 'told') - 0.1, 0.3);
+  if (a <= 0) return;
+  OV(() => {
+    vaText('Does electric current', CXT, 320, 72, VA.cream, { align: 'center', serif: true, a, frac: vaType(VL('title').t0, 'Does electric current', 24), glow: 8 });
+    vaText('get used up?', CXT, 410, 72, VA.minus, { align: 'center', serif: true, italic: true, a, frac: vaType(VW('title', 'get') - 0.05, 'get used up?', 18), glow: 18 });
+  });
+}
+function stageLoop() {   // title .. same
+  const a = BW('title', 'same');
+  if (a <= 0) return;
+  const tP = VW('picture', 'leaves') - 0.2, tW = VW('false', 'wrong') - 0.2, tM1 = VW('false', 'before') - 0.2, tM2 = VW('false', 'after') - 0.2, tS = VW('same', 'half', 1) - 0.2;
+  // the myth (picture → wrong): dots after the bulb fade out along the way back
+  const myth = TT >= tP && TT < tW + 0.4 ? EZ.io(clamp((TT - tP) / 1.0)) : 0;
+  flow(LOOPP, 28, 0.06, a, { dim: (u) => (myth > 0 ? (u < 0.25 ? 1 : 1 - myth * 0.85 * clamp((u - 0.25) / 0.2)) : 1), halo: true });
+  battery(540, 1250, a);
+  bulb(540, 700, 1, a);
+  // the stamp
+  const st = TT >= tW ? popS(tW) * fadeOut(tW + 1.6, 0.3) : 0;
+  if (st > 0) { ctx.save(); ctx.translate(540, 960); ctx.rotate(-0.12); ctx.scale(st, st); vaStroke([[-170, -50], [170, -50], [170, 50], [-170, 50]], VA.plus, 5, { a, closed: true }); vaText('MYTH', 0, 24, 72, VA.plus, { align: 'center', a, weight: 700, glow: 12 }); ctx.restore(); }
+  // the two meters, before and after the bulb
+  const m1 = popS(tM1) * a, m2 = popS(tM2) * a, reading = TT >= tS ? '0.5 A' : '';
+  ammeter(300, 860, reading, m1); ammeter(780, 860, reading, m2);
+  cap('two meters can prove it', 1430, VW('lie', 'meters') - 0.2, VA.text, 50, { a: a * fadeOut(SUB('picture'), 0.3), italic: true });
+  cap('full in, a little back?', 1430, tP, VA.plus, 54, { a: a * fadeOut(tW, 0.3), italic: true });
+  cap('exactly the same', 1430, tS - 0.5, VA.minus, 60, { a: a * fadeIn(tS - 0.5, 0.3), italic: true });
+  OV(() => { const k = fadeIn(VW('same', 'single') - 0.2, 0.3) * a; if (k > 0) vaText('not one electron lost', CXT, 1500, 34, VA.text, { align: 'center', a: k }); });
+}
+// the strip: same spacing before and after the bulb, but tired electrons; the voltage step below
+function stageStrip() {
+  const a = BW('energy', 'voltage');
+  if (a <= 0) return;
+  const tE = VW('energy', 'energy') - 0.2, tV = VW('voltage', 'voltage') - 0.2, y = 820;
+  flow([[40, y], [1040, y]], 24, 0.11, a, { dim: (u) => (u < 0.5 ? 1 : 0.4), halo: true });
+  bulb(540, y, 0.85 + 0.15 * Math.sin(TT * 6), a, 1.1 + 0.04 * Math.sin(TT * 3));
+  label('pushed hard', 260, y - 70, VA.minus, 32, a * fadeIn(VW('energy', 'pushed') - 0.2, 0.3));
+  label('tired', 770, y - 70, '#5f8fa8', 32, a * fadeIn(VW('energy', 'tired') - 0.2, 0.3));
+  label('same current', CXT, y + 110, VA.minus, 34, a * fadeIn(VW('voltage', 'same') - 0.2, 0.3));
+  // the voltage step
+  const ga = fadeIn(tV - 0.6, 0.4) * a;
+  if (ga > 0) {
+    const d = EZ.io(clamp((TT - tV) / 0.8));
+    vaGlow([[120, 1050], [540, 1050], [540, lerp(1050, 1250, d)], [960, lerp(1050, 1250, d)]], VA.amber, 4, ga);
+    vaText('voltage', 120, 1020, 30, VA.amber, { a: ga });
+    if (d > 0.3) { vaArrow(600, 1060, 600, 1240, VA.amber, 3, ga * d, 14); vaText('drops', 630, 1165, 34, VA.amber, { a: ga * d }); }
+  }
+  cap('energy is what gets used up', 1430, tE, VA.amber, 52, { a: a * fadeOut(tV - 0.3, 0.3), italic: true });
+  cap('the voltage drops, not the current', 1430, tV, VA.amber, 46, { a, italic: true });
+}
+// the junction: 3 A in, 2 A and 1 A out; the roundabout
+const JN = [420, 900];
+function stageJunction() {
+  const a = BW('kirchhoff', 'end');
+  if (a <= 0) return;
+  const tN = VW('kirchhoff', "kirchhoff's") - 0.2, tSp = VW('split', 'splits') - 0.2, tR = VW('round', 'roundabout') - 0.2;
+  const hit = flashK(HIT, 1.0);
+  const inP = [[40, 900], [JN[0] - 70, 900]], up = [[JN[0] + 60, 860], [980, 600]], dn = [[JN[0] + 60, 940], [980, 1180]];
+  const bk = fadeIn(tSp, 0.4);
+  flow(inP, 9, 0.18, a, { halo: true });
+  vaGlow(vaArcPts(JN[0], JN[1], 70, 0, TAU, 48), VA.minus, 3, a * (0.5 + 0.5 * Math.sin(TT * 4)), { a });
+  for (let i = 0; i < 8; i++) { const th = i / 8 * TAU + TT * 2.8; vaDot(JN[0] + 70 * Math.cos(th), JN[1] + 70 * Math.sin(th), 7, VA.minus, a * (TT >= tR - 0.5 ? 1 : 0.6)); }
+  if (bk > 0) { flow(up, 6, 0.18, a * bk, { halo: true }); flow(dn, 3, 0.18, a * bk, { wire: '#6a2a7a' }); }
+  if (TT >= HIT) { vaGlow([...inP], VA.minus, 4, hit * a); vaGlow(up, VA.minus, 4, hit * a); vaGlow(dn, VA.plus, 4, hit * a); vaRing(JN[0], JN[1], 70 + 160 * EZ.o3(clamp((TT - HIT) / 0.8)), VA.cream, 3, a * (1 - clamp((TT - HIT) / 0.8))); }
+  label('3 A', 200, 860, VA.minus, 40, a * fadeIn(VW('split', 'three') - 0.2, 0.3));
+  label('2 A', 820, 640, VA.minus, 40, a * bk);
+  label('1 A', 820, 1170, VA.plus, 40, a * bk);
+  cap("Kirchhoff's current law", 360, tN, VA.cream, 60, { a: a * fadeOut(HIT - 0.45, 0.3) });
+  cap('what goes in, comes out', 440, VW('kirchhoff', 'wherever') - 0.2, VA.minus, 46, { a: a * fadeOut(HIT - 0.45, 0.3), italic: true });
+  OV(() => { const k = fadeIn(VW('round', 'three') - 0.2, 0.3) * a * fadeOut(HIT - 0.45, 0.3); if (k > 0) { vaText('3 A = 2 A + 1 A', CXT, 1400, 64, VA.cream, { align: 'center', serif: true, a: k, glow: 10 }); } });
+  cap('like a roundabout: no car disappears', 1490, tR, VA.text, 40, { a: a * fadeOut(HIT - 0.45, 0.3), italic: true });
+}
+function beatEnd() {
+  if (TT < HIT - 0.1) return;
+  OV(() => {
+    const t1 = VW('end', 'current') - 0.2, t2 = VW('end', 'shared') - 0.3, t3 = VW('end', 'what') - 0.2;
+    vaText("Current isn't used up.", CXT, 330, 62, VA.cream, { align: 'center', serif: true, a: fadeIn(t1, 0.3), frac: vaType(t1, "Current isn't used up.", 24), glow: 8 });
+    vaText("It's shared.", CXT, 420, 80, VA.minus, { align: 'center', serif: true, italic: true, a: fadeIn(t2, 0.3), frac: vaType(t2, "It's shared.", 16), glow: 18 });
+    vaText('Energy is what gets used up.', CXT, 1400, 48, VA.amber, { align: 'center', serif: true, italic: true, a: fadeIn(t3, 0.3), frac: vaType(t3, 'Energy is what gets used up.', 26), glow: 10 });
+    const na = fadeIn(VL('end').t1 + 0.2, 0.5);
+    if (na > 0) {
+      ctx.save(); ctx.font = `700 46px ${VMONO}`; const wB = ctx.measureText('Bit').width, wV = ctx.measureText('volts').width; ctx.restore();
+      const x0 = CXT - (wB + wV) / 2;
+      vaText('Bit', x0, 1485, 46, VA.minus, { weight: 700, a: na, glow: 12 }); vaText('volts', x0 + wB, 1485, 46, VA.plus, { weight: 700, a: na, glow: 12 });
+    }
+  });
+}
+
+// =====================================================================
+//  the stage
+// =====================================================================
+function sceneStage() {
+  const c = camAtT(); CAMZ = c.z;
+  const warm = TT >= HIT ? flashK(HIT, 1.0) * 0.4 : 0;
+  vaBg(warm);
+  vaGridBg(c);
+  gridPulses(c);
+  vaSpecks(40, 0.3);
+  setCam(c);
+  stageLoop(); stageStrip(); stageJunction(); beatTitle(); beatEnd();
+}
+// no bridges: one continuous stage; the later small stages are cross-faded inside the scene
+const ERA_BG = ['#04031a'];
+const BRIDGES = [];
+
+// =====================================================================
+//  kit/morph.js — the renderer for pieces built from ERAS (scenes) joined by SHAPE MORPHS.
+//
+//  At each bridge time tc:
+//    shrink [tc-d, tc-m]      the old era is seen through a window shaped like the bridge object (STYLE.window),
+//                             shrinking onto the object while the backdrop fades to blank paper
+//    morph  [tc-m, tc+m]      on blank paper, the object's outline blends into its counterpart's
+//                             (both resampled by angle around their centroids; colour lerped). Hero-to-hero
+//                             bridges draw the hero itself with blended position, size and ray count.
+//    grow   [tc+m, tc+d]      the new era opens out of a window shaped like the counterpart
+//    d = the bridge's half-length (default 0.6s, so a bridge costs 1.2s), m = the morph's half (default 0.2s, or d/3 when d is set).
+//    Short pieces: { tc, d: 0.4 } (0.8s) or fewer bridges — see craft.md -> Transitions.
+//  Era boundaries WITHOUT a bridge are hard cuts (keep at most one: the slam).
+//
+//  The piece defines (in its head / src):
+//    ERA_LIST = [[t0, t1, () => drawScene()], ...]      scenes draw in world coords, call yearTag()/capStrip()
+//    ERA_BG   = ['#hex', ...]                          each era's dominant colour (for the fade to paper)
+//    BRIDGES  = [{ tc, A: () => shape, B: () => shape, d?, m? }]   shape = { P: points, c: '#hex' } or SP(x, y, r, rays)
+//    function pieceCam(era, t) { return null | CAM }   optional; use push() / bump() below
+//  Shapes are in each era's world coords; the bridge object must be in frame at tc (pull push-ins back first).
+//  The look comes from the style kit's STYLE hooks (paper, backdrop, window, blob, hero, post, ones):
+//  this file draws nothing itself, so the same piece structure works in any style.
+// =====================================================================
+// ---- cameras: CAM = { z, tx, ty }; camOf({ z, p, to }) puts world point p on screen point to
+const CAM0 = { z: 1, tx: 0, ty: 0 };
+const camOf = (c) => ({ z: c.z, tx: c.to[0] - c.z * c.p[0], ty: c.to[1] - c.z * c.p[1] });
+const camMix = (a, b, u) => ({ z: lerp(a.z, b.z, u), tx: lerp(a.tx, b.tx, u), ty: lerp(a.ty, b.ty, u) });
+// an eased push-in over [a, b] to cam, optionally pulled back over [oa, ob]
+function push(t, a, b, cam, oa, ob) { let u = EZ.io(seg(t, a, b)); if (oa != null) u *= 1 - EZ.io(seg(t, oa, ob)); return u > 0 ? camMix(CAM0, camOf(cam), u) : null; }
+// a zoom bump on every beat from t0, centred on point p (the hero keeps its screen spot)
+function bump(t, t0, p, amt = 0.3, every = 0.5) { return camOf({ z: 1 + amt * Math.exp(-mod(t - t0, every) * 7), p, to: p }); }
+function camAt(era, t) { return (typeof pieceCam === 'function' && pieceCam(era, t)) || CAM0; }
+const camPts = (P, c) => P.map(([x, y]) => [c.z * x + c.tx, c.z * y + c.ty]);
+// ---- bridge shapes
+function starPts(x, y, r, n, r0 = -Math.PI / 2, m = 96) {
+  const P = []; for (let i = 0; i < m; i++) { const a = i / m * TAU, k = 0.42 + 0.58 * (0.5 + 0.5 * Math.cos(n * (a - r0))) ** 3; P.push([x + Math.cos(a) * r * k, y + Math.sin(a) * r * k]); }
+  return P;
+}
+const SP = (x, y, r, n) => ({ spark: [x, y, r, n] });
+const shapeOf = (s) => (s.spark ? { P: (STYLE.heroPts || starPts)(...s.spark), c: STYLE.heroColor, spark: s.spark } : s);
+function byAngle(P, m = 96) {   // resample a closed outline to m points by angle around its centroid
+  const c = P.reduce((a, p) => [a[0] + p[0] / P.length, a[1] + p[1] / P.length], [0, 0]), Q = resample(P, true, 4), out = [];
+  for (let i = 0; i < m; i++) {
+    const a = -Math.PI + i / m * TAU; let best = null, bd = 1e9;
+    for (const q of Q) { let d = Math.atan2(q[1] - c[1], q[0] - c[0]) - a; d = Math.abs(Math.atan2(Math.sin(d), Math.cos(d))); const r = Math.hypot(q[0] - c[0], q[1] - c[1]); if (d < bd - 1e-4 || (Math.abs(d - bd) < 1e-4 && r > best[2])) { bd = d; best = [q[0], q[1], r]; } }
+    out.push([best[0], best[1]]);
+  }
+  return { P: out, c };
+}
+const mixHex = (a, b, u) => { const p = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16)); const x = p(a), y = p(b); return `rgb(${x.map((v, i) => Math.round(lerp(v, y[i], u))).join(',')})`; };
+function maskK(P) {   // how far the window must scale about its centroid to cover the frame
+  const c = P.reduce((a, p) => [a[0] + p[0] / P.length, a[1] + p[1] / P.length], [0, 0]);
+  const rmin = Math.max(8, Math.min(...byAngle(P, 48).P.map((p) => Math.hypot(p[0] - c[0], p[1] - c[1]))));
+  const far = Math.max(...[[0, 0], [W, 0], [0, H], [W, H]].map((q) => Math.hypot(q[0] - c[0], q[1] - c[1])));
+  return { c, kmax: far / rmin * 1.1 };
+}
+const scaled = (P, c, k) => P.map(([x, y]) => [c[0] + (x - c[0]) * k, c[1] + (y - c[1]) * k]);
+// ---- layers and windows
+const LAYER = [];
+function layer(i) { if (!LAYER[i]) { const c = document.createElement('canvas'); c.width = W; c.height = H; LAYER[i] = c; } return LAYER[i]; }
+function renderEra(e, target) {   // draws era e into target; returns its overlay queue (year tag, caption)
+  const saved = ctx; ctx = target.getContext('2d');
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ctx.filter = 'none'; ctx.setLineDash([]);
+  ctx.fillStyle = STYLE.paper; ctx.fillRect(0, 0, W, H);   // a clean sheet every frame: nothing carries over between frames
+  const cam = camAt(e, TT); ctx.setTransform(cam.z, 0, 0, cam.z, cam.tx, cam.ty);
+  DEFER = []; ERA_LIST[e][2](); const q = DEFER; DEFER = null;
+  ctx.restore(); ctx = saved;
+  return q;
+}
+function flush(q, e) { const keep = E0; E0 = ERA_LIST[e][0]; ctx.setTransform(1, 0, 0, 1, 0, 0); q.forEach((f) => f()); E0 = keep; }
+function shotAtFrame(fr) {
+  for (const s of TIMELINE.shots) if (fr >= Math.round(s.t0 * FPS) && fr < Math.round(s.t1 * FPS)) return s;
+  return TIMELINE.shots[TIMELINE.shots.length - 1];
+}
+const eraAt = (t) => ERA_LIST.findIndex(([a, b]) => t >= a - 1e-6 && t < b - 1e-6);
+// renderFrame(t, canvas, sub): sub = true draws the exact time t between frames (motion blur sub-frames, styles on 1s)
+function renderFrame(t, canvas, sub) {
+  const cv = canvas || document.getElementById('c');
+  ctx = cv.getContext('2d');
+  F = ((Math.floor(sub ? t * FPS + 1e-6 : Math.round(t * FPS)) % NFRAMES) + NFRAMES) % NFRAMES;
+  B = Math.floor(F / 2);
+  TT = (STYLE.ones ? (sub ? F + (t * FPS - Math.floor(t * FPS + 1e-6)) : F) : B * 2) / FPS;
+  // the era is picked by the real frame, so a cut on an odd frame (a 16th at 24fps) lands on that frame;
+  // on its first frame the new era is drawn at its own start time (motion stays on 2s inside it)
+  const s = shotAtFrame(F), e = Math.max(0, eraAt(F / FPS));
+  E0 = ERA_LIST[e][0];
+  if (TT < E0 - 1e-6) TT = E0;
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over'; ctx.setLineDash([]); ctx.filter = 'none';
+  SPARK_AT = null;
+  const bd = (r) => r.d ?? 0.6, bm = (r) => r.m ?? (r.d != null ? r.d / 3 : 0.2);
+  const tr = BRIDGES.find((r) => TT >= r.tc - bd(r) - 1e-6 && TT < r.tc + bd(r) - 1e-6);
+  if (!tr) {
+    const q = renderEra(e, layer(0)); ctx.drawImage(layer(0), 0, 0); flush(q, e);
+  } else {
+    const ea = eraAt(tr.tc - 0.01), eb = eraAt(tr.tc + 0.01);
+    const sa = shapeOf(tr.A()), sb = shapeOf(tr.B());
+    const PA = camPts(sa.P, camAt(ea, TT)), PB = camPts(sb.P, camAt(eb, TT));
+    const D = bd(tr), M = bm(tr);
+    if (TT < tr.tc - M) {
+      const u = EZ.i2(seg(TT, tr.tc - D, tr.tc - M)), { c, kmax } = maskK(PA), k = Math.exp(lerp(Math.log(kmax), 0, u));
+      STYLE.backdrop(mixHex(ERA_BG[ea], STYLE.paper, 0.5 + u * 0.5), { eraA: ea, eraB: eb, u, phase: 'shrink' });
+      const q = renderEra(ea, layer(0));
+      STYLE.window(scaled(PA, c, k), 'mA' + tr.tc, layer(0), { c: sa.c, u, phase: 'shrink', eraA: ea, eraB: eb });
+      flush(q, ea);
+    } else if (TT < tr.tc + M) {
+      const u = EZ.io(seg(TT, tr.tc - M, tr.tc + M));
+      STYLE.backdrop(STYLE.paper, { eraA: ea, eraB: eb, u, phase: 'morph' });
+      if (sa.spark && sb.spark) {
+        const ca = camAt(ea, TT), cb = camAt(eb, TT), [ax, ay] = camPts([sa.spark.slice(0, 2)], ca)[0], [bx, by] = camPts([sb.spark.slice(0, 2)], cb)[0];
+        STYLE.hero(lerp(ax, bx, u), lerp(ay, by, u), lerp(sa.spark[2] * ca.z, sb.spark[2] * cb.z, u), { rays: Math.round(lerp(sa.spark[3], sb.spark[3], u)), mood: 'wow', key: 'morphspark' });
+      } else {
+        const A2 = byAngle(PA), B2 = byAngle(PB), M = A2.P.map((p, i) => [lerp(p[0], B2.P[i][0], u), lerp(p[1], B2.P[i][1], u)]);
+        STYLE.blob(M, mixHex(sa.c, sb.c, u), 'morph' + tr.tc, u, { eraA: ea, eraB: eb, phase: 'morph' });
+        if (sb.spark && u > 0.6) STYLE.hero(...camPts([sb.spark.slice(0, 2)], camAt(eb, TT))[0], sb.spark[2] * clamp((u - 0.6) / 0.4), { rays: sb.spark[3], mood: 'wow', key: 'morphspark2' });
+      }
+    } else {
+      const u = EZ.o2(seg(TT, tr.tc + M, tr.tc + D)), { c, kmax } = maskK(PB), k = Math.exp(lerp(0, Math.log(kmax), u));
+      STYLE.backdrop(mixHex(STYLE.paper, ERA_BG[eb], u * 0.5), { eraA: ea, eraB: eb, u, phase: 'grow' });
+      const q = renderEra(eb, layer(0));
+      STYLE.window(scaled(PB, c, k), 'mB' + tr.tc, layer(0), { c: sb.c, u, phase: 'grow', eraA: ea, eraB: eb });
+      flush(q, eb);
+    }
+  }
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  if (STYLE.post) STYLE.post();
+  ctx.restore();
+  return s.id;
+}
+window.renderFrame = renderFrame;
+window.anchorAt = () => (SPARK_AT ? { x: SPARK_AT[0], y: SPARK_AT[1] } : null);
+
+// =====================================================================
+//  kit/board.js — the storyboard: every beat in TIMELINE.board drawn as a 9:16 key frame with its notes.
+//  The panels ARE the piece: each one is renderFrame(t) at the beat's key time, so an approved board
+//  carries straight into the video.  TIMELINE.board = [{ t, title, sound, next }]
+//  Render: node tools/storyboard.mjs <piece dir> [out.png] [panel numbers...]
+// =====================================================================
+function drawPanel(k) { renderFrame(TIMELINE.board[k].t, ctx.canvas); }
+function renderBoard() {
+  const BD = TIMELINE.board || [], COLS = 5, PW = 360, PH = Math.round(PW * H / W), GAP = 30, NOTE = 130, HEAD = 150;
+  const rows = Math.ceil(BD.length / COLS), bc = document.createElement('canvas');
+  bc.width = GAP + COLS * (PW + GAP); bc.height = HEAD + rows * (PH + NOTE + GAP);
+  const g = bc.getContext('2d'), SANS = '"Segoe UI", Arial, sans-serif';
+  g.fillStyle = '#2a211b'; g.fillRect(0, 0, bc.width, bc.height);
+  g.fillStyle = '#efe5cf'; g.font = `400 60px ${HAND}`; g.fillText(`${document.title}: storyboard`, GAP, 80);
+  g.font = `600 22px ${SANS}`; g.fillStyle = '#d9c9a8';
+  g.fillText(`${TIMELINE.duration}s · ${W}×${H} · ${TIMELINE.bpm} BPM · ${BD.length} beats. Thumbs up or down by panel number.`, GAP, 122);
+  const wrap = (str, x, y, maxW, lh) => { let line = ''; for (const w of str.split(' ')) { const t = line ? line + ' ' + w : w; if (g.measureText(t).width > maxW && line) { g.fillText(line, x, y); y += lh; line = w; } else line = t; } if (line) g.fillText(line, x, y); return y + lh; };
+  const pc = document.createElement('canvas'); pc.width = W; pc.height = H;
+  BD.forEach((b, k) => {
+    renderFrame(b.t, pc);
+    const x = GAP + (k % COLS) * (PW + GAP), y = HEAD + Math.floor(k / COLS) * (PH + NOTE + GAP);
+    g.drawImage(pc, x, y, PW, PH);
+    g.fillStyle = '#f0b27c'; g.font = `700 26px ${SANS}`; g.fillText(`${k + 1}`, x, y + PH + 32);
+    g.fillStyle = '#efe5cf'; g.font = `600 20px ${SANS}`;
+    let ttl = `${b.t.toFixed(1)}s · ${b.title || ''}`; while (ttl.length > 4 && g.measureText(ttl).width > PW - 44) ttl = ttl.slice(0, -2) + '…';   // fits the panel
+    g.fillText(ttl, x + 40, y + PH + 30);
+    g.font = `400 18px ${SANS}`; g.fillStyle = '#cdbd9c';
+    const yy = b.sound ? wrap('sound: ' + b.sound, x, y + PH + 58, PW, 22) : y + PH + 58;
+    if (b.next) { g.fillStyle = '#a8977a'; wrap('→ ' + b.next, x, yy + 2, PW, 22); }
+  });
+  return bc;
+}
+window.renderBoard = renderBoard; window.drawPanel = drawPanel;
+// =====================================================================
+//  kit/score-head.js — live preview (click to hear), noise/impulse/WAV helpers, and the synth.
+//  buildScore() opens here; the piece's score body follows (src/score.js), then kit/score-tail.js closes it.
+//  Helpers inside buildScore: pluck, noiseHit, sub, sweep, riser, chime, bass, blip, pad, drone, out, osc, env.
+//  Set `to = 'm'` (music bus) or `to = 's'` (sfx bus) before calling them. Notes: nz('D4').
+// =====================================================================
+// live preview: rAF on the 24fps grid; click to hear the score (?t=1.5 freezes a frame)
+const QS = new URLSearchParams(location.search);
+const LIVE = { audio: null, t0: 0, start: performance.now() };
+if (!QS.has('export')) {
+  const cv = document.getElementById('c');
+  if (QS.has('t')) renderFrame(parseFloat(QS.get('t')));
+  else {
+    const tick = () => {
+      const sec = LIVE.audio ? LIVE.audio.currentTime - LIVE.t0 : (performance.now() - LIVE.start) / 1000;
+      const t = ((sec % LOOP_T) + LOOP_T) % LOOP_T;
+      renderFrame(Math.floor(t * FPS) / FPS);
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+  cv.addEventListener('click', async () => {
+    if (LIVE.audio || typeof buildScore !== 'function') return;
+    const ac = new AudioContext(), score = await buildScore(ac.sampleRate);
+    const buf = ac.createBuffer(2, score.left.length, score.sampleRate);
+    buf.copyToChannel(score.left, 0); buf.copyToChannel(score.right, 1);
+    const src = ac.createBufferSource(); src.buffer = buf; src.loop = true; src.connect(ac.destination);
+    LIVE.t0 = ac.currentTime + 0.05; src.start(LIVE.t0); LIVE.audio = ac;
+  });
+}
+
+const HZ = {
+  A1: 55.0, D2: 73.42, F2: 87.31, A2: 110.0, D3: 146.83, F3: 174.61, A3: 220.0, C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23,
+  Fs4: 369.99, A4: 440.0, B4: 493.88, C5: 523.25, D5: 587.33, E5: 659.25, Fs5: 739.99, A5: 880.0, D6: 1174.66, A6: 1760.0,
+};
+function makeNoise(ac, sec) {
+  const b = ac.createBuffer(1, Math.floor(sec * ac.sampleRate), ac.sampleRate), d = b.getChannelData(0), R = RNG('noise');
+  for (let i = 0; i < d.length; i++) d[i] = R.f() * 2 - 1;
+  return b;
+}
+function makeImpulse(ac, sec, decay) {
+  const n = Math.floor(sec * ac.sampleRate), b = ac.createBuffer(2, n, ac.sampleRate);
+  for (let c = 0; c < 2; c++) { const d = b.getChannelData(c), R = RNG('ir', c); for (let i = 0; i < n; i++) d[i] = (R.f() * 2 - 1) * Math.pow(1 - i / n, decay); }
+  return b;
+}
+function encodeWav(left, right, sr) {
+  const n = left.length, buf = new ArrayBuffer(44 + n * 4), v = new DataView(buf);
+  const ws = (o, s) => { for (let i = 0; i < s.length; i++) v.setUint8(o + i, s.charCodeAt(i)); };
+  ws(0, 'RIFF'); v.setUint32(4, 36 + n * 4, true); ws(8, 'WAVE'); ws(12, 'fmt ');
+  v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 2, true); v.setUint32(24, sr, true);
+  v.setUint32(28, sr * 4, true); v.setUint16(32, 4, true); v.setUint16(34, 16, true);
+  ws(36, 'da' + 'ta'); v.setUint32(40, n * 4, true);
+  let o = 44;
+  for (let i = 0; i < n; i++) { v.setInt16(o, Math.round(clamp(left[i], -1, 1) * 32767), true); v.setInt16(o + 2, Math.round(clamp(right[i], -1, 1) * 32767), true); o += 4; }
+  return new Uint8Array(buf);
+}
+
+
+const MIDI = (m) => 440 * 2 ** ((m - 69) / 12);
+const NOTE = { D2: 38, A2: 45, D3: 50, E3: 52, Fs3: 54, A3: 57, D4: 62, E4: 64, Fs4: 66, G4: 67, A4: 69, B4: 71, Cs5: 73, D5: 74, E5: 76, Fs5: 78, A5: 81, B5: 83, D6: 86, E6: 88, Fs6: 90, A6: 93 };
+// any note name: 'D4', 'Fs4' / 'F#4' (sharp), 'Bb3' (flat); the table above is the fast path
+function noteNum(n) {
+  if (NOTE[n] != null) return NOTE[n];
+  const m = /^([A-G])(s|#|b)?(-?\d)$/.exec(n); if (!m) throw new Error(`unknown note "${n}"`);
+  return 12 * (Number(m[3]) + 1) + { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 }[m[1]] + (m[2] === 'b' ? -1 : m[2] ? 1 : 0);
+}
+const nz = (n) => MIDI(noteNum(n));
+async function buildScore(sampleRate = 48000, part = 'mix', normIn = null) {
+  const TAIL = 3.0, len = Math.ceil((LOOP_T + TAIL) * sampleRate);
+  const ac = new OfflineAudioContext(2, len, sampleRate);
+  const master = ac.createGain(); master.gain.value = 0.8;
+  const comp = ac.createDynamicsCompressor();
+  comp.threshold.value = -16; comp.knee.value = 10; comp.ratio.value = 3.5; comp.attack.value = 0.004; comp.release.value = 0.2;
+  master.connect(comp); comp.connect(ac.destination);
+  const musicBus = ac.createGain(), sfxBus = ac.createGain();
+  musicBus.gain.value = part === 'sfx' ? 0 : 1; sfxBus.gain.value = part === 'music' ? 0 : 1;
+  musicBus.connect(master); sfxBus.connect(master);
+  // ducking + presence dip, driven by the narration (lines closer than 0.29s are merged)
+  const duck = ac.createGain(), dip = ac.createBiquadFilter();
+  dip.type = 'peaking'; dip.frequency.value = 2500; dip.Q.value = 1;
+  duck.connect(dip); dip.connect(musicBus);
+  const lines = [];
+  for (const n of TIMELINE.narration) { const L = lines[lines.length - 1]; if (L && n.t0 - L.t1 < 0.29) L.t1 = n.t1; else lines.push({ t0: n.t0, t1: n.t1 }); }
+  const DUCK = 10 ** (-3 / 20);
+  duck.gain.setValueAtTime(1, 0); dip.gain.setValueAtTime(0, 0);
+  for (const L of lines) {
+    duck.gain.setValueAtTime(1, Math.max(0, L.t0 - 0.1)); duck.gain.linearRampToValueAtTime(DUCK, L.t0);
+    duck.gain.setValueAtTime(DUCK, L.t1 + 0.03); duck.gain.linearRampToValueAtTime(1, L.t1 + 0.18);
+    dip.gain.setValueAtTime(0, Math.max(0, L.t0 - 0.1)); dip.gain.linearRampToValueAtTime(-6, L.t0);
+    dip.gain.setValueAtTime(-6, L.t1 + 0.03); dip.gain.linearRampToValueAtTime(0, L.t1 + 0.18);
+  }
+  const mkVerb = (dest, sec = 1.6, decay = 2.8, level = 0.3) => { const v = ac.createConvolver(); v.buffer = makeImpulse(ac, sec, decay); const g = ac.createGain(); g.gain.value = level; v.connect(g); g.connect(dest); return v; };
+  const verbs = { m: mkVerb(duck), s: mkVerb(sfxBus) }, shortVerb = verbs.m, longVerb = mkVerb(duck, 3.6, 1.6, 0.55);
+  const noise = makeNoise(ac, 3.0);
+  let to = 'm';   // which bus the helpers below write to
+
+  // the gain is silent until the envelope starts (a GainNode defaults to 1: a note whose oscillator starts first would click)
+  const env = (g, t, a, peak, d) => { g.gain.value = 0.0001; g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(Math.max(0.0002, peak), t + a); g.gain.exponentialRampToValueAtTime(0.0001, t + a + d); };
+  const out = (node, pan = 0, send = 0) => {
+    const p = ac.createStereoPanner(); p.pan.value = clamp(pan, -1, 1); node.connect(p); p.connect(to === 'm' ? duck : sfxBus);
+    if (send) { const s = ac.createGain(); s.gain.value = send; node.connect(s); s.connect(verbs[to]); }
+  };
+  const osc = (type, f, t, stop) => { const o = ac.createOscillator(); o.type = type; o.frequency.setValueAtTime(f, t); o.start(t); o.stop(stop); return o; };
+  function pluck(t, f, vel, pan = 0, dur = 0.32, bright = 3200, send = 0.25) {
+    const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 2.5;
+    lp.frequency.setValueAtTime(bright, t); lp.frequency.exponentialRampToValueAtTime(380, t + dur);
+    const g = ac.createGain(); env(g, t, 0.003, vel, dur);
+    const g2 = ac.createGain(); g2.gain.value = 0.3;
+    osc('triangle', f, t, t + dur + 0.05).connect(lp);
+    osc('sine', f * 2.004, t, t + dur + 0.05).connect(g2); g2.connect(lp);
+    lp.connect(g); out(g, pan, send);
+  }
+  function noiseHit(t, dur, type, freq, q, vel, pan = 0, send = 0, sweepTo = 0) {
+    const src = ac.createBufferSource(); src.buffer = noise;
+    const f = ac.createBiquadFilter(); f.type = type; f.Q.value = q; f.frequency.setValueAtTime(freq, t);
+    if (sweepTo) f.frequency.exponentialRampToValueAtTime(sweepTo, t + dur);
+    const g = ac.createGain(); env(g, t, Math.min(0.004, dur * 0.3), vel, dur);
+    src.connect(f); f.connect(g); out(g, pan, send);
+    src.start(t, (t * 7.31) % 2.0); src.stop(t + dur + 0.05);
+  }
+  function sub(t, vel) {
+    const o = osc('sine', 120, t, t + 0.8); o.frequency.exponentialRampToValueAtTime(36, t + 0.3);
+    const g = ac.createGain(); env(g, t, 0.004, vel, 0.6); o.connect(g); out(g);
+    noiseHit(t, 0.07, 'lowpass', 1100, 0.7, vel * 0.45);
+  }
+  function sweep(t0, t1, vel, f0, f1, pan = 0) {
+    const src = ac.createBufferSource(); src.buffer = noise; src.loop = true;
+    const f = ac.createBiquadFilter(); f.type = 'bandpass'; f.Q.value = 1.1;
+    f.frequency.setValueAtTime(f0, t0); f.frequency.exponentialRampToValueAtTime(f1, t1);
+    const g = ac.createGain(); g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(vel, t1 - 0.03); g.gain.linearRampToValueAtTime(0.0001, t1 + 0.005);
+    src.connect(f); f.connect(g); out(g, pan, 0.2); src.start(t0, (t0 * 3.1) % 1.0); src.stop(t1 + 0.05);
+  }
+  function riser(t0, t1, vel) {
+    const o = osc('sawtooth', 110, t0, t1 + 0.02); o.frequency.exponentialRampToValueAtTime(1320, t1);
+    const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 6; lp.frequency.setValueAtTime(300, t0); lp.frequency.exponentialRampToValueAtTime(5000, t1);
+    const g = ac.createGain(); g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(vel, t1 - 0.01); g.gain.linearRampToValueAtTime(0.0001, t1 + 0.01);
+    o.connect(lp); lp.connect(g); out(g, 0, 0.3);
+    sweep(t0, t1, vel * 0.9, 400, 7000);
+  }
+  function chime(t, freqs, vel, pan = 0) {
+    freqs.forEach((f, i) => { const g = ac.createGain(), ti = t + i * 0.012; env(g, ti, 0.002, vel / (1 + i * 0.4), 1.3); osc('sine', f, ti, ti + 1.5).connect(g); out(g, pan + (i - 1) * 0.25, 0.6); });
+  }
+  function bass(t, f, vel) { const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 320; const g = ac.createGain(); env(g, t, 0.006, vel, 0.28); osc('triangle', f, t, t + 0.35).connect(lp); lp.connect(g); out(g); }
+  function blip(t, f0, f1, dur, vel, pan = 0) { const o = osc('sine', f0, t, t + dur + 0.05); o.frequency.exponentialRampToValueAtTime(f1, t + dur); const g = ac.createGain(); env(g, t, 0.002, vel, dur); o.connect(g); out(g, pan, 0.2); }
+
+  // ---- v2 instruments built from the helpers above
+  function pad(t0, t1, notes, peak, o = {}) {
+    const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = o.cut ?? 1200; lp.Q.value = 0.7;
+    const g = ac.createGain(), hold = o.swellTo ?? peak;
+    g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(peak, t0 + (o.att ?? 0.4));
+    if (o.swellTo) g.gain.linearRampToValueAtTime(o.swellTo, o.swellAt);
+    g.gain.setValueAtTime(hold, t1 - (o.rel ?? 0.3)); g.gain.exponentialRampToValueAtTime(0.0001, t1);
+    notes.forEach((n, i) => { for (const det of [-7, 7]) { const oo = osc(o.type ?? 'sawtooth', nz(n), t0, t1 + 0.05); oo.detune.value = det + i; oo.connect(lp); } });
+    lp.connect(g); out(g, o.pan ?? 0, o.send ?? 0.4);
+  }
+  function drone(t0, t1, f, peak, o = {}) {
+    const g = ac.createGain(); g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(peak, t0 + (o.att ?? 0.5));
+    g.gain.setValueAtTime(peak, t1 - (o.rel ?? 0.4)); g.gain.exponentialRampToValueAtTime(0.0001, t1);
+    osc('sine', f, t0, t1 + 0.05).connect(g); out(g, 0, 0);
+  }
+  const claudeMotif = (t, notes, vel) => notes.forEach(([n, dt], i) => pluck(t + dt, nz(n), vel, -0.15 + i * 0.1, 0.6, 1300, 0.35));
+  const childMotif = (t, notes, vel, bright = 5200, send = 0.3) => notes.forEach(([n, dt], i) => pluck(t + dt, nz(n), vel, 0.2 - i * 0.1, 0.32, bright, send));
+  // SCORE BODY — Does electric current get used up? Music = the user's track (piece.json "music");
+  // this body is the sound effects only (sfx bus), loud and present: switches, heat, electrons and photons.
+  to = 's';
+  // ---- instruments
+  const rumble = (t, dur, vel, pan = 0, cut = 180) => {   // a long low roll of thunder: looped noise, lowpassed, slow swells
+    const src = ac.createBufferSource(); src.buffer = noise; src.loop = true;
+    const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 0.9; lp.frequency.setValueAtTime(cut * 2.5, t); lp.frequency.exponentialRampToValueAtTime(cut, t + dur);
+    const g = ac.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vel, t + 0.08);
+    const R = RNG('rum', t);
+    for (let k = 1; k <= 6; k++) g.gain.linearRampToValueAtTime(vel * R.r(0.35, 1), t + dur * k / 7);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    src.connect(lp); lp.connect(g); out(g, pan, 0.5); src.start(t, (t * 1.7) % 2); src.stop(t + dur + 0.05);
+  };
+  const crackle = (t, dur, vel, pan = 0, key = 'c') => {   // dry electric crackle: a burst of tiny high clicks
+    const R = RNG('crk', key, t), n = Math.max(3, Math.round(dur * 60));
+    for (let i = 0; i < n; i++) noiseHit(t + R.r(0, dur), 0.012, 'highpass', 2500 + R.r(0, 4000), 0.8, vel * R.r(0.4, 1), pan + R.r(-0.2, 0.2), 0.05);
+  };
+  const zap = (t, vel, pan = 0, f0 = 2600, f1 = 300) => {   // an electric zap: a fast falling buzz + crackle
+    const o = osc('sawtooth', f0, t, t + 0.2); o.frequency.exponentialRampToValueAtTime(f1, t + 0.16);
+    const bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1800; bp.Q.value = 0.8;
+    const g = ac.createGain(); env(g, t, 0.002, vel * 0.5, 0.16); o.connect(bp); bp.connect(g); out(g, pan, 0.15);
+    crackle(t, 0.12, vel * 0.7, pan, 'z');
+  };
+  const crack = (t, vel, pan = 0) => {   // the strike itself: a sharp broadband crack, a sub punch, a roll
+    noiseHit(t, 0.05, 'highpass', 1200, 0.6, vel, pan, 0.4);
+    noiseHit(t + 0.01, 0.22, 'bandpass', 2400, 0.7, vel * 0.7, pan, 0.5, 600);
+    crackle(t, 0.2, vel * 0.8, pan, 'k');
+    sub(t, vel * 0.9);
+  };
+  const tick = (t, vel = 0.12, pan = 0, f = 3000) => { noiseHit(t, 0.015, 'bandpass', f, 4, vel, pan); blip(t, f * 0.7, f * 0.5, 0.03, vel * 0.25, pan); };
+  const ice = (t, vel, pan = 0) => { blip(t, 3400, 2600, 0.05, vel * 0.5, pan); noiseHit(t, 0.03, 'highpass', 5000, 1, vel * 0.6, pan, 0.2); };
+  const pop = (t, vel, pan = 0, f = 900) => blip(t, f, f * 1.6, 0.06, vel, pan);
+  const typing = (t0, n, cps, vel = 0.05, pan = 0) => { for (let i = 0; i < n; i++) tick(t0 + i / cps, vel, pan, 2200 + (i % 3) * 400); };
+  const hum = (t0, t1, vel) => {   // a mains-like buzz: 100 Hz saw, bandpassed, tremolo
+    const o = osc('sawtooth', 100, t0, t1 + 0.05), bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 400; bp.Q.value = 1.5;
+    const g = ac.createGain(); g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(vel, t0 + 0.4); g.gain.setValueAtTime(vel, t1 - 0.4); g.gain.exponentialRampToValueAtTime(0.0001, t1);
+    o.connect(bp); bp.connect(g); out(g, 0, 0.1);
+  };
+  const whoosh = (t, d, vel, f0 = 300, f1 = 3000, pan = 0) => sweep(t - d, t, vel, f0, f1, pan);
+
+  // (no rain bed: a constant hiss pumps audibly in every pause of the voice)
+
+
+  const drop = (t, vel, f = 900, pan = 0.2) => blip(t, f * 1.6, f * 0.5, 0.18, vel, pan);
+  const pew = (t, vel, f = 1800, pan = 0.4) => { blip(t, f * 0.6, f * 1.8, 0.22, vel, pan); noiseHit(t, 0.08, 'highpass', 5000, 0.8, vel * 0.3, pan, 0.3); };
+
+  const sub2 = (t, v) => sub(t, v * 0.4);   // every other low hit sits well under the payoff
+  const click = (t, vel, pan = 0) => { tick(t, vel, pan, 1600); noiseHit(t, 0.04, 'bandpass', 800, 2, vel * 0.7, pan); };
+
+  const sizzle = (t, dur, vel, pan = 0) => { crackle(t, dur, vel, pan, 'sz' + t); noiseHit(t, Math.min(1.2, dur), 'bandpass', 3500, 0.8, vel * 1.4, pan, 0.2); };
+  const buzz = (t0, t1, vel) => hum(t0, t1, vel);
+
+  const thunk = (t, vel, pan = 0) => { noiseHit(t, 0.12, 'lowpass', 500, 1, vel, pan, 0.3); sub2(t, vel * 1.5); };   // a breaker / power cut
+
+  const flowTicks = (t0, t1, rate, vel, pan = 0, f = 2400) => { for (let t = t0; t < t1; t += 1 / rate) tick(t, vel, pan + Math.sin(t * 3) * 0.2, f); };
+  // ---- title and the myth
+  pop(VL('title').t0, 0.08, 0, 420);
+  typing(VL('title').t0, 21, 24, 0.03, -0.2); typing(VW('title', 'get') - 0.05, 12, 18, 0.03, 0.2);
+  hum(0.4, SUB('energy'), 0.025);
+  flowTicks(0.6, SUB('picture'), 2.2, 0.02, -0.2);
+  { const t = VW('picture', 'leaves') - 0.2; sweep(t, t + 1.4, 0.05, 2400, 500, 0.3); }
+  { const t = VW('false', 'wrong') - 0.2; sub2(t, 0.5); noiseHit(t, 0.12, 'bandpass', 500, 1.5, 0.22, 0); crack(t + 0.02, 0.25, 0); }
+  pop(VW('false', 'before') - 0.2, 0.1, -0.5, 700); pop(VW('false', 'after') - 0.2, 0.1, 0.5, 700);
+  { const t = VW('same', 'half', 1) - 0.2; chime(t, [1318.5], 0.05, -0.4); chime(t + 0.12, [1318.5], 0.05, 0.4); for (let i = 0; i < 6; i++) tick(t + i * 0.05, 0.05, 0, 2600 + i * 80); }
+  // ---- energy and the voltage step
+  whoosh(SUB('energy') + 0.6, 0.6, 0.09, 300, 3000, 0);
+  { const t = VW('energy', 'pushed') - 0.2; sweep(t, t + 0.5, 0.06, 800, 3000, -0.4); }
+  { const t = VW('energy', 'tired') - 0.2; sweep(t, t + 0.7, 0.05, 1500, 300, 0.4); }
+  { const t = VW('voltage', 'voltage') - 0.2; sweep(t, t + 0.8, 0.07, 2000, 250, 0); sub2(t + 0.8, 0.4); }
+  flowTicks(SUB('energy') + 0.5, SUB('kirchhoff'), 3, 0.018, 0);
+  // ---- Kirchhoff and the split
+  whoosh(SUB('kirchhoff') + 0.6, 0.6, 0.09, 4000, 400, 0);
+  { const t = VW('kirchhoff', "kirchhoff's") - 0.2; chime(t, [880, 1318.5, 1760], 0.05, 0); }
+  { const t = VW('split', 'splits') - 0.2; zap(t, 0.12, 0.3, 2400, 600); sweep(t, t + 0.7, 0.05, 400, 2600, 0.4); sweep(t, t + 0.7, 0.04, 400, 1800, -0.2); }
+  pop(VW('split', 'three') - 0.2, 0.08, -0.5, 600);
+  { const t = VW('round', 'three') - 0.2; pop(t, 0.1, -0.3, 700); pop(t + 0.4, 0.1, 0.3, 900); chime(t + 0.6, [1046.5, 1568], 0.05, 0); }
+  { const t = VW('round', 'roundabout') - 0.2; for (let i = 0; i < 10; i++) blip(t + i * 0.12, 900 + (i % 4) * 150, 1100, 0.06, 0.03, Math.sin(i) * 0.6); }
+  // ---- THE PAYOFF: shared (the loudest moment, after the silence)
+  sub(HIT, 1.0); sub(HIT + 0.03, 0.7); noiseHit(HIT, 0.9, 'lowpass', 3200, 0.7, 0.75, 0, 0.6, 180);
+  [['D3', 0], ['A3', 0.01], ['D4', 0.02], ['Fs4', 0.03], ['A4', 0.04]].forEach(([n, dt], i) => pluck(HIT + dt, nz(n), 0.22 - i * 0.02, (i - 2) * 0.2, 0.9, 3000, 0.6));
+  rumble(HIT + 0.15, 3.2, 0.22, 0, 300);
+  for (let k = 0; k < 8; k++) chime(HIT + 0.4 + k * 0.32, [1046.5 * (1 + (k % 3) * 0.25)], 0.035, (k % 2 ? 0.4 : -0.4));
+  chime(VW('end', 'shared') - 0.3, [1318.5, 1975.5], 0.05, 0);
+  chime(VL('end').t1 + 0.2, [1760, 2637, 3520], 0.06, 0);   // Bitvolts
+  // =====================================================================
+  //  kit/score-tail.js — render, fold the tail over the loop point, loudness stage
+  //  (RMS-normalise to -17 dBFS, look-ahead limiter at -1 dBFS; stems share the mix gain curve)
+  // =====================================================================
+  const buf = await ac.startRendering();
+  // fold the tail over the loop point so the loop is seamless
+  const N = Math.round(LOOP_T * sampleRate), L = new Float32Array(N), Rr = new Float32Array(N);
+  const c0 = buf.getChannelData(0), c1 = buf.getChannelData(1);
+  for (let i = 0; i < N; i++) { L[i] = c0[i] + (i + N < len ? c0[i + N] : 0); Rr[i] = c1[i] + (i + N < len ? c1[i + N] : 0); }
+  // loudness for a phone (subagents-short): RMS-normalise to -17 dBFS, then a look-ahead limiter at -1 dBFS.
+  // Stems reuse the mix's gain and gain curve, so they sum back to the mix.
+  let k = normIn?.k, g = normIn?.g;
+  if (!g) {
+    let sum = 0; for (let i = 0; i < N; i++) sum += (L[i] * L[i] + Rr[i] * Rr[i]) / 2;
+    k = 10 ** (-17 / 20) / Math.sqrt(sum / N || 1e-12);
+    const ceil = 0.89; g = new Float32Array(N);
+    for (let i = 0; i < N; i++) { const p = Math.max(Math.abs(L[i]), Math.abs(Rr[i])) * k; g[i] = p > ceil ? ceil / p : 1; }
+    const att = Math.exp(-1 / (0.0015 * sampleRate)), rel = Math.exp(-1 / (0.09 * sampleRate));
+    for (let i = N - 2; i >= 0; i--) g[i] = Math.min(g[i], 1 - (1 - g[i + 1]) * att);
+    let r = 1; for (let i = 0; i < N; i++) { r = Math.min(g[i], 1 - (1 - r) * rel); g[i] = r; }
+  }
+  for (let i = 0; i < N; i++) { L[i] *= k * g[i]; Rr[i] *= k * g[i]; }
+  return { left: L, right: Rr, sampleRate, norm: { k, g } };
+}
+function wavB64(s) {
+  const bytes = encodeWav(s.left, s.right, s.sampleRate);
+  let bin = '';
+  for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+  return btoa(bin);
+}
+async function renderAudioWav() { return wavB64(await buildScore(48000, 'mix')); }
+async function renderAudioStems() {
+  const mix = await buildScore(48000, 'mix');
+  const music = await buildScore(48000, 'music', mix.norm), sfx = await buildScore(48000, 'sfx', mix.norm);
+  return { music: wavB64(music), sfx: wavB64(sfx) };
+}
+window.renderAudioWav = renderAudioWav;
+window.renderAudioStems = renderAudioStems;
+</script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ganaste esa carrera</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #05060f; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; image-rendering: pixelated; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  GANASTE ESA CARRERA — 9:16, voice-led (~60 s) @ 120 BPM, 24fps, style pixdoc (360x640, box captions).
+//  A race down a fleshy tunnel: you (the yellow tail) against 250 million; a counter falls to 1, then rises (cells, days,
+//  weeks) to a baby. Yellow = you, coral = the egg and its cells, plum/crimson = the body. The hit is "Tú" (24.75).
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = Math.round(VOICE.duration * FPS) / FPS;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = '"Helvetica Neue", Arial, sans-serif';
+const CX = 540;
+const SP_RES = [360, 640];
+const SHOT_LIST = [
+  [0.0, 'title', '1 título: el túnel', 0.0, 4.5, 1],
+  [4.5, 'race', '2 tú contra 250 millones', 4.5, 5.0, 1],
+  [9.5, 'lost', '3 se pierden, se cansan', 9.5, 6.5, 1],
+  [16.0, 'few', '4 unos pocos cientos: el óvulo', 16.0, 3.0, 1],
+  [19.0, 'dig', '5 se abren paso en la capa', 19.0, 3.0, 1],
+  [22.0, 'through', '6 uno lo atraviesa', 22.0, 1.75, 1],
+  [23.75, 'hush', '7 silencio', 23.75, 1.0, 1],
+  [24.75, 'seal', '8 TÚ; el óvulo se sella', 24.75, 5.75, 1],
+  [30.5, 'divide', '9 1 → 2 → 4 → 8 → 16', 30.5, 5.0, 1],
+  [35.5, 'ball', '10 esfera hueca; se implanta', 35.5, 5.5, 1],
+  [41.0, 'heart', '11 el corazón late', 41.0, 5.0, 1],
+  [46.0, 'grow', '12 semana tras semana', 46.0, 6.5, 1],
+  [52.5, 'one', '13 uno entre 250 millones', 52.5, 3.0, 1],
+  [55.5, 'end', '14 ganaste esa carrera', 55.5, 4.0, 1],
+];
+let CUR_SHOT = 0;
+function warp(i, fn) {
+  const [t0, , , o0, , k] = SHOT_LIST[i], st = o0 + (TT - t0) * k, keepT = TT, keepE = E0, n0 = DEFER ? DEFER.length : 0;
+  CUR_SHOT = i; TT = st; E0 = o0;
+  try { fn(); } finally { TT = keepT; E0 = keepE; }
+  if (DEFER) for (let j = n0; j < DEFER.length; j++) { const f = DEFER[j]; DEFER[j] = () => { const a = TT, e = E0; TT = st; E0 = o0; try { f(); } finally { TT = a; E0 = e; } }; }
+}
+function NT(t) { return t; }
+const ERA_LIST = SHOT_LIST.map(([t0, sc], i) => [t0, i + 1 < SHOT_LIST.length ? SHOT_LIST[i + 1][0] : DURATION, () => warp(i, () => SCENES[sc](i))]);
+const SHOTS = SHOT_LIST.map(([t0, sc, title], i) => [sc, i, t0, ERA_LIST[i][1], title]);
+const AMB = '#f0b23c', YOU = '#ffe040', CORAL = '#ff8a6a', ROSE = '#ff9ad0', BLU = '#5ab8ff', HOT = '#ff5a6a', CREAM = '#ffe0c8';
+const CAPS = [
+  [0.4,  ['LA CARRERA', 'MÁS DIFÍCIL', 'DE TU VIDA'], { big: true }],
+  [4.7,  [[['ERAS TÚ', YOU]], 'CONTRA ≈ 250 MILLONES']],
+  [9.8,  ['LA MAYORÍA SE PIERDE', 'POR EL CAMINO']],
+  [11.9, ['SE CANSAN, SE ATASCAN...', [['O VAN AL REVÉS', HOT]]]],
+  [16.2, ['SOLO UNOS POCOS CIENTOS', [['LLEGAN AL ÓVULO', CORAL]]]],
+  [19.1, ['TODOS SE ABREN PASO', 'EN SU CAPA PROTECTORA...']],
+  [22.3, ['...HASTA QUE UNO', [['LO ATRAVIESA', YOU]]]],
+  [26.1, ['EN ESE INSTANTE,', [['EL ÓVULO SE SELLA', CORAL]]]],
+  [28.6, ['NADIE MÁS', 'PUEDE ENTRAR']],
+  [30.7, ['ESA ÚNICA CÉLULA', [['EMPIEZA A DIVIDIRSE', CORAL]]]],
+  [35.8, ['DÍA 5: UNA PEQUEÑA', [['ESFERA HUECA', CORAL]]]],
+  [38.4, ['...QUE SE ACOMODA EN', 'LA PARED DEL ÚTERO']],
+  [41.4, ['UNAS 3 SEMANAS DESPUÉS', [['LATE UN CORAZÓN', HOT]]]],
+  [46.3, ['SEMANA TRAS SEMANA,', [['CRECE...', CREAM]]]],
+  [50.6, ['...HASTA ESTAR', [['LISTO PARA NACER', CREAM]]]],
+  [52.9, [[['1', YOU], [' ENTRE ', '#eef0ea'], ['250 MILLONES', '#eef0ea']]]],
+  [55.6, ['GANASTE', 'ESA CARRERA'], { big: true }],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'morph-chain',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: SHOT_LIST.slice(1).map(([t0]) => t0),
+  morphs: [],
+  cues: { rivals: 6.7, lost: 9.8, tired: 11.9, stuck: 12.85, wrong: 13.8, egg: 16.2, dig: 19.1, through: 22.6, hit: 24.75, seal: 26.1, closed: 28.6,
+          div: [33.19, 33.43, 33.89, 34.39], cell1: 31.15, ball: 35.8, nest: 38.6, beat: 42.9, week: [[46.0, 7], [47.6, 17], [48.55, 38]], born: 50.65, one: 52.9, title: 55.6 },
+  acts: [
+    { name: '1 La carrera',  role: 'build',   t0: 0.0,   t1: 16.0 },
+    { name: '2 El óvulo',    role: 'journey', t0: 16.0,  t1: 22.0 },
+    { name: '3 Atraviesa',   role: 'peak',    t0: 22.0,  t1: 23.8 },
+    { name: '4 Silencio',    role: 'silence', t0: 23.8,  t1: 24.7 },
+    { name: '5 Tú y las células', role: 'gift', t0: 24.7, t1: 41.0 },
+    { name: '6 Crece',       role: 'goodbye', t0: 41.0,  t1: DURATION },
+  ],
+  board: [
+    { t: 2.8,  title: '1 título: el túnel', sound: 'música desde 0', next: '' },
+    { t: 8.0,  title: '2 tú contra 250 millones', sound: 'pulso', next: '' },
+    { t: 13.5, title: '3 se pierden', sound: 'caídas', next: '' },
+    { t: 18.2, title: '4 el óvulo', sound: 'tensión', next: '' },
+    { t: 21.2, title: '5 se abren paso', sound: '', next: '' },
+    { t: 23.2, title: '6 uno atraviesa', sound: 'pico', next: 'silencio' },
+    { t: 27.4, title: '8 TÚ; se sella', sound: 'EL GOLPE (24.75)', next: '' },
+    { t: 34.7, title: '9 16 células', sound: 'plops', next: '' },
+    { t: 39.6, title: '10 esfera hueca; se implanta', sound: 'pad', next: '' },
+    { t: 44.0, title: '11 el corazón late', sound: 'latido', next: '' },
+    { t: 51.0, title: '12 semana 38', sound: 'tema', next: '' },
+    { t: 54.2, title: '13 uno entre 250 millones', sound: '', next: '' },
+    { t: 57.6, title: '14 título', sound: 'cierre', next: 'loop' },
+  ],
+  narration: VOICE.lines.map((l) => ({ id: l.id, t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;

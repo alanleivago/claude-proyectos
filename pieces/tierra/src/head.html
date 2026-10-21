@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>¿Cómo se formó la Tierra?</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #05060f; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; image-rendering: pixelated; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  ¿CÓMO SE FORMÓ LA TIERRA? — 9:16, voice-led (~71 s) @ 120 BPM, 24fps, style pixdoc (360x640, box captions).
+//  A cloud of dust becomes the Earth under a clock that counts DOWN (billions of years ago) to HOY. Gold = the Sun,
+//  orange = heat/magma, blue = water, grey = rock. The voice is the clock; the hit is Theia (35.5).
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = Math.round(VOICE.duration * FPS) / FPS;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = '"Helvetica Neue", Arial, sans-serif';
+const CX = 540;
+const SP_RES = [360, 640];
+const SHOT_LIST = [
+  [0.0, 'title', '1 título: la Tierra hoy', 0.0, 5.75, 1],
+  [5.75, 'cloud', '2 la nube de gas y polvo', 5.75, 4.5, 1],
+  [10.25, 'gravity', '3 la gravedad: gira y se aplana', 10.25, 4.25, 1],
+  [14.5, 'sun', '4 se enciende el Sol', 14.5, 6.0, 1],
+  [20.5, 'dust', '5 el polvo se pega: choques', 20.5, 7.75, 1],
+  [28.25, 'young', '6 una Tierra joven', 28.25, 2.25, 1],
+  [30.5, 'theia', '7 Tea', 30.5, 4.0, 1],
+  [34.5, 'hush', '8 silencio', 34.5, 1.0, 1],
+  [35.5, 'impact', '9 ¡impacto! nace la Luna', 35.5, 5.5, 1],
+  [41.0, 'magma', '10 océano de magma', 41.0, 3.0, 1],
+  [44.0, 'crust', '11 corteza; el cristal más antiguo', 44.0, 7.75, 1],
+  [51.75, 'rain', '12 lluvia y océanos', 51.75, 5.0, 1],
+  [56.75, 'moon', '13 la Luna se aleja', 56.75, 6.0, 1],
+  [62.75, 'today', '14 hoy', 62.75, 4.5, 1],
+  [67.25, 'end', '15 así se formó la Tierra', 67.25, 4.208, 1],
+];
+let CUR_SHOT = 0;
+function warp(i, fn) {
+  const [t0, , , o0, , k] = SHOT_LIST[i], st = o0 + (TT - t0) * k, keepT = TT, keepE = E0, n0 = DEFER ? DEFER.length : 0;
+  CUR_SHOT = i; TT = st; E0 = o0;
+  try { fn(); } finally { TT = keepT; E0 = keepE; }
+  if (DEFER) for (let j = n0; j < DEFER.length; j++) { const f = DEFER[j]; DEFER[j] = () => { const a = TT, e = E0; TT = st; E0 = o0; try { f(); } finally { TT = a; E0 = e; } }; }
+}
+function NT(t) { return t; }
+const ERA_LIST = SHOT_LIST.map(([t0, sc], i) => [t0, i + 1 < SHOT_LIST.length ? SHOT_LIST[i + 1][0] : DURATION, () => warp(i, () => SCENES[sc](i))]);
+const SHOTS = SHOT_LIST.map(([t0, sc, title], i) => [sc, i, t0, ERA_LIST[i][1], title]);
+const AMB = '#f0b23c', GOLD = '#ffe6a0', BLU = '#5ab8ff', HOT = '#ff8a4a', ROCK = '#c8b8a0', SEAC = '#6ab0ff', ROSE = '#ff9ad0';
+const CAPS = [
+  [0.4,  ['¿CÓMO SE FORMÓ', 'LA TIERRA?'], { big: true }],
+  [5.9,  ['UNA NUBE ENORME', [['DE GAS Y POLVO', AMB]]]],
+  [10.4, [[['LA GRAVEDAD', BLU]], 'LA APRIETA HACIA EL CENTRO']],
+  [12.6, ['LA NUBE GIRA', 'Y SE APLANA']],
+  [14.7, ['EN EL MEDIO', [['SE ENCIENDE EL SOL', GOLD]]]],
+  [16.4, ['EL SOL SE QUEDA', [['CASI TODA LA MASA', GOLD]]]],
+  [20.6, ['CON LO QUE SOBRA,', [['EL POLVO SE PEGA', AMB]]]],
+  [23.4, ['LOS GRANOS FORMAN PIEDRAS', [['CHOQUE TRAS CHOQUE', HOT]]]],
+  [28.4, ['NACE UNA', [['TIERRA JOVEN', ROCK]]]],
+  [30.6, ['PERO ENTONCES APARECE', [['TEA', HOT]]]],
+  [32.6, ['UN PLANETA DEL', 'TAMAÑO DE MARTE']],
+  [35.6, [[['¡IMPACTO!', HOT]]]],
+  [36.4, ['LOS ESCOMBROS', [['QUEDAN EN ÓRBITA', ROCK]]]],
+  [39.6, ['...Y SE JUNTAN', [['EN LA LUNA', '#e8e8f0']]]],
+  [41.3, ['LA TIERRA ES UN', [['OCÉANO DE MAGMA', HOT]]]],
+  [44.25, ['SE ENFRÍA Y FORMA', [['UNA CORTEZA DE ROCA', ROCK]]]],
+  [47.3, ['EL CRISTAL MÁS ANTIGUO', 'QUE CONOCEMOS']],
+  [52.0, ['EL VAPOR CAE', [['COMO LLUVIA', SEAC]]]],
+  [55.1, ['...Y LLENA', [['LOS OCÉANOS', SEAC]]]],
+  [56.9, [[['LA LUNA', '#e8e8f0']], 'ESTABA MUCHO MÁS CERCA']],
+  [59.7, ['Y SE SIGUE ALEJANDO']],
+  [63.1, ['HOY, LA TIERRA TIENE', [['≈ 4.500 MILLONES', BLU]], 'DE AÑOS']],
+  [67.6, ['ASÍ SE FORMÓ', 'LA TIERRA'], { big: true }],
+];
+// the clock counts down: [video time, billions of years ago]
+const CLOCK = [[5.75, 4.60], [14.5, 4.59], [20.5, 4.57], [28.25, 4.55], [30.5, 4.54], [35.5, 4.51], [41.0, 4.50], [44.0, 4.48], [51.75, 4.40], [56.75, 4.30], [62.75, 0.0]];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'morph-chain',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: SHOT_LIST.slice(1).map(([t0]) => t0),
+  morphs: [],
+  cues: { sun: 15.25, mass: 18.4, stick: 21.6, crash: [24.0, 25.5, 26.0, 26.4, 26.75, 27.1, 27.4, 27.65, 27.9], young: 28.6, theia: 31.8, mars: 33.6, hit: 35.5,
+          ring: 37.3, moon: 40.3, magma: 41.4, cool: 44.6, zircon: 47.3, age: 49.25, rain: 52.2, ocean: 55.1, moonFar: 59.7, cm: 60.7, today: 63.1, title: 67.6 },
+  acts: [
+    { name: '1 Nube y Sol',     role: 'build',   t0: 0.0,   t1: 20.5 },
+    { name: '2 Choques',        role: 'journey', t0: 20.5,  t1: 30.5 },
+    { name: '3 Tea',            role: 'peak',    t0: 30.5,  t1: 34.55 },
+    { name: '4 Silencio',       role: 'silence', t0: 34.55, t1: 35.5 },
+    { name: '5 Impacto y magma',role: 'gift',    t0: 35.5,  t1: 51.75 },
+    { name: '6 Océanos y hoy',  role: 'goodbye', t0: 51.75, t1: DURATION },
+  ],
+  board: [
+    { t: 3.0,  title: '1 título: la Tierra hoy', sound: 'música desde 0', next: 'mosaico' },
+    { t: 8.5,  title: '2 la nube de gas y polvo', sound: 'pad', next: '' },
+    { t: 13.2, title: '3 gira y se aplana', sound: 'barrido', next: '' },
+    { t: 18.8, title: '4 el Sol: > 99 % de la masa', sound: 'golpe brillante', next: 'zoom al disco' },
+    { t: 26.2, title: '5 el polvo se pega: choques', sound: 'un golpe por choque', next: '' },
+    { t: 29.6, title: '6 una Tierra joven', sound: 'tema', next: '' },
+    { t: 33.8, title: '7 Tea, del tamaño de Marte', sound: 'tensión', next: 'silencio' },
+    { t: 37.6, title: '9a ¡impacto! escombros en órbita', sound: 'EL GOLPE (35.5)', next: '' },
+    { t: 40.8, title: '9b nace la Luna', sound: '', next: '' },
+    { t: 42.8, title: '10 océano de magma', sound: 'retumbo', next: '' },
+    { t: 50.0, title: '11 corteza; el circón de 4.400 Ma', sound: 'lupa', next: '' },
+    { t: 55.6, title: '12 lluvia y océanos', sound: 'lluvia', next: '' },
+    { t: 61.2, title: '13 la Luna se aleja ≈ 4 cm/año', sound: 'baja', next: '' },
+    { t: 65.0, title: '14 hoy', sound: 'tema', next: '' },
+    { t: 69.6, title: '15 título', sound: 'cierre', next: 'loop' },
+  ],
+  narration: VOICE.lines.map((l) => ({ id: l.id, t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;

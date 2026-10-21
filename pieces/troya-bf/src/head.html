@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Troya</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #1b0c0f; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  TROYA — remake of Ref amphora mitologia/5.mp4: Odysseus, the wooden horse and the guilt of victory.
+//  9:16, 24fps, voice-led (~63s), style amphora-bf with Nano Banana 2 cut-out layers (assets/), captions in ITC Garamond Std italic.
+//  Fixed-hero journey (F5): Odysseus carried from home, to Troy, to the horse, through the fall, back to sea.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4, GRID0 = 0;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, serif';
+const CX = 540;
+const onBeat = (t) => t;
+
+// the voice is the clock (voice.json -> VOICE): beats start just before their line, captions ink on the spoken words
+const VL = (id) => VOICE.lines.find((l) => l.id === id);
+const NORM = (x) => x.toLowerCase().replace(/[^a-z0-9']/g, '');
+const VW = (id, w, n = 1) => { const L = VL(id); let k = 0; for (const x of L.words) if (NORM(x.w) === NORM(w) && ++k === n) return x.t0; return L.t0; };
+const ALLW = VOICE.lines.flatMap((L) => L.words.map((x) => ({ ...x, line: L.id })));
+// captions: chunks of up to 4 words, broken after punctuation, each word with its own time
+const CAPS = [];
+for (const L of VOICE.lines) {
+  const ws = L.text.split(/\s+/); let cur = null;
+  ws.forEach((w, i) => { const t = L.words[i] ? L.words[i].t0 : L.t0;
+    if (!cur) { cur = [t, [], []]; CAPS.push(cur); }
+    cur[1].push(w); cur[2].push(t);
+    if (/[.,:;?!]$/.test(w) || cur[1].length >= 4) cur = null; });
+}
+CAPS.forEach((c) => (c[1] = c[1].join(' ')));
+// the time of a spoken phrase (its first word), n-th occurrence
+const CAP = (s, n = 1) => { const q = s.split(/\s+/).map(NORM); let k = 0;
+  for (let i = 0; i + q.length <= ALLW.length; i++) if (q.every((x, j) => NORM(ALLW[i + j].w) === x) && ++k === n) return ALLW[i].t0; return 0; };
+const IDS = ['home', 'sail', 'siege', 'think', 'horse', 'trojans', 'night', 'gates', 'fire', 'march', 'priestess', 'lie', 'guilt', 'voyage', 'banner', 'sign'];
+const S0 = (id) => VL(id).t0 - 0.3;
+const TB = [0, VW('home', 'sail') - 0.35, S0('siege'), S0('think'), S0('horse'), S0('trojans'), S0('night'), VW('night', 'opened') - 0.3, S0('fire'), S0('march'), S0('priestess'), S0('lie'), S0('guilt'), S0('voyage')];
+TB.push(VL('voyage').t1 + 0.5); TB.push(TB[14] + 3.4);
+const DURATION = Math.round((TB[15] + 2.8) * FPS) / FPS;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SUB = (id) => TB[IDS.indexOf(id)], SUBEND = (id) => (IDS.indexOf(id) + 1 < IDS.length ? TB[IDS.indexOf(id) + 1] : DURATION);
+const HIT = SUB('fire');                                         // the payoff: Troy goes up in flames, in the pause before "Before sunrise"
+const SIGN_T = SUB('sign');
+const ERA_LIST = [[0, DURATION, () => sceneStage()]];
+const SHOTS = IDS.map((id, i) => [id, 0, TB[i], i + 1 < IDS.length ? TB[i + 1] : DURATION, id]);
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, gridOffset: GRID0, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE, aspect: '9:16',
+  format: 'fixed-hero-journey',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: TB.slice(1),
+  morphs: [],
+  cues: { hit: HIT },
+  acts: [
+    { name: '1 Home',    role: 'build',   t0: 0, t1: SUB('think') },
+    { name: '2 The lie', role: 'build',   t0: SUB('think'), t1: SUB('night') },
+    { name: '3 Night',   role: 'silence', t0: SUB('night'), t1: SUB('gates') },
+    { name: '4 The fall', role: 'peak',   t0: SUB('gates'), t1: SUB('priestess') },
+    { name: '5 Guilt',   role: 'gift',    t0: SUB('priestess'), t1: SUB('banner') },
+    { name: '6 Name',    role: 'goodbye', t0: SUB('banner'), t1: DURATION },
+  ],
+  board: IDS.map((id, i) => ({ t: Math.min((i + 1 < IDS.length ? TB[i + 1] : DURATION) - 0.15, TB[i] + 2.6), title: id, sound: '', next: '' })),
+  narration: VOICE.lines.map((l) => ({ id: l.id, t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;

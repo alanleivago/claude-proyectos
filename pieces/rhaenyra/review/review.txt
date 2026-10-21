@@ -1,0 +1,159 @@
+shot 1 (heir): 23 frames [0,6,12,18,24,30,36,42,48,54,60,66,72,78,84,90,96,102,108,114,120,126,132] -> review/shot01-sheet.jpg
+shot 2 (swear): 26 frames [135,141,147,153,159,165,171,177,183,189,195,201,207,213,219,225,231,237,243,249,255,261,267,273,279,284] -> review/shot02-sheet.jpg
+shot 3 (crown): 23 frames [285,291,297,303,309,315,321,327,333,339,345,351,357,363,369,375,381,387,393,399,405,411,417] -> review/shot03-sheet.jpg
+shot 4 (sides): 17 frames [418,424,430,436,442,448,454,460,466,472,478,484,490,496,502,508,514] -> review/shot04-sheet.jpg
+shot 5 (sons): 10 frames [520,526,532,538,544,550,556,562,568,574] -> review/shot05-sheet.jpg
+shot 6 (chase): 31 frames [580,586,592,598,604,610,616,622,628,634,640,646,652,658,664,670,676,682,688,694,700,706,712,718,724,730,736,742,748,754,760] -> review/shot06-sheet.jpg
+shot 7 (fell): 12 frames [765,771,777,783,789,795,801,807,813,819,825,831] -> review/shot07-sheet.jpg
+shot 8 (grief): 27 frames [832,838,844,850,856,862,868,874,880,886,892,898,904,910,916,922,928,934,940,946,952,958,964,970,976,982,988] -> review/shot08-sheet.jpg
+shot 9 (vengeance): 17 frames [991,997,1003,1009,1015,1021,1027,1033,1039,1045,1051,1057,1063,1069,1075,1081,1087] -> review/shot09-sheet.jpg
+shot 10 (lost): 23 frames [1091,1097,1103,1109,1115,1121,1127,1133,1139,1145,1151,1157,1163,1169,1175,1181,1187,1193,1199,1205,1211,1217,1223] -> review/shot10-sheet.jpg
+shot 11 (cost): 22 frames [1228,1234,1240,1246,1252,1258,1264,1270,1276,1282,1288,1294,1300,1306,1312,1318,1324,1330,1336,1342,1348,1354] -> review/shot11-sheet.jpg
+shot 12 (sign): 16 frames [1360,1366,1372,1378,1384,1390,1396,1402,1408,1414,1420,1426,1432,1438,1444,1450] -> review/shot12-sheet.jpg
+
+CUTS vs beat grid @ 120 BPM, 24fps (8ths = 0.25s)
+ #   cut t     grid  grid#   nominal f  cut f   cut f t     err(f)  Δ@cut  peak(±2f)          shot change           result
+ 1    5.610s   8th    22      134.6    135   5.6250s  +0.4     1.8  f136 ok            shot 1 -> 2           FAIL
+ 2   11.895s   8th    48      285.5    285   11.8750s  -0.5     1.6  f286 ok            shot 2 -> 3           FAIL
+ 3   17.427s   8th    70      418.2    418   17.4167s  -0.2    34.9  f420 CHECK         shot 3 -> 4           FAIL
+ 4   21.667s   8th    87      520.0    520   21.6667s  -0.0    36.8  f520 ok            shot 4 -> 5           FAIL
+ 5   24.161s   8th    97      579.9    580   24.1667s  +0.1    24.0  f580 ok            shot 5 -> 6           FAIL
+ 6   31.871s   8th   127      764.9    765   31.8750s  +0.1     1.3  f764 ok            shot 6 -> 7           FAIL
+ 7   34.653s   8th   139      831.7    832   34.6667s  +0.3    20.5  f834 CHECK         shot 7 -> 8           FAIL
+ 8   41.299s   8th   165      991.2    991   41.2917s  -0.2     0.0  f992 ok            shot 8 -> 9           FAIL
+ 9   45.441s   8th   182     1090.6   1091   45.4583s  +0.4     0.0  f1090 ok           shot 9 -> 10          FAIL
+10   51.180s   8th   205     1228.3   1228   51.1667s  -0.3    29.7  f1230 CHECK        shot 10 -> 11         FAIL
+11   56.671s   8th   227     1360.1   1360   56.6667s  -0.1    29.3  f1358 CHECK        shot 11 -> 12         FAIL
+all cuts on grid within 1 frame: FAIL
+
+PACING: 11 hard cuts (1 in the last 5s), mean segment 5.05s, shortest 2.49s, plus 0 on-2s montage steps
+FLAT FRAMES (contrast < 6/255): none
+LOOP: diff(last=1452, first=0) = 31.20; typical consecutive diff in the first 40 frames = 1.12 (info: F4/F6 loop pixel-exactly and F4 checks it; other formats return to the opening image, changed)
+
+NARRATION (voice-over added outside; checks density and word hits)
+ #   t0-t1          words  wps   shot  line
+ 1  0.60-5.76s     20  3.88     1  "Rhaenyra was named heir to the Iron Throne by her own father, and for a while the realm believed it."  <-- too dense / overlapping
+ 2  5.86-12.04s     24  3.88     2  "Her father, King Viserys, had made his lords swear to support her, but the lords of the realm still did not want a queen."  <-- too dense / overlapping
+ 3  12.14-17.53s     17  3.16     3  "When he died, the crown went to her half-brother Aegon, and the great houses split in two."
+ 4  17.68-21.77s     12  2.93     4  "Her supporters were called the Blacks, and Aegon's were called the Greens."
+ 5  21.92-24.31s      7  2.92     5  "Rhaenyra's sons rode dragons into the war."
+ 6  24.41-31.87s     25  3.35     6  "Her young son Lucerys fled across the sky, trying to escape his cousin Aemond. Aemond chased him down on Vhagar, the largest dragon of all."
+ 7  32.12-34.45s      8  3.43     7  "Lucerys fell, and his dragon fell with him."
+ 8  34.90-41.40s     21  3.23     8  "Grief and rage spread through every castle in Westeros. Dragons began falling from the sky, and their riders died with them."
+ 9  41.55-45.54s     12  3.01     9  "Rhaenyra wanted vengeance, and the houses answered her with fire and blood."
+10  45.69-50.83s     22  4.28    10  "She had fought for the throne that was promised to her, and she had lost the one thing she could never replace."  <-- too dense / overlapping
+11  51.63-56.32s     20  4.26    11  "Now that throne would cost her everything, and the Dance of the Dragons would burn the realm to the ground."  <-- too dense / overlapping
+narration: 188 words, density FAIL (<= 3.5 words/s, no overlaps), word hits PASS (<= 2 frames from a cut)
+
+STORY ARC (loudness in dBFS over 100ms windows: median / 90th percentile; music = music stem median)
+ act          role       t0-t1         cuts  cuts/s  motion   mix med  mix p90  music
+ 1 Heir       build      0.00-11.89s      1    0.08     2.0    -16.3    -14.3    -6.9
+ 2 Split      build      11.89-24.16s      3    0.24     3.0    -16.7    -14.4    -7.2
+ 3 Chase      peak       24.16-45.44s      4    0.19     2.5    -17.0    -14.5    -7.3
+ 4 Loss       build      45.44-50.88s      1    0.18     1.5    -17.5    -15.2    -7.8
+ 5 Silence    silence    50.88-51.18s      0    0.00     8.8    -35.2    -25.2   -28.9
+ 6 Cost       gift       51.18-56.67s      1    0.18     4.9    -16.6    -14.9    -7.1
+ 7 Sign       goodbye    56.67-60.54s      1    0.26     1.3    -17.5    -14.9    -7.9
+  FAIL  gift is the loudest act (p90 -14.9 vs next -14.3)
+  FAIL  gift p90 >= peak p90 + 1 dB (-14.9 vs -14.5): the busiest moment is not the loudest
+  PASS  silence median <= peak median - 15 dB (-35.2 vs -17.0)
+  FAIL  peak has the highest cut rate (0.19/s)
+  PASS  gift is held: <= 0.5 cuts/s (0.18)
+  FAIL  goodbye decays: median <= gift median - 6 dB (-17.5 vs -16.6)
+story arc: FAIL (2/6 rules)
+
+TEXT (every string drawn, traced to screen; 264 frames sampled, morph windows skipped)
+  FAIL  cut off by the frame edge: and  at 5.58–57.00s (50 frames)
+  FAIL  cut off by the frame edge: for  at 5.58–6.00s (8 frames)
+  FAIL  cut off by the frame edge: realm  at 5.58–57.00s (22 frames)
+  FAIL  cut off by the frame edge: while  at 5.75–6.00s (4 frames)
+  FAIL  cut off by the frame edge: the  at 5.75–57.00s (66 frames)
+  FAIL  cut off by the frame edge: believed  at 5.75–6.00s (4 frames)
+  FAIL  cut off by the frame edge: it.  at 5.75–6.00s (4 frames)
+  FAIL  cut off by the frame edge: but  at 11.83–12.25s (8 frames)
+  FAIL  cut off by the frame edge: want  at 11.83–12.25s (8 frames)
+  FAIL  cut off by the frame edge: lords  at 12.00–12.25s (4 frames)
+  FAIL  cut off by the frame edge: of  at 12.00–57.00s (12 frames)
+  FAIL  cut off by the frame edge: still  at 12.00–12.25s (4 frames)
+  FAIL  cut off by the frame edge: did  at 12.00–12.25s (4 frames)
+  FAIL  cut off by the frame edge: not  at 12.00–12.25s (4 frames)
+  FAIL  cut off by the frame edge: queen.  at 12.00–12.25s (4 frames)
+  FAIL  cut off by the frame edge: great  at 17.42–17.75s (6 frames)
+  FAIL  cut off by the frame edge: split  at 17.42–17.75s (6 frames)
+  FAIL  cut off by the frame edge: houses  at 17.50–45.75s (12 frames)
+  FAIL  cut off by the frame edge: in  at 17.50–17.75s (4 frames)
+  FAIL  cut off by the frame edge: two.  at 17.50–17.75s (4 frames)
+  FAIL  cut off by the frame edge: THE BLACKS  at 21.63–22.00s (8 frames)
+  FAIL  cut off by the frame edge: Her  at 21.63–22.00s (8 frames)
+  FAIL  cut off by the frame edge: called  at 21.63–22.00s (12 frames)
+  FAIL  cut off by the frame edge: Aegon's  at 21.63–22.00s (8 frames)
+  FAIL  cut off by the frame edge: supporters  at 21.67–22.00s (6 frames)
+  FAIL  cut off by the frame edge: Blacks,  at 21.67–22.00s (6 frames)
+  FAIL  cut off by the frame edge: were  at 21.67–22.00s (10 frames)
+  FAIL  cut off by the frame edge: Greens.  at 21.67–22.00s (6 frames)
+  FAIL  cut off by the frame edge: THE GREENS  at 21.75–22.00s (4 frames)
+  FAIL  cut off by the frame edge: Rhaenyra's  at 24.13–24.50s (8 frames)
+  FAIL  cut off by the frame edge: dragons  at 24.13–24.50s (8 frames)
+  FAIL  cut off by the frame edge: into  at 24.17–24.50s (6 frames)
+  FAIL  cut off by the frame edge: sons  at 24.25–24.50s (4 frames)
+  FAIL  cut off by the frame edge: rode  at 24.25–24.50s (4 frames)
+  FAIL  cut off by the frame edge: war.  at 24.25–24.50s (4 frames)
+  FAIL  cut off by the frame edge: largest  at 31.75–32.25s (10 frames)
+  FAIL  cut off by the frame edge: VHAGAR  at 31.83–32.25s (8 frames)
+  FAIL  cut off by the frame edge: Aemond  at 31.83–32.25s (8 frames)
+  FAIL  cut off by the frame edge: down  at 31.83–32.25s (8 frames)
+  FAIL  cut off by the frame edge: on  at 31.83–32.25s (8 frames)
+  FAIL  cut off by the frame edge: LUCERYS  at 32.00–32.25s (4 frames)
+  FAIL  cut off by the frame edge: chased  at 32.00–32.25s (4 frames)
+  FAIL  cut off by the frame edge: him  at 32.00–32.25s (4 frames)
+  FAIL  cut off by the frame edge: Vhagar,  at 32.00–32.25s (4 frames)
+  FAIL  cut off by the frame edge: dragon  at 32.00–35.00s (12 frames)
+  FAIL  cut off by the frame edge: all.  at 32.00–32.25s (4 frames)
+  FAIL  cut off by the frame edge: Lucerys  at 34.63–35.00s (8 frames)
+  FAIL  cut off by the frame edge: fell,  at 34.67–35.00s (6 frames)
+  FAIL  cut off by the frame edge: fell  at 34.67–35.00s (6 frames)
+  FAIL  cut off by the frame edge: his  at 34.75–35.00s (4 frames)
+  FAIL  cut off by the frame edge: with  at 34.75–45.75s (14 frames)
+  FAIL  cut off by the frame edge: him.  at 34.75–35.00s (4 frames)
+  FAIL  cut off by the frame edge: Dragons  at 41.25–57.00s (14 frames)
+  FAIL  cut off by the frame edge: from  at 41.25–41.50s (6 frames)
+  FAIL  cut off by the frame edge: riders  at 41.25–41.50s (6 frames)
+  FAIL  cut off by the frame edge: began  at 41.50s (2 frames)
+  FAIL  cut off by the frame edge: falling  at 41.50s (2 frames)
+  FAIL  cut off by the frame edge: sky,  at 41.50s (2 frames)
+  FAIL  cut off by the frame edge: their  at 41.50s (2 frames)
+  FAIL  cut off by the frame edge: died  at 41.50s (2 frames)
+  FAIL  cut off by the frame edge: them.  at 41.50s (2 frames)
+  FAIL  cut off by the frame edge: Rhaenyra  at 45.42–45.75s (8 frames)
+  FAIL  cut off by the frame edge: vengeance,  at 45.42–45.75s (8 frames)
+  FAIL  cut off by the frame edge: answered  at 45.42–45.75s (8 frames)
+  FAIL  cut off by the frame edge: fire  at 45.42–45.75s (8 frames)
+  FAIL  cut off by the frame edge: wanted  at 45.50–45.75s (4 frames)
+  FAIL  cut off by the frame edge: blood.  at 45.50–45.75s (4 frames)
+  FAIL  cut off by the frame edge: her  at 45.75s (2 frames)
+  FAIL  cut off by the frame edge: one  at 51.13–51.50s (8 frames)
+  FAIL  cut off by the frame edge: she  at 51.17–51.50s (10 frames)
+  FAIL  cut off by the frame edge: had  at 51.17–51.50s (6 frames)
+  FAIL  cut off by the frame edge: thing  at 51.17–51.50s (6 frames)
+  FAIL  cut off by the frame edge: never  at 51.17–51.50s (6 frames)
+  FAIL  cut off by the frame edge: lost  at 51.25–51.50s (4 frames)
+  FAIL  cut off by the frame edge: could  at 51.25–51.50s (4 frames)
+  FAIL  cut off by the frame edge: replace.  at 51.25–51.50s (4 frames)
+  FAIL  cut off by the frame edge: Dance  at 56.67–57.00s (6 frames)
+  FAIL  cut off by the frame edge: would  at 56.67–57.00s (6 frames)
+  FAIL  cut off by the frame edge: ground.  at 56.67–57.00s (6 frames)
+  FAIL  cut off by the frame edge: burn  at 56.75–57.00s (4 frames)
+  FAIL  cut off by the frame edge: to  at 56.75–57.00s (4 frames)
+  WARN  under the phone UI (safe zone): LUCERYS  at 30.00–31.50s (13 frames)
+text: FAIL (81 cut-off/overlap, 1 in the safe zone)
+
+SOUND (the payoff window on the score without the voice: renders/audio-score.wav; loudness on the mix)
+  loudest 100ms window: 14.1s (-12.6 dBFS) - NOT in the payoff act 51.18-56.671s
+  silence before it: 0.0s at <= -40 dBFS in the 2s before (craft.md wants 0.5-4s when the story has a turn)
+  loudness: -14.1 LUFS integrated, range 2.3 LU, true peak -1.5 dBFS (phone target about -16 to -14 LUFS, peak <= -1)
+
+DEAD BEATS (the picture's change over 0.5s, every 0.25s; median 3.21, "still" below 0.80; silence acts are exempt)
+dead beats: PASS (0 stretches over 3s)
+PHONE SHEET: review/phone.jpg (one frame a second at 360px wide — read every caption at this size)
+
+video: 1080x1920, 1453 frames decoded

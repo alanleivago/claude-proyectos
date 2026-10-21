@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El meteorito</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0d14; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  WHAT IF AN ASTEROID BLEW APART ABOVE YOUR TOWN? — 9:16, 70s, 24fps, motion on 1s.
+//  F5 fixed place: a porch on a hillside above a timber river town at sunrise. A new star brightens, burns through the
+//  air and bursts without a sound; the heat, the ground shaking, the forest lying down in a wave, then the blast.
+//  Light now, sound later: the flash is silent, the loudest moment is the shockwave (57.3 s). Tunguska, 1908.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 70.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 70, () => sceneBurst()]];
+const SHOTS = [
+  ['porch',   0, 0.0,  5.0,  'sunrise over a river town from a porch'],
+  ['star',    0, 5.0,  13.0, 'a new star beside the sun'],
+  ['bright',  0, 13.0, 21.0, 'it grows brighter'],
+  ['air',     0, 21.0, 28.0, 'a fireball with a burning trail'],
+  ['quiet',   0, 28.0, 31.0, 'its light fills the sky, no sound'],
+  ['burst',   0, 31.0, 37.0, 'the airburst: flash, a ring, the plume'],
+  ['heat',    0, 37.0, 43.0, 'the heat: amber light, steam off the roofs'],
+  ['quake',   0, 43.0, 49.0, 'the ground shakes, birds scatter'],
+  ['wall',    0, 49.0, 55.0, 'the dust wall; the forest lies down'],
+  ['ears',    0, 55.0, 57.3, 'cover your ears; silence'],
+  ['blast',   0, 57.3, 58.5, 'the shockwave'],
+  ['after',   0, 58.5, 63.0, 'the dust settles on a flattened forest'],
+  ['card',    0, 63.0, 70.0, 'Tunguska, 1908'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { star: 5.0, air: 21.0, quiet: 28.0, burst: 31.0, heat: 37.0, quake: 43.0, wall: 49.0, ears: 55.0, hit: 57.3, card: 63.0 },
+  acts: [
+    { name: '1 Porch',   role: 'build',   t0: 0.0,  t1: 5.0 },
+    { name: '2 Star',    role: 'journey', t0: 5.0,  t1: 21.0 },
+    { name: '3 Air',     role: 'journey', t0: 21.0, t1: 31.0 },
+    { name: '4 Burst',   role: 'turn',    t0: 31.0, t1: 37.0 },
+    { name: '5 Heat',    role: 'journey', t0: 37.0, t1: 49.0 },
+    { name: '6 Wall',    role: 'peak',    t0: 49.0, t1: 56.6 },
+    { name: '7 Silence', role: 'silence', t0: 56.6, t1: 57.3 },
+    { name: '8 Blast',   role: 'gift',    t0: 57.3, t1: 63.0 },
+    { name: '9 Card',    role: 'goodbye', t0: 63.0, t1: 70.0 },
+  ],
+  board: [
+    { t: 2.5,  title: '¿Que pasaría si un meteorito cayera en tu ciudad?', sound: 'birds, river, distant train', next: 'a new star' },
+    { t: 10.0, title: 'Una estrella nueva sale con el sol.', sound: 'calm morning', next: 'brighter' },
+    { t: 18.0, title: 'Cada segundo brilla más.', sound: 'dogs bark', next: 'the air' },
+    { t: 25.5, title: 'Entra en la atmósfera.', sound: 'the bed thins', next: 'quiet' },
+    { t: 29.6, title: 'Ni un solo sonido.', sound: 'near silence', next: 'the burst' },
+    { t: 33.5, title: 'El cielo se rasga.', sound: 'a silent flash, a high tone only', next: 'heat' },
+    { t: 40.0, title: 'Primero llega el calor.', sound: 'crackle, wind', next: 'quake' },
+    { t: 46.0, title: 'Luego tiembla el suelo.', sound: 'deep rumble', next: 'the wall' },
+    { t: 53.0, title: 'El bosque cae hacia un lado.', sound: 'growing roar', next: 'silence' },
+    { t: 56.2, title: 'Tápate los oídos.', sound: '0.7 s of silence', next: 'the blast' },
+    { t: 57.6, title: 'La onda expansiva', sound: 'EL GOLPE (57,3 s), después gritos', next: 'polvo' },
+    { t: 61.0, title: 'Esto pasó de verdad. En 1908.', sound: 'wind, settling debris', next: 'card' },
+    { t: 67.5, title: 'Tranquilo... ¿o si?', sound: 'fade', next: 'end' },
+  ],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

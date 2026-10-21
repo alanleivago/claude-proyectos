@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El mayor terremoto</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0d14; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  ¿QUÉ PASARÍA SI EL MAYOR TERREMOTO DE LA HISTORIA GOLPEARA TU CIUDAD? — 9:16, 70s, 24fps, motion on 1s.
+//  F5 fixed place: a balcony over the seafront of a port city on the hills (pans between the bay, the street and the building
+//  across). A jolt, then the magnitude climbs to 9,5: the street tears, facades fall, ten minutes of shaking; quiet;
+//  the sea pulls back and comes back as a 25 m tsunami (60.8 s); under water, the lens cracks. Valdivia, Chile, 1960.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 70.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 70, () => sceneQuake()]];
+const SHOTS = [
+  ['bahia',    0, 0.0,  5.0,  'la bahía al atardecer desde el balcón'],
+  ['calle',    0, 5.0,  10.0, 'la cámara gira hacia la calle'],
+  ['sacudida', 0, 10.0, 14.0, 'una sacudida'],
+  ['nopara',   0, 14.0, 19.0, 'no se detiene'],
+  ['falla',    0, 19.0, 25.0, 'vidrios y letreros caen'],
+  ['rompe',    0, 25.0, 31.0, 'la costanera se abre'],
+  ['fachada',  0, 31.0, 37.0, 'cae la fachada de enfrente'],
+  ['diez',     0, 37.0, 45.0, 'diez minutos de temblor'],
+  ['silencio', 0, 45.0, 50.0, 'polvo y silencio'],
+  ['retira',   0, 50.0, 56.0, 'el mar se retira'],
+  ['vuelve',   0, 56.0, 60.0, 'vuelve'],
+  ['vacio',    0, 60.0, 60.8, 'silencio'],
+  ['agua',     0, 60.8, 64.0, 'bajo el agua'],
+  ['final',    0, 64.0, 70.0, 'Valdivia, 1960'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { jolt: 10.0, rupture: 19.0, tear: 25.0, facade: 31.0, quiet: 45.0, drain: 50.0, wave: 56.0, hit: 60.8, card: 64.0 },
+  acts: [
+    { name: '1 Calma',    role: 'build',   t0: 0.0,  t1: 10.0 },
+    { name: '2 Sacudida', role: 'turn',    t0: 10.0, t1: 25.0 },
+    { name: '3 Ruptura',  role: 'peak',    t0: 25.0, t1: 45.0 },
+    { name: '4 Quietud',  role: 'journey', t0: 45.0, t1: 60.0 },
+    { name: '5 Silencio', role: 'silence', t0: 60.0, t1: 60.8 },
+    { name: '6 Golpe',    role: 'gift',    t0: 60.8, t1: 64.0 },
+    { name: '7 Final',    role: 'goodbye', t0: 64.0, t1: 70.0 },
+  ],
+  board: [
+    { t: 2.5,  title: '¿Qué pasaría si el mayor terremoto de la historia golpeara tu ciudad?', sound: 'mar, gaviotas, ciudad', next: 'la calle' },
+    { t: 8.0,  title: 'Una tarde tranquila en la costa.', sound: 'tráfico, voces', next: 'la sacudida' },
+    { t: 12.0, title: 'El suelo da una pequeña sacudida.', sound: 'retumbo, traqueteo', next: 'no para' },
+    { t: 17.0, title: 'Y luego no se detiene.', sound: 'rugido creciente', next: 'la falla' },
+    { t: 22.5, title: 'La falla bajo el mar mide mil kilómetros.', sound: 'alarmas, vidrios', next: 'la costanera' },
+    { t: 28.5, title: 'Todo se rompe a la vez.', sound: 'crujidos', next: 'la fachada' },
+    { t: 34.0, title: 'Nada se construyó para moverse así.', sound: 'derrumbe', next: 'diez minutos' },
+    { t: 41.0, title: 'El temblor dura diez minutos.', sound: 'rugido, alarmas', next: 'silencio' },
+    { t: 47.5, title: 'Luego todo queda en silencio.', sound: 'calma inquietante', next: 'el mar' },
+    { t: 53.0, title: 'Y el mar se retira.', sound: 'succión', next: 'vuelve' },
+    { t: 58.0, title: 'Ya viene de vuelta.', sound: 'rugido', next: 'silencio' },
+    { t: 62.0, title: 'Nada queda en pie.', sound: 'EL GOLPE (60,8 s) tras 0,8 s de silencio; bajo el agua', next: 'final' },
+    { t: 68.0, title: 'Valdivia, Chile, 1960', sound: 'cola grave', next: 'fin' },
+  ],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

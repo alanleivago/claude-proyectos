@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>¿Cómo se forma un huracán?</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #05060f; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; image-rendering: pixelated; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  ¿CÓMO SE FORMA UN HURACÁN? — 9:16, 62s @ 120 BPM, 24fps, style pixdoc (360x640, box captions).
+//  A heat engine: warm sea feeds it, land starves it. A wind counter (KM/H + category) rises and falls; heat is
+//  always orange (vapour, the section, the power grid). Top views and side sections alternate, joined by mosaics.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 62.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = '"Helvetica Neue", Arial, sans-serif';
+const CX = 540;
+const SP_RES = [360, 640];
+const SHOT_LIST = [
+  [0.0,  'palm',     '1 la palmera: más de 250 km/h',          0.0, 4.0, 1],
+  [4.0,  'sea',      '2 el mar a más de 26,5 °C',              4.0, 4.0, 1],
+  [8.0,  'side',     '3–4 evaporación, calor, corriente',      8.0, 9.0, 1],
+  [17.0, 'globe',    '5 el giro de la Tierra',                 17.0, 4.0, 1],
+  [21.0, 'spin',     '6 se organiza: categoría a categoría',   21.0, 9.0, 1],
+  [30.0, 'spinClose','6b CAT 5: el ojo de cerca',              30.0, 1.0, 1],
+  [31.0, 'dark',     '7 silencio',                             31.0, 1.0, 1],
+  [32.0, 'section',  '8 el ojo y la pared; el avión',          32.0, 6.0, 1],
+  [38.0, 'energy',   '9 medio año de electricidad',            38.0, 6.0, 1],
+  [44.0, 'landfall', '10 toca tierra: marejada',               44.0, 6.0, 1],
+  [50.0, 'decay',    '11 sin combustible',                     50.0, 6.0, 1],
+  [56.0, 'calm',     '12 el ciclo; título',                    56.0, 6.0, 1],
+];
+let CUR_SHOT = 0;
+function warp(i, fn) {
+  const [t0, , , o0, , k] = SHOT_LIST[i], st = o0 + (TT - t0) * k, keepT = TT, keepE = E0, n0 = DEFER ? DEFER.length : 0;
+  CUR_SHOT = i; TT = st; E0 = o0;
+  try { fn(); } finally { TT = keepT; E0 = keepE; }
+  if (DEFER) for (let j = n0; j < DEFER.length; j++) { const f = DEFER[j]; DEFER[j] = () => { const a = TT, e = E0; TT = st; E0 = o0; try { f(); } finally { TT = a; E0 = e; } }; }
+}
+function NT(t) { return t; }
+const ERA_LIST = SHOT_LIST.map(([t0, sc], i) => [t0, i + 1 < SHOT_LIST.length ? SHOT_LIST[i + 1][0] : DURATION, () => warp(i, () => SCENES[sc](i))]);
+const SHOTS = SHOT_LIST.map(([t0, sc, title], i) => [sc, i, t0, ERA_LIST[i][1], title]);
+const HEAT = '#ff9a2a';
+const CAPS = [
+  [0.4,  ['¿CÓMO SE FORMA', 'UN HURACÁN?'], { big: true }],
+  [3.7,  null],
+  [4.3,  ['TODO EMPIEZA CON', 'UN MAR MUY CALIENTE']],
+  [8.3,  [[['EVAPORACIÓN', '#9ad8ff']], 'EL AGUA SUBE COMO VAPOR']],
+  [10.6, [[['CALOR LATENTE', HEAT]], 'AL CONDENSARSE, SUELTA CALOR']],
+  [13.3, [[['CORRIENTE ASCENDENTE', '#eef0ea']], 'EL AIRE CALIENTE SE DISPARA']],
+  [15.3, ['ABAJO, EL AIRE ENTRA', 'POR LOS LADOS']],
+  [17.3, ['EL GIRO DE LA TIERRA', 'LO HACE ROTAR']], [19.2, ['JUNTO AL ECUADOR', 'NO SE FORMAN']],
+  [21.3, null],
+  [31.0, null],
+  [32.3, [[['EL OJO', '#9ad8ff']], 'CALMA... Y CIELO AZUL']], [34.8, [[['LA PARED DEL OJO', '#ff5a7a']], 'LOS VIENTOS MÁS FUERTES']],
+  [38.3, ['EN UN SOLO DÍA LIBERA', 'EL CALOR DE MEDIO AÑO', 'DE ELECTRICIDAD MUNDIAL']],
+  [44.3, ['TOCA TIERRA']], [46.3, ['EL MAR SE LEVANTA', 'SOBRE LA COSTA']],
+  [50.3, ['SIN AGUA CALIENTE...']], [52.3, ['...SE QUEDA SIN COMBUSTIBLE']],
+  [56.3, ['Y EN EL MAR,', 'TODO VUELVE A EMPEZAR']],
+  [58.6, ['¿CÓMO SE FORMA', 'UN HURACÁN?'], { big: true }],
+];
+// the wind counter: [video time, km/h]; categories from the Saffir-Simpson scale (km/h thresholds)
+const WIND = [[21.0, 40], [22.4, 55], [23.6, 75], [24.8, 100], [26.0, 125], [27.0, 160], [28.0, 185], [29.0, 215], [30.0, 252], [44.0, 252], [46.0, 235], [50.0, 180], [51.6, 150], [52.8, 120], [54.0, 85], [55.0, 60], [56.0, 45]];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'morph-chain',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: SHOT_LIST.slice(1).map(([t0]) => t0),
+  morphs: [],
+  cues: { gust: 1.2, thermo: 5.0, evap: 8.3, latent: 10.6, updraft: 13.3, anvil: 14.4, inflow: 15.3, coriolis: 17.3, equator: 19.2,
+          eyeOpen: 27.5, cat5: 30.0, hit: 32.0, plane: 34.8, grid: 39.0, landfall: 44.0, surge: 46.3, fuel: 50.3, newCloud: 57.0, title: 58.6 },
+  acts: [
+    { name: '1 El motor', role: 'build',   t0: 0.0,  t1: 21.0 },
+    { name: '2 Crece',    role: 'journey', t0: 21.0, t1: 29.0 },
+    { name: '3 CAT 5',    role: 'peak',    t0: 29.0, t1: 31.05 },
+    { name: '4 Silencio', role: 'silence', t0: 31.05, t1: 32.0 },
+    { name: '5 El ojo',   role: 'gift',    t0: 32.0, t1: 50.0 },
+    { name: '6 Se apaga', role: 'goodbye', t0: 50.0, t1: 62.0 },
+  ],
+  board: [
+    { t: 2.6, title: '1 vientos de más de 250 km/h', sound: 'música desde 0, viento', next: 'mosaico al mar' },
+    { t: 6.8, title: '2 el mar a más de 26,5 °C', sound: 'olas', next: 'corte lateral' },
+    { t: 11.6, title: '3 evaporación y calor latente', sound: 'burbujas', next: '' },
+    { t: 16.2, title: '4 corriente ascendente; aire que entra', sound: 'subida', next: 'mosaico al globo' },
+    { t: 20.0, title: '5 el giro de la Tierra; el ecuador', sound: '—', next: 'zoom al mar' },
+    { t: 23.4, title: '6a se organiza: tormenta', sound: 'acelera', next: '' },
+    { t: 28.6, title: '6b categoría 4 y el ojo', sound: 'lo más denso', next: 'corte cerca' },
+    { t: 30.6, title: '6c CAT 5 de cerca', sound: 'pico', next: 'silencio' },
+    { t: 33.8, title: '8a el ojo: calma, cielo azul', sound: 'EL GOLPE (32)', next: '' },
+    { t: 36.6, title: '8b la pared; el avión', sound: 'turbulencia', next: 'energía' },
+    { t: 42.0, title: '9 medio año de electricidad', sound: 'tema', next: 'costa' },
+    { t: 47.6, title: '10 toca tierra: marejada', sound: 'golpe de ola', next: 'vista de arriba' },
+    { t: 53.4, title: '11 sin combustible', sound: 'baja', next: 'mar en calma' },
+    { t: 60.6, title: '12 el ciclo; título', sound: 'cierre', next: 'loop' },
+  ],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

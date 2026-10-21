@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cae a través de la Tierra</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #05060f; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; image-rendering: pixelated; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  CAE A TRAVÉS DE LA TIERRA — 9:16, 62s @ 120 BPM, 24fps, style pixdoc (360x640, box captions).
+//  A ball dropped down a tunnel through the Earth: 38 min to the other side (real Earth), 42 min (textbook,
+//  uniform density). The ball stays centred while the layers stream past; a grey ghost is the textbook ball.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 62.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = '"Helvetica Neue", Arial, sans-serif';
+const CX = 540;
+const SP_RES = [360, 640];
+const SHOT_LIST = [
+  [0.0,  'garden',  '1 el jardín: la pelota al agujero',       0.0, 5.0, 1],
+  [5.0,  'section', '2 la Tierra en corte; Kola 12 km',        5.0, 4.0, 1],
+  [9.0,  'fall',    '3–5 cae: corteza, manto, núcleo',         9.0, 23.0, 1],
+  [32.0, 'fallClose','6–8 el centro: casi 10 km/s, 0 g',       32.0, 4.0, 1],
+  [36.0, 'fall',    '9 sube frenando',                         36.0, 8.5, 1],
+  [44.5, 'arrive',  '10 sale: 38 min; libro 42',               44.5, 4.5, 1],
+  [49.0, 'antipode','11 ¿dónde sales? antípodas',              49.0, 6.0, 1],
+  [55.0, 'loop',    '12 va y viene; vuelve al jardín',         55.0, 7.0, 1],
+];
+let CUR_SHOT = 0;
+function warp(i, fn) {
+  const [t0, , , o0, , k] = SHOT_LIST[i], st = o0 + (TT - t0) * k, keepT = TT, keepE = E0, n0 = DEFER ? DEFER.length : 0;
+  CUR_SHOT = i; TT = st; E0 = o0;
+  try { fn(); } finally { TT = keepT; E0 = keepE; }
+  if (DEFER) for (let j = n0; j < DEFER.length; j++) { const f = DEFER[j]; DEFER[j] = () => { const a = TT, e = E0; TT = st; E0 = o0; try { f(); } finally { TT = a; E0 = e; } }; }
+}
+function NT(t) { return t; }
+const ERA_LIST = SHOT_LIST.map(([t0, sc], i) => [t0, i + 1 < SHOT_LIST.length ? SHOT_LIST[i + 1][0] : DURATION, () => warp(i, () => SCENES[sc](i))]);
+const SHOTS = SHOT_LIST.map(([t0, sc, title], i) => [sc, i, t0, ERA_LIST[i][1], title]);
+const CAPS = [
+  [0.5,  ['¿Y SI CAVARAS', 'UN TÚNEL', 'A TRAVÉS DE', 'LA TIERRA?'], { big: true }],
+  [4.6,  null],
+  [5.3,  ['EL POZO MÁS PROFUNDO: 12 KM.']], [7.1, ['FALTAN 12.730 KM.']],
+  [9.3,  ['SIN AIRE. SIN FRICCIÓN.']],
+  [13.3, ['CORTEZA Y MANTO:', 'ROCA CADA VEZ MÁS DENSA']],
+  [21.3, ['A 2.891 KM, EL NÚCLEO:', 'LA GRAVEDAD SUBE']], [24.3, ['EL NÚCLEO DENSO', 'TIRA MÁS FUERTE']],
+  [27.3, ['HIERRO LÍQUIDO, CALIENTE', 'COMO LA SUPERFICIE', 'DEL SOL']],
+  [32.2, ['EN EL CENTRO: CASI 10 KM/S', 'Y NO PESAS NADA']],
+  [35.0, null],
+  [36.4, ['AHORA TODO TIRA HACIA ATRÁS']], [40.3, ['FRENA... FRENA...']],
+  [44.7, ['LLEGA AL OTRO LADO', 'Y SE DETIENE']],
+  [49.2, ['¿DÓNDE SALDRÍAS?']], [51.0, ['ESPAÑA: NUEVA ZELANDA', 'ARGENTINA: CHINA']], [53.2, ['Y CASI SIEMPRE... AL MAR']],
+  [55.2, ['Y VUELVE A CAER.', 'IDA Y VUELTA: 76 MIN', 'PARA SIEMPRE']],
+  [59.0, ['CAE A', 'TRAVÉS DE', 'LA TIERRA'], { big: true }],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'fixed-hero',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: SHOT_LIST.slice(1).map(([t0]) => t0),
+  morphs: [],
+  cues: { drop: 2.4, dive: 4.2, kola: 6.0, start: 9.5, cmb: 24.0, center: 35.5, drop0: 35.0, hit: 36.0, arrive: 44.5, ghostIn: 47.5, ant1: 51.0, ant2: 52.2, sea: 53.2, back: 55.0, popOut: 59.0, title: 59.0 },
+  acts: [
+    { name: '1 El túnel',  role: 'build',   t0: 0.0,  t1: 21.0 },
+    { name: '2 El núcleo', role: 'journey', t0: 21.0, t1: 31.5 },
+    { name: '3 El centro', role: 'peak',    t0: 31.5, t1: 35.0 },
+    { name: '4 Silencio',  role: 'silence', t0: 35.0, t1: 36.0 },
+    { name: '5 Llega',     role: 'gift',    t0: 36.0, t1: 49.0 },
+    { name: '6 Para siempre', role: 'goodbye', t0: 49.0, t1: 62.0 },
+  ],
+  board: [
+    { t: 2.6, title: '1 la pelota al agujero', sound: 'música desde 0', next: 'zoom al agujero' },
+    { t: 7.6, title: '2 la Tierra; Kola 12 km', sound: 'tic de la regla', next: 'al túnel' },
+    { t: 11.5, title: '3 sin aire ni fricción', sound: 'colchón', next: 'cae' },
+    { t: 17.0, title: '4 corteza y manto', sound: 'groove', next: '' },
+    { t: 25.0, title: '5 el núcleo tira más: 10,7', sound: 'golpe en 10,7', next: '' },
+    { t: 29.5, title: '6 hierro líquido', sound: 'arpegio rápido', next: 'corte cerca' },
+    { t: 33.8, title: '7 el centro: 0 g', sound: 'suspenso', next: 'silencio' },
+    { t: 38.5, title: '9 sube frenando', sound: 'EL GOLPE (36)', next: '' },
+    { t: 46.6, title: '10 38 min; libro 42', sound: 'campana', next: 'globo' },
+    { t: 51.8, title: '11 antípodas', sound: 'pops', next: '' },
+    { t: 54.0, title: '11b casi siempre al mar', sound: 'gotas', next: '' },
+    { t: 57.0, title: '12 76 min, para siempre', sound: 'tema', next: 'jardín' },
+    { t: 61.0, title: '12b la pelota vuelve; título', sound: 'cierre', next: 'loop' },
+  ],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

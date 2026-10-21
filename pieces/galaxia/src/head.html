@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>¿Cómo se forma una galaxia?</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #05060f; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; image-rendering: pixelated; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  ¿CÓMO SE FORMA UNA GALAXIA? — 9:16, voice-led (~72 s) @ 120 BPM, 24fps, style pixdoc (360x640, box captions).
+//  One galaxy grows under a cosmic clock (billions of years after the Big Bang) from a golden flash to TODAY,
+//  then meets Andromeda. Violet = dark matter, gold = the core/heat, blue-white = stars. The voice is the clock.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = Math.round(VOICE.duration * FPS) / FPS;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = '"Helvetica Neue", Arial, sans-serif';
+const CX = 540;
+const SP_RES = [360, 640];
+const SHOT_LIST = [
+  [0.0,   'title', '1 título: una espiral',              0.0,   6.25, 1],
+  [6.25,  'bang',  '2 el Big Bang',                      6.25,  6.5,  1],
+  [12.75, 'dark',  '3 la edad oscura',                   12.75, 4.75, 1],
+  [17.5,  'web',   '4 la telaraña de materia oscura',    17.5,  6.0,  1],
+  [23.5,  'stars', '5 el gas cae; primeras estrellas',   23.5,  6.0,  1],
+  [29.5,  'small', '6 galaxias pequeñas chocan',         29.5,  8.25, 1],
+  [37.75, 'disk',  '7 disco y brazos espirales',         37.75, 5.25, 1],
+  [43.0,  'hush',  '8 silencio',                         43.0,  1.0,  1],
+  [44.0,  'hole',  '9 el agujero negro del centro',      44.0,  6.75, 1],
+  [50.75, 'today', '10 hoy: tú estás aquí',              50.75, 6.25, 1],
+  [57.0,  'andro', '11 Andrómeda: ¿una elíptica?',        57.0,  10.25, 1],
+  [67.25, 'end',   '12 así se forma una galaxia',        67.25, 4.42, 1],
+];
+let CUR_SHOT = 0;
+function warp(i, fn) {
+  const [t0, , , o0, , k] = SHOT_LIST[i], st = o0 + (TT - t0) * k, keepT = TT, keepE = E0, n0 = DEFER ? DEFER.length : 0;
+  CUR_SHOT = i; TT = st; E0 = o0;
+  try { fn(); } finally { TT = keepT; E0 = keepE; }
+  if (DEFER) for (let j = n0; j < DEFER.length; j++) { const f = DEFER[j]; DEFER[j] = () => { const a = TT, e = E0; TT = st; E0 = o0; try { f(); } finally { TT = a; E0 = e; } }; }
+}
+function NT(t) { return t; }
+const ERA_LIST = SHOT_LIST.map(([t0, sc], i) => [t0, i + 1 < SHOT_LIST.length ? SHOT_LIST[i + 1][0] : DURATION, () => warp(i, () => SCENES[sc](i))]);
+const SHOTS = SHOT_LIST.map(([t0, sc, title], i) => [sc, i, t0, ERA_LIST[i][1], title]);
+const AMB = '#f0b23c', VIO = '#b07aff', GOLD = '#ffe6a0', BLU = '#9ab8ff', ROSE = '#ff9ad0', HOT = '#ff8a4a';
+const CAPS = [
+  [0.4,  ['¿CÓMO SE FORMA', 'UNA GALAXIA?'], { big: true }],
+  [6.5,  ['HACE 13.800 MILLONES', [['DE AÑOS: ', '#eef0ea'], ['EL BIG BANG', AMB]]]],
+  [10.8, ['MUCHO GAS CALIENTE...', [['NI UNA SOLA ESTRELLA', AMB]]]],
+  [13.0, ['CIENTOS DE MILLONES', [['DE AÑOS ', '#eef0ea'], ['A OSCURAS', '#8a7aa8']]]],
+  [18.6, [[['MATERIA OSCURA', VIO]], 'SE AGRUPA EN UNA TELARAÑA']],
+  [23.6, ['EL GAS CAE', [['HACIA LOS NUDOS', BLU]]]],
+  [26.2, ['NACEN LAS', [['PRIMERAS ESTRELLAS', GOLD]]]],
+  [29.7, [[['GALAXIAS PEQUEÑAS', BLU]], 'Y DESORDENADAS']],
+  [33.1, [[['CHOCAN', HOT], [' Y SE ', '#eef0ea'], ['FUSIONAN', HOT]], '...Y CRECEN']],
+  [37.9, ['AL GIRAR, SE APLANA', [['EN UN DISCO', AMB]]]],
+  [40.9, ['LA GRAVEDAD DIBUJA', [['BRAZOS ESPIRALES', BLU]]]],
+  [44.4, [[['UN AGUJERO NEGRO', HOT]], 'SUPERMASIVO EN EL CENTRO']],
+  [47.8, ['EL NUESTRO PESA', [['≈ 4 MILLONES DE SOLES', GOLD]]]],
+  [51.0, ['13.800 MILLONES', 'DE AÑOS DESPUÉS...']],
+  [53.9, [[['AQUÍ ESTÁS TÚ', AMB]]]],
+  [57.1, ['PERO LA HISTORIA', 'NO TERMINA']],
+  [59.0, [[['ANDRÓMEDA', ROSE]], 'VIENE HACIA NOSOTROS']],
+  [61.0, ['SI CHOCAN...']],
+  [64.0, ['...SE FUNDIRÁN EN UNA', [['GALAXIA ELÍPTICA', GOLD]]]],
+  [67.5, ['ASÍ SE FORMA', 'UNA GALAXIA'], { big: true }],
+];
+// the cosmic clock: [video time, billions of years after the Big Bang]
+const CLOCK = [[6.25, 0], [7.5, 0.0], [12.75, 0.02], [17.5, 0.12], [23.5, 0.18], [29.5, 0.45], [37.75, 3.0], [43.0, 6.4], [44.0, 6.4], [50.95, 13.8]];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'morph-chain',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: SHOT_LIST.slice(1).map(([t0]) => t0),
+  morphs: [],
+  cues: { bang: 7.5, cool: 8.5, nostar: 11.5, web: 18.6, webFull: 22.25, fall: 23.75, ignite: 26.0, merge: [31.0, 33.0, 34.0, 34.5, 35.25, 35.75, 36.25, 36.75], flat: 38.75,
+          arms: 41.75, hit: 44.0, sgr: 45.75, mass: 48.75, today: 51.0, here: 54.0, andro: 59.0, collide: 61.25, fuse: 64.5, ellip: 66.0, title: 67.5 },
+  acts: [
+    { name: '1 Big Bang y oscuridad', role: 'build',   t0: 0.0,   t1: 23.5 },
+    { name: '2 Estrellas y choques',  role: 'journey', t0: 23.5,  t1: 37.75 },
+    { name: '3 Disco y brazos',       role: 'peak',    t0: 37.75, t1: 43.05 },
+    { name: '4 Silencio',             role: 'silence', t0: 43.05, t1: 44.0 },
+    { name: '5 El centro y hoy',      role: 'gift',    t0: 44.0,  t1: 57.0 },
+    { name: '6 Andrómeda',            role: 'goodbye', t0: 57.0,  t1: DURATION },
+  ],
+  board: [
+    { t: 3.0,  title: '1 título: una espiral gira', sound: 'música desde 0', next: 'mosaico' },
+    { t: 8.6,  title: '2 el Big Bang', sound: 'golpe + barrido', next: 'se apaga' },
+    { t: 15.0, title: '3 la edad oscura', sound: 'casi nada', next: 'telaraña' },
+    { t: 21.6, title: '4 materia oscura: la telaraña', sound: 'arpegio crece', next: '' },
+    { t: 27.8, title: '5 primeras estrellas', sound: 'un destello por estrella', next: 'mosaico al nudo' },
+    { t: 34.6, title: '6 galaxias chocan y se fusionan', sound: 'golpes', next: '' },
+    { t: 42.0, title: '7 disco y brazos espirales', sound: 'el pico', next: 'silencio' },
+    { t: 46.6, title: '9 el agujero negro: Sgr A*', sound: 'EL GOLPE (44)', next: '' },
+    { t: 55.0, title: '10 hoy: tú estás aquí', sound: 'tema', next: 'Andrómeda' },
+    { t: 60.2, title: '11a Andrómeda se acerca', sound: 'baja', next: '' },
+    { t: 63.0, title: '11b si chocan: colas de marea', sound: '', next: '' },
+    { t: 69.5, title: '12 la elíptica; título', sound: 'cierre', next: 'loop' },
+  ],
+  narration: VOICE.lines.map((l) => ({ id: l.id, t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;
