@@ -1,0 +1,22 @@
+function litMat(col, seed) { const m = STDm({ color: col, roughness: 0.6, metalness: 0.2 }), U = { uLit: { value: 1 } }; m.userData.U = U;
+  m.onBeforeCompile = (sh) => { sh.uniforms.uLit = U.uLit; sh.vertexShader = 'varying vec3 vWp; varying vec3 vWn;\n' + sh.vertexShader.replace('#include <worldpos_vertex>', '#include <worldpos_vertex>\n { mat4 IM4 = modelMatrix;\n#ifdef USE_INSTANCING\n IM4 = modelMatrix * instanceMatrix;\n#endif\n vWp = (IM4 * vec4(transformed, 1.0)).xyz; vWn = normalize(mat3(IM4) * objectNormal); }');
+    sh.fragmentShader = 'uniform float uLit; varying vec3 vWp; varying vec3 vWn;\n' + sh.fragmentShader.replace('#include <color_fragment>', `#include <color_fragment>
+      float win = 0.0, lit = 0.0; if (abs(vWn.y) < 0.5) { float u = abs(vWn.x) > 0.5 ? vWp.z : vWp.x; vec2 c = vec2(floor(u / 3.0), floor(vWp.y / 3.4)); float h = fract(sin(dot(c + ${seed.toFixed(1)}, vec2(12.9898, 78.233))) * 43758.5453);
+        float wx = fract(u / 3.0), wy = fract(vWp.y / 3.4); win = step(0.16, wx) * step(wx, 0.84) * step(0.2, wy) * step(wy, 0.86); lit = win * step(0.55, h);
+        diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.12, 0.15, 0.2) + 0.1 * h, win * 0.85); }`).replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
+      totalEmissiveRadiance += vec3(1.0, 0.78, 0.48) * lit * uLit * 1.4 * smoothstep(-58.0, -30.0, vWp.y);
+      { float hz = 1.0 - smoothstep(-62.0, -22.0, vWp.y); totalEmissiveRadiance = mix(totalEmissiveRadiance, vec3(0.95, 0.58, 0.42) * 0.55, hz * 0.85); diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.0), hz * 0.6); }`); }; return m; }
+const MEN_TOPS = ['#2f6fd1', '#1f2d3d', '#d94848', '#3a8a5a', '#f4f1ea', '#7a5a3a', '#5a5a6a', '#c8a070'], BOTS = ['#2b3a55', '#3a3a3a', '#c8b89a', '#1f2d3d', '#4a4a4a'];
+function man(R, o = {}) { return makePerson(Object.assign({ skin: R.pick(SKINS), hair: R.pick(HAIRS), hairStyle: R.pick(['short', 'short', 'curly', 'none']), top: R.pick(MEN_TOPS), bottom: R.pick(BOTS), sleeve: R.f() < 0.5 ? 'short' : 'long', seed: Math.floor(R.f() * 900) }, o)); }
+function woman(R, o = {}) { return makePerson(Object.assign({ female: true, skin: R.pick(SKINS), hair: R.pick(HAIRS), hairStyle: R.pick(['bob', 'pony', 'long', 'bun', 'curly']), top: R.pick(['#e86fa8', '#f0c33c', '#2a9d8f', '#7b4fc9', '#f4f1ea', '#c8372d']), bottom: R.pick(BOTS), seed: Math.floor(R.f() * 900) }, o)); }
+const BELLY = [0.5, -0.28, 1.75];
+function signTex(lines, o = {}) { const w = o.w || 512, h = o.h || 128; return g3Tex((x) => { x.fillStyle = o.bg || '#1f8a5a'; x.fillRect(0, 0, w, h); if (o.border) { x.strokeStyle = o.border; x.lineWidth = 8; x.strokeRect(4, 4, w - 8, h - 8); }
+  x.fillStyle = o.fg || '#ffffff'; x.textAlign = 'center'; x.textBaseline = 'middle'; const n = lines.length; lines.forEach((l, i) => { const sz = (o.size || 64) * (i ? 0.62 : 1); x.font = `bold ${sz}px Arial, sans-serif`; x.fillText(l, w / 2, h * (i + 0.5) / n + (n > 1 ? (i ? -6 : 6) : 0)); }); }, w, h); }
+function sign(par, lines, x, y, z, w, h, o = {}) { const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshStandardMaterial({ map: signTex(lines, Object.assign({ w: Math.round(512 * Math.min(2, w / h / 4 * 4) / 2) * 2 || 512, h: 128 }, o)), roughness: 0.5, emissive: '#ffffff', emissiveIntensity: o.glow ?? 0.15, emissiveMap: null })); m.material.emissiveMap = m.material.map; m.position.set(x, y, z); if (o.ry) m.rotation.y = o.ry; (par.scene || par).add(m); return m; }
+function samplePoints(meshes, n, seed) { const R = RNG('samp' + seed), out = [], tmp = new THREE.Vector3(), M = new THREE.Matrix4(); const list = [];
+  meshes.forEach((m) => m.traverse((o) => { if (o.isMesh && o.geometry && o.geometry.attributes.position) list.push(o); }));
+  const weights = list.map((o) => Math.min(4000, o.geometry.attributes.position.count) * (o.isInstancedMesh ? Math.min(o.count, 40) : 1)), tot = weights.reduce((a, b) => a + b, 0);
+  list.forEach((o, li) => { const k = Math.max(2, Math.round(n * weights[li] / tot)), pos = o.geometry.attributes.position; o.updateMatrixWorld(true);
+    for (let j = 0; j < k; j++) { const vi = Math.floor(R.f() * pos.count); tmp.fromBufferAttribute(pos, vi); if (o.isSkinnedMesh && o.boneTransform) o.boneTransform(vi, tmp);
+      if (o.isInstancedMesh) { o.getMatrixAt(Math.floor(R.f() * o.count), M); tmp.applyMatrix4(M); } tmp.applyMatrix4(o.matrixWorld); out.push(tmp.clone()); } });
+  return out; }

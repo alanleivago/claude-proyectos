@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>One percent battery</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0706; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  "Your phone at 1 percent" — cartoon3d, 9:16, 30 fps, 61.4 s. You, a rainy night, a dying phone and a ride app
+//  that knows your battery level. Brief and shot list: brief.md. Voice: VoiceStudio "3D cartoon 2" (voice/), words in src/words.js.
+// =====================================================================
+const FPS = 30, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 61.4;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = '"Segoe UI", Arial, sans-serif';
+const CX = 540;
+const ERA_LIST = [[0, DURATION, () => sceneApple()]];
+const SHOTS = [['all', 0, 0.0, DURATION, 'look check: kitchen 1976, byte shop, LED']];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  gpu: true, format: 'F-true-story',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [], morphs: [],
+  cues: {},
+  acts: [{ name: 'all', role: 'build', t0: 0, t1: DURATION }],
+  board: [],   // filled from SHOT_LIST below (one panel per shot, at its middle)
+  narration: [],
+};
+window.TIMELINE = TIMELINE;
+TIMELINE.boardFromShots = true;

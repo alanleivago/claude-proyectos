@@ -82,7 +82,8 @@ for k in range(len(S['lines']) - 1):
     if lo is None and hi is None: print('warning: no heard words around line', S['lines'][k]['id'], '- cut by estimate'); cuts.append(cuts[-1] + 0.5); continue
     if lo is None: lo = hi - 0.4
     if hi is None: hi = lo + 0.4
-    w0, w1 = (lo - 0.02, hi + 0.02) if hi > lo + 0.04 else (min(lo, hi) - 0.35, max(lo, hi) + 0.35)
+    # never before the previous line's last word has ended (a plosive's closure inside a word, e.g. the 'b' of 'boom', is silent too)
+    w0, w1 = lo - 0.06, (hi + 0.02 if hi > lo + 0.04 else lo + 0.45)
     nxt = first.get(k + 2); w1 = max(w1, min(hi + 1.2, nxt - 0.1 if nxt else hi + 1.2)) if TAIL_UNHEARD(k) else w1
     t, l = quietest(max(w0, cuts[-1] + 0.2), w1)
     if l > -38: print(f'warning: no real silence between "{S["lines"][k]["id"]}" and "{S["lines"][k + 1]["id"]}" (quietest {l:.0f} dBFS at {t:.2f}s): listen to that cut')

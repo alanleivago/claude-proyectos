@@ -38,6 +38,9 @@ A voice-led explainer in a simple clay-like 3D world on a near-black warm backgr
 - Loudness (user, 2026-10-18: "se escucha un poco bajo"): `piece.json "loudness": -11, "truePeak": -1.0` (export reads them); code SFX `sfxBus.gain.value *= 3.5`.
 - End signature: **DOPAMENTES**, centred on the screen (y = H/2, 44 px, spaced).
 
+## Reusing pov3d assets (user, 2026-10-21)
+People, cars, buildings, trees and props may come from the pov3d pieces (people: `pieces/oxigeno/src/scenes.js` PG parts + `personPose`, cloth folds, hair; cars: `pieces/giro`; city and nature props: oxigeno, agujero, asteroide) — only when they raise the quality over the scroll3d builders. Keep the scroll3d look (dark ground, clay materials, labels, captions) around them.
+
 ## Transitions into a detail
 Never a hard cut into a texture world: push in until the texture fills the frame, dissolve (`XFADE` in shots.js renders both shots and blends them) into the matching world seen at the same scale (the voxel field from above, coloured with the knit's chevrons), then move on; come back out the same way in one continuous pull-back.
 

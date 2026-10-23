@@ -95,7 +95,8 @@ async function inProject(fn) {
 
 function tiles(page) {
   return page.evaluate(() => [...document.querySelectorAll('flow-grid-tile-container')].map((t) => ({
-    name: t.querySelector('span.footer-title')?.innerText.trim() || '',
+    // newer Flow UI: the name lives in the tile's aria-label (the footer title span is gone)
+    name: (t.querySelector('span.footer-title')?.innerText || t.getAttribute('aria-label') || '').trim(),
     mediaId: t.querySelector('img[data-media-id]')?.dataset.mediaId || '',
   })).filter((t) => t.mediaId));
 }
@@ -142,7 +143,7 @@ async function renameTile(page, mediaId, name) {
   await input.pressSequentially(name, { delay: 30 });
   await input.press('Enter');
   await page.waitForTimeout(2500);
-  const shown = (await tile.locator('span.footer-title').innerText()).trim();
+  const shown = ((await tile.locator('span.footer-title').innerText({ timeout: 1000 }).catch(() => '')) || (await tile.getAttribute('aria-label')) || '').trim();
   if (shown !== name) throw new Error(`Rename did not apply (tile shows "${shown}")`);
 }
 
@@ -317,12 +318,36 @@ export async function generateImages({ prompt, aspect = '1:1', count = 1, model 
     const stamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
     const files = [];
     for (const [i, id] of fresh.slice(0, count).entries()) {
-      const src = await page.locator(`flow-image-tile img[data-media-id="${id}"]`).getAttribute('src');
-      const res = await context.request.get(src);
-      if (!res.ok()) throw new Error(`Download failed (${res.status()}) for media ${id}`);
-      const ext = (res.headers()['content-type'] || '').includes('png') ? 'png' : 'jpg';
+      // The tile's src can lag behind the finished image, and some URLs only work with the page's own session: retry, then fetch in-page.
+      let body = null, ext = 'jpg', status = 0;
+      for (let attempt = 0; attempt < 10 && !body; attempt++) {
+        if (attempt) await page.waitForTimeout(3000);
+        const src = await page.locator(`flow-image-tile img[data-media-id="${id}"]`).getAttribute('src');
+        if (!src) continue;
+        const res = await context.request.get(src);
+        status = res.status();
+        if (res.ok()) {
+          ext = (res.headers()['content-type'] || '').includes('png') ? 'png' : 'jpg';
+          body = await res.body();
+          break;
+        }
+        const inPage = await page.evaluate(async (u) => {
+          const r = await fetch(u, { credentials: 'include' });
+          if (!r.ok) return { status: r.status };
+          const buf = new Uint8Array(await r.arrayBuffer());
+          let s = '';
+          for (let k = 0; k < buf.length; k += 0x8000) s += String.fromCharCode(...buf.subarray(k, k + 0x8000));
+          return { status: r.status, type: r.headers.get('content-type') || '', b64: btoa(s) };
+        }, src).catch(() => ({ status: 0 }));
+        status = inPage.status || status;
+        if (inPage.b64) {
+          ext = inPage.type.includes('png') ? 'png' : 'jpg';
+          body = Buffer.from(inPage.b64, 'base64');
+        }
+      }
+      if (!body) throw new Error(`Download failed (${status}) for media ${id}`);
       const file = path.join(outDir, `${stamp}-${slug(prompt)}-${i + 1}.${ext}`);
-      fs.writeFileSync(file, await res.body());
+      fs.writeFileSync(file, body);
       files.push(file);
     }
     return { files, projectId, model, aspect, seconds: Math.round((Date.now() - started) / 1000) };

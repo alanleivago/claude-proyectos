@@ -1,0 +1,40 @@
+{
+ "passed": true,
+ "results": [
+  {
+   "check": "offset",
+   "status": "pass",
+   "detail": "encoded audio vs mix.wav: worst 0 samples (0.00 ms), lags [0, 0, 0]"
+  },
+  {
+   "check": "loudness",
+   "status": "pass",
+   "detail": "integrated -15.43 LUFS, target -15"
+  },
+  {
+   "check": "true peak",
+   "status": "pass",
+   "detail": "-2.44 dBTP (limit -1.0)"
+  },
+  {
+   "check": "picture SMASH",
+   "status": "pass",
+   "detail": "cut at frame 1116: largest change at frame 1116 (96.9 vs local 4.5)"
+  },
+  {
+   "check": "audible SMASH",
+   "status": "pass",
+   "detail": "stands out by 4.8 dB in 125-250 Hz over music+voice"
+  },
+  {
+   "check": "hero body SMASH",
+   "status": "pass",
+   "detail": "main band 125-250 Hz lifted 4.8 dB (needs 3)"
+  },
+  {
+   "check": "silence",
+   "status": "pass",
+   "detail": "none"
+  }
+ ]
+}
