@@ -46,3 +46,12 @@ Copy `pieces/troya-bf/` → `pieces/<name>/`: `piece.json`, `src/` (head.html, s
 
 ## Not matched yet
 The layers are stills: limbs don't articulate (motion is the whole figure: bob, rock, squash, slide). A walk cycle would need 2–3 pose layers per figure.
+
+## God of War — Greek era (approved 2026-10-23, pieces/kratos)
+**The look for every God of War video set in the Greek saga.** Start new pieces by copying `pieces/kratos` (src, assets/bg.jpg, piece.json, score).
+- **Ref:** `Ref amphora mitologia/kratos 1.jpeg` (uploaded to Flow as a ~900px JPG, `@{kratos1}`). Background = that image with the figure, lettering and red stains removed (`assets/bg.jpg`): orange ground, meander top, wave band + meander bottom, all fixed while the picture slides right.
+- **Figures:** Flow layers, SIMPLE black silhouettes with only a few thin orange incised lines; colour only for dark red cloth and red/orange hair. Game characters come from their game renders (godofwar.fandom.com page images) simplified into this style (Ares with long loose hair and no back blades, Zeus, Hydra, legionnaires…). Kratos always has exactly two Blades of Chaos and two arms — check every layer.
+- **Staging:** figures that talk or fight face each other; enemies charge from the side and are cut down (crossfade to a falling layer flying back); nothing pops in; every layer fits inside its panel; slides right only.
+- **Captions:** Dalek Pinpoint Bold, brown (#6e2a18) with a light edge, phrases ≤7 words on ≤2 lines, written word by word, complete before the next phrase; the last one slides out with the cloth; placed per panel just above the figures, never above y 230. Run `tools/capcheck.mjs` before delivery.
+- **Voice:** VoiceStudio (local API on :3900), clone "Mad 3" — reference = its first 8.8s + transcript (denoised), speed 0.75, 2–4 seeds per line, pick by transcript match / noise floor / pace, trim to the first word (no stray sound), see `pieces/kratos/voice`.
+- **Sound:** God of War Soundtrack from 0:01, loudnorm −14, music gain 0, voice.music −1, dip before the payoff; strong fight SFX (strike = swing + chain + flesh/bone/metal + sub; bones, charges, roars, thunder, stone).

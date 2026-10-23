@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Encogerse</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0d14; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  ¿QUÉ PASARÍA SI NO DEJARAS DE ENCOGERTE? — 9:16, 80s, 24fps, motion on 1s.
+//  A floating POV that keeps shrinking: a Valdivian forest floor, a mossy log, the moss as a jungle, insects as giants, a
+//  dewdrop; inside it diatoms and a tardigrade; one of its cells; too small for light, the colour fades; DNA; an atom,
+//  almost empty; its nucleus; the quarks — the smallest things we know of.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 80.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 80, () => sceneShrink()]];
+const SHOTS = [
+  ['forest',  0, 0.0,  4.0,  'the Valdivian forest floor; a mossy log'],
+  ['shrink',  0, 4.0,  10.0, 'you start to shrink; moss becomes a jungle'],
+  ['locals',  0, 10.0, 16.0, 'the locals are bigger now'],
+  ['dew',     0, 16.0, 20.0, 'a dewdrop; you fall in'],
+  ['drop',    0, 20.0, 26.0, 'inside a single drop'],
+  ['tardi',   0, 26.0, 34.0, 'something swims toward you: a tardigrade'],
+  ['cell',    0, 34.0, 40.0, 'inside one of its cells'],
+  ['grey',    0, 40.0, 45.0, 'too small for light; the colour fades'],
+  ['dna',     0, 45.0, 51.0, 'the instructions for everything'],
+  ['atom',    0, 51.0, 57.0, 'an atom, almost entirely empty'],
+  ['nucleus', 0, 57.0, 62.0, 'the heart of the atom'],
+  ['quarks',  0, 62.0, 70.0, 'the smallest things we know of'],
+  ['beyond',  0, 70.0, 74.0, 'and beyond?'],
+  ['card',    0, 74.0, 80.0, 'card'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { shrink: 4.0, drop: 20.0, tardi: 26.0, cell: 34.0, grey: 40.0, dna: 45.0, atom: 51.0, nucleus: 57.0, quarks: 62.6, card: 74.0 },
+  acts: [
+    { name: '1 Bosque',   role: 'build',   t0: 0.0,  t1: 4.0 },
+    { name: '2 Musgo',    role: 'turn',    t0: 4.0,  t1: 20.0 },
+    { name: '3 Gota',     role: 'journey', t0: 20.0, t1: 40.0 },
+    { name: '4 Gris',     role: 'peak',    t0: 40.0, t1: 62.0 },
+    { name: '5 Silencio', role: 'silence', t0: 62.0, t1: 62.6 },
+    { name: '6 Quarks',   role: 'gift',    t0: 62.6, t1: 70.0 },
+    { name: '7 Final',    role: 'goodbye', t0: 70.0, t1: 80.0 },
+  ],
+  board: [
+    { t: 2.0,  title: '¿Qué pasaría si no dejaras de encogerte?', sound: 'bosque, pájaros, gotas', next: 'encoger' },
+    { t: 7.4,  title: 'Empiezas a encogerte.', sound: 'zumbido que baja', next: 'vecinos' },
+    { t: 13.0, title: 'Los vecinos ahora son más grandes.', sound: 'patas, élitros', next: 'gota' },
+    { t: 18.4, title: 'Una gota de rocío.', sound: 'gota, chapuzón', next: 'dentro' },
+    { t: 23.0, title: 'Dentro de una sola gota.', sound: 'mundo acuático', next: 'tardígrado' },
+    { t: 32.8, title: 'Algo nada hacia ti.', sound: 'latido grave', next: 'célula' },
+    { t: 37.0, title: 'Dentro de una de sus células.', sound: 'burbujeo, pulsos', next: 'gris' },
+    { t: 42.6, title: 'Demasiado pequeño para la luz. El color se apaga.', sound: 'todo se apaga', next: 'ADN' },
+    { t: 48.0, title: 'Las instrucciones de todo.', sound: 'tono que gira', next: 'átomo' },
+    { t: 54.0, title: 'Un átomo. Casi completamente vacío.', sound: 'vacío', next: 'núcleo' },
+    { t: 59.6, title: 'El corazón del átomo.', sound: 'zumbido denso', next: 'quarks' },
+    { t: 66.0, title: 'Lo más pequeño que conocemos.', sound: 'EL GOLPE (62,6 s) tras 0,6 s de silencio', next: 'más allá' },
+    { t: 72.0, title: '¿Y más allá?', sound: 'cola', next: 'final' },
+    { t: 78.0, title: 'Nadie sabe si existe algo más pequeño.', sound: 'cola', next: 'fin' },
+  ],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

@@ -1,0 +1,8 @@
+# brief — hormiga (Bitstory, video 10)
+- Ref: `Ref bit y pixels/10.mp4` (Langton's ant, 121 s, ES) → EN paraphrase keeping every step, 20 lines, 102.6 s, title spoken first.
+- Style: `voltreal` (the look made from the ref 1–4 videos for Bitvolts; Bitstory's ref 1–3 share it): warm charcoal ground, bokeh, 2.5D slabs, cartoon ant, karaoke captions with blue selection boxes, "@bitstory · Follow" sign-off.
+- Voice: VoiceStudio profile "mathomaly" (e4eb9da7), seeds 1,2, best whisper match per line (`references/voltamps/tools/vs_gen.py`).
+- The board is a real Langton's ant run in code (13,000 steps); the 104-step highway starts at step 9,977 (checked in Python and JS). Three random starts (30 squares in a 13×13 area, seeds 1–3) each reach a highway; their onsets are drawn on screen.
+- Beats: title/hero ant → 2 rules → board → right rule → left rule → forward → slow steps → tidy (420) → chaos (1,000 / 5,000 / 7,600) → bet → 9,977 → silence → HIT highway → 104 steps ×2 ×3 ∞ → Langton card → "?" → random start → same highway ×3, never proven → AND/OR/NOT → chip, 2 rules · 1 bit · 40 years → end question, @bitstory.
+- Sound: documentary track (dip in the silence before HIT, tail fade) + code SFX (flip on/off blips, swirl on turns, tiny feet, tick patter in the chaos, sub + chord stab on HIT).
+- Claims: chaos ≈10,000 steps then a 104-step highway; Langton 1986; unproven for all finite starts (arXiv 1707.00255; futilitycloset.com 2014/04/06; awesci.com). Any boolean circuit via one ant's trajectory (Gajardo, Moreira, Goles, Discrete Applied Mathematics 117, 2002; arXiv nlin/0306022; Wikipedia). "Forty years": 1986 → 2026.

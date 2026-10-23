@@ -1,0 +1,128 @@
+shot 1 (ares): 18 frames [0,6,12,18,24,30,36,42,48,54,60,66,72,78,84,90,96,102] -> review/shot01-sheet.jpg
+shot 2 (ghost): 33 frames [107,113,119,125,131,137,143,149,155,161,167,173,179,185,191,197,203,209,215,221,227,233,239,245,251,257,263,269,275,281,287,293,299] -> review/shot02-sheet.jpg
+shot 3 (hydra): 18 frames [301,307,313,319,325,331,337,343,349,355,361,367,373,379,385,391,397,403] -> review/shot03-sheet.jpg
+shot 4 (trick): 7 frames [406,412,418,424,430,436,442] -> review/shot04-sheet.jpg
+shot 5 (family): 21 frames [445,451,457,463,469,475,481,487,493,499,505,511,517,523,529,535,541,547,553,559,565] -> review/shot05-sheet.jpg
+shot 6 (hunt): 19 frames [567,573,579,585,591,597,603,609,615,621,627,633,639,645,651,657,663,669,675] -> review/shot06-sheet.jpg
+shot 7 (olympus): 11 frames [679,685,691,697,703,709,715,721,727,733,739] -> review/shot07-sheet.jpg
+shot 8 (zeus): 16 frames [743,749,755,761,767,773,779,785,791,797,803,809,815,821,827,832] -> review/shot08-sheet.jpg
+shot 9 (past): 10 frames [833,839,845,851,857,863,869,875,881,887] -> review/shot09-sheet.jpg
+shot 10 (north): 33 frames [890,896,902,908,914,920,926,932,938,944,950,956,962,968,974,980,986,992,998,1004,1010,1016,1022,1028,1034,1040,1046,1052,1058,1064,1070,1076,1082] -> review/shot10-sheet.jpg
+shot 11 (question): 34 frames [1087,1093,1099,1105,1111,1117,1123,1129,1135,1141,1147,1153,1159,1165,1171,1177,1183,1189,1195,1201,1207,1213,1219,1225,1231,1237,1243,1249,1255,1261,1267,1273,1279,1285] -> review/shot11-sheet.jpg
+shot 12 (norse): 16 frames [1286,1292,1298,1304,1310,1316,1322,1328,1334,1340,1346,1352,1358,1364,1370,1376] -> review/shot12-sheet.jpg
+shot 13 (lesson): 18 frames [1382,1388,1394,1400,1406,1412,1418,1424,1430,1436,1442,1448,1454,1460,1466,1472,1478,1484] -> review/shot13-sheet.jpg
+shot 14 (blood): 15 frames [1486,1492,1498,1504,1510,1516,1522,1528,1534,1540,1546,1552,1558,1564,1570] -> review/shot14-sheet.jpg
+shot 15 (sign): 15 frames [1571,1577,1583,1589,1595,1601,1607,1613,1619,1625,1631,1637,1643,1649,1655] -> review/shot15-sheet.jpg
+
+CUTS vs beat grid @ 120 BPM, 24fps (8ths = 0.25s)
+ #   cut t     grid  grid#   nominal f  cut f   cut f t     err(f)  Δ@cut  peak(±2f)          shot change           result
+ 1    4.473s   8th    18      107.4    107   4.4583s  -0.4     0.0  f106 ok            shot 1 -> 2           FAIL
+ 2   12.542s   8th    50      301.0    301   12.5417s  -0.0     0.0  f300 ok            shot 2 -> 3           FAIL
+ 3   16.937s   8th    68      406.5    406   16.9167s  -0.5    20.3  f404 CHECK         shot 3 -> 4           FAIL
+ 4   18.526s   8th    74      444.6    445   18.5417s  +0.4     0.0  f444 ok            shot 4 -> 5           FAIL
+ 5   23.633s   8th    95      567.2    567   23.6250s  -0.2     1.6  f568 ok            shot 5 -> 6           FAIL
+ 6   28.302s   8th   113      679.2    679   28.2917s  -0.2     0.0  f680 ok            shot 6 -> 7           FAIL
+ 7   30.955s   8th   124      742.9    743   30.9583s  +0.1     0.0  f742 ok            shot 7 -> 8           FAIL
+ 8   34.708s   8th   139      833.0    833   34.7083s  +0.0     0.0  f834 ok            shot 8 -> 9           FAIL
+ 9   37.090s   8th   148      890.2    890   37.0833s  -0.2    32.6  f890 ok            shot 9 -> 10          FAIL
+10   45.305s   8th   181     1087.3   1087   45.2917s  -0.3     0.0  f1088 ok           shot 10 -> 11         FAIL
+11   53.583s   8th   214     1286.0   1286   53.5833s  +0.0    28.8  f1288 CHECK        shot 11 -> 12         FAIL
+12   57.571s   8th   230     1381.7   1382   57.5833s  +0.3    38.9  f1382 ok           shot 12 -> 13         FAIL
+13   61.927s   8th   248     1486.2   1486   61.9167s  -0.2    36.7  f1488 CHECK        shot 13 -> 14         FAIL
+14   65.465s   8th   262     1571.2   1571   65.4583s  -0.2     0.0  f1570 ok           shot 14 -> 15         FAIL
+all cuts on grid within 1 frame: FAIL
+
+PACING: 14 hard cuts (1 in the last 5s), mean segment 4.61s, shortest 1.59s, plus 0 on-2s montage steps
+FLAT FRAMES (contrast < 6/255): none
+LOOP: diff(last=1658, first=0) = 20.10; typical consecutive diff in the first 40 frames = 0.62 (info: F4/F6 loop pixel-exactly and F4 checks it; other formats return to the opening image, changed)
+
+NARRATION (voice-over added outside; checks density and word hits)
+ #   t0-t1          words  wps   shot  line
+ 1  0.60-4.47s     15  3.87     1  "Kratos made a promise to Ares, the god of war, and the god kept him."  <-- too dense / overlapping
+ 2  4.72-12.59s     25  3.18     2  "He became the Ghost of Sparta, a man who wore his enemies' blood like armor, fought with the Blades of Chaos, and never feared death."
+ 3  12.79-16.84s     14  3.46     3  "He fought the Hydra and the Medusa, and he survived every one of them."
+ 4  17.19-18.48s      5  3.88     4  "Then the gods tricked him."  <-- too dense / overlapping
+ 5  18.78-23.38s     15  3.26     5  "In his rage, he destroyed his own family, and he lost everything he had left."
+ 6  23.88-28.30s     15  3.39     6  "For years he walked the lands of Greece, hunting the gods who had used him."
+ 7  28.55-30.95s      7  2.91     7  "He climbed Olympus. He tore it down."
+ 8  31.20-34.51s     12  3.63     8  "He killed Zeus, the king of the gods, with his own hands."  <-- too dense / overlapping
+ 9  34.96-36.84s      8  4.25     9  "But the past would not let him go."  <-- too dense / overlapping
+10  37.34-45.26s     26  3.28    10  "Years later, in the frozen lands of the north, he raised a son named Atreus and tried to teach him to be better than his father."
+11  45.55-53.38s     26  3.32    11  "Every battle he won, against gods and monsters alike, carried him closer to the same question: what does a man owe to the family he destroyed?"
+12  53.83-56.92s     10  3.24    12  "The northern gods were no kinder than the Greek ones."
+13  57.82-62.03s     13  3.09    13  "In the end, the god of war learned the cruelest lesson of all."
+14  62.38-65.11s      9  3.29    14  "The blood he spilled had always been his own."
+narration: 200 words, density FAIL (<= 3.5 words/s, no overlaps), word hits PASS (<= 2 frames from a cut)
+
+STORY ARC (loudness in dBFS over 100ms windows: median / 90th percentile; music = music stem median)
+ act          role       t0-t1         cuts  cuts/s  motion   mix med  mix p90  music
+ 1 Pact       build      0.00-16.94s      2    0.12     2.2    -19.2    -14.9   -15.9
+ 2 Fall       build      16.94-23.63s      2    0.30     2.2    -18.1    -15.7   -14.0
+ 3 War        peak       23.63-37.09s      4    0.30     2.8    -19.9    -16.4   -16.7
+ 4 North      build      37.09-62.08s      5    0.20     2.2    -19.4    -15.6   -15.6
+ 5 Silence    silence    62.08-61.93s      0    0.00     0.0   -120.0   -120.0  -120.0
+ 6 Blood      gift       61.93-65.46s      1    0.28     2.6    -18.9    -13.6   -16.1
+ 7 Sign       goodbye    65.46-69.13s      1    0.27     0.7    -18.5    -14.2   -15.9
+  PASS  gift is the loudest act (p90 -13.6 vs next -14.2)
+  PASS  gift p90 >= peak p90 + 1 dB (-13.6 vs -16.4): the busiest moment is not the loudest
+  PASS  silence median <= peak median - 15 dB (-120.0 vs -19.9)
+  FAIL  peak has the highest cut rate (0.30/s)
+  PASS  gift is held: <= 0.5 cuts/s (0.28)
+  FAIL  goodbye decays: median <= gift median - 6 dB (-18.5 vs -18.9)
+story arc: FAIL (4/6 rules)
+
+TEXT (every string drawn, traced to screen; 302 frames sampled, morph windows skipped)
+  FAIL  cut off by the frame edge: and  at 4.42–17.25s (18 frames)
+  FAIL  cut off by the frame edge: the  at 4.42–62.25s (26 frames)
+  FAIL  cut off by the frame edge: god  at 4.50–4.75s (4 frames)
+  FAIL  cut off by the frame edge: him.  at 4.50–28.75s (10 frames)
+  FAIL  cut off by the frame edge: kept  at 4.75s (2 frames)
+  FAIL  cut off by the frame edge: Chaos,  at 12.50–12.75s (6 frames)
+  FAIL  cut off by the frame edge: feared  at 12.50–12.75s (6 frames)
+  FAIL  cut off by the frame edge: never  at 12.75s (2 frames)
+  FAIL  cut off by the frame edge: death.  at 12.75s (2 frames)
+  FAIL  cut off by the frame edge: every  at 16.88–17.25s (8 frames)
+  FAIL  cut off by the frame edge: he  at 16.92–54.00s (10 frames)
+  FAIL  cut off by the frame edge: one  at 16.92–17.25s (6 frames)
+  FAIL  cut off by the frame edge: survived  at 17.00–17.25s (4 frames)
+  FAIL  cut off by the frame edge: of  at 17.00–62.25s (8 frames)
+  FAIL  cut off by the frame edge: them.  at 17.00–17.25s (4 frames)
+  FAIL  cut off by the frame edge: Then  at 18.50–18.75s (6 frames)
+  FAIL  cut off by the frame edge: tricked  at 18.50–18.75s (6 frames)
+  FAIL  cut off by the frame edge: gods  at 18.75s (2 frames)
+  FAIL  cut off by the frame edge: left.  at 23.75–24.00s (4 frames)
+  FAIL  cut off by the frame edge: He  at 30.92–31.25s (8 frames)
+  FAIL  cut off by the frame edge: tore  at 30.92–31.25s (8 frames)
+  FAIL  cut off by the frame edge: it  at 31.00–31.25s (4 frames)
+  FAIL  cut off by the frame edge: down.  at 31.00–31.25s (4 frames)
+  FAIL  cut off by the frame edge: gods,  at 34.67–35.00s (8 frames)
+  FAIL  cut off by the frame edge: with  at 34.67–35.00s (8 frames)
+  FAIL  cut off by the frame edge: hands.  at 34.67–35.00s (8 frames)
+  FAIL  cut off by the frame edge: his  at 34.75–65.75s (16 frames)
+  FAIL  cut off by the frame edge: own  at 35.00s (2 frames)
+  FAIL  cut off by the frame edge: go.  at 37.08–37.50s (6 frames)
+  FAIL  cut off by the frame edge: be  at 45.25–45.75s (8 frames)
+  FAIL  cut off by the frame edge: better  at 45.25–45.75s (8 frames)
+  FAIL  cut off by the frame edge: than  at 45.50–45.75s (4 frames)
+  FAIL  cut off by the frame edge: father.  at 45.50–45.75s (4 frames)
+  FAIL  cut off by the frame edge: family  at 53.58–54.00s (6 frames)
+  FAIL  cut off by the frame edge: destroyed?  at 53.58–54.00s (6 frames)
+  FAIL  cut off by the frame edge: Greek  at 57.58–58.00s (6 frames)
+  FAIL  cut off by the frame edge: ones.  at 57.75–58.00s (4 frames)
+  FAIL  cut off by the frame edge: learned  at 61.88–62.25s (8 frames)
+  FAIL  cut off by the frame edge: lesson  at 61.92–62.25s (6 frames)
+  FAIL  cut off by the frame edge: cruelest  at 62.00–62.25s (4 frames)
+  FAIL  cut off by the frame edge: all.  at 62.00–62.25s (4 frames)
+  FAIL  cut off by the frame edge: own.  at 65.50–65.75s (4 frames)
+text: FAIL (42 cut-off/overlap, 0 in the safe zone)
+
+SOUND (the payoff window on the score without the voice: renders/audio-score.wav; loudness on the mix)
+  loudest 100ms window: 34.2s (-9.9 dBFS) - NOT in the payoff act 61.927-65.46499999999999s
+  silence before it: 0.0s at <= -40 dBFS in the 2s before (craft.md wants 0.5-4s when the story has a turn)
+  loudness: -13.9 LUFS integrated, range 2.1 LU, true peak -1.5 dBFS (phone target about -16 to -14 LUFS, peak <= -1)
+
+DEAD BEATS (the picture's change over 0.5s, every 0.25s; median 2.91, "still" below 0.80; silence acts are exempt)
+dead beats: PASS (0 stretches over 3s)
+PHONE SHEET: review/phone.jpg (one frame a second at 360px wide — read every caption at this size)
+
+video: 1080x1920, 1659 frames decoded

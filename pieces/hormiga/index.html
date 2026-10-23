@@ -1,0 +1,1610 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Langton's Ant</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #04031a; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// ---- voice.json (tools/voice.mjs): the voice-over's lines and word times
+const VOICE = {"duration":102.641,"lead":0.5,"tail":3.2,"lines":[{"id":"title","text":"An ant with two rules builds a highway, and nobody can prove why.","t0":0.5,"t1":4.04,"words":[{"w":"An","t0":0.46,"t1":0.9},{"w":"ant","t0":0.9,"t1":1.04},{"w":"with","t0":1.04,"t1":1.22},{"w":"two","t0":1.22,"t1":1.44},{"w":"rules","t0":1.44,"t1":1.78},{"w":"builds","t0":1.78,"t1":2.02},{"w":"a","t0":2.02,"t1":2.16},{"w":"highway,","t0":2.16,"t1":2.44},{"w":"and","t0":2.78,"t1":2.82},{"w":"nobody","t0":2.82,"t1":3.04},{"w":"can","t0":3.04,"t1":3.32},{"w":"prove","t0":3.32,"t1":3.54},{"w":"why.","t0":3.54,"t1":3.9}]},{"id":"ant","text":"This is an ant. It can't see, it can't think, it doesn't remember anything. It only knows how to do two things, and with that, it's going to build a highway.","t0":4.54,"t1":12.86,"words":[{"w":"This","t0":4.62,"t1":4.86},{"w":"is","t0":4.86,"t1":5},{"w":"an","t0":5,"t1":5.14},{"w":"ant.","t0":5.14,"t1":5.4},{"w":"It","t0":5.68,"t1":5.8},{"w":"can't","t0":5.8,"t1":6.12},{"w":"see,","t0":6.12,"t1":6.36},{"w":"it","t0":6.66,"t1":6.78},{"w":"can't","t0":6.78,"t1":7.04},{"w":"think,","t0":7.04,"t1":7.26},{"w":"it","t0":7.46,"t1":7.58},{"w":"doesn't","t0":7.58,"t1":7.8},{"w":"remember","t0":7.8,"t1":8.18},{"w":"anything.","t0":8.18,"t1":8.6},{"w":"It","t0":8.94,"t1":9.06},{"w":"only","t0":9.06,"t1":9.3},{"w":"knows","t0":9.3,"t1":9.5},{"w":"how","t0":9.5,"t1":9.7},{"w":"to","t0":9.7,"t1":9.82},{"w":"do","t0":9.82,"t1":10},{"w":"two","t0":10,"t1":10.2},{"w":"things,","t0":10.2,"t1":10.64},{"w":"and","t0":10.82,"t1":11.02},{"w":"with","t0":11.02,"t1":11.22},{"w":"that,","t0":11.22,"t1":11.5},{"w":"it's","t0":11.68,"t1":11.82},{"w":"going","t0":11.82,"t1":11.96},{"w":"to","t0":11.96,"t1":12.1},{"w":"build","t0":12.1,"t1":12.24},{"w":"a","t0":12.24,"t1":12.38},{"w":"highway.","t0":12.38,"t1":12.72}]},{"id":"board","text":"A board of squares, and every square is a bit: on, or off.","t0":13.16,"t1":16.123,"words":[{"w":"A","t0":13.36,"t1":13.54},{"w":"board","t0":13.54,"t1":13.7},{"w":"of","t0":13.7,"t1":13.84},{"w":"squares,","t0":13.84,"t1":14.08},{"w":"and","t0":14.08,"t1":14.26,"est":true},{"w":"every","t0":14.26,"t1":14.48},{"w":"square","t0":14.48,"t1":14.76},{"w":"is","t0":14.76,"t1":14.9},{"w":"a","t0":14.9,"t1":15},{"w":"bit:","t0":15,"t1":15.16},{"w":"on,","t0":15.3,"t1":15.52},{"w":"or","t0":15.52,"t1":15.72},{"w":"off.","t0":15.72,"t1":16}]},{"id":"right","text":"If the ant steps on a square that's off, it switches it on and turns right.","t0":16.423,"t1":20.355,"words":[{"w":"If","t0":16.6,"t1":16.8},{"w":"the","t0":16.8,"t1":16.94},{"w":"ant","t0":16.94,"t1":17.16},{"w":"steps","t0":17.16,"t1":17.4},{"w":"on","t0":17.4,"t1":17.58},{"w":"a","t0":17.58,"t1":17.72},{"w":"square","t0":17.72,"t1":17.92},{"w":"that's","t0":17.92,"t1":18.2},{"w":"off,","t0":18.2,"t1":18.42},{"w":"it","t0":18.58,"t1":18.7},{"w":"switches","t0":18.7,"t1":18.96},{"w":"it","t0":18.96,"t1":19.18},{"w":"on","t0":19.18,"t1":19.4},{"w":"and","t0":19.4,"t1":19.64},{"w":"turns","t0":19.64,"t1":19.9},{"w":"right.","t0":19.9,"t1":20.18}]},{"id":"left","text":"If it steps on one that's on, it switches it off and turns left.","t0":20.655,"t1":23.966,"words":[{"w":"If","t0":20.76,"t1":21},{"w":"it","t0":21,"t1":21.12},{"w":"steps","t0":21.12,"t1":21.36},{"w":"on","t0":21.36,"t1":21.56},{"w":"one","t0":21.56,"t1":21.76},{"w":"that's","t0":21.76,"t1":21.96},{"w":"on,","t0":21.96,"t1":22.18},{"w":"it","t0":22.3,"t1":22.42},{"w":"switches","t0":22.42,"t1":22.68},{"w":"it","t0":22.68,"t1":22.9},{"w":"off","t0":22.9,"t1":23.08},{"w":"and","t0":23.08,"t1":23.28},{"w":"turns","t0":23.28,"t1":23.54},{"w":"left.","t0":23.54,"t1":23.8}]},{"id":"forward","text":"Then it moves forward. That's all it knows how to do.","t0":24.266,"t1":26.964,"words":[{"w":"Then","t0":24.54,"t1":24.72},{"w":"it","t0":24.72,"t1":24.84},{"w":"moves","t0":24.84,"t1":25.06},{"w":"forward.","t0":25.06,"t1":25.4},{"w":"That's","t0":25.68,"t1":25.88},{"w":"all","t0":25.88,"t1":26.04},{"w":"it","t0":26.04,"t1":26.16},{"w":"knows","t0":26.16,"t1":26.32},{"w":"how","t0":26.32,"t1":26.52},{"w":"to","t0":26.52,"t1":26.64},{"w":"do.","t0":26.64,"t1":26.88}]},{"id":"slow","text":"Watch it slowly. On, turn, step. Off, turn, step.","t0":27.264,"t1":29.817,"words":[{"w":"Watch","t0":27.46,"t1":27.6},{"w":"it","t0":27.6,"t1":27.76},{"w":"slowly.","t0":27.76,"t1":28},{"w":"On,","t0":28.3,"t1":28.4},{"w":"turn,","t0":28.4,"t1":28.58},{"w":"step.","t0":28.58,"t1":28.84},{"w":"Off,","t0":28.84,"t1":29.24},{"w":"turn,","t0":29.24,"t1":29.46},{"w":"step.","t0":29.46,"t1":29.72}]},{"id":"tidy","text":"The first few hundred steps make small, tidy shapes. Almost pretty.","t0":30.117,"t1":33.512,"words":[{"w":"The","t0":30.24,"t1":30.24},{"w":"first","t0":30.24,"t1":30.42},{"w":"few","t0":30.42,"t1":30.66},{"w":"hundred","t0":30.66,"t1":30.86},{"w":"steps","t0":30.86,"t1":31.24},{"w":"make","t0":31.24,"t1":31.46},{"w":"small,","t0":31.46,"t1":31.8},{"w":"tidy","t0":32,"t1":32.08},{"w":"shapes.","t0":32.08,"t1":32.54},{"w":"Almost","t0":33,"t1":33.02},{"w":"pretty.","t0":33.02,"t1":33.34}]},{"id":"breaks","text":"And then it breaks. A thousand steps. Five thousand. A messy blob that grows with no shape, never repeating, going nowhere.","t0":33.812,"t1":40.465,"words":[{"w":"And","t0":34.08,"t1":34.18},{"w":"then","t0":34.18,"t1":34.32},{"w":"it","t0":34.32,"t1":34.48},{"w":"breaks.","t0":34.48,"t1":34.74},{"w":"A","t0":35.2,"t1":35.2},{"w":"thousand","t0":35.2,"t1":35.5},{"w":"steps.","t0":35.5,"t1":35.94},{"w":"Five","t0":36.18,"t1":36.32},{"w":"thousand.","t0":36.32,"t1":36.68},{"w":"A","t0":36.92,"t1":37.06},{"w":"messy","t0":37.06,"t1":37.3},{"w":"blob","t0":37.3,"t1":37.68},{"w":"that","t0":37.68,"t1":37.92},{"w":"grows","t0":37.92,"t1":38.06},{"w":"with","t0":38.06,"t1":38.28},{"w":"no","t0":38.28,"t1":38.52},{"w":"shape,","t0":38.52,"t1":38.8},{"w":"never","t0":38.98,"t1":39.1},{"w":"repeating,","t0":39.1,"t1":39.5},{"w":"going","t0":39.74,"t1":39.92},{"w":"nowhere.","t0":39.92,"t1":40.32}]},{"id":"bet","text":"If you had to bet right now, you'd say this ends in nothing.","t0":40.765,"t1":43.698,"words":[{"w":"If","t0":41.18,"t1":41.32},{"w":"you","t0":41.32,"t1":41.42},{"w":"had","t0":41.42,"t1":41.56},{"w":"to","t0":41.56,"t1":41.68},{"w":"bet","t0":41.68,"t1":41.84},{"w":"right","t0":41.84,"t1":42.06},{"w":"now,","t0":42.06,"t1":42.28},{"w":"you'd","t0":42.36,"t1":42.5},{"w":"say","t0":42.5,"t1":42.64},{"w":"this","t0":42.64,"t1":42.82},{"w":"ends","t0":42.82,"t1":43.06},{"w":"in","t0":43.06,"t1":43.24},{"w":"nothing.","t0":43.24,"t1":43.54}]},{"id":"step","text":"Step nine thousand, nine hundred seventy-seven.","t0":43.998,"t1":46.716,"words":[{"w":"Step","t0":44.48,"t1":44.54},{"w":"nine","t0":44.54,"t1":44.82},{"w":"thousand,","t0":44.82,"t1":45.16},{"w":"nine","t0":45.16,"t1":45.6},{"w":"hundred","t0":45.6,"t1":45.84},{"w":"seventy-seven.","t0":45.84,"t1":46.716,"est":true}]},{"id":"look","text":"Look. The ant shoots off diagonally, and starts building a highway.","t0":47.716,"t1":51.407,"words":[{"w":"Look.","t0":48.04,"t1":48.3},{"w":"The","t0":48.5,"t1":48.6},{"w":"ant","t0":48.6,"t1":48.78},{"w":"shoots","t0":48.78,"t1":49.08},{"w":"off","t0":49.08,"t1":49.32},{"w":"diagonally,","t0":49.32,"t1":49.98},{"w":"and","t0":49.98,"t1":50.2},{"w":"starts","t0":50.2,"t1":50.42},{"w":"building","t0":50.42,"t1":50.72},{"w":"a","t0":50.72,"t1":50.9},{"w":"highway.","t0":50.9,"t1":51.24}]},{"id":"repeat","text":"A hundred and four steps that repeat. And again. And again. It never comes back. It'll keep going like this forever.","t0":51.707,"t1":58.118,"words":[{"w":"A","t0":52.06,"t1":52.1},{"w":"hundred","t0":52.1,"t1":52.32},{"w":"and","t0":52.32,"t1":52.48},{"w":"four","t0":52.48,"t1":52.68},{"w":"steps","t0":52.68,"t1":53},{"w":"that","t0":53,"t1":53.2},{"w":"repeat.","t0":53.2,"t1":53.5},{"w":"And","t0":54,"t1":54.08},{"w":"again.","t0":54.08,"t1":54.36},{"w":"And","t0":54.7,"t1":54.8},{"w":"again.","t0":54.8,"t1":55.06},{"w":"It","t0":55.46,"t1":55.58},{"w":"never","t0":55.58,"t1":55.8},{"w":"comes","t0":55.8,"t1":56.04},{"w":"back.","t0":56.04,"t1":56.36},{"w":"It'll","t0":56.62,"t1":56.78},{"w":"keep","t0":56.78,"t1":56.96},{"w":"going","t0":56.96,"t1":57.24},{"w":"like","t0":57.24,"t1":57.44},{"w":"this","t0":57.44,"t1":57.62},{"w":"forever.","t0":57.62,"t1":57.92}]},{"id":"langton","text":"This is called Langton's ant. Chris Langton came up with it in 1986, looking for the simplest rule that could behave like something alive.","t0":58.418,"t1":66.336,"words":[{"w":"This","t0":58.3,"t1":58.54},{"w":"is","t0":58.54,"t1":58.7},{"w":"called","t0":58.7,"t1":58.94},{"w":"Langton's","t0":58.94,"t1":59.54},{"w":"ant.","t0":59.54,"t1":59.74},{"w":"Chris","t0":60.58,"t1":60.68},{"w":"Langton","t0":60.68,"t1":61.1},{"w":"came","t0":61.1,"t1":61.28},{"w":"up","t0":61.28,"t1":61.42},{"w":"with","t0":61.42,"t1":61.56},{"w":"it","t0":61.56,"t1":61.68},{"w":"in","t0":61.68,"t1":61.84},{"w":"1986,","t0":61.84,"t1":62.62},{"w":"looking","t0":63.22,"t1":63.34},{"w":"for","t0":63.34,"t1":63.56},{"w":"the","t0":63.56,"t1":63.7},{"w":"simplest","t0":63.7,"t1":64.04},{"w":"rule","t0":64.04,"t1":64.42},{"w":"that","t0":64.42,"t1":64.78},{"w":"could","t0":64.78,"t1":64.9},{"w":"behave","t0":64.9,"t1":65.22},{"w":"like","t0":65.22,"t1":65.46},{"w":"something","t0":65.46,"t1":65.74},{"w":"alive.","t0":65.74,"t1":66.16}]},{"id":"why","text":"And here's the uncomfortable part. Nobody knows why.","t0":66.636,"t1":69.314,"words":[{"w":"And","t0":66.92,"t1":67},{"w":"here's","t0":67,"t1":67.28},{"w":"the","t0":67.28,"t1":67.38},{"w":"uncomfortable","t0":67.38,"t1":67.82},{"w":"part.","t0":67.82,"t1":68.26},{"w":"Nobody","t0":68.46,"t1":68.6},{"w":"knows","t0":68.6,"t1":68.84},{"w":"why.","t0":68.84,"t1":69.22}]},{"id":"any","text":"Switch on any squares you like before it starts, wherever you want, and it happens again.","t0":69.714,"t1":74.548,"words":[{"w":"Switch","t0":70.16,"t1":70.26},{"w":"on","t0":70.26,"t1":70.46},{"w":"any","t0":70.46,"t1":70.76},{"w":"squares","t0":70.76,"t1":71.06},{"w":"you","t0":71.06,"t1":71.26},{"w":"like","t0":71.26,"t1":71.5},{"w":"before","t0":71.5,"t1":71.84},{"w":"it","t0":71.84,"t1":71.98},{"w":"starts,","t0":71.98,"t1":72.32},{"w":"wherever","t0":72.6,"t1":72.78},{"w":"you","t0":72.78,"t1":73.08},{"w":"want,","t0":73.08,"t1":73.36},{"w":"and","t0":73.56,"t1":73.68},{"w":"it","t0":73.68,"t1":73.78},{"w":"happens","t0":73.78,"t1":74.1},{"w":"again.","t0":74.1,"t1":74.44}]},{"id":"same","text":"It might take longer, or less, but it ends up building the same highway. Every time. And it's never been proven.","t0":74.848,"t1":80.787,"words":[{"w":"It","t0":75.06,"t1":75.2},{"w":"might","t0":75.2,"t1":75.36},{"w":"take","t0":75.36,"t1":75.56},{"w":"longer,","t0":75.56,"t1":75.96},{"w":"or","t0":75.96,"t1":76.34},{"w":"less,","t0":76.34,"t1":76.66},{"w":"but","t0":76.84,"t1":76.92},{"w":"it","t0":76.92,"t1":77.02},{"w":"ends","t0":77.02,"t1":77.16},{"w":"up","t0":77.16,"t1":77.32},{"w":"building","t0":77.32,"t1":77.5},{"w":"the","t0":77.5,"t1":77.7},{"w":"same","t0":77.7,"t1":77.9},{"w":"highway.","t0":77.9,"t1":78.28},{"w":"Every","t0":78.62,"t1":78.84},{"w":"time.","t0":78.84,"t1":79.18},{"w":"And","t0":79.54,"t1":79.64},{"w":"it's","t0":79.64,"t1":79.86},{"w":"never","t0":79.86,"t1":80.06},{"w":"been","t0":80.06,"t1":80.32},{"w":"proven.","t0":80.32,"t1":80.6}]},{"id":"circuit","text":"And there's more. Set up the starting squares just right, and this ant can build any logic circuit.","t0":81.087,"t1":86.509,"words":[{"w":"And","t0":81.5,"t1":81.68},{"w":"there's","t0":81.68,"t1":81.94},{"w":"more.","t0":81.94,"t1":82.14},{"w":"Set","t0":82.64,"t1":82.8},{"w":"up","t0":82.8,"t1":82.9},{"w":"the","t0":82.9,"t1":83.06},{"w":"starting","t0":83.06,"t1":83.32},{"w":"squares","t0":83.32,"t1":83.62},{"w":"just","t0":83.62,"t1":83.9},{"w":"right,","t0":83.9,"t1":84.22},{"w":"and","t0":84.4,"t1":84.52},{"w":"this","t0":84.52,"t1":84.7},{"w":"ant","t0":84.7,"t1":84.96},{"w":"can","t0":84.96,"t1":85.18},{"w":"build","t0":85.18,"t1":85.4},{"w":"any","t0":85.4,"t1":85.66},{"w":"logic","t0":85.66,"t1":86},{"w":"circuit.","t0":86,"t1":86.38}]},{"id":"computer","text":"A whole computer, made from a bug that only knows how to turn. Two rules. One bit. And forty years without a proof.","t0":86.809,"t1":93.027,"words":[{"w":"A","t0":86.93,"t1":87.14},{"w":"whole","t0":87.14,"t1":87.38},{"w":"computer,","t0":87.38,"t1":87.82},{"w":"made","t0":87.82,"t1":88.18},{"w":"from","t0":88.18,"t1":88.38},{"w":"a","t0":88.38,"t1":88.5},{"w":"bug","t0":88.5,"t1":88.68},{"w":"that","t0":88.68,"t1":88.86},{"w":"only","t0":88.86,"t1":89.04},{"w":"knows","t0":89.04,"t1":89.26},{"w":"how","t0":89.26,"t1":89.46},{"w":"to","t0":89.46,"t1":89.56},{"w":"turn.","t0":89.56,"t1":89.88},{"w":"Two","t0":90.2,"t1":90.36},{"w":"rules.","t0":90.36,"t1":90.66},{"w":"One","t0":90.98,"t1":91.08},{"w":"bit.","t0":91.08,"t1":91.3},{"w":"And","t0":91.5,"t1":91.64},{"w":"forty","t0":91.64,"t1":91.92},{"w":"years","t0":91.92,"t1":92.2},{"w":"without","t0":92.2,"t1":92.46},{"w":"a","t0":92.46,"t1":92.6},{"w":"proof.","t0":92.6,"t1":92.82}]},{"id":"end","text":"What do you think? Coincidence, or is there something hidden in there we still can't see? Tell me in the comments.","t0":93.327,"t1":99.441,"words":[{"w":"What","t0":93.7,"t1":93.9},{"w":"do","t0":93.9,"t1":93.98},{"w":"you","t0":93.98,"t1":94.1},{"w":"think?","t0":94.1,"t1":94.38},{"w":"Coincidence,","t0":95,"t1":95.42},{"w":"or","t0":95.7,"t1":95.8},{"w":"is","t0":95.8,"t1":95.94},{"w":"there","t0":95.94,"t1":96.04},{"w":"something","t0":96.04,"t1":96.3},{"w":"hidden","t0":96.3,"t1":96.58},{"w":"in","t0":96.58,"t1":96.78},{"w":"there","t0":96.78,"t1":96.94},{"w":"we","t0":96.94,"t1":97.1},{"w":"still","t0":97.1,"t1":97.3},{"w":"can't","t0":97.3,"t1":97.62},{"w":"see?","t0":97.62,"t1":97.88},{"w":"Tell","t0":98.4,"t1":98.52},{"w":"me","t0":98.52,"t1":98.66},{"w":"in","t0":98.66,"t1":98.74},{"w":"the","t0":98.74,"t1":98.84},{"w":"comments.","t0":98.84,"t1":99.14}]}]};
+// =====================================================================
+//  AN ANT WITH TWO RULES BUILDS A HIGHWAY — 9:16, voice-led (~2 min), 24fps, style voltreal (Bitstory).
+//  A real Langton's ant run in code: the two rules up close, tidy shapes, the chaos, step 9,977, the highway;
+//  random starts that end in the same highway; logic circuits; the closing question.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4, GRID0 = 0;
+const VL = (id) => VOICE.lines.find((l) => l.id === id);
+const VW = (id, w, n = 1) => { const L = VL(id); let k = 0; for (const x of L.words) if (x.w.toLowerCase().replace(/[^a-z0-9']/g, '') === w.toLowerCase() && ++k === n) return x.t0; return L.t0; };
+const DURATION = Math.round(VOICE.duration * FPS) / FPS;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const VMONO = '"SF Mono", Menlo, "JetBrains Mono", "DejaVu Sans Mono", Consolas, monospace';
+const HAND = VMONO;
+const CX = 520;
+const onBeat = (t) => t;
+
+const S = (id) => VL(id).t0 - 0.3;                    // a beat starts ~0.3s before its line
+const HIT = VL('look').t0 - 0.3;                      // the payoff: the highway breaks out, in the pause before "Look."
+const IDS = ['title', 'ant', 'board', 'right', 'left', 'forward', 'slow', 'tidy', 'breaks', 'bet', 'step', 'look', 'repeat', 'langton', 'why', 'any', 'same', 'circuit', 'computer', 'end'];
+const TB = IDS.map((id, i) => (i === 0 ? 0 : id === 'look' ? HIT : S(id)));
+const SUB = (id) => TB[IDS.indexOf(id)], SUBEND = (id) => (IDS.indexOf(id) + 1 < IDS.length ? TB[IDS.indexOf(id) + 1] : DURATION);
+const ERA_LIST = [[0, DURATION, () => sceneStage()]];
+const SHOTS = IDS.map((id, i) => [id, 0, TB[i], i + 1 < IDS.length ? TB[i + 1] : DURATION, id]);
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, gridOffset: GRID0, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE, aspect: '9:16',
+  format: 'fixed-stage',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { hit: HIT },
+  acts: [
+    { name: '1 Rules',   role: 'build',   t0: 0, t1: S('tidy') },
+    { name: '2 Chaos',   role: 'peak',    t0: S('tidy'), t1: VL('step').t1 + 0.05 },
+    { name: '3 Silence', role: 'silence', t0: VL('step').t1 + 0.05, t1: HIT - 0.1 },
+    { name: '4 Highway', role: 'gift',    t0: HIT - 0.05, t1: S('langton') },
+    { name: '5 Why',     role: 'build',   t0: S('langton'), t1: S('end') },
+    { name: '6 End',     role: 'goodbye', t0: S('end'), t1: DURATION },
+  ],
+  board: IDS.map((id, i) => ({ t: i + 1 === IDS.length ? DURATION - 0.4 : Math.min(VL(id).t1 - 0.2, TB[i + 1] - 0.1), title: id, sound: '', next: '' })),
+  narration: VOICE.lines.map((l) => ({ id: l.id, t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;
+// =====================================================================
+//  kit/core.js — seeded RNG, math, easing, palette, geometry, the hand-drawn drawing kit
+//  (wobble on the boil, ink, paint, hatch, pencil, stipple, grain), cameras, mono text.
+//  Needs from the piece head: FPS, W, H. Render state: ctx, F (frame), B (boil = floor(F/2)).
+// =====================================================================
+
+// ---------------------------------------------------------------------
+//  seeded RNG
+// ---------------------------------------------------------------------
+function mulberry32(a) {
+  return function () {
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+function hash(...xs) {
+  let h = 2166136261 >>> 0;
+  for (const x of xs) {
+    const s = String(x);
+    for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+    h ^= 124; h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+function RNG(...xs) {
+  const f = mulberry32(hash(...xs));
+  return {
+    f,
+    r: (a, b) => a + (b - a) * f(),
+    n: (amt) => (f() * 2 - 1) * amt,
+    i: (a, b) => a + Math.floor(f() * (b - a + 1)),
+    pick: (arr) => arr[Math.floor(f() * arr.length)],
+  };
+}
+
+// ---------------------------------------------------------------------
+//  math
+// ---------------------------------------------------------------------
+const TAU = Math.PI * 2, DEG = Math.PI / 180;
+const clamp = (x, a = 0, b = 1) => (x < a ? a : x > b ? b : x);
+const lerp = (a, b, t) => a + (b - a) * t;
+const seg = (t, a, b) => clamp((t - a) / (b - a));
+// has absolute time t reached cut time c? (cuts snap to the nearest frame, like shot boundaries)
+const past = (t, c) => Math.round(t * FPS + 1e-6) >= Math.round(c * FPS);
+const dist = (a, b) => Math.hypot(b[0] - a[0], b[1] - a[1]);
+const EZ = {
+  o2: (t) => 1 - (1 - clamp(t)) ** 2,
+  o3: (t) => 1 - (1 - clamp(t)) ** 3,
+  i2: (t) => clamp(t) ** 2,
+  i3: (t) => clamp(t) ** 3,
+  io: (t) => { t = clamp(t); return t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2; },
+  back: (t) => { t = clamp(t) - 1; return 1 + 2.70158 * t * t * t + 1.70158 * t * t; },
+};
+
+// ---------------------------------------------------------------------
+//  render state
+// ---------------------------------------------------------------------
+let ctx = null;   // current 2d context
+let F = 0;        // absolute frame index
+let B = 0;        // boil index — reseeds every 2 frames (Math.floor(t*12))
+
+const C = {
+  ink: '#3a2417', cream: '#efe5cf', paper: '#f4ecd9', paperLine: 'rgba(90,130,190,0.32)',
+  orange: '#e58a4e', orangeD: '#c3622e', orangeL: '#f4b27c', terra: '#d97757',
+  rose: '#d98b8b', roseD: '#b0616a', roseL: '#efb9b0',
+  wood: '#d6a466', woodD: '#a8773f', woodL: '#e9c48f',
+  sky: '#9cc4d6', skyD: '#6f9fb8', skyL: '#c9e1ea',
+  teal: '#3d9f96', tealL: '#86c9be',
+  yellow: '#f0c55a', yellowL: '#f7dd92',
+  green: '#5f9c5c', greenL: '#a3cf92',
+  red: '#d4382c', redL: '#ea7a6c',
+  skin: '#ebb68f', skinD: '#c7815d', skinL: '#f7d4b4',
+  lav: 'rgba(104,112,214,0.7)', lavS: 'rgba(104,112,214,0.42)',
+  navy: '#0c0d1c', navy2: '#15173a', peri: '#c8d0f0', periD: '#7c86c4', periS: 'rgba(150,164,230,0.20)',
+  cyan: '#52d6c4', mag: '#e0368f', glow: '#5de37a', white: '#f4f6ff',
+};
+const RAINBOW = ['#f0d042', '#e050b8', '#46cde0', '#7ad866', '#a47ef0'];
+const MONO = 'Consolas, "Cascadia Mono", Menlo, "DejaVu Sans Mono", "Courier New", monospace';   // Windows first, then macOS / Linux
+
+// ---------------------------------------------------------------------
+//  geometry
+// ---------------------------------------------------------------------
+function ellipsePts(cx, cy, rx, ry, rot = 0, n = 64, a0 = 0, a1 = TAU) {
+  const P = [], c = Math.cos(rot), s = Math.sin(rot), full = Math.abs(a1 - a0 - TAU) < 1e-6;
+  for (let i = 0; i < n; i++) {
+    const a = a0 + (a1 - a0) * i / (full ? n : n - 1);
+    const x = Math.cos(a) * rx, y = Math.sin(a) * ry;
+    P.push([cx + x * c - y * s, cy + x * s + y * c]);
+  }
+  return P;
+}
+function rrectPts(x, y, w, h, r, n = 6) {
+  r = Math.min(r, w / 2, h / 2);
+  const P = [], cs = [[x + w - r, y + r, -Math.PI / 2], [x + w - r, y + h - r, 0], [x + r, y + h - r, Math.PI / 2], [x + r, y + r, Math.PI]];
+  for (const [cx, cy, a0] of cs) for (let i = 0; i <= n; i++) { const a = a0 + (Math.PI / 2) * i / n; P.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r]); }
+  return P;
+}
+function arcPts(cx, cy, r, a0, a1, n = 18, sy = 1) {
+  const P = [];
+  for (let i = 0; i <= n; i++) { const a = a0 + (a1 - a0) * i / n; P.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r * sy]); }
+  return P;
+}
+function xform(P, tx, ty, rot = 0, sx = 1, sy = sx) {
+  const c = Math.cos(rot), s = Math.sin(rot);
+  return P.map(([x, y]) => [tx + x * sx * c - y * sy * s, ty + x * sx * s + y * sy * c]);
+}
+function bbox(P, pad = 0) {
+  let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
+  for (const [x, y] of P) { if (x < x0) x0 = x; if (y < y0) y0 = y; if (x > x1) x1 = x; if (y > y1) y1 = y; }
+  return { x0: x0 - pad, y0: y0 - pad, x1: x1 + pad, y1: y1 + pad };
+}
+function resample(P, closed, step) {
+  const out = [], n = P.length, m = closed ? n : n - 1;
+  for (let i = 0; i < m; i++) {
+    const a = P[i], b = P[(i + 1) % n], k = Math.max(1, Math.ceil(dist(a, b) / step));
+    for (let j = 0; j < k; j++) out.push([a[0] + (b[0] - a[0]) * j / k, a[1] + (b[1] - a[1]) * j / k]);
+  }
+  if (!closed) out.push(P[n - 1]);
+  return out;
+}
+function pathLen(P) { let L = 0; for (let i = 1; i < P.length; i++) L += dist(P[i - 1], P[i]); return L; }
+function subPath(P, frac) {
+  let want = pathLen(P) * clamp(frac);
+  const out = [P[0]];
+  for (let i = 1; i < P.length; i++) {
+    const d = dist(P[i - 1], P[i]);
+    if (want >= d) { out.push(P[i]); want -= d; }
+    else { const k = want / (d || 1); out.push([lerp(P[i - 1][0], P[i][0], k), lerp(P[i - 1][1], P[i][1], k)]); break; }
+  }
+  return out;
+}
+function pointAt(P, frac) { const S = subPath(P, frac); return S[S.length - 1]; }
+
+// ---------------------------------------------------------------------
+//  drawing kit — boil, sketchy lines, hatching, stipple, pencil, grain
+// ---------------------------------------------------------------------
+// smooth hand wobble along the normal; reseeded every boil step
+function wobble(P, closed, amt, key, step = 7) {
+  const Q = resample(P, closed, step), n = Q.length;
+  const R = RNG('wob', key, B);
+  const f1 = R.r(0.012, 0.03), f2 = R.r(0.05, 0.1), p1 = R.r(0, TAU), p2 = R.r(0, TAU);
+  const sx = R.n(amt * 0.5), sy = R.n(amt * 0.5);
+  const out = new Array(n); let s = 0;
+  for (let i = 0; i < n; i++) {
+    const a = Q[closed ? (i - 1 + n) % n : Math.max(0, i - 1)], b = Q[closed ? (i + 1) % n : Math.min(n - 1, i + 1)];
+    const nx = a[1] - b[1], ny = b[0] - a[0], l = Math.hypot(nx, ny) || 1;
+    if (i) s += dist(Q[i - 1], Q[i]);
+    const o = amt * (0.75 * Math.sin(s * f1 + p1) + 0.35 * Math.sin(s * f2 + p2));
+    out[i] = [Q[i][0] + nx / l * o + sx, Q[i][1] + ny / l * o + sy];
+  }
+  return out;
+}
+function trace(P, closed) {
+  ctx.beginPath();
+  const n = P.length; if (n < 2) return;
+  if (closed) {
+    ctx.moveTo((P[n - 1][0] + P[0][0]) / 2, (P[n - 1][1] + P[0][1]) / 2);
+    for (let i = 0; i < n; i++) { const p = P[i], q = P[(i + 1) % n]; ctx.quadraticCurveTo(p[0], p[1], (p[0] + q[0]) / 2, (p[1] + q[1]) / 2); }
+    ctx.closePath();
+  } else {
+    ctx.moveTo(P[0][0], P[0][1]);
+    for (let i = 1; i < n - 1; i++) { const p = P[i], q = P[i + 1]; ctx.quadraticCurveTo(p[0], p[1], (p[0] + q[0]) / 2, (p[1] + q[1]) / 2); }
+    ctx.lineTo(P[n - 1][0], P[n - 1][1]);
+  }
+}
+// sketchy stroke. o: closed, color, w, amt, key, alpha, frac (write-on), double
+function ink(P, o = {}) {
+  const closed = !!o.closed, key = o.key ?? 'ink';
+  let Q = o.raw ? P : wobble(P, closed, o.amt ?? 1.8, key);
+  let cl = closed;
+  if (o.frac != null && o.frac < 1) { if (o.frac <= 0) return Q; Q = subPath(closed ? [...Q, Q[0]] : Q, o.frac); cl = false; }
+  ctx.strokeStyle = o.color || C.ink; ctx.lineWidth = o.w ?? 3; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  ctx.globalAlpha = o.alpha ?? 1;
+  trace(Q, cl); ctx.stroke();
+  if (o.double) {
+    let Q2 = wobble(P, closed, (o.amt ?? 1.8) * 1.6 + 0.8, key + '~');
+    if (!cl && closed) Q2 = subPath([...Q2, Q2[0]], o.frac ?? 1);
+    ctx.lineWidth = (o.w ?? 3) * 0.4; ctx.globalAlpha = (o.alpha ?? 1) * 0.55; trace(Q2, cl); ctx.stroke();
+  }
+  ctx.globalAlpha = 1;
+  return Q;
+}
+// filled shape + textures (clipped) + ink outline
+function paint(P, o = {}) {
+  const key = o.key || 'paint';
+  const Q = o.raw ? P : wobble(P, true, o.amt ?? 1.6, key);
+  ctx.save();
+  trace(Q, true);
+  if (o.fill) { ctx.globalAlpha = o.fillAl ?? 1; ctx.fillStyle = o.fill; ctx.fill(); ctx.globalAlpha = 1; }
+  if (o.tex) { ctx.clip(); const bb = bbox(Q, 6); o.tex.forEach((t, i) => texture(bb, { key: key + ':' + i, ...t })); }
+  ctx.restore();
+  if (o.line !== false) {
+    ctx.strokeStyle = o.line || C.ink; ctx.lineWidth = o.w ?? 3; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    ctx.globalAlpha = o.lineAl ?? 1; trace(Q, true); ctx.stroke(); ctx.globalAlpha = 1;
+  }
+  return Q;
+}
+function texture(bb, t) {
+  if (t.k === 'hatch') hatch(bb, t);
+  else if (t.k === 'cross') { hatch(bb, t); hatch(bb, { ...t, a: (t.a ?? 0.7) + (t.a2 ?? 1.25), key: t.key + 'x' }); }
+  else if (t.k === 'pencil') pencil(bb, t);
+  else if (t.k === 'stipple') stipple(bb, t);
+  else if (t.k === 'fn') t.fn(bb);
+}
+// parallel hatching inside current clip. t: a angle, gap, c, w, al, dash [min,max], skip, dens(x,y)
+function hatch(bb, t) {
+  const a = t.a ?? 0.7, gap = t.gap ?? 7, S = RNG('hs', t.key), R = RNG('hj', t.key, B);
+  const cx = (bb.x0 + bb.x1) / 2, cy = (bb.y0 + bb.y1) / 2, rad = Math.hypot(bb.x1 - bb.x0, bb.y1 - bb.y0) / 2 + 4;
+  const ca = Math.cos(a), sa = Math.sin(a), dens = t.dens, jit = t.jit ?? 0.9, dash = t.dash;
+  ctx.beginPath();
+  for (let d = -rad; d <= rad; d += gap) {
+    const dd = d + S.n(gap * 0.3);
+    let u = -rad + (dash ? S.r(0, dash[1]) : 0);
+    while (u < rad) {
+      const len = dash ? S.r(dash[0], dash[1]) : rad * 2, u2 = Math.min(rad, u + len);
+      const mu = (u + u2) / 2, mx = cx + ca * mu - sa * dd, my = cy + sa * mu + ca * dd, p = S.f();
+      if (!dens || p < dens(mx, my)) {
+        const e1 = R.n(jit), e2 = R.n(jit);
+        ctx.moveTo(cx + ca * u - sa * (dd + e1), cy + sa * u + ca * (dd + e1));
+        ctx.lineTo(cx + ca * u2 - sa * (dd + e2), cy + sa * u2 + ca * (dd + e2));
+      }
+      u = u2 + (dash ? S.r(t.skip?.[0] ?? 3, t.skip?.[1] ?? 12) : 0);
+    }
+  }
+  ctx.strokeStyle = t.c || C.ink; ctx.lineWidth = t.w ?? 1.2; ctx.globalAlpha = t.al ?? 0.5; ctx.lineCap = 'round';
+  ctx.stroke(); ctx.globalAlpha = 1;
+}
+// colored-pencil diagonal strokes
+function pencil(bb, t) {
+  const S = RNG('ps', t.key), R = RNG('pj', t.key, B);
+  const area = (bb.x1 - bb.x0) * (bb.y1 - bb.y0);
+  const n = Math.min(t.max ?? 6000, t.n ?? Math.floor(area / (t.per ?? 700)));
+  const a = t.a ?? -0.95, L = t.len ?? 14, dens = t.dens;
+  ctx.beginPath();
+  for (let i = 0; i < n; i++) {
+    const x = S.r(bb.x0, bb.x1), y = S.r(bb.y0, bb.y1), p = S.f(), aa = a + S.n(0.22), l = L * (0.5 + S.f() * 0.7);
+    if (dens && p > dens(x, y)) continue;
+    const jx = R.n(1.1), jy = R.n(1.1), dx = Math.cos(aa) * l / 2, dy = Math.sin(aa) * l / 2;
+    ctx.moveTo(x - dx + jx, y - dy + jy); ctx.lineTo(x + dx + jx, y + dy + jy);
+  }
+  ctx.strokeStyle = t.c; ctx.lineWidth = t.w ?? 1.4; ctx.globalAlpha = t.al ?? 0.45; ctx.lineCap = 'round';
+  ctx.stroke(); ctx.globalAlpha = 1;
+}
+// square stipple dots
+function stipple(bb, t) {
+  const S = RNG('ss', t.key), R = RNG('sj', t.key, B);
+  const n = t.n ?? 400, sz = t.s ?? 2.2, dens = t.dens, jit = t.jit ?? 0.8;
+  ctx.fillStyle = t.c; ctx.globalAlpha = t.al ?? 1; ctx.beginPath();
+  for (let i = 0; i < n; i++) {
+    const x = S.r(bb.x0, bb.x1), y = S.r(bb.y0, bb.y1), p = S.f(), s = sz * (0.6 + S.f() * 0.8);
+    if (dens && p > dens(x, y)) continue;
+    ctx.rect(x + R.n(jit), y + R.n(jit), s, s);
+  }
+  ctx.fill(); ctx.globalAlpha = 1;
+}
+// screen-space paper grain, reseeded with the boil
+function grain(o = {}) {
+  ctx.save(); screen();
+  const R = RNG('grain', B), n = o.n ?? 2600;
+  ctx.fillStyle = o.dark || 'rgba(70,45,25,0.13)'; ctx.beginPath();
+  for (let i = 0; i < n; i++) ctx.rect(R.r(0, W), R.r(0, H), 1.7, 1.7);
+  ctx.fill();
+  ctx.fillStyle = o.light || 'rgba(255,250,236,0.20)'; ctx.beginPath();
+  for (let i = 0; i < n; i++) ctx.rect(R.r(0, W), R.r(0, H), 1.9, 1.9);
+  ctx.fill();
+  // a few paper fibres
+  ctx.strokeStyle = 'rgba(80,55,35,0.07)'; ctx.lineWidth = 1; ctx.beginPath();
+  for (let i = 0; i < 90; i++) { const x = R.r(0, W), y = R.r(0, H), a = R.r(0, TAU), l = R.r(6, 22); ctx.moveTo(x, y); ctx.lineTo(x + Math.cos(a) * l, y + Math.sin(a) * l); }
+  ctx.stroke();
+  ctx.restore();
+}
+
+// ---------------------------------------------------------------------
+//  construction lines, rulers, sparks, bursts, rainbow contours
+// ---------------------------------------------------------------------
+function construct(cx, cy, r, o = {}) {
+  const R = RNG('con', o.key ?? 'c', B);
+  ctx.save();
+  ctx.strokeStyle = o.c || C.lav; ctx.lineWidth = o.w ?? 1.4; ctx.globalAlpha = o.al ?? 1; ctx.lineCap = 'round';
+  const a0 = (o.a0 ?? R.r(0, TAU)), sw = o.sweep ?? 1.05;
+  ctx.beginPath(); ctx.ellipse(cx + R.n(1.2), cy + R.n(1.2), r, r * (o.sq ?? 1), o.rot ?? 0, a0, a0 + TAU * sw); ctx.stroke();
+  if (o.cross) { const k = o.cross; ctx.beginPath(); ctx.moveTo(cx - k, cy); ctx.lineTo(cx + k, cy); ctx.moveTo(cx, cy - k); ctx.lineTo(cx, cy + k); ctx.stroke(); }
+  if (o.ticks) {
+    ctx.beginPath();
+    for (let i = 0; i < o.ticks; i++) { const a = i / o.ticks * TAU + (o.rot ?? 0); ctx.moveTo(cx + Math.cos(a) * (r - 6), cy + Math.sin(a) * (r - 6)); ctx.lineTo(cx + Math.cos(a) * (r + 6), cy + Math.sin(a) * (r + 6)); }
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+function cline(x1, y1, x2, y2, o = {}) {
+  const R = RNG('cl', o.key ?? 'l', B);
+  ctx.save(); ctx.strokeStyle = o.c || C.lavS; ctx.lineWidth = o.w ?? 1.2; ctx.globalAlpha = o.al ?? 1;
+  ctx.beginPath(); ctx.moveTo(x1 + R.n(1), y1 + R.n(1)); ctx.lineTo(x2 + R.n(1), y2 + R.n(1)); ctx.stroke(); ctx.restore();
+}
+function ruler(x1, y1, x2, y2, o = {}) {
+  const R = RNG('rul', o.key ?? 'r', B);
+  const L = Math.hypot(x2 - x1, y2 - y1) || 1, ux = (x2 - x1) / L, uy = (y2 - y1) / L, nx = -uy, ny = ux;
+  const frac = clamp(o.frac ?? 1), step = o.step ?? 16, tk = o.tick ?? 7, side = o.side ?? 1;
+  ctx.save(); ctx.strokeStyle = o.c || C.periD; ctx.lineWidth = o.w ?? 1.5; ctx.globalAlpha = o.al ?? 1; ctx.lineCap = 'round';
+  const jx = R.n(0.8), jy = R.n(0.8);
+  ctx.beginPath(); ctx.moveTo(x1 + jx, y1 + jy); ctx.lineTo(x1 + ux * L * frac + jx, y1 + uy * L * frac + jy);
+  const n = Math.floor(L * frac / step);
+  for (let i = 0; i <= n; i++) {
+    const k = i % 5 === 0 ? tk * 1.9 : tk, px = x1 + ux * i * step + jx, py = y1 + uy * i * step + jy;
+    ctx.moveTo(px, py); ctx.lineTo(px + nx * k * side, py + ny * k * side);
+  }
+  ctx.moveTo(x1 - nx * tk * 1.6, y1 - ny * tk * 1.6); ctx.lineTo(x1 + nx * tk * 2.2, y1 + ny * tk * 2.2);
+  if (frac >= 1) { ctx.moveTo(x2 - nx * tk * 1.6, y2 - ny * tk * 1.6); ctx.lineTo(x2 + nx * tk * 2.2, y2 + ny * tk * 2.2); }
+  ctx.stroke(); ctx.restore();
+}
+// glowing radial spark (dark world)
+function sparkBurst(cx, cy, r, o = {}) {
+  if (r <= 0.5) return;
+  const R = RNG('spk', o.key ?? 's', B), n = o.n ?? 18, rays = [];
+  for (let i = 0; i < n; i++) { const a = i / n * TAU + R.n(0.14); rays.push([a, r * R.r(0.28, 0.5), r * R.r(0.72, 1.15)]); }
+  const path = () => { ctx.beginPath(); for (const [a, r0, r1] of rays) { ctx.moveTo(cx + Math.cos(a) * r0, cy + Math.sin(a) * r0); ctx.lineTo(cx + Math.cos(a) * r1, cy + Math.sin(a) * r1); } };
+  ctx.save(); ctx.lineCap = 'round';
+  path(); ctx.strokeStyle = o.glow || 'rgba(82,214,196,0.22)'; ctx.lineWidth = (o.w ?? 2.4) * 3.4; ctx.stroke();
+  path(); ctx.strokeStyle = o.c || '#8ff5e6'; ctx.lineWidth = o.w ?? 2.4; ctx.stroke();
+  if (o.core !== false) {
+    const cr = Math.max(2.5, r * (o.coreR ?? 0.15));
+    ctx.beginPath(); ctx.arc(cx, cy, cr * 2.2, 0, TAU); ctx.fillStyle = 'rgba(190,215,255,0.16)'; ctx.fill();
+    ctx.beginPath(); ctx.arc(cx, cy, cr, 0, TAU); ctx.fillStyle = C.white; ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = C.periD; ctx.stroke();
+  }
+  if (o.specks) { ctx.fillStyle = o.c || '#8ff5e6'; for (let i = 0; i < o.specks; i++) { const a = R.r(0, TAU), d = r * R.r(0.2, 1.4); ctx.fillRect(cx + Math.cos(a) * d, cy + Math.sin(a) * d, 2, 2); } }
+  ctx.restore();
+}
+// radial tick burst (warm world impact)
+function burst(cx, cy, r0, r1, o = {}) {
+  const R = RNG('bur', o.key ?? 'b', B), n = o.n ?? 12;
+  ctx.save(); ctx.strokeStyle = o.c || C.ink; ctx.lineWidth = o.w ?? 3; ctx.lineCap = 'round'; ctx.globalAlpha = o.al ?? 1; ctx.beginPath();
+  for (let i = 0; i < n; i++) {
+    const a = i / n * TAU + R.n(0.15) + (o.rot ?? 0), a1 = r0 * R.r(0.85, 1.1), b1 = r1 * R.r(0.75, 1.15);
+    ctx.moveTo(cx + Math.cos(a) * a1, cy + Math.sin(a) * a1); ctx.lineTo(cx + Math.cos(a) * b1, cy + Math.sin(a) * b1);
+  }
+  ctx.stroke(); ctx.restore();
+}
+function star4(x, y, s, c) {
+  ctx.save(); ctx.fillStyle = c; ctx.beginPath();
+  ctx.moveTo(x, y - s); ctx.quadraticCurveTo(x, y, x + s, y); ctx.quadraticCurveTo(x, y, x, y + s);
+  ctx.quadraticCurveTo(x, y, x - s, y); ctx.quadraticCurveTo(x, y, x, y - s); ctx.fill(); ctx.restore();
+}
+// rainbow contour strokes around a moving part
+function rainbow(P, o = {}) {
+  const bb = bbox(P), cx = o.cx ?? (bb.x0 + bb.x1) / 2, cy = o.cy ?? (bb.y0 + bb.y1) / 2, n = o.n ?? 3;
+  for (let i = 0; i < n; i++) {
+    const S = RNG('rb', o.key, i, B), sc = 1 + (o.spread ?? 0.07) * (i + 1) + S.n(0.02);
+    const Q = P.map(([x, y]) => [cx + (x - cx) * sc + S.n(o.drift ?? 3), cy + (y - cy) * sc + S.n(o.drift ?? 3)]);
+    ink(Q, { closed: o.closed ?? true, color: RAINBOW[(i + (o.off ?? 0)) % RAINBOW.length], w: o.w ?? 1.6, amt: o.amt ?? 3.5, key: o.key + 'rb' + i, alpha: o.al ?? 0.85 });
+  }
+}
+// hex cell grid inside current clip
+function hexGrid(bb, size, o = {}) {
+  const h = size * Math.sqrt(3), R = RNG('hex', o.key ?? 'h', B);
+  ctx.save(); ctx.strokeStyle = o.c || C.periS; ctx.lineWidth = o.w ?? 1.2; ctx.globalAlpha = o.al ?? 1; ctx.beginPath();
+  let row = 0;
+  for (let y = bb.y0 - h; y < bb.y1 + h; y += h * 0.5, row++) {
+    for (let x = bb.x0 - size * 3 + (row % 2) * size * 1.5; x < bb.x1 + size * 3; x += size * 3) {
+      const jx = R.n(0.6), jy = R.n(0.6);
+      for (let k = 0; k < 6; k++) {
+        const a = k / 6 * TAU, b = (k + 1) / 6 * TAU;
+        if (k === 0) ctx.moveTo(x + Math.cos(a) * size + jx, y + Math.sin(a) * size + jy);
+        ctx.lineTo(x + Math.cos(b) * size + jx, y + Math.sin(b) * size + jy);
+      }
+    }
+  }
+  ctx.stroke(); ctx.restore();
+}
+
+// ---------------------------------------------------------------------
+//  iris, camera, text
+// ---------------------------------------------------------------------
+// ragged hatched rim; dir=+1 strokes reach outward, -1 inward
+function irisRim(cx, cy, r, dir, o = {}) {
+  const R = RNG('irisR', o.key ?? 'i', B), n = Math.min(1600, Math.floor(r * TAU / 2.0));
+  ctx.strokeStyle = o.c || '#0b0c17'; ctx.lineWidth = o.w ?? 1.6; ctx.lineCap = 'round'; ctx.beginPath();
+  for (let i = 0; i < n; i++) {
+    const a = R.r(0, TAU), L = R.r(3, 11) + (R.f() < 0.28 ? R.r(10, 34) : 0), sl = R.n(0.4);
+    const r0 = r - dir * R.r(2, 6), r1 = r + dir * L, ax = Math.cos(a), ay = Math.sin(a);
+    ctx.moveTo(cx + ax * r0, cy + ay * r0); ctx.lineTo(cx + ax * r1 - ay * L * sl, cy + ay * r1 + ax * L * sl);
+  }
+  ctx.stroke();
+}
+// iris into a black hole (screen space)
+function irisHole(cx, cy, r, o = {}) {
+  if (r <= 0.5) return;
+  ctx.save(); screen();
+  const col = o.c || '#0b0c17';
+  const P = wobble(ellipsePts(cx, cy, r, r, 0, 140), true, Math.min(4, 0.6 + r * 0.02), 'ih' + (o.key ?? ''), 9);
+  trace(P, true); ctx.fillStyle = col; ctx.fill();
+  irisRim(cx, cy, r, +1, { c: col, key: o.key });
+  if (o.inner) { ctx.save(); trace(P, true); ctx.clip(); o.inner(r); ctx.restore(); }
+  ctx.restore();
+}
+// world point (cx,cy) lands at screen centre
+function camera(cx, cy, zoom = 1, rot = 0, sx = 0, sy = 0) {
+  const c = Math.cos(rot) * zoom, s = Math.sin(rot) * zoom;
+  ctx.setTransform(c, s, -s, c, W / 2 + sx - (c * cx - s * cy), H / 2 + sy - (s * cx + c * cy));
+}
+function screen() { ctx.setTransform(1, 0, 0, 1, 0, 0); }
+function toScreen(x, y) { const p = ctx.getTransform().transformPoint(new DOMPoint(x, y)); return [p.x, p.y]; }
+function fillAll(color) { ctx.save(); screen(); ctx.fillStyle = color; ctx.fillRect(0, 0, W, H); ctx.restore(); }
+
+// monospace text with per-glyph hand jitter
+function monoText(str, x, y, size, color, o = {}) {
+  ctx.save();
+  ctx.font = `${o.weight ?? 700} ${size}px ${MONO}`; ctx.fillStyle = color; ctx.textBaseline = 'alphabetic';
+  const cw = ctx.measureText('M').width, R = RNG('txt', o.key ?? str, B), jit = o.jit ?? 0.9;
+  const n = Math.min(o.count ?? str.length, str.length);
+  ctx.globalAlpha = o.al ?? 1;
+  for (let i = 0; i < n; i++) {
+    const ch = str[i]; if (ch === ' ') continue;
+    ctx.save(); ctx.translate(x + i * cw + R.n(jit), y + R.n(jit)); ctx.rotate(R.n(0.045)); ctx.fillText(ch, 0, 0); ctx.restore();
+  }
+  ctx.restore();
+  return cw;
+}
+function monoW(size) { ctx.save(); ctx.font = `700 ${size}px ${MONO}`; const w = ctx.measureText('M').width; ctx.restore(); return w; }
+
+// single-stroke hand lettering (x-height 0.5, ascender 1.0, baseline 0)
+const GLYPHS = {
+  ' ': { w: 0.26, s: [] },
+  c: { w: 0.5, s: [arcPts(0.26, -0.25, 0.25, -35 * DEG, -322 * DEG, 22)] },
+  o: { w: 0.52, s: [arcPts(0.26, -0.25, 0.25, -95 * DEG, -460 * DEG, 30)] },
+  a: { w: 0.54, s: [[...arcPts(0.25, -0.25, 0.235, -28 * DEG, -335 * DEG, 24)], [[0.49, -0.5], [0.49, -0.05], [0.55, 0.0]]] },
+  d: { w: 0.56, s: [[...arcPts(0.25, -0.25, 0.235, -28 * DEG, -335 * DEG, 24)], [[0.49, -1.0], [0.49, -0.05], [0.56, 0.0]]] },
+  l: { w: 0.24, s: [[[0.08, -1.0], [0.08, -0.1], [0.12, -0.01], [0.2, 0.0]]] },
+  u: { w: 0.54, s: [[[0.03, -0.5], [0.03, -0.22], ...arcPts(0.255, -0.22, 0.225, 180 * DEG, 0, 14), [0.48, -0.5]], [[0.48, -0.5], [0.48, -0.04], [0.54, 0.0]]] },
+  e: { w: 0.52, s: [[[0.03, -0.26], [0.5, -0.26], ...arcPts(0.265, -0.25, 0.245, -4 * DEG, -318 * DEG, 26)]] },
+};
+function handwrite(str, x, y, size, o = {}) {
+  const strokes = []; let pen = 0;
+  for (const ch of str) {
+    const g = GLYPHS[ch] || GLYPHS[' '];
+    for (const s of g.s) strokes.push(s.map(([u, v]) => [x + (pen + u) * size, y + v * size]));
+    pen += g.w + 0.1;
+  }
+  const lens = strokes.map(pathLen), total = lens.reduce((a, b) => a + b, 0);
+  let budget = clamp(o.frac ?? 1) * total;
+  for (let i = 0; i < strokes.length && budget > 0; i++) {
+    const f = Math.min(1, budget / lens[i]); budget -= lens[i];
+    if (o.glow) ink(strokes[i], { color: o.glow, w: (o.w ?? size * 0.06) * 3, amt: o.amt ?? 1.0, key: 'hw' + i + str, frac: f });
+    ink(strokes[i], { color: o.c, w: o.w ?? size * 0.06, amt: o.amt ?? 1.0, key: 'hw' + i + str, frac: f });
+  }
+  return pen * size;
+}
+
+// =====================================================================
+// ---- small props and helpers
+function drawPencil(tx, ty, ang, len, k = 1, key = 'pencil') {
+  ctx.save(); ctx.translate(tx, ty); ctx.rotate(ang); ctx.scale(k, k);
+  paint([[46, -16], [len, -16], [len, 16], [46, 16]], {
+    fill: C.yellow, key: key + 'b', w: 3,
+    tex: [{ k: 'hatch', a: 0.05, gap: 5, c: '#a8741d', al: 0.55, w: 1.1, dash: [20, 90], dens: (x, y) => (y > 5 ? 1 : 0.08) }, { k: 'pencil', c: '#fff1b8', al: 0.5, a: 0.05, len: 30, per: 120, dens: (x, y) => (y < -4 ? 1 : 0.1) }],
+  });
+  ink([[50, -5], [len, -5]], { w: 1.6, key: key + 'f1', alpha: 0.7 });
+  ink([[50, 6], [len, 6]], { w: 1.6, key: key + 'f2', alpha: 0.7 });
+  paint([[1, 0], [46, -15], [46, 15]], { fill: '#efcf9f', key: key + 'c', w: 2.6, tex: [{ k: 'hatch', a: 1.2, gap: 4, al: 0.35, dens: (x, y) => (y > 2 ? 1 : 0.1) }] });
+  paint([[0, 0], [15, -5], [15, 5]], { fill: '#3b3438', key: key + 't', w: 2 });
+  paint([[len, -17], [len + 26, -17], [len + 26, 17], [len, 17]], { fill: '#bcb7ab', key: key + 'fe', w: 2.6, tex: [{ k: 'hatch', a: Math.PI / 2, gap: 5, al: 0.5 }] });
+  paint(rrectPts(len + 24, -16, 34, 32, 10), { fill: '#e58f8c', key: key + 'e', w: 2.6, tex: [{ k: 'pencil', c: C.roseD, al: 0.5, per: 60 }] });
+  ctx.restore();
+}
+// smoothstep of x between a and b (NOT manim's `smooth` rate function — the math style calls that smoothM)
+const smooth = (a, b, x) => { const u = clamp((x - a) / (b - a)); return u * u * (3 - 2 * u); };
+const mod = (a, n) => ((a % n) + n) % n;
+function asterisk(x, y, r0, r1, n, rot, color, w) {
+  ctx.save(); ctx.strokeStyle = color; ctx.lineWidth = w; ctx.lineCap = 'round'; ctx.beginPath();
+  for (let i = 0; i < n; i++) { const a = i / n * TAU + rot; ctx.moveTo(x + Math.cos(a) * r0, y + Math.sin(a) * r0); ctx.lineTo(x + Math.cos(a) * r1, y + Math.sin(a) * r1); }
+  ctx.stroke(); ctx.restore();
+}
+
+// ---------------------------------------------------------------------
+//  time (set by the renderer): TT = absolute time on the motion step (on 2s unless STYLE.ones);
+//  E0 = the current era's start; DEFER = overlay queue (captions drawn after the camera); SPARK_AT = the hero's screen spot
+//  ev(t, d) = 0..1 progress of an event at t over d seconds; popS(t) = back-eased pop-in scale
+// ---------------------------------------------------------------------
+let TT = 0, E0 = 0, DEFER = null, SPARK_AT = null;
+const ev = (t, d = 0.25) => clamp((TT - t) / d);
+const popS = (t) => (TT < t ? 0 : EZ.back(clamp((TT - t) / 0.25)));
+
+// ---------------------------------------------------------------------
+//  springs: closed-form, so any frame can be drawn on its own (deterministic, no state)
+//  springEase(t, k, d)       0 -> 1 over time t >= 0 (stiffness k, damping d): accelerates, overshoots a hair, settles
+//  springMove(t0, a, b, p)   a value moving from a to b, starting at time t0 (p = a SPRING preset)
+//  springTrack(keys, p)      a value with many targets: keys = [[t, value], ...] sorted by t. One spring per change,
+//                            added up, so a target change mid-move stays continuous (cursors, widths, positions)
+// ---------------------------------------------------------------------
+const SPRING = {
+  snappy: { k: 320, d: 30 },    // UI: buttons, toggles, leading edges
+  smooth: { k: 170, d: 26 },    // cards, containers, the camera
+  heavy: { k: 90, d: 19 },      // big type, logos, large objects
+  playful: { k: 260, d: 14 },   // mascots, stickers: visible overshoot
+};
+function springEase(t, k = 170, d = 26) {
+  if (t <= 0) return 0;
+  const w0 = Math.sqrt(k), z = d / (2 * w0);
+  if (z < 1) { const wd = w0 * Math.sqrt(1 - z * z); return 1 - Math.exp(-z * w0 * t) * (Math.cos(wd * t) + (z * w0 / wd) * Math.sin(wd * t)); }
+  return 1 - Math.exp(-w0 * t) * (1 + w0 * t);
+}
+const springMove = (t0, a, b, p = SPRING.smooth) => a + (b - a) * springEase(TT - t0, p.k, p.d);
+function springTrack(keys, p = SPRING.smooth) {
+  let v = keys[0][1];
+  for (let i = 1; i < keys.length; i++) v += (keys[i][1] - keys[i - 1][1]) * springEase(TT - keys[i][0], p.k, p.d);
+  return v;
+}
+
+// ---------------------------------------------------------------------
+//  layout for several formats (9:16, 1:1, 16:9, 4:5 from one piece): place things by fractions of the frame,
+//  size them by UNIT (1 at 1080 on the short side). LX(0.5), LY(0.62), 120 * UNIT. PORTRAIT / WIDE pick layouts.
+// ---------------------------------------------------------------------
+const LX = (f) => f * W, LY = (f) => f * H, UNIT = Math.min(W, H) / 1080, PORTRAIT = H > W * 1.2, WIDE = W > H * 1.2;
+
+// ---------------------------------------------------------------------
+//  the user's own assets (screenshots, logos): files in <piece>/assets/ that tools/build.mjs embeds in the page.
+//  asset('logo.png') -> the Image (or null); drawAsset(name, x, y, w, h, { fit: 'contain'|'cover', r, alpha })
+//  Real product UI only: never redraw a product screen from imagination when a screenshot exists.
+// ---------------------------------------------------------------------
+const asset = (name) => (typeof ASSETS !== 'undefined' && ASSETS[name] && ASSETS[name].complete ? ASSETS[name] : null);
+function drawAsset(name, x, y, w, h, o = {}) {
+  const img = asset(name); if (!img) return false;
+  const iw = img.naturalWidth || img.width, ih = img.naturalHeight || img.height;
+  const s = (o.fit === 'cover' ? Math.max : Math.min)(w / iw, h / ih), dw = iw * s, dh = ih * s;
+  ctx.save(); ctx.globalAlpha *= o.alpha ?? 1;
+  if (o.r || o.fit === 'cover') { ctx.beginPath(); ctx.roundRect(x, y, w, h, o.r || 0); ctx.clip(); }
+  ctx.drawImage(img, x + (w - dw) / 2, y + (h - dh) / 2, dw, dh);
+  ctx.restore(); return true;
+}
+// =====================================================================
+//  styles/voltreal/kit.js — Bitvolts "real" look (measured from local refs, references/voltamps/new/).
+//  Cinematic 2.5D objects on a dark charcoal / warm-brown ground: soft key light, gradients for volume,
+//  drop shadows, depth-of-field blur on far layers, bokeh specks, warm amber glow for energy, cartoon
+//  hands. Karaoke captions top-centre: word by word, current word white semibold, earlier words grey,
+//  keywords inside a blue text-selection box. Motion on 1s.
+//  Needs from the piece head: W, H, VOICE (for captions), VMONO.
+// =====================================================================
+const VR = {
+  bg0: '#1c1c1c', bg1: '#070707', warm0: '#2a170c', warm1: '#0a0706', night0: '#0f1428', night1: '#04040a',
+  ink: '#f4f4f4', grey: '#8a8a8a', dim: '#5c5c5c',
+  amber: '#f5b74a', gold: '#ffd27a', red: '#ff4d4d', green: '#3fd27a', blue: '#3b82f6', navy: '#0f2350',
+  skin0: '#f2c2aa', skin1: '#c58768', skin2: '#9c5f45', nail: '#f6d3cc',
+  metal0: '#4a4f5c', metal1: '#22252d', glass: '#0d1018',
+};
+const VR_SANS = '"Avenir Next", "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif';
+
+// ---- the ground: a lit centre falling into black; tone = 'neutral' | 'warm' | 'night'
+function vrBg(tone = 'neutral', o = {}) {
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+  const [c0, c1] = tone === 'warm' ? [VR.warm0, VR.warm1] : tone === 'night' ? [VR.night0, VR.night1] : [VR.bg0, VR.bg1];
+  const g = ctx.createRadialGradient(W / 2, H * (o.cy ?? 0.55), 40, W / 2, H * (o.cy ?? 0.55), H * 0.85);
+  g.addColorStop(0, c0); g.addColorStop(1, c1);
+  ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+  if (o.light) {   // a warm pool of light
+    const l = ctx.createRadialGradient(o.light[0], o.light[1], 10, o.light[0], o.light[1], o.light[2] ?? 600);
+    l.addColorStop(0, `rgba(255,190,110,${o.lightK ?? 0.18})`); l.addColorStop(1, 'rgba(255,190,110,0)');
+    ctx.fillStyle = l; ctx.fillRect(0, 0, W, H);
+  }
+  ctx.restore();
+}
+// floating specks and soft bokeh discs (depth)
+function vrBokeh(n = 26, a = 1, key = 'bk', warm = true) {
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+  for (let i = 0; i < n; i++) {
+    const R = RNG(key, i), x = mod(R.r(0, W) + TT * R.r(-6, 6), W), y = mod(R.r(0, H) - TT * R.r(3, 12), H);
+    const big = i % 5 === 0, r = big ? R.r(18, 46) : R.r(1.5, 3);
+    const k = (0.5 + 0.5 * Math.sin(TT * R.r(0.4, 1.2) + i)) * a * (big ? 0.12 : 0.55);
+    ctx.fillStyle = warm ? `rgba(255,214,160,${k})` : `rgba(200,215,255,${k})`;
+    ctx.beginPath(); ctx.arc(x, y, r, 0, TAU); ctx.fill();
+  }
+  ctx.restore();
+}
+// grain + vignette (STYLE.post)
+let VR_NOISE = null;
+function vrPost(k = 1) {
+  if (!VR_NOISE) { VR_NOISE = document.createElement('canvas'); VR_NOISE.width = VR_NOISE.height = 256; const g = VR_NOISE.getContext('2d'), im = g.createImageData(256, 256), R = RNG('vrg');
+    for (let i = 0; i < im.data.length; i += 4) { const v = R.f() * 255 | 0; im.data[i] = im.data[i + 1] = im.data[i + 2] = v; im.data[i + 3] = 255; } g.putImageData(im, 0, 0); }
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+  const R = RNG('vrgf', F); const ox = R.r(0, 256) | 0, oy = R.r(0, 256) | 0;
+  ctx.globalAlpha = 0.035 * k; ctx.globalCompositeOperation = 'overlay';
+  for (let x = -ox; x < W; x += 256) for (let y = -oy; y < H; y += 256) ctx.drawImage(VR_NOISE, x, y);
+  ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
+  const v = ctx.createRadialGradient(W / 2, H * 0.5, H * 0.32, W / 2, H * 0.5, H * 0.78);
+  v.addColorStop(0, 'rgba(0,0,0,0)'); v.addColorStop(1, 'rgba(0,0,0,0.6)'); ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
+  ctx.restore();
+}
+
+// ---- volume helpers
+function vrShadow(x, y, w, h, k = 0.55, blur = 40) {   // a soft contact shadow under an object
+  ctx.save(); ctx.filter = `blur(${blur}px)`; ctx.fillStyle = `rgba(0,0,0,${k})`;
+  ctx.beginPath(); ctx.ellipse(x, y, w / 2, h / 2, 0, 0, TAU); ctx.fill(); ctx.restore();
+}
+// a rounded slab seen slightly from above: top face (gradient), front side (thickness), rim highlight
+function vrSlab(x, y, w, h, d, r, top0, top1, side, o = {}) {
+  const a = o.a ?? 1;
+  ctx.save(); ctx.globalAlpha *= a;
+  if (o.shadow !== false) { ctx.save(); ctx.filter = 'blur(28px)'; ctx.fillStyle = 'rgba(0,0,0,0.6)'; ctx.beginPath(); ctx.roundRect(x - w / 2 + 10, y - h / 2 + d + 24, w - 20, h, r); ctx.fill(); ctx.restore(); }
+  ctx.fillStyle = side; ctx.beginPath(); ctx.roundRect(x - w / 2, y - h / 2 + d, w, h, r); ctx.fill();
+  const g = ctx.createLinearGradient(0, y - h / 2, 0, y + h / 2); g.addColorStop(0, top0); g.addColorStop(1, top1);
+  ctx.fillStyle = g; ctx.beginPath(); ctx.roundRect(x - w / 2, y - h / 2, w, h, r); ctx.fill();
+  ctx.strokeStyle = o.rim ?? 'rgba(255,255,255,0.12)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.roundRect(x - w / 2 + 1, y - h / 2 + 1, w - 2, h - 2, r); ctx.stroke();
+  ctx.restore();
+}
+// glowing energy line (amber by default)
+function vrGlow(P, c = VR.amber, w = 4, k = 1, o = {}) {
+  if (P.length < 2 || k <= 0) return;
+  ctx.save(); ctx.globalAlpha *= o.a ?? 1; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+  ctx.beginPath(); ctx.moveTo(P[0][0], P[0][1]); for (let i = 1; i < P.length; i++) ctx.lineTo(P[i][0], P[i][1]); if (o.closed) ctx.closePath();
+  ctx.globalCompositeOperation = 'lighter';
+  ctx.strokeStyle = c; ctx.globalAlpha *= 0.14 * k; ctx.lineWidth = w * 8; ctx.stroke();
+  ctx.globalAlpha /= 0.14; ctx.globalAlpha *= 0.35; ctx.lineWidth = w * 3; ctx.stroke();
+  ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha /= 0.35;
+  ctx.strokeStyle = o.core ?? '#fff1d0'; ctx.lineWidth = w; ctx.stroke();
+  ctx.restore();
+}
+function vrHalo(x, y, r, c = '255,190,90', k = 1) {
+  ctx.save(); ctx.globalCompositeOperation = 'lighter';
+  const g = ctx.createRadialGradient(x, y, 0, x, y, r); g.addColorStop(0, `rgba(${c},${0.45 * k})`); g.addColorStop(1, `rgba(${c},0)`);
+  ctx.fillStyle = g; ctx.fillRect(x - r, y - r, 2 * r, 2 * r); ctx.restore();
+}
+// a cartoon fingertip / thumb pointing along `ang` (radians, 0 = right); tip at (x, y)
+function vrFinger(x, y, ang, s = 1, a = 1) {
+  ctx.save(); ctx.globalAlpha *= a; ctx.translate(x, y); ctx.rotate(ang);
+  const L = 520 * s, Wd = 150 * s;
+  ctx.save(); ctx.filter = 'blur(18px)'; ctx.fillStyle = 'rgba(0,0,0,0.45)'; ctx.beginPath(); ctx.roundRect(-L + 20, -Wd / 2 + 26, L, Wd, Wd / 2); ctx.fill(); ctx.restore();
+  const g = ctx.createLinearGradient(0, -Wd / 2, 0, Wd / 2); g.addColorStop(0, VR.skin0); g.addColorStop(0.55, VR.skin1); g.addColorStop(1, VR.skin2);
+  ctx.fillStyle = g; ctx.beginPath(); ctx.roundRect(-L, -Wd / 2, L, Wd, Wd / 2); ctx.fill();
+  ctx.strokeStyle = 'rgba(90,40,25,0.45)'; ctx.lineWidth = 3; ctx.stroke();
+  // nail
+  const ng = ctx.createLinearGradient(0, -Wd * 0.3, 0, Wd * 0.3); ng.addColorStop(0, '#fff2ee'); ng.addColorStop(1, VR.nail);
+  ctx.fillStyle = ng; ctx.beginPath(); ctx.roundRect(-Wd * 0.95, -Wd * 0.34, Wd * 0.82, Wd * 0.68, [Wd * 0.18, Wd * 0.34, Wd * 0.34, Wd * 0.18]); ctx.fill();
+  ctx.strokeStyle = 'rgba(150,80,60,0.5)'; ctx.lineWidth = 2.5; ctx.stroke();
+  ctx.strokeStyle = 'rgba(255,255,255,0.6)'; ctx.lineWidth = 3; ctx.beginPath(); ctx.moveTo(-Wd * 0.88, -Wd * 0.18); ctx.lineTo(-Wd * 0.3, -Wd * 0.2); ctx.stroke();
+  ctx.restore();
+}
+
+// ---- type
+function vrText(str, x, y, size, c, o = {}) {
+  ctx.save(); ctx.globalAlpha *= o.a ?? 1;
+  ctx.font = `${o.italic ? 'italic ' : ''}${o.weight ?? 600} ${size}px ${o.mono ? VMONO : VR_SANS}`;
+  ctx.fillStyle = c; ctx.textAlign = o.align ?? 'center'; ctx.textBaseline = 'alphabetic';
+  if (o.glow) { ctx.shadowColor = o.glowC ?? c; ctx.shadowBlur = o.glow; }
+  if (o.letter) ctx.letterSpacing = o.letter + 'px';
+  ctx.fillText(str, x, y); ctx.restore();
+}
+
+// ---- karaoke captions from VOICE: phrases of ≤ maxW words / 2 lines; keywords get the blue selection box
+// opts: { y, size, keys: Set of lowercased words, hide: (t) => bool }
+let VR_PHRASES = null;
+function vrBuildPhrases(maxChars = 19, maxWords = 5) {
+  const out = [];
+  for (const L of VOICE.lines) {
+    let cur = [];
+    const flush = () => { if (cur.length) out.push(cur); cur = []; };
+    L.words.forEach((w, i) => {
+      cur.push(w);
+      const len = cur.map((x) => x.w).join(' ').length, end = /[.,!?:;]$/.test(w.w);
+      if ((end && cur.length >= 2) || len > maxChars * 2 - 8 || cur.length >= maxWords) flush();
+    });
+    flush();
+  }
+  // each phrase lives from its first word to the next phrase's first word (or its last word + 0.6s)
+  out.forEach((p, i) => { p.t0 = p[0].t0 - 0.05; p.t1 = i + 1 < out.length ? Math.min(out[i + 1][0].t0 - 0.05, p[p.length - 1].t1 + 0.9) : p[p.length - 1].t1 + 0.9; });
+  return out;
+}
+function vrCaptions(o = {}) {
+  if (!VR_PHRASES) VR_PHRASES = vrBuildPhrases();
+  const p = VR_PHRASES.find((q) => TT >= q.t0 && TT < q.t1);
+  if (!p || (o.hide && o.hide(TT))) return;
+  const size = o.size ?? 64, y0 = o.y ?? 352, lh = size * 1.18, keys = o.keys ?? new Set();
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+  // split into ≤ 2 lines by character count
+  const words = p.map((w) => w.w), total = words.join(' ').length;
+  let split = words.length, acc = 0;
+  if (total > 22) for (let i = 0; i < words.length; i++) { acc += words[i].length + 1; if (acc >= total / 2) { split = i + 1; break; } }
+  const lines = [p.slice(0, split), p.slice(split)].filter((l) => l.length);
+  const font = (b) => `${b ? 700 : 500} ${size}px ${VR_SANS}`;
+  lines.forEach((ln, li) => {
+    ctx.font = font(true);
+    const widths = ln.map((w) => ctx.measureText(w.w + ' ').width), lineW = widths.reduce((s, v) => s + v, 0) - ctx.measureText(' ').width;
+    let x = W / 2 - lineW / 2; const y = y0 + li * lh;
+    ln.forEach((w, wi) => {
+      const shown = TT >= w.t0 - 0.02, cur = shown && (TT < w.t1 + 0.05 || wi === ln.length - 1 && li === lines.length - 1 && TT < w.t1 + 0.3);
+      const key = keys.has(w.w.toLowerCase().replace(/[^a-z0-9'%]/g, ''));
+      if (shown) {
+        const bold = cur || key;
+        ctx.font = font(bold);
+        const ww = ctx.measureText(w.w).width;
+        if (key) {   // the text-selection box
+          const k = clamp((TT - w.t0) / 0.12);
+          ctx.fillStyle = `rgba(15,35,80,${0.9 * k})`; ctx.fillRect(x - 8, y - size * 0.86, ww + 16, size * 1.12);
+          ctx.strokeStyle = VR.blue; ctx.lineWidth = 2.5; ctx.globalAlpha = k; ctx.strokeRect(x - 8, y - size * 0.86, ww + 16, size * 1.12);
+          ctx.fillStyle = VR.blue; ctx.beginPath(); ctx.arc(x - 8, y - size * 0.86, 6, 0, TAU); ctx.fill(); ctx.beginPath(); ctx.arc(x + ww + 8, y + size * 0.26, 6, 0, TAU); ctx.fill();
+          ctx.globalAlpha = 1;
+        }
+        const pop = cur ? 1 + 0.04 * (1 - clamp((TT - w.t0) / 0.15)) : 1;
+        ctx.save(); ctx.translate(x + ww / 2, y); ctx.scale(pop, pop);
+        ctx.fillStyle = bold ? VR.ink : VR.grey; ctx.shadowColor = 'rgba(0,0,0,0.7)'; ctx.shadowBlur = 14; ctx.textAlign = 'center';
+        ctx.fillText(w.w, 0, 0); ctx.restore();
+      }
+      x += widths[wi];
+    });
+  });
+  ctx.restore();
+}
+
+// =====================================================================
+//  STYLE — the renderer's hooks
+// =====================================================================
+const STYLE = {
+  name: 'voltreal',
+  paper: '#121212',
+  backdrop(c) { vrBg('neutral'); },
+  window(P, key, src) { ctx.save(); trace(P, true); ctx.clip(); ctx.drawImage(src, 0, 0); ctx.restore(); },
+  blob(P, c, key) { ctx.save(); trace(P, true); ctx.fillStyle = c; ctx.fill(); ctx.restore(); },
+  hero(x, y, r, o) { vrHalo(x, y, r, '255,190,90', 1); },
+  heroColor: VR.amber,
+  post() { vrPost(1); },
+  ones: true,
+};
+// =====================================================================
+//  SCENES — An ant with two rules builds a highway (voltreal, Bitstory). World 1080x1920, TT on 1s.
+//  A real Langton's ant, run in code: a 2.5D board of bits (amber = on), a cartoon ant, the counter,
+//  the highway; random starts; logic circuits. Karaoke captions from VOICE (kit vrCaptions).
+// =====================================================================
+const fadeIn = (t, d = 0.35) => EZ.o2(ev(t, d));
+const fadeOut = (t, d = 0.35) => 1 - EZ.i2(ev(t, d));
+const win = (t0, t1, d = 0.35) => fadeIn(t0, d) * fadeOut(t1, d);
+const flashK = (t, d = 0.6) => (TT < t ? 0 : TT < t + 0.08 ? (TT - t) / 0.08 : Math.exp(-(TT - t - 0.08) / d * 3));
+const OV = (f) => { if (DEFER) DEFER.push(f); else f(); };
+const KEYS = new Set(['ant', 'two', 'highway', 'bit', 'right', 'left', 'forward', 'slowly', 'tidy', 'breaks', 'thousand', 'nothing', 'look', 'diagonally', 'hundred', 'forever', "langton's", '1986', 'alive', 'nobody', 'again', 'same', 'proven', 'circuit', 'computer', 'turn', 'forty', 'comments']);
+const BX = 540, BY = 960;   // the board's centre on screen
+
+function camAtT() {
+  let i = 0; while (i + 1 < TB.length && TT >= TB[i + 1]) i++;
+  const u = EZ.io(clamp((TT - TB[i]) / Math.max(0.5, (i + 1 < TB.length ? TB[i + 1] : DURATION) - TB[i])));
+  const push = 0.06 * (i % 2 ? 1 - u : u);
+  const sh = TT > HIT ? Math.exp(-(TT - HIT) * 5) * 12 : 0;
+  return { cx: 540 + 14 * Math.sin(TT * 0.27), cy: 960 + 10 * Math.sin(TT * 0.21 + 1), z: (1 + push) * (1 + 0.015 * Math.sin(TT * 0.37)), sx: sh * Math.sin(TT * 91), sy: sh * Math.cos(TT * 77) };
+}
+function setCam(c) { ctx.setTransform(c.z, 0, 0, c.z, W / 2 + c.sx - c.z * c.cx, H / 2 + c.sy - c.z * c.cy); }
+function rr(x, y, w, h, r, fill, stroke, lw = 2) { ctx.beginPath(); ctx.roundRect(x, y, w, h, r); if (fill) { ctx.fillStyle = fill; ctx.fill(); } if (stroke) { ctx.strokeStyle = stroke; ctx.lineWidth = lw; ctx.stroke(); } }
+function card(x, y, w, h, a, f) {
+  if (a <= 0) return;
+  ctx.save(); ctx.globalAlpha *= a;
+  ctx.save(); ctx.filter = 'blur(26px)'; ctx.fillStyle = 'rgba(0,0,0,0.55)'; ctx.beginPath(); ctx.roundRect(x - w / 2 + 8, y - h / 2 + 22, w - 16, h, 34); ctx.fill(); ctx.restore();
+  const g = ctx.createLinearGradient(0, y - h / 2, 0, y + h / 2); g.addColorStop(0, 'rgba(48,48,52,0.96)'); g.addColorStop(1, 'rgba(26,26,30,0.96)');
+  rr(x - w / 2, y - h / 2, w, h, 34, g, 'rgba(255,255,255,0.10)', 2);
+  f(x - w / 2, y - h / 2, w, h);
+  ctx.restore();
+}
+function pill(x, y, str, bg, fg = '#fff', a = 1, size = 34) {
+  if (a <= 0) return;
+  ctx.save(); ctx.globalAlpha *= a; ctx.font = `700 ${size}px ${VR_SANS}`; const w = ctx.measureText(str).width + size * 1.1;
+  rr(x - w / 2, y - size * 0.95, w, size * 1.5, size * 0.75, bg); vrText(str, x, y + size * 0.15, size, fg, { weight: 700 }); ctx.restore();
+}
+
+// =====================================================================
+//  the ant, run for real: every step's place, heading, and whether it switched a bit on
+// =====================================================================
+const DXS = [0, 1, 0, -1], DYS = [-1, 0, 1, 0];
+const key = (x, y) => x * 4096 + y;
+function antRun(start, n) {
+  const on = new Set(start.map(([x, y]) => key(x, y))), X = new Int16Array(n + 1), Y = new Int16Array(n + 1), D0 = new Int8Array(n + 1), D1 = new Int8Array(n + 1), ON = new Uint8Array(n);
+  const mv = new Uint8Array(n); let x = 0, y = 0, d = 0;
+  let bx0 = 0, bx1 = 0, by0 = 0, by1 = 0; const BB = new Int16Array(4 * (n + 1));
+  for (let s = 0; s < n; s++) {
+    X[s] = x; Y[s] = y; D0[s] = d; const k = key(x, y);
+    if (on.has(k)) { on.delete(k); d = (d + 3) % 4; ON[s] = 0; mv[s] = 0; } else { on.add(k); d = (d + 1) % 4; ON[s] = 1; mv[s] = 1; }
+    D1[s] = d; x += DXS[d]; y += DYS[d];
+    bx0 = Math.min(bx0, x); bx1 = Math.max(bx1, x); by0 = Math.min(by0, y); by1 = Math.max(by1, y); BB.set([bx0, bx1, by0, by1], 4 * (s + 1));
+  }
+  X[n] = x; Y[n] = y; D0[n] = d; D1[n] = d;
+  for (const [sx, sy] of start) { bx0 = Math.min(bx0, sx); bx1 = Math.max(bx1, sx); by0 = Math.min(by0, sy); by1 = Math.max(by1, sy); }
+  let last = -1;   // the highway starts right after the last step that breaks the 104-step repeat
+  for (let i = 0; i < n - 104; i++) if (mv[i] !== mv[i + 104]) last = i;
+  const onset = last + 1;
+  return { start, X, Y, D0, D1, ON, BB, n, onset };
+}
+const MAIN = antRun([], 13000);
+function scatter(seed, n = 30, span = 6) { const R = RNG('start', seed), out = [], seen = new Set(); while (out.length < n) { const x = Math.round(R.r(-span, span)), y = Math.round(R.r(-span, span)); if (!seen.has(key(x, y))) { seen.add(key(x, y)); out.push([x, y]); } } return out; }
+const ALT = [1, 2, 3].map((s) => antRun(scatter(s), 16000));
+// the bits that are on after k whole steps (cached)
+const CELLS_CACHE = new Map();
+function cellsAt(run, k) {
+  k = Math.max(0, Math.min(run.n, Math.floor(k)));
+  const ck = run.n + ':' + run.start.length + ':' + k;
+  if (CELLS_CACHE.has(ck)) return CELLS_CACHE.get(ck);
+  const on = new Map(); for (const [x, y] of run.start) on.set(key(x, y), -1);
+  for (let s = 0; s < k; s++) { const kk = key(run.X[s], run.Y[s]); if (run.ON[s]) on.set(kk, s); else on.delete(kk); }
+  if (CELLS_CACHE.size > 6) CELLS_CACHE.clear();
+  CELLS_CACHE.set(ck, on); return on;
+}
+// the ant's pose at a fractional step: flip (0–.3), turn (.3–.65), walk (.65–1)
+function antPose(run, n) {
+  const k = Math.max(0, Math.min(run.n - 1, Math.floor(n))), f = n - k;
+  const a0 = run.D0[k] * Math.PI / 2, a1 = a0 + (run.D1[k] - run.D0[k] === 1 || run.D1[k] - run.D0[k] === -3 ? 1 : -1) * Math.PI / 2;
+  const tu = EZ.io(clamp((f - 0.3) / 0.35)), wk = EZ.io(clamp((f - 0.65) / 0.35));
+  return { x: lerp(run.X[k], run.X[k + 1], wk), y: lerp(run.Y[k], run.Y[k + 1], wk), ang: lerp(a0, a1, tu), flip: clamp(f / 0.3), k, walking: wk > 0 && wk < 1 };
+}
+
+// =====================================================================
+//  the clock: how many steps at time TT (slow for the rules, a flood in the chaos, a stop at 9,977)
+// =====================================================================
+function stepsAt(t) {
+  const K = [
+    [0, 0], [VW('right', 'switches') - 0.2, 0], [VW('right', 'switches') + 1.6, 1],
+    [S('left') + 0.1, 1], [S('left') + 1.0, 4], [VW('left', 'switches') - 0.2, 4], [VW('left', 'switches') + 1.6, 5],
+    [VW('forward', 'moves') - 0.3, 5], [VW('forward', 'moves') + 1.0, 6],
+    [S('slow') + 0.5, 6], [VL('slow').t1, 12],
+    [S('tidy') + 0.3, 12], [VL('tidy').t1, 420],
+    [VW('breaks', 'thousand') - 0.2, 1000], [VW('breaks', 'five') + 0.4, 5000], [VL('breaks').t1, 7600],
+    [VL('bet').t1, 9100], [VL('step').t1 - 0.2, 9977], [HIT, 9977],
+    [VL('look').t1, 10900], [S('langton') + 0.6, 12600], [DURATION, 12600],
+  ];
+  for (let i = 1; i < K.length; i++) if (t < K[i][0]) { const [t0, n0] = K[i - 1], [t1, n1] = K[i]; const u = clamp((t - t0) / Math.max(0.01, t1 - t0));
+    const e = n1 - n0 > 200 ? (i === K.length - 2 || t0 >= HIT ? u : EZ.io(u)) : u; return n0 + (n1 - n0) * e; }
+  return K[K.length - 1][1];
+}
+
+// =====================================================================
+//  drawing: the board slab, the bits, the ant
+// =====================================================================
+function boardSlab(x0, y0, w, h, a) {
+  if (a <= 0) return;
+  vrSlab(x0 + w / 2, y0 + h / 2, w, h, 22, 36, '#26262a', '#18181b', '#0c0c0e', { a });
+}
+// draw a run's bits in a view {cx, cy, cs} clipped to a rect; hot = steps after which bits glow gold
+function drawBits(run, n, view, clip, a, o = {}) {
+  const { cx, cy, cs } = view;
+  const sx = (gx) => clip.x + clip.w / 2 + (gx - cx) * cs, sy = (gy) => clip.y + clip.h / 2 + (gy - cy) * cs;
+  if (a <= 0) return { sx, sy };
+  const cells = cellsAt(run, n + 0.85);   // a step's own flip shows from 15 % into it
+  ctx.save(); ctx.globalAlpha *= a; ctx.beginPath(); ctx.roundRect(clip.x, clip.y, clip.w, clip.h, 28); ctx.clip();
+  // the empty squares (only when they are big enough to read)
+  if (cs >= 16) {
+    const gx0 = Math.floor(cx - clip.w / 2 / cs) - 1, gx1 = Math.ceil(cx + clip.w / 2 / cs) + 1, gy0 = Math.floor(cy - clip.h / 2 / cs) - 1, gy1 = Math.ceil(cy + clip.h / 2 / cs) + 1;
+    const pad = Math.max(1.5, cs * 0.07), al = clamp((cs - 16) / 30);
+    for (let gx = gx0; gx <= gx1; gx++) for (let gy = gy0; gy <= gy1; gy++) {
+      const x = sx(gx) - cs / 2 + pad, y = sy(gy) - cs / 2 + pad, s = cs - 2 * pad;
+      ctx.globalAlpha = a * (0.55 + 0.45 * al); ctx.fillStyle = '#121214'; ctx.beginPath(); ctx.roundRect(x, y, s, s, cs * 0.12); ctx.fill();
+      if (al > 0) { ctx.globalAlpha = a * al * 0.5; ctx.strokeStyle = 'rgba(255,255,255,0.07)'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(x, y + s); ctx.lineTo(x + s, y + s); ctx.stroke(); }
+    }
+  } else {
+    ctx.globalAlpha = a * 0.25; ctx.strokeStyle = 'rgba(255,255,255,0.05)'; ctx.lineWidth = 1;
+    for (let gx = Math.floor(cx - clip.w / 2 / cs); gx < cx + clip.w / 2 / cs; gx += cs < 8 ? 4 : 2) { const x = sx(gx) - cs / 2; ctx.beginPath(); ctx.moveTo(x, clip.y); ctx.lineTo(x, clip.y + clip.h); ctx.stroke(); }
+  }
+  // the bits that are on: a soft glow pass, then the tiles
+  const hot = o.hot ?? Infinity, pad = Math.max(0.6, cs * 0.07);
+  for (const pass of [0, 1]) {
+    for (const [k, s] of cells) {
+      const gx = Math.round(k / 4096), gy = k - gx * 4096, x = sx(gx), y = sy(gy);
+      if (x < clip.x - cs || x > clip.x + clip.w + cs || y < clip.y - cs || y > clip.y + clip.h + cs) continue;
+      const isHot = s >= hot, isStart = s === -1, isWin = o.win && s >= o.win[0] && s < o.win[1];
+      const fresh = o.flash !== false && s >= 0 && n - s < 1.5 && cs > 20 ? 1 - (n - s) / 1.5 : 0;
+      const c = isStart ? VR.blue : isHot ? '#fff1cf' : VR.amber;
+      if (pass === 0) { ctx.globalAlpha = a * (0.22 + 0.5 * fresh + (isHot ? 0.25 : 0)); ctx.fillStyle = isHot ? VR.gold : c; const g = cs * (0.5 + 0.6 * fresh); ctx.fillRect(x - g, y - g, 2 * g, 2 * g); }
+      else {
+        const s2 = cs - 2 * pad; ctx.globalAlpha = a;
+        if (cs >= 20) { const gr = ctx.createLinearGradient(0, y - s2 / 2, 0, y + s2 / 2); gr.addColorStop(0, isStart ? '#7fb0ff' : '#ffe2a0'); gr.addColorStop(1, c); ctx.fillStyle = gr; } else ctx.fillStyle = c;
+        ctx.beginPath(); ctx.roundRect(x - s2 / 2, y - s2 / 2, s2, s2, cs * 0.14); ctx.fill();
+        if (isWin) { ctx.strokeStyle = VR.blue; ctx.lineWidth = Math.max(1.5, cs * 0.12); ctx.stroke(); }
+      }
+    }
+  }
+  ctx.restore();
+  return { sx, sy };
+}
+// a cartoon ant seen from above, heading ang (0 = up), length s
+function ant(x, y, ang, s, a = 1, walk = 0) {
+  if (a <= 0) return;
+  vrShadow(x + s * 0.06, y + s * 0.1, s * 0.75, s * 0.95, 0.5 * a, Math.max(4, s * 0.12));
+  ctx.save(); ctx.globalAlpha *= a; ctx.translate(x, y); ctx.rotate(ang);
+  const ph = walk * TAU, lw = Math.max(1.5, s * 0.035);
+  ctx.strokeStyle = '#1a1210'; ctx.lineCap = 'round'; ctx.lineWidth = lw;
+  for (const side of [-1, 1]) for (let i = 0; i < 3; i++) {   // six legs, alternating as it walks
+    const sw = Math.sin(ph + i * 2.1 + (side > 0 ? Math.PI : 0)) * 0.08 * s, y0 = -0.05 * s + i * 0.06 * s;
+    ctx.beginPath(); ctx.moveTo(side * 0.08 * s, y0); ctx.lineTo(side * 0.3 * s, y0 - 0.1 * s + (i - 1) * 0.1 * s + sw); ctx.lineTo(side * 0.42 * s, y0 + (i - 1) * 0.22 * s + sw); ctx.stroke();
+  }
+  // antennae
+  for (const side of [-1, 1]) { ctx.beginPath(); ctx.moveTo(side * 0.05 * s, -0.36 * s); ctx.quadraticCurveTo(side * 0.12 * s, -0.56 * s, side * 0.24 * s, -0.6 * s + Math.sin(TT * 5 + side) * 0.02 * s); ctx.stroke(); }
+  const blob = (cy, rx, ry) => { const g = ctx.createRadialGradient(-rx * 0.35, cy - ry * 0.4, rx * 0.1, 0, cy, Math.max(rx, ry) * 1.1); g.addColorStop(0, '#6b4a3c'); g.addColorStop(0.5, '#2c1d18'); g.addColorStop(1, '#0d0807'); ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(0, cy, rx, ry, 0, 0, TAU); ctx.fill(); };
+  blob(0.3 * s, 0.2 * s, 0.27 * s); blob(-0.03 * s, 0.11 * s, 0.13 * s); blob(-0.27 * s, 0.15 * s, 0.13 * s);
+  // gloss and the big cartoon eyes
+  ctx.fillStyle = 'rgba(255,240,220,0.35)'; ctx.beginPath(); ctx.ellipse(-0.06 * s, 0.22 * s, 0.05 * s, 0.09 * s, -0.3, 0, TAU); ctx.fill();
+  for (const side of [-1, 1]) { ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(side * 0.07 * s, -0.32 * s, 0.055 * s, 0, TAU); ctx.fill(); ctx.fillStyle = '#111'; ctx.beginPath(); ctx.arc(side * 0.07 * s, -0.34 * s, 0.028 * s, 0, TAU); ctx.fill(); }
+  ctx.restore();
+}
+
+// =====================================================================
+//  the main board: view, bits, ant, counter
+// =====================================================================
+const CLIP = { x: 90, y: 520, w: 900, h: 860 };
+function fitView(run, n, capCs, box = 860) {   // a view that holds everything drawn up to a little ahead of n
+  const k = Math.min(run.n, Math.floor(n) + 300), b = run.BB.subarray(4 * k, 4 * k + 4);
+  const w = b[1] - b[0] + 6, h = b[3] - b[2] + 6, cs = Math.min(capCs, box / Math.max(w, h));
+  return { cx: (b[0] + b[1]) / 2, cy: (b[2] + b[3]) / 2, cs };
+}
+function capAt(t) { return springTrack([[0, 150], [S('tidy') + 0.2, 150], [VL('tidy').t1, 40], [S('breaks'), 26], [VL('breaks').t1, 12], [DURATION, 12]], SPRING.smooth); }
+function beatBoard() {
+  const a = win(0.1, S('langton') + 0.3, 0.4) * (1 - 0.65 * win(S('langton') + 0.2, S('why'), 0.3)); if (a <= 0) return;
+  const n = stepsAt(TT), ba = fadeIn(S('board') + 0.1, 0.5);
+  // the view: centred on the ant while the rules are shown, then on everything drawn so far
+  const f = fitView(MAIN, n, capAt(TT)), p = antPose(MAIN, n), early = 1 - EZ.io(clamp((TT - S('tidy')) / 1.5));
+  const view = { cx: lerp(f.cx, p.x, early), cy: lerp(f.cy, p.y, early), cs: lerp(f.cs, capAt(TT), early) };
+  ctx.save(); const dz = 1 + 0.08 * (1 - EZ.o3(ba)); ctx.translate(BX, BY); ctx.scale(dz, dz); ctx.translate(-BX, -BY);
+  boardSlab(CLIP.x, CLIP.y, CLIP.w, CLIP.h, a * ba);
+  const { sx, sy } = drawBits(MAIN, n, view, CLIP, a * ba, { hot: TT >= HIT ? MAIN.onset : Infinity, win: TT > S('repeat') && TT < S('langton') ? [Math.floor(n) - 104, Math.floor(n)] : null });
+  ctx.restore();
+  // the ant: as big as a square up close, never smaller than a visible bug; a halo when the board is far
+  const hero = 1 - EZ.io(clamp((TT - S('board') - 0.2) / 1.0)), as = lerp(Math.max(56, view.cs * (view.cs > 60 ? 1.35 : 0.95)), 300, hero), ax = lerp(sx(p.x), 540, hero), ay = lerp(sy(p.y), 1000, hero);
+  if (view.cs < 30) vrHalo(ax, ay, 60, '255,210,140', a * 0.8);
+  ant(ax, ay, p.ang + hero * 0.15 * Math.sin(TT * 1.3), as, a * fadeIn(0.3, 0.5), TT * (n < 20 ? 1.6 : 6) * (hero > 0.5 ? 0.3 : 1));
+  // the flip flash on the square under the ant (rules)
+  if (n < 13 && p.flip < 1 && p.flip > 0) vrHalo(sx(MAIN.X[p.k]), sy(MAIN.Y[p.k]), view.cs * 0.8, MAIN.ON[p.k] ? '255,200,90' : '160,170,190', a * (1 - p.flip));
+  // turn arrows for the rules
+  const ra = win(VW('right', 'turns') - 0.2, S('left'), 0.2), la = win(VW('left', 'turns') - 0.2, S('forward'), 0.2), fa = win(VW('forward', 'moves') - 0.2, S('slow'), 0.2);
+  OV(() => {
+    if (ra > 0) { vrGlow(vaArc(ax, ay, as * 0.85, -2.2, -0.6, 18), VR.amber, 5, ra); vrText('↻ right', ax + as * 0.9, ay - as * 0.9, 40, VR.amber, { weight: 700, a: ra, glow: 14 }); }
+    if (la > 0) { vrGlow(vaArc(ax, ay, as * 0.85, -2.5, -0.9, 18).reverse(), VR.blue, 5, la, {}); vrText('↺ left', ax - as * 0.9, ay - as * 0.9, 40, '#8fb8ff', { weight: 700, a: la, glow: 14 }); }
+    if (fa > 0) vrText('↑ forward', ax, ay - as * 1.05, 40, VR.ink, { weight: 700, a: fa, glow: 14 });
+  });
+  // the two rules as cards under the board
+  const rk = win(S('right'), S('tidy') + 0.4, 0.3) * a;
+  if (rk > 0) OV(() => {
+    const on = TT < S('left') || (TT >= S('slow') && MAIN.ON[p.k]), off = (TT >= S('left') && TT < S('forward')) || (TT >= S('slow') && !MAIN.ON[p.k]);
+    pill(300, 1460, 'off → on · ↻ right', on ? 'rgba(245,183,74,0.95)' : 'rgba(60,60,64,0.9)', on ? '#1a1206' : '#cfcfcf', rk, 32);
+    pill(780, 1460, 'on → off · ↺ left', off ? 'rgba(59,130,246,0.95)' : 'rgba(60,60,64,0.9)', '#fff', rk * fadeIn(S('left'), 0.3), 32);
+  });
+  // the counter
+  const ca = win(S('tidy') + 0.2, S('langton') + 0.2, 0.3) * a;
+  if (ca > 0) OV(() => { const s = Math.floor(n), pk = 1 + 0.25 * flashK(VL('step').t1 - 0.2, 0.5) + 0.15 * flashK(HIT, 0.5);
+    vrText('STEP', 540, 1410, 28, VR.grey, { weight: 700, a: ca, letter: 4 });
+    vrText(s.toLocaleString('en-US'), 540, 1490, 76 * pk, TT >= VL('step').t1 - 0.2 ? VR.gold : VR.ink, { weight: 800, a: ca, glow: TT >= VL('step').t1 - 0.2 ? 24 : 8, glowC: TT >= VL('step').t1 - 0.2 ? VR.gold : 'rgba(0,0,0,0.8)' }); });
+  // the intro: no eyes, no brain, no memory; 2 rules
+  const ia = win(VW('ant', 'see') - 0.2, S('board') + 0.2, 0.3);
+  if (ia > 0) OV(() => { [['no eyes', 270, 'see'], ['no brain', 540, 'think'], ['no memory', 810, 'remember']].forEach(([w, x, k]) => pill(x, 1460, w, 'rgba(60,60,64,0.9)', '#ddd', ia * popS(VW('ant', k) - 0.1), 30)); });
+  const ta = win(VW('ant', 'two') - 0.1, S('board'), 0.3);
+  if (ta > 0) OV(() => vrText('2 rules', 540, 640, 96, VR.amber, { weight: 800, a: ta * popS(VW('ant', 'two') - 0.1), glow: 26 }));
+  // the bet: "ends in nothing?" and the highway's arrow → ∞
+  if (TT >= HIT && TT < S('langton')) {
+    const ha = fadeIn(HIT + 0.6, 0.4) * fadeOut(S('langton'), 0.3);
+    const d = MAIN.X[MAIN.n] - MAIN.X[MAIN.onset], e = MAIN.Y[MAIN.n] - MAIN.Y[MAIN.onset], L = Math.hypot(d, e), ux = d / L, uy = e / L;
+    OV(() => { const x0 = ax + ux * 60, y0 = ay + uy * 60; vrGlow([[x0, y0], [x0 + ux * 150, y0 + uy * 150]], VR.gold, 5, ha * (0.6 + 0.4 * Math.sin(TT * 6)));
+      if (TT > VW('repeat', 'forever') - 0.2) vrText('∞', x0 + ux * 200, y0 + uy * 200 + 30, 90, VR.gold, { weight: 700, a: fadeIn(VW('repeat', 'forever') - 0.2, 0.3), glow: 24 }); });
+  }
+  const pa = win(VW('repeat', 'hundred') - 0.2, S('langton'), 0.3);
+  if (pa > 0) OV(() => { pill(540, 640, '104 steps, repeating', 'rgba(59,130,246,0.95)', '#fff', pa, 36);
+    ['again', 'again'].forEach((w, i) => { const t = VW('repeat', 'again', i + 1) - 0.1; vrText(`×${i + 2}`, 540 + (i ? 120 : -120), 740, 56, VR.gold, { weight: 800, a: pa * popS(t), glow: 16 }); }); });
+}
+function vaArc(cx, cy, r, a0, a1, n) { const P = []; for (let i = 0; i <= n; i++) { const a = lerp(a0, a1, i / n); P.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r]); } return P; }
+
+// =====================================================================
+//  Langton, 1986 · nobody knows why · random starts · the same highway
+// =====================================================================
+function beatLangton() {
+  const a = win(S('langton') + 0.1, S('why') + 0.1, 0.3); if (a <= 0) return;
+  OV(() => card(540, 960, 760, 420, a, (x, y, w, h) => {
+    vrText("Langton's ant", 540, y + 120, 72, VR.ink, { weight: 800 });
+    vrText('Chris Langton · 1986', 540, y + 200, 40, VR.amber, { weight: 700, a: fadeIn(VW('langton', 'chris') - 0.1, 0.3) });
+    vrText('the simplest rule', 540, y + 290, 36, VR.grey, { weight: 600, a: fadeIn(VW('langton', 'simplest') - 0.1, 0.3) });
+    vrText('that behaves like something alive', 540, y + 340, 36, VR.grey, { weight: 600, a: fadeIn(VW('langton', 'alive') - 0.4, 0.3) });
+  }));
+}
+function beatWhy() {
+  const a = win(S('why') + 0.1, VW('circuit', 'logic') - 0.2, 0.35); if (a <= 0) return;
+  // the main board resets to a random start (blue = squares you switched on), then runs into a highway
+  const A = ALT[0], tA = VW('any', 'switch') - 0.1, tR = VW('any', 'happens') - 0.3, sameT = S('same');
+  const solo = fadeOut(sameT + 0.2, 0.4), q = win(S('why') + 0.2, S('any') + 0.2, 0.3);
+  if (solo > 0) {
+    const n = TT < tR ? 0 : lerp(0, A.onset + 1600, EZ.i2(clamp((TT - tR) / (sameT + 0.3 - tR))));
+    const v = fitView(A, n, 70), shown = fadeIn(tA, 0.4);
+    boardSlab(CLIP.x, CLIP.y, CLIP.w, CLIP.h, a * solo);
+    const { sx, sy } = drawBits(A, TT < tA ? 0 : n, v, CLIP, a * solo * shown, { hot: A.onset, flash: false });
+    const p = antPose(A, n); ant(sx(p.x), sy(p.y), p.ang, Math.max(48, v.cs), a * solo, TT * 6);
+    if (q > 0) OV(() => vrText('?', 540, 1050, 260, VR.ink, { weight: 800, a: q * a, glow: 40, glowC: 'rgba(255,200,120,0.7)' }));
+  }
+  // the same highway, three times: longer, shorter, every time
+  const ta = fadeIn(sameT + 0.1, 0.4) * a;
+  if (ta > 0) ALT.forEach((R, i) => {
+    const x = 255 + i * 280, cl = { x: x - 130, y: 760, w: 260, h: 420 }, t0 = sameT + 0.2 + i * 0.25;
+    const n = lerp(0, R.onset + 1800, EZ.i2(clamp((TT - t0) / (VL('same').t1 - 0.6 - t0))));
+    const k = popS(t0 - 0.1) * ta;
+    boardSlab(cl.x, cl.y, cl.w, cl.h, k);
+    const v = fitView(R, n, 24, cl.w - 30);
+    const { sx, sy } = drawBits(R, n, v, cl, k, { hot: R.onset, flash: false });
+    const p = antPose(R, n); vrHalo(sx(p.x), sy(p.y), 30, '255,210,140', k); ant(sx(p.x), sy(p.y), p.ang, 34, k, TT * 6);
+    OV(() => { const done = n >= R.onset; vrText(done ? `highway at ${R.onset.toLocaleString('en-US')}` : 'chaos…', x, 1240, 22, done ? VR.gold : VR.grey, { weight: 700, a: k }); });
+  });
+  if (ta > 0) OV(() => { pill(540, 1350, 'the same highway. every time.', 'rgba(245,183,74,0.95)', '#1a1206', ta * fadeIn(VW('same', 'every') - 0.1, 0.3), 34);
+    vrText('never proven', 540, 1470, 44, VR.red, { weight: 800, a: ta * fadeIn(VW('same', 'proven') - 0.2, 0.3), glow: 16 }); });
+}
+
+// =====================================================================
+//  a logic circuit · a whole computer · two rules, one bit, forty years
+// =====================================================================
+function gate(x, y, kind, a, lit) {
+  if (a <= 0) return;
+  ctx.save(); ctx.translate(x, y); ctx.scale(1.45, 1.45); ctx.translate(-x, -y); gateBody(x, y, kind, a, lit); ctx.restore();
+}
+function gateBody(x, y, kind, a, lit) {
+  vrSlab(x, y, 220, 150, 16, 22, '#2a2a2e', '#1b1b1e', '#0c0c0e', { a });
+  const c = lit > 0.5 ? VR.amber : '#9a9aa0', P = [];
+  if (kind === 'AND') { P.push([x - 45, y - 40], [x, y - 40]); for (let i = 0; i <= 12; i++) { const an = -Math.PI / 2 + Math.PI * i / 12; P.push([x + 40 * Math.cos(an), y + 40 * Math.sin(an)]); } P.push([x - 45, y + 40], [x - 45, y - 40]); }
+  if (kind === 'OR') { for (let i = 0; i <= 12; i++) { const u = i / 12; P.push([x - 45 + 95 * u, y - 40 + 40 * u * u]); } for (let i = 0; i <= 12; i++) { const u = i / 12; P.push([x + 50 - 95 * u, y + 40 * u * u]); } for (let i = 0; i <= 12; i++) { const u = i / 12; P.push([x - 45 + 18 * Math.sin(Math.PI * u), y + 40 - 80 * u]); } }
+  if (kind === 'NOT') { P.push([x - 40, y - 38], [x + 30, y], [x - 40, y + 38], [x - 40, y - 38]); }
+  vrGlow(P, c, 5, lit > 0.5 ? 1.8 : 0.3, { a });
+  if (lit > 0.5) vrHalo(x, y, 90, '255,190,90', a * 0.6);
+  if (kind === 'NOT') vrGlow(vaArc(x + 40, y, 9, 0, TAU, 16), c, 4, 1, { a });
+  vrText(kind, x, y + 108, 28, VR.grey, { weight: 700, a });
+}
+function beatCircuit() {
+  const a = win(S('circuit') + 0.1, S('end') + 0.2, 0.35); if (a <= 0) return;
+  const ga = fadeOut(S('computer') + 0.3, 0.4) * a;
+  if (ga > 0) {
+    // the ant's highway-like trails run into the gates and light them
+    const G = [['AND', 290, 800], ['OR', 790, 800], ['NOT', 540, 1170]];
+    G.forEach(([k, x, y], i) => { const t = VW('circuit', 'logic') - 0.3 + i * 0.25, lit = clamp((TT - t - 0.5) / 0.2);
+      const tr = []; for (let j = 0; j <= 24; j++) { const u = j / 24; tr.push([x - 250 + 110 * u + (j % 2) * 8, y + 90 - 90 * u + ((j >> 1) % 2) * 8]); }
+      vrGlow(vaPartTrail(tr, clamp((TT - t) / 0.5)), VR.gold, 5, 1.4, { a: ga * popS(t) }); gate(x, y, k, ga * popS(t), lit); });
+  }
+  const ca = fadeIn(S('computer') + 0.1, 0.4) * a;
+  if (ca > 0) {
+    // a chip: a slab with pins, its die is a tiny ant board with a highway
+    const k = popS(S('computer') + 0.1) * ca;
+    vrSlab(540, 900, 420 * k, 420 * k, 26, 40, '#2c2c30', '#1a1a1d', '#0b0b0d', { a: ca });
+    for (let i = 0; i < 8; i++) for (const s of [-1, 1]) { const o = -175 + i * 50; rr(540 + o * k - 9, 900 + s * 228 * k - 18, 18, 36, 4, '#b9b9be'); rr(540 + s * 228 * k - 18, 900 + o * k - 9, 36, 18, 4, '#b9b9be'); }
+    const cl = { x: 540 - 150 * k, y: 900 - 150 * k, w: 300 * k, h: 300 * k }, v = fitView(MAIN, 12600, 30, 280 * k);
+    drawBits(MAIN, 12600, v, cl, ca, { hot: MAIN.onset, flash: false });
+    OV(() => {
+      [['2 rules', 'two', 290], ['1 bit', 'one', 540], ['40 years', 'forty', 790]].forEach(([s, w, x]) => pill(x, 1300, s, w === 'forty' ? 'rgba(255,77,77,0.95)' : 'rgba(245,183,74,0.95)', w === 'forty' ? '#fff' : '#1a1206', ca * popS(VW('computer', w) - 0.1), 36));
+      vrText('no proof', 540, 1420, 48, VR.red, { weight: 800, a: ca * fadeIn(VW('computer', 'proof') - 0.1, 0.3), glow: 16 });
+    });
+  }
+}
+function vaPartTrail(P, f) { const n = Math.max(2, Math.round(P.length * clamp(f))); return P.slice(0, n); }
+
+// =====================================================================
+//  title and end
+// =====================================================================
+function beatTitle() {
+  const a = fadeOut(VL('title').t1 + 0.1, 0.3); if (a <= 0) return;
+  OV(() => {
+    vrText('An ant with two rules', 540, 330, 66, VR.ink, { weight: 800, a, glow: 20, glowC: 'rgba(0,0,0,0.8)' });
+    vrText('builds a highway', 540, 415, 70, VR.amber, { weight: 800, a: a * fadeIn(VW('title', 'builds') - 0.1, 0.2), glow: 26 });
+    vrText('and nobody can prove why', 540, 500, 52, VR.ink, { weight: 600, a: a * fadeIn(VW('title', 'nobody') - 0.1, 0.2), glow: 20, glowC: 'rgba(0,0,0,0.8)' });
+  });
+}
+function beatEnd() {
+  const a = fadeIn(S('end') + 0.1, 0.5); if (a <= 0) return;
+  // the ant again, on its highway, small and lit
+  const EC = { x: 190, y: 560, w: 700, h: 640 }, v = fitView(MAIN, 12600, 12, 620);
+  boardSlab(EC.x, EC.y, EC.w, EC.h, a);
+  const { sx, sy } = drawBits(MAIN, 12600, v, EC, a, { hot: MAIN.onset, flash: false });
+  const p = antPose(MAIN, 12600 - 0.5 + 0.5 * Math.sin(TT)); vrHalo(sx(p.x), sy(p.y), 60, '255,210,140', a); ant(sx(p.x), sy(p.y), p.ang, 52, a, TT * 2);
+  OV(() => {
+    pill(320, 1310, 'coincidence?', 'rgba(60,60,64,0.92)', '#eee', a * popS(VW('end', 'coincidence') - 0.1), 34);
+    pill(760, 1310, 'something hidden?', 'rgba(59,130,246,0.95)', '#fff', a * popS(VW('end', 'hidden') - 0.1), 34);
+    const na = fadeIn(VL('end').t1 + 0.2, 0.4);
+    if (na > 0) {
+      ctx.save(); ctx.globalAlpha = na; ctx.font = `700 34px ${VR_SANS}`; const w1 = ctx.measureText('@bitstory').width;
+      rr(540 - (w1 + 200) / 2, 1400, w1 + 200, 76, 38, 'rgba(255,255,255,0.12)', 'rgba(255,255,255,0.2)', 2);
+      vrText('@bitstory', 540 - 50, 1450, 34, '#fff', { weight: 700 }); rr(540 + w1 / 2 - 40, 1414, 130, 48, 24, VR.blue); vrText('Follow', 540 + w1 / 2 + 25, 1448, 26, '#fff', { weight: 700 });
+      ctx.restore();
+    }
+  });
+}
+
+// =====================================================================
+//  the stage
+// =====================================================================
+function sceneStage() {
+  const c = camAtT();
+  const glow = TT >= HIT && TT < S('langton') ? Math.max(0.25, flashK(HIT, 1.4)) : 0;
+  vrBg('warm', { light: [540, 960, 900], lightK: 0.16 + 0.2 * glow });
+  vrBokeh(28, 1, 'bk', true);
+  setCam(c);
+  beatBoard(); beatLangton(); beatWhy(); beatCircuit(); beatEnd(); beatTitle();
+  OV(() => vrCaptions({ keys: KEYS, hide: (t) => t < VL('title').t1 + 0.3 }));
+}
+// no bridges: one continuous stage; the later small stages are cross-faded inside the scene
+const ERA_BG = ['#04031a'];
+const BRIDGES = [];
+
+// =====================================================================
+//  kit/morph.js — the renderer for pieces built from ERAS (scenes) joined by SHAPE MORPHS.
+//
+//  At each bridge time tc:
+//    shrink [tc-d, tc-m]      the old era is seen through a window shaped like the bridge object (STYLE.window),
+//                             shrinking onto the object while the backdrop fades to blank paper
+//    morph  [tc-m, tc+m]      on blank paper, the object's outline blends into its counterpart's
+//                             (both resampled by angle around their centroids; colour lerped). Hero-to-hero
+//                             bridges draw the hero itself with blended position, size and ray count.
+//    grow   [tc+m, tc+d]      the new era opens out of a window shaped like the counterpart
+//    d = the bridge's half-length (default 0.6s, so a bridge costs 1.2s), m = the morph's half (default 0.2s, or d/3 when d is set).
+//    Short pieces: { tc, d: 0.4 } (0.8s) or fewer bridges — see craft.md -> Transitions.
+//  Era boundaries WITHOUT a bridge are hard cuts (keep at most one: the slam).
+//
+//  The piece defines (in its head / src):
+//    ERA_LIST = [[t0, t1, () => drawScene()], ...]      scenes draw in world coords, call yearTag()/capStrip()
+//    ERA_BG   = ['#hex', ...]                          each era's dominant colour (for the fade to paper)
+//    BRIDGES  = [{ tc, A: () => shape, B: () => shape, d?, m? }]   shape = { P: points, c: '#hex' } or SP(x, y, r, rays)
+//    function pieceCam(era, t) { return null | CAM }   optional; use push() / bump() below
+//  Shapes are in each era's world coords; the bridge object must be in frame at tc (pull push-ins back first).
+//  The look comes from the style kit's STYLE hooks (paper, backdrop, window, blob, hero, post, ones):
+//  this file draws nothing itself, so the same piece structure works in any style.
+// =====================================================================
+// ---- cameras: CAM = { z, tx, ty }; camOf({ z, p, to }) puts world point p on screen point to
+const CAM0 = { z: 1, tx: 0, ty: 0 };
+const camOf = (c) => ({ z: c.z, tx: c.to[0] - c.z * c.p[0], ty: c.to[1] - c.z * c.p[1] });
+const camMix = (a, b, u) => ({ z: lerp(a.z, b.z, u), tx: lerp(a.tx, b.tx, u), ty: lerp(a.ty, b.ty, u) });
+// an eased push-in over [a, b] to cam, optionally pulled back over [oa, ob]
+function push(t, a, b, cam, oa, ob) { let u = EZ.io(seg(t, a, b)); if (oa != null) u *= 1 - EZ.io(seg(t, oa, ob)); return u > 0 ? camMix(CAM0, camOf(cam), u) : null; }
+// a zoom bump on every beat from t0, centred on point p (the hero keeps its screen spot)
+function bump(t, t0, p, amt = 0.3, every = 0.5) { return camOf({ z: 1 + amt * Math.exp(-mod(t - t0, every) * 7), p, to: p }); }
+function camAt(era, t) { return (typeof pieceCam === 'function' && pieceCam(era, t)) || CAM0; }
+const camPts = (P, c) => P.map(([x, y]) => [c.z * x + c.tx, c.z * y + c.ty]);
+// ---- bridge shapes
+function starPts(x, y, r, n, r0 = -Math.PI / 2, m = 96) {
+  const P = []; for (let i = 0; i < m; i++) { const a = i / m * TAU, k = 0.42 + 0.58 * (0.5 + 0.5 * Math.cos(n * (a - r0))) ** 3; P.push([x + Math.cos(a) * r * k, y + Math.sin(a) * r * k]); }
+  return P;
+}
+const SP = (x, y, r, n) => ({ spark: [x, y, r, n] });
+const shapeOf = (s) => (s.spark ? { P: (STYLE.heroPts || starPts)(...s.spark), c: STYLE.heroColor, spark: s.spark } : s);
+function byAngle(P, m = 96) {   // resample a closed outline to m points by angle around its centroid
+  const c = P.reduce((a, p) => [a[0] + p[0] / P.length, a[1] + p[1] / P.length], [0, 0]), Q = resample(P, true, 4), out = [];
+  for (let i = 0; i < m; i++) {
+    const a = -Math.PI + i / m * TAU; let best = null, bd = 1e9;
+    for (const q of Q) { let d = Math.atan2(q[1] - c[1], q[0] - c[0]) - a; d = Math.abs(Math.atan2(Math.sin(d), Math.cos(d))); const r = Math.hypot(q[0] - c[0], q[1] - c[1]); if (d < bd - 1e-4 || (Math.abs(d - bd) < 1e-4 && r > best[2])) { bd = d; best = [q[0], q[1], r]; } }
+    out.push([best[0], best[1]]);
+  }
+  return { P: out, c };
+}
+const mixHex = (a, b, u) => { const p = (h) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16)); const x = p(a), y = p(b); return `rgb(${x.map((v, i) => Math.round(lerp(v, y[i], u))).join(',')})`; };
+function maskK(P) {   // how far the window must scale about its centroid to cover the frame
+  const c = P.reduce((a, p) => [a[0] + p[0] / P.length, a[1] + p[1] / P.length], [0, 0]);
+  const rmin = Math.max(8, Math.min(...byAngle(P, 48).P.map((p) => Math.hypot(p[0] - c[0], p[1] - c[1]))));
+  const far = Math.max(...[[0, 0], [W, 0], [0, H], [W, H]].map((q) => Math.hypot(q[0] - c[0], q[1] - c[1])));
+  return { c, kmax: far / rmin * 1.1 };
+}
+const scaled = (P, c, k) => P.map(([x, y]) => [c[0] + (x - c[0]) * k, c[1] + (y - c[1]) * k]);
+// ---- layers and windows
+const LAYER = [];
+function layer(i) { if (!LAYER[i]) { const c = document.createElement('canvas'); c.width = W; c.height = H; LAYER[i] = c; } return LAYER[i]; }
+function renderEra(e, target) {   // draws era e into target; returns its overlay queue (year tag, caption)
+  const saved = ctx; ctx = target.getContext('2d');
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ctx.filter = 'none'; ctx.setLineDash([]);
+  ctx.fillStyle = STYLE.paper; ctx.fillRect(0, 0, W, H);   // a clean sheet every frame: nothing carries over between frames
+  const cam = camAt(e, TT); ctx.setTransform(cam.z, 0, 0, cam.z, cam.tx, cam.ty);
+  DEFER = []; ERA_LIST[e][2](); const q = DEFER; DEFER = null;
+  ctx.restore(); ctx = saved;
+  return q;
+}
+function flush(q, e) { const keep = E0; E0 = ERA_LIST[e][0]; ctx.setTransform(1, 0, 0, 1, 0, 0); q.forEach((f) => f()); E0 = keep; }
+function shotAtFrame(fr) {
+  for (const s of TIMELINE.shots) if (fr >= Math.round(s.t0 * FPS) && fr < Math.round(s.t1 * FPS)) return s;
+  return TIMELINE.shots[TIMELINE.shots.length - 1];
+}
+const eraAt = (t) => ERA_LIST.findIndex(([a, b]) => t >= a - 1e-6 && t < b - 1e-6);
+// renderFrame(t, canvas, sub): sub = true draws the exact time t between frames (motion blur sub-frames, styles on 1s)
+function renderFrame(t, canvas, sub) {
+  const cv = canvas || document.getElementById('c');
+  ctx = cv.getContext('2d');
+  F = ((Math.floor(sub ? t * FPS + 1e-6 : Math.round(t * FPS)) % NFRAMES) + NFRAMES) % NFRAMES;
+  B = Math.floor(F / 2);
+  TT = (STYLE.ones ? (sub ? F + (t * FPS - Math.floor(t * FPS + 1e-6)) : F) : B * 2) / FPS;
+  // the era is picked by the real frame, so a cut on an odd frame (a 16th at 24fps) lands on that frame;
+  // on its first frame the new era is drawn at its own start time (motion stays on 2s inside it)
+  const s = shotAtFrame(F), e = Math.max(0, eraAt(F / FPS));
+  E0 = ERA_LIST[e][0];
+  if (TT < E0 - 1e-6) TT = E0;
+  ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over'; ctx.setLineDash([]); ctx.filter = 'none';
+  SPARK_AT = null;
+  const bd = (r) => r.d ?? 0.6, bm = (r) => r.m ?? (r.d != null ? r.d / 3 : 0.2);
+  const tr = BRIDGES.find((r) => TT >= r.tc - bd(r) - 1e-6 && TT < r.tc + bd(r) - 1e-6);
+  if (!tr) {
+    const q = renderEra(e, layer(0)); ctx.drawImage(layer(0), 0, 0); flush(q, e);
+  } else {
+    const ea = eraAt(tr.tc - 0.01), eb = eraAt(tr.tc + 0.01);
+    const sa = shapeOf(tr.A()), sb = shapeOf(tr.B());
+    const PA = camPts(sa.P, camAt(ea, TT)), PB = camPts(sb.P, camAt(eb, TT));
+    const D = bd(tr), M = bm(tr);
+    if (TT < tr.tc - M) {
+      const u = EZ.i2(seg(TT, tr.tc - D, tr.tc - M)), { c, kmax } = maskK(PA), k = Math.exp(lerp(Math.log(kmax), 0, u));
+      STYLE.backdrop(mixHex(ERA_BG[ea], STYLE.paper, 0.5 + u * 0.5), { eraA: ea, eraB: eb, u, phase: 'shrink' });
+      const q = renderEra(ea, layer(0));
+      STYLE.window(scaled(PA, c, k), 'mA' + tr.tc, layer(0), { c: sa.c, u, phase: 'shrink', eraA: ea, eraB: eb });
+      flush(q, ea);
+    } else if (TT < tr.tc + M) {
+      const u = EZ.io(seg(TT, tr.tc - M, tr.tc + M));
+      STYLE.backdrop(STYLE.paper, { eraA: ea, eraB: eb, u, phase: 'morph' });
+      if (sa.spark && sb.spark) {
+        const ca = camAt(ea, TT), cb = camAt(eb, TT), [ax, ay] = camPts([sa.spark.slice(0, 2)], ca)[0], [bx, by] = camPts([sb.spark.slice(0, 2)], cb)[0];
+        STYLE.hero(lerp(ax, bx, u), lerp(ay, by, u), lerp(sa.spark[2] * ca.z, sb.spark[2] * cb.z, u), { rays: Math.round(lerp(sa.spark[3], sb.spark[3], u)), mood: 'wow', key: 'morphspark' });
+      } else {
+        const A2 = byAngle(PA), B2 = byAngle(PB), M = A2.P.map((p, i) => [lerp(p[0], B2.P[i][0], u), lerp(p[1], B2.P[i][1], u)]);
+        STYLE.blob(M, mixHex(sa.c, sb.c, u), 'morph' + tr.tc, u, { eraA: ea, eraB: eb, phase: 'morph' });
+        if (sb.spark && u > 0.6) STYLE.hero(...camPts([sb.spark.slice(0, 2)], camAt(eb, TT))[0], sb.spark[2] * clamp((u - 0.6) / 0.4), { rays: sb.spark[3], mood: 'wow', key: 'morphspark2' });
+      }
+    } else {
+      const u = EZ.o2(seg(TT, tr.tc + M, tr.tc + D)), { c, kmax } = maskK(PB), k = Math.exp(lerp(0, Math.log(kmax), u));
+      STYLE.backdrop(mixHex(STYLE.paper, ERA_BG[eb], u * 0.5), { eraA: ea, eraB: eb, u, phase: 'grow' });
+      const q = renderEra(eb, layer(0));
+      STYLE.window(scaled(PB, c, k), 'mB' + tr.tc, layer(0), { c: sb.c, u, phase: 'grow', eraA: ea, eraB: eb });
+      flush(q, eb);
+    }
+  }
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  if (STYLE.post) STYLE.post();
+  ctx.restore();
+  return s.id;
+}
+window.renderFrame = renderFrame;
+window.anchorAt = () => (SPARK_AT ? { x: SPARK_AT[0], y: SPARK_AT[1] } : null);
+
+// =====================================================================
+//  kit/board.js — the storyboard: every beat in TIMELINE.board drawn as a 9:16 key frame with its notes.
+//  The panels ARE the piece: each one is renderFrame(t) at the beat's key time, so an approved board
+//  carries straight into the video.  TIMELINE.board = [{ t, title, sound, next }]
+//  Render: node tools/storyboard.mjs <piece dir> [out.png] [panel numbers...]
+// =====================================================================
+function drawPanel(k) { renderFrame(TIMELINE.board[k].t, ctx.canvas); }
+function renderBoard() {
+  const BD = TIMELINE.board || [], COLS = 5, PW = 360, PH = Math.round(PW * H / W), GAP = 30, NOTE = 130, HEAD = 150;
+  const rows = Math.ceil(BD.length / COLS), bc = document.createElement('canvas');
+  bc.width = GAP + COLS * (PW + GAP); bc.height = HEAD + rows * (PH + NOTE + GAP);
+  const g = bc.getContext('2d'), SANS = '"Segoe UI", Arial, sans-serif';
+  g.fillStyle = '#2a211b'; g.fillRect(0, 0, bc.width, bc.height);
+  g.fillStyle = '#efe5cf'; g.font = `400 60px ${HAND}`; g.fillText(`${document.title}: storyboard`, GAP, 80);
+  g.font = `600 22px ${SANS}`; g.fillStyle = '#d9c9a8';
+  g.fillText(`${TIMELINE.duration}s · ${W}×${H} · ${TIMELINE.bpm} BPM · ${BD.length} beats. Thumbs up or down by panel number.`, GAP, 122);
+  const wrap = (str, x, y, maxW, lh) => { let line = ''; for (const w of str.split(' ')) { const t = line ? line + ' ' + w : w; if (g.measureText(t).width > maxW && line) { g.fillText(line, x, y); y += lh; line = w; } else line = t; } if (line) g.fillText(line, x, y); return y + lh; };
+  const pc = document.createElement('canvas'); pc.width = W; pc.height = H;
+  BD.forEach((b, k) => {
+    renderFrame(b.t, pc);
+    const x = GAP + (k % COLS) * (PW + GAP), y = HEAD + Math.floor(k / COLS) * (PH + NOTE + GAP);
+    g.drawImage(pc, x, y, PW, PH);
+    g.fillStyle = '#f0b27c'; g.font = `700 26px ${SANS}`; g.fillText(`${k + 1}`, x, y + PH + 32);
+    g.fillStyle = '#efe5cf'; g.font = `600 20px ${SANS}`;
+    let ttl = `${b.t.toFixed(1)}s · ${b.title || ''}`; while (ttl.length > 4 && g.measureText(ttl).width > PW - 44) ttl = ttl.slice(0, -2) + '…';   // fits the panel
+    g.fillText(ttl, x + 40, y + PH + 30);
+    g.font = `400 18px ${SANS}`; g.fillStyle = '#cdbd9c';
+    const yy = b.sound ? wrap('sound: ' + b.sound, x, y + PH + 58, PW, 22) : y + PH + 58;
+    if (b.next) { g.fillStyle = '#a8977a'; wrap('→ ' + b.next, x, yy + 2, PW, 22); }
+  });
+  return bc;
+}
+window.renderBoard = renderBoard; window.drawPanel = drawPanel;
+// =====================================================================
+//  kit/score-head.js — live preview (click to hear), noise/impulse/WAV helpers, and the synth.
+//  buildScore() opens here; the piece's score body follows (src/score.js), then kit/score-tail.js closes it.
+//  Helpers inside buildScore: pluck, noiseHit, sub, sweep, riser, chime, bass, blip, pad, drone, out, osc, env.
+//  Set `to = 'm'` (music bus) or `to = 's'` (sfx bus) before calling them. Notes: nz('D4').
+// =====================================================================
+// live preview: rAF on the 24fps grid; click to hear the score (?t=1.5 freezes a frame)
+const QS = new URLSearchParams(location.search);
+const LIVE = { audio: null, t0: 0, start: performance.now() };
+if (!QS.has('export')) {
+  const cv = document.getElementById('c');
+  if (QS.has('t')) renderFrame(parseFloat(QS.get('t')));
+  else {
+    const tick = () => {
+      const sec = LIVE.audio ? LIVE.audio.currentTime - LIVE.t0 : (performance.now() - LIVE.start) / 1000;
+      const t = ((sec % LOOP_T) + LOOP_T) % LOOP_T;
+      renderFrame(Math.floor(t * FPS) / FPS);
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+  cv.addEventListener('click', async () => {
+    if (LIVE.audio || typeof buildScore !== 'function') return;
+    const ac = new AudioContext(), score = await buildScore(ac.sampleRate);
+    const buf = ac.createBuffer(2, score.left.length, score.sampleRate);
+    buf.copyToChannel(score.left, 0); buf.copyToChannel(score.right, 1);
+    const src = ac.createBufferSource(); src.buffer = buf; src.loop = true; src.connect(ac.destination);
+    LIVE.t0 = ac.currentTime + 0.05; src.start(LIVE.t0); LIVE.audio = ac;
+  });
+}
+
+const HZ = {
+  A1: 55.0, D2: 73.42, F2: 87.31, A2: 110.0, D3: 146.83, F3: 174.61, A3: 220.0, C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23,
+  Fs4: 369.99, A4: 440.0, B4: 493.88, C5: 523.25, D5: 587.33, E5: 659.25, Fs5: 739.99, A5: 880.0, D6: 1174.66, A6: 1760.0,
+};
+function makeNoise(ac, sec) {
+  const b = ac.createBuffer(1, Math.floor(sec * ac.sampleRate), ac.sampleRate), d = b.getChannelData(0), R = RNG('noise');
+  for (let i = 0; i < d.length; i++) d[i] = R.f() * 2 - 1;
+  return b;
+}
+function makeImpulse(ac, sec, decay) {
+  const n = Math.floor(sec * ac.sampleRate), b = ac.createBuffer(2, n, ac.sampleRate);
+  for (let c = 0; c < 2; c++) { const d = b.getChannelData(c), R = RNG('ir', c); for (let i = 0; i < n; i++) d[i] = (R.f() * 2 - 1) * Math.pow(1 - i / n, decay); }
+  return b;
+}
+function encodeWav(left, right, sr) {
+  const n = left.length, buf = new ArrayBuffer(44 + n * 4), v = new DataView(buf);
+  const ws = (o, s) => { for (let i = 0; i < s.length; i++) v.setUint8(o + i, s.charCodeAt(i)); };
+  ws(0, 'RIFF'); v.setUint32(4, 36 + n * 4, true); ws(8, 'WAVE'); ws(12, 'fmt ');
+  v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 2, true); v.setUint32(24, sr, true);
+  v.setUint32(28, sr * 4, true); v.setUint16(32, 4, true); v.setUint16(34, 16, true);
+  ws(36, 'da' + 'ta'); v.setUint32(40, n * 4, true);
+  let o = 44;
+  for (let i = 0; i < n; i++) { v.setInt16(o, Math.round(clamp(left[i], -1, 1) * 32767), true); v.setInt16(o + 2, Math.round(clamp(right[i], -1, 1) * 32767), true); o += 4; }
+  return new Uint8Array(buf);
+}
+
+
+const MIDI = (m) => 440 * 2 ** ((m - 69) / 12);
+const NOTE = { D2: 38, A2: 45, D3: 50, E3: 52, Fs3: 54, A3: 57, D4: 62, E4: 64, Fs4: 66, G4: 67, A4: 69, B4: 71, Cs5: 73, D5: 74, E5: 76, Fs5: 78, A5: 81, B5: 83, D6: 86, E6: 88, Fs6: 90, A6: 93 };
+// any note name: 'D4', 'Fs4' / 'F#4' (sharp), 'Bb3' (flat); the table above is the fast path
+function noteNum(n) {
+  if (NOTE[n] != null) return NOTE[n];
+  const m = /^([A-G])(s|#|b)?(-?\d)$/.exec(n); if (!m) throw new Error(`unknown note "${n}"`);
+  return 12 * (Number(m[3]) + 1) + { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 }[m[1]] + (m[2] === 'b' ? -1 : m[2] ? 1 : 0);
+}
+const nz = (n) => MIDI(noteNum(n));
+async function buildScore(sampleRate = 48000, part = 'mix', normIn = null) {
+  const TAIL = 3.0, len = Math.ceil((LOOP_T + TAIL) * sampleRate);
+  const ac = new OfflineAudioContext(2, len, sampleRate);
+  const master = ac.createGain(); master.gain.value = 0.8;
+  const comp = ac.createDynamicsCompressor();
+  comp.threshold.value = -16; comp.knee.value = 10; comp.ratio.value = 3.5; comp.attack.value = 0.004; comp.release.value = 0.2;
+  master.connect(comp); comp.connect(ac.destination);
+  const musicBus = ac.createGain(), sfxBus = ac.createGain();
+  musicBus.gain.value = part === 'sfx' ? 0 : 1; sfxBus.gain.value = part === 'music' ? 0 : 1;
+  musicBus.connect(master); sfxBus.connect(master);
+  // ducking + presence dip, driven by the narration (lines closer than 0.29s are merged)
+  const duck = ac.createGain(), dip = ac.createBiquadFilter();
+  dip.type = 'peaking'; dip.frequency.value = 2500; dip.Q.value = 1;
+  duck.connect(dip); dip.connect(musicBus);
+  const lines = [];
+  for (const n of TIMELINE.narration) { const L = lines[lines.length - 1]; if (L && n.t0 - L.t1 < 0.29) L.t1 = n.t1; else lines.push({ t0: n.t0, t1: n.t1 }); }
+  const DUCK = 10 ** (-3 / 20);
+  duck.gain.setValueAtTime(1, 0); dip.gain.setValueAtTime(0, 0);
+  for (const L of lines) {
+    duck.gain.setValueAtTime(1, Math.max(0, L.t0 - 0.1)); duck.gain.linearRampToValueAtTime(DUCK, L.t0);
+    duck.gain.setValueAtTime(DUCK, L.t1 + 0.03); duck.gain.linearRampToValueAtTime(1, L.t1 + 0.18);
+    dip.gain.setValueAtTime(0, Math.max(0, L.t0 - 0.1)); dip.gain.linearRampToValueAtTime(-6, L.t0);
+    dip.gain.setValueAtTime(-6, L.t1 + 0.03); dip.gain.linearRampToValueAtTime(0, L.t1 + 0.18);
+  }
+  const mkVerb = (dest, sec = 1.6, decay = 2.8, level = 0.3) => { const v = ac.createConvolver(); v.buffer = makeImpulse(ac, sec, decay); const g = ac.createGain(); g.gain.value = level; v.connect(g); g.connect(dest); return v; };
+  const verbs = { m: mkVerb(duck), s: mkVerb(sfxBus) }, shortVerb = verbs.m, longVerb = mkVerb(duck, 3.6, 1.6, 0.55);
+  const noise = makeNoise(ac, 3.0);
+  let to = 'm';   // which bus the helpers below write to
+
+  // the gain is silent until the envelope starts (a GainNode defaults to 1: a note whose oscillator starts first would click)
+  const env = (g, t, a, peak, d) => { g.gain.value = 0.0001; g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(Math.max(0.0002, peak), t + a); g.gain.exponentialRampToValueAtTime(0.0001, t + a + d); };
+  const out = (node, pan = 0, send = 0) => {
+    const p = ac.createStereoPanner(); p.pan.value = clamp(pan, -1, 1); node.connect(p); p.connect(to === 'm' ? duck : sfxBus);
+    if (send) { const s = ac.createGain(); s.gain.value = send; node.connect(s); s.connect(verbs[to]); }
+  };
+  const osc = (type, f, t, stop) => { const o = ac.createOscillator(); o.type = type; o.frequency.setValueAtTime(f, t); o.start(t); o.stop(stop); return o; };
+  function pluck(t, f, vel, pan = 0, dur = 0.32, bright = 3200, send = 0.25) {
+    const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 2.5;
+    lp.frequency.setValueAtTime(bright, t); lp.frequency.exponentialRampToValueAtTime(380, t + dur);
+    const g = ac.createGain(); env(g, t, 0.003, vel, dur);
+    const g2 = ac.createGain(); g2.gain.value = 0.3;
+    osc('triangle', f, t, t + dur + 0.05).connect(lp);
+    osc('sine', f * 2.004, t, t + dur + 0.05).connect(g2); g2.connect(lp);
+    lp.connect(g); out(g, pan, send);
+  }
+  function noiseHit(t, dur, type, freq, q, vel, pan = 0, send = 0, sweepTo = 0) {
+    const src = ac.createBufferSource(); src.buffer = noise;
+    const f = ac.createBiquadFilter(); f.type = type; f.Q.value = q; f.frequency.setValueAtTime(freq, t);
+    if (sweepTo) f.frequency.exponentialRampToValueAtTime(sweepTo, t + dur);
+    const g = ac.createGain(); env(g, t, Math.min(0.004, dur * 0.3), vel, dur);
+    src.connect(f); f.connect(g); out(g, pan, send);
+    src.start(t, (t * 7.31) % 2.0); src.stop(t + dur + 0.05);
+  }
+  function sub(t, vel) {
+    const o = osc('sine', 120, t, t + 0.8); o.frequency.exponentialRampToValueAtTime(36, t + 0.3);
+    const g = ac.createGain(); env(g, t, 0.004, vel, 0.6); o.connect(g); out(g);
+    noiseHit(t, 0.07, 'lowpass', 1100, 0.7, vel * 0.45);
+  }
+  function sweep(t0, t1, vel, f0, f1, pan = 0) {
+    const src = ac.createBufferSource(); src.buffer = noise; src.loop = true;
+    const f = ac.createBiquadFilter(); f.type = 'bandpass'; f.Q.value = 1.1;
+    f.frequency.setValueAtTime(f0, t0); f.frequency.exponentialRampToValueAtTime(f1, t1);
+    const g = ac.createGain(); g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(vel, t1 - 0.03); g.gain.linearRampToValueAtTime(0.0001, t1 + 0.005);
+    src.connect(f); f.connect(g); out(g, pan, 0.2); src.start(t0, (t0 * 3.1) % 1.0); src.stop(t1 + 0.05);
+  }
+  function riser(t0, t1, vel) {
+    const o = osc('sawtooth', 110, t0, t1 + 0.02); o.frequency.exponentialRampToValueAtTime(1320, t1);
+    const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 6; lp.frequency.setValueAtTime(300, t0); lp.frequency.exponentialRampToValueAtTime(5000, t1);
+    const g = ac.createGain(); g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(vel, t1 - 0.01); g.gain.linearRampToValueAtTime(0.0001, t1 + 0.01);
+    o.connect(lp); lp.connect(g); out(g, 0, 0.3);
+    sweep(t0, t1, vel * 0.9, 400, 7000);
+  }
+  function chime(t, freqs, vel, pan = 0) {
+    freqs.forEach((f, i) => { const g = ac.createGain(), ti = t + i * 0.012; env(g, ti, 0.002, vel / (1 + i * 0.4), 1.3); osc('sine', f, ti, ti + 1.5).connect(g); out(g, pan + (i - 1) * 0.25, 0.6); });
+  }
+  function bass(t, f, vel) { const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 320; const g = ac.createGain(); env(g, t, 0.006, vel, 0.28); osc('triangle', f, t, t + 0.35).connect(lp); lp.connect(g); out(g); }
+  function blip(t, f0, f1, dur, vel, pan = 0) { const o = osc('sine', f0, t, t + dur + 0.05); o.frequency.exponentialRampToValueAtTime(f1, t + dur); const g = ac.createGain(); env(g, t, 0.002, vel, dur); o.connect(g); out(g, pan, 0.2); }
+
+  // ---- v2 instruments built from the helpers above
+  function pad(t0, t1, notes, peak, o = {}) {
+    const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = o.cut ?? 1200; lp.Q.value = 0.7;
+    const g = ac.createGain(), hold = o.swellTo ?? peak;
+    g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(peak, t0 + (o.att ?? 0.4));
+    if (o.swellTo) g.gain.linearRampToValueAtTime(o.swellTo, o.swellAt);
+    g.gain.setValueAtTime(hold, t1 - (o.rel ?? 0.3)); g.gain.exponentialRampToValueAtTime(0.0001, t1);
+    notes.forEach((n, i) => { for (const det of [-7, 7]) { const oo = osc(o.type ?? 'sawtooth', nz(n), t0, t1 + 0.05); oo.detune.value = det + i; oo.connect(lp); } });
+    lp.connect(g); out(g, o.pan ?? 0, o.send ?? 0.4);
+  }
+  function drone(t0, t1, f, peak, o = {}) {
+    const g = ac.createGain(); g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(peak, t0 + (o.att ?? 0.5));
+    g.gain.setValueAtTime(peak, t1 - (o.rel ?? 0.4)); g.gain.exponentialRampToValueAtTime(0.0001, t1);
+    osc('sine', f, t0, t1 + 0.05).connect(g); out(g, 0, 0);
+  }
+  const claudeMotif = (t, notes, vel) => notes.forEach(([n, dt], i) => pluck(t + dt, nz(n), vel, -0.15 + i * 0.1, 0.6, 1300, 0.35));
+  const childMotif = (t, notes, vel, bright = 5200, send = 0.3) => notes.forEach(([n, dt], i) => pluck(t + dt, nz(n), vel, 0.2 - i * 0.1, 0.32, bright, send));
+  // SCORE BODY — An ant with two rules builds a highway Music = the user's track (piece.json "music");
+  // this body is the sound effects only (sfx bus), loud and present: bits flipping, little feet, the highway.
+  to = 's';
+  // ---- instruments
+  const rumble = (t, dur, vel, pan = 0, cut = 180) => {   // a long low roll of thunder: looped noise, lowpassed, slow swells
+    const src = ac.createBufferSource(); src.buffer = noise; src.loop = true;
+    const lp = ac.createBiquadFilter(); lp.type = 'lowpass'; lp.Q.value = 0.9; lp.frequency.setValueAtTime(cut * 2.5, t); lp.frequency.exponentialRampToValueAtTime(cut, t + dur);
+    const g = ac.createGain(); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(vel, t + 0.08);
+    const R = RNG('rum', t);
+    for (let k = 1; k <= 6; k++) g.gain.linearRampToValueAtTime(vel * R.r(0.35, 1), t + dur * k / 7);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    src.connect(lp); lp.connect(g); out(g, pan, 0.5); src.start(t, (t * 1.7) % 2); src.stop(t + dur + 0.05);
+  };
+  const crackle = (t, dur, vel, pan = 0, key = 'c') => {   // dry electric crackle: a burst of tiny high clicks
+    const R = RNG('crk', key, t), n = Math.max(3, Math.round(dur * 60));
+    for (let i = 0; i < n; i++) noiseHit(t + R.r(0, dur), 0.012, 'highpass', 2500 + R.r(0, 4000), 0.8, vel * R.r(0.4, 1), pan + R.r(-0.2, 0.2), 0.05);
+  };
+  const zap = (t, vel, pan = 0, f0 = 2600, f1 = 300) => {   // an electric zap: a fast falling buzz + crackle
+    const o = osc('sawtooth', f0, t, t + 0.2); o.frequency.exponentialRampToValueAtTime(f1, t + 0.16);
+    const bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 1800; bp.Q.value = 0.8;
+    const g = ac.createGain(); env(g, t, 0.002, vel * 0.5, 0.16); o.connect(bp); bp.connect(g); out(g, pan, 0.15);
+    crackle(t, 0.12, vel * 0.7, pan, 'z');
+  };
+  const crack = (t, vel, pan = 0) => {   // the strike itself: a sharp broadband crack, a sub punch, a roll
+    noiseHit(t, 0.05, 'highpass', 1200, 0.6, vel, pan, 0.4);
+    noiseHit(t + 0.01, 0.22, 'bandpass', 2400, 0.7, vel * 0.7, pan, 0.5, 600);
+    crackle(t, 0.2, vel * 0.8, pan, 'k');
+    sub(t, vel * 0.9);
+  };
+  const tick = (t, vel = 0.12, pan = 0, f = 3000) => { noiseHit(t, 0.015, 'bandpass', f, 4, vel, pan); blip(t, f * 0.7, f * 0.5, 0.03, vel * 0.25, pan); };
+  const ice = (t, vel, pan = 0) => { blip(t, 3400, 2600, 0.05, vel * 0.5, pan); noiseHit(t, 0.03, 'highpass', 5000, 1, vel * 0.6, pan, 0.2); };
+  const pop = (t, vel, pan = 0, f = 900) => blip(t, f, f * 1.6, 0.06, vel, pan);
+  const typing = (t0, n, cps, vel = 0.05, pan = 0) => { for (let i = 0; i < n; i++) tick(t0 + i / cps, vel, pan, 2200 + (i % 3) * 400); };
+  const hum = (t0, t1, vel) => {   // a mains-like buzz: 100 Hz saw, bandpassed, tremolo
+    const o = osc('sawtooth', 100, t0, t1 + 0.05), bp = ac.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 400; bp.Q.value = 1.5;
+    const g = ac.createGain(); g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(vel, t0 + 0.4); g.gain.setValueAtTime(vel, t1 - 0.4); g.gain.exponentialRampToValueAtTime(0.0001, t1);
+    o.connect(bp); bp.connect(g); out(g, 0, 0.1);
+  };
+  const whoosh = (t, d, vel, f0 = 300, f1 = 3000, pan = 0) => sweep(t - d, t, vel, f0, f1, pan);
+
+  // (no rain bed: a constant hiss pumps audibly in every pause of the voice)
+
+
+  const drop = (t, vel, f = 900, pan = 0.2) => blip(t, f * 1.6, f * 0.5, 0.18, vel, pan);
+  const pew = (t, vel, f = 1800, pan = 0.4) => { blip(t, f * 0.6, f * 1.8, 0.22, vel, pan); noiseHit(t, 0.08, 'highpass', 5000, 0.8, vel * 0.3, pan, 0.3); };
+
+  const sub2 = (t, v) => sub(t, v * 0.4);   // every other low hit sits well under the payoff
+  const click = (t, vel, pan = 0) => { tick(t, vel, pan, 1600); noiseHit(t, 0.04, 'bandpass', 800, 2, vel * 0.7, pan); };
+
+  const sizzle = (t, dur, vel, pan = 0) => { crackle(t, dur, vel, pan, 'sz' + t); noiseHit(t, Math.min(1.2, dur), 'bandpass', 3500, 0.8, vel * 1.4, pan, 0.2); };
+  const buzz = (t0, t1, vel) => hum(t0, t1, vel);
+
+  const thunk = (t, vel, pan = 0) => { noiseHit(t, 0.12, 'lowpass', 500, 1, vel, pan, 0.3); sub2(t, vel * 1.5); };   // a breaker / power cut
+
+
+  const fwoosh = (t, vel, dur = 2.5) => { noiseHit(t, 0.5, 'lowpass', 1800, 0.7, vel, 0, 0.6, 300); rumble(t + 0.1, dur, vel * 0.55, 0, 200); crackle(t + 0.1, dur * 0.8, vel * 0.15, 0, 'fw' + t); };
+
+  const ding = (t, v = 0.05, pan = 0) => chime(t, [1318.5, 1975.5], v, pan);
+  // ---- the ant's own sounds
+  const flipOn = (t, v = 0.1, pan = 0) => { blip(t, 880, 1320, 0.05, v, pan); noiseHit(t, 0.02, 'bandpass', 3000, 3, v * 0.6, pan); };
+  const flipOff = (t, v = 0.1, pan = 0) => { blip(t, 660, 440, 0.06, v, pan); noiseHit(t, 0.02, 'bandpass', 1800, 3, v * 0.6, pan); };
+  const feet = (t, v = 0.04, pan = 0) => { for (let i = 0; i < 3; i++) noiseHit(t + i * 0.05, 0.012, 'highpass', 6000, 1, v, pan + (i - 1) * 0.15); };
+  const swirl = (t, v, right = true) => sweep(t, t + 0.25, v, right ? 600 : 1400, right ? 1400 : 600, right ? 0.3 : -0.3);
+  // ---- title, the ant, the board
+  pop(VL('title').t0, 0.08, 0, 420); { const t = VW('title', 'builds') - 0.1; swirl(t, 0.04); } ding(VW('title', 'nobody') - 0.1, 0.03);
+  feet(S('ant') + 0.2, 0.05); ['see', 'think', 'remember'].forEach((w, i) => pop(VW('ant', w) - 0.1, 0.07, -0.4 + i * 0.4, 500 + i * 120));
+  { const t = VW('ant', 'two') - 0.1; pop(t, 0.12, 0, 520); ding(t + 0.1, 0.04); }
+  { const t = S('board') + 0.1; whoosh(t + 0.5, 0.5, 0.05, 300, 2000, 0); for (let i = 0; i < 10; i++) tick(t + 0.2 + i * 0.04, 0.05, Math.sin(i) * 0.6, 2000 + i * 100); flipOn(VW('board', 'on') - 0.05, 0.1); flipOff(VW('board', 'off') - 0.05, 0.1); }
+  // ---- the steps while they are slow: a flip at k + 0.15, the turn at k + 0.35, the feet at k + 0.7
+  { let prev = stepsAt(S('right') - 0.1);
+    for (let t = S('right'); t < VL('slow').t1 + 0.3; t += 1 / 96) { const n = stepsAt(t);
+      for (const [off, f] of [[0.15, 'flip'], [0.35, 'turn'], [0.7, 'feet']]) if (Math.floor(n - off) > Math.floor(prev - off) && n < 13) { const k = Math.floor(n - off), on = MAIN.ON[k];
+        if (f === 'flip') (on ? flipOn : flipOff)(t, 0.12, 0); else if (f === 'turn') swirl(t, 0.04, !!on); else feet(t, 0.05); }
+      prev = n; } }
+  // the chaos: a rising patter of ticks, denser as the steps fly
+  { const t0 = S('tidy') + 0.3, t1 = VL('step').t1 - 0.2; for (let t = t0; t < t1; t += 0.06) { const v = clamp((stepsAt(t + 0.06) - stepsAt(t)) / 20); if (v > 0.02) tick(t, 0.008 + 0.012 * v, Math.sin(t * 7) * 0.6, 2400 + 1600 * v); } riser(S('breaks'), VL('breaks').t1, 0.012); }
+  ['thousand', 'five'].forEach((w) => pop(VW('breaks', w) - 0.1, 0.07, 0, 600));
+  noiseHit(VW('bet', 'nothing') - 0.1, 0.4, 'lowpass', 600, 0.7, 0.06, 0, 0.3);
+  { const t = VW('step', 'seventyseven'); click(t, 0.12, 0); }
+  // ---- THE PAYOFF: the highway breaks out (after the silence), the loudest moment
+  sub(HIT, 1.0); sub(HIT + 0.03, 0.7); noiseHit(HIT, 1.0, 'lowpass', 3200, 0.7, 0.8, 0, 0.6, 180);
+  [['D3', 0], ['A3', 0.01], ['D4', 0.02], ['Fs4', 0.03], ['A4', 0.04]].forEach(([n, dt], i) => pluck(HIT + dt, nz(n), 0.22 - i * 0.02, (i - 2) * 0.2, 0.9, 3000, 0.6));
+  whoosh(VW('look', 'shoots') + 0.4, 0.5, 0.08, 400, 4000, 0.3); sub2(VW('look', 'highway') - 0.1, 0.3);
+  { const t0 = HIT + 0.3, t1 = S('langton'); for (let t = t0; t < t1; t += 104 / ((10900 - 9977) / (VL('look').t1 - HIT)) / 2) { blip(t, 1200, 1250, 0.05, 0.06, 0.3); noiseHit(t, 0.03, 'bandpass', 2600, 2, 0.07, -0.3); } }
+  { pop(VW('repeat', 'hundred') - 0.2, 0.1, 0, 600); [1, 2].forEach((i) => pop(VW('repeat', 'again', i) - 0.1, 0.1, i === 1 ? -0.3 : 0.3, 700 + i * 120)); ding(VW('repeat', 'forever') - 0.2, 0.04); }
+  // ---- Langton, why, random starts
+  { const t = S('langton') + 0.1; whoosh(t + 0.4, 0.4, 0.05, 2000, 500, 0); pop(VW('langton', 'chris') - 0.1, 0.09, 0, 520); pop(VW('langton', 'alive') - 0.3, 0.07, 0, 700); }
+  { const t = VW('why', 'nobody') - 0.1; sub2(t, 0.3); noiseHit(t, 0.4, 'lowpass', 500, 0.7, 0.07, 0, 0.3); }
+  { const t = VW('any', 'switch') - 0.1; for (let i = 0; i < 12; i++) flipOn(t + i * 0.05, 0.05, Math.sin(i * 2) * 0.6); riser(VW('any', 'happens') - 0.3, S('same') + 0.3, 0.03); }
+  { const t = S('same') + 0.2; for (let i = 0; i < 3; i++) pop(t + i * 0.25, 0.08, -0.5 + i * 0.5, 500 + i * 100); ding(VW('same', 'every') - 0.1, 0.04); click(VW('same', 'proven') - 0.2, 0.12, 0); }
+  // ---- circuits and the computer
+  for (let i = 0; i < 3; i++) { const t = VW('circuit', 'logic') - 0.3 + i * 0.25; pop(t, 0.08, -0.4 + i * 0.4, 600 + i * 150); flipOn(t + 0.5, 0.08, -0.4 + i * 0.4); }
+  { const t = S('computer') + 0.1; whoosh(t + 0.4, 0.4, 0.06, 300, 2500, 0); ['two', 'one', 'forty'].forEach((w, i) => pop(VW('computer', w) - 0.1, 0.1, -0.4 + i * 0.4, 520 + i * 90)); click(VW('computer', 'proof') - 0.1, 0.12, 0); }
+  // ---- the end
+  pop(VW('end', 'coincidence') - 0.1, 0.04, -0.3, 600); pop(VW('end', 'hidden') - 0.1, 0.04, 0.3, 750);
+  chime(VL('end').t1 + 0.2, [1760, 2637, 3520], 0.035, 0);   // Bitstory
+  // =====================================================================
+  //  kit/score-tail.js — render, fold the tail over the loop point, loudness stage
+  //  (RMS-normalise to -17 dBFS, look-ahead limiter at -1 dBFS; stems share the mix gain curve)
+  // =====================================================================
+  const buf = await ac.startRendering();
+  // fold the tail over the loop point so the loop is seamless
+  const N = Math.round(LOOP_T * sampleRate), L = new Float32Array(N), Rr = new Float32Array(N);
+  const c0 = buf.getChannelData(0), c1 = buf.getChannelData(1);
+  for (let i = 0; i < N; i++) { L[i] = c0[i] + (i + N < len ? c0[i + N] : 0); Rr[i] = c1[i] + (i + N < len ? c1[i + N] : 0); }
+  // loudness for a phone (subagents-short): RMS-normalise to -17 dBFS, then a look-ahead limiter at -1 dBFS.
+  // Stems reuse the mix's gain and gain curve, so they sum back to the mix.
+  let k = normIn?.k, g = normIn?.g;
+  if (!g) {
+    let sum = 0; for (let i = 0; i < N; i++) sum += (L[i] * L[i] + Rr[i] * Rr[i]) / 2;
+    k = 10 ** (-17 / 20) / Math.sqrt(sum / N || 1e-12);
+    const ceil = 0.89; g = new Float32Array(N);
+    for (let i = 0; i < N; i++) { const p = Math.max(Math.abs(L[i]), Math.abs(Rr[i])) * k; g[i] = p > ceil ? ceil / p : 1; }
+    const att = Math.exp(-1 / (0.0015 * sampleRate)), rel = Math.exp(-1 / (0.09 * sampleRate));
+    for (let i = N - 2; i >= 0; i--) g[i] = Math.min(g[i], 1 - (1 - g[i + 1]) * att);
+    let r = 1; for (let i = 0; i < N; i++) { r = Math.min(g[i], 1 - (1 - r) * rel); g[i] = r; }
+  }
+  for (let i = 0; i < N; i++) { L[i] *= k * g[i]; Rr[i] *= k * g[i]; }
+  return { left: L, right: Rr, sampleRate, norm: { k, g } };
+}
+function wavB64(s) {
+  const bytes = encodeWav(s.left, s.right, s.sampleRate);
+  let bin = '';
+  for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 0x8000));
+  return btoa(bin);
+}
+async function renderAudioWav() { return wavB64(await buildScore(48000, 'mix')); }
+async function renderAudioStems() {
+  const mix = await buildScore(48000, 'mix');
+  const music = await buildScore(48000, 'music', mix.norm), sfx = await buildScore(48000, 'sfx', mix.norm);
+  return { music: wavB64(music), sfx: wavB64(sfx) };
+}
+window.renderAudioWav = renderAudioWav;
+window.renderAudioStems = renderAudioStems;
+</script>
+</body>
+</html>
