@@ -8,37 +8,52 @@
   const has = (t) => t != null && isFinite(t);
   const TRUCK = s04_TRUCK, BRAKE = VW('081-narrator', 'brakes'), BLANK = VW('135-narrator', 'blank');
 
-  // ---- music bed: pad + 8th-note arpeggio per bar, from t0 to t1
-  function bed(t0, t1, chords, o = {}) {
-    const bl = o.bar ?? 3.2, pv = o.pad ?? 0.022, av = o.arp ?? 0.045, pat = o.pat ?? [0, 1, 2, 3, 2, 1, 2, 1];
+  // ---- music: a light groove like the reference (~100–120 BPM, the tempo and the kit change with the story)
+  //  level 0 pad · 1 + arpeggio · 2 + bass + hi-hat · 3 + kick + clap. One chord per bar (4 beats).
+  function groove(t0, t1, chords, o = {}) {
+    if (!(t1 > t0 + 0.5)) return;
+    const bpm = o.bpm ?? 110, lv = o.lv ?? 2, beat = 60 / bpm, bar = beat * 4, mv = o.v ?? 1;
     to = 'm';
-    for (let i = 0, t = t0; t < t1 - 0.2; i++, t += bl) {
-      const ch = chords[i % chords.length], end = Math.min(t1, t + bl);
-      pad(t, end + 0.25, ch.slice(0, 3), pv, { type: 'triangle', cut: o.cut ?? 900, att: 0.5, rel: 0.4, send: 0.5 });
-      const up = ch.map((n) => nz(n) * (o.oct ?? 2));
-      pat.forEach((k, j) => { const tj = t + j * bl / pat.length; if (tj < end - 0.05 && (!o.sparse || j % 2 === 0)) pluck(tj, up[k % up.length], av * (j === 0 ? 1.25 : 1), (j % 2 ? 0.25 : -0.25), 0.9, o.bright ?? 1700, 0.45); });
-      if (o.bass !== false) bass(t, nz(ch[0]) / 2, (o.bassV ?? 0.05));
+    for (let i = 0, t = t0; t < t1 - 0.25; i++, t += bar) {
+      const ch = chords[i % chords.length], end = Math.min(t1, t + bar), up = ch.map((n) => nz(n) * 2);
+      pad(t, end + 0.2, ch.slice(0, 3), 0.018 * mv, { type: 'triangle', cut: o.cut ?? 1000, att: 0.3, rel: 0.25, send: 0.45 });
+      for (let s = 0; s < 8; s++) {                                     // 8ths
+        const ts = t + s * beat / 2; if (ts >= end - 0.03) break;
+        if (lv >= 1 && (lv >= 2 || s % 2 === 0)) pluck(ts, up[[0, 1, 2, 3, 2, 1, 2, 3][s] % up.length], (s === 0 ? 0.05 : 0.038) * mv, s % 2 ? 0.25 : -0.25, 0.5, o.bright ?? 2000, 0.35);
+        if (lv >= 2) noiseHit(ts, 0.03, 'highpass', 8000, 0.7, (s % 2 ? 0.018 : 0.01) * mv, 0.3);           // hi-hat
+        if (lv >= 2 && (s === 0 || s === 3 || s === 4)) bass(ts, nz(ch[0]) / 2, 0.06 * mv);                  // bass: 1, and-of-2, 3
+        if (lv >= 3 && (s === 0 || s === 4 || s === 5)) sub(ts, (s === 5 ? 0.06 : 0.11) * mv);              // kick: 1, 3, and-of-3
+        if (lv >= 3 && (s === 2 || s === 6)) { noiseHit(ts, 0.13, 'bandpass', 1900, 0.8, 0.045 * mv, 0, 0.3); noiseHit(ts, 0.05, 'highpass', 4500, 0.7, 0.02 * mv); }   // clap
+      }
     }
   }
   const D = ['D3', 'A3', 'Fs4', 'D4'], A = ['A2', 'E3', 'Cs4', 'A3'], Bm = ['B2', 'Fs3', 'D4', 'B3'], G = ['G2', 'D3', 'B3', 'G3'];
-  const Em = ['E3', 'B3', 'G4', 'E4'], Dm = ['D3', 'A3', 'F4', 'D4'], Bb = ['Bb2', 'F3', 'D4', 'Bb3'], Gm = ['G2', 'D3', 'Bb3', 'G3'];
+  const Em = ['E3', 'B3', 'G4', 'E4'], C = ['C3', 'G3', 'E4', 'C4'], Dm = ['D3', 'A3', 'F4', 'D4'], Bb = ['Bb2', 'F3', 'D4', 'Bb3'], Gm = ['G2', 'D3', 'Bb3', 'G3'];
   const tBus = SK('s04_busWide'), tMon = SK('s05_monday'), tCorner = SK('s06_noOneSees'), tRev = SK('s07_review'), tFact = SK('s07_thousand');
-  const tDad = SK('s08_itsDad'), tNight = SK('s08_night'), tCta = SK('s08_cta');
-  bed(0.4, SK('s03_minus'), [D, A, Bm, G], { arp: 0.042 });                                     // warm: lunch, the power, the plus
-  bed(SK('s03_minus'), tBus, [Bm, G, D, A], { arp: 0.036, pad: 0.018 });                       // minus: same colours, sadder order
-  bed(tBus, LT('074-narrator'), [Dm, Bb, Gm, A], { arp: 0.03, sparse: true, cut: 700 });       // the night bus
+  const tDad = SK('s08_itsDad'), tNight = SK('s08_night'), tCta = SK('s08_cta'), tKitchen = SK('s05_night'), tWalk = SK('s08_walkHome');
+  groove(0.4, SK('s01_title'), [D, A, Bm, G], { bpm: 110, lv: 2 });                              // lunch, the hook: curious
+  groove(SK('s01_title'), SK('s02_plus'), [D, A, Bm, G], { bpm: 112, lv: 2, v: 1.1 });            // the title, the rules
+  groove(SK('s02_plus'), SK('s03_minus'), [D, A, Bm, G], { bpm: 118, lv: 3 });                    // PLUS: the fun montage
+  groove(SK('s03_minus'), SK('s03_st-every'), [Bm, G, D, A], { bpm: 104, lv: 2, v: 0.9 });        // MINUS
+  groove(SK('s03_st-every'), SK('s03_st-fade'), [Bm, G, D, A], { bpm: 120, lv: 3 });              // the accidents
+  groove(SK('s03_st-fade'), SK('s04_cap'), [G, D, A, Bm], { bpm: 104, lv: 1, v: 0.9 });           // nobody sees the disaster
+  groove(SK('s04_cap'), tBus, [D, G, A, D], { bpm: 100, lv: 2 });                                 // Dad
+  groove(tBus, LT('074-narrator'), [Dm, Bb, Gm, A], { bpm: 92, lv: 1, cut: 700, v: 0.9 });        // the night bus
   // the build: a heartbeat that quickens into "brakes", then nothing
   to = 'm';
   pad(LT('074-narrator'), BRAKE, ['D3', 'A3', 'Eb4'], 0.03, { type: 'sawtooth', cut: 600, att: 1.5, rel: 0.05, send: 0.3, swellTo: 0.05, swellAt: BRAKE - 0.2 });
-  for (let t = LT('074-narrator'), k = 0; t < BRAKE - 0.15; k++) { bass(t, nz('D2'), 0.09); bass(t + 0.16, nz('D2'), 0.06); t += Math.max(0.42, 0.9 - k * 0.025); }
-  bed(TRUCK + 1.6, tMon, [['D3', 'A3', 'F4']], { bar: 4, arp: 0.02, sparse: true, pad: 0.015, cut: 600, bass: false }); // aftermath
-  bed(tMon, tCorner, [Bm, G, D, A], { bar: 3.6, arp: 0.03, sparse: true, pad: 0.02 });       // Voss, the kitchen
-  bed(tCorner, tRev, [D, A, Bm, G], { arp: 0.045, bright: 2200 });                              // the corner: hope
-  bed(tRev, tFact, [Em, ['C3', 'G3', 'E4', 'C4'], G, D], { arp: 0.03, sparse: true });          // the review
-  bed(tFact, BLANK - 0.05, [D, G, A, D], { arp: 0.048, bright: 2400, pad: 0.026 });            // the fix, walking home
-  bed(tDad, tNight, [D, G, Bm, A], { bar: 3.4, arp: 0.04, pad: 0.026 });                       // Dad caught you
-  bed(tNight, tCta, [Bm, ['G2', 'D3', 'A3', 'G3']], { bar: 3.6, arp: 0.025, sparse: true, cut: 650 }); // the message
-  bed(tCta, DURATION - 1.2, [D, A, Bm, G], { arp: 0.04 });                                      // outro
+  for (let t = LT('074-narrator'), k = 0; t < BRAKE - 0.15; k++) { bass(t, nz('D2'), 0.09); bass(t + 0.16, nz('D2'), 0.06); noiseHit(t, 0.03, 'highpass', 8000, 0.7, 0.012); t += Math.max(0.36, 0.9 - k * 0.03); }
+  groove(TRUCK + 1.6, tMon, [['D3', 'A3', 'F4']], { bpm: 70, lv: 0, cut: 600, v: 0.8 });          // aftermath
+  groove(tMon, tKitchen, [Bm, G, D, A], { bpm: 96, lv: 1 });                                      // Voss
+  groove(tKitchen, tCorner, [Bm, G, D, A], { bpm: 80, lv: 1, v: 0.8, bright: 1400 });             // the kitchen
+  groove(tCorner, tRev, [D, A, Bm, G], { bpm: 118, lv: 3 });                                      // the corner: hope
+  groove(tRev, tFact, [Em, C, G, D], { bpm: 100, lv: 1 });                                        // the review
+  groove(tFact, tWalk, [D, G, A, D], { bpm: 120, lv: 3, v: 1.1 });                                // the facts, the fix
+  groove(tWalk, BLANK - 0.05, [D, G, A, D], { bpm: 104, lv: 1 });                                 // walking home
+  groove(tDad, tNight, [D, G, Bm, A], { bpm: 100, lv: 2 });                                       // Dad caught you
+  groove(tNight, tCta, [Bm, ['G2', 'D3', 'A3', 'G3']], { bpm: 90, lv: 1, cut: 650, v: 0.8 });    // the message
+  groove(tCta, DURATION - 7, [D, A, Bm, G], { bpm: 116, lv: 3 });                                 // the CTA
+  groove(DURATION - 7, DURATION - 1.2, [D, G], { bpm: 116, lv: 1 });                              // outro
 
   // ---- sfx kit
   to = 's';
@@ -75,9 +90,9 @@
   const SFX_KINDS = {
     whoosh: (t, v, p) => sweep(t - 0.25, t + 0.04, 0.07 * v, 300, 3400, p),
     swish:  (t, v, p) => sweep(t - 0.1, t + 0.02, 0.06 * v, 700, 4200, p),
-    pop:    (t, v, p) => { tone(t, 520, 1100, 0.07, 0.09 * v, 'sine', p); noiseHit(t, 0.03, 'highpass', 3000, 0.7, 0.03 * v, p); },
-    blip:   (t, v, p) => tone(t, 1250, 1900, 0.06, 0.07 * v, 'sine', p),
-    tick:   (t, v, p) => noiseHit(t, 0.015, 'bandpass', 4200, 4, 0.12 * v, p),
+    pop:    (t, v, p) => { tone(t, 380, 760, 0.07, 0.07 * v, 'sine', p); noiseHit(t, 0.03, 'bandpass', 1800, 0.9, 0.025 * v, p); },
+    blip:   (t, v, p) => tone(t, 820, 1100, 0.05, 0.045 * v, 'sine', p),
+    tick:   (t, v, p) => noiseHit(t, 0.015, 'bandpass', 2600, 3, 0.07 * v, p),
     click:  (t, v, p) => { noiseHit(t, 0.02, 'highpass', 2600, 0.8, 0.12 * v, p); tone(t, 1800, 1500, 0.02, 0.03 * v, 'square', p, 0); },
     thud:   (t, v, p) => { sub(t, 0.18 * v); noiseHit(t, 0.06, 'lowpass', 900, 0.7, 0.07 * v, p); },
     impact: (t, v, p) => { sub(t, 0.6 * v); noiseHit(t, 0.35, 'lowpass', 2200, 0.6, 0.3 * v, p, 0.3, 300); noiseHit(t, 0.08, 'highpass', 2500, 0.7, 0.12 * v, p); },
@@ -87,9 +102,9 @@
     cloth:  (t, v, p) => noiseHit(t, 0.18, 'bandpass', 1100, 0.7, 0.09 * v, p, 0.05, 500),
     step:   (t, v, p) => { noiseHit(t, 0.05, 'lowpass', 750, 0.8, 0.09 * v, p); sub(t, 0.03 * v); },
     slide:  (t, v, p) => noiseHit(t, 0.3, 'bandpass', 1700, 1.6, 0.07 * v, p, 0.05, 900),
-    glass:  (t, v, p) => { noiseHit(t, 0.25, 'highpass', 4500, 0.9, 0.12 * v, p, 0.3); chime(t, [2637, 3520, 4186], 0.04 * v, p); },
-    metal:  (t, v, p) => { chime(t, [620, 1480, 2210], 0.06 * v, p); noiseHit(t, 0.04, 'bandpass', 3000, 3, 0.06 * v, p); },
-    beep:   (t, v, p) => tone(t, 1500, 1500, 0.09, 0.05 * v, 'square', p, 0),
+    glass:  (t, v, p) => { noiseHit(t, 0.25, 'highpass', 4500, 0.9, 0.09 * v, p, 0.3); chime(t, [1760, 2349], 0.02 * v, p); },
+    metal:  (t, v, p) => { chime(t, [420, 990], 0.04 * v, p); noiseHit(t, 0.05, 'bandpass', 2200, 2, 0.06 * v, p); },
+    beep:   (t, v, p) => tone(t, 1000, 1000, 0.08, 0.025 * v, 'square', p, 0),
     buzz:   (t, v, p) => { for (let i = 0; i < 3; i++) tone(t + i * 0.2, 140, 140, 0.13, 0.07 * v, 'square', p, 0); },
     cheer:  (t, v, p) => { for (let i = 0; i < 6; i++) noiseHit(t + i * 0.08, 0.9, 'bandpass', 800 + i * 220, 0.6, 0.06 * v, -0.5 + i * 0.2, 0.35); },
     gasp:   (t, v, p) => noiseHit(t, 0.5, 'bandpass', 1300, 0.8, 0.07 * v, p, 0.3, 2200),
@@ -101,13 +116,13 @@
     wiper:  (t, v, p) => noiseHit(t, 0.25, 'bandpass', 600, 1.2, 0.06 * v, p, 0.1, 1100),
     door:   (t, v, p) => { sub(t, 0.16 * v); noiseHit(t, 0.12, 'bandpass', 700, 1, 0.1 * v, p); noiseHit(t - 0.15, 0.1, 'highpass', 2000, 1, 0.03 * v, p); },
     bounce: (t, v, p) => { sub(t, 0.12 * v); tone(t, 220, 140, 0.08, 0.06 * v, 'sine', p, 0); },
-    coin:   (t, v, p) => chime(t, [1976, 2637], 0.06 * v, p),
-    ding:   (t, v, p) => chime(t, [1318, 1976, 2637], 0.05 * v, p),
+    coin:   (t, v, p) => { tone(t, 523, 523, 0.18, 0.045 * v, 'triangle', p, 0.2); tone(t + 0.07, 784, 784, 0.22, 0.04 * v, 'triangle', p, 0.2); },
+    ding:   (t, v, p) => { tone(t, 587, 587, 0.25, 0.04 * v, 'triangle', p, 0.25); tone(t, 880, 880, 0.2, 0.02 * v, 'sine', p, 0.25); },
     camera: (t, v, p) => { noiseHit(t, 0.03, 'highpass', 3000, 0.8, 0.1 * v, p); noiseHit(t + 0.06, 0.04, 'highpass', 2600, 0.8, 0.07 * v, p); },
     type:   (t, v, p, d = 0.6) => { for (let i = 0; i < d * 14; i++) noiseHit(t + i / 14 + (i % 3) * 0.008, 0.015, 'bandpass', 3500, 3, 0.05 * v, p); },
     heart:  (t, v, p) => { sub(t, 0.2 * v); sub(t + 0.16, 0.12 * v); },
-    shimmer:(t, v, p) => chime(t, [nz('A5'), nz('E6'), nz('A6')], 0.04 * v, p),
-    ghost:  (t, v, p) => { sweep(t - 0.4, t + 0.02, 0.05 * v, 2400, 800, p); chime(t, [nz('E6'), nz('B6')], 0.03 * v, p); },
+    shimmer:(t, v, p) => chime(t, [nz('A4'), nz('E5'), nz('A5')], 0.022 * v, p),
+    ghost:  (t, v, p) => { sweep(t - 0.4, t + 0.02, 0.045 * v, 1800, 600, p); chime(t, [nz('E5'), nz('B5')], 0.018 * v, p); },
     rise:   (t, v, p, d = 1.2) => riser(t, t + d, 0.06 * v),
     drop:   (t, v, p) => { tone(t, 600, 90, 0.5, 0.08 * v, 'sine', p, 0.3); sub(t + 0.3, 0.1 * v); },
     crowd:  (t, v, p, d = 2) => { for (let i = 0; i < d * 3; i++) noiseHit(t + i / 3, 0.5, 'bandpass', 600 + (i % 4) * 150, 0.5, 0.025 * v, ((i % 5) - 2) * 0.2, 0.3); },
@@ -115,10 +130,23 @@
   };
   window.SFX_KINDS_LIST = Object.keys(SFX_KINDS);
   // the same kind twice within 50 ms plays once (the louder); everything else plays as registered
-  const SFX_PLAY = [...SFX_REG].sort((x, y) => x[0] - y[0]), lastAt = {};
+  // balance (user, 2026-10-24: too many, the "ding" is annoying): a minimum gap per kind, and at most 2 sounds in any
+  // 0.35 s only one sound (a second only if it is a big one, v ≥ 1.3) → ~70 a minute. Louder cues are placed first so they win the slots.
+  const GAP = { ding: 12, coin: 8, shimmer: 4, ghost: 1.5, tick: 0.6, blip: 0.6, pop: 0.4, beep: 1, drip: 1.5, step: 0.2, swish: 0.5, cloth: 0.5,
+    heart: 0.6, laugh: 3, gasp: 2, glass: 1.5, metal: 0.6, bounce: 0.3, thud: 0.3, paper: 0.6, click: 0.3, whoosh: 0.6, wiper: 1.1, slide: 0.5 };
+  const SFX_PLAY = [], lastAt = {}, placed = [];
+  for (const e of [...SFX_REG].sort((x, y) => (y[2] ?? 1) - (x[2] ?? 1) || x[0] - y[0])) {
+    const [t, k, v] = e; if (!SFX_KINDS[k] || !(t >= 0 && t < DURATION)) continue;
+    const g = GAP[k] ?? 0.05, mine = lastAt[k] || (lastAt[k] = []);
+    if (mine.some((u) => Math.abs(u - t) < g)) continue;
+    const near = placed.filter((u) => Math.abs(u - t) < 0.35).length;
+    if (near >= 1 && (v ?? 1) < 1.3) continue;
+    mine.push(t); placed.push(t); SFX_PLAY.push(e);
+  }
+  SFX_PLAY.sort((x, y) => x[0] - y[0]);
+  window.SFX_PLAYED = SFX_PLAY.length;
   for (const [t, k, v, p, d] of SFX_PLAY) {
-    const f = SFX_KINDS[k]; if (!f || !(t >= 0 && t < DURATION)) continue;
-    if (lastAt[k] != null && t - lastAt[k] < 0.05) continue;
-    lastAt[k] = t; const tt = Math.max(t, 0.05 + (['whoosh', 'swish', 'ghost', 'car', 'rise'].includes(k) ? (k === 'car' ? (d ?? 1.4) / 2 : 0.45) : 0));
+    const f = SFX_KINDS[k];
+    const tt = Math.max(t, 0.05 + (['whoosh', 'swish', 'ghost', 'car', 'rise'].includes(k) ? (k === 'car' ? (d ?? 1.4) / 2 : 0.45) : 0));
     try { f(tt, v ?? 1, clamp(p ?? 0, -1, 1), d); } catch (e) { console.warn('sfx skipped', k, t, e.message); }
   }

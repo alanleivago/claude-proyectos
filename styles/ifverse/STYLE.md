@@ -4,7 +4,7 @@ Long-form (≥ 8 min) 16:9 YouTube stories in the manner of @IfverseTales, all i
 
 ## The look
 - **Flat cards at real depth, filmed by a camera** (`ivStage(layers)`): each layer is drawn flat and placed at a depth d (1 = the actors' plane, 2–6 far, 0.5–0.7 foreground). Far layers pan 1/d as much, zoom 1+(z−1)/d and go soft with depth of field (`IV.dof`); blurred layers render at half resolution.
-- **Film:** mood tint, vignette, grain (4 seeded tiles), black cinema bars (62 px at 1080). `ivPost()` is `STYLE.post`.
+- **Film:** mood tint, vignette, black cinema bars (62 px at 1080). **No grain** (`IV.grain = 0`; the user saw it and the reference is clean). `ivPost()` is `STYLE.post`.
 - **Stick people** (`ivMan`): black round head (R = 0.125 h), black limbs (0.034 h), one-colour clothes (hoodie, jacket, suit, uniform, cardigan, coat, vest, tee), cream eyes and mouth, a **warm rim light** from the mood's key (a silhouette pass nudged toward the light). Hair/hats: puffs, bun, pony, tuft, buscap, cap; glasses.
 - **Faces:** eyes open / happy / wide (pupil) / squint / angry / sad / tired / dots / closed; brows angry / sad / up; mouths smile / grin / flat / o / frown / open / smirk; the speaker's mouth follows its VOICE words (`talk: id`); the narrator has no mouth. **Blink every 3.5–4 s, 3 frames.**
 - **Hands change with shot size:** nub (wide) → mitten (medium) → five-finger glove (close-up); grips open / fist / point / hold / flat; `hold: { R|L|front|back: (x, y, ang, h) => prop }`.
@@ -20,6 +20,10 @@ Long-form (≥ 8 min) 16:9 YouTube stories in the manner of @IfverseTales, all i
 ## Story and voice
 - Title "What If You…?" + a number. 2nd-person present narration, short sentences; ~860 words, ~¼ dialogue, 10ish voices. 12 beats: the wish in minute one, plus/minus, the big hit at the halfway point, the twist before the end, a callback, a cliffhanger, a CTA.
 - `script.md` with `[Name] line` and `[beat Ns]` → `tools/md2json.py` → `tools/vs_cast_gen.py` (VoiceStudio: narrator `mathomaly` at 0.9; characters = profiles cloned from voice-designed samples). Pauses SENT 0.85 / PARA 1.25 / CHAR 0.7 s, beats +1 s → ~1.7 words/s → 8:00+ from ~860 words.
+
+## Sound (user-tuned on ten-seconds)
+- **Music:** a light groove like the reference (measured 100–125 BPM, the tempo changes per section): `groove(t0, t1, chords, { bpm, lv })` in score.js — lv 0 pad · 1 + arpeggio · 2 + bass + hi-hat · 3 + kick + clap. Fast for montages (118–120, lv 3), slow for emotion (80–96, lv 0–1), heartbeat build into the big hit, silence for the twist.
+- **SFX:** every action gets one (`SFX(t, kind, …)` per shot), but balanced: per-kind minimum gaps and one sound per 0.35 s (big ones exempt) → ~70 a minute. No bright "ting/ding" chimes (ding/coin are low marimba taps, max one per 12 s). In the mix SFX sit **under** the voice (≈ −6 dB), music −10 dB, both ducked by the voice.
 
 ## Production pattern (worked on ten-seconds)
 head.html SHOT engine → sets.js (15 sets) + props.js (~35 props) → 8 section files built in parallel in `dev/<sec>` → full storyboard → fixes → code score (bed + 15–25 sfx/min, silence before the loudest hit) → export in chunks (frames are ~2.5 MB each; 12k frames will fill a disk).

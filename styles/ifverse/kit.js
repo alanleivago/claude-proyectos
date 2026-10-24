@@ -11,6 +11,7 @@ const IV = {
   font: '"Arial Rounded MT Bold", "Avenir Next", "Nunito", "Helvetica Neue", Arial, sans-serif',
   sans: '"Avenir Next", "Helvetica Neue", "Segoe UI", Arial, sans-serif',
   dof: 16,                     // blur px for a layer one "depth unit" off focus
+  grain: 0,                    // film grain alpha (0 = none: the reference is clean; 0.085 was the first look)
 };
 // moods: light and grade for a whole set. rim = the edge light on the stick people; amb = a wash over the far layers
 const IV_MOOD = {
@@ -121,8 +122,8 @@ function ivPost(o = {}) {
   v.addColorStop(0, 'rgba(0,0,0,0)'); v.addColorStop(1, `rgba(5,3,10,${IV_M.vig ?? 0.5})`);
   ctx.fillStyle = v; ctx.fillRect(0, 0, W, H);
   const gt = ivGrainTiles()[mod(F, 4)];
-  ctx.globalAlpha = 0.085; ctx.globalCompositeOperation = 'overlay'; ctx.imageSmoothingEnabled = true;
-  if (gt instanceof HTMLCanvasElement) ctx.drawImage(gt, (F * 37) % 7 - 7, (F * 53) % 5 - 5, W + 14, H + 10);
+  ctx.globalAlpha = IV.grain; ctx.globalCompositeOperation = 'overlay'; ctx.imageSmoothingEnabled = true;
+  if (IV.grain > 0 && gt instanceof HTMLCanvasElement) ctx.drawImage(gt, (F * 37) % 7 - 7, (F * 53) % 5 - 5, W + 14, H + 10);
   ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
   if (o.bars !== false) { ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, IV.bar); ctx.fillRect(0, H - IV.bar, W, IV.bar); }
   ctx.restore();
