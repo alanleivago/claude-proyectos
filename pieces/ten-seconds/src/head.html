@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ten Seconds</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { max-width: 100vw; max-height: 100vh; width: auto; height: auto; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  WHAT IF YOU COULD SEE 10 SECONDS INTO THE FUTURE? — 16:9, ~8.5 min, 24fps, style ifverse, voice-led.
+//  The voice is the clock: every shot starts a few frames before the word it shows (CUT). One picture per clause.
+//  Shots are registered by the section files (src/s01.js … s08.js) with SHOT(t0, key, draw); src/main.js sorts them
+//  and fills TIMELINE. Sets and props live in src/sets.js / src/props.js; the look in styles/ifverse/kit.js.
+// =====================================================================
+const FPS = 24, W = 1920, H = 1080, FORMAT = '16:9';
+const BPM = 120, GRID0 = 0, BEAT = 0.5, E8 = 0.25, E16 = 0.125;
+const VL = (id) => { const L = VOICE.lines.find((l) => l.id === id); if (!L) throw new Error('no voice line ' + id); return L; };
+// VW(id, word, n): when the n-th `word` of line id starts (case/punctuation-insensitive); the line start if not found
+const VW = (id, w, n = 1) => { const L = VL(id); let k = 0; const q = w.toLowerCase().replace(/[^a-z0-9']/g, ''); for (const x of L.words || []) if (x.w.toLowerCase().replace(/[^a-z0-9']/g, '') === q && ++k === n) return x.t0; return L.t0; };
+const VWE = (id, w, n = 1) => { const L = VL(id); let k = 0; const q = w.toLowerCase().replace(/[^a-z0-9']/g, ''); for (const x of L.words || []) if (x.w.toLowerCase().replace(/[^a-z0-9']/g, '') === q && ++k === n) return x.t1; return L.t1; };
+const LT = (id) => VL(id).t0, LE = (id) => VL(id).t1;
+const DURATION = Math.round(VOICE.duration * FPS) / FPS;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 62, bottom: 62, right: 0 };
+const HAND = '"Arial Rounded MT Bold", "Avenir Next", Arial, sans-serif', CX = 960;
+const onBeat = (t) => t;
+// a cut lands 3 frames before the word it shows (or before the line, with no word)
+const CUT = (id, word, n = 1) => Math.max(0, (word ? VW(id, word, n) : LT(id)) - 3 / FPS);
+// ---- the shot registry -----------------------------------------------------------------------
+// SHOT(t0, key, draw, o): draw(lt, S) runs every frame of the shot; lt = seconds since the shot began, S = the shot.
+//   o.sec: the section ('s01'…), o.title: what the board says, o.sound: [{t, sfx}] cues (absolute times)
+const SHOTS_REG = [];
+function SHOT(t0, key, draw, o = {}) { SHOTS_REG.push({ t0: Math.max(0, t0), key, draw, ...o }); }
+let SHOT_NOW = null, SHOT_T0 = 0;
+function sceneMain() {
+  let lo = 0, hi = SHOTS_REG.length - 1, k = 0;
+  while (lo <= hi) { const m = (lo + hi) >> 1; if (SHOTS_REG[m].t0 <= TT + 1e-6) { k = m; lo = m + 1; } else hi = m - 1; }
+  const S = SHOTS_REG[k]; if (!S) return; SHOT_NOW = S; SHOT_T0 = S.t0;
+  IV_CAM = { x: 960, y: 540, z: 1 }; IV_FOCUS = 1; IV_M = IV_MOOD.sunset;
+  ctx.fillStyle = '#0c0b10'; ctx.fillRect(0, 0, W, H);
+  S.draw(TT - S.t0, S);
+  if (typeof sceneOverlay === 'function') sceneOverlay();
+}
+const ERA_LIST = [[0, DURATION, () => sceneMain()]];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, gridOffset: GRID0, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE, aspect: FORMAT,
+  format: 'voice-led', shots: [], cuts: [], morphs: [], cues: {}, acts: [], board: [],
+  narration: VOICE.lines.map((l) => ({ id: l.id, t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;
