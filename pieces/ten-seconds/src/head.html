@@ -40,6 +40,11 @@ const CUT = (id, word, n = 1) => Math.max(0, (word ? VW(id, word, n) : LT(id)) -
 //   o.sec: the section ('s01'…), o.title: what the board says, o.sound: [{t, sfx}] cues (absolute times)
 const SHOTS_REG = [];
 function SHOT(t0, key, draw, o = {}) { SHOTS_REG.push({ t0: Math.max(0, t0), key, draw, ...o }); }
+// SFX(t, kind, v, pan, dur): a sound effect at absolute time t (seconds). Call it at REGISTRATION time (top level of a
+// section file, next to the SHOT that shows the action) — never inside a draw function (that runs every frame).
+// kinds: see src/score.js -> SFX_KINDS. v = 0.3..2 (1 = normal), pan -1..1, dur only for long kinds (engine, rise, rain…)
+const SFX_REG = [];
+function SFX(t, kind, v = 1, pan = 0, dur) { if (isFinite(t)) SFX_REG.push([t, kind, v, pan, dur]); }
 let SHOT_NOW = null, SHOT_T0 = 0;
 function sceneMain() {
   let lo = 0, hi = SHOTS_REG.length - 1, k = 0;

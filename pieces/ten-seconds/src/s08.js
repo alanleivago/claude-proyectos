@@ -50,6 +50,8 @@ function s08_face(who, cx, cy, R, f, expr, o = {}) {
   const h = R / IV_J.R; return ivMan({ who, x: cx, y: cy + h * IV_J.headY, h, f, pose: o.pose || ivPose('stand', { hL: [-0.05, 0.29], hR: [0.05, 0.29] }), expr, talk: o.talk, grip: o.grip, hold: o.hold, blinkKey: o.blinkKey, armsFront: o.armsFront, noBlink: o.noBlink });
 }
 // the corner at sunset with our own actors' plane: keeps the set's sidewalk + pole, adds o.act
+// footsteps while walking: one every 5 frames, alternating feet left/right around pan p (registration time only)
+function s08_steps(a, b, v = 1, p = 0) { for (let t = a, i = 0; t < b; t += 5 / FPS, i++) SFX(t, 'step', v * (i % 2 ? 0.8 : 1), p + (i % 2 ? 0.15 : -0.15)); }
 const s08_corner = (o = {}) => SET_corner({ t: 'sunset', light: 'green', ...o });
 
 // ---------------------------------------------------------------------
@@ -67,6 +69,9 @@ SHOT(CUT('133-narrator'), 's08_walkHome', (lt) => {
     ivMan({ who: CAST.you, x: w.x, y: 935, h: 520, f: -0.6, pose: ivPoseMix(w.pose, ivPose('stand', { hL: [0.06, 0.14] }), 0.4), expr: { eyes: 'open', mouth: 'smile' } });
   } }));
 }, { sec: 's08', title: 'Walking home — you + Dad, ghost of you both already crossing' });
+// SFX: two pairs of feet on the sidewalk, the ghost of you both already crossing
+SFX(CUT('133-narrator') + 0.05, 'ghost', 0.5, -0.4);
+s08_steps(CUT('133-narrator') + 0.1, CUT('134-narrator'), 0.8, 0.35);
 
 // 134 "Fifth and Main." — insert: the street blades and the walk signal
 SHOT(CUT('134-narrator'), 's08_signs', (lt) => {
@@ -76,6 +81,10 @@ SHOT(CUT('134-narrator'), 's08_signs', (lt) => {
     ivGhost(() => ivDot(SET_POS.corner.signal[0] + 2, SET_POS.corner.signal[1] + 176, 25, '#ffffff'), 0.35 + 0.1 * Math.sin(TT * 9));
   } }));
 }, { sec: 's08', title: 'MAIN ST × 5TH ST blades, walk light green' });
+SFX(CUT('134-narrator') + 0.04, 'click', 0.9, 0.5);                                   // the walk light
+SFX(VW('134-narrator', 'fifth'), 'beep', 0.6, 0.5); SFX(VW('134-narrator', 'main'), 'beep', 0.6, 0.5); SFX(VW('134-narrator', 'main') + 0.5, 'beep', 0.6, 0.5);
+SFX(CUT('134-narrator') + 0.3, 'ghost', 0.35, 0.5);
+s08_steps(CUT('134-narrator') + 0.1, CUT('135-narrator'), 0.35, 0);
 
 // 135 "You step off the curb," — side-on, low: your shoe drops off the curb onto the crosswalk; the ghost foot ahead
 function s08_curbFeet(lt, u, ghost) {
@@ -102,6 +111,9 @@ SHOT(CUT('135-narrator'), 's08_step', (lt) => {
   IV_CAM = { x: 600, y: 700, z: 3.0 };
   ivStage(s08_swap(s08_corner({ cars: false }), s08_ss(() => s08_curbFeet(lt, s08_ramp(lt, ts, s08_fr(6)), 1)), { noFg: true }));
 }, { sec: 's08', title: 'shoe steps off the curb; ghost foot ahead' });
+s08_steps(CUT('135-narrator') + 0.05, VW('135-narrator', 'step') - 0.1, 0.6, 0.2);
+SFX(VW('135-narrator', 'step'), 'swish', 0.5, 0.1);                                   // the shoe lifts off the curb…
+SFX(VW('135-narrator', 'step') + s08_fr(6), 'step', 1.6, -0.2); SFX(VW('135-narrator', 'step') + s08_fr(6), 'thud', 0.6, -0.2);   // …and lands on the crosswalk
 
 // 135 "…and the ghost goes blank." — medium: you at the edge of the road, the ghost world on… then it flickers out
 SHOT(CUT('135-narrator', 'and'), 's08_blank', (lt) => {
@@ -118,6 +130,10 @@ SHOT(CUT('135-narrator', 'and'), 's08_blank', (lt) => {
   } }));
   s08_blank(k);
 }, { sec: 's08', title: 'the ghost flickers out on "blank" — world drains grey-blue' });
+SFX(CUT('135-narrator', 'and') + 0.1, 'car', 0.35, 0.6, 1.0);                     // the ghost traffic, still there…
+SFX(VW('135-narrator', 'ghost'), 'ghost', 0.6, -0.4);
+{ const tb = VW('135-narrator', 'blank'); SFX(tb, 'click', 0.8, 0); SFX(tb + s08_fr(2), 'click', 0.6, 0); SFX(tb + s08_fr(5), 'click', 0.4, 0); SFX(tb + 0.05, 'swish', 0.6, -0.3); SFX(tb + 0.12, 'gasp', 0.7, -0.3); }
+// ---- THE SILENCE: nothing registered from VW('135-narrator','blank') + 0.6 until VW('140-narrator','grabs') ----
 
 // [BEAT 2 s] — silence. Wide: you alone in the crosswalk, everything still and grey
 const s08_beat135 = (u) => LE('135-narrator') + (LT('136-narrator') - LE('135-narrator')) * u;
@@ -263,6 +279,7 @@ SHOT(CUT('140-narrator'), 's08_grab', (lt) => {
   s08_bigArm(-160, 1300, lerp(260, 1010 - 50 * pull, u), lerp(1110, 790 + 40 * pull, u), 118, CAST.dad.col, held ? 'hold' : 'open');
   ctx.restore();
 }, { sec: 's08', title: 'HAND CLOSE-UP: Dad\'s glove grabs the hood (colour on grey)' });
+SFX(VW('140-narrator', 'grabs'), 'cloth', 2, -0.3); SFX(VW('140-narrator', 'grabs'), 'thud', 0.8, -0.3); SFX(VW('140-narrator', 'grabs') + s08_fr(2), 'gasp', 0.9, 0.2);   // the grab: sound comes back hard
 
 // "…and yanks you back." — medium: you fly back off the road into Dad
 SHOT(CUT('140-narrator', 'yanks'), 's08_yank', (lt) => {
@@ -282,6 +299,7 @@ SHOT(CUT('140-narrator', 'yanks'), 's08_yank', (lt) => {
     ivMan({ who: CAST.dad, x: dx, y: dy, h: dh, f: 0.5, pose: P, grip: { front: 'hold' }, expr: { eyes: 'angry', mouth: 'open', brow: 'angry' } });
   });
 }, { sec: 's08', title: 'the yank: off the road, back into Dad' });
+{ const ty = VW('140-narrator', 'yanks'); SFX(ty, 'swish', 1.6, -0.4); SFX(ty, 'cloth', 1, -0.4); SFX(ty + s08_fr(5), 'thud', 1.5, -0.5); SFX(ty + s08_fr(6), 'step', 1, -0.3); SFX(ty + s08_fr(9), 'step', 0.7, -0.5); }
 
 // 141 "A scooter screams through / the spot where you were standing."
 SHOT(CUT('141-narrator'), 's08_scooter', (lt) => {
@@ -300,6 +318,8 @@ SHOT(CUT('141-narrator'), 's08_scooter', (lt) => {
     ivMan({ who: CAST.dad, x: dx, y: dy, h: dh, f: 0.5, pose: P, grip: { front: 'hold' }, expr: { eyes: 'wide', mouth: 'open', brow: 'up', look: [1, -0.2] } });
   });
 }, { sec: 's08', title: 'the scooter screams through the spot (you on the ground, Dad holding the hood)' });
+SFX(CUT('141-narrator') + 0.04, 'impact', 1, -0.2); SFX(CUT('141-narrator') + 0.04, 'thud', 1.5, -0.2); SFX(CUT('141-narrator') + 0.1, 'cloth', 0.8, -0.3);   // you land on the ground
+SFX(VW('141-narrator', 'screams') + 0.08, 'gasp', 0.8, -0.2);
 SHOT(CUT('141-narrator', 'spot'), 's08_spot', (lt) => {
   IV_CAM = { x: 470, y: 760, z: 3.0 };
   ivStage(s08_swap(s08_corner({ cars: false }), s08_ss(() => {
@@ -314,6 +334,9 @@ SHOT(CUT('141-narrator', 'spot'), 's08_spot', (lt) => {
   }), { noFg: true }));
   s08_blank(1);
 }, { sec: 's08', title: 'the empty spot on the stripe, a leaf spinning' });
+SFX(CUT('141-narrator', 'spot') + 0.02, 'whoosh', 0.6, 0.7);                       // the last of the scooter's wind
+SFX(CUT('141-narrator', 'spot') + 0.15, 'paper', 0.5, 0); SFX(CUT('141-narrator', 'spot') + 0.75, 'paper', 0.4, 0.3);   // the leaf
+SFX(CUT('141-narrator', 'spot') + 0.4, 'drip', 0.3, 0.2);
 
 // 142 "It's Dad." — low close-up on Dad, in colour, breathing hard
 SHOT(CUT('142-narrator'), 's08_itsDad', (lt) => {
@@ -325,6 +348,9 @@ SHOT(CUT('142-narrator'), 's08_itsDad', (lt) => {
   s08_face(CAST.dad, 1060, 470 + br, 215, -0.25, { eyes: 'wide', mouth: 'open', brow: 'sad', look: [-0.5, 0.4] }, { blinkKey: 'd1' });
   ctx.restore();
 }, { sec: 's08', title: 'It\'s Dad — close, low, panting' });
+// Dad panting (the face bobs with sin(lt*9): a breath every ~0.7 s)
+for (let i = 0; i < 3; i++) SFX(CUT('142-narrator') + 0.1 + i * 0.7, 'gasp', 0.6 - i * 0.08, 0.2);
+SFX(CUT('142-narrator') + 0.2, 'heart', 0.7, 0); SFX(CUT('142-narrator') + 1.0, 'heart', 0.5, 0);
 
 // 143 Dad: "Eyes on the road, kid." — the ritual: two fingers to his eyes, then at you. Colour comes back.
 const s08_warm = (k0) => s08_blank(k0 * (1 - EZ.o3(clamp((TT - SHOT_T0) / 1.2))));
@@ -341,6 +367,9 @@ SHOT(CUT('143-dad'), 's08_eyesOnRoad', (lt) => {
   } }));
   s08_warm(0.4);
 }, { sec: 's08', title: 'Dad: "Eyes on the road, kid." — fingers to his eyes, then at you' });
+SFX(CUT('143-dad') + 0.05, 'rise', 0.5, 0, 1.2);                                    // the colour comes back
+SFX(VW('143-dad', 'eyes') - s08_fr(5), 'swish', 0.9, -0.2);                           // two fingers to his eyes…
+SFX(VW('143-dad', 'kid') - s08_fr(5), 'swish', 1.1, 0.2); SFX(VW('143-dad', 'kid'), 'cloth', 0.4, 0.2);   // …then at you
 
 // 144 "He didn't see the future." — Dad's eye, extreme close: no cyan, only you reflected in it
 SHOT(CUT('144-narrator'), 's08_dadEye', () => {
@@ -355,6 +384,7 @@ SHOT(CUT('144-narrator'), 's08_dadEye', () => {
   }), { noFg: true }));
   s08_blank(0.12);
 }, { sec: 's08', title: 'ECU Dad\'s eye: no ghost, just you in it' });
+SFX(CUT('144-narrator') + 0.1, 'heart', 0.7, 0); SFX(CUT('144-narrator') + 0.9, 'heart', 0.6, 0); SFX(VW('144-narrator', 'future'), 'shimmer', 0.3, 0);
 
 // 145 "He was just watching you." — the walk home again, from his side: his eyes on you the whole way
 SHOT(CUT('145-narrator'), 's08_watching', (lt) => {
@@ -366,6 +396,7 @@ SHOT(CUT('145-narrator'), 's08_watching', (lt) => {
     ivMan({ who: CAST.dad, x: d.x, y: 915, h: 560, f: -0.6, pose: d.pose, expr: { eyes: 'open', mouth: 'smile', look: [-1, 0.6] } });
   } }));
 }, { sec: 's08', title: 'callback: walking home, Dad\'s eyes on you' });
+s08_steps(CUT('145-narrator') + 0.1, LE('145-narrator') + s08_fr(2), 0.6, 0.3);
 
 // [BEAT 1 s] — the hug
 SHOT(LE('145-narrator') + s08_fr(2), 's08_hug', (lt) => {
@@ -375,6 +406,8 @@ SHOT(LE('145-narrator') + s08_fr(2), 's08_hug', (lt) => {
     ivMan({ who: CAST.dad, x: 830, y: 950, h: 580, f: 0.55, pose: ivPose('hug', { hL: [0.24, 0.14], hR: [0.3, 0.12], tilt: 0.12 }), expr: { eyes: 'closed', mouth: 'smile' } });
   } }));
 }, { sec: 's08', title: 'BEAT: the hug, warm sunset' });
+SFX(LE('145-narrator') + s08_fr(2), 'cloth', 1.4, 0); SFX(LE('145-narrator') + s08_fr(3), 'thud', 0.5, 0);   // the hug
+SFX(LE('145-narrator') + 0.35, 'heart', 0.8, 0); SFX(LE('145-narrator') + 1.0, 'laugh', 0.4, -0.1); SFX(LE('145-narrator') + 1.6, 'cloth', 0.5, 0);
 
 // 146 "Futures changed: two hundred and thirteen." — the two of you on the kerb; the counter lands on "thirteen"
 const s08_cnt = (rows, a = 1) => ivCounter(rows, a);
@@ -386,6 +419,10 @@ SHOT(CUT('146-narrator'), 's08_count213', (lt) => {
   } }));
   s08_cnt([['FUTURES CHANGED', ivCount(VW('146-narrator', 'two'), VWE('146-narrator', 'thirteen'), 212, 213), true], ['THANK-YOUS', 0]], ivPop(SHOT_T0));
 }, { sec: 's08', title: 'counter 212 → 213 on "thirteen", you two on the kerb' });
+SFX(CUT('146-narrator') + 0.02, 'pop', 1, -0.6);                                    // the counter comes in
+SFX(CUT('146-narrator') + 0.2, 'thud', 0.5, 0); SFX(CUT('146-narrator') + 0.3, 'thud', 0.4, 0.1);   // you two sit on the kerb
+SFX(VW('146-narrator', 'two'), 'tick', 0.6, -0.6); SFX(VW('146-narrator', 'hundred'), 'tick', 0.6, -0.6); SFX(VW('146-narrator', 'and'), 'tick', 0.6, -0.6);
+SFX(VWE('146-narrator', 'thirteen'), 'blip', 1.5, -0.6); SFX(VWE('146-narrator', 'thirteen'), 'coin', 0.6, -0.6);   // 212 → 213
 // 147 "This one wasn't yours." — Dad close, the 213 gets a tag: DAD
 SHOT(CUT('147-narrator'), 's08_notYours', (lt) => {
   IV_CAM = { x: 820, y: 420, z: 2.4 };
@@ -395,6 +432,8 @@ SHOT(CUT('147-narrator'), 's08_notYours', (lt) => {
   s08_cnt([['FUTURES CHANGED', 213, true], ['THANK-YOUS', 0]]);
   ivTag('BY DAD', 795, H - IV.bar - 160, 30, ivPop(VW('147-narrator', 'wasn\'t')), { c: '#cfe0ff', line: 'rgba(110,150,220,0.8)' });
 }, { sec: 's08', title: 'Dad close; tag "BY DAD" over 213' });
+SFX(CUT('147-narrator') + 0.02, 'swish', 0.5, -0.3);
+SFX(VW('147-narrator', 'wasn\'t'), 'pop', 1.2, -0.2);                                 // "BY DAD"
 // 148 "Thank-yous: one." — you, close; THANK-YOUS 0 → 1 on "one"
 SHOT(CUT('148-narrator'), 's08_thanks1', (lt) => {
   IV_CAM = { x: 1100, y: 420, z: 2.4 };
@@ -403,6 +442,8 @@ SHOT(CUT('148-narrator'), 's08_thanks1', (lt) => {
   }), { noFg: true }));
   s08_cnt([['FUTURES CHANGED', 213, true], ['THANK-YOUS', ivCount(VW('148-narrator', 'one') - s08_fr(4), VWE('148-narrator', 'one'), 0, 1)]]);
 }, { sec: 's08', title: 'you close; THANK-YOUS 0 → 1 on "one"' });
+SFX(CUT('148-narrator') + 0.02, 'swish', 0.5, 0.3);
+SFX(VW('148-narrator', 'one') - s08_fr(4), 'tick', 0.7, -0.6); SFX(VWE('148-narrator', 'one'), 'blip', 1.5, -0.6); SFX(VWE('148-narrator', 'one'), 'ding', 0.7, -0.6);   // THANK-YOUS 0 → 1
 // 149 You: "Thanks, Dad." — two-shot on the kerb
 SHOT(CUT('149-you'), 's08_thanksDad', (lt) => {
   IV_CAM = { x: 930, y: 600, z: 1.6 };
@@ -411,6 +452,7 @@ SHOT(CUT('149-you'), 's08_thanksDad', (lt) => {
     ivMan({ who: CAST.you, x: 1080, y: 945, h: 500, f: -0.5, pose: s08_sitGround(), talk: '149-you', expr: { eyes: 'open', mouth: 'smile', look: [-1, -0.3] } });
   } }));
 }, { sec: 's08', title: 'You: "Thanks, Dad."' });
+SFX(CUT('149-you') + 0.05, 'cloth', 0.5, 0.2); SFX(VW('149-you', 'dad'), 'swish', 0.4, 0.2);
 // [BEAT 1 s] — fist bump: green sleeve meets blue sleeve, hard stop
 SHOT(LE('149-you') + s08_fr(2), 's08_fistBump', (lt) => {
   const u = s08_ramp(lt, 0.25, s08_fr(5)), back = Math.sin(clamp((lt - 0.25 - s08_fr(5)) / 0.25) * Math.PI) * 18;
@@ -421,6 +463,7 @@ SHOT(LE('149-you') + s08_fr(2), 's08_fistBump', (lt) => {
     if (u >= 1 && lt < 0.25 + s08_fr(9)) { ctx.save(); ctx.globalAlpha = 0.6; for (let i = 0; i < 6; i++) { const a = i / 6 * TAU; ivLine(960 + Math.cos(a) * 150, 590 + Math.sin(a) * 150, 960 + Math.cos(a) * 210, 590 + Math.sin(a) * 210, 6, '#ffe2b0'); } ctx.restore(); }
   }), { noFg: true }));
 }, { sec: 's08', title: 'BEAT: fist bump close-up' });
+{ const t = LE('149-you') + s08_fr(2) + 0.25; SFX(t, 'swish', 1.1, 0); SFX(t + s08_fr(5), 'impact', 1.2, 0); SFX(t + s08_fr(5), 'thud', 0.8, 0); SFX(t + 0.5, 'laugh', 0.5, 0.2); }
 
 // ---------------------------------------------------------------------
 //  150–153 · that night: the message from ten seconds ahead — the cyan comes back
@@ -431,6 +474,8 @@ SHOT(CUT('150-narrator'), 's08_night', (lt) => {
     ivMan({ who: CAST.you, x: 600, y: GROUND, h: 520, f: 0.45, pose: ivPose('sit', { hL: [0.1, 0.2], hR: [0.16, 0.2], tilt: 0.12 }), expr: { eyes: 'tired', mouth: 'flat', look: [0.6, 0.4] } });
   } }));
 }, { sec: 's08', title: 'That night — bedroom wide' });
+SFX(CUT('150-narrator'), 'whoosh', 1, 0);                                            // that night
+SFX(CUT('150-narrator') + 0.25, 'tick', 0.5, 0.4); SFX(CUT('150-narrator') + 0.75, 'tick', 0.5, 0.4); SFX(CUT('150-narrator') + 0.4, 'cloth', 0.4, -0.3);
 // "…your phone buzzes." — top-down on the blanket: the lock screen lights up and buzzes
 function s08_lock(w, h, o = {}) {
   ctx.fillStyle = ivVGrad(0, h, ['#1a2448', '#11163a', '#0b0d1e']); ctx.fillRect(0, 0, w, h);
@@ -452,6 +497,8 @@ SHOT(CUT('150-narrator', 'your'), 's08_buzz', (lt) => {
     P_phone(960 + bz, 560, 9.5, { ang: -0.12, off: !on, glow: on, screen: (w, h) => s08_lock(w, h, { note: ivPop(tb) }) });
   }) }]);
 }, { sec: 's08', title: 'top-down: the phone on the blanket lights up and buzzes' });
+SFX(CUT('150-narrator', 'your') + 0.02, 'cloth', 0.4, 0);                            // the blanket
+SFX(VW('150-narrator', 'buzzes'), 'buzz', 1.5, 0); SFX(VW('150-narrator', 'buzzes'), 'click', 0.6, 0); SFX(VW('150-narrator', 'buzzes') + 0.05, 'pop', 0.9, 0); SFX(VW('150-narrator', 'buzzes') + 0.75, 'buzz', 1.1, 0);
 
 // 151 "A message," — you, lit by the screen
 SHOT(CUT('151-narrator'), 's08_reads', (lt) => {
@@ -462,6 +509,7 @@ SHOT(CUT('151-narrator'), 's08_reads', (lt) => {
     ivGlow(m.handR[0], m.handR[1] - 20, 260, 'rgba(160,190,255,0.35)');
   } }));
 }, { sec: 's08', title: 'you on the bed, face lit by the message' });
+SFX(CUT('151-narrator') + 0.05, 'cloth', 0.6, -0.2); SFX(CUT('151-narrator') + 0.1, 'swish', 0.5, 0); SFX(VW('151-narrator', 'message'), 'click', 0.6, 0);
 // "…timestamped ten seconds from now." — insert: the bedside clock 11:42:00 vs the stamp 11:42:10
 SHOT(CUT('151-narrator', 'timestamped'), 's08_stamp', (lt) => {
   ivStage(SET_void({ mood: 'night' }));
@@ -477,6 +525,9 @@ SHOT(CUT('151-narrator', 'timestamped'), 's08_stamp', (lt) => {
   ivTag('+10 s', 960, 300, 56, ivPop(VWE('151-narrator', 'seconds') - s08_fr(3)));
   ctx.restore();
 }, { sec: 's08', title: 'insert: clock 11:42:00 vs stamp 11:42:10, "+10 s"' });
+SFX(CUT('151-narrator', 'timestamped') + 0.02, 'pop', 0.8, -0.4); SFX(CUT('151-narrator', 'timestamped') + 0.12, 'pop', 0.8, 0.4);   // clock + bubble
+for (let i = 0; i < 2; i++) SFX(CUT('151-narrator', 'timestamped') + 0.4 + i, 'tick', 0.9, -0.4);   // the bedside clock
+SFX(VWE('151-narrator', 'seconds') - s08_fr(3), 'pop', 1.2, 0); SFX(VWE('151-narrator', 'seconds') - s08_fr(3), 'blip', 0.7, 0);   // "+10 s"
 
 // 152 "Nice corner." / 153 "I see twenty." — the phone in your hand, extreme close; on "twenty" the screen turns cyan
 function s08_phoneHand(text, cy) {
@@ -488,12 +539,15 @@ SHOT(CUT('152-narrator'), 's08_niceCorner', (lt) => {
   IV_CAM = { x: 820, y: 560, z: 2.6 };
   ivStage(s08_swap(SET_bedroom({ phone: false }), s08_ss(() => s08_phoneHand('Nice corner.', 0)), { noFg: true }));
 }, { sec: 's08', title: 'ECU phone: "Nice corner."' });
+SFX(CUT('152-narrator') + 0.02, 'swish', 0.5, 0.3); SFX(VW('152-narrator', 'nice') + 0.06, 'pop', 1, 0);   // the bubble
 SHOT(CUT('153-narrator'), 's08_seeTwenty', (lt) => {
   const cy = s08_ramp(TT, VW('153-narrator', 'twenty'), s08_fr(6));
   IV_CAM = { x: 820, y: 560, z: 2.6 };
   ivStage(s08_swap(SET_bedroom({ phone: false }), s08_ss(() => { ivGlow(960, 520, 900, 'rgba(90,230,255,0.4)', cy); s08_phoneHand(TT >= VW('153-narrator', 'i') ? 'Nice corner. I see twenty.' : 'Nice corner.', cy); }), { noFg: true }));
   ivTag('20 s', 1560, 300, 60, ivPop(VWE('153-narrator', 'twenty') - s08_fr(3)), { c: '#7ff0ff', line: 'rgba(127,240,255,0.7)' });
 }, { sec: 's08', title: 'ECU: "I see twenty." — screen turns cyan, "20 s"' });
+SFX(VW('153-narrator', 'i'), 'pop', 1.1, 0); SFX(VW('153-narrator', 'i'), 'click', 0.5, 0);   // "I see twenty." pops in
+SFX(VWE('153-narrator', 'twenty') - s08_fr(3), 'pop', 1.2, 0.6);                      // "20 s"
 // [BEAT 2 s] — your face in the cyan light; then the eye, the future back in it
 const s08_beat153 = (u) => LE('153-narrator') + (LT('154-narrator') - LE('153-narrator')) * u;
 SHOT(s08_beat153(0.1), 's08_cyanFace', () => {
@@ -505,6 +559,7 @@ SHOT(s08_beat153(0.1), 's08_cyanFace', () => {
     ivGlow(960, 1080, 380, 'rgba(127,240,255,0.5)');
   }), { noFg: true }));
 }, { sec: 's08', title: 'BEAT: your face lit cyan from below' });
+SFX(s08_beat153(0.1) + 0.05, 'heart', 0.8, 0); SFX(s08_beat153(0.1) + 0.7, 'heart', 0.7, 0); SFX(s08_beat153(0.1) + 0.3, 'gasp', 0.5, 0);
 SHOT(s08_beat153(0.55), 's08_eyeCyan', () => {
   IV_CAM = { x: 700, y: 400, z: 3.2 };
   ivStage(s08_swap(SET_bedroom({ phone: false }), s08_ss(() => {
@@ -516,6 +571,7 @@ SHOT(s08_beat153(0.55), 's08_eyeCyan', () => {
     ivRR(ex - 70, ey - 120, 46, 26, 8, 'rgba(255,255,255,0.55)');
   }), { noFg: true }));
 }, { sec: 's08', title: 'BEAT: the eye — cyan back in it (callback to the empty eye)' });
+SFX(s08_beat153(0.55) + 0.02, 'ghost', 0.8, 0); SFX(s08_beat153(0.55) + 0.3, 'rise', 0.6, 0, 1.5);   // the future, back in your eye
 
 // ---------------------------------------------------------------------
 //  154–156 · the CTA
@@ -529,6 +585,8 @@ SHOT(CUT('154-narrator'), 's08_cta', (lt) => {
   } }));
   ivTag('10 s', 1420, 260, 50, ivPop(VWE('154-narrator', 'seconds') - s08_fr(3)), { c: '#7ff0ff', line: 'rgba(127,240,255,0.7)' });
 }, { sec: 's08', title: 'CTA: you to camera, your ghost beside you, "10 s"' });
+SFX(CUT('154-narrator'), 'whoosh', 1.2, 0); SFX(CUT('154-narrator') + 0.15, 'ghost', 0.6, 0.3); SFX(VW('154-narrator', 'what'), 'swish', 0.6, -0.1);
+SFX(VWE('154-narrator', 'seconds') - s08_fr(3), 'pop', 1.2, 0.5);                     // "10 s"
 // 155 "Tell us in the comments." — a comment card; Nia already wrote one
 SHOT(CUT('155-narrator'), 's08_comments', (lt) => {
   ivStage(SET_void({ mood: 'night' }));
@@ -549,12 +607,17 @@ SHOT(CUT('155-narrator'), 's08_comments', (lt) => {
   if (Math.floor(lt * 2.5) % 2 === 0) ivLine(x + 330, y + 616, x + 330, y + 650, 3, '#ffe6c4');
   ctx.restore();
 }, { sec: 's08', title: 'comments card: Nia "Spoiler."' });
+SFX(CUT('155-narrator'), 'whoosh', 0.8, 0); SFX(CUT('155-narrator') + 0.04, 'pop', 0.9, 0);   // the card
+for (let i = 0; i < 3; i++) SFX(CUT('155-narrator') + 0.15 + i * 0.22, 'pop', 0.9 + i * 0.1, -0.3);   // three comments
+SFX(VW('155-narrator', 'comments'), 'type', 0.5, -0.1, 0.6);
 // 156 "And if you'd have braked too," — Dad's bus, the brake (callback)
 SHOT(CUT('156-narrator'), 's08_braked', (lt) => {
   const u = EZ.o3(clamp(lt / 0.7));
   IV_CAM = { x: 960, y: 540, z: 1.0 };
   ivStage(SET_busSide({ busX: 520 + 260 * u, brake: u > 0.2 ? 1 : 0 }));
 }, { sec: 's08', title: 'callback: the bus brakes in the rain' });
+SFX(CUT('156-narrator'), 'whoosh', 0.8, 0); SFX(CUT('156-narrator') + 0.02, 'engine', 0.6, -0.2, 0.8);
+SFX(CUT('156-narrator') + 0.05, 'brake', 1.3, 0.2); SFX(CUT('156-narrator') + 0.7, 'thud', 0.6, 0.3); SFX(CUT('156-narrator') + 0.4, 'wiper', 0.6, 0.4); SFX(CUT('156-narrator') + 1.2, 'wiper', 0.5, 0.4);
 // "…hit like and subscribe" — the corner at night, you and Dad walking home, safe; the buttons pop on their words
 function s08_pill(str, x, y, a, col) {
   if (a <= 0) return; ctx.save(); ctx.translate(x, y); const sc = 0.85 + 0.15 * EZ.back(clamp(a)); ctx.scale(sc, sc); ctx.globalAlpha *= clamp(a);
@@ -577,6 +640,10 @@ SHOT(CUT('156-narrator', 'hit'), 's08_like', (lt) => {
   ivDot(712, 228, 0.1, '#fff');
   ctx.restore();
 }, { sec: 's08', title: 'LIKE / SUBSCRIBE pop over the night corner' });
+SFX(CUT('156-narrator', 'hit'), 'whoosh', 1, 0);
+SFX(VW('156-narrator', 'like') - s08_fr(3), 'pop', 1.5, -0.2); SFX(VW('156-narrator', 'like') - s08_fr(3), 'click', 0.9, -0.2);
+SFX(VW('156-narrator', 'subscribe') - s08_fr(3), 'pop', 1.7, 0.2); SFX(VW('156-narrator', 'subscribe') - s08_fr(3), 'click', 1, 0.2);
+s08_steps(CUT('156-narrator', 'hit') + 0.1, CUT('156-narrator', 'part'), 0.35, 0.3);
 // "…for part two." — the last wide: the town at night, the title small, PART 2 lands on "two"; runs to the end
 SHOT(CUT('156-narrator', 'part'), 's08_end', (lt) => {
   const t0 = CUT('156-narrator', 'hit');
@@ -588,3 +655,6 @@ SHOT(CUT('156-narrator', 'part'), 's08_end', (lt) => {
   ivTag('PART 2', 960, 300, 40, ivPop(VWE('156-narrator', 'two') - s08_fr(3)), { c: '#ffe2b0' });
   ctx.restore();
 }, { sec: 's08', title: 'END: night town, title small, "PART 2" on "two"' });
+SFX(CUT('156-narrator', 'part'), 'whoosh', 1.2, 0);
+SFX(VWE('156-narrator', 'two') - s08_fr(3), 'pop', 1, 0); SFX(VWE('156-narrator', 'two') - s08_fr(3), 'ding', 0.6, 0);   // PART 2 — the soft final ding
+s08_steps(CUT('156-narrator', 'part') + 0.1, CUT('156-narrator', 'part') + 3, 0.3, 0.2);

@@ -99,12 +99,15 @@ SHOT(CUT('122-narrator'), 's07_review', () => {
   IV_CAM = { x: 980, y: 520, z: 1.04 * ivPush(CUT('122-narrator'), 0.03, 1.8) };
   ivStage(s07_hearing());
 }, { sec: 's07', title: 'The review: city hall wide — Voss at the lectern, Dad, 3 officials, Theo + Nia at the back' });
+{ const t = CUT('122-narrator');
+  SFX(t, 'whoosh', 1.2); SFX(t + 0.05, 'crowd', 0.35, 0, 2.8); SFX(t + 0.4, 'paper', 0.4, 0.5); SFX(t + 0.9, 'cloth', 0.35, -0.6); SFX(t + 1.5, 'thud', 0.3, 0.1); SFX(t + 2.2, 'paper', 0.3, 0.6); }
 
 // ---- 123 "Voss," — Voss at the lectern, smooth, the red tie ------------------------------------------
 SHOT(CUT('123-narrator', 'Voss'), 's07_voss', () => {
   IV_CAM = { x: 610, y: 445, z: 2.6 }; IV_FOCUS = 1;
   ivStage(s07_hearing({ voss: { f: 0.35, pose: ivPose('stand', { hR: [0.15, 0.1], hL: [0.06, 0.12] }), expr: { eyes: 'squint', mouth: 'smirk' } } }));
 }, { sec: 's07', title: 'Voss close: smirk, red tie' });
+SFX(CUT('123-narrator', 'Voss'), 'swish', 0.6, -0.3); SFX(CUT('123-narrator', 'Voss') + 0.05, 'cloth', 0.4, -0.3);
 
 // ---- "Dad," — Dad in the chair, cap off in his hands, eyes down --------------------------------------
 SHOT(CUT('123-narrator', 'Dad'), 's07_dad', () => {
@@ -112,6 +115,7 @@ SHOT(CUT('123-narrator', 'Dad'), 's07_dad', () => {
   const turn = Math.floor((TT - CUT('123-narrator', 'Dad')) * FPS / 6) % 2;   // turning the cap in his fingers
   ivStage(s07_hearing({ dad: { f: 0.4, pose: ivPose('sit', { hL: [0.13, 0.08], hR: [0.2, 0.09], tilt: 0.2 }), expr: { eyes: 'sad', mouth: 'frown', look: [0.5, 1] }, capAng: turn ? 0.1 : 0.22 } }));
 }, { sec: 's07', title: 'Dad close: cap in his hands, eyes down' });
+{ const t = CUT('123-narrator', 'Dad'); SFX(t, 'swish', 0.5); for (let k = 1; k * 0.25 < VW('123-narrator', 'three') - t; k++) SFX(t + k * 0.25, 'cloth', 0.3, 0.1); }   // the cap turning in his fingers
 
 // ---- "and three people from the city." — the officials behind their nameplates ---------------------
 SHOT(CUT('123-narrator', 'three'), 's07_three', () => {
@@ -120,6 +124,8 @@ SHOT(CUT('123-narrator', 'three'), 's07_three', () => {
   ivStage(s07_hearing({ off: [0, 1, 2].map((k) => ({ expr: { eyes: TT > t + k * 0.18 ? 'open' : 'tired', mouth: 'flat', look: [-1, 0.2] }, f: -0.15 })) }));
   [0, 1, 2].forEach((k) => { const p = ivPop(t + k * 0.12); ivTag(String(k + 1), 960 + (SET_POS.hearing.officials[k] - 1450) * 1.75, 250, 34, p); });
 }, { sec: 's07', title: 'Three officials at the long table, nameplates, 1·2·3 pop' });
+{ const t = VW('123-narrator', 'three'); SFX(CUT('123-narrator', 'three'), 'swish', 0.6, 0.4);
+  [0, 1, 2].forEach((k) => SFX(t + k * 0.12, 'pop', 0.8, -0.4 + k * 0.4)); SFX(t + 0.6, 'paper', 0.35, 0.3); }
 
 // ---- 124 Voss: "A teenager with a phone." — medium, his hand sweeps back toward the kid ------------
 SHOT(CUT('124-voss'), 's07_vossTalk', () => {
@@ -129,6 +135,7 @@ SHOT(CUT('124-voss'), 's07_vossTalk', () => {
   ivStage(s07_hearing({ voss: { f: 0.45, pose: P, expr: { eyes: 'squint', mouth: 'smirk' }, talk: '124-voss', grip: { back: 'open' } },
     you: { expr: { eyes: 'open', mouth: 'flat', look: [1, 0] } } }));
 }, { sec: 's07', title: 'Voss talks, his hand flicks back at Theo' });
+SFX(CUT('124-voss'), 'swish', 0.5, -0.4); SFX(VW('124-voss', 'teenager'), 'swish', 0.9, -0.5); SFX(VW('124-voss', 'teenager') + 0.12, 'cloth', 0.5, -0.5);
 
 // ---- "…with a phone." — Theo's hand on the phone: 47 clips in the gallery ----------------------------
 SHOT(CUT('124-voss', 'with'), 's07_phone', () => {
@@ -141,6 +148,7 @@ SHOT(CUT('124-voss', 'with'), 's07_phone', () => {
   });
   ivTag('47 CLIPS', 1500, 300, 44, ivPop(VW('124-voss', 'phone') - 0.05));
 }, { sec: 's07', title: 'Hand close-up: Theo\'s phone, the gallery of corner clips' });
+SFX(CUT('124-voss', 'with'), 'swish', 0.6, 0.4); SFX(CUT('124-voss', 'with') + 0.06, 'plastic', 0.6, 0.2); SFX(VW('124-voss', 'phone') - 0.05, 'pop', 1, 0.5); SFX(VW('124-voss', 'phone') + 0.2, 'tick', 0.4, 0);
 
 // ---- "Really?" — Voss close, eyebrow up, the smirk ----------------------------------------------------
 SHOT(CUT('124-voss', 'really'), 's07_really', () => {
@@ -148,6 +156,7 @@ SHOT(CUT('124-voss', 'really'), 's07_really', () => {
   const u = s07_r(VW('124-voss', 'really'), 4);
   ivStage(s07_hearing({ voss: { f: 0.2, pose: ivPose('shrug', { tilt: -0.1 * u, hL: [lerp(0.1, -0.17, u), lerp(0.13, 0.1, u)], hR: [lerp(0.16, 0.17, u), lerp(0.12, 0.1, u)] }), expr: { eyes: 'squint', mouth: 'smirk', brow: u > 0.5 ? 'up' : null, look: [-0.6, 0] }, talk: '124-voss' } }));
 }, { sec: 's07', title: 'Voss close: "Really?" shrug, brow up' });
+SFX(CUT('124-voss', 'really'), 'swish', 0.4, -0.3); SFX(VW('124-voss', 'really'), 'cloth', 0.6, -0.3); SFX(VW('124-voss', 'really') + 4 / FPS, 'swish', 0.5, -0.4);   // the shrug
 
 // ---- the projector, framed full: the screen plane is d 1.7, its centre (680, 365) → frame centre --------
 const s07_SCR = () => { IV_CAM = { x: 484, y: 242, z: 2.87 }; IV_FOCUS = 1.7; };
@@ -169,6 +178,10 @@ SHOT(CUT('125-narrator'), 's07_grid', () => {
   ivStage(s07_hearing({ sharpScreen: true, back: false, heads: true, screen: (w, h) => s07_grid(w, h, n, t1) }));
   ivTag('47', 960, 560, 120, ivPop(t1), { c: '#ffe2b0' });
 }, { sec: 's07', title: 'The projector fills with clips, 1 → 47 on "forty-seven"' });
+{ const t0 = CUT('125-narrator'), t1 = VWE('125-narrator', 'Forty-seven');
+  SFX(t0, 'click', 1.1); SFX(t0 + 0.04, 'buzz', 0.25);   // the projector comes on
+  for (let n = 2; n < 47; n += 3) SFX(t0 + (t1 - t0) * (1 - Math.cbrt(1 - (n - 1) / 46)), 'tick', 0.45, -0.6 + (n % 8) * 0.17);   // clips landing (ivCount eases o3)
+  SFX(t1, 'blip', 1.2); SFX(t1, 'impact', 0.7); SFX(t1 + 0.02, 'pop', 1.2); }
 
 // a plain delivery truck (not the RAPIDO truck from the crash): P_truck with its logo painted over
 function s07_truck(x, y, s) {
@@ -195,6 +208,9 @@ SHOT(CUT('126-narrator'), 's07_clipTruck', (lt) => {
   ivStage(SET_corner({ t: 'day', light: 'red', cars: false, road: () => s07_truck(x, SET_POS.corner.lanes[1], 0.5) }));
   s07_rec(12, 'DAY 2');
 }, { sec: 's07', title: 'Clip 12: a truck flies through the red' });
+{ const T0 = CUT('126-narrator'), T1 = VW('126-narrator', 'flying');
+  SFX(T0, 'whoosh', 1); SFX(T0 + 0.03, 'camera', 0.7); SFX(T0 + 0.1, 'beep', 0.4); SFX(T0 + 0.05, 'engine', 0.8, -0.5, T1 - T0);
+  SFX(lerp(T0, T1, 0.51), 'car', 1.4, 0, 1.6); SFX(lerp(T0, T1, 0.56), 'horn', 0.6, 0.5, 0.4); }   // the truck flies across the red
 
 // ---- "flying through the same red light." — clip 31 at sunset: the red signal, a van streaks under it --
 SHOT(CUT('126-narrator', 'flying'), 's07_clipVan', () => {
@@ -203,6 +219,8 @@ SHOT(CUT('126-narrator', 'flying'), 's07_clipVan', () => {
   ivStage(SET_corner({ t: 'sunset', light: 'red', cars: false, road: () => P_car(x, SET_POS.corner.lanes[0], 0.55, { dir: -1, col: '#3d6fa0', lights: true }) }));
   s07_rec(31, 'DAY 4');
 }, { sec: 's07', title: 'Clip 31: the red signal close, a van streaks through' });
+{ const T0 = CUT('126-narrator', 'flying'), T1 = LE('126-narrator');
+  SFX(T0, 'camera', 0.7); SFX(T0 + 0.02, 'swish', 0.6); SFX(lerp(T0, T1, 0.46), 'car', 1.3, 0, 1.2); SFX(lerp(T0, T1, 0.5), 'whoosh', 0.8, -0.4); }
 
 // ---- [BEAT 2 s] silence: the officials staring at the screen ------------------------------------------
 SHOT(LE('126-narrator'), 's07_silence', () => {
@@ -213,6 +231,8 @@ SHOT(LE('126-narrator'), 's07_silence', () => {
     { expr: { eyes: TT > t ? 'open' : 'squint', mouth: 'flat', brow: TT > t ? 'up' : null, look: [-1, -0.2] }, f: -0.2 },
     { expr: { eyes: 'wide', mouth: TT > t + 0.4 ? 'o' : 'flat', look: [-1, -0.2] }, f: -0.25 }] }));
 }, { sec: 's07', title: 'Beat: silence — the officials stare at the screen' });
+{ const t = LE('126-narrator');   // near silence: room tone, a clock, one breath
+  SFX(t + 0.05, 'crowd', 0.12, 0, 2); [0.5, 1.0, 1.5].forEach((d) => SFX(t + d, 'tick', 0.2, 0.6)); SFX(t + 1.3, 'gasp', 0.45, 0.6); }
 
 // ---- (beat) Voss's smirk drains away ---------------------------------------------------------------------
 SHOT(lerp(LE('126-narrator'), CUT('127-citywoman'), 0.5), 's07_vossDrop', () => {
@@ -220,6 +240,7 @@ SHOT(lerp(LE('126-narrator'), CUT('127-citywoman'), 0.5), 's07_vossDrop', () => 
   const t = lerp(LE('126-narrator'), CUT('127-citywoman'), 0.5) + 0.5;
   ivStage(s07_hearing({ voss: { f: 0.3, pose: ivPose('stand', { hR: [0.15, 0.1], hL: [0.06, 0.12] }), expr: { eyes: TT > t ? 'open' : 'squint', mouth: TT > t ? 'flat' : 'smirk', look: [0.8, 0] } } }));
 }, { sec: 's07', title: 'Beat: Voss\'s smirk drains away' });
+{ const t = lerp(LE('126-narrator'), CUT('127-citywoman'), 0.5); SFX(t, 'swish', 0.3, -0.3); SFX(t + 0.5, 'drop', 0.5, -0.2); [1.0, 1.5].forEach((d) => SFX(t + d, 'tick', 0.18, 0.6)); }
 
 // ---- 127 City Woman: "Play it again." — close, one finger up ----------------------------------------------
 SHOT(CUT('127-citywoman'), 's07_again', () => {
@@ -228,6 +249,7 @@ SHOT(CUT('127-citywoman'), 's07_again', () => {
   const P = ivPoseMix(ivPose('sit', { hL: [0.07, 0.25], hR: [-0.07, 0.25], bendL: -1, bendR: 1 }), ivPose('sit', { hL: [0.07, 0.25], hR: [0.1, -0.06], bendL: -1, bendR: 1 }), u);
   ivStage(s07_hearing({ off: [{}, { pose: P, f: -0.1, expr: { eyes: 'squint', mouth: 'flat', brow: 'angry', look: [-1, 0] }, talk: '127-citywoman', grip: { front: 'point' } }, {}] }));
 }, { sec: 's07', title: 'City woman close: "Play it again." finger up' });
+SFX(CUT('127-citywoman'), 'swish', 0.4, 0.4); SFX(VW('127-citywoman', 'play'), 'swish', 0.9, 0.3); SFX(VW('127-citywoman', 'play') + 5 / FPS, 'cloth', 0.5, 0.3); SFX(LE('127-citywoman') + 0.15, 'click', 0.9, -0.3);   // finger up; the projector restarts
 
 // ---- 128 "In the US, red-light crashes kill more than a thousand people a year." — the fact card ---------
 SHOT(CUT('128-narrator'), 's07_thousand', () => {
@@ -237,6 +259,10 @@ SHOT(CUT('128-narrator'), 's07_thousand', () => {
   ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.fillStyle = 'rgba(14,10,16,0.35)'; ctx.fillRect(0, 0, W, H); ctx.restore();
   P_statCard(560, 230, 800, 520, n.toLocaleString('en-US') + (TT >= t1 ? '+' : ''), 'PEOPLE KILLED EVERY YEAR', { a: ivPop(t0), head: 'RED-LIGHT CRASHES · USA', accent: '#ff7a5a' });
 }, { sec: 's07', title: 'Fact card: 1,000+ killed a year (US), lands on "thousand"' });
+{ const t0 = CUT('128-narrator'), a = VW('128-narrator', 'kill'), t1 = VWE('128-narrator', 'thousand');
+  SFX(t0, 'whoosh', 0.9); SFX(t0 + 0.02, 'pop', 1.1); SFX(t0 + 0.1, 'paper', 0.4);
+  for (let k = 1; k < 10; k++) SFX(a + (t1 - a) * (1 - Math.cbrt(1 - k / 10)), 'tick', 0.45);   // 0 → 1,000
+  SFX(t1, 'blip', 1.1); SFX(t1 + 0.02, 'pop', 0.8, 0.3); SFX(t1 + 0.05, 'thud', 0.6); }
 
 // a timeline of the yellow phase: 2.1 s now, +1 s growing (u 0..1), drawn at (x, y), 1 s = px
 function s07_yellowBar(x, y, px, u) {
@@ -254,6 +280,9 @@ SHOT(CUT('129-narrator'), 's07_plusOne', () => {
   s07_yellowBar(780, 520, 300, EZ.o3(clamp((TT - t0) / Math.max(0.1, t1 - t0))));
   ivTag('YELLOW LIGHT', 1290, 330, 34, ivPop(CUT('129-narrator')));
 }, { sec: 's07', title: 'Graphic: the yellow light, its 2.1 s bar grows +1 s on "second"' });
+{ const t0 = VW('129-narrator', 'one'), t1 = VWE('129-narrator', 'second');
+  SFX(CUT('129-narrator'), 'whoosh', 1); SFX(CUT('129-narrator') + 0.03, 'click', 0.8, -0.5); SFX(CUT('129-narrator') + 0.05, 'pop', 0.8, 0.3);
+  SFX(t0, 'rise', 0.9, 0, t1 - t0); SFX(t0, 'slide', 0.7, 0.3); SFX(t1, 'shimmer', 1, 0.3); SFX(t1 + 0.05, 'pop', 0.6, 0.4); }   // +1 s grows
 
 // ---- "…can cut red-light running by about a third." — bars: before / after, the after bar loses a third --
 SHOT(CUT('129-narrator', 'cut'), 's07_third', () => {
@@ -270,6 +299,9 @@ SHOT(CUT('129-narrator', 'cut'), 's07_third', () => {
   });
   P_statCard(1310, 520, 400, 300, '−⅓', 'FEWER RED-LIGHT RUNS', { a: ivPop(t1 - 2 / FPS), accent: '#ffe27a' });
 }, { sec: 's07', title: 'Chart: before/after bars, the after bar loses ⅓ on "third"' });
+{ const t0 = VW('129-narrator', 'cut'), t1 = VWE('129-narrator', 'third');
+  SFX(CUT('129-narrator', 'cut'), 'swish', 0.7); SFX(CUT('129-narrator', 'cut') + 0.04, 'pop', 0.6, -0.5); SFX(t0 + 0.1, 'slide', 0.8, 0.1); SFX(lerp(t0, t1, 0.5), 'slide', 0.6, 0);
+  SFX(t1 - 2 / FPS, 'pop', 1.1, 0.5); SFX(t1, 'blip', 1, 0.5); SFX(t1 + 0.04, 'thud', 0.5, 0.5); }   // the after bar loses a third
 
 // ---- 130 "One week later," — Fifth and Main, a tech re-timing the signal; Theo + Nia watch ---------------
 SHOT(CUT('130-narrator'), 's07_week', () => {
@@ -283,6 +315,9 @@ SHOT(CUT('130-narrator'), 's07_week', () => {
   } }));
   ivTag('ONE WEEK LATER', 960, 170, 40, ivPop(VW('130-narrator', 'one')));
 }, { sec: 's07', title: 'One week later: Fifth and Main, a tech re-times the signal, Theo + Nia watch' });
+{ const t = CUT('130-narrator');
+  SFX(t, 'whoosh', 1.1); SFX(t + 0.05, 'car', 0.5, -0.6, 1.5); SFX(t + 0.15, 'engine', 0.3, 0.4, 1.2); SFX(t + 0.25, 'type', 0.5, 0.6, 0.8);   // street; the tech on his tablet
+  SFX(VW('130-narrator', 'one'), 'pop', 0.9); SFX(VW('130-narrator', 'later') + 0.1, 'click', 0.7, 0.6); SFX(VW('130-narrator', 'later') + 0.15, 'metal', 0.4, 0.6); }
 
 // ---- "…that yellow gets its extra second." — Theo's stopwatch on the new yellow: 3.10 s ----------------
 SHOT(CUT('130-narrator', 'that'), 's07_watch', () => {
@@ -297,6 +332,10 @@ SHOT(CUT('130-narrator', 'that'), 's07_watch', () => {
   });
   ivTag('3.1 s', 1450, 300, 54, ivPop(t1), { c: '#ffe27a' });
 }, { sec: 's07', title: 'Hand close-up: the stopwatch stops at 3.10 on "second"' });
+{ const t0 = VW('130-narrator', 'that'), t1 = VWE('130-narrator', 'second');
+  SFX(CUT('130-narrator', 'that'), 'swish', 0.6, 0.3); SFX(t0, 'click', 1, 0.2);
+  for (let k = 1; k * 0.25 < t1 - t0; k++) SFX(t0 + k * 0.25, 'tick', 0.45, 0.2);   // the stopwatch running
+  SFX(t1, 'click', 1.2, 0.2); SFX(t1 + 0.02, 'pop', 1, 0.5); SFX(t1 + 0.08, 'ding', 0.8, 0.5); }   // stops on 3.1
 
 // ---- 131 "Dad gets his bus back." — the night bus again, Dad at the wheel, cap on; he touches the brim ----
 SHOT(CUT('131-narrator'), 's07_bus', () => {
@@ -308,6 +347,9 @@ SHOT(CUT('131-narrator'), 's07_bus', () => {
     ivMan({ who: CAST.dad, x: B.driver[0], y: B.driver[1], h: B.driver[2], f: 0.55, pose: P, expr: { eyes: u > 0.5 ? 'happy' : 'open', mouth: 'smile', look: [1, 0] }, grip: { front: u > 0.5 ? 'flat' : 'hold', back: 'hold' } });
   } }));
 }, { sec: 's07', title: 'Dad back at the wheel of the night bus, cap on, touches the brim' });
+{ const t = CUT('131-narrator');
+  SFX(t, 'whoosh', 1); SFX(t + 0.05, 'engine', 0.9, 0, LE('131-narrator') - t + 0.6); SFX(t + 0.3, 'car', 0.4, 0.6, 1.2);
+  SFX(VW('131-narrator', 'back'), 'cloth', 0.6, -0.3); SFX(VW('131-narrator', 'back') + 5 / FPS, 'swish', 0.4, -0.3); }   // he touches the brim
 
 // the office pair: Dad (left, facing right) and Voss (right, turned away, reading a paper), hands clasped; pump 0..1
 function s07_shakeAct(pump, vossExpr, dadExpr) {
@@ -328,6 +370,8 @@ SHOT(CUT('132-narrator'), 's07_hands', () => {
   s07_arm(DA, 60, 1300, 870, 610 + p, 3600, 'hold', -1);
   s07_tips(1000, 560 + p, 0, [[100, -70], [124, 14]], [], 40);   // Voss's fingertips over Dad's knuckles
 }, { sec: 's07', title: 'Hand close-up: the handshake, blue cuff and grey cuff' });
+{ const t = VW('132-narrator', 'shakes'); SFX(CUT('132-narrator'), 'swish', 0.6);
+  SFX(t, 'cloth', 1); SFX(t + 0.02, 'thud', 0.4); [0.15, 0.45, 0.75].forEach((d) => SFX(t + d, 'cloth', 0.55, 0)); }   // grip + three pumps
 
 // ---- "…without looking at him." — two-shot: Voss's eyes on his paper, Dad looking at him ------------------
 SHOT(CUT('132-narrator', 'without'), 's07_away', () => {
@@ -335,6 +379,7 @@ SHOT(CUT('132-narrator', 'without'), 's07_away', () => {
   const pump = clamp((TT - CUT('132-narrator', 'without')) / 0.7);
   ivStage(SET_office({ act: () => s07_shakeAct(pump, { eyes: 'tired', mouth: 'flat', look: [1, 0.6] }, { eyes: 'sad', mouth: 'flat', look: [1, 0] }) }));
 }, { sec: 's07', title: 'Two-shot: Voss shakes without looking up from his paper; Dad looks at him' });
+{ const t = CUT('132-narrator', 'without'); SFX(t, 'swish', 0.4); SFX(t + 0.1, 'cloth', 0.5, -0.1); SFX(t + 0.3, 'paper', 0.5, 0.3); SFX(t + 0.6, 'cloth', 0.4, -0.1); }
 
 // ---- [BEAT 1 s] Dad walks out past the glass; Theo waiting in the corridor; Dad's small nod ---------------
 SHOT(LE('132-narrator'), 's07_out', () => {
@@ -346,3 +391,5 @@ SHOT(LE('132-narrator'), 's07_out', () => {
     ivMan({ who: CAST.dad, x: w.x, y: GROUND, h: 540, f: w.moving ? -0.7 : -0.5, pose: w.moving ? w.pose : ivPose('relaxed'), expr: { eyes: 'open', mouth: TT > t0 + 0.6 ? 'smile' : 'flat', look: [-1, 0] } });
   } }));
 }, { sec: 's07', title: 'Beat: Dad walks out toward Theo, both small smiles; Voss back at his desk' });
+{ const t0 = LE('132-narrator'); SFX(t0, 'swish', 0.4); [0, 1, 2].forEach((k) => SFX(t0 + k * 6 / FPS, 'step', 0.8, -0.1 - k * 0.1));   // ivWalk 6 frames/step until +0.67
+  SFX(t0 + 0.3, 'glass', 0.25, 0.3); SFX(t0 + 0.75, 'cloth', 0.4, -0.4); SFX(t0 + 1.0, 'paper', 0.3, 0.5); }   // past the glass; the nod; Voss's papers

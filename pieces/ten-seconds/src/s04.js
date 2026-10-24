@@ -78,6 +78,12 @@ function s04_fly(t, x0, y0, vx, vy, g, fy, k = 0.35) {
   return { x: x + roll, y: fy, a: (x + roll) * 0.02, air: false };
 }
 
+// the floor hits of s04_fly (same maths), for the SFX: [{ t, x }] up to 4 bounces
+function s04_hits(x0, y0, vx, vy, g, fy, k = 0.35) {
+  const out = []; let x = x0, y = y0, VX = vx, VY = vy, T = 0;
+  for (let b = 0; b < 4; b++) { const tl = (-VY + Math.sqrt(Math.max(0, VY * VY + 2 * g * (fy - y)))) / g; x += VX * tl; y = fy; T += tl; out.push({ t: T, x, v: Math.abs(VY + g * tl) }); VY = -(VY + g * tl) * k; VX *= 0.7; if (Math.abs(VY) < 60) break; }
+  return out;
+}
 // =====================================================================
 //  A · Dad (kitchen, before the night shift) — 065–069
 // =====================================================================
@@ -95,6 +101,9 @@ SHOT(s04_C(65), 's04_cap', () => {
       hold: on ? null : { front: (x, y, a, h) => s04_cap(x + 0.1 * h, y + 0.005 * h, h * 0.125, -0.4) } });
   } }));
 }, { ...s04_O, title: 'Dad puts his cap on' });
+{ const T0 = s04_C(65), tA = s04_W(65, 'dad') - 0.12;
+  SFX(T0 + 0.05, 'whoosh', 0.9, 0); SFX(T0 + 0.3, 'tick', 0.35, -0.3); SFX(T0 + 0.9, 'step', 0.5, 0.4);
+  SFX(tA + 0.05, 'swish', 0.9, 0.35); SFX(tA + 0.21, 'cloth', 1.2, 0.35); SFX(tA + 0.23, 'thud', 0.35, 0.35); SFX(tA + 0.5, 'swish', 0.6, 0.35); }
 // 066 "He drives the night bus." — his hand takes the keys (LINE 9 fob) off the table
 SHOT(s04_C(66), 's04_keys', () => {
   const g = s04_W(66, 'night') - 0.18, dn = s04_u(SHOT_T0, g - SHOT_T0), lift = s04_ui(s04_W(66, 'bus') - 0.05, 0.3), shut = TT >= g + 0.05;
@@ -107,6 +116,8 @@ SHOT(s04_C(66), 's04_keys', () => {
     s04_arm(ex, ey, wx, wy, 1200, shut ? 'hold' : 'open', CAST.dad.col, -1);
   } }));
 }, { ...s04_O, title: 'hand grabs the LINE 9 keys' });
+{ const T0 = s04_C(66), g = s04_W(66, 'night') - 0.18, tL = s04_W(66, 'bus') - 0.05;
+  SFX(T0 + 0.05, 'swish', 0.8, 0.4); SFX(g + 0.05, 'metal', 1.2, 0.25); SFX(g + 0.07, 'slide', 0.6, 0.25); SFX(g + 0.3, 'metal', 0.6, 0.3); SFX(tL + 0.15, 'swish', 1, 0.3); SFX(tL + 0.3, 'metal', 0.5, 0.35); }
 // 067 "Twenty-two years, not one scratch." — the pin on his chest: 22 counts up, the ribbon "0 ACCIDENTS" lands on "scratch"
 SHOT(s04_C(67), 's04_badge', () => {
   IV_CAM = { x: 1415, y: 625, z: 4.2 };
@@ -117,6 +128,9 @@ SHOT(s04_C(67), 's04_badge', () => {
     s04_badge(1390, 568, 0.95, n, rib);
   } }));
 }, { ...s04_O, title: 'the 22 YEARS · 0 ACCIDENTS pin' });
+{ const T0 = s04_C(67), e = s04_WE(67, 'twentytwo');
+  SFX(T0 + 0.02, 'shimmer', 0.6, 0); for (let i = 0; i < 6; i++) SFX(lerp(T0 + 0.12, e - 0.05, i / 5), 'blip', 0.55 + i * 0.07, -0.05);
+  SFX(e, 'coin', 1.1, -0.05); SFX(s04_W(67, 'scratch') - 0.05, 'cloth', 0.8, 0.1); SFX(s04_WE(67, 'scratch') - 3 / FPS, 'pop', 1.3, -0.05); SFX(s04_WE(67, 'scratch'), 'ding', 0.7, -0.05); }
 // 067 "Know why?" — Dad's face, eyebrow up, a proud smile
 SHOT(s04_C(67, 'know'), 's04_dadKnow', () => {
   IV_CAM = { x: 1330, y: 470, z: 2.7 };
@@ -124,11 +138,13 @@ SHOT(s04_C(67, 'know'), 's04_dadKnow', () => {
     ivMan({ who: CAST.dad, x: 1420, y: GROUND, h: 560, f: -0.35, pose: ivPose('hips'), talk: s04_V[67], expr: { eyes: 'open', mouth: 'smirk', brow: 'up', look: [-1, 0] } });
   } }));
 }, { ...s04_O, title: 'Dad: "Know why?"' });
+SFX(s04_C(67, 'know') + 0.03, 'swish', 0.6, 0.3); SFX(s04_W(67, 'know') + 0.05, 'pop', 0.5, 0.25);
 // 068 "Eyes on the road." — Theo at the table, eye-roll grin: he has heard it a thousand times
 SHOT(s04_C(68), 's04_theoEyes', () => {
   IV_CAM = { x: 820, y: 545, z: 2.7 };
   ivStage(SET_kitchen({ cap: false, act: () => s04_kitTheo({ talk: s04_V[68], expr: { eyes: TT < s04_W(68, 'road') ? 'tired' : 'happy', mouth: 'smile', look: [0.6, -1] } }) }));
 }, { ...s04_O, title: 'Theo: "Eyes on the road."' });
+SFX(s04_C(68) + 0.12, 'swish', 0.5, -0.2); SFX(s04_W(68, 'road'), 'pop', 0.5, -0.2); SFX(s04_W(68, 'road') + 0.2, 'cloth', 0.4, -0.2);
 // 069 "Eyes on the road, kid." — the ritual: two fingers to his eyes, a point at Theo, a fist-bump on "kid"
 SHOT(s04_C(69), 's04_ritual', () => {
   const e = s04_u(s04_W(69, 'eyes') - 0.1, 0.2), r = s04_u(s04_W(69, 'road') - 0.1, 0.17), k = s04_u(s04_W(69, 'kid') - 0.12, 0.18);
@@ -141,6 +157,9 @@ SHOT(s04_C(69), 's04_ritual', () => {
     s04_kitTheo({ pose: pt, grip: { front: 'fist' }, expr: { eyes: k > 0.9 ? 'happy' : 'open', mouth: 'grin', look: [1, -0.6] } });
   } }));
 }, { ...s04_O, title: 'the ritual: eyes, point, fist-bump' });
+{ const k = s04_W(69, 'kid') - 0.12;
+  SFX(s04_W(69, 'eyes') - 0.02, 'swish', 0.8, 0.1); SFX(s04_W(69, 'road') - 0.02, 'swish', 0.9, 0); SFX(s04_W(69, 'road') + 0.08, 'cloth', 0.5, 0);
+  SFX(k + 0.18, 'thud', 0.9, -0.05); SFX(k + 0.18, 'pop', 0.7, -0.05); SFX(k + 0.3, 'laugh', 0.5, -0.2); }
 
 // =====================================================================
 //  B · the night bus in the rain — 070–073
@@ -153,10 +172,18 @@ SHOT(s04_C(70), 's04_busWide', () => {
   ivStage(SET_busSide({ busX: 560 + (TT - SHOT_T0) * 170, light: 'green' }));
   s04_screen(() => ivTag('FRIDAY  ·  11:48 PM', 360, 150, 34, ivPop(s04_W(70, 'friday'))));
 }, { ...s04_O, title: 'the night bus, Friday, rain' });
+// ---- the bus bed (070 → brakes): engine, wipers (each stroke of SET_busFront's TT·2.6 cycle), rain drops. Stops at BRAKE + 0.8:
+// from VW(081,'brakes') + 1.0 to s04_TRUCK nothing plays (score.js owns the brake and the truck).
+{ const t0 = s04_C(70), end = s04_W(81, 'brakes') + 0.6, r = RNG('s04rainsfx').f;
+  SFX(t0, 'engine', 0.6, 0, end - t0 - 0.2);
+  for (let k = Math.ceil(t0 / 1.208 - 0.5); (k + 0.5) * 1.208 < end - 0.2; k++) SFX((k + 0.5) * 1.208, 'wiper', 0.6, k % 2 ? 0.2 : -0.2);
+  for (let t = t0 + 0.8; t < end - 0.2; t += 1.6 + r() * 1.4) SFX(t, 'drip', 0.2 + r() * 0.15, r() * 1.6 - 0.8); }
+SFX(s04_C(70) + 0.05, 'whoosh', 1.2, 0); SFX(s04_C(70) + 0.4, 'slide', 0.7, -0.2); SFX(s04_C(70) + 0.6, 'car', 0.6, 0.3, 2.0); SFX(s04_W(70, 'friday'), 'pop', 1.1, -0.6);
 SHOT(s04_C(70, 'ride'), 's04_rideWith', () => {
   IV_CAM = { x: 960, y: 560, z: 1.05 };
   ivStage(SET_busFront({ light: 'green', act: () => { s04_dadDrive({ expr: { eyes: 'happy', mouth: 'smile', look: [1, 0] } }); s04_theoPole(); } }));
 }, { ...s04_O, title: 'riding up front with Dad' });
+SFX(s04_C(70, 'ride') + 0.03, 'swish', 0.6, 0.3); SFX(s04_C(70, 'ride') + 0.2, 'metal', 0.45, 0.35); SFX(s04_C(70, 'ride') + 0.3, 'cloth', 0.5, 0.35);
 // 071 "Rain." — the windshield: drops, the wiper sweeping, the city smeared beyond
 SHOT(s04_C(71), 's04_rainGlass', () => {
   IV_CAM = { x: 700, y: 360, z: 2.5 };
@@ -164,6 +191,7 @@ SHOT(s04_C(71), 's04_rainGlass', () => {
     const r = RNG('s04drops').f; for (let i = 0; i < 26; i++) { const x = 300 + r() * 900, y = 160 + mod(r() * 420 + TT * (r() < 0.3 ? 120 : 10), 420), rr = 4 + r() * 7; ivDot(x, y, rr, 'rgba(210,228,255,0.35)'); ivDot(x - rr * 0.3, y - rr * 0.3, rr * 0.35, 'rgba(255,255,255,0.6)'); }
   } }));
 }, { ...s04_O, title: 'rain on the windshield' });
+SFX(s04_C(71) + 0.05, 'whoosh', 0.6, 0); SFX(s04_W(71, 'rain'), 'splash', 0.7, -0.2); SFX(s04_W(71, 'rain') + 0.5, 'drip', 0.6, 0.3);
 // 072 "Line nine." — the LED sign above the aisle: LINE 9, the next stop scrolling (5TH & MAIN)
 function s04_led(x, y, w, h, hot) {
   ivRR(x - 10, y - 10, w + 20, h + 20, 10, '#05050a'); ivRR(x, y, w, h, 6, '#0d0b08');
@@ -180,16 +208,19 @@ SHOT(s04_C(72), 's04_line9', () => {
   IV_CAM = { x: 470, y: 160, z: 2.6 };
   ivStage(SET_busAisle({ fg: false, front: () => s04_led(110, 70, 720, 110, ivPop(s04_W(72, 'nine'))) }));
 }, { ...s04_O, title: 'LINE 9 sign, next: 5th & Main' });
+SFX(s04_C(72) + 0.05, 'click', 0.9, -0.2); SFX(s04_W(72, 'line') - 0.25, 'ding', 0.8, -0.1); SFX(s04_W(72, 'nine') + 0.02, 'beep', 0.8, -0.35); SFX(s04_W(72, 'nine') + 0.3, 'type', 0.4, 0.4, 0.8);
 // 073 "Rain like this, nobody's out." — Dad at the wheel, easy; then the empty aisle: only Mrs. Okafor, seat 4, bags + cane
 SHOT(s04_C(73), 's04_dadRain', () => {
   IV_CAM = { x: 600, y: 640, z: 2.35 };
   ivStage(SET_busFront({ light: 'green', act: () => s04_dadDrive({ talk: s04_V[73], expr: { eyes: 'open', mouth: 'smile', look: [1, 0] } }) }));
 }, { ...s04_O, title: 'Dad: "Rain like this…"' });
+SFX(s04_C(73) + 0.05, 'swish', 0.5, -0.3); SFX(s04_W(73, 'like'), 'slide', 0.5, -0.3); SFX(s04_W(73, 'this') + 0.2, 'plastic', 0.5, -0.3);
 const s04_okSeat = (o = {}) => ivMan({ who: CAST.okafor, x: SET_POS.busAisle.seat4, y: GROUND, h: 500, f: -0.5, pose: o.pose || ivPose('sit', { hL: [0.14, 0.22], hR: [0.18, 0.21] }), talk: o.talk, expr: o.expr || { eyes: 'tired', mouth: 'smile', look: [-1, 0.2] } });
 SHOT(s04_C(73, "nobody's"), 's04_aisleEmpty', () => {
   IV_CAM = { x: 1000, y: 540, z: ivPush(SHOT_T0, 0.03, 1.8) };
   ivStage(SET_busAisle({ act: () => { s04_okSeat(); P_bags(1360, 742, 1.35); P_cane(1260, 760, 0.95, { ang: 0.22 }); } }));
 }, { ...s04_O, title: 'empty bus: Mrs. Okafor, seat 4' });
+SFX(s04_C(73, "nobody's") + 0.05, 'whoosh', 0.7, 0.2); SFX(s04_C(73, "nobody's") + 0.35, 'paper', 0.6, 0.4); SFX(s04_C(73, "nobody's") + 0.6, 'cloth', 0.4, 0.3);
 
 // =====================================================================
 //  C · Fifth and Main — the light, the ghost truck — 074–076 + [BEAT]
@@ -200,6 +231,7 @@ SHOT(s04_C(74), 's04_corner', () => {
   const bx = lerp(2250, 1250, EZ.o2(clamp((TT - SHOT_T0) / 1.6)));
   ivStage(SET_corner({ t: 'rain', light: 'green', cars: false, road: () => P_bus(bx, SET_POS.corner.lanes[0], 0.34, { dir: -1 }) }));
 }, { ...s04_O, title: 'Fifth and Main, rain, the bus arrives' });
+SFX(s04_C(74) + 0.05, 'whoosh', 0.8, 0.4); SFX(s04_C(74) + 0.8, 'car', 0.8, 0.4, 1.6); SFX(s04_C(74) + 1.4, 'brake', 0.3, 0.3, 0.5);
 // a traffic-light close-up stage: the wet street soft behind, the signal head sharp, rain in front
 function s04_signalStage(x, y, s, state) {
   IV_M = IV_MOOD.rain;
@@ -212,8 +244,10 @@ function s04_signalStage(x, y, s, state) {
 }
 // 074 "…the light turns yellow." — green → yellow on "yellow"
 SHOT(s04_C(74, 'light'), 's04_yellow', () => { s04_signalStage(1120, 540, 3.1, TT < s04_W(74, 'yellow') ? 'green' : 'yellow'); }, { ...s04_O, title: 'the light turns yellow' });
+SFX(s04_C(74, 'light') + 0.05, 'whoosh', 0.5, 0.15); SFX(s04_C(74, 'light') + 0.2, 'drip', 0.5, 0.2); SFX(s04_W(74, 'yellow'), 'click', 1.3, 0.15); SFX(s04_W(74, 'yellow') + 0.02, 'buzz', 0.3, 0.15);
 // 075 "Then red." — tight on the lamps: yellow → red on "red"
 SHOT(s04_C(75), 's04_red', () => { s04_signalStage(900, 540 + 36 * 6.4, 6.4, TT < s04_W(75, 'red') ? 'yellow' : 'red'); }, { ...s04_O, title: 'then red' });
+SFX(s04_C(75) + 0.05, 'swish', 0.5, 0); SFX(s04_C(75) + 0.3, 'drip', 0.5, -0.1); SFX(s04_W(75, 'red'), 'click', 1.5, 0); SFX(s04_W(75, 'red') + 0.02, 'thud', 0.4, 0);
 
 // the ghost truck through the windshield (o.out layer, d = 2): x centre, s scale, a alpha
 // (drawn on the actors' layer, clipped to the glass: a ghost must be drawn on a sharp layer)
@@ -229,6 +263,7 @@ SHOT(s04_C(76), 's04_inGhost', () => {
   } }));
   s04_screen(() => ivTag('+10 s', 520, 230, 46, ivPop(s04_W(76, 'ten')), { c: IV.ghost, line: 'rgba(127,240,255,0.7)' }));
 }, { ...s04_O, title: 'Theo sees the ghost: +10 s' });
+SFX(s04_W(76, 'ghost') - 0.05, 'ghost', 1.4, 0.4); SFX(s04_W(76, 'ghost') + 0.15, 'gasp', 0.7, 0.4); SFX(s04_W(76, 'ten'), 'pop', 1.2, -0.45); SFX(s04_W(76, 'ten') + 0.05, 'shimmer', 0.8, -0.45);
 // 076 "…a truck comes through that red light," — over Dad's shoulder: the real street is empty; the ghost truck charges in
 SHOT(s04_C(76, 'truck'), 's04_ghostComes', () => {
   const u = clamp((TT - SHOT_T0) / (s04_C(76, 'straight') - SHOT_T0));
@@ -239,6 +274,7 @@ SHOT(s04_C(76, 'truck'), 's04_ghostComes', () => {
     s04_theoPole({ f: -0.45, expr: { eyes: 'wide', mouth: 'o', brow: 'up', look: [-1, -0.2] } });
   } }));
 }, { ...s04_O, title: 'the ghost truck runs the red' });
+SFX(s04_C(76, 'truck') + 0.1, 'ghost', 1.2, 0.8); SFX(s04_C(76, 'truck') + 0.05, 'rise', 0.9, 0, s04_C(76, 'straight') - s04_C(76, 'truck')); SFX(s04_W(76, 'red') + 0.1, 'whoosh', 0.8, 0.3); SFX(s04_W(76, 'light'), 'gasp', 0.5, -0.3);
 // ---- the god's-eye view of the intersection (rain, night): Main St runs up the frame, the cross street left-right ----
 const s04_OH = { x0: 700, x1: 1220, y0: 260, y1: 640, busX: 1100, stop: 742, lane: 555 };
 function s04_ohGround() {
@@ -309,6 +345,8 @@ SHOT(s04_C(76, 'straight'), 's04_ghostCrash', () => {
     if (TT >= tH) ivGlow(1185, Q.lane, 700, 'rgba(110,235,255,0.7)', 1 - s04_u(tH, 0.6));
   }, 'ghc');
 }, { ...s04_O, title: 'from above: the ghost crash into the side' });
+{ const tH = s04_W(76, 'side');
+  SFX(s04_C(76, 'straight') + 0.1, 'ghost', 0.9, 0.6); SFX(tH, 'whoosh', 1.3, 0.4); SFX(tH, 'impact', 1.0, 0.15); SFX(tH + 0.03, 'glass', 1.1, 0.15); SFX(tH + 0.08, 'shimmer', 1.1, 0.15); SFX(tH + 0.25, 'metal', 0.6, 0.1); }
 // [BEAT] — Theo frozen: the crash still glowing in his eyes
 SHOT(LE(s04_V[76]) + 0.2, 's04_frozen', () => {
   IV_CAM = { x: 1400, y: 545, z: 4.1 };
@@ -319,6 +357,8 @@ SHOT(LE(s04_V[76]) + 0.2, 's04_frozen', () => {
     ivGlow(m.head[0] - R, m.head[1], R * 3, 'rgba(60,200,255,0.22)', p);
   } }));
 }, { ...s04_O, title: 'BEAT: Theo frozen, cyan in his eyes', boardAt: 0.6 });
+{ const t0 = LE(s04_V[76]) + 0.2;
+  SFX(t0 + 0.05, 'shimmer', 0.6, 0.4); SFX(t0 + 0.2, 'heart', 0.9, 0); SFX(t0 + 1.1, 'heart', 1.0, 0); SFX(t0 + 2.0, 'heart', 1.1, 0); SFX(t0 + 1.5, 'ghost', 0.5, 0.4); }
 
 // =====================================================================
 //  D · ten seconds — 077–081: the ghost countdown runs 10 → 1 and lands on "brakes"
@@ -334,6 +374,12 @@ SHOT(s04_C(77), 's04_ten', () => {
   } }));
   s04_ring(960, 340, 150, ivPop(s04_W(77, 'ten')));
 }, { ...s04_O, title: 'ghost countdown: 10' });
+// the countdown 10 → 1: a tick + blip on every number (s04_left steps every (b - a) / 9), a heartbeat that thickens
+{ const a = s04_W(77, 'ten'), b = s04_WE(81, 'brakes'), st = (b - a) / 9;
+  SFX(a, 'pop', 1.3, 0); SFX(s04_C(77) + 0.1, 'ghost', 0.6, 0.9);
+  for (let k = 0; k < 9; k++) { const t = a + k * st, pn = t < s04_C(78) ? 0 : 0.82;
+    SFX(t, 'tick', 1.3 + k * 0.05, pn); SFX(t + 0.01, 'blip', 0.5 + 0.06 * k, pn); SFX(t, 'heart', 0.7 + 0.1 * k, 0);
+    if (k >= 4) SFX(t + st / 2, 'heart', 0.6 + 0.1 * k, 0); } }
 // 078 "Not enough time to explain." — Theo turns from the glass to Dad, mouth opening
 SHOT(s04_C(78), 's04_turn', () => {
   const t = s04_u(s04_W(78, 'time') - 0.05, 0.2);
@@ -344,6 +390,7 @@ SHOT(s04_C(78), 's04_turn', () => {
   } }));
   s04_ringS();
 }, { ...s04_O, title: 'Theo turns to Dad' });
+SFX(s04_W(78, 'time') + 0.02, 'swish', 1, 0.3); SFX(s04_W(78, 'time') + 0.1, 'cloth', 0.6, 0.3);
 // 079 "Dad. Brake. Now." — he leans in and points at the red light, shouting
 SHOT(s04_C(79), 's04_shout', () => {
   const p = s04_u(s04_W(79, 'dad') - 0.05, 0.2);
@@ -354,6 +401,7 @@ SHOT(s04_C(79), 's04_shout', () => {
   } }));
   s04_ringS();
 }, { ...s04_O, title: 'Theo: "Dad. Brake. Now."' });
+SFX(s04_C(79) + 0.05, 'whoosh', 0.6, 0); SFX(s04_W(79, 'dad') + 0.05, 'swish', 1.2, 0.3); SFX(s04_W(79, 'dad') + 0.12, 'cloth', 0.7, 0.3);
 // 079 "Brake. Now." — Dad's eyes in the rear-view mirror, flicking to Theo and going wide on "now"
 SHOT(s04_C(79, 'brake'), 's04_mirror', () => {
   IV_CAM = { x: 960, y: 300, z: 1.7 }; IV_FOCUS = 0.5;
@@ -372,12 +420,14 @@ SHOT(s04_C(79, 'brake'), 's04_mirror', () => {
   });
   s04_ringS();
 }, { ...s04_O, title: "Dad's eyes in the mirror" });
+SFX(s04_C(79, 'brake') + 0.03, 'swish', 0.7, 0); SFX(s04_C(79, 'brake') + 0.15, 'glass', 0.35, -0.2); SFX(s04_W(79, 'now'), 'tick', 0.8, 0); SFX(s04_W(79, 'now') + 0.05, 'gasp', 0.6, 0);
 // 080 "He doesn't ask why." — Dad's face sets; then his hands clamp the wheel at ten and two
 SHOT(s04_C(80), 's04_dadSet', () => {
   IV_CAM = { x: 600, y: 640, z: 2.35 };
   ivStage(SET_busFront({ light: 'red', act: () => s04_dadDrive({ f: 0.7, expr: { eyes: TT < s04_W(80, 'ask') ? 'wide' : 'angry', mouth: 'flat', brow: TT < s04_W(80, 'ask') ? 'up' : 'angry', look: [1, 0] } }) }));
   s04_ringS();
 }, { ...s04_O, title: "Dad doesn't ask why" });
+SFX(s04_C(80) + 0.05, 'swish', 0.5, -0.3); SFX(s04_W(80, 'ask'), 'cloth', 0.7, -0.3); SFX(s04_W(80, 'ask') + 0.02, 'thud', 0.4, -0.3);
 SHOT(s04_C(80, 'why'), 's04_grip', () => {
   const g = s04_u(SHOT_T0 + 1 / FPS, 4 / FPS);
   IV_CAM = { x: 720, y: 760, z: 3.4 }; IV_FOCUS = 1;
@@ -392,6 +442,8 @@ SHOT(s04_C(80, 'why'), 's04_grip', () => {
   } }));
   s04_ringS();
 }, { ...s04_O, title: 'hands clamp the wheel' });
+{ const g = s04_C(80, 'why') + 1 / FPS;
+  SFX(g + 0.04, 'swish', 0.9, 0); SFX(g + 4 / FPS, 'thud', 1.0, -0.2); SFX(g + 4 / FPS, 'cloth', 1.3, -0.25); SFX(g + 4 / FPS + 0.02, 'plastic', 1.1, 0.15); SFX(g + 0.4, 'plastic', 0.6, -0.1); }
 // 081 "He brakes." — the shoe slams the brake pedal on "brakes"
 function s04_pedals(p) {
   IV_M = IV_MOOD.rain;
@@ -423,6 +475,8 @@ SHOT(s04_C(81), 's04_pedal', () => {
   s04_pedals(s04_ui(s04_W(81, 'brakes') - 0.06, 4 / FPS));
   s04_ringS();
 }, { ...s04_O, title: 'the foot slams the brake' });
+{ const tb = s04_W(81, 'brakes') - 0.06;
+  SFX(s04_C(81) + 0.05, 'whoosh', 0.7, 0); SFX(tb + 0.05, 'swish', 1.2, 0); SFX(tb + 4 / FPS, 'impact', 1.3, 0); SFX(tb + 4 / FPS + 0.02, 'metal', 0.7, 0); }
 
 // =====================================================================
 //  E · [BEAT 2 s] the stop, then THE TRUCK (s04_TRUCK — the loudest hit; 6-frame jolt) — 082–083
@@ -450,6 +504,13 @@ SHOT(s04_TRUCK - 0.45, 's04_truckPass', () => {
   const fl = clamp(1 - Math.abs(nose - 900) / 900);
   if (fl > 0) s04_screen(() => { ivGlow(clamp(nose, 0, 1920), 430, 1100, 'rgba(255,248,225,0.8)', fl); ctx.globalAlpha = fl * 0.35; ctx.fillStyle = '#fff6e0'; ctx.fillRect(0, 0, W, H); });
 }, { ...s04_O, title: 'THE TRUCK roars past (jolt)', boardAt: 0.5 });
+// after the truck (score.js plays the pass itself): the windshield and the cab rattle, Dad's breath, the tail leaving left
+SFX(s04_TRUCK + 0.05, 'glass', 1.5, -0.2); SFX(s04_TRUCK + 0.1, 'metal', 1.0, 0.1); SFX(s04_TRUCK + 0.15, 'plastic', 0.9, -0.3); SFX(s04_TRUCK + 0.25, 'whoosh', 1.6, -0.7); SFX(s04_TRUCK + 0.35, 'gasp', 1.0, -0.2);
+// the bed comes back after the hit: idle engine, wipers, rain drops (to the end of the section)
+{ const t0 = s04_TRUCK + 1.3, end = s04_C(90) - 0.1, r = RNG('s04rainsfx2').f;
+  SFX(t0, 'engine', 0.4, 0, end - t0);
+  for (let k = Math.ceil(t0 / 1.208 - 0.5); (k + 0.5) * 1.208 < end; k++) SFX((k + 0.5) * 1.208, 'wiper', 0.4, k % 2 ? 0.2 : -0.2);
+  for (let t = t0 + 0.8; t < end; t += 1.8 + r() * 1.4) SFX(t, 'drip', 0.18 + r() * 0.12, r() * 1.6 - 0.8); }
 // 082 "The truck roars past the windshield." — from above again: the bus stopped on the line, the truck blasting by its nose
 SHOT(s04_C(82), 's04_nearMiss', () => {
   const Q = s04_OH, u = (TT - SHOT_T0) / 2.0, tx = lerp(1020, -1300, u);
@@ -461,12 +522,14 @@ SHOT(s04_C(82), 's04_nearMiss', () => {
   }, 'nm');
   s04_screen(() => ivTag('INCHES', 1340, 500, 30, ivPop(s04_W(82, 'past')) * (1 - clamp((TT - s04_W(82, 'past') - 1.2) * 4))));
 }, { ...s04_O, title: 'from above: the real truck misses by inches' });
+SFX(s04_C(82) + 0.05, 'whoosh', 1.2, -0.3); SFX(s04_C(82) + 0.1, 'horn', 0.5, -0.6, 0.7); SFX(s04_C(82) + 0.3, 'car', 0.9, -0.6, 1.2); SFX(s04_W(82, 'past'), 'pop', 1.2, 0.4); SFX(s04_W(82, 'windshield') + 0.3, 'brake', 0.25, 0.1, 0.4);
 // 083 "Close enough to read the logo." — RAPIDO FREIGHT sliding past the wet glass
 SHOT(s04_C(83), 's04_logo', () => {
   const u = (TT - SHOT_T0) / (s04_C(84) - SHOT_T0), tx = lerp(980, 420, u);
   IV_CAM = { x: 900, y: 420, z: 1.75 }; IV_FOCUS = 1.7;
   ivStage(SET_busFront({ light: 'red', out: () => P_truck(tx, 880, 0.95, { dir: -1, lights: false }) }));
 }, { ...s04_O, title: 'RAPIDO FREIGHT, close enough to read' });
+SFX(s04_C(83) + 0.05, 'swish', 0.6, -0.1); SFX(s04_C(83), 'engine', 0.9, -0.3, 1.6); SFX(s04_C(83) + 0.2, 'slide', 0.8, -0.2); SFX(s04_W(83, 'read'), 'tick', 0.5, -0.2); SFX(s04_W(83, 'logo') + 0.05, 'drip', 0.6, 0.2);
 
 // =====================================================================
 //  F · inside, everything flies — 084–089 + [BEAT 2 s]
@@ -489,6 +552,11 @@ SHOT(s04_C(84), 's04_flies', () => {
     const c = s04_caneAt(t); P_cane(c.x, c.y, 0.95, { ang: c.ang });
   } }));
 }, { ...s04_O, title: 'everything flies' });
+{ const T0 = s04_C(84) + 0.04, pn = (x) => clamp((x - 980) / 960, -1, 1);
+  SFX(s04_C(84) + 0.02, 'impact', 0.8, 0.2); SFX(T0 + 0.05, 'whoosh', 1.4, 0.3); SFX(T0 + 0.05, 'paper', 1.0, 0.4); SFX(T0 + 0.1, 'gasp', 1.1, 0.3); SFX(T0 + 0.1, 'cloth', 0.9, 0.3); SFX(T0 + 0.12, 'swish', 1.0, 0.3);
+  s04_hits(1360, 742, -820, -380, 2600, GROUND, 0.2).forEach((h, i) => { SFX(T0 + h.t, 'thud', i ? 0.5 : 1.1, pn(h.x)); if (!i) SFX(T0 + h.t + 0.02, 'paper', 0.9, pn(h.x)); });
+  for (let j = 0; j < 6; j++) s04_hits(1330 + j * 14, 690, -460 - j * 105, -560 + j * 70, 2600, GROUND, 0.45).slice(0, 2).forEach((h, i) => SFX(T0 + h.t, 'bounce', (i ? 0.5 : 0.9) - j * 0.04, pn(h.x)));
+  s04_hits(1260, 760, -980, -650, 2600, GROUND - 12, 0.25).forEach((h, i) => { SFX(T0 + h.t, 'metal', i ? 0.6 : 1.2, pn(h.x)); SFX(T0 + h.t, 'thud', i ? 0.3 : 0.6, pn(h.x)); }); }
 // 085 "Shopping bags." — close: the bags tumbling, oranges spilling out
 SHOT(s04_C(85), 's04_bags', () => {
   const t = TT - SHOT_T0;
@@ -499,6 +567,10 @@ SHOT(s04_C(85), 's04_bags', () => {
     P_bags(f.x, f.y, 1.8, { ang });
   } }));
 }, { ...s04_O, title: 'shopping bags tumbling', boardAt: 0.22 });
+{ const T0 = s04_C(85), pn = (x) => clamp((x - 760) * 2.5 / 960, -1, 1);
+  SFX(T0 + 0.03, 'whoosh', 0.8, 0.3); SFX(T0 + 0.05, 'paper', 1.1, 0.6);
+  s04_hits(1180, 640, -330, -220, 1500, GROUND, 0.2).forEach((h, i) => { SFX(T0 + h.t, 'thud', i ? 0.5 : 1.0, pn(h.x)); SFX(T0 + h.t + 0.02, 'paper', i ? 0.5 : 1.0, pn(h.x)); });
+  for (let j = 0; j < 5; j++) { const t0 = 0.12 + j * 0.05; s04_hits(1150 - j * 8, 630, -260 - j * 60, -120 + j * 40, 1500, GROUND, 0.5).slice(0, 2).forEach((h, i) => SFX(T0 + t0 + h.t, 'bounce', i ? 0.55 : 0.95, pn(h.x))); } }
 // 086 "A cane." — the cane spins through the air, cracks off the pole, drops
 SHOT(s04_C(86), 's04_cane', () => {
   const t = TT - SHOT_T0, tc = (1420 - 1215) / 520;
@@ -513,11 +585,15 @@ SHOT(s04_C(86), 's04_cane', () => {
     if (t >= tc && t < tc + 0.2) for (let i = 0; i < 5; i++) { const an = -0.9 + i * 0.45, k = (t - tc) / 0.2; ivLine(1180 + Math.cos(an) * 30, y + Math.sin(an) * 30, 1180 + Math.cos(an) * (40 + 50 * k), y + Math.sin(an) * (40 + 50 * k), 5, `rgba(255,236,200,${1 - k})`); }
   } }));
 }, { ...s04_O, title: 'a cane, spinning, hits the pole' });
+{ const T0 = s04_C(86), tc = (1420 - 1215) / 520, y0 = 470 - 150 * tc + 700 * tc * tc;
+  SFX(T0 + 0.05, 'swish', 0.9, 0.3); SFX(T0 + 0.2, 'swish', 0.7, 0.4); SFX(T0 + tc, 'metal', 1.8, 0.35); SFX(T0 + tc, 'impact', 0.5, 0.35);
+  s04_hits(1215, y0, 170, 80, 1800, GROUND - 12, 0.3).forEach((h, i) => { SFX(T0 + tc + h.t, 'thud', i ? 0.4 : 0.8, clamp((h.x - 1080) * 2.4 / 960, -1, 1)); SFX(T0 + tc + h.t, 'plastic', i ? 0.5 : 0.9, clamp((h.x - 1080) * 2.4 / 960, -1, 1)); }); }
 // 087 "And Mrs. Okafor," — her face: glasses, eyes wide, pitching forward
 SHOT(s04_C(87), 's04_okFace', () => {
   IV_CAM = { x: 920, y: 530, z: 2.6 };
   ivStage(SET_busAisle({ speed: 0, act: () => s04_okLurch(lerp(0.35, 1, s04_u(SHOT_T0, 0.5))) }));
 }, { ...s04_O, title: 'Mrs. Okafor pitching forward' });
+SFX(s04_C(87) + 0.03, 'cloth', 0.8, 0); SFX(s04_C(87) + 0.1, 'gasp', 1.0, 0); SFX(s04_C(87) + 0.35, 'swish', 0.6, -0.1);
 // 087 "…seat four," — the seat-4 plate (PRIORITY): she's thrown out of it; the 4 lights on "four"
 SHOT(s04_C(87, 'seat'), 's04_seat4', () => {
   const u = s04_ui(SHOT_T0, 0.32);
@@ -526,6 +602,7 @@ SHOT(s04_C(87, 'seat'), 's04_seat4', () => {
     if (u < 1) ivMan({ who: CAST.okafor, x: 960 - 330 * u, y: GROUND, h: 500, f: -0.5, pose: ivPose('sit', { lean: 0.5 + 0.7 * u, hL: [0.3, 0.02], hR: [0.33, -0.02], dip: 0.14 + 0.1 * u }), expr: { eyes: 'wide', mouth: 'o', brow: 'up' } });
   }, front: () => { const g = ivPop(s04_W(87, 'four')); ivGlow(1055, 415, 220, 'rgba(255,210,58,0.55)', g); if (g > 0) { ctx.save(); ctx.globalAlpha = g; ivRR(1020, 390, 70, 50, 8, '#ffe066'); ivText('4', 1055, 430, 40, '#1a1e2c', { font: IV.sans }); ctx.restore(); } } }));
 }, { ...s04_O, title: 'seat 4, empty' });
+SFX(s04_C(87, 'seat') + 0.05, 'whoosh', 1.0, -0.3); SFX(s04_C(87, 'seat') + 0.1, 'cloth', 0.9, -0.3); SFX(s04_W(87, 'four'), 'pop', 1.2, 0.2); SFX(s04_W(87, 'four') + 0.03, 'ding', 0.5, 0.2);
 // 087 "…hits the floor." — she lands in the aisle on "floor": oranges rolling, the cane down, the bags spilled
 const s04_aftermath = (t) => {
   P_bags(300, GROUND, 1.35, { ang: -1.45 }); P_cane(1060, GROUND - 12, 0.95, { ang: Math.PI / 2 });
@@ -540,6 +617,9 @@ SHOT(s04_C(87, 'hits'), 's04_fall', () => {
       pose: ivPoseMix(ivPose('sit', { lean: 0.75, hL: [0.3, 0.05], hR: [0.33, 0.02] }), ivPose('fallen'), u), expr: { eyes: u < 1 ? 'wide' : 'closed', mouth: u < 1 ? 'o' : 'frown', brow: 'sad' } });
   } }));
 }, { ...s04_O, title: 'Mrs. Okafor hits the floor' });
+{ const land = s04_W(87, 'floor') + 0.03;
+  SFX(s04_C(87, 'hits') + 0.05, 'swish', 0.9, 0); SFX(land, 'impact', 1.4, -0.1); SFX(land + 0.02, 'cloth', 1.2, -0.1); SFX(land + 0.15, 'thud', 0.7, -0.1); SFX(land + 0.25, 'gasp', 0.8, -0.1);
+  SFX(land + 0.3, 'slide', 0.4, -0.4); SFX(land + 0.1, 'bounce', 0.4, 0.3); SFX(land + 0.6, 'plastic', 0.5, 0.4); }
 // 089 "My wrist…" — sitting up on the floor, clutching her wrist; then the [BEAT]: the wrist, and Dad looking back
 const s04_okFloor = (o = {}) => ivMan({ who: CAST.okafor, x: 720, y: GROUND, h: 500, f: -0.5, talk: o.talk,
   pose: { ...IV_POSES.stand, hL: [0.15, 0.12], hR: [0.1, 0.15], fL: [0.3, 0.04], fR: [0.35, 0.07], dip: 0.4, seat: true, lean: 0.15, tilt: 0.22 },
@@ -548,6 +628,7 @@ SHOT(s04_C(89), 's04_myWrist', () => {
   IV_CAM = { x: 690, y: 690, z: 2.5 };
   ivStage(SET_busAisle({ speed: 0, act: () => { s04_aftermath(TT - SHOT_T0 + 2); s04_okFloor({ talk: s04_V[89] }); } }));
 }, { ...s04_O, title: 'Mrs. Okafor: "My wrist…"' });
+SFX(s04_C(89) + 0.05, 'cloth', 0.6, -0.1); SFX(s04_C(89) + 0.3, 'slide', 0.4, 0.3); SFX(s04_W(89, 'wrist') + 0.2, 'cloth', 0.5, -0.1);
 const s04_beat2 = LE(s04_V[89]) + 0.15;
 SHOT(s04_beat2, 's04_wristCU', () => {
   IV_CAM = { x: 900, y: 820, z: 3.1 }; IV_FOCUS = 1;
@@ -558,7 +639,10 @@ SHOT(s04_beat2, 's04_wristCU', () => {
     s04_arm(1060, 1080, 835 + sh * 0.5, 872, 1300, 'hold', CAST.okafor.col, -1);
   } }));
 }, { ...s04_O, title: 'BEAT: her hand holding the wrist', boardAt: 0.5 });
+SFX(s04_beat2 + 0.05, 'cloth', 0.5, 0); SFX(s04_beat2 + 0.2, 'slide', 0.5, 0.3); SFX(s04_beat2 + 0.4, 'heart', 0.6, 0); SFX(s04_beat2 + 1.3, 'heart', 0.5, 0);
 SHOT(s04_beat2 + 0.5 * (s04_C(90) - s04_beat2), 's04_dadBack', () => {
   IV_CAM = { x: 590, y: 640, z: 2.35 };
   ivStage(SET_busFront({ light: 'green', act: () => s04_dadDrive({ f: -0.3, expr: { eyes: 'sad', mouth: 'o', brow: 'sad', look: [-0.6, 0.2] } }) }));
 }, { ...s04_O, title: 'BEAT: Dad looks back, the light turns green', boardAt: 0.5 });
+{ const T0 = s04_beat2 + 0.5 * (s04_C(90) - s04_beat2);
+  SFX(T0 + 0.05, 'swish', 0.7, -0.3); SFX(T0 + 0.15, 'cloth', 0.5, -0.3); SFX(T0 + 0.5, 'click', 0.8, 0.5); }

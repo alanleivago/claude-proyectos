@@ -87,6 +87,10 @@ SHOT(CUT('107-narrator'), 's06_noOneSees', (lt, S) => {
     s06_you({ x: 620, f: 0.55, pose: ivPoseMix(ivPose('relaxed'), ivPose('point', { hR: [0.3, -0.02] }), u), expr: { eyes: u > 0.5 ? 'sad' : 'open', mouth: 'flat', brow: 'sad', look: [1, 0] } });
   } }));
 }, { sec: 's06', title: "107 nobody else sees the ghost" });
+{ const t0 = CUT('107-narrator');                                                        // sfx 107
+  SFX(t0, 'whoosh', 1.1); SFX(t0 + 0.12, 'ghost', 1, 0.3); SFX(t0 + 0.3, 'car', 0.35, 0.3, 2.4);   // the ghost car, drifting
+  for (let k = 2; k < 10; k += 2) SFX(t0 - 0.4 + k * 5 / 24, 'step', 0.4, clamp((2350 - 587 * (k * 5 / 24) - 960) / 960, -1, 1));
+  SFX(s06_wS('107-narrator', 'show'), 'swish', 0.9, -0.4); }
 
 // 108 "But you can show them the corner." — Fifth and Main by day, wide, push-in
 SHOT(CUT('108-narrator', 'corner'), 's06_cornerWide', (lt, S) => {
@@ -96,6 +100,7 @@ SHOT(CUT('108-narrator', 'corner'), 's06_cornerWide', (lt, S) => {
     s06_you({ x: 820, f: 0.4, pose: ivPose('relaxed'), expr: { eyes: 'open', mouth: 'smile' } });
   } }));
 }, { sec: 's06', title: '108 the corner' });
+SFX(CUT('108-narrator', 'corner'), 'swish', 0.6); SFX(CUT('108-narrator', 'corner') + 0.1, 'car', 0.45, 0.6, 1.6);
 SHOT(CUT('108-narrator'), 's06_butYouCan', (lt, S) => {
   // "But you can show them…" — your face, an idea: a small smile, eyes to the side
   IV_CAM = { x: 860, y: 470, z: 2.7 };
@@ -105,6 +110,8 @@ SHOT(CUT('108-narrator'), 's06_butYouCan', (lt, S) => {
     s06_you({ x: 820, f: 0.25, pose: ivPose('relaxed'), expr: { eyes: u > 0.5 ? 'squint' : 'open', mouth: u > 0.5 ? 'smirk' : 'flat', look: [lerp(-1, 1, u), -0.3] } });
   } }));
 }, { sec: 's06', title: '108 your idea' });
+SFX(CUT('108-narrator'), 'whoosh', 1.2); SFX(CUT('108-narrator') + 0.1, 'crowd', 0.5, 0, 1.5);   // into the corner, by day
+SFX(s06_wS('108-narrator', 'show'), 'ding', 0.5, -0.2);                                       // the idea
 
 // ---------------------------------------------------------------------
 //  109 Nia: "If you get arrested, I never knew you." — hand close-up: she holds out her phone, you take it;
@@ -124,6 +131,9 @@ SHOT(CUT('109-nia'), 's06_handOver', (lt, S) => {
   if (!nOpen) s06_tips(1010 + hw - 70, py - 168, 3, -62, 0, 143, Math.PI / 2);
   if (reach > 0.95) s06_tips(px - hw + 70, py - 168, 3, 62, 0, 143, Math.PI / 2);
 }, { sec: 's06', title: '109 the phone changes hands' });
+{ const tg = s06_wS('109-nia', 'arrested');                                              // sfx 109: the hand-over
+  SFX(CUT('109-nia'), 'whoosh', 0.9); SFX(tg - 0.25, 'swish', 0.9, -0.6); SFX(tg, 'plastic', 1.1, -0.2);
+  SFX(tg + 0.15, 'slide', 0.8, -0.3); SFX(tg + 0.2, 'swish', 0.5, 0.6); }
 SHOT(CUT('109-nia', 'i', 1), 's06_niaNever', (lt, S) => {
   IV_CAM = { x: 1100, y: 480, z: 2.8 };
   ivStage(SET_corner({ t: 'day', light: 'green', act: () => {
@@ -131,6 +141,7 @@ SHOT(CUT('109-nia', 'i', 1), 's06_niaNever', (lt, S) => {
     s06_nia({ x: 1130, f: -0.3, pose: ivPose('arms'), expr: { eyes: 'tired', mouth: 'flat', brow: 'up' }, talk: '109-nia' });
   } }));
 }, { sec: 's06', title: '109 Nia: I never knew you' });
+SFX(CUT('109-nia', 'i', 1), 'swish', 0.5, 0.3); SFX(CUT('109-nia', 'i', 1) + 0.08, 'cloth', 0.6, 0.3);
 
 // ---------------------------------------------------------------------
 //  110 "Fifth and Main." — the street blades and the signal, low angle; it turns yellow, then red
@@ -140,6 +151,8 @@ SHOT(CUT('110-narrator'), 's06_signs', (lt, S) => {
   const ty = LE('110-narrator') - S.t0 - 0.2;
   ivStage(SET_corner({ t: 'day', light: lt < ty ? 'green' : 'yellow', fg: false }));
 }, { sec: 's06', title: '110 5TH ST x MAIN ST' });
+SFX(CUT('110-narrator'), 'whoosh', 1); SFX(CUT('110-narrator') + 0.1, 'car', 0.4, -0.5, 1.4);
+SFX(LE('110-narrator') - 0.2, 'click', 1.2, 0.3);   // green → yellow
 
 // ---------------------------------------------------------------------
 //  111 "Every time a driver is about to run the red, / you see it ten seconds early, / and you're already filming."
@@ -152,6 +165,9 @@ SHOT(CUT('111-narrator'), 's06_ghostRunner', (lt, S) => {
     s06_you({ x: 900, f: -0.55, pose: ivPose('phone'), expr: { eyes: see > 0.5 ? 'wide' : 'open', mouth: see > 0.5 ? 'o' : 'flat', look: [-1, 0] }, ...s06_film(1) });
   } }));
 }, { sec: 's06', title: '111 the ghost runs the red' });
+{ const tc = s06_wS('111-narrator', 'run');                                               // sfx 111: the ghost runner
+  SFX(CUT('111-narrator'), 'whoosh', 0.9); SFX(CUT('111-narrator') + 0.3, 'engine', 0.4, 0.3, 2);   // the car waiting at the red
+  SFX(tc - 0.7, 'ghost', 1.2, -0.7); SFX(tc, 'car', 0.7, 0, 1.2); SFX(tc - 0.5, 'gasp', 0.45, -0.1); }
 SHOT(CUT('111-narrator', 'you'), 's06_tenEarly', (lt, S) => {
   IV_CAM = { x: 1020, y: 470, z: 2.7 };
   const tc = s06_wS('111-narrator', 'ten') + 0.2;
@@ -162,6 +178,9 @@ SHOT(CUT('111-narrator', 'you'), 's06_tenEarly', (lt, S) => {
   ivGlow(860, 445, 140, 'rgba(127,240,255,0.35)');
   ivTag('10 SECONDS EARLY', 1330, 300, 50, ivPop(VW('111-narrator', 'ten')), { c: IV.ghost, line: 'rgba(127,240,255,0.6)' });
 }, { sec: 's06', title: '111 ten seconds early' });
+{ const tc = s06_wS('111-narrator', 'ten') + 0.2;
+  SFX(CUT('111-narrator', 'you'), 'swish', 0.6); SFX(CUT('111-narrator', 'you') + 0.05, 'shimmer', 0.8, -0.1);   // cyan glints in the eyes
+  SFX(VW('111-narrator', 'ten'), 'pop', 1, 0.4); SFX(tc - 0.4, 'ghost', 0.9, -0.5); SFX(tc, 'whoosh', 0.7, 0.3); }
 SHOT(CUT('111-narrator', 'and'), 's06_filming', (lt, S) => {
   s06_soft(SET_corner({ t: 'day', light: 'red', cars: false, fg: false }));
   const tc = LE('111-narrator') + 0.25, rec = 3 + lt;
@@ -171,6 +190,9 @@ SHOT(CUT('111-narrator', 'and'), 's06_filming', (lt, S) => {
   s06_tips(1172, 470, 3, 0, 78, 156, Math.PI);
   s06_tips(788, 640, 1, 0, 0, 170, 0);
 }, { sec: 's06', title: "111 already filming: REC" });
+{ const t0 = CUT('111-narrator', 'and'), tc = LE('111-narrator') + 0.25;              // sfx 111: REC, the real car in the screen
+  SFX(t0, 'whoosh', 0.8); SFX(t0 + 0.06, 'plastic', 0.8); SFX(t0 + 0.15, 'beep', 1.2);
+  SFX(tc, 'car', 0.8, 0, 1); SFX(tc - 0.1, 'horn', 0.5, 0.2, 0.35); }
 
 // 112 Nia: "So we just stand here?" — the two of you on the corner, you filming, she unconvinced
 SHOT(CUT('112-nia'), 's06_standHere', (lt, S) => {
@@ -180,6 +202,7 @@ SHOT(CUT('112-nia'), 's06_standHere', (lt, S) => {
     s06_nia({ x: 1230, f: -0.15, pose: ivPose('arms'), expr: { eyes: 'tired', mouth: 'flat', brow: 'up' }, talk: '112-nia' });
   } }));
 }, { sec: 's06', title: '112 Nia: so we just stand here?' });
+SFX(CUT('112-nia'), 'whoosh', 0.7); SFX(CUT('112-nia') + 0.1, 'crowd', 0.5, 0, 1.6); SFX(CUT('112-nia') + 0.4, 'car', 0.4, 0.5, 1.4);
 
 // 113 You: "Three. Two. Now." — your face behind the phone, the count tags; the ghost car crosses behind you
 SHOT(CUT('113-you'), 's06_threeTwo', (lt, S) => {
@@ -191,6 +214,10 @@ SHOT(CUT('113-you'), 's06_threeTwo', (lt, S) => {
   ivTag('3', 470, 330, 110, ivPop(VW('113-you', 'three')));
   ivTag('2', 640, 330, 110, ivPop(VW('113-you', 'two')));
 }, { sec: 's06', title: '113 three, two…' });
+SFX(CUT('113-you'), 'swish', 0.7);
+SFX(VW('113-you', 'three'), 'pop', 1.1, -0.5); SFX(VW('113-you', 'three') + 0.04, 'beep', 0.7, -0.5);
+SFX(VW('113-you', 'two'), 'pop', 1.1, -0.3); SFX(VW('113-you', 'two') + 0.04, 'beep', 0.7, -0.3);
+SFX(VW('113-you', 'now') - 0.55, 'ghost', 0.9, -0.8);
 SHOT(CUT('113-you', 'now'), 's06_now', (lt, S) => {
   IV_CAM = { x: 960, y: 540, z: 1.04 };
   const tc = VW('113-you', 'now') + 0.12, hit = s06_E(TT, tc, 4 / 24);
@@ -199,6 +226,9 @@ SHOT(CUT('113-you', 'now'), 's06_now', (lt, S) => {
     s06_nia({ x: 1230, f: -0.4, pose: ivPoseMix(ivPose('arms'), ivPose('handsUp', { hL: [-0.15, -0.05], hR: [0.12, -0.08] }), hit), expr: { eyes: hit > 0.5 ? 'wide' : 'tired', mouth: hit > 0.5 ? 'open' : 'flat', look: [-1, 0] } });
   } }));
 }, { sec: 's06', title: '113 NOW: the real car runs the red' });
+{ const tc = VW('113-you', 'now') + 0.12;                                                // sfx 113: NOW, the real car runs it
+  SFX(CUT('113-you', 'now'), 'whoosh', 0.8); SFX(tc - 0.3, 'engine', 0.9, -0.4, 0.6); SFX(tc, 'car', 1.8, 0.1, 1.2); SFX(tc + 0.02, 'whoosh', 1.3, 0.5);
+  SFX(tc + 0.1, 'horn', 1.2, 0.6, 0.55); SFX(tc + 0.05, 'gasp', 0.8, 0.3); SFX(tc + 0.08, 'cloth', 0.7, 0.3); }
 // 114 Nia: "No way."
 SHOT(CUT('114-nia'), 's06_noWay', (lt, S) => {
   IV_CAM = { x: 1230, y: 470, z: 2.8 };
@@ -206,6 +236,7 @@ SHOT(CUT('114-nia'), 's06_noWay', (lt, S) => {
     s06_nia({ x: 1230, f: -0.3, pose: ivPose('handsUp', { hL: [-0.15, -0.05], hR: [0.12, -0.08] }), expr: { eyes: 'wide', mouth: 'open', brow: 'up', look: [-1, 0] }, talk: '114-nia' });
   } }));
 }, { sec: 's06', title: '114 Nia: no way' });
+SFX(CUT('114-nia'), 'swish', 0.6, 0.2); SFX(CUT('114-nia') + 0.25, 'horn', 0.45, 0.9, 0.4); SFX(CUT('114-nia') + 0.1, 'car', 0.35, -0.5, 1.2);
 
 // ---------------------------------------------------------------------
 //  115–117 the days pass: DAY 1 · 4 (day) → DAY 3 · 19 (afternoon) → DAY 5 · 47 (sunset); a near miss in each
@@ -232,6 +263,16 @@ s06_dayShot('117-narrator', ['forty-seven', 'seven'], 5, 47, { t: 'sunset', cx: 
   s06_you({ x: 560, f: -0.6, pose: ivPose('phoneUp'), expr: { eyes: 'squint', mouth: 'smirk', look: [-1, 0] }, ...s06_film(1) });
   s06_nia({ x: 830, f: -0.6, pose: ivPose('phoneUp'), expr: { eyes: 'squint', mouth: 'smirk', look: [-1, 0] }, ...s06_film(0.95) });
 } });
+// sfx 115–117: each day is a new cut; the card pops, its number counts up and lands, a runner and a horn
+function s06_daySfx(id, numWords, n, pan, step) {
+  const t0 = CUT(id), tD = VW(id, 'day'), tE = s06_wE(id, ...numWords), tc = s06_wS(id, ...numWords) + 0.1;
+  SFX(t0, 'whoosh', 1.1); SFX(tD - 1 / 24, 'pop', 1.2, pan);
+  for (let k = step; k < n; k += step) { const u = 1 - Math.cbrt(1 - (k - 0.5) / n); SFX(tD + u * (tE - tD), 'tick', 0.5, pan); }  // EZ.o3 inverted
+  SFX(tE, 'blip', 1.2, pan); SFX(tc, 'car', 1.4, 0.2, 1.2); SFX(tc + 0.02, 'whoosh', 0.9, 0.5); SFX(tc + 0.12, 'horn', 0.8, 0.6, 0.45);
+}
+s06_daySfx('115-narrator', ['four'], 4, 0.45, 1);
+s06_daySfx('116-narrator', ['nineteen'], 19, -0.5, 3);
+s06_daySfx('117-narrator', ['forty-seven', 'seven'], 47, 0.45, 6); SFX(s06_wS('117-narrator', 'forty-seven', 'seven') + 0.12, 'camera', 0.7, -0.3);
 
 // ---------------------------------------------------------------------
 //  118 Nia: "That yellow is way too short." — she points up at the yellow (sunset)
@@ -243,6 +284,8 @@ SHOT(CUT('118-nia'), 's06_tooShort', (lt, S) => {
     s06_nia({ x: 1190, f: 0.5, pose: ivPoseMix(ivPose('relaxed'), ivPose('point', { hR: [0.2, -0.3] }), u), grip: { front: 'point' }, expr: { eyes: 'squint', mouth: 'flat', brow: 'angry', look: [1, -1] }, talk: '118-nia' });
   } }));
 }, { sec: 's06', title: '118 Nia: that yellow is way too short' });
+SFX(CUT('118-nia'), 'whoosh', 0.8); SFX(CUT('118-nia') + 0.15, 'swish', 1, 0.4);   // she points up
+SFX(s06_wS('118-nia', 'short') + 0.1, 'click', 1.2, 0.5);          // yellow → red
 
 // 119 You: "Two seconds." — the stopwatch in your hand, timing the yellow: it stops at 2.10 as the light goes red
 SHOT(CUT('119-you'), 's06_stopwatch', (lt, S) => {
@@ -257,6 +300,10 @@ SHOT(CUT('119-you'), 's06_stopwatch', (lt, S) => {
   s06_tips(1150, 240 + press * 18, 1, 0, 0, 190, 0.25);
   ivTag('2.1 S', 900, 880, 56, ivPop(VW('119-you', 'two')));
 }, { sec: 's06', title: '119 two seconds (stopwatch 2.10)' });
+{ const t0 = CUT('119-you'), tE = s06_wE('119-you', 'seconds');                          // sfx 119: the stopwatch runs and stops
+  SFX(t0, 'whoosh', 0.8); for (let t = t0 + 0.05; t < tE - 0.05; t += 0.2) SFX(t, 'tick', 0.55, 0.3);
+  SFX(VW('119-you', 'two'), 'pop', 1, -0.1); SFX(tE, 'click', 1.4, 0.3); SFX(tE + 0.04, 'beep', 0.8, 0.3); SFX(tE + 0.02, 'thud', 0.4, -0.4);   // stop · the light goes red
+}
 // "Most places give at least three."
 SHOT(CUT('119-you', 'most'), 's06_atLeast3', (lt, S) => {
   IV_CAM = { x: 1020, y: 480, z: 2.5 };
@@ -266,6 +313,7 @@ SHOT(CUT('119-you', 'most'), 's06_atLeast3', (lt, S) => {
   } }));
   ivTag('MOST PLACES: 3 S', 1250, 300, 50, ivPop(VW('119-you', 'three')));
 }, { sec: 's06', title: '119 most places give at least three' });
+SFX(CUT('119-you', 'most'), 'swish', 0.7); SFX(CUT('119-you', 'most') + 0.15, 'cloth', 0.7, -0.1); SFX(VW('119-you', 'three'), 'pop', 1.1, 0.3);
 
 // ---------------------------------------------------------------------
 //  120 Nia: "Spoiler. / The blue van." — her smug close-up, then she points before you do; a blue van coming
@@ -277,6 +325,7 @@ SHOT(CUT('120-nia'), 's06_spoiler', (lt, S) => {
     s06_nia({ x: 1180, f: -0.3, pose: ivPoseMix(ivPose('relaxed'), ivPose('point', { hR: [0.22, -0.05] }), u), grip: { front: 'point' }, expr: { eyes: 'squint', mouth: 'smirk', look: [-1, 0] }, talk: '120-nia' });
   } }));
 }, { sec: 's06', title: '120 Nia: Spoiler.' });
+SFX(CUT('120-nia'), 'whoosh', 0.7); SFX(CUT('120-nia') + 0.25, 'swish', 1, -0.3);
 SHOT(CUT('120-nia', 'the'), 's06_blueVan', (lt, S) => {
   IV_CAM = { x: 960, y: 540, z: 1.04 };
   const tc = LT('121-narrator') + 0.35, turn = s06_E(TT, VW('120-nia', 'van'));
@@ -285,6 +334,8 @@ SHOT(CUT('120-nia', 'the'), 's06_blueVan', (lt, S) => {
     s06_nia({ x: 900, f: -0.6, pose: ivPose('point', { hR: [0.3, -0.06] }), grip: { front: 'point' }, expr: { eyes: 'squint', mouth: 'smirk', look: [-1, 0] }, talk: '120-nia' });
   } }));
 }, { sec: 's06', title: '120 the blue van (Nia points first)' });
+SFX(CUT('120-nia', 'the'), 'swish', 0.7); SFX(VW('120-nia', 'van'), 'swish', 0.8, -0.4);
+SFX(CUT('120-nia', 'the') + 0.4, 'engine', 0.6, -0.9, LT('121-narrator') - CUT('120-nia', 'the')); SFX(LT('121-narrator') - 0.8, 'rise', 0.5, 0, 0.8);   // the van coming
 
 // 121 "She's getting good at this." — the van blasts through the red behind you; you turn to her and smile
 SHOT(CUT('121-narrator'), 's06_goodAtThis', (lt, S) => {
@@ -295,6 +346,9 @@ SHOT(CUT('121-narrator'), 's06_goodAtThis', (lt, S) => {
     s06_nia({ x: 1150, f: -0.45, pose: ivPose('hips'), expr: { eyes: 'squint', mouth: 'smirk', look: [-1, 0] } });
   } }));
 }, { sec: 's06', title: "121 she's getting good at this" });
+{ const tc = LT('121-narrator') + 0.35;                                                  // sfx 121: the blue van blasts through
+  SFX(CUT('121-narrator'), 'whoosh', 0.7); SFX(tc - 0.25, 'horn', 0.7, -0.3, 0.5); SFX(tc, 'car', 1.9, 0.1, 1.4); SFX(tc + 0.02, 'whoosh', 1.4, 0.5);
+  SFX(tc + 0.05, 'engine', 0.8, 0.6, 0.8); SFX(tc + 0.35, 'swish', 0.8, -0.2); }
 // [BEAT] — a fist bump at the corner, the sunset behind
 SHOT(LE('121-narrator') + 3 / 24, 's06_fistBump', (lt, S) => {
   IV_CAM = { x: 1010, y: 520, z: 1.95 * ivPush(S.t0, 0.03, 1.6) };
@@ -304,3 +358,7 @@ SHOT(LE('121-narrator') + 3 / 24, 's06_fistBump', (lt, S) => {
     s06_nia({ x: 1150, f: -0.6, pose: ivPoseMix(ivPose('relaxed'), ivPose('handOut', { hR: [0.205, 0.06] }), k), grip: { front: 'fist' }, expr: { eyes: 'happy', mouth: 'smile' } });
   } }));
 }, { sec: 's06', title: '121 [beat] fist bump at sunset', boardAt: 0.45 });
+{ const t0 = LE('121-narrator') + 3 / 24;                                                 // sfx: the fist bump
+  SFX(t0, 'whoosh', 0.7); SFX(t0 + 0.1, 'crowd', 0.45, 0, 2.6); SFX(t0 + 0.8, 'car', 0.35, -0.6, 1.6);
+  SFX(t0 + 0.25, 'swish', 0.9, -0.2); SFX(t0 + 0.25 + 5 / 24, 'thud', 1.3);
+  SFX(t0 + 0.75, 'swish', 0.5); SFX(t0 + 0.9, 'laugh', 0.6, 0.2); }

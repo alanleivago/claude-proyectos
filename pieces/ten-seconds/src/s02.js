@@ -58,6 +58,9 @@ SHOT(CUT('017-narrator'), 's02_plus', (lt) => {
       const a = a0 + sp; ctx.save(); ctx.globalAlpha = s02_R(lt, 0.3 + a0 * 0.05, 0.2); fn(960 + Math.cos(a) * r * 1.5, 470 + Math.sin(a) * r * 0.55); ctx.restore(); });
   } }));
 }, { sec: 's02', title: 'PLUS — the gold + badge' });
+{ const t = CUT('017-narrator');
+  SFX(t, 'whoosh', 1); SFX(t + 0.1, 'pop', 1.4); SFX(t + 0.14, 'shimmer', 0.8);
+  SFX(t + 0.3, 'pop', 0.4, 0.6); SFX(t + 0.405, 'pop', 0.4, -0.5); SFX(t + 0.51, 'pop', 0.4, -0.3); }
 
 // ---------------------------------------------------------------------
 //  018 "The small stuff." — walking down the street, the phone riding loose in the hoodie pocket
@@ -74,6 +77,10 @@ SHOT(CUT('018-narrator'), 's02_walk', (lt, S) => {
   } }));
   s02_plus();
 }, { sec: 's02', title: 'the small stuff — walking, phone loose in the pocket' });
+{ const t = CUT('018-narrator'), t1 = CUT('019-nia');
+  SFX(t, 'whoosh', 1, -0.3);
+  for (let k = 0; t + k * 6 / FPS < t1; k++) SFX(t + k * 6 / FPS, 'step', k % 2 ? 0.45 : 0.55, clamp((380 + 135 * k - 960) * 1.12 / 960, -1, 1));   // your steps (6 frames each)
+  SFX(t + 1.1, 'slide', 0.35, 0); SFX(t + 2.0, 'cloth', 0.35, 0.3); }   // the phone working its way out of the pocket
 
 // ---------------------------------------------------------------------
 //  019 "Your phone!" — Nia points; the phone slips; in the ghost it lies cracked on the pavement
@@ -92,6 +99,8 @@ SHOT(CUT('019-nia'), 's02_niaPhone', (lt) => {
   } }));
   s02_plus();
 }, { sec: 's02', title: '"Your phone!" — Nia points, ghost: phone cracked on the ground' });
+{ const t = CUT('019-nia');
+  SFX(t, 'ghost', 0.7, -0.4); SFX(t + 0.05, 'swish', 0.8, 0.45); SFX(t + 0.15, 'cloth', 0.55, -0.5); SFX(t + 0.3, 'swish', 0.5, -0.4); }   // Nia points; the phone slips out
 
 // ---------------------------------------------------------------------
 //  020 "Got it." — hand close-up: the catch, a hand-width above the ghost's cracked phone
@@ -110,6 +119,9 @@ SHOT(VWE('019-nia', 'phone') - 2 / FPS, 's02_catch', (lt) => {
   });
   s02_plus();
 }, { sec: 's02', title: '"Got it." — hand close-up, the catch over the ghost crack' });
+{ const t = VWE('019-nia', 'phone') - 2 / FPS, tc = VW('020-you', 'got');
+  SFX(t, 'shimmer', 0.5, -0.1); SFX(t + 0.05, 'swish', 0.5, 0.1);                  // the phone tumbling down over the ghost crack
+  SFX(tc - 0.06, 'swish', 0.9, 0.5); SFX(tc, 'plastic', 1.2, 0.2); SFX(tc + 0.01, 'cloth', 0.7, 0.3); }   // the hand sweeps in, catches
 
 // ---------------------------------------------------------------------
 //  020 cont. — your face, smug, the phone already back in your hand
@@ -123,6 +135,7 @@ SHOT(CUT('020-you', 'it'), 's02_gotIt', () => {
   } }));
   s02_plus();
 }, { sec: 's02', title: '"Got it." — your smug face' });
+SFX(CUT('020-you', 'it'), 'swish', 0.4, -0.2); SFX(CUT('020-you', 'it') + 0.35, 'plastic', 0.35, -0.3);
 
 // ---------------------------------------------------------------------
 //  021 "Heads up!" — the gym: coach yells, a ball flies in; its ghost is already on your head; you start to duck
@@ -141,6 +154,10 @@ SHOT(CUT('021-coach'), 's02_headsUp', (lt, S) => {
   } }));
   s02_plus();
 }, { sec: 's02', title: '"Heads up!" — ball flying, ghost: it hits you' });
+{ const t = CUT('021-coach');
+  SFX(t, 'whoosh', 1.1); SFX(t, 'crowd', 0.35, 0, CUT('023-narrator') - t);         // the gym, a low crowd bed under 021-022
+  SFX(t + 0.04, 'swish', 0.8, -0.5); SFX(t + 0.1, 'ghost', 0.6, 0.45);
+  SFX(t + 0.25, 'whoosh', 0.7, -0.2); SFX(VW('021-coach', 'up') + 0.05, 'cloth', 0.7, 0.45); }   // ball in the air; you start to duck
 
 // ---------------------------------------------------------------------
 //  022 "Already up." — ducked, deadpan, the ball sails over your head
@@ -155,6 +172,9 @@ SHOT(CUT('022-you'), 's02_duck', (lt, S) => {
   } }));
   s02_plus();
 }, { sec: 's02', title: '"Already up." — ducked, the ball goes over' });
+{ const t = CUT('022-you'), d = CUT('023-narrator') - t;
+  SFX(t, 'swish', 0.4); SFX(t + d * 0.35, 'whoosh', 1.2, 0.1);                       // the ball sails over your head
+  SFX(t + d * 0.8, 'bounce', 0.9, 1); SFX(t + d * 0.8 + 0.4, 'bounce', 0.55, 1); SFX(t + d * 0.8 + 0.7, 'bounce', 0.3, 1); }
 
 // ---------------------------------------------------------------------
 //  023 "Pop quiz." — the classroom wide, POP QUIZ on the board, the teacher with the stack of sheets
@@ -175,6 +195,9 @@ SHOT(CUT('023-narrator'), 's02_quizWide', (lt, S) => {
   } }));
   s02_plus();
 }, { sec: 's02', title: 'Pop quiz — classroom wide' });
+{ const t = CUT('023-narrator'), u = VW('023-narrator', 'quiz') - 0.1;
+  SFX(t, 'whoosh', 1); SFX(t + 0.3, 'tick', 0.3, -0.6);
+  SFX(u, 'swish', 0.6, 0.55); SFX(u + 0.08, 'paper', 0.9, 0.55); SFX(u + 0.8, 'tick', 0.3, -0.6); }   // the teacher turns, the stack of sheets
 
 // ---------------------------------------------------------------------
 //  024a "You know who gets picked," — the teacher scanning the room; her ghost already points at you
@@ -188,6 +211,9 @@ SHOT(CUT('024-narrator'), 's02_picked', () => {
   } }));
   s02_plus();
 }, { sec: 's02', title: 'who gets picked — ghost teacher points at you' });
+{ const t = CUT('024-narrator');
+  SFX(t, 'swish', 0.3); SFX(t + 0.15, 'ghost', 0.75, 0);
+  for (let k = 0; k < 2; k++) SFX(t + 0.6 + k, 'tick', 0.35, -0.5); }      // the classroom clock
 
 // ---------------------------------------------------------------------
 //  024b "and you know the answer." — insert: your quiz sheet; the answer is already there, in the ghost
@@ -205,6 +231,9 @@ SHOT(CUT('024-narrator', 'and'), 's02_answer', (lt) => {
   });
   s02_plus();
 }, { sec: 's02', title: 'insert — quiz sheet, the ghost answer already written' });
+{ const t = CUT('024-narrator', 'and');
+  SFX(t, 'paper', 0.7); SFX(t + 0.2, 'shimmer', 0.9, -0.1);                         // the ghost answer writes itself
+  [3, 5].forEach((k) => SFX(t + k * Math.PI / 9, 'tick', 0.6, 0.5)); }     // the fingertip taps the sheet
 
 // ---------------------------------------------------------------------
 //  025 "Theo?" — the teacher turns and points
@@ -218,6 +247,7 @@ SHOT(CUT('025-teacher'), 's02_theo', (lt) => {
   } }));
   s02_plus();
 }, { sec: 's02', title: '"Theo?" — the teacher points' });
+SFX(CUT('025-teacher'), 'cloth', 0.4, 0.2); SFX(CUT('025-teacher') + 0.12, 'swish', 0.9, 0.2);
 
 // ---------------------------------------------------------------------
 //  026 "Photosynthesis." — you, hand already up, smug
@@ -227,6 +257,7 @@ SHOT(CUT('026-you'), 's02_photo', () => {
   ivStage(SET_classroom({ act: () => s02_class({ youPose: ivPose('sitDesk', { hR: [0.12, -0.3], hL: [0.22, 0.17] }), you: { eyes: 'squint', mouth: 'smirk' }, youTalk: '026-you' }) }));
   s02_plus();
 }, { sec: 's02', title: '"Photosynthesis." — hand already up' });
+SFX(CUT('026-you'), 'swish', 0.6, -0.1); SFX(CUT('026-you') + 0.05, 'thud', 0.3, -0.1);   // hand already up, chair creak
 
 // ---------------------------------------------------------------------
 //  027 "I haven't asked yet." — her flat face; then the class turns to stare
@@ -239,6 +270,7 @@ SHOT(CUT('027-teacher'), 's02_notYet', () => {
   } }));
   s02_plus();
 }, { sec: 's02', title: '"I haven\'t asked yet." — flat face' });
+SFX(CUT('027-teacher'), 'cloth', 0.5, 0); SFX(CUT('027-teacher') + 0.5, 'tick', 0.3, -0.6);
 SHOT(CUT('027-teacher', 'yet'), 's02_stare', () => {
   IV_CAM = { x: 820, y: 560, z: 1.25 };
   ivStage(SET_classroom({ act: () => {
@@ -247,6 +279,8 @@ SHOT(CUT('027-teacher', 'yet'), 's02_stare', () => {
   } }));
   s02_plus();
 }, { sec: 's02', title: 'the class stares at you' });
+{ const t = CUT('027-teacher', 'yet');
+  SFX(t, 'swish', 0.5, -0.6); SFX(t + 0.07, 'swish', 0.4, -0.2); SFX(t + 0.12, 'thud', 0.3, -0.4); SFX(t + 0.6, 'tick', 0.4, 0.6); }   // heads turn; awkward clock
 
 // ---------------------------------------------------------------------
 //  028 "Rock, paper, scissors with Nia." — the lunch table, both fists pumping on the words
@@ -266,6 +300,9 @@ SHOT(CUT('028-narrator'), 's02_rps', (lt, S) => {
   } }));
   s02_plus();
 }, { sec: 's02', title: 'rock, paper, scissors — fists pumping at lunch' });
+{ const t = CUT('028-narrator');
+  SFX(t, 'whoosh', 1); SFX(t, 'crowd', 0.3, 0, CUT('033-narrator') - t);            // the lunchroom murmur under 028-032
+  ['rock', 'paper', 'scissors'].forEach((w) => { SFX(VW('028-narrator', w) + 0.03, 'swish', 0.35); SFX(VW('028-narrator', w) + 0.2, 'thud', 0.7, 0); }); }
 
 // ---------------------------------------------------------------------
 //  029 "Fifty rounds." — hand close-up: her ghost already shows paper; your fist turns to scissors before she opens
@@ -289,6 +326,11 @@ SHOT(CUT('029-narrator'), 's02_hands', (lt, S) => {
   });
   s02_plus();
 }, { sec: 's02', title: 'RPS hands — ghost paper, you switch to scissors; ROUND 50' });
+{ const t = CUT('029-narrator'), d = CUT('030-narrator') - t, tw = d * 0.42, tn = d * 0.55, te = VWE('029-narrator', 'fifty');
+  SFX(t, 'swish', 0.5); SFX(t + 0.05, 'ghost', 0.6, 0.5); SFX(t, 'pop', 0.8, 0);
+  [0, 0.5, 1].forEach((k) => SFX(t + k * tw + 0.15, 'thud', 0.6, 0));                 // the fists pump
+  for (let k = 1; k < 8; k++) SFX(t + (te - t) * (1 - Math.cbrt(1 - k / 8)), 'tick', 0.4, 0); SFX(te, 'blip', 1, 0);   // ROUND 1 -> 50
+  SFX(t + tw, 'swish', 0.9, -0.5); SFX(t + tn, 'swish', 0.6, 0.5); SFX(t + tn + 0.06, 'ding', 0.6, -0.3); }
 
 // ---------------------------------------------------------------------
 //  030 "Fifty wins." — you, smug; the score lands 50 – 0
@@ -303,6 +345,10 @@ SHOT(CUT('030-narrator'), 's02_score', (lt, S) => {
   s02_scr(() => { const n = ivCount(S.t0 + 0.05, VWE('030-narrator', 'fifty'), 0, 50); ivTag('YOU ' + n + '  –  0 NIA', 1380, 230, 46, ivPop(S.t0)); });
   s02_plus();
 }, { sec: 's02', title: 'Fifty wins — 50 – 0, smug' });
+{ const t = CUT('030-narrator'), te = VWE('030-narrator', 'fifty');
+  SFX(t, 'swish', 0.4); SFX(t, 'pop', 1, 0.45); SFX(t + 0.15, 'swish', 0.5, -0.3);
+  for (let k = 1; k < 10; k++) SFX(t + 0.05 + (te - t - 0.05) * (1 - Math.cbrt(1 - k / 10)), 'tick', 0.4, 0.45);
+  SFX(te, 'blip', 1.2, 0.45); SFX(te + 0.04, 'ding', 0.7, 0.45); SFX(LE('030-narrator'), 'cheer', 0.4, -0.2); }
 
 // ---------------------------------------------------------------------
 //  031 "Spoiler." — Nia, deadpan close-up
@@ -316,6 +362,7 @@ SHOT(CUT('031-nia'), 's02_spoiler', () => {
   } }));
   s02_plus();
 }, { sec: 's02', title: '"Spoiler." — Nia deadpan' });
+SFX(CUT('031-nia'), 'swish', 0.3, 0.3); SFX(CUT('031-nia') + 0.04, 'cloth', 0.6, 0.3);   // arms crossed
 
 // ---------------------------------------------------------------------
 //  032 "That's her word for you now." — the two-shot: she points at you, you shrug, the word hangs between them
@@ -330,6 +377,8 @@ SHOT(CUT('032-narrator'), 's02_herWord', (lt, S) => {
   s02_scr(() => ivTag('“SPOILER.”', 1000, 250, 40, ivPop(S.t0 + 0.15)));
   s02_plus();
 }, { sec: 's02', title: 'her word for you — Nia points, you shrug' });
+{ const t = CUT('032-narrator');
+  SFX(t, 'swish', 0.3); SFX(t + 0.15, 'swish', 0.7, 0.35); SFX(t + 0.17, 'pop', 1, 0); SFX(t + 0.55, 'cloth', 0.6, -0.35); }
 
 // ---------------------------------------------------------------------
 //  033 "The claw machine at the arcade." — the arcade wide; you walk up to the CLAW and stop at the controls
@@ -348,6 +397,11 @@ SHOT(CUT('033-narrator'), 's02_arcade', (lt, S) => {
   } }));
   s02_plus();
 }, { sec: 's02', title: 'the claw machine — arcade wide, you walk up' });
+{ const t = CUT('033-narrator'), t1 = CUT('039-narrator');
+  SFX(t, 'whoosh', 1);
+  for (let k = 0; t + 0.4 + k * 0.85 < t1; k++) SFX(t + 0.4 + k * 0.85, 'beep', 0.22 + (k % 3) * 0.05, [-0.8, 0.6, -0.3, 0.9, 0.2][k % 5]);   // arcade cabinets beeping under 033-038
+  for (let k = 0; k < 5; k++) SFX(t + k * 6 / FPS, 'step', 0.55, -0.7 + k * 0.16);
+  SFX(t + 5 * 6 / FPS, 'plastic', 0.6, 0); }                                           // hand lands on the joystick
 
 // ---------------------------------------------------------------------
 //  034 "You just wait for the ghost to grab." — inside the glass: the real claw waits; its ghost drops, grabs, lifts a bear
@@ -366,6 +420,10 @@ SHOT(CUT('034-narrator'), 's02_ghostClaw', (lt) => {
   s02_scr(() => ivGlow(1180, 560, 380, 'rgba(90,230,255,0.10)'));
   s02_plus();
 }, { sec: 's02', title: 'the ghost claw grabs a bear; the real one waits' });
+{ const t = CUT('034-narrator');
+  SFX(t, 'swish', 0.4); SFX(t + 0.05, 'ghost', 0.8, 0.15);
+  SFX(t + 0.15, 'engine', 0.5, 0.15, 0.5); SFX(t + 0.75, 'metal', 0.9, 0.15); SFX(t + 0.77, 'cloth', 0.5, 0.15);   // ghost claw drops, grabs the bear
+  SFX(t + 1.0, 'engine', 0.5, 0.15, 0.5); }
 
 // ---------------------------------------------------------------------
 //  035 "Kid, that machine is rigged." — the manager, arms crossed
@@ -375,6 +433,7 @@ SHOT(CUT('035-manager'), 's02_rigged', () => {
   ivStage(SET_arcade({ fg: false, act: () => s02_std(CAST.manager, 1680, -0.4, 540, ivPose('arms'), { eyes: 'tired', mouth: 'flat', look: [-1, 0] }, { talk: '035-manager' }) }));
   s02_plus();
 }, { sec: 's02', title: '"Kid, that machine is rigged." — manager' });
+SFX(CUT('035-manager'), 'swish', 0.3, 0.6); SFX(CUT('035-manager') + 0.05, 'cloth', 0.45, 0.6);
 
 // ---------------------------------------------------------------------
 //  036 "I know. Watch." — you at the controls, the ghost's cyan in your eyes
@@ -388,6 +447,7 @@ SHOT(CUT('036-you'), 's02_watch', (lt) => {
   s02_scr(() => ivGlow(1180, 420, 300, 'rgba(90,230,255,0.16)'));
   s02_plus();
 }, { sec: 's02', title: '"I know. Watch." — you at the controls' });
+SFX(CUT('036-you'), 'shimmer', 0.5, 0.3); SFX(VW('036-you', 'watch') + 0.1, 'click', 0.8, 0.1);   // the joystick nudges
 
 // ---------------------------------------------------------------------
 //  [BEAT 2 s] — hand close-up: your thumb slams the red button; then the chute: plushies dropping one after another
@@ -404,6 +464,9 @@ SHOT(LE('036-you') - 2 / FPS, 's02_button', (lt) => {
   });
   s02_plus();
 }, { sec: 's02', title: 'BEAT — hand slams the button' });
+{ const t = LE('036-you') - 2 / FPS;
+  SFX(t, 'swish', 0.4); SFX(t + 0.3, 'swish', 0.8, -0.4); SFX(t + 0.37, 'click', 1.6, 0); SFX(t + 0.37, 'impact', 0.7, 0);   // thumb slams the red button
+  SFX(t + 0.45, 'beep', 0.8, 0.2); SFX(t + 0.5, 'engine', 0.6, 0.3, 0.3); }
 SHOT(LE('036-you') + 0.75, 's02_cascade', (lt) => {
   IV_CAM = { x: 1180, y: 640, z: 2.1 };
   const per = 0.17, n = Math.min(11, Math.floor(lt / per) + 1), kinds = ['bear', 'bunny', 'star', 'blob'];
@@ -417,6 +480,10 @@ SHOT(LE('036-you') + 0.75, 's02_cascade', (lt) => {
   } }));
   s02_plus();
 }, { sec: 's02', title: 'BEAT — plushies tumble out one after another' });
+{ const t = LE('036-you') + 0.75;
+  SFX(t, 'swish', 0.4); SFX(t + 0.02, 'ding', 1, 0); SFX(t + 0.2, 'beep', 0.5, 0.3);
+  for (let i = 0; i < 11; i++) SFX(t + (i + 1) * 0.17, 'thud', 0.45 + (i % 3) * 0.1, ((i % 4) - 1.5) * 0.15);   // plushies dropping, one after another
+  SFX(t + 12 * 0.17, 'cheer', 0.35, 0); }
 
 // ---------------------------------------------------------------------
 //  037 "Eleven plushies." — you with an armful, the 11 lands on the word
@@ -430,6 +497,10 @@ SHOT(CUT('037-narrator'), 's02_eleven', (lt, S) => {
   s02_scr(() => { const n = ivCount(S.t0 + 0.1, VWE('037-narrator', 'eleven'), 0, 11); ivTag(String(n), 1420, 330, 64, ivPop(S.t0 + 0.05)); });
   s02_plus();
 }, { sec: 's02', title: 'Eleven plushies — armful, tag 11' });
+{ const t = CUT('037-narrator'), a = t + 0.1, te = VWE('037-narrator', 'eleven');
+  SFX(t, 'swish', 0.4); SFX(t + 0.02, 'cloth', 0.6, 0); SFX(t + 0.05, 'pop', 0.9, 0.48);
+  for (let k = 1; k < 11; k++) SFX(a + (te - a) * (1 - Math.cbrt(1 - (k - 0.5) / 11)), 'tick', 0.45, 0.48);
+  SFX(te, 'blip', 1.2, 0.48); }
 
 // ---------------------------------------------------------------------
 //  038 "Okay. Out." — the manager points at the EXIT; you walk out with the pile
@@ -446,6 +517,10 @@ SHOT(CUT('038-manager'), 's02_out', (lt, S) => {
   } }));
   s02_plus();
 }, { sec: 's02', title: '"Okay. Out." — manager points at EXIT, you leave with the pile' });
+{ const t = CUT('038-manager'), tw = VW('038-manager', 'out') + 0.1;
+  SFX(t, 'swish', 0.3); SFX(VW('038-manager', 'out') - 0.05, 'swish', 0.8, 0.55);    // manager points at EXIT
+  SFX(tw, 'cloth', 0.45, -0.1);
+  for (let k = 0; tw + k * 6 / FPS < CUT('039-narrator'); k++) SFX(tw + k * 6 / FPS, 'step', 0.5, -0.1 - k * 0.15); }
 
 // ---------------------------------------------------------------------
 //  039a "Wall Street once spent about..." — the street at night: the sign, the towers, a ticker running
@@ -472,6 +547,9 @@ SHOT(CUT('039-narrator'), 's02_wallSt', (lt, S) => {
   ]);
   s02_plus();
 }, { sec: 's02', title: 'Wall Street at night — sign, towers, ticker' });
+{ const t = CUT('039-narrator');
+  SFX(t, 'whoosh', 1.2); SFX(t, 'crowd', 0.25, 0, 1.9); SFX(t + 0.2, 'car', 0.45, -0.5, 1.4); SFX(t + 1.2, 'horn', 0.2, 0.7, 0.25);
+  SFX(t + 0.5, 'tick', 0.25, 0.4); SFX(t + 1.0, 'tick', 0.25, 0.4); SFX(t + 1.5, 'tick', 0.25, 0.4); }   // street at night; the ticker
 
 // ---------------------------------------------------------------------
 //  039b "three hundred million dollars on a cable," — the map: $300,000,000 counts and lands on "million"; the cable draws on
@@ -486,6 +564,11 @@ SHOT(CUT('039-narrator', 'three'), 's02_map', (lt, S) => {
   } }));
   s02_plus();
 }, { sec: 's02', title: 'the cable map — $300,000,000 lands on "million"' });
+{ const t = CUT('039-narrator', 'three'), a = t + 0.05, te = VWE('039-narrator', 'million');
+  SFX(t, 'whoosh', 0.8); SFX(t + 0.02, 'pop', 1, 0.06);
+  for (let k = 1; k < 10; k++) SFX(a + (te - a) * (1 - Math.cbrt(1 - k / 10)), 'blip', 0.35, 0.06);
+  SFX(te, 'coin', 1.3, 0.06); SFX(te + 0.02, 'blip', 0.9, 0.06);
+  SFX(VW('039-narrator', 'cable'), 'slide', 0.7, -0.3); SFX(VW('039-narrator', 'cable') + 0.05, 'rise', 0.35, 0, 0.7); }   // the cable draws on
 
 // ---------------------------------------------------------------------
 //  039c "just to be three milliseconds faster than everyone else." — a race: two pulses, the cable wins by 3 ms
@@ -505,6 +588,9 @@ SHOT(CUT('039-narrator', 'just'), 's02_race', (lt, S) => {
   s02_scr(() => ivTag('3 ms', 1560, 800, 54, ivPop(tEnd - 3 / FPS), { c: '#ffe2b0' }));
   s02_plus();
 }, { sec: 's02', title: 'the race — the cable wins by 3 ms' });
+{ const t = CUT('039-narrator', 'just'), te = VWE('039-narrator', 'milliseconds');
+  SFX(t, 'whoosh', 0.8, -0.6); SFX(t + 0.05, 'rise', 0.5, 0, Math.max(0.3, te - t - 0.1));
+  SFX(te - 3 / FPS, 'pop', 1, 0.6); SFX(te, 'ding', 1, 0.6); SFX(te + 0.25, 'beep', 0.4, 0.6); }   // the cable crosses first, by 3 ms
 
 // ---------------------------------------------------------------------
 //  040 "You're ten thousand milliseconds faster." — you on the stage, your ghost already a step ahead; 10,000 ms in cyan
@@ -522,6 +608,10 @@ SHOT(CUT('040-narrator'), 's02_tenK', (lt, S) => {
   });
   s02_plus();
 }, { sec: 's02', title: '10,000 ms — you and your ghost a step ahead' });
+{ const t = CUT('040-narrator'), a = t + 0.05, te = VWE('040-narrator', 'thousand');
+  SFX(t, 'whoosh', 0.8); SFX(t + 0.04, 'ghost', 0.8, 0.3); SFX(t + 0.02, 'pop', 1, 0.46); SFX(t + 0.06, 'pop', 0.6, -0.46);
+  for (let k = 1; k < 10; k++) SFX(a + (te - a) * (1 - Math.cbrt(1 - k / 10)), 'blip', 0.35, 0.46);
+  SFX(te, 'blip', 1.2, 0.46); SFX(te + 0.05, 'shimmer', 0.8, 0.46); }
 
 // ---------------------------------------------------------------------
 //  041 "You could rob Wall Street." — Nia, sunset street, scheming grin
@@ -535,6 +625,8 @@ SHOT(CUT('041-nia'), 's02_rob', (lt) => {
   } }));
   s02_plus();
 }, { sec: 's02', title: '"You could rob Wall Street." — Nia grins' });
+{ const t = CUT('041-nia');
+  SFX(t, 'whoosh', 1); SFX(t + 0.1, 'car', 0.25, 0.7, 1.4); SFX(VW('041-nia', 'rob') - 0.03, 'cloth', 0.6, 0.05); }   // sunset street; Nia shrugs
 
 // ---------------------------------------------------------------------
 //  042 "I have fourteen dollars." — you, flat, showing the phone; then [BEAT] the bank app close: $14.00
@@ -551,8 +643,12 @@ SHOT(CUT('042-you'), 's02_fourteen', (lt, S) => {
   s02_scr(() => ivTag('$14', 1180, 300, 44, ivPop(VW('042-you', 'fourteen'))));
   s02_plus();
 }, { sec: 's02', title: '"I have fourteen dollars." — flat, phone up' });
+{ const t = CUT('042-you');
+  SFX(t, 'swish', 0.3); SFX(t + 0.1, 'swish', 0.6, -0.3); SFX(t + 0.25, 'plastic', 0.45, -0.3); SFX(VW('042-you', 'fourteen'), 'pop', 0.7, 0.4); }   // phone up; $14
 SHOT(LE('042-you') - 2 / FPS, 's02_bankApp', () => {
   s02_macro(SET_street({ t: 'sunset', fg: false }), 900, 560, 3);
   s02_scr(() => s02_arm(1560, 1350, 1110, 930, 6000, 'hold', CAST.you.col, { s: -1, under: () => P_phone(880, 540, 10.5, { ang: -0.06, screen: s02_bank }) }));
   s02_plus();
 }, { sec: 's02', title: 'BEAT — the bank app: $14.00' });
+{ const t = LE('042-you') - 2 / FPS;
+  SFX(t, 'whoosh', 0.6); SFX(t + 0.15, 'click', 0.6, 0.1); SFX(t + 0.25, 'blip', 0.6, 0); SFX(t + 0.6, 'drop', 0.6, 0); }   // the bank app; the sad $14.00

@@ -38,6 +38,9 @@ function s01_tableCU(y0, y1) {
 const s01_cafCU = (cam, fn, fg) => { IV_CAM = cam; return s01_cu(SET_cafeteria({ fg: false }), fn, fg); };
 // juice positions in the wide (world, on the table top)
 const s01_J = { carton: 1150, tray0: 990, tray1: 720, spill: 1040 };
+// sfx helpers (registration time only): a counter's ticks as ivCount lands them (o3), and footsteps every fps frames
+function s01_sfxCount(t0, t1, a, b, kind, v, pan) { for (let k = a + 1; k <= b; k++) { const y = (k - a - 0.5) / (b - a), x = 1 - Math.cbrt(1 - y); SFX(t0 + x * (t1 - t0), kind, k === b ? v * 1.4 : v, pan); } }
+function s01_sfxSteps(t0, t1, fps, v, pan) { for (let t = t0 + fps / FPS, i = 0; t < t1; t += fps / FPS, i++) SFX(t, 'step', v * (i % 2 ? 0.85 : 1), typeof pan === 'function' ? pan(t) : pan); }
 
 // ---------------------------------------------------------------------
 //  SHOT 1 — "Lunch." — the wide: the long table, you and Nia, kids behind, light through the tall windows
@@ -61,6 +64,10 @@ SHOT(0, 's01_lunch', (lt, S) => {
     },
   }));
 }, { sec: 's01', title: 'Lunch. — wide, you + Nia at the long table' });
+SFX(0, 'crowd', 0.4, 0, CUT('007-narrator'));                                        // cafeteria bed under 001–006
+SFX(0.05, 'whoosh', 0.6);
+for (const t of [0.25, 1.85]) SFX(t + 0.22, 'metal', 0.35, -0.35);                     // your fork on the tray
+for (const t of [0.62, 1.24, 1.86, 2.48]) if (t < CUT('002-narrator')) SFX(t, 'swish', 0.35, 0.3);   // Nia's big hands
 
 // ---------------------------------------------------------------------
 //  SHOT 2 — "Nia's elbow hits her juice." — close on the table: her elbow comes down on the carton; the ghost
@@ -79,6 +86,11 @@ SHOT(CUT('002-narrator'), 's01_elbow', (lt, S) => {
     s01_arm([sh, el, wr], 2600, CAST.nia.col, { grip: TT < tHit ? 'open' : 'fist', s: -1 });
   }));
 }, { sec: 's01', title: "Nia's elbow hits her juice — elbow drops, ghost spill" });
+SFX(CUT('002-narrator'), 'swish', 0.5, 0.2);
+SFX(VW('002-narrator', 'hits') - 4 / FPS, 'swish', 0.8, 0.4);                         // the elbow comes down
+SFX(VW('002-narrator', 'hits'), 'plastic', 1.6, 0.1);                                 // elbow on the carton
+SFX(VW('002-narrator', 'hits'), 'thud', 1, 0.2);
+SFX(VW('002-narrator', 'hits') + 0.04, 'ghost', 0.8, -0.2);                           // ghost spill appears
 
 // ---------------------------------------------------------------------
 //  SHOT 3 — "The carton hasn't even tipped," — extreme close-up: the real carton barely leaning; over it the ghost
@@ -96,6 +108,12 @@ SHOT(CUT('003-narrator'), 's01_tip', (lt, S) => {
   ivTag('NOW', 1120, 230, 30, ivPop(S.t0 + 0.15));
   ivTag('+10 s', 560, 640, 30, ivPop(S.t0 + 0.45), { c: IV.ghost, line: 'rgba(127,240,255,0.6)' });
 }, { sec: 's01', title: "the carton hasn't even tipped — ECU, ghost carton down + juice" });
+SFX(CUT('003-narrator'), 'swish', 0.5);
+SFX(CUT('003-narrator') + 0.05, 'shimmer', 0.5, -0.2);
+SFX(CUT('003-narrator') + 0.15, 'pop', 1, 0.15);                                      // NOW
+SFX(CUT('003-narrator') + 0.45, 'pop', 1, -0.4);                                      // +10 s
+SFX(CUT('003-narrator') + 0.9, 'drip', 0.5, -0.4);
+SFX(CUT('003-narrator') + 1.4, 'drip', 0.4, -0.5);
 
 // ---------------------------------------------------------------------
 //  SHOT 4 — "and your tray is already out of the way." — hand close-up: your glove on the tray, it has just slid
@@ -115,6 +133,13 @@ SHOT(CUT('003-narrator', 'your'), 's01_tray', (lt, S) => {
     s01_arm([[-420, 520], [gx - 360, gy + 40], [gx, gy]], 3800, CAST.you.col, { grip: 'hold', ang: -0.1 });
   }));
 }, { sec: 's01', title: 'your tray is already out of the way — hand CU, real juice spills' });
+SFX(CUT('003-narrator', 'your'), 'cloth', 0.6, -0.4);                                // grab the tray
+SFX(CUT('003-narrator', 'your') + 1 / FPS, 'slide', 1.2, -0.2);                       // it slides left
+SFX(VW('003-narrator', 'out') + 5 / FPS, 'plastic', 1.2, 0.6);                        // the carton falls over
+SFX(VW('003-narrator', 'out') + 5 / FPS, 'thud', 0.6, 0.6);
+SFX(VW('003-narrator', 'out') + 5 / FPS, 'splash', 1.1, 0.4);
+SFX(VW('003-narrator', 'out') + 0.7, 'drip', 0.6, 0.3);
+SFX(VW('003-narrator', 'out') + 1.1, 'drip', 0.5, 0.2);
 
 // ---------------------------------------------------------------------
 //  SHOT 5 — Nia: "How did you..." — close-up, eyes wide, hands up off the wet table
@@ -130,6 +155,9 @@ SHOT(CUT('004-nia'), 's01_niaHow', (lt, S) => {
     front: s01_wet,
   }));
 }, { sec: 's01', title: 'Nia: "How did you..." — CU, hands up' });
+SFX(CUT('004-nia'), 'cloth', 0.8, 0.3);                                               // hands up off the wet table
+SFX(CUT('004-nia') + 1 / FPS, 'swish', 0.5, 0.3);
+SFX(CUT('004-nia') + 0.45, 'drip', 0.4, 0.2);
 
 // ---------------------------------------------------------------------
 //  SHOT 6 — You: "How did you know?" — close-up, smug, finishing her sentence; her ghost mouths the same words
@@ -145,6 +173,8 @@ SHOT(CUT('005-you'), 's01_youKnow', (lt, S) => {
   }));
   ctx.save(); ivGlow(1160, 330, 170, 'rgba(90,230,255,0.22)'); ctx.restore();
 }, { sec: 's01', title: 'You: "How did you know?" — CU smug, ghost Nia mouthing it' });
+SFX(CUT('005-you'), 'ghost', 0.7, 0.3);                                               // ghost Nia mouthing it
+SFX(CUT('005-you') + 0.1, 'swish', 0.4, -0.2);
 
 // ---------------------------------------------------------------------
 //  SHOT 7 — "You were about to say that." — two-shot across the table: you lean back, arms crossed; dry tray;
@@ -161,6 +191,8 @@ SHOT(CUT('005-you', 'you', 2), 's01_twoShot', (lt, S) => {
     front: s01_wet,
   }));
 }, { sec: 's01', title: '"You were about to say that." — two-shot, you lean back' });
+SFX(CUT('005-you', 'you', 2) + 2 / FPS, 'cloth', 0.8, -0.4);                         // lean back, arms crossed
+SFX(CUT('005-you', 'you', 2) + 6 / FPS, 'thud', 0.4, -0.4);
 
 // ---------------------------------------------------------------------
 //  SHOT 8 — Nia: "Okay. That's creepy." — close-up, she leans away on "creepy", arms in
@@ -173,6 +205,9 @@ SHOT(CUT('006-nia'), 's01_creepy', (lt, S) => {
     front: s01_wet,
   }));
 }, { sec: 's01', title: 'Nia: "Okay. That\'s creepy." — CU, leans away' });
+SFX(CUT('006-nia'), 'swish', 0.4, 0.2);
+SFX(VW('006-nia', 'creepy') - 2 / FPS, 'cloth', 0.7, 0.4);                            // she leans away
+SFX(VW('006-nia', 'creepy') + 4 / FPS, 'thud', 0.3, 0.4);
 
 // =====================================================================
 //  THE HOOK — 007–010 on the dark warm stage (SET_void 'lamp'): the brain lags 80 ms, yours runs 10 s ahead
@@ -214,6 +249,11 @@ SHOT(CUT('007-narrator'), 's01_brain', (lt, S) => {
   }));
   ivTag('PAST', 1400, 420, 44, ivPop(tP));
 }, { sec: 's01', title: 'Your brain lives in the past — huge head, brain + backwards clock' });
+SFX(CUT('007-narrator'), 'whoosh', 1.2);
+SFX(VW('007-narrator', 'brain') - 2 / FPS, 'shimmer', 0.8, -0.3);                     // the brain lights up
+for (let t = VW('007-narrator', 'brain') + 0.25; t < CUT('008-narrator') - 0.1; t += 0.35) SFX(t, 'tick', 0.5, -0.3);   // clock ticking back
+SFX(VW('007-narrator', 'past') - 3 / FPS, 'swish', 0.8, 0.5);                         // the arrow shoots back
+SFX(VW('007-narrator', 'past'), 'pop', 1.1, 0.4);                                     // PAST
 
 // ---------------------------------------------------------------------
 //  SHOT 10 — "Everything you see" — extreme close-up of your eyes; a ball crosses in front, the eyes follow it late
@@ -225,6 +265,10 @@ SHOT(CUT('008-narrator'), 's01_eyes', (lt, S) => {
     ivMan({ who: CAST.you, x: 960, y: 560 + 0.85 * 3300, h: 3300, f: 0, expr: { eyes: 'wide', mouth: 'flat', look: [clamp((lag - 960) / 700, -1, 1) * 1.6, 0.4] }, noBlink: true });
   }, () => { ctx.save(); ctx.filter = 'blur(6px)'; P_ball(bx, 1090, 3.8, { air: true, rot: lt * 8 }); ctx.restore(); }));
 }, { sec: 's01', title: 'Everything you see — ECU eyes following a ball, late' });
+SFX(CUT('008-narrator'), 'swish', 0.5);
+{ const t0 = CUT('008-narrator'), D = Math.max(0.6, CUT('008-narrator', 'eighty') - t0), k = 1110 / 2250;
+  SFX(t0 + D * k, 'whoosh', 1.1, 0);                                                  // the ball crosses in front
+  SFX(t0 + D * k + 0.35, 'swish', 0.35, 0.3); }                                       // the eyes follow, late
 
 // ---------------------------------------------------------------------
 //  SHOTS 11–12 — "…at least eighty milliseconds old." / "Yours runs the other way." — the diagram: a ball rolls,
@@ -258,6 +302,10 @@ SHOT(CUT('008-narrator', 'eighty'), 's01_lag', (lt, S) => {
   ivTag('0.0' + n + ' s', sx, sy, 40, ivPop(S.t0 + 3 / FPS));
   ivTag('WHAT YOU SEE', 960 + (D.bx - 150 - IV_CAM.x) * IV_CAM.z, 540 + (GROUND + 80 - IV_CAM.y) * IV_CAM.z, 22, ivPop(S.t0 + 0.4), { c: 'rgba(255,230,200,0.75)' });
 }, { sec: 's01', title: 'eighty milliseconds old — the ball and its late grey copy, 0.08 s' });
+SFX(CUT('008-narrator', 'eighty'), 'swish', 0.5);
+SFX(CUT('008-narrator', 'eighty') + 3 / FPS, 'pop', 1, -0.1);                         // 0.0x s tag
+s01_sfxCount(VW('008-narrator', 'eighty'), VWE('008-narrator', 'milliseconds'), 0, 8, 'blip', 0.6, -0.1);
+SFX(CUT('008-narrator', 'eighty') + 0.4, 'pop', 0.6, -0.2);                           // WHAT YOU SEE
 SHOT(CUT('009-narrator'), 's01_flip', (lt, S) => {
   const tF = VW('009-narrator', 'other') - 2 / FPS, u = s01_r(tF, 5 / FPS);
   IV_CAM = { x: s01_bx() + 120, y: GROUND - 120, z: 1.9 };
@@ -265,6 +313,10 @@ SHOT(CUT('009-narrator'), 's01_flip', (lt, S) => {
   if (u >= 1) ivTag('YOURS', 1360, 330, 34, ivPop(tF + 5 / FPS), { c: IV.ghost, line: 'rgba(127,240,255,0.6)' });
   else ivTag('YOUR BRAIN', 560, 330, 34, 1);
 }, { sec: 's01', title: 'Yours runs the other way — the arrow flips, the copy jumps ahead in cyan' });
+SFX(CUT('009-narrator'), 'pop', 0.7, -0.4);                                           // YOUR BRAIN
+SFX(VW('009-narrator', 'other') - 2 / FPS, 'whoosh', 1, 0.3);                         // the arrow flips
+SFX(VW('009-narrator', 'other') + 1 / FPS, 'ghost', 1, 0.4);                          // the copy jumps ahead, cyan
+SFX(VW('009-narrator', 'other') + 3 / FPS, 'pop', 1, 0.4);                            // YOURS
 
 // ---------------------------------------------------------------------
 //  SHOT 13 — "You see ten whole seconds ahead." — close-up, your eyes catch the cyan; the ghost ball far ahead;
@@ -280,6 +332,10 @@ SHOT(CUT('010-narrator'), 's01_plus10', (lt, S) => {
   }));
   ivTag('+' + n + ' s', 1380, 300, 64, ivPop(VW('010-narrator', 'ten') - 2 / FPS), { c: IV.ghost, line: 'rgba(127,240,255,0.7)' });
 }, { sec: 's01', title: 'ten whole seconds ahead — CU, cyan ghost ahead, +10 s' });
+SFX(CUT('010-narrator'), 'shimmer', 1, 0.5);                                          // your eyes catch the cyan
+SFX(CUT('010-narrator') + 0.05, 'ghost', 0.7, 0.6);
+SFX(VW('010-narrator', 'ten') - 2 / FPS, 'pop', 1.1, 0.4);                            // +0 s tag
+s01_sfxCount(VW('010-narrator', 'ten'), VWE('010-narrator', 'seconds'), 0, 10, 'blip', 0.6, 0.4);
 
 // =====================================================================
 //  THE TITLE — 011 + the 2 s beat: the town at sunset, you and Nia walking home small, the title pops on the beat
@@ -294,6 +350,12 @@ SHOT(CUT('011-narrator'), 's01_title', (lt, S) => {
   } }));
   ivTitle('WHAT IF YOU COULD SEE', '10 SECONDS INTO THE FUTURE?', 'A WHAT-IF STORY', 960, 170, ivPop(LE('011-narrator') + 2 / FPS), 74);
 }, { sec: 's01', title: 'So, what if… — town at sunset, push-in; TITLE in the beat' });
+SFX(CUT('011-narrator'), 'whoosh', 1.3);
+s01_sfxSteps(CUT('011-narrator'), CUT('011-narrator') + 3.4, 8, 0.3, 0);               // you + Nia walking home, small
+SFX(LE('011-narrator') - 0.6, 'rise', 0.6, 0, 0.6 + 2 / FPS);
+SFX(LE('011-narrator') + 2 / FPS, 'impact', 1.4);                                     // TITLE
+SFX(LE('011-narrator') + 2 / FPS, 'shimmer', 1.1);
+SFX(LE('011-narrator') + 2 / FPS + 1.6, 'cloth', 0.3, 0);                             // they turn to look
 
 // =====================================================================
 //  THE RULES — 012–016 on the street at sunset
@@ -321,6 +383,9 @@ SHOT(CUT('012-narrator'), 's01_works', (lt, S) => {
   } }));
   if (open) { const a = 1 - 0.5 * clamp((TT - tW) / 0.5); ivGlow(s01_hd[0] + 30, s01_hd[1] - 10, 420, 'rgba(90,230,255,0.75)', a); ivGlow(s01_hd[0] + 30, s01_hd[1] - 10, 160, 'rgba(190,250,255,0.7)', a); }
 }, { sec: 's01', title: "Here's how it works — CU, eyes open on 'works', cyan glint" });
+SFX(CUT('012-narrator'), 'swish', 0.6);
+SFX(VW('012-narrator', 'works') - 2 / FPS, 'shimmer', 1.2, 0);                        // eyes open, cyan glint
+SFX(VW('012-narrator', 'works') - 2 / FPS, 'ghost', 0.7, 0.4);                        // a ghost walker fades in
 
 // the street wide for 013: you on the left; a woman walks right; o.ghost adds her ghost ahead + the cyan tag
 function s01_streetRule(S, ghost) {
@@ -338,10 +403,15 @@ function s01_streetRule(S, ghost) {
 }
 SHOT(CUT('013-narrator'), 's01_real', (lt, S) => { s01_streetRule(S, false); ivTag('THE REAL WORLD', 960, 160, 30, ivPop(VW('013-narrator', 'real'))); },
   { sec: 's01', title: 'On top of the real world — the street, a woman walking' });
+SFX(CUT('013-narrator'), 'whoosh', 0.7);
+s01_sfxSteps(CUT('013-narrator'), CUT('014-narrator'), 14, 0.45, (t) => clamp((420 + 0.26 * 440 * (t - CUT('013-narrator')) / (14 / FPS) - 960) / 960, -1, 1));   // the woman's steps
+SFX(VW('013-narrator', 'real'), 'pop', 1, 0);                                         // THE REAL WORLD
 SHOT(CUT('013-narrator', 'you'), 's01_ghostLayer', (lt, S) => {
   const w = s01_streetRule(S, true);
   ivTag('+10 s', Math.min(1700, w.x + 340), 300, 36, ivPop(VW('013-narrator', 'ten') - 2 / FPS), { c: IV.ghost, line: 'rgba(127,240,255,0.6)' });
 }, { sec: 's01', title: 'a pale ghost, ten seconds ahead — her ghost walks ahead, +10 s' });
+SFX(CUT('013-narrator', 'you'), 'ghost', 1.1, 0.2);                                  // her ghost appears ahead
+SFX(VW('013-narrator', 'ten') - 2 / FPS, 'pop', 1, 0.5);                              // +10 s
 
 // ---------------------------------------------------------------------
 //  SHOT 18 — "Only what your own eyes would see." — top-down: you on the sidewalk, a cone of sight in front;
@@ -399,6 +469,12 @@ SHOT(CUT('014-narrator'), 's01_cone', (lt, S) => {
   } }]);
   ivTag('NO GHOST', 260, 210, 26, ivPop(tE), { c: 'rgba(255,230,200,0.85)' });
 }, { sec: 's01', title: 'Only what your own eyes would see — top-down, cone of sight' });
+SFX(CUT('014-narrator'), 'whoosh', 1.1);
+SFX(CUT('014-narrator') + 2 / FPS, 'shimmer', 0.9, 0);                                // the cone of sight opens
+SFX(CUT('014-narrator') + 6 / FPS, 'ghost', 0.8, 0.5);                                // ghosts inside the cone
+SFX(CUT('014-narrator') + 2.2, 'car', 0.7, 0.4, 2.2);                                 // the car coming along the road
+for (let t = CUT('014-narrator') + 0.17; t < CUT('015-narrator'); t += 2 * Math.PI / 9) SFX(t, 'step', 0.25, 0);   // the walkers from above (every other step)
+SFX(VW('014-narrator', 'eyes') - 2 / FPS, 'pop', 0.9, -0.7);                          // NO GHOST
 
 // ---------------------------------------------------------------------
 //  SHOTS 19–20 — "And only the future where you do nothing." — a kid with a ball; in the ghost he kicks it and it
@@ -418,6 +494,10 @@ SHOT(CUT('015-narrator'), 's01_ballWide', (lt, S) => {
     if (hit) ivMan({ who: CAST.you, x: s01_theo, y: GROUND, h: 520, f: -0.45, pose: ivPose('stand', { lean: -0.18, tilt: -0.3, hL: [-0.14, 0.05], hR: [0.12, 0.02] }), expr: { eyes: 'closed', mouth: 'o' }, ghost: true, ghostA: 0.65 });
   } }));
 }, { sec: 's01', title: 'only the future where you do nothing — ghost ball flies at your head' });
+SFX(CUT('015-narrator'), 'whoosh', 0.8);
+SFX(CUT('015-narrator') + 0.25, 'ghost', 0.6, -0.5);                                  // the ghost kid kicks
+SFX(CUT('015-narrator') + 0.27, 'bounce', 0.6, -0.5);
+SFX(CUT('015-narrator') + 0.25 + (Math.max(0.6, CUT('015-narrator', 'do') - CUT('015-narrator')) - 0.4) * 0.5, 'swish', 0.6, 0);   // ghost ball in flight
 SHOT(CUT('015-narrator', 'do'), 's01_bonk', (lt, S) => {
   const tHit = S.t0 + 0.3, hu = s01_r(tHit, 3 / FPS);
   IV_CAM = { x: s01_theo - 120, y: 470, z: 2.8 };
@@ -431,6 +511,10 @@ SHOT(CUT('015-narrator', 'do'), 's01_bonk', (lt, S) => {
     }, 0.85);
   } }));
 }, { sec: 's01', title: 'do nothing — CU: real you still, ghost you gets bonked' });
+SFX(CUT('015-narrator', 'do') + 0.3, 'whoosh', 0.8, -0.4);                           // ball incoming
+SFX(CUT('015-narrator', 'do') + 0.3, 'bounce', 1.6, -0.1);                            // bonk on the ghost forehead
+SFX(CUT('015-narrator', 'do') + 0.3, 'thud', 0.8, -0.1);
+SFX(CUT('015-narrator', 'do') + 0.32, 'ghost', 0.5, -0.1);
 
 // ---------------------------------------------------------------------
 //  SHOTS 21–22 — "Move, and the ghost moves with you." — you take two steps aside; the ghost re-forms: the ghost
@@ -450,6 +534,11 @@ SHOT(CUT('016-narrator'), 's01_move', (lt, S) => {
     ivGhost(() => { const [gx, gy] = s01_arc(0.85, s01_theo - 30, s01_headY); P_ball(gx, gy + 32, 1.1, { air: true, rot: TT * 9 }); ivLine(gx + 50, gy + 10, s01_theo - 40, s01_headY + 10, 4, '#fff'); }, 0.6 * (1 - clamp((x - s01_theo) / s01_step)));
   } }));
 }, { sec: 's01', title: 'Move, — you step aside (two steps)' });
+SFX(CUT('016-narrator'), 'swish', 0.5);
+SFX(s01_moveT(), 'cloth', 0.6, 0.1);
+SFX(s01_moveT() + 5 / FPS, 'step', 0.9, 0.2);                                         // two steps aside
+SFX(s01_moveT() + 10 / FPS, 'step', 0.8, 0.35);
+SFX(s01_moveT() + 6 / FPS, 'shimmer', 0.5, -0.3);                                     // the old ghost ball fades
 SHOT(CUT('016-narrator', 'ghost'), 's01_ghostMoves', (lt, S) => {
   const D = Math.max(0.6, LE('016-narrator') - S.t0), u = clamp(lt / D);
   IV_CAM = { x: 860, y: 560, z: 1.12 };
@@ -461,6 +550,9 @@ SHOT(CUT('016-narrator', 'ghost'), 's01_ghostMoves', (lt, S) => {
     ivGhost(() => { for (let k = 0; k < 4; k++) { const q = clamp(u - k * 0.06); const [gx, gy] = s01_arc(q * 1.25, s01_theo + 60, GROUND - 40); ctx.save(); ctx.globalAlpha = k ? 0.35 / k : 1; P_ball(gx, gy + 32, 1.1, { air: true, rot: TT * 9 }); ctx.restore(); } }, 0.85);
   } }));
 }, { sec: 's01', title: 'the ghost moves with you — ghost you in the new spot, ghost ball misses' });
+SFX(CUT('016-narrator', 'ghost'), 'ghost', 1.1, 0.3);                                // the ghost re-forms in the new spot
+SFX(CUT('016-narrator', 'ghost') + 0.05, 'swish', 0.5, -0.5);                         // ghost kid kicks
+SFX(CUT('016-narrator', 'ghost') + Math.max(0.6, LE('016-narrator') - CUT('016-narrator', 'ghost')) * 0.55, 'whoosh', 0.6, 0.3);   // ghost ball flies past
 
 // ---------------------------------------------------------------------
 //  SHOT 23 — [BEAT] wordless: the real ball whizzes through the spot where you were; you don't even look
@@ -476,3 +568,8 @@ SHOT(LE('016-narrator') + 2 / FPS, 's01_miss', (lt, S) => {
     ivMan({ who: CAST.you, x, y: GROUND, h: 520, f: -0.35, hands: 'nub', pose: ivPose('stand', { hL: [-0.06, 0.24], hR: [0.06, 0.24] }), expr: { eyes: TT > tB + 0.5 ? 'squint' : 'open', mouth: TT > tB + 0.5 ? 'smirk' : 'flat', look: [0.6, 0] } });
   } }));
 }, { sec: 's01', title: '[beat] the real ball lands where you stood; you smirk' });
+SFX(LE('016-narrator') + 2 / FPS, 'swish', 0.5);
+SFX(LE('016-narrator') + 2 / FPS + 0.6, 'whoosh', 1.2, -0.4);                         // the real ball whizzes in
+SFX(LE('016-narrator') + 2 / FPS + 0.65, 'bounce', 1.3, -0.1);                        // lands where you stood
+SFX(LE('016-narrator') + 2 / FPS + 1.55, 'bounce', 0.7, 0.5);                          // bounces off behind you
+SFX(LE('016-narrator') + 2 / FPS + 0.75, 'cloth', 0.35, 0.1);                         // you don't even look — smirk

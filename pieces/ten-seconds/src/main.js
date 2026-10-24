@@ -9,7 +9,7 @@ TIMELINE.shots = SHOTS_REG.map((s, i) => ({ id: i + 1, key: s.key, era: 0, t0: s
 TIMELINE.cuts = SHOTS_REG.slice(1).map((s) => s.t0);
 TIMELINE.board = SHOTS_REG.map((s) => ({ t: Math.min(s.t1 - 1 / FPS, s.t0 + (s.boardAt ?? Math.min(1.2, (s.t1 - s.t0) * 0.6))), title: `${s.sec || ''} ${s.key}`, sound: '', next: '' }));
 // the arc for review.mjs: the bus builds, silence on "brakes", the truck is the loudest hit
-{ const tb = SHOTS_REG.find((s) => s.key === 's04_busWide').t0, br = VW('081-narrator', 'brakes');
+if (typeof s04_TRUCK !== 'undefined' && SHOTS_REG.find((s) => s.key === 's04_busWide')) { const tb = SHOTS_REG.find((s) => s.key === 's04_busWide').t0, br = VW('081-narrator', 'brakes');
   TIMELINE.cues = { brake: br, truck: s04_TRUCK, blank: VW('135-narrator', 'blank') };
   TIMELINE.acts = [
     { name: '1 The power', role: 'build', t0: 0, t1: tb },

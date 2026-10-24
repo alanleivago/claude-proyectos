@@ -204,6 +204,7 @@ SHOT(CUT('090-narrator'), 's05_monday', (lt) => {
   IV_CAM = { x: 1190, y: 600, z: 3.4 }; IV_FOCUS = 1;
   ivStage(s05_office({ voss: null, dad: null, theo: null, front: () => { s05_calendar(1190, 705, 1.1, s05_u(lt, 0.18, s05_fr(6))); } }));
 }, { sec: 's05', title: 'MONDAY: the desk calendar flips from Sunday' });
+{ const t = CUT('090-narrator'); SFX(t, 'whoosh', 0.7); SFX(t + 0.18, 'paper', 0.85, 0.05); SFX(t + 0.18 + s05_fr(6), 'tick', 0.5, 0.05); }
 
 // 091 — Mr. Voss from the bus company. (wide office, push-in; Dad on the carpet, Theo behind the glass)
 SHOT(CUT('091-narrator'), 's05_officeWide', (lt, S) => {
@@ -217,6 +218,7 @@ SHOT(CUT('091-narrator'), 's05_officeWide', (lt, S) => {
   const tb = s05_cw('091-narrator', 'bus', 1, LE('091-narrator'));
   ivTag('CITY TRANSIT', 1700, 540, 22, ivPop(tb));
 }, { sec: 's05', title: 'Mr. Voss behind his desk, Dad standing, Theo in the hall' });
+{ const t = CUT('091-narrator'); SFX(t, 'swish', 0.5); SFX(t + s05_fr(6), 'pop', 0.7, 0.75); SFX(s05_cw('091-narrator', 'bus', 1, LE('091-narrator')), 'pop', 0.55, 0.75); }
 
 // 093 — Smooth suit. (insert: his grey sleeve, the white cuff, a gold cufflink; the other hand tugs it straight)
 SHOT(CUT('093-narrator'), 's05_suit', (lt) => {
@@ -231,6 +233,7 @@ SHOT(CUT('093-narrator'), 's05_suit', (lt) => {
   s05_arm(-150, 1200, wx + 100 - 10 * tug, wy + 130, 180, CAST.voss.col, 'hold', { cuff: '#eef0f4' });
   ctx.restore();
 }, { sec: 's05', title: 'smooth suit: grey sleeve, gold cufflink, a tug on the cuff' });
+{ const t = CUT('093-narrator'); SFX(t, 'swish', 0.45); SFX(t + 0.12, 'cloth', 0.8, 0.1); SFX(t + 0.12 + s05_fr(5), 'metal', 0.35, 0.05); SFX(t + 0.12 + s05_fr(7), 'cloth', 0.4, 0.1); }
 
 // 094 — Smooth voice. (his face, the smile)
 SHOT(CUT('094-narrator'), 's05_voice', (lt) => {
@@ -238,6 +241,7 @@ SHOT(CUT('094-narrator'), 's05_voice', (lt) => {
   const u = s05_u(lt, 0.25, s05_fr(5));
   ivStage(s05_office({ dad: null, theo: null, voss: { f: lerp(-0.5, -0.25, u), pose: ivPose('relaxed', { tilt: -0.08 * u }), expr: { eyes: u > 0.5 ? 'happy' : 'squint', mouth: u > 0.5 ? 'grin' : 'smile' } } }));
 }, { sec: 's05', title: 'smooth voice: Voss smiles' });
+{ const t = CUT('094-narrator'); SFX(t, 'swish', 0.4, 0.3); SFX(t + 0.25, 'cloth', 0.4, 0.4); }
 
 // 095 — We pulled the camera. (he clicks the remote at the wall screen)
 SHOT(CUT('095-voss'), 's05_remote', (lt) => {
@@ -248,6 +252,7 @@ SHOT(CUT('095-voss'), 's05_remote', (lt) => {
     voss: { pose: s05_mix('relaxed', ivPose('point', { hR: [0.3, -0.12] }), u), expr: { eyes: 'squint', mouth: 'smile', look: [-1, -0.4] }, talk: '095-voss', hold: { front: s05_remote }, grip: { front: 'hold' } },
   }));
 }, { sec: 's05', title: 'we pulled the camera: the remote, the wall screen wakes' });
+{ const t = CUT('095-voss'); SFX(t, 'swish', 0.45); SFX(t + 0.2, 'swish', 0.55, 0.3); SFX(VW('095-voss', 'camera') - s05_fr(2), 'click', 0.8, 0.25); SFX(VW('095-voss', 'camera'), 'beep', 0.45, -0.1); SFX(VW('095-voss', 'camera') + 0.05, 'buzz', 0.3, -0.1); }
 
 // "A truck goes by." — CCTV CAM 04, top-down: the bus stopped short, the truck passes
 const s05_monCam = (z) => ({ x: 960 + (1130 - 960) * 1.3, y: 540 + (315 - 540) * 1.3, z });
@@ -257,6 +262,7 @@ SHOT(CUT('095-voss', 'a', 1), 's05_cctvTruck', () => {
   ivStage(s05_office({ dad: null, theo: null, voss: null, sharpWall: true, fg: false,
     screen: (w, h) => P_cctv(0, 0, w, h, (cw, ch) => s05_camTop(cw, ch, u, { brake: 1 }), { stamp: s05_stamp(u), cam: 'CAM 04' }) }));
 }, { sec: 's05', title: 'CCTV top-down: the truck goes by, the bus stopped' });
+{ const t = CUT('095-voss', 'a', 1); SFX(t, 'whoosh', 0.45); SFX(t + 0.02, 'beep', 0.35); SFX(VW('095-voss', 'truck') - 0.15 + 0.5, 'car', 0.45, -0.05, 1.0); }
 
 // "No crash." — Voss, palms open
 SHOT(CUT('095-voss', 'no'), 's05_nocrash', (lt) => {
@@ -264,6 +270,7 @@ SHOT(CUT('095-voss', 'no'), 's05_nocrash', (lt) => {
   const u = s05_u(lt, 0.08, s05_fr(5));
   ivStage(s05_office({ dad: null, theo: null, voss: { f: -0.35, pose: s05_mix('relaxed', 'shrug', u), expr: { eyes: 'squint', mouth: 'smirk', brow: 'up' }, talk: '095-voss', grip: { front: 'flat', back: 'flat' } } }));
 }, { sec: 's05', title: 'no crash: Voss opens his palms' });
+{ const t = CUT('095-voss', 'no'); SFX(t, 'swish', 0.4); SFX(t + 0.08, 'swish', 0.6, 0.15); SFX(t + 0.08 + s05_fr(4), 'cloth', 0.45, 0.15); }
 
 // "A driver slams the brakes" — CCTV CAM 01, side-on: the bus stops dead in an empty road
 SHOT(CUT('095-voss', 'a', 2), 's05_cctvBrake', () => {
@@ -272,6 +279,7 @@ SHOT(CUT('095-voss', 'a', 2), 's05_cctvBrake', () => {
   ivStage(s05_office({ dad: null, theo: null, voss: null, sharpWall: true, fg: false,
     screen: (w, h) => P_cctv(0, 0, w, h, (cw, ch) => s05_camSide(cw, ch, u, { skid: u }), { stamp: s05_stamp(u * 0.3), cam: 'CAM 01' }) }));
 }, { sec: 's05', title: 'CCTV side-on: the bus slams to a stop, empty road' });
+{ const t = CUT('095-voss', 'a', 2); SFX(t, 'click', 0.5); SFX(t + 0.03, 'beep', 0.35); SFX(VW('095-voss', 'slams') - 0.25, 'brake', 0.55, -0.3, 0.6); SFX(VW('095-voss', 'slams') + 0.35, 'thud', 0.5, -0.05); }
 
 // "for nothing," — Dad takes it, eyes down
 SHOT(CUT('095-voss', 'for'), 's05_dadHurt', (lt) => {
@@ -279,6 +287,7 @@ SHOT(CUT('095-voss', 'for'), 's05_dadHurt', (lt) => {
   const u = s05_u(lt, 0.3, s05_fr(4));
   ivStage(s05_office({ voss: null, theo: null, dad: { expr: { eyes: u > 0.5 ? 'sad' : 'open', mouth: 'flat', brow: u > 0.5 ? 'sad' : undefined, look: [0.4 * u, 0.7 * u] } } }));
 }, { sec: 's05', title: 'for nothing: Dad looks down' });
+{ const t = CUT('095-voss', 'for'); SFX(t, 'swish', 0.35); SFX(t + 0.3, 'cloth', 0.4); }
 
 // "and a passenger breaks her wrist." — top-down: the report slides across the desk, the photo of the cast
 SHOT(CUT('095-voss', 'and'), 's05_report', (lt) => {
@@ -290,6 +299,7 @@ SHOT(CUT('095-voss', 'and'), 's05_report', (lt) => {
     s05_arm(2400, 200 - back * 200, hx, hy, 120, CAST.voss.col, 'flat', { cuff: '#eef0f4' });
   }));
 }, { sec: 's05', title: 'top-down: the incident report slides over, the cast photo' });
+{ const t = CUT('095-voss', 'and'); SFX(t, 'whoosh', 0.5); SFX(t + 0.06, 'slide', 0.85, 0.3); SFX(t + 0.06 + s05_fr(6), 'paper', 0.6, 0); SFX(t + 1.15, 'swish', 0.35, 0.7); }
 
 // =====================================================================
 //  096 — I saw something. (Dad, over Voss's shoulder)
@@ -302,6 +312,7 @@ SHOT(CUT('096-dad'), 's05_sawSomething', () => {
     fgD: 0.6, fgDraw: () => ivMan({ who: CAST.voss, x: 1110, y: 860, h: 560, f: -0.85, pose: ivPose('relaxed'), expr: {}, hands: 'mitten' }),
   }));
 }, { sec: 's05', title: 'Dad: "I saw something." over Voss\'s shoulder' });
+{ const t = CUT('096-dad'); SFX(t, 'swish', 0.4); SFX(VW('096-dad', 'something') - 0.05, 'cloth', 0.35, -0.1); }
 
 // 097 — What did you see, Raymond? (Voss leans on the desk; Dad's shoulder soft in front)
 SHOT(CUT('097-voss'), 's05_whatSee', (lt) => {
@@ -312,6 +323,7 @@ SHOT(CUT('097-voss'), 's05_whatSee', (lt) => {
     fgD: 0.6, fgDraw: () => ivMan({ who: CAST.dad, x: 1360, y: 860, h: 572, f: 0.85, pose: ivPose('relaxed'), expr: {}, hands: 'mitten' }),
   }));
 }, { sec: 's05', title: 'Voss leans on the desk: "What did you see, Raymond?"' });
+{ const t = CUT('097-voss'); SFX(t, 'swish', 0.4); SFX(t + 0.1, 'cloth', 0.45, 0.2); SFX(t + 0.1 + s05_fr(6), 'thud', 0.55, 0.2); }
 
 // 098 — Dad looks at you. (his head turns to the glass door)
 SHOT(CUT('098-narrator'), 's05_dadTurns', (lt) => {
@@ -319,6 +331,7 @@ SHOT(CUT('098-narrator'), 's05_dadTurns', (lt) => {
   const u = s05_u(lt, 0.18, s05_fr(5));
   ivStage(s05_office({ voss: null, theo: null, dad: { f: lerp(0.5, -0.7, u), expr: { eyes: 'open', mouth: 'flat', look: [lerp(0.5, -1, u), 0] } } }));
 }, { sec: 's05', title: 'Dad turns his head toward the hall' });
+{ const t = CUT('098-narrator'); SFX(t, 'swish', 0.35); SFX(t + 0.18, 'swish', 0.5, -0.3); }
 
 // "…at you." — Theo behind the glass door
 const s05_theoGlass = (z, expr, extra) => {
@@ -330,6 +343,7 @@ const s05_theoGlass = (z, expr, extra) => {
 SHOT(CUT('098-narrator', 'you'), 's05_theoSeen', () => {
   s05_theoGlass(3.4, { eyes: 'wide', mouth: 'flat', look: [1, 0] });
 }, { sec: 's05', title: 'Theo behind the glass, caught' });
+{ const t = CUT('098-narrator', 'you'); SFX(t, 'swish', 0.45, -0.4); SFX(t + 0.4, 'heart', 0.55, -0.2); }
 
 // 099 — And says nothing. (Dad turns back, eyes down)
 SHOT(CUT('099-narrator'), 's05_saysNothing', (lt) => {
@@ -337,10 +351,12 @@ SHOT(CUT('099-narrator'), 's05_saysNothing', (lt) => {
   const u = s05_u(lt, 0.12, s05_fr(6));
   ivStage(s05_office({ voss: null, theo: null, dad: { f: lerp(-0.7, 0.45, u), expr: { eyes: u > 0.6 ? 'sad' : 'open', mouth: 'flat', look: [lerp(-1, 0.3, u), 0.6 * u] } } }));
 }, { sec: 's05', title: 'Dad turns back and says nothing' });
+{ const t = CUT('099-narrator'); SFX(t, 'swish', 0.35); SFX(t + 0.12, 'swish', 0.45, 0.2); SFX(t + 0.12 + s05_fr(6), 'cloth', 0.3, 0.1); }
 
 SHOT(CUT('099-narrator', 'nothing'), 's05_theoSad', () => {
   s05_theoGlass(3.9, { eyes: 'sad', mouth: 'frown', brow: 'sad', look: [1, 0.2] });
 }, { sec: 's05', title: 'Theo, sad, behind the glass' });
+{ const t = CUT('099-narrator', 'nothing'); SFX(t, 'swish', 0.35, -0.3); SFX(t + 0.35, 'drop', 0.4, -0.2); }
 
 // 100 — Suspended. (the two-shot, Voss arms crossed)
 SHOT(CUT('100-voss'), 's05_suspended', (lt, S) => {
@@ -352,6 +368,7 @@ SHOT(CUT('100-voss'), 's05_suspended', (lt, S) => {
   }));
   ivTag('SUSPENDED', 1640, 250, 34, ivPop(VWE('100-voss', 'suspended') - 0.2), { c: '#ffb0a0' });
 }, { sec: 's05', title: '"Suspended." Voss crosses his arms' });
+{ const t = CUT('100-voss'); SFX(t, 'whoosh', 0.5); SFX(t + 0.1, 'cloth', 0.7, 0.5); SFX(VWE('100-voss', 'suspended') - 0.2, 'pop', 0.85, 0.7); SFX(VWE('100-voss', 'suspended') - 0.2, 'thud', 0.55, 0.7); }
 
 // "Pending review." — Dad takes off his cap
 SHOT(CUT('100-voss', 'pending'), 's05_capOff', (lt) => {
@@ -364,6 +381,7 @@ SHOT(CUT('100-voss', 'pending'), 's05_capOff', (lt) => {
       hold: off ? { front: (x, y, an, h) => s05_capSide(x - 10, y + lerp(-25, 30, u2), 0.9 * h / 572, -0.25) } : undefined },
   }));
 }, { sec: 's05', title: 'Dad takes off his cap' });
+{ const t = CUT('100-voss', 'pending'); SFX(t, 'swish', 0.35); SFX(t + 0.12, 'swish', 0.5, -0.05); SFX(t + 0.12 + s05_fr(6), 'cloth', 0.7, -0.05); SFX(t + 0.12 + s05_fr(9), 'cloth', 0.4, -0.05); }
 
 // [BEAT] — the cap goes down on Voss's desk (hand close-up), then Dad walks out past Theo
 SHOT(LE('100-voss'), 's05_capDesk', (lt) => {
@@ -376,6 +394,7 @@ SHOT(LE('100-voss'), 's05_capDesk', (lt) => {
     s05_arm(840, 380 - back * 200, hx, hy, 40, CAST.dad.col, rel ? 'open' : 'hold', { cuff: CAST.dad.col2 });
   } }));
 }, { sec: 's05', title: 'BEAT: Dad\'s hand sets the cap on the desk and lets go', boardAt: 0.4 });
+{ const t = LE('100-voss'); SFX(t, 'swish', 0.4); SFX(t + 0.05 + s05_fr(6), 'thud', 0.75, -0.15); SFX(t + 0.05 + s05_fr(6), 'cloth', 0.4, -0.15); SFX(t + 0.5, 'cloth', 0.3, -0.2); SFX(t + 0.62, 'swish', 0.4, -0.4); }
 
 SHOT(s05_BEAT_A, 's05_walkOut', () => {
   IV_CAM = { x: 940, y: 540, z: 1.1 }; IV_FOCUS = 1;
@@ -386,6 +405,9 @@ SHOT(s05_BEAT_A, 's05_walkOut', () => {
     front: () => s05_capSide(1225, 705, 1.0, 0),
   }));
 }, { sec: 's05', title: 'BEAT: Dad walks out, cap left on the desk' });
+{ const t = s05_BEAT_A; SFX(t, 'swish', 0.4);
+  for (let k = 0; t + 0.1 + k * s05_fr(5) < CUT('101-narrator'); k++) { const x = 860 - 572 * 0.26 * k; SFX(t + 0.1 + k * s05_fr(5), 'step', 0.5, clamp(((x - 940) * 1.1) / 960, -1, 1)); }
+  SFX(t + 0.1 + 2.5 * s05_fr(5), 'door', 0.55, -0.5); }
 
 // =====================================================================
 //  101 — Twenty-two years, gone in ten seconds only you saw.
@@ -403,6 +425,10 @@ SHOT(CUT('101-narrator'), 's05_badge', (lt) => {
     { d: 1, draw: () => { s05_badge(900, 470, 2.3, n, { shine: (TT - LT('101-narrator')) * 0.6 }); } },
   ]);
 }, { sec: 's05', title: 'the 22-YEARS pin on his uniform, counting to 22' });
+{ const t = CUT('101-narrator'), a = LT('101-narrator'), b = VWE('101-narrator', 'twenty-two');
+  SFX(t, 'whoosh', 0.6);
+  for (let k = 2; k < 22; k += 2) SFX(a + (b - a) * (1 - Math.cbrt(1 - k / 22)), 'tick', 0.45, -0.05);
+  SFX(b, 'blip', 0.8, -0.05); SFX(b + 0.02, 'metal', 0.5, -0.05); SFX(a + 0.85, 'shimmer', 0.45, 0); }
 
 SHOT(CUT('101-narrator', 'gone'), 's05_leftBehind', () => {
   IV_CAM = { x: 960, y: 540, z: 1.05 }; IV_FOCUS = 1;
@@ -415,6 +441,7 @@ SHOT(CUT('101-narrator', 'gone'), 's05_leftBehind', () => {
     if (g > 0) ivGhost(() => { ivText('10 s', 1240, 690, 230 * (0.9 + 0.1 * g), '#ffffff', { glow: 'rgba(255,255,255,0.8)' }); ctx.beginPath(); ctx.arc(1240, 620, 250, 0, TAU); ctx.lineWidth = 14; ctx.strokeStyle = '#fff'; ctx.stroke(); }, 0.85 * g);
   }));
 }, { sec: 's05', title: 'top-down: cap, pin and keys left on the desk; ghost "10 s"' });
+{ const t = CUT('101-narrator', 'gone'); SFX(t, 'whoosh', 0.5); SFX(t + 0.06, 'metal', 0.3, -0.1); SFX(VW('101-narrator', 'ten'), 'ghost', 0.75, 0.3); }
 
 SHOT(CUT('101-narrator', 'only'), 's05_onlyYou', () => {
   s05_theoGlass(3.6, { eyes: 'sad', mouth: 'flat', look: [0.6, 0] }, () => {
@@ -424,6 +451,7 @@ SHOT(CUT('101-narrator', 'only'), 's05_onlyYou', () => {
     ctx.restore();
   });
 }, { sec: 's05', title: 'only you saw: Theo, the ghost truck in the glass' });
+{ const t = CUT('101-narrator', 'only'); SFX(t, 'swish', 0.4, -0.3); SFX(VW('101-narrator', 'only') + 0.1, 'ghost', 0.55, 0.6); SFX(VW('101-narrator', 'only') + 0.8, 'whoosh', 0.35, -0.2); }
 
 // =====================================================================
 //  102 — That night, Dad sits in the kitchen, still in his uniform.
@@ -432,11 +460,14 @@ SHOT(CUT('102-narrator'), 's05_night', () => {
   IV_CAM = { x: 960 + (1250 - 960) * 2.6, y: 540 + (350 - 540) * 2.6, z: 4.1 }; IV_FOCUS = 2.6;
   ivStage(s05_kitchen({ theo: null }));
 }, { sec: 's05', title: 'that night: the kitchen window, rain, city lights' });
+{ const t = CUT('102-narrator'); SFX(t, 'whoosh', 0.7); SFX(t + 0.3, 'car', 0.22, 0.6, 2.0);
+  [0.1, 0.32, 0.47, 0.71, 0.9, 1.08].forEach((d, i) => SFX(t + d, 'drip', 0.35 + 0.1 * (i % 2), 0.3 + 0.1 * (i % 3))); }
 
 SHOT(CUT('102-narrator', 'dad'), 's05_kitchenWide', (lt, S) => {
   IV_CAM = { x: 960, y: 540, z: 1.04 * ivPush(S.t0, 0.03, 1.8) }; IV_FOCUS = 1;
   ivStage(s05_kitchen({ theo: null }));
 }, { sec: 's05', title: 'Dad alone at the kitchen table under the lamp' });
+{ const t = CUT('102-narrator', 'dad'); SFX(t, 'swish', 0.4); SFX(t + 0.25, 'drip', 0.3, 0.4); SFX(t + 0.7, 'drip', 0.25, 0.5); SFX(t + 0.5, 'tick', 0.3, -0.3); SFX(t + 1.0, 'tick', 0.3, -0.3); }
 
 // "still in his uniform." — his hands round the cold mug, the blue sleeves, the cap beside it
 SHOT(CUT('102-narrator', 'still'), 's05_mugHands', () => {
@@ -447,12 +478,14 @@ SHOT(CUT('102-narrator', 'still'), 's05_mugHands', () => {
     front: () => { if (M) { const [x, y] = M.handR; ivHand(x, y, 0.15, 560, 'glove', 'hold', (c) => IV_M.rim, (v) => v + 4, 1); ivHand(x, y, 0.15, 560, 'glove', 'hold', (c) => c, (v) => v, 1); } },
   }));
 }, { sec: 's05', title: 'his hands round the cold mug, still in uniform' });
+{ const t = CUT('102-narrator', 'still'); SFX(t, 'swish', 0.35); SFX(t + 0.1, 'cloth', 0.4, -0.05); SFX(t + 0.18, 'glass', 0.22, 0); SFX(t + 0.6, 'drip', 0.25, 0.5); }
 
 // 103 — Dad, I… (Theo at the kitchen door)
 SHOT(CUT('103-you'), 's05_theoDoor', () => {
   IV_CAM = { x: 1420, y: 450, z: 2.6 }; IV_FOCUS = 1;
   ivStage(s05_kitchen({ dad: null, theo: { expr: { eyes: 'sad', mouth: 'flat', brow: 'sad', look: [-1, 0.2] }, talk: '103-you', pose: ivPose('relaxed', { hR: [0.08, 0.12] }) } }));
 }, { sec: 's05', title: 'Theo: "Dad, I..."' });
+{ const t = CUT('103-you'); SFX(t, 'door', 0.4, 0.5); SFX(t + 0.06, 'step', 0.45, 0.5); SFX(t + 0.06 + s05_fr(5), 'step', 0.35, 0.5); }
 
 // 104 — I'd do it again. (Dad lifts his head)
 SHOT(CUT('104-dad'), 's05_doItAgain', (lt) => {
@@ -460,6 +493,7 @@ SHOT(CUT('104-dad'), 's05_doItAgain', (lt) => {
   const u = s05_u(lt, 0.1, s05_fr(6));
   ivStage(s05_kitchen({ theo: null, dad: { pose: s05_mix('slump', ivPose('slump', { tilt: 0.02, lean: 0.18 }), u), expr: { eyes: 'tired', mouth: 'flat', look: [lerp(0.3, 1, u), lerp(0.6, -0.2, u)] }, talk: '104-dad' } }));
 }, { sec: 's05', title: 'Dad lifts his head: "I\'d do it again."' });
+{ const t = CUT('104-dad'); SFX(t, 'swish', 0.35, -0.2); SFX(t + 0.1, 'cloth', 0.45, -0.2); }
 
 // "I just wish I knew why." — two-shot; he turns the cap in his hands
 SHOT(CUT('104-dad', 'i', 1), 's05_wishWhy', () => {
@@ -470,6 +504,7 @@ SHOT(CUT('104-dad', 'i', 1), 's05_wishWhy', () => {
     theo: { x: 1360, expr: { eyes: 'sad', mouth: 'flat', look: [-1, 0.4] } },
   }));
 }, { sec: 's05', title: '"I just wish I knew why." Dad turns the cap in his hands' });
+{ const t = CUT('104-dad', 'i', 1); SFX(t, 'swish', 0.35); SFX(t + 0.3, 'cloth', 0.3, -0.3); SFX(t + 1.3, 'cloth', 0.3, -0.3); SFX(t + 0.9, 'drip', 0.25, 0.4); }
 
 // 105 — Futures changed: two hundred and twelve. (wide, the counter lands on "twelve")
 SHOT(CUT('105-narrator'), 's05_counter', (lt, S) => {
@@ -481,6 +516,10 @@ SHOT(CUT('105-narrator'), 's05_counter', (lt, S) => {
   const n = ivCount(VW('105-narrator', 'two'), VWE('105-narrator', 'twelve'), 112, 212);
   ivCounter([['FUTURES CHANGED', n, true], ['THANK-YOUS', 0]], ivPop(S.t0 + s05_fr(4)));
 }, { sec: 's05', title: 'counter: FUTURES CHANGED 212 lands on "twelve"', boardAt: 2.6 });
+{ const t = CUT('105-narrator'), a = VW('105-narrator', 'two'), b = VWE('105-narrator', 'twelve');
+  SFX(t, 'swish', 0.35); SFX(t + s05_fr(4), 'pop', 0.7, -0.17);
+  for (let k = 10; k < 100; k += 10) SFX(a + (b - a) * (1 - Math.cbrt(1 - k / 100)), 'blip', 0.35, -0.17);
+  SFX(b, 'blip', 0.8, -0.17); SFX(b + 0.03, 'ding', 0.55, -0.17); }
 
 // 106 — This one cost the most. (the cap on the table under the lamp)
 SHOT(CUT('106-narrator'), 's05_costMost', () => {
@@ -488,6 +527,7 @@ SHOT(CUT('106-narrator'), 's05_costMost', () => {
   ivStage(s05_kitchen({ theo: null, dad: { expr: { eyes: 'closed', mouth: 'flat' } } }));
   ivCounter([['FUTURES CHANGED', 212, true], ['THANK-YOUS', 0]], 0.55);
 }, { sec: 's05', title: 'the cap on the kitchen table, lamp light' });
+{ const t = CUT('106-narrator'); SFX(t, 'swish', 0.35); SFX(t + 0.3, 'drip', 0.3, 0.5); SFX(t + 1.1, 'drip', 0.25, 0.4); SFX(t + 1.6, 'tick', 0.25, -0.3); }
 
 // [BEAT] — Theo pulls out the other chair and sits down with him
 SHOT(LE('106-narrator'), 's05_sitsDown', (lt) => {
@@ -498,3 +538,4 @@ SHOT(LE('106-narrator'), 's05_sitsDown', (lt) => {
     theo: { x: lerp(1250, 1180, u), f: -0.55, pose: s05_mix('relaxed', 'sit', u), expr: { eyes: 'sad', mouth: 'flat', look: [-1, 0] } },
   }));
 }, { sec: 's05', title: 'BEAT: Theo sits down across from Dad' });
+{ const t = LE('106-narrator'); SFX(t, 'swish', 0.4); SFX(t + 0.1, 'slide', 0.6, 0.35); SFX(t + 0.25, 'step', 0.4, 0.35); SFX(t + 0.25, 'cloth', 0.4, 0.33); SFX(t + 0.25 + s05_fr(6), 'thud', 0.6, 0.3); SFX(t + 0.9, 'drip', 0.25, 0.5); }

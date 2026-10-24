@@ -21,6 +21,8 @@ const s03_VWE = (id, w, n = 1, d = 0.8) => (s03_has(id, w, n) ? VWE(id, w, n) : 
 const s03_u = (lt, a, d = 5 / FPS) => EZ.o3(clamp((lt - a) / d));
 const s03_O = { sec: 's03' };
 const s03_shot = (t0, key, title, draw, o = {}) => SHOT(t0, 's03_' + key, draw, { ...s03_O, title, ...o });
+// footsteps (SFX at registration): one every n frames from a to b, pan sliding p0 → p1
+function s03_steps(a, b, n, v, p0, p1) { for (let x = a; x < b; x += n / FPS) SFX(x, 'step', v, lerp(p0, p1, (x - a) / Math.max(0.01, b - a))); }
 // the hand target (pose hR / hL) that puts a standing actor's hand on world point (tx, ty)
 function s03_reach(x, y, h, f, tx, ty, side = 'R', P = {}, build = 1) {
   const s = f < 0 ? -1 : 1, af = Math.abs(clamp(f, -1, 1)), lean = P.lean || 0, dip = P.dip || 0, L = 0.235 * h;
@@ -91,6 +93,8 @@ s03_shot(CUT(s03_ID.minus), 'minus', 'MINUS card', (lt, S) => {
   ivText('MINUS', 0, 245, 62, '#ffe6c4', { glow: 'rgba(255,170,90,0.5)', track: 8 });
   ctx.restore();
 });
+{ const t = CUT(s03_ID.minus), tm = VW(s03_ID.minus, 'Minus');
+  SFX(t, 'whoosh', 1.1); SFX(tm, 'pop', 1.3, -0.25); SFX(tm + 0.04, 'thud', 0.7, -0.25); SFX(tm + 0.35, 'cloth', 0.4, 0.3); }
 
 // 044 "Nothing surprises you." — wide: you walk in; three heads peek over the sofa
 s03_shot(CUT(s03_ID.nothing), 'party-walkin', 'party wide: you walk in, friends hiding', (lt, S) => {
@@ -103,6 +107,10 @@ s03_shot(CUT(s03_ID.nothing), 'party-walkin', 'party wide: you walk in, friends 
   } }));
   s03_minus();
 });
+{ const t = CUT(s03_ID.nothing), stop = t + 0.95;
+  SFX(t, 'whoosh', 0.9); SFX(t + 0.02, 'door', 0.7, -0.9);
+  s03_steps(t, stop, 5, 0.6, -1, -0.5);
+  SFX(stop + 0.1, 'cloth', 0.35, 0.1); SFX(VW(s03_ID.nothing, 'surprises') + 0.2, 'laugh', 0.22, 0.15); }
 
 // 045 "You hear 'Surprise!' ten seconds before anyone yells it." — the ghost friends jump out; the real ones still hide
 s03_shot(CUT(s03_ID.hear), 'party-ghost', 'ghost: SURPRISE! 10 s early, real friends still hiding', (lt, S) => {
@@ -119,6 +127,9 @@ s03_shot(CUT(s03_ID.hear), 'party-ghost', 'ghost: SURPRISE! 10 s early, real fri
   s03_cyanTag('10 s EARLY', 1520, 330, 34, ivPop(s03_VWE(s03_ID.hear, 'seconds', 1, 0.75) - 3 / FPS));
   s03_minus();
 });
+{ const t = CUT(s03_ID.hear), tS = s03_VW(s03_ID.hear, 'Surprise', 1, 0);
+  SFX(t, 'swish', 0.6); SFX(tS - 0.05, 'ghost', 1.1, 0.1); SFX(tS, 'shimmer', 0.8, 0.2); SFX(tS + 0.02, 'cheer', 0.35, 0.1);
+  SFX(s03_VWE(s03_ID.hear, 'seconds', 1, 0.75) - 3 / FPS, 'pop', 0.9, 0.6); }
 
 // … "before anyone yells it." — the real SURPRISE! — you stand there, flat
 s03_shot(s03_VW(s03_ID.hear, 'yells', 1, 1.55) - 3 / FPS, 'party-real', 'the real SURPRISE!, you flat-faced', (lt, S) => {
@@ -132,6 +143,9 @@ s03_shot(s03_VW(s03_ID.hear, 'yells', 1, 1.55) - 3 / FPS, 'party-real', 'the rea
   if (a > 0) { ctx.save(); ctx.translate(1120, 215); ctx.scale(sc, sc); ctx.rotate(-0.04); ivText('SURPRISE!', 0, 0, 112, '#ffe2b0', { glow: 'rgba(255,150,70,0.8)', track: 4, shadow: 'rgba(40,10,20,0.6)' }); ctx.restore(); }
   s03_minus();
 });
+{ const t = s03_VW(s03_ID.hear, 'yells', 1, 1.55) - 3 / FPS + 0.08;
+  SFX(t - 0.08, 'swish', 0.5); SFX(t, 'cloth', 0.9, 0.1); SFX(t, 'pop', 1.3, 0.25); SFX(t + 0.02, 'cheer', 1.7, 0.1);
+  SFX(t + 0.22, 'thud', 0.8, 0.0); SFX(t + 0.26, 'thud', 0.6, 0.25); SFX(t + 0.3, 'crowd', 0.45, 0.1, LE(s03_ID.wow) + 0.4 - (t + 0.3)); }
 
 // 047 Nia: "At least act surprised."
 s03_shot(CUT(s03_ID.act), 'nia-act', 'Nia close: At least act surprised.', (lt, S) => {
@@ -145,6 +159,8 @@ s03_shot(CUT(s03_ID.act), 'nia-act', 'Nia close: At least act surprised.', (lt, 
   } }));
   s03_minus();
 });
+{ const t = CUT(s03_ID.act), g = VW(s03_ID.act, 'act') - 2 / FPS;
+  SFX(t, 'swish', 0.5); SFX(g, 'swish', 0.55, -0.1); SFX(g + 2 / FPS, 'cloth', 0.45, -0.1); }
 
 // 048 you: "Wow. A party." — deadpan jazz hands
 s03_shot(CUT(s03_ID.wow), 'you-wow', 'you close: Wow. A party. (deadpan jazz hands)', (lt, S) => {
@@ -157,6 +173,8 @@ s03_shot(CUT(s03_ID.wow), 'you-wow', 'you close: Wow. A party. (deadpan jazz han
   } }));
   s03_minus();
 });
+{ const t = CUT(s03_ID.wow), up = VW(s03_ID.wow, 'Wow'), dn = VWE(s03_ID.wow, 'party') + 0.1;
+  SFX(t, 'swish', 0.5); SFX(up, 'swish', 0.6, -0.2); SFX(up + 2 / FPS, 'cloth', 0.4, -0.2); SFX(dn, 'swish', 0.4, -0.2); SFX(dn + 5 / FPS, 'cloth', 0.35, -0.2); }
 
 // ---------------------------------------------------------------------
 //  CAFETERIA — the punchline, the question, "Let me finish one sentence."
@@ -179,6 +197,9 @@ s03_shot(CUT(s03_ID.laugh), 'caf-laugh', 'cafeteria: friend mid-joke, you alread
   } }));
   s03_minus();
 });
+{ const t = CUT(s03_ID.laugh);
+  SFX(t, 'whoosh', 1.0); SFX(t + 0.02, 'crowd', 0.28, 0, CUT(s03_ID.every) - t); SFX(t + 0.1, 'laugh', 1.0, -0.3);
+  SFX(t + 0.15, 'ghost', 0.6, 0.25); SFX(t + 0.5, 'glass', 0.3, 0.5); }
 
 // … "punchline." — the friend's face: confused, hands frozen
 s03_shot(CUT(s03_ID.laugh, 'punchline'), 'caf-confused', 'friend close: confused, joke not finished', (lt, S) => {
@@ -189,6 +210,8 @@ s03_shot(CUT(s03_ID.laugh, 'punchline'), 'caf-confused', 'friend close: confused
   } }));
   s03_minus();
 });
+{ const t = CUT(s03_ID.laugh, 'punchline');
+  SFX(t, 'swish', 0.45, 0.2); SFX(t + 0.12, 'gasp', 0.45, 0.25); }
 
 // 050 "You answer before the question." — your answer bubble; her question still in the future (cyan)
 function s03_bubble(x, y, w, h, tail, fill, text, tc, size) {
@@ -213,6 +236,8 @@ s03_shot(CUT(s03_ID.answer), 'caf-answer', 'you answer (bubble) before Nia asks 
   ctx.restore();
   s03_minus();
 });
+{ const t = CUT(s03_ID.answer), ta = VW(s03_ID.answer, 'answer');
+  SFX(t, 'swish', 0.5); SFX(t + 0.05, 'shimmer', 0.6, 0.45); SFX(ta - 2 / FPS, 'swish', 0.5, -0.3); SFX(ta + 2 / FPS, 'pop', 1.1, -0.45); }
 
 // 051 Nia: "Let me finish one sentence. One. Please." — close, annoyed; then her one finger (hand insert)
 s03_shot(CUT(s03_ID.finish), 'nia-finish', 'Nia close: Let me finish one sentence.', (lt, S) => {
@@ -225,6 +250,8 @@ s03_shot(CUT(s03_ID.finish), 'nia-finish', 'Nia close: Let me finish one sentenc
   } }));
   s03_minus();
 });
+{ const t = CUT(s03_ID.finish), g = VW(s03_ID.finish, 'finish') - 2 / FPS;
+  SFX(t, 'swish', 0.5, 0.3); SFX(g + 4 / FPS, 'thud', 0.9, 0.35); SFX(g + 4 / FPS, 'plastic', 0.4, 0.35); }
 const s03_NIA_FINGER = { x: 1290, h: 500, f: -0.5 };
 // a big arm + five-finger glove in screen space (hand inserts): from the sleeve point (sx, sy) to the wrist (hx, hy)
 function s03_bigArm(sx, sy, hx, hy, lw, col, grip, s = 1) {
@@ -247,6 +274,8 @@ s03_shot(CUT(s03_ID.finish, 'One', 2), 'nia-finger', 'hand insert: Nia holds up 
   ivTag('ONE', 1640, 250, 44, ivPop(VWE(s03_ID.finish, 'One', 2) - 2 / FPS));
   s03_minus();
 });
+{ const t = CUT(s03_ID.finish, 'One', 2);
+  SFX(t, 'swish', 0.8, 0.3); SFX(t + 3 / FPS, 'cloth', 0.5, 0.3); SFX(VWE(s03_ID.finish, 'One', 2) - 2 / FPS, 'pop', 1.0, 0.7); }
 
 // 052 "Everyone else lives right now." — the lonely wide: the group laughing together, you apart at the end of the table
 const s03_GROUP = [[CAST.kidA, 1010, -0.5], [CAST.nia, 1190, -0.45], [CAST.kidC, 1380, 0.5], [CAST.kidB, 1560, -0.5]];
@@ -264,6 +293,8 @@ s03_shot(CUT(s03_ID.now), 'caf-group', 'lonely wide: the group laughs together, 
   } }));
   s03_minus();
 });
+{ const t = CUT(s03_ID.now);
+  SFX(t, 'swish', 0.5); SFX(t + 0.1, 'laugh', 1.1, 0.4); SFX(t + 0.25, 'glass', 0.35, 0.6); SFX(t + 1.1, 'laugh', 0.7, 0.6); }
 
 // 053 "You live ten seconds away from all of them." — you in a cyan haze, their future ghosts already leaving
 s03_shot(CUT(s03_ID.away), 'caf-away', 'you alone, cyan haze, the group 10 s ahead as ghosts', (lt, S) => {
@@ -282,6 +313,9 @@ s03_shot(CUT(s03_ID.away), 'caf-away', 'you alone, cyan haze, the group 10 s ahe
   s03_cyanTag('10 s AWAY', 1180, 210, 40, ivPop(VWE(s03_ID.away, 'seconds') - 3 / FPS));
   s03_minus();
 });
+{ const t = CUT(s03_ID.away);
+  SFX(t, 'swish', 0.5); SFX(t + 0.05, 'shimmer', 0.6, -0.4); SFX(t + 0.25, 'ghost', 0.7, 0.4);
+  SFX(VWE(s03_ID.away, 'seconds') - 3 / FPS, 'pop', 0.9, 0.25); SFX(LE(s03_ID.away) - 0.1, 'laugh', 0.3, 0.6); }
 
 // ---------------------------------------------------------------------
 //  STREET (day) — the accidents: the ball, the cyclist and the car door, the ladder; the painter; the counter
@@ -322,6 +356,9 @@ s03_shot(CUT(s03_ID.every), 'st-every', 'street wide: all the accidents ahead as
     ivGhost(() => s03_ghostCrash(), 0.45);
   } }));
 });
+{ const t = CUT(s03_ID.every);
+  SFX(t, 'whoosh', 1.2); SFX(t + 0.1, 'car', 0.3, -0.6, 3); SFX(t + 0.15, 'ghost', 1.0); SFX(VW(s03_ID.every, 'accident'), 'shimmer', 0.6, 0.3);
+  SFX(LE(s03_ID.every) - 0.4, 'rise', 0.5, 0, 0.9); }
 
 // 055 "A ball rolling into the street." — low: the ball rolls for the curb; ghost: in the road, a car on it
 s03_shot(CUT(s03_ID.ball), 'st-ball', 'ball rolling for the road (ghost: car hits it)', (lt, S) => {
@@ -334,6 +371,10 @@ s03_shot(CUT(s03_ID.ball), 'st-ball', 'ball rolling for the road (ghost: car hit
     ivGhost(() => { P_ball(900, 1012, 1.3, { rot: 4 }); P_car(1560 - Math.min(lt, 1.5) * 60, 1060, 0.62, { dir: -1, col: '#c8503f' }); }, 0.55);
   } }));
 });
+{ const t = CUT(s03_ID.ball);
+  SFX(t, 'swish', 0.5, -0.4); SFX(t + 0.05, 'bounce', 0.6, -0.7); SFX(t + 0.35, 'bounce', 0.35, -0.5);
+  s03_steps(t + 0.2, CUT(s03_ID.ball, 'street'), 5, 0.4, -0.95, -0.7);
+  SFX(t + 0.2, 'ghost', 0.5, 0.4); SFX(t + 0.3, 'car', 0.4, 0.7, 1.3); }
 
 // … "street." — insert: your sneaker comes down on the ball, it stops dead at the curb
 s03_shot(CUT(s03_ID.ball, 'street'), 'st-foot', 'foot insert: you stop the ball with your foot', (lt, S) => {
@@ -346,6 +387,8 @@ s03_shot(CUT(s03_ID.ball, 'street'), 'st-foot', 'foot insert: you stop the ball 
     ivMan({ who: CAST.you, x, y: GROUND, h, f, pose: ivPose('stand', { fR, fL: [-0.06, 0.45], hR: [0.1, 0.26] }), air: true, expr: { eyes: 'squint', mouth: 'flat' } });
   } }));
 });
+{ const t = CUT(s03_ID.ball, 'street');
+  SFX(t, 'swish', 0.4); SFX(t + 0.03, 'slide', 0.4, -0.3); SFX(t + 0.18, 'swish', 0.5, 0); SFX(t + 0.18 + 3 / FPS, 'thud', 1.2, 0.05); SFX(t + 0.18 + 3 / FPS, 'plastic', 0.6, 0.05); }
 
 // 056 "A cyclist about to hit a car door." — the door starts to open, the cyclist rides at it; ghost: the crash
 s03_shot(CUT(s03_ID.cyc), 'st-cyclist', 'cyclist vs opening car door (ghost: the crash)', (lt, S) => {
@@ -361,6 +404,10 @@ s03_shot(CUT(s03_ID.cyc), 'st-cyclist', 'cyclist vs opening car door (ghost: the
     P_bikeRider(cx, 1112, 0.75, { who: CAST.cyclist, expr: { eyes: 'open', mouth: 'smile' } });
   } }));
 });
+{ const t = CUT(s03_ID.cyc);
+  SFX(t, 'whoosh', 0.7); SFX(t + 0.05, 'ghost', 0.5, -0.4); SFX(t + 0.12, 'door', 0.9, -0.5);
+  for (let k = 0; k < 6; k++) SFX(t + 0.2 + k * 0.16, 'tick', 0.3, lerp(-0.95, -0.5, k / 5));
+  SFX(VW(s03_ID.cyc, 'door') - 0.35, 'swish', 0.5, 0.1); SFX(VW(s03_ID.cyc, 'car') - 0.1, 'gasp', 0.45, 0.1); }
 
 // … "door." — hand insert: your palm on the door, pushing it shut
 s03_shot(CUT(s03_ID.cyc, 'door'), 'st-door', 'hand insert: you push the car door shut', (lt, S) => {
@@ -374,6 +421,8 @@ s03_shot(CUT(s03_ID.cyc, 'door'), 'st-door', 'hand insert: you push the car door
     ivMan({ who: CAST.you, x, y: 1120, h, f, pose: P, grip: { front: 'flat' }, hands: 'glove', expr: { eyes: 'squint', mouth: 'flat' } });
   } }));
 });
+{ const t = CUT(s03_ID.cyc, 'door');
+  SFX(t, 'swish', 0.6, 0.2); SFX(t + 0.12 + 4 / FPS, 'door', 1.4, -0.3); SFX(t + 0.12 + 4 / FPS, 'metal', 0.5, -0.3); }
 
 // 057 "A ladder about to tip." — the ladder starts to go; ghost: on the sidewalk, on a passer-by
 s03_shot(CUT(s03_ID.ladder), 'st-ladder', 'ladder tipping (ghost: falls on a passer-by)', (lt, S) => {
@@ -386,6 +435,9 @@ s03_shot(CUT(s03_ID.ladder), 'st-ladder', 'ladder tipping (ghost: falls on a pas
     set_walker(CAST.extraC, 2300, 1180, GROUND, 480, 0, 's03w', { rest: 9 });
   } }));
 });
+{ const t = CUT(s03_ID.ladder);
+  SFX(t, 'swish', 0.6, 0.4); SFX(t + 0.05, 'ghost', 0.6, 0.4); SFX(t + 0.3, 'metal', 0.6, 0.6); SFX(t + 0.9, 'metal', 0.5, 0.6);
+  s03_steps(t, CUT(s03_ID.ladder, 'tip'), 5, 0.5, -0.2, 0.1); SFX(t + 0.2, 'rise', 0.55, 0.3, CUT(s03_ID.ladder, 'tip') - t - 0.2); }
 
 // … "tip." — hand insert: your glove closes on the rail; the ladder goes back against the scaffold
 const s03_GRAB = { x: 1400, h: 540, f: 0.6, up: 400 };
@@ -400,6 +452,9 @@ s03_shot(CUT(s03_ID.ladder, 'tip'), 'st-grab', 'hand insert: you grab the ladder
     ivMan({ who: CAST.you, x: G.x, y: GROUND, h: G.h, f: G.f, pose: P, grip: { front: grab > 0.6 ? 'hold' : 'open' }, hands: 'glove', expr: { eyes: 'squint', mouth: 'flat' } });
   } }));
 });
+{ const t = CUT(s03_ID.ladder, 'tip');
+  SFX(t, 'swish', 0.6); SFX(t + 0.04 + 3 / FPS, 'metal', 1.1, 0.1); SFX(t + 0.04 + 3 / FPS, 'cloth', 0.5, 0.1);
+  SFX(t + 0.25 + 5 / FPS, 'thud', 1.0, 0.2); SFX(t + 0.25 + 5 / FPS, 'metal', 0.5, 0.2); }
 
 // 058 "So you quietly fix them." — wide: you hold the ladder; the cyclist rides past the shut door; the kid has his ball
 s03_shot(CUT(s03_ID.fix), 'st-fixed', 'wide: everything fine, you holding the ladder', (lt, S) => {
@@ -415,6 +470,10 @@ s03_shot(CUT(s03_ID.fix), 'st-fixed', 'wide: everything fine, you holding the la
     P_bikeRider(-200 + lt * 420, 1112, 0.75, { who: CAST.cyclist, expr: { eyes: 'happy', mouth: 'smile' } });
   } }));
 });
+{ const t = CUT(s03_ID.fix);
+  SFX(t, 'whoosh', 0.8); SFX(t + 0.3, 'bounce', 0.4, -0.2);
+  for (let k = 0; k < 5; k++) SFX(t + 0.2 + k * 0.16, 'tick', 0.3, -0.9 + k * 0.08);
+  SFX(t + 1.3, 'ding', 0.5, -0.5); SFX(t + 0.6, 'car', 0.3, 0.5, 2.4); }
 
 // 059 painter: "Hey! What are you doing?" — back with his coffee, pointing at you
 const s03_PAINTER = { x: 1790, h: 540, f: -0.6 };
@@ -431,6 +490,8 @@ s03_shot(CUT(s03_ID.hey), 'st-painter', 'painter: Hey! What are you doing?', (lt
       expr: { eyes: 'angry', mouth: 'open', brow: 'angry', look: [-1, 0] } });
   } }));
 });
+{ const t = CUT(s03_ID.hey), p = VW(s03_ID.hey, 'Hey') - 1 / FPS;
+  SFX(t, 'swish', 0.5, 0.5); SFX(p, 'swish', 0.7, 0.6); SFX(p + 0.05, 'splash', 0.25, 0.7); SFX(p + 0.08, 'glass', 0.3, 0.7); }
 
 // 060 you: "Sorry. Thought it was falling." — one hand still on the rail, the other on the back of your head
 s03_shot(CUT(s03_ID.sorry), 'st-sorry', 'you close: Sorry. Thought it was falling.', (lt, S) => {
@@ -445,6 +506,8 @@ s03_shot(CUT(s03_ID.sorry), 'st-sorry', 'you close: Sorry. Thought it was fallin
     ivMan({ who: CAST.painter, x: s03_PAINTER.x, y: GROUND, h: s03_PAINTER.h, f: s03_PAINTER.f, pose: ivPose('hips'), expr: { eyes: 'squint', mouth: 'frown', brow: 'angry' } });
   } }));
 });
+{ const t = CUT(s03_ID.sorry);
+  SFX(t, 'swish', 0.4); SFX(t + 0.1, 'metal', 0.3, -0.1); SFX(VW(s03_ID.sorry, 'Sorry'), 'cloth', 0.6, 0.1); }
 
 // 061 "It was." — beat on the paint can at the top of the ladder: still swinging, then still
 s03_shot(CUT(s03_ID.itwas), 'st-can', 'beat: the paint can wobbling at the ladder top', (lt, S) => {
@@ -458,6 +521,8 @@ s03_shot(CUT(s03_ID.itwas), 'st-can', 'beat: the paint can wobbling at the ladde
     if (lt > 0.15) { const d = clamp((lt - 0.15) * 2); ivDot(hook[0] + Math.sin(wob) * -50 + 14, hook[1] + 82 + d * 8, 4 + d * 3, '#4aa3d8'); }
   } }));
 });
+{ const t = CUT(s03_ID.itwas);
+  SFX(t, 'swish', 0.5); SFX(t + 0.03, 'metal', 0.75, 0.1); SFX(t + 0.32, 'metal', 0.4, 0.1); SFX(t + 0.6, 'metal', 0.2, 0.1); SFX(t + 0.66, 'drip', 0.5, 0.1); }
 
 // 062 "Futures changed: one hundred and twelve." — you walk on; the counter climbs and lands on "twelve"
 s03_shot(CUT(s03_ID.fut), 'st-counter', 'walking on; FUTURES CHANGED → 112', (lt, S) => {
@@ -471,6 +536,10 @@ s03_shot(CUT(s03_ID.fut), 'st-counter', 'walking on; FUTURES CHANGED → 112', (
   const n = ivCount(VW(s03_ID.fut, 'one'), VWE(s03_ID.fut, 'twelve'), 0, 112);
   ivCounter([['FUTURES CHANGED', n, true]], ivPop(VW(s03_ID.fut, 'Futures') - 2 / FPS));
 });
+{ const t = CUT(s03_ID.fut), a = VW(s03_ID.fut, 'one'), b = VWE(s03_ID.fut, 'twelve');
+  SFX(t, 'whoosh', 0.8); s03_steps(t, CUT(s03_ID.thx), 6, 0.45, -0.6, -0.1);
+  SFX(VW(s03_ID.fut, 'Futures') - 2 / FPS, 'pop', 1.1);
+  for (let x = a; x < b - 0.05; x += 0.09) SFX(x, 'tick', 0.35, 0); SFX(b, 'blip', 1.3); SFX(b + 0.02, 'ding', 0.6); }
 
 // 063 "Thank-yous: zero." — close on you; people pass behind without a look; the zero lands
 s03_shot(CUT(s03_ID.thx), 'st-zero', 'you close, passers-by ignore you; THANK-YOUS 0', (lt, S) => {
@@ -486,6 +555,9 @@ s03_shot(CUT(s03_ID.thx), 'st-zero', 'you close, passers-by ignore you; THANK-YO
   ivCounter([['FUTURES CHANGED', 112, true], ['THANK-YOUS', TT >= tz ? 0 : '']], 1);
   if (TT >= tz && TT < tz + 0.3) { ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0); ivGlow(1125, H - IV.bar - 60, 120, 'rgba(255,170,90,0.35)', 1 - (TT - tz) / 0.3); ctx.restore(); }
 });
+{ const t = CUT(s03_ID.thx), tz = VW(s03_ID.thx, 'zero');
+  SFX(t, 'swish', 0.5); s03_steps(t, CUT(s03_ID.dis), 6, 0.3, -0.7, -0.3);
+  SFX(t + 0.3, 'type', 0.2, -0.6, 0.6); SFX(tz, 'blip', 1.1, 0.15); SFX(tz + 0.03, 'drop', 0.7, 0.15); }
 
 // 064 "When you stop a disaster," — the sunny street; the disasters that never happened fade off it
 s03_shot(CUT(s03_ID.dis), 'st-fade', 'sunny street, the ghost disasters fading out', (lt, S) => {
@@ -498,6 +570,8 @@ s03_shot(CUT(s03_ID.dis), 'st-fade', 'sunny street, the ghost disasters fading o
     if (fade > 0.01) ivGhost(() => { s03_ghostLadder(); P_ball(1000, 1012, 1.3, { rot: 4 }); }, fade);
   }, front: () => { s03_car(0); if (fade > 0.01) ivGhost(() => s03_ghostCrash(470), fade); } }));
 });
+{ const t = CUT(s03_ID.dis);
+  SFX(t, 'whoosh', 0.7); SFX(t + 0.15, 'car', 0.3, 0.5, 2.2); SFX(t + 0.3, 'shimmer', 0.6, 0.2); SFX(t + 0.5, 'ghost', 0.5, -0.3); }
 
 // … "nobody ever sees the disaster." + the 2 s beat — you sit on the curb; the street goes on, sunny, unaware
 s03_shot(CUT(s03_ID.dis, 'nobody'), 'st-curb', 'beat: you alone on the curb, the street goes on', (lt, S) => {
@@ -511,6 +585,9 @@ s03_shot(CUT(s03_ID.dis, 'nobody'), 'st-curb', 'beat: you alone on the curb, the
     const hh = 470; ivMan({ who: CAST.you, x: 820, y: 905 + 0.31 * hh, h: hh, f: 0.35, pose: ivPose('sit', { hL: [0.14, 0.2], hR: [0.18, 0.2], lean: 0.12, tilt: 0.15 }), expr: { eyes: 'tired', mouth: 'flat', look: [0, 1] } });
   } }));
 });
+{ const t = CUT(s03_ID.dis, 'nobody');
+  SFX(t, 'swish', 0.4); SFX(t + 0.1, 'cloth', 0.4, -0.1); SFX(t + 0.4, 'car', 0.3, -0.5, 3);
+  s03_steps(t + 0.2, LE(s03_ID.dis) + 0.35, 10, 0.2, -0.8, 0.2); }
 
 // the 2 s beat — close on you on the curb; a kid bounces the saved ball past behind you
 s03_shot(LE(s03_ID.dis) + 0.35, 'st-beat', 'beat: your face on the curb, nobody knows', (lt, S) => {
@@ -523,3 +600,6 @@ s03_shot(LE(s03_ID.dis) + 0.35, 'st-beat', 'beat: your face on the curb, nobody 
     ivMan({ who: CAST.you, x: 820, y, h: hh, f: 0.35, pose: ivPose('sit', { hL: [0.14, 0.2], hR: [0.18, 0.2], lean: 0.12, tilt: 0.15 }), expr: { eyes: 'tired', mouth: 'flat', look: [-0.3, 0.6] } });
   } }));
 });
+{ const t = LE(s03_ID.dis) + 0.35;
+  SFX(t, 'swish', 0.35); s03_steps(t, t + 2.2, 5, 0.3, -0.7, 0.9);
+  for (let k = 1; k < 7; k++) SFX(t + k * Math.PI / 5, 'bounce', 0.6 * (1 - k * 0.11), clamp(-0.6 + k * 0.32, -1, 1)); }
