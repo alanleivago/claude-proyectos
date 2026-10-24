@@ -47,3 +47,6 @@ Proven on `pieces/rhaenyra-flow` — start new pieces from it (src/scenes.js has
 
 ## The user's rules (checklist)
 See the memory note `feedback-tapestry-rules`; in short: v1 linen + v2 borders, figures off the borders, opaque, large, no red lips on men, never an empty scene, stitched hair; captions lowered toward the figures where there is room; slides right only; seamless pose swaps; moving props are one Flow sprite throughout; nothing pops in (walk in from the sides, fall from above, grow); fire without square edges; apple + AMPHORUS centred; theme from 0:30, bgm +10 / voice −1; look and storyboard approved before every export.
+
+- Slides: draw both panels' cloth first, then their pictures with a vertical clip only, so props overhanging a panel edge stay whole across the seam (fixed 2026-10-22 after the user saw clouds/sea/dragons cut mid-slide).
+- Wide elements (sea, clouds, flames): prompt Flow for natural finished ends inside the image ("the band ends in rounded puffs / tapering waves on both sides, with margin"); a layer cut by its image edge shows a straight end in every slide.

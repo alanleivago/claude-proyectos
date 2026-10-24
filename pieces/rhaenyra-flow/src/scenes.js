@@ -166,11 +166,13 @@ function pSign() {
 const PANELS = [pHeir, pSwear, pCrown, pSides, pSons, pChase, pFell, pGrief, pVengeance, pLost, pCost, pSign];
 
 function sceneStage() {
-  const p = stripPos(), off = p * W, i0 = Math.floor(p), i1 = Math.min(PANELS.length - 1, i0 + 1);
-  for (const i of i0 === i1 ? [i0] : [i0, i1]) {
+  const p = stripPos(), off = p * W, i0 = Math.floor(p), i1 = Math.min(PANELS.length - 1, i0 + 1), show = i0 === i1 ? [i0] : [i0, i1];
+  // the cloth first (both panels), then the pictures with only a vertical clip, so anything that overhangs a
+  // panel's edge (clouds, sea, a dragon's wing) stays whole while the strip slides instead of being cut at the seam
+  for (const i of show) { ctx.save(); ctx.setTransform(1, 0, 0, 1, i * W - off, 0); drawAsset('bg.jpg', 0, 0, W, H); ctx.restore(); }
+  for (const i of show) {
     ctx.save(); ctx.setTransform(1, 0, 0, 1, i * W - off, 0);
-    drawAsset('bg.jpg', 0, 0, W, H);
-    ctx.beginPath(); ctx.rect(0, 182, W, 1556); ctx.clip();   // the figures stay off the border lines
+    ctx.beginPath(); ctx.rect(-W, 182, 3 * W, 1556); ctx.clip();
     PANELS[i](); panelCaption(i);
     ctx.restore();
   }
