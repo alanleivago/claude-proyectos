@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>cartoon3d test</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0706; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  cartoon3d ENGINE TEST — ref 6's opening (0-4.5 s) rebuilt in code with the reference's own word timing:
+//  extreme close-up on spinning reels, pull back to a man on a stool at a "Lucky 7s" machine, two 7s land,
+//  the third reel stops one click short; push in on his unimpressed face. 9:16, 30 fps, motion on 1s.
+// =====================================================================
+const FPS = 30, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 4.5;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = '"Segoe UI", Arial, sans-serif';
+const CX = 540;
+// the reference's words (faster-whisper on ref 6), used here only to test sync against it
+const WORDS = [
+  { w: 'You', s: 0.0, e: 0.22 }, { w: 'just', s: 0.22, e: 0.42 }, { w: 'watched', s: 0.42, e: 0.78 }, { w: 'two', s: 0.78, e: 1.04 },
+  { w: 'jackpot', s: 1.04, e: 1.6 }, { w: 'symbols', s: 1.6, e: 1.84 }, { w: 'land,', s: 1.84, e: 2.3 }, { w: 'and', s: 2.44, e: 2.58 },
+  { w: 'the', s: 2.58, e: 2.68 }, { w: 'third', s: 2.68, e: 2.94 }, { w: 'one', s: 2.94, e: 3.12 }, { w: 'stopped', s: 3.12, e: 3.36 },
+  { w: 'one', s: 3.36, e: 3.72 }, { w: 'click', s: 3.72, e: 4.0 }, { w: 'short.', s: 4.0, e: 4.4 },
+];
+
+const ERA_LIST = [[0, DURATION, () => sceneCasino()]];
+const SHOTS = [['casino', 0, 0.0, 4.5, 'reels ECU -> pull back -> push in on the face']];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  gpu: true, format: 'test',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [], morphs: [],
+  cues: { land1: 0.95, land2: 1.84, short: 3.95 },
+  acts: [{ name: 'test', role: 'build', t0: 0, t1: 4.5 }],
+  board: [{ t: 0.1, title: 'reels ECU', sound: '', next: '' }, { t: 1.6, title: 'grin', sound: '', next: '' }, { t: 3.9, title: 'one click short', sound: '', next: '' }],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

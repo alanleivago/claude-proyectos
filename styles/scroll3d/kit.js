@@ -72,6 +72,14 @@ function s3Readout(value, unit, label, a = 1, o = {}) {
   ctx.font = s3Font(24); ctx.letterSpacing = '3px'; ctx.fillStyle = S3.note; ctx.fillText(label, x + 40 + vw + 12 + uw + 22, y - 30);
   ctx.restore();
 }
+// the step bar (top): dots on a line, labels under; the active step bright (and coloured), the rest dim
+function s3Steps(labels, active, a = 1, o = {}) {
+  if (a <= 0) return; const y = o.y ?? 330, x0 = o.x0 ?? 110, x1 = o.x1 ?? 970, n = labels.length, c = o.color ?? S3.yellow;
+  ctx.save(); screen(); ctx.globalAlpha = clamp(a) * 0.5; ctx.strokeStyle = S3.grey; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(x0, y); ctx.lineTo(x1, y); ctx.stroke(); ctx.restore();
+  labels.forEach((l, i) => { const x = lerp(x0, x1, i / (n - 1)), on = i === Math.round(active), k = clamp(1 - Math.abs(active - i));
+    ctx.save(); screen(); ctx.globalAlpha = clamp(a); ctx.fillStyle = on ? c : i < active ? S3.white : S3.grey; ctx.beginPath(); ctx.arc(x, y, 7 + 4 * k, 0, TAU); ctx.fill(); ctx.restore();
+    s3Text(l, x, y + 44, { size: 24, color: on ? S3.white : S3.grey, align: 'center', alpha: a * (0.55 + 0.45 * k), spacing: 3 }); });
+}
 // a small grey honesty note at the top-left ("RECREADO · ILUSTRATIVO")
 function s3Note(str, a = 1, o = {}) { s3Text(str, o.x ?? 60, o.y ?? 230, { size: o.size ?? 22, color: S3.note, alpha: a * 0.85, spacing: 3 }); }
 
@@ -104,7 +112,10 @@ function s3Caption(t = TT, o = {}) {
   ctx.globalAlpha = a * fade * 0.86; ctx.fillStyle = '#16130f';
   ctx.beginPath(); ctx.roundRect(CX - tw / 2 - padX, y - h / 2, tw + padX * 2, h, 6); ctx.fill();
   ctx.globalAlpha = a * fade; ctx.textBaseline = 'middle'; let x = CX - tw / 2;
-  c.words.forEach((w, i) => { ctx.fillStyle = t >= w.t0 - 0.02 ? S3.white : S3.grey; ctx.fillText(w.w, x, y + sz * 0.05); x += ws[i] + sp; });
+  c.words.forEach((w, i) => { const said = t >= w.t0 - 0.02, now = said && (i === c.words.length - 1 ? t < w.t1 + 0.25 : t < c.words[i + 1].t0 - 0.02);
+    ctx.fillStyle = S3.hl && now ? S3.yellow : said ? S3.white : S3.grey; ctx.fillText(w.w, x, y + sz * 0.05);
+    if (S3.hl && now) { ctx.fillRect(x, y + sz * 0.58, ws[i] * clamp((t - w.t0) / Math.max(0.08, w.t1 - w.t0)), 3); }
+    x += ws[i] + sp; });
   ctx.restore();
 }
 

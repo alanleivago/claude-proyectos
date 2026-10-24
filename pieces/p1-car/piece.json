@@ -1,0 +1,41 @@
+{
+ "name": "p1-car",
+ "title": "Your phone at 1 percent",
+ "format": {
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "bpm": 120,
+  "duration": 61.4,
+  "frames": 1842
+ },
+ "storyFormat": "second-person true story, one clause per shot, continuous camera, 6-frame dissolves (cartoon3d)",
+ "style": "cartoon3d",
+ "build": [
+  "src/head.html",
+  "kit/core.js",
+  "styles/pov3d/three.js",
+  "style",
+  "src/words.js",
+  "src/scenes.js",
+  "src/shots.js",
+  "src/set-street.js",
+  "src/set-phone.js",
+  "src/set-car.js",
+  "src/set-hq.js",
+  "src/bridges.js",
+  "kit/morph.js",
+  "kit/board.js",
+  "kit/score-head.js",
+  "src/score.js",
+  "kit/score-tail.js"
+ ],
+ "review": {
+  "safe": {
+   "top": 240,
+   "bottom": 420,
+   "right": 140
+  },
+  "refs": {}
+ }
+}

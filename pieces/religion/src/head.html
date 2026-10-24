@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sin religión</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0d14; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  ¿QUÉ PASARÍA SI LA RELIGIÓN DESAPARECIERA? — 9:16, 64 s, 24 fps.
+//  A baroque cathedral; then every mosque, synagogue, temple and church breaks into golden sparks; St Peter's Square
+//  empties; the Ganges is just a river; baby names fade; "In God We Trust" is erased; football fills the void;
+//  a shop window breaks; only 7 % of wars were religious; a hospital corridor: who comforts us now?
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 64.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 64, () => sceneMain()]];
+const SHOTS = [
+  ['cath',   0,     6,     'catedral barroca; título; 5.900 millones'],
+  ['mosq',   6,     7.25,  'mezquita: se deshace en luz'],
+  ['syn',    7.25,  8.5,   'sinagoga'],
+  ['hin',    8.5,   9.75,  'templo hindú'],
+  ['bud',    9.75,  11,    'templo budista'],
+  ['plaza',  11,    15,    'la torre de la iglesia se deshace'],
+  ['aerial', 15,    18,    'la ciudad: cúpulas y agujas desaparecen'],
+  ['vat',    18,    23,    'la plaza de San Pedro se vacía'],
+  ['gang',   23,    28,    'el Ganges: solo un río'],
+  ['names',  28,    33,    'maternidad: Muhammad, Noah, Oliver'],
+  ['bill',   33,    38,    'In God We Trust se borra'],
+  ['stad1',  38,    40,    'estadio: bengalas'],
+  ['stad2',  40,    42,    'las gradas cantan'],
+  ['stad3',  42,    44,    'brazos arriba'],
+  ['stad4',  44,    45.5,  'el estadio entero'],
+  ['jewel',  45.5,  51,    'silencio; rompen el escaparate'],
+  ['war',    51,    56,    'cementerio militar: 7 %'],
+  ['hosp',   56,    60,    'hospital de noche: ¿quién nos consuela?'],
+  ['card',   60,    64,    'tarjeta final'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, t0, t1, title], i) => ({ id: i + 1, key, era: 0, t0, t1, title })),
+  cuts: SHOTS.slice(1).map((s) => s[1]), morphs: [],
+  cues: { gone: 6.0, smash: 46.5 },
+  acts: [
+    { name: '1 Fe', role: 'build', t0: 0, t1: 6 },
+    { name: '2 Desaparece', role: 'journey', t0: 6, t1: 38 },
+    { name: '3 Estadio', role: 'peak', t0: 38, t1: 45.6 },
+    { name: '4 Silencio', role: 'silence', t0: 45.6, t1: 46.5 },
+    { name: '5 Sin freno', role: 'gift', t0: 46.5, t1: 51 },
+    { name: '6 Consuelo', role: 'goodbye', t0: 51, t1: 64 },
+  ],
+  board: [[2.5, 'título, catedral'], [6.8, 'mezquita'], [8.0, 'sinagoga'], [9.3, 'templo hindú'], [10.5, 'templo budista'], [13, 'torre'], [16.5, 'ciudad'], [20.5, 'San Pedro'], [25.5, 'Ganges'], [31, 'nombres'], [36, 'dólar'], [39, 'estadio'], [43, 'brazos arriba'], [47.5, 'escaparate'], [53.5, 'cementerio militar'], [58, 'hospital'], [62.5, 'tarjeta']].map(([t, title]) => ({ t, title, sound: '', next: '' })),
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

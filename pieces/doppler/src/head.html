@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Doppler Effect</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #05080a; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  THE DOPPLER EFFECT — Bitstory #6. 9:16, voice-led (~85s), 24fps, style bitpix. One stage (F2).
+//  Rings of pressure born where the siren was, growing at the speed of sound: squeezed ahead, stretched behind;
+//  the siren catches its own sound (a wall, the boom); light does the same (blue / red); galaxies recede (1929).
+//  Mint = waves ahead / the source; magenta = waves behind, red-shift; yellow = numbers, the shock wall.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4, GRID0 = 0;
+const VL = (id) => VOICE.lines.find((l) => l.id === id);
+const VW = (id, w, n = 1) => { const L = VL(id); let k = 0; for (const x of L.words) if (x.w.toLowerCase().replace(/[^a-z0-9']/g, '') === w.toLowerCase() && ++k === n) return x.t0; return L.t0; };
+const DURATION = Math.round(VOICE.duration * FPS) / FPS;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", "DejaVu Serif", serif';
+const CX = 540;
+const onBeat = (t) => t;
+
+const B0 = (id) => VL(id).t0 - 0.3;
+const HIT = VL('boom').t0 - 0.32;                       // the payoff hit: the shock wall, the sonic boom
+const ERA_LIST = [[0, DURATION, () => sceneStage()]];
+const SHOTS = [
+  ['pass',    0, 0,              B0('wave'),     'an ambulance passes; the pitch drops'],
+  ['rings',   0, B0('wave'),     B0('squeeze'),  'rings of pressure; the siren moves'],
+  ['squeeze', 0, B0('squeeze'),  B0('numbers'),  'squeezed ahead, stretched behind; what you hear'],
+  ['numbers', 0, B0('numbers'),  B0('fast'),     '700 Hz -> 767 / 644 Hz; the siren never changes'],
+  ['mach',    0, B0('fast'),     B0('light'),    'as fast as its sound: a wall; the boom'],
+  ['light',   0, B0('light'),    B0('galaxies'), 'light: red and blue; Andromeda comes closer'],
+  ['cosmos',  0, B0('galaxies'), B0('end'),      'every galaxy recedes; 1929'],
+  ['end',     0, B0('end'),      DURATION,       'the same trick; Bitstory'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, gridOffset: GRID0, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE, aspect: '9:16',
+  format: 'morph-chain',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [], morphs: [],
+  cues: { hit: HIT },
+  acts: [
+    { name: '1 Siren',   role: 'build',   t0: 0, t1: B0('fast') },
+    { name: '2 Faster',  role: 'peak',    t0: B0('fast'), t1: VL('pile').t1 },
+    { name: '3 Silence', role: 'silence', t0: VL('pile').t1 + 0.1, t1: HIT - 0.1 },
+    { name: '4 Boom',    role: 'gift',    t0: HIT, t1: B0('galaxies') },
+    { name: '5 Cosmos',  role: 'goodbye', t0: B0('galaxies'), t1: DURATION },
+  ],
+  board: [
+    { t: VL('open').t1 - 0.3, title: 'the ambulance passes', sound: 'a pitch drop', next: 'rings' },
+    { t: VL('wave').t1 - 0.3, title: 'rings of pressure', sound: 'soft pulses', next: 'it moves' },
+    { t: VL('squeeze').t1 - 0.3, title: 'squeezed / stretched', sound: 'two rates', next: 'what you hear' },
+    { t: VL('pitch').t1 - 0.3, title: 'more waves per second', sound: 'ticks', next: 'the numbers' },
+    { t: VL('numbers').t1 - 0.3, title: '767 / 644 Hz', sound: 'three notes down', next: 'faster' },
+    { t: VL('pile').t1 + 0.2, title: 'a single wall', sound: 'silence', next: 'the boom' },
+    { t: VL('boom').t1 - 0.3, title: 'sonic boom', sound: 'the loudest hit', next: 'light' },
+    { t: VL('andro').t1 - 0.3, title: 'Andromeda: blue', sound: 'a shimmer', next: 'the galaxies' },
+    { t: VL('year').t1 - 0.3, title: '1929', sound: 'a chime', next: 'the end' },
+    { t: DURATION - 0.6, title: 'Bitstory', sound: 'keys', next: 'loops' },
+  ],
+  narration: VOICE.lines.map((l) => ({ id: l.id, t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;

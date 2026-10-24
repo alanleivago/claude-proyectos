@@ -1,0 +1,50 @@
+{
+  "name": "shazam-voz2",
+  "title": "Cómo te reconoce Shazam",
+  "format": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "bpm": 120,
+    "duration": 109.632,
+    "frames": 3289
+  },
+  "storyFormat": "voice-led explainer, scroll3d remake of Ref Scroll animations/1.mp4 (same shots and camera moves)",
+  "style": "scroll3d",
+  "build": [
+    "src/head.html",
+    "kit/core.js",
+    "styles/pov3d/three.js",
+    "style",
+    "styles/scroll3d/people.js",
+    "src/base.js",
+    "src/world.js",
+    "src/shots.js",
+    "src/bridges.js",
+    "kit/morph.js",
+    "kit/board.js",
+    "kit/score-head.js",
+    "src/score.js",
+    "kit/score-tail.js"
+  ],
+  "music": {
+    "file": "audio/track-shaped.wav",
+    "start": 0,
+    "gain": 0,
+    "fade": 1.5
+  },
+  "voice": {
+    "file": "voice/voice.wav",
+    "music": -4
+  },
+  "review": {
+    "safe": {
+      "top": 240,
+      "bottom": 420,
+      "right": 0
+    },
+    "refs": {}
+  },
+  "loudness": -7.5,
+  "truePeak": -3.0
+}

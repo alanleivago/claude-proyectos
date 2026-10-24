@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cómo te reconoce Shazam</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0c0a08; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  CÓMO TE RECONOCE SHAZAM — scroll3d, 9:16, 30fps, voice-led (the user's Spanish take).
+//  A Spanish remake of reference 1 (how Shazam identifies a song) in the scroll3d look
+//  (reference 7's dusk test track, HUD pill, readout, labels). Shots authored in REFERENCE time R = refT(TT).
+// =====================================================================
+const FPS = 30, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const VL = (id) => VOICE.lines.find((l) => l.id === id);
+const DURATION = Math.round(VOICE.duration * FPS) / FPS;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 0 };
+const HAND = '"FreeSans", Helvetica, Arial, sans-serif';
+const CX = 540;
+
+// [reference time, Spanish time] — line starts and ends of both voices
+const ANCH = [
+  [0.0, 0.0],
+  [6.36, 7.82],
+  [6.88, 8.04],
+  [9.76, 10.0],
+  [10.46, 10.78],
+  [11.86, 12.82],
+  [12.52, 13.06],
+  [14.46, 15.16],
+  [17.9, 18.7],
+  [18.62, 19.42],
+  [19.42, 20.2],
+  [20.02, 20.48],
+  [23.02, 23.8],
+  [23.48, 24.42],
+  [28.78, 28.5],
+  [31.62, 32.02],
+  [32.22, 32.2],
+  [34.22, 34.4],
+  [34.74, 34.58],
+  [39.16, 38.7],
+  [39.72, 39.28],
+  [42.6, 42.04],
+  [43.2, 42.56],
+  [44.68, 43.68],
+  [45.56, 44.54],
+  [48.18, 47.42],
+  [48.66, 47.64],
+  [49.7, 48.78],
+  [49.8, 49.1],
+  [51.18, 50.44],
+  [51.66, 50.6],
+  [54.08, 53.0],
+  [58.24, 56.98],
+  [58.9, 57.02],
+  [62.94, 61.18],
+  [63.54, 61.88],
+  [69.14, 69.2],
+  [69.86, 69.8],
+  [71.02, 71.34],
+  [71.66, 71.72],
+  [73.26, 73.88],
+  [73.84, 74.56],
+  [78.02, 79.66],
+  [82.5, 84.56],
+  [83.26, 84.9],
+  [86.36, 88.7],
+  [87.02, 88.92],
+  [88.2, 90.54],
+  [88.92, 90.88],
+  [92.8, 96.24],
+  [93.64, 96.62],
+  [98.5, 102.36],
+  [99.16, 102.68],
+  [103.94, 108.38],
+  [104.23, DURATION]
+];
+function refT(t) {
+  if (t <= 0) return 0;
+  for (let i = 1; i < ANCH.length; i++) { const [r0, s0] = ANCH[i - 1], [r1, s1] = ANCH[i]; if (t <= s1) return r0 + (r1 - r0) * (t - s0) / (s1 - s0); }
+  return ANCH[ANCH.length - 1][0];
+}
+function esT(r) {
+  for (let i = 1; i < ANCH.length; i++) { const [r0, s0] = ANCH[i - 1], [r1, s1] = ANCH[i]; if (r <= r1) return s0 + (s1 - s0) * (r - r0) / (r1 - r0); }
+  return DURATION;
+}
+
+const ERA_LIST = [[0, DURATION, () => sceneMain()]];
+const SHOTS_R = [
+  ['rec', 0, 4.2, 'la grabación se vuelve espectrograma'],
+  ['stars', 4.2, 7.0, 'una constelación coincide'],
+  ['melody', 7.0, 10.2, 'no reconoce la melodía'],
+  ['taqueria', 10.2, 18.4, 'la taquería: canción, pláticas, platos'],
+  ['app', 18.4, 20.0, 'abres la app'],
+  ['mic', 20.0, 23.3, 'graba 5 segundos'],
+  ['field', 23.3, 29.3, 'contra canciones completas: lentísimo'],
+  ['back', 29.3, 32.0, 'algo más listo'],
+  ['spec', 32.0, 39.5, 'el espectrograma: frecuencia, tiempo, volumen'],
+  ['flat', 39.5, 43.0, 'ya no parece una onda'],
+  ['const', 43.0, 45.3, 'una constelación'],
+  ['cut', 45.3, 48.5, 'los puntos más fuertes'],
+  ['peaks', 48.5, 54.5, 'bajo, voz, tambor'],
+  ['zone', 54.5, 58.6, 'ancla y zona: huellas'],
+  ['song', 58.6, 63.3, 'solo lo justo'],
+  ['send', 63.3, 66.2, 'las huellas viajan al servidor'],
+  ['db', 66.2, 69.6, 'la base de canciones'],
+  ['one', 69.6, 73.6, 'un punto no basta'],
+  ['many', 73.6, 79.0, 'el mismo tiempo entre ellos'],
+  ['agree', 79.0, 83.0, 'se alinean'],
+  ['noise', 83.0, 88.6, 'gente hablando encima'],
+  ['hist', 88.6, 93.4, 'sobrevive bajo el ruido'],
+  ['again', 93.4, 95.5, 'en unos segundos'],
+  ['nomel', 95.5, 99.0, 'no escucha la melodía'],
+  ['end', 99.0, 104.23, 'el patrón que encaja']
+];
+const SHOTS = SHOTS_R.map(([k, a, b, title]) => [k, 0, esT(a), esT(b), title]);
+const CUTS_R = [];   // no hard cuts: every boundary is a dissolve (shots.js)
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'voice-led explainer (scroll3d remake of reference 1)',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: CUTS_R.map(esT),
+  morphs: SHOTS_R.slice(1).map((s) => esT(s[1])),
+  cues: { hit: esT(79.0) },
+  acts: [
+    { name: '1 El truco',     role: 'build',   t0: 0,          t1: esT(18.4) },
+    { name: '2 Graba',        role: 'journey', t0: esT(18.4),  t1: esT(32.0) },
+    { name: '3 El mapa',      role: 'peak',    t0: esT(32.0),  t1: esT(63.3) },
+    { name: '4 La búsqueda',  role: 'journey', t0: esT(63.3),  t1: esT(79.0) },
+    { name: '5 Se alinean',   role: 'gift',    t0: esT(79.0),  t1: esT(83.0) },
+    { name: '6 El ruido',     role: 'end',     t0: esT(83.0),  t1: DURATION },
+  ],
+  board: [
+    { t: esT(2.52), title: 'la grabación se vuelve espectrograma', sound: '', next: '' },
+    { t: esT(5.88), title: 'una constelación coincide', sound: '', next: '' },
+    { t: esT(8.92), title: 'no reconoce la melodía', sound: '', next: '' },
+    { t: esT(15.12), title: 'la taquería: canción, pláticas, platos', sound: '', next: '' },
+    { t: esT(19.36), title: 'abres la app', sound: '', next: '' },
+    { t: esT(21.98), title: 'graba 5 segundos', sound: '', next: '' },
+    { t: esT(26.9), title: 'contra canciones completas: lentísimo', sound: '', next: '' },
+    { t: esT(30.92), title: 'algo más listo', sound: '', next: '' },
+    { t: esT(36.5), title: 'el espectrograma: frecuencia, tiempo, volumen', sound: '', next: '' },
+    { t: esT(41.6), title: 'ya no parece una onda', sound: '', next: '' },
+    { t: esT(44.38), title: 'una constelación', sound: '', next: '' },
+    { t: esT(47.22), title: 'los puntos más fuertes', sound: '', next: '' },
+    { t: esT(52.1), title: 'bajo, voz, tambor', sound: '', next: '' },
+    { t: esT(56.96), title: 'ancla y zona: huellas', sound: '', next: '' },
+    { t: esT(61.42), title: 'solo lo justo', sound: '', next: '' },
+    { t: esT(65.04), title: 'las huellas viajan al servidor', sound: '', next: '' },
+    { t: esT(68.24), title: 'la base de canciones', sound: '', next: '' },
+    { t: esT(72.0), title: 'un punto no basta', sound: '', next: '' },
+    { t: esT(76.84), title: 'el mismo tiempo entre ellos', sound: '', next: '' },
+    { t: esT(81.4), title: 'se alinean', sound: '', next: '' },
+    { t: esT(86.36), title: 'gente hablando encima', sound: '', next: '' },
+    { t: esT(91.48), title: 'sobrevive bajo el ruido', sound: '', next: '' },
+    { t: esT(94.66), title: 'en unos segundos', sound: '', next: '' },
+    { t: esT(97.6), title: 'no escucha la melodía', sound: '', next: '' },
+    { t: esT(102.14), title: 'el patrón que encaja', sound: '', next: '' }
+  ],
+  narration: VOICE.lines.map((l) => ({ id: l.id, t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;
