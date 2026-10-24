@@ -1,0 +1,41 @@
+# ifverse — "What If…?" stickman stories
+
+Long-form (≥ 8 min) 16:9 YouTube stories in the manner of @IfverseTales, all in code. Analysis of the source and the full spec: `ANALISIS.md`. First piece (the proof): `pieces/ten-seconds`.
+
+## The look
+- **Flat cards at real depth, filmed by a camera** (`ivStage(layers)`): each layer is drawn flat and placed at a depth d (1 = the actors' plane, 2–6 far, 0.5–0.7 foreground). Far layers pan 1/d as much, zoom 1+(z−1)/d and go soft with depth of field (`IV.dof`); blurred layers render at half resolution.
+- **Film:** mood tint, vignette, grain (4 seeded tiles), black cinema bars (62 px at 1080). `ivPost()` is `STYLE.post`.
+- **Stick people** (`ivMan`): black round head (R = 0.125 h), black limbs (0.034 h), one-colour clothes (hoodie, jacket, suit, uniform, cardigan, coat, vest, tee), cream eyes and mouth, a **warm rim light** from the mood's key (a silhouette pass nudged toward the light). Hair/hats: puffs, bun, pony, tuft, buscap, cap; glasses.
+- **Faces:** eyes open / happy / wide (pupil) / squint / angry / sad / tired / dots / closed; brows angry / sad / up; mouths smile / grin / flat / o / frown / open / smirk; the speaker's mouth follows its VOICE words (`talk: id`); the narrator has no mouth. **Blink every 3.5–4 s, 3 frames.**
+- **Hands change with shot size:** nub (wide) → mitten (medium) → five-finger glove (close-up); grips open / fist / point / hold / flat; `hold: { R|L|front|back: (x, y, ang, h) => prop }`.
+- **Moods (`IV_MOOD`):** sunset, lunch, day, night, rain, lamp, office (+ arcade, party, hall, school from the sets). One mood per scene.
+- **The ghost** (`ivGhost(fn, a)`): anything drawn in fn becomes a cyan hologram (luminance recoloured cyan, glow, 1-px jitter). Cyan = the device (the future) and the running counter only.
+- **Type:** rounded bold caps (`IV.font`), cream with a warm glow (`ivTitle`, `ivTag`, `ivText`); `ivCounter` bottom-centre.
+
+## Motion (measured from the source + the guide)
+- **Motion on 1s** (`STYLE.ones = true`), no motion blur. Gestures 4–6 frames with a hard stop (`ivPoseMix` + `EZ.o3`). Walks: `ivWalk` (5 frames a step, planted feet).
+- **Camera almost still:** close-ups never move; ~⅓ of wides get `ivPush(t0, 0.03, 1.8)` and stop. No shake (one 6-frame jolt allowed on the biggest hit).
+- **Cuts:** hard cuts only, 3 frames before the word (`CUT(id, word)`); ~25–29 shots a minute; a shot under 0.45 s is dropped (main.js).
+
+## Story and voice
+- Title "What If You…?" + a number. 2nd-person present narration, short sentences; ~860 words, ~¼ dialogue, 10ish voices. 12 beats: the wish in minute one, plus/minus, the big hit at the halfway point, the twist before the end, a callback, a cliffhanger, a CTA.
+- `script.md` with `[Name] line` and `[beat Ns]` → `tools/md2json.py` → `tools/vs_cast_gen.py` (VoiceStudio: narrator `mathomaly` at 0.9; characters = profiles cloned from voice-designed samples). Pauses SENT 0.85 / PARA 1.25 / CHAR 0.7 s, beats +1 s → ~1.7 words/s → 8:00+ from ~860 words.
+
+## Production pattern (worked on ten-seconds)
+head.html SHOT engine → sets.js (15 sets) + props.js (~35 props) → 8 section files built in parallel in `dev/<sec>` → full storyboard → fixes → code score (bed + 15–25 sfx/min, silence before the loudest hit) → export in chunks (frames are ~2.5 MB each; 12k frames will fill a disk).
+
+## Frame checklist (on top of grammar/FRAME.md)
+1. ≥ 3 depth layers; the far ones soft; background life (3+ details).
+2. The face of whoever the shot is about is readable; nothing cut by the bars.
+3. Feet on the floor line (GROUND 900 at d = 1); no sliding, no passing through furniture.
+4. The picture shows the noun on its word; every spoken number on screen, landing at the end of its word.
+5. Any grab or hold gets a hand close-up with an exact grip.
+6. The ghost (cyan) on every use of the power, nowhere else.
+7. Not the same picture three times in a row.
+
+## Not matched yet
+- Back views (only a workaround in s08); fingertips in some hand inserts are simple capsules.
+- Ghosts on far blurred layers read soft; draw important ghosts on the actors' layer.
+
+## Proven on
+`pieces/ten-seconds` — "What If You Could See 10 Seconds Into the Future?" (8:22, 239 shots, 11 voices).
