@@ -147,8 +147,8 @@ function ivIK(ax, ay, bx, by, l1, l2, bend) {
 // poses: hand targets relative to the shoulder, foot targets relative to the hip, in units of h (y down).
 // lean: torso angle (rad, + = forward); dip: hip drop (units of h); tilt: head tilt (rad)
 const IV_POSES = {
-  stand:   { hL: [-0.03, 0.29], hR: [0.03, 0.29], fL: [-0.05, 0.45], fR: [0.05, 0.45] },
-  relaxed: { hL: [-0.05, 0.28], hR: [0.06, 0.27], fL: [-0.06, 0.45], fR: [0.07, 0.45] },
+  stand:   { hL: [-0.03, 0.315], hR: [0.03, 0.315], fL: [-0.05, 0.45], fR: [0.05, 0.45] },
+  relaxed: { hL: [-0.05, 0.305], hR: [0.06, 0.3], fL: [-0.06, 0.45], fR: [0.07, 0.45] },
   hips:    { hL: [-0.11, 0.2], hR: [0.11, 0.2], fL: [-0.07, 0.45], fR: [0.07, 0.45], bendL: 1, bendR: -1 },
   shrug:   { hL: [-0.17, 0.1], hR: [0.17, 0.1], fL: [-0.05, 0.45], fR: [0.05, 0.45], bendL: 1, bendR: -1 },
   reach:   { hL: [-0.03, 0.28], hR: [0.3, -0.02], fL: [-0.06, 0.45], fR: [0.08, 0.45], lean: 0.08 },
@@ -216,8 +216,17 @@ function ivMan(o) {
   const tgt = (base, v) => [base[0] + v[0] * s * h, base[1] + v[1] * h];
   const gY = o.y;
   const foot = (base, v) => { const p = tgt(base, v); if (!P.seat && !o.air) p[1] = Math.min(p[1], gY); return p; };
-  const armL = ivIK(...shL, ...tgt(shL, P.hL), J.ua * h, J.fa * h, (P.bendL ?? 1) * s);
-  const armR = ivIK(...shR, ...tgt(shR, P.hR), J.ua * h, J.fa * h, (P.bendR ?? 1) * s);
+  // elbows: a pose may force the bend (bendL/bendR); otherwise each arm takes the natural one — facing the camera
+  // the elbow goes out to its own side, in profile it hangs down and back (one fixed sign flipped one arm "inside out")
+  const armIK = (sh, hv, side, forced) => {
+    const t = tgt(sh, hv);
+    if (forced != null) return ivIK(...sh, ...t, J.ua * h, J.fa * h, forced * s);
+    const A1 = ivIK(...sh, ...t, J.ua * h, J.fa * h, 1), A2 = ivIK(...sh, ...t, J.ua * h, J.fa * h, -1);
+    const out = (side === 'L' ? -1 : 1) * s;
+    const score = (A) => (A.ey - sh[1]) * 3 + (af < 0.5 ? (A.ex - sh[0]) * out : -(A.ex - sh[0]) * s * 0.5);   // down first, then out (front) / back (profile)
+    return score(A1) >= score(A2) ? A1 : A2;
+  };
+  const armL = armIK(shL, P.hL, 'L', P.bendL), armR = armIK(shR, P.hR, 'R', P.bendR);
   const legL = ivIK(...hipL, ...foot(hipL, P.fL), J.th * h, J.sh * h, -s);
   const legR = ivIK(...hipR, ...foot(hipR, P.fR), J.th * h, J.sh * h, -s);
   const sc = ctx.getTransform().a, pxR = R * sc;
