@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fuera del universo</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0d14; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  ¿QUÉ PASARÍA SI LA TIERRA SALIERA DEL UNIVERSO DURANTE 5 SEGUNDOS? — 9:16, 80 s, 24 fps.
+//  Sunset at a monumental fountain on a hill over a city and the sea. At 8 s the Earth leaves at impossible speed and
+//  time slows: the Sun goes, the stars streak, the Milky Way shrinks, galaxies, the cosmic web; going back in time:
+//  a quasar, the first stars, the dark ages; the sky heats up to the glowing edge (the CMB). Someone outside watches,
+//  and hits rewind.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 80.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 80, () => sceneMain()]];
+const SHOTS = [
+  ['plaza',  0,    4,    'atardecer en la explanada; la fuente'],
+  ['people', 4,    6,    'el niño a hombros; pompas'],
+  ['palace', 6,    7,    'el palacio y la Luna'],
+  ['plaza2', 7,    8,    'la fuente; cuenta atrás'],
+  ['night',  8,    10.5, 'noche al instante: sin luz del Sol'],
+  ['warp',   10.5, 13,   'estrellas en estela sobre la ciudad'],
+  ['milky',  13,   20,   'la Vía Láctea desde fuera'],
+  ['gal',    20,   24,   'cada punto es una galaxia'],
+  ['you',    24,   27,   'TÚ: la ciudad, la Tierra'],
+  ['web',    27,   30,   'la red cósmica'],
+  ['quasar', 30,   37,   'un cuásar'],
+  ['first',  37,   40,   'las primeras estrellas'],
+  ['dark',   40,   43,   'la edad oscura'],
+  ['map',    43,   46,   'el folleto en la mano; frío'],
+  ['steam',  46,   48,   'vapor en la fuente'],
+  ['burn',   48,   50,   'el folleto arde'],
+  ['trees',  50,   52,   'arden los árboles'],
+  ['glow',   52,   56,   'el cielo brilla: el borde'],
+  ['plasma', 56,   58,   'plasma'],
+  ['white',  58,   60,   'ya nadie corre'],
+  ['hand',   60,   62,   'tu mano contra el resplandor'],
+  ['alien',  62,   67,   'alguien te mira desde fuera'],
+  ['rewind', 67,   70,   'rebobina'],
+  ['loop',   70,   73,   'atardecer otra vez, agrietado'],
+  ['card',   73,   80,   'tarjeta final'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, t0, t1, title], i) => ({ id: i + 1, key, era: 0, t0, t1, title })),
+  cuts: SHOTS.slice(1).map((s) => s[1]), morphs: [],
+  cues: { leave: 8.0, rewind: 67.0 },
+  acts: [
+    { name: '1 Atardecer', role: 'build', t0: 0, t1: 8 },
+    { name: '2 Hacia el borde', role: 'journey', t0: 8, t1: 46 },
+    { name: '3 El calor', role: 'peak', t0: 46, t1: 61.6 },
+    { name: '4 Silencio', role: 'silence', t0: 61.6, t1: 62.4 },
+    { name: '5 Alguien fuera', role: 'gift', t0: 62.4, t1: 70 },
+    { name: '6 Otra vez', role: 'goodbye', t0: 70, t1: 80 },
+  ],
+  board: [[2.5, 'título, la fuente'], [5, 'niño a hombros'], [6.5, 'palacio y Luna'], [9.3, 'noche'], [11.8, 'estelas'], [16.5, 'Vía Láctea'], [22, 'galaxias'], [25.5, 'TÚ, la Tierra'], [28.5, 'red cósmica'], [33.5, 'cuásar'], [38.5, 'primeras estrellas'], [41.5, 'oscuridad'], [44.5, 'el folleto'], [47, 'vapor'], [49, 'arde el papel'], [51, 'arden los árboles'], [54, 'el borde'], [57, 'plasma'], [59, 'blanco'], [61, 'tu mano'], [64.5, 'alguien fuera'], [68.5, 'rebobina'], [71.5, 'otra vez'], [77, 'tarjeta']].map(([t, title]) => ({ t, title, sound: '', next: '' })),
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

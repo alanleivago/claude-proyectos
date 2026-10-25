@@ -67,7 +67,12 @@ def transcribe_words(raw):
     model = WhisperModel("medium", device="cpu", compute_type="int8")
     segs, _ = model.transcribe(decode_audio(raw), language="es", vad_filter=True, beam_size=1,
                                word_timestamps=True)
+    segs = list(segs)
     words = [[round(w.start, 2), round(w.end, 2), w.word.strip()] for s in segs for w in s.words]
+    # same pass also writes the segment .srt (intro / subscribe detection), so one transcription is enough
+    with open(os.path.splitext(raw)[0] + ".srt", "w", encoding="utf-8") as f:
+        for n, s in enumerate(segs, 1):
+            f.write(f"{n}\n{ts(s.start).replace('.', ',')} --> {ts(s.end).replace('.', ',')}\n{s.text.strip()}\n\n")
     out = os.path.splitext(raw)[0] + ".words.json"
     json.dump(words, open(out, "w", encoding="utf-8"), ensure_ascii=False)
     print(f"wrote {out} ({len(words)} words)")
