@@ -37,6 +37,10 @@ head.html SHOT engine → sets.js (15 sets) + props.js (~35 props) → 8 section
 6. The ghost (cyan) on every use of the power, nowhere else.
 7. Not the same picture three times in a row.
 
+## Next (user notes after ten-seconds)
+- **More 2D→3D, like the reference:** heads that sometimes read half-3D (sphere shading, a turn), sets with real perspective (floors, walls, objects with sides), camera moves that reveal depth.
+- **Arms:** the rig bent every elbow with one sign (one arm looked flipped). Fixed: `armIK` in ivMan picks the natural bend (down first, then out facing camera / back in profile); rest poses hang straight. Check arms on every board (`pieces/ten-seconds/dev/armtest`).
+
 ## Not matched yet
 - Back views (only a workaround in s08); fingertips in some hand inserts are simple capsules.
 - Ghosts on far blurred layers read soft; draw important ghosts on the actors' layer.
