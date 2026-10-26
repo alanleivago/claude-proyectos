@@ -1,0 +1,1165 @@
+{
+ "_doc": "faster: ambience fragment (amb bus). Real Freesound field recordings only (CC0 / CC BY, see audio/assets/manifests/ambience.json). Every name prefixed am. Balance pass (user notes): the pier waves are a bed (-11 dB from the first mix), the pier is full of people (Brighton pier walla, close walla, kids, passers-by), the sea retreat is a big drain + pebble backwash + crowd reacting + gulls, 34-46 a planet drone under the flips, 46-52 an eerie thin-air bed (deep low-passed wind, singing wires, heartbeat, strained breathing), 52-63.6 a howling gale with screams and creaks building to the black frame, the gale returns over the wheel and decays into the card.",
+ "samples": {
+  "am.gasp.a": {
+   "file": "audio/assets/ambience/fs-439258_gasps-small-crowd.ogg",
+   "start": 5.45,
+   "end": 8.6,
+   "eq": {
+    "hp": 200,
+    "lp": 7000
+   },
+   "fade_in": 0.01,
+   "fade_out": 0.4,
+   "_doc": "gasp 1 of a small crowd; heavy lp + hp = far down the beach"
+  },
+  "am.gasp.b": {
+   "file": "audio/assets/ambience/fs-439258_gasps-small-crowd.ogg",
+   "start": 11.95,
+   "end": 16.6,
+   "eq": {
+    "hp": 200,
+    "lp": 7000
+   },
+   "fade_in": 0.01,
+   "fade_out": 0.6
+  },
+  "am.react.surprise": {
+   "file": "audio/assets/ambience/fs-488472_small-crowd-reactions.ogg",
+   "start": 10.15,
+   "end": 12.1,
+   "eq": {
+    "hp": 200,
+    "lp": 7000
+   },
+   "fade_in": 0.02,
+   "fade_out": 0.4,
+   "_doc": "'4. Surprise' on the page"
+  },
+  "am.react.tender": {
+   "file": "audio/assets/ambience/fs-488472_small-crowd-reactions.ogg",
+   "start": 0.0,
+   "end": 2.45,
+   "eq": {
+    "hp": 200,
+    "lp": 7000
+   },
+   "fade_in": 0.02,
+   "fade_out": 0.4,
+   "_doc": "'1. Tender surprise' (an 'ooh')"
+  },
+  "am.gasp.big": {
+   "file": "audio/assets/sfx/fs-264376_small-crowd-gasp.ogg",
+   "start": 0.0,
+   "end": 8.4,
+   "eq": {
+    "hp": 150,
+    "lp": 8000
+   },
+   "fade_in": 0.02,
+   "fade_out": 1.2,
+   "env": [
+    [
+     0,
+     0
+    ],
+    [
+     2.0,
+     0
+    ],
+    [
+     8.4,
+     -12
+    ]
+   ],
+   "_doc": "about 20 people gasp in shock (room recording: hp/lp + the beach bed hide the hall)"
+  },
+  "am.gasp.gossip": {
+   "file": "audio/assets/sfx/fs-763982_crowd-gasp-gossip.ogg",
+   "start": 0.5,
+   "end": 11.8,
+   "eq": {
+    "hp": 150
+   },
+   "fade_in": 0.05,
+   "fade_out": 1.0,
+   "_doc": "medium crowd gasps, then murmurs about it (Ambeo binaural)"
+  },
+  "am.gasp.short": {
+   "file": "audio/assets/sfx/fs-324895_crowd-gasp.ogg",
+   "start": 5.2,
+   "end": 7.4,
+   "eq": {
+    "hp": 150
+   },
+   "fade_in": 0.02,
+   "fade_out": 0.4
+  },
+  "am.sky.drone": {
+   "file": "audio/assets/ambience/fs-847113_heavy-aircraft-passby.ogg",
+   "start": 62.0,
+   "end": 73.0,
+   "pitch": -5,
+   "eq": {
+    "hp": 30,
+    "lp": 900
+   },
+   "env": [
+    [
+     0,
+     -16
+    ],
+    [
+     3,
+     -6
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     12,
+     0
+    ],
+    [
+     14.6,
+     -12
+    ]
+   ],
+   "fade_in": 1.0,
+   "fade_out": 2.0,
+   "_doc": "a real military jet passing (rising roar), slowed 5 st and low-passed: the planet spinning up, 33.5-48 s"
+  },
+  "am.panic.yell": {
+   "file": "audio/assets/ambience/fs-214147_crowd-screaming-yelling.ogg",
+   "start": 0.0,
+   "end": 16.6,
+   "eq": {
+    "hp": 250,
+    "lp": 5000
+   },
+   "fade_in": 0.6,
+   "fade_out": 2.0,
+   "_doc": "a large outdoor crowd yelling and screaming (felix.blume, Mexico City)"
+  },
+  "am.panic.run": {
+   "file": "audio/assets/ambience/fs-873254_thousands-runners.ogg",
+   "start": 271.0,
+   "end": 285.0,
+   "eq": {
+    "hp": 120
+   },
+   "fade_in": 1.2,
+   "fade_out": 2.0,
+   "_doc": "thousands of runners going by (Tim Kahn, MKH8020 SASS)"
+  },
+  "am.tilt.yell": {
+   "file": "audio/assets/ambience/fs-214147_crowd-screaming-yelling.ogg",
+   "start": 0.0,
+   "end": 6.6,
+   "eq": {
+    "hp": 250,
+    "lp": 6500
+   },
+   "fade_in": 1.0,
+   "fade_out": 0.06,
+   "env": [
+    [
+     0,
+     -8
+    ],
+    [
+     2.5,
+     -2
+    ],
+    [
+     6.0,
+     0
+    ]
+   ]
+  }
+ },
+ "place": [
+  {
+   "sample": "am.gasp.big",
+   "at": 17.3,
+   "gain_db": -19.0,
+   "bus": "amb",
+   "align": "start",
+   "pan": -0.2
+  },
+  {
+   "sample": "am.gasp.a",
+   "at": 18.6,
+   "gain_db": -6.0,
+   "bus": "amb",
+   "align": "start",
+   "pan": 0.25
+  },
+  {
+   "sample": "am.gasp.gossip",
+   "at": 20.0,
+   "gain_db": 4.0,
+   "bus": "amb",
+   "align": "start"
+  },
+  {
+   "sample": "am.react.surprise",
+   "at": 22.6,
+   "gain_db": -6.0,
+   "bus": "amb",
+   "align": "start",
+   "pan": -0.3
+  },
+  {
+   "sample": "am.gasp.b",
+   "at": 25.0,
+   "gain_db": -6.0,
+   "bus": "amb",
+   "align": "start",
+   "pan": 0.3
+  },
+  {
+   "sample": "am.react.tender",
+   "at": 28.6,
+   "gain_db": -9.0,
+   "bus": "amb",
+   "align": "start",
+   "pan": -0.1
+  },
+  {
+   "sample": "am.gasp.short",
+   "at": 31.2,
+   "gain_db": -10.0,
+   "bus": "amb",
+   "align": "start",
+   "pan": 0.2
+  },
+  {
+   "sample": "am.sky.drone",
+   "at": 33.4,
+   "gain_db": -11.0,
+   "bus": "amb",
+   "align": "start"
+  },
+  {
+   "sample": "am.panic.run",
+   "at": 35.0,
+   "gain_db": -10.0,
+   "bus": "amb",
+   "align": "start",
+   "pan": 0.1
+  },
+  {
+   "sample": "am.panic.yell",
+   "at": 37.6,
+   "gain_db": -12.0,
+   "bus": "amb",
+   "align": "start",
+   "pan": -0.15
+  },
+  {
+   "sample": "am.tilt.yell",
+   "at": 57.0,
+   "gain_db": -10.0,
+   "bus": "amb",
+   "align": "start",
+   "pan": 0.2,
+   "qa_ok": "choked at 63.6 s by the black frame (the clip ends at 63.6 s)"
+  }
+ ],
+ "ambience": [
+  {
+   "name": "am.pier.pebbles",
+   "file": "audio/assets/ambience/fs-450637_pebble-waves-close.ogg",
+   "src_start": 60.0,
+   "src_end": 92.0,
+   "at": 0.0,
+   "until": 22.0,
+   "fade_in": 0.05,
+   "fade_out": 5.0,
+   "gain_db": -9.0,
+   "width": 1.0,
+   "eq": {
+    "hp": 60
+   },
+   "_doc": "near layer: waves on pebbles, the backwash rattle. Fade 17-26 = the sea draining away"
+  },
+  {
+   "name": "am.pier.sea",
+   "file": "audio/assets/ambience/fs-570564_penarth-pier-sea.ogg",
+   "src_start": 20.0,
+   "src_end": 50.0,
+   "at": 0.0,
+   "until": 23.0,
+   "fade_in": 0.05,
+   "fade_out": 6.0,
+   "gain_db": -10.0,
+   "width": 1.1,
+   "eq": {
+    "hp": 50
+   },
+   "_doc": "wide layer: the sea from the shale beach at a UK pier"
+  },
+  {
+   "name": "am.pier.gulls",
+   "file": "audio/assets/ambience/fs-316721_brighton-seagulls.ogg",
+   "src_start": 186.0,
+   "src_end": 212.0,
+   "at": 0.0,
+   "until": 23.0,
+   "fade_in": 0.05,
+   "fade_out": 6.0,
+   "gain_db": -10.0,
+   "width": 1.0,
+   "eq": {
+    "hp": 400
+   },
+   "_doc": "Brighton gulls; window 186-212 avoids the clipped samples at 220/247 s"
+  },
+  {
+   "name": "am.pier.crowd",
+   "file": "audio/assets/ambience/fs-98267_brighton-beach-kids.ogg",
+   "src_start": 40.0,
+   "src_end": 75.0,
+   "at": 0.0,
+   "until": 32.0,
+   "fade_in": 0.05,
+   "fade_out": 6.0,
+   "gain_db": -9.0,
+   "width": 0.8,
+   "eq": {
+    "hp": 200,
+    "lp": 7000
+   },
+   "auto": [
+    [
+     0,
+     0
+    ],
+    [
+     17,
+     0
+    ],
+    [
+     19,
+     2
+    ],
+    [
+     24,
+     0
+    ],
+    [
+     32,
+     -6
+    ]
+   ],
+   "_doc": "far beach crowd on Brighton pebbles (filtered = distance); lifts a little 19-24 while people react to the draining sea"
+  },
+  {
+   "name": "am.pier.breeze",
+   "file": "audio/assets/ambience/fs-822585_windy-salt-marshes.ogg",
+   "src_start": 120.0,
+   "src_end": 150.0,
+   "at": 0.0,
+   "until": 22.0,
+   "fade_in": 0.05,
+   "fade_out": 5.0,
+   "gain_db": -16.0,
+   "width": 1.0,
+   "eq": {
+    "hp": 150,
+    "lp": 6000
+   }
+  },
+  {
+   "name": "am.drain.rush",
+   "file": "audio/assets/ambience/fs-826442_ocean-pier-sloshing.ogg",
+   "src_start": 176.0,
+   "src_end": 206.0,
+   "at": 16.0,
+   "until": 34.0,
+   "fade_in": 1.5,
+   "fade_out": 3.0,
+   "gain_db": -7.0,
+   "width": 1.15,
+   "eq": {
+    "hp": 40,
+    "lp": 9000
+   },
+   "auto": [
+    [
+     16,
+     -4
+    ],
+    [
+     18,
+     0
+    ],
+    [
+     22,
+     0
+    ],
+    [
+     26,
+     -5
+    ],
+    [
+     30,
+     -12
+    ],
+    [
+     34,
+     -22
+    ]
+   ],
+   "_doc": "water surging back out along the pier's iron legs; earshot find put the 'surging and rushing back out' take at 187.8 s (= film 27.8): the ride thins it out as the sea leaves"
+  },
+  {
+   "name": "am.drain.trickle",
+   "file": "audio/assets/ambience/fs-637977_stream-small-trickle.ogg",
+   "src_start": 5.0,
+   "src_end": 40.0,
+   "at": 21.0,
+   "until": 39.0,
+   "fade_in": 3.0,
+   "fade_out": 4.0,
+   "gain_db": 3.0,
+   "width": 1.0,
+   "eq": {
+    "hp": 250
+   },
+   "_doc": "trickles over the bared wet seabed"
+  },
+  {
+   "name": "am.drain.drips",
+   "file": "audio/assets/ambience/fs-166324_water-drip-metal.ogg",
+   "src_start": 1.0,
+   "src_end": 30.0,
+   "at": 23.0,
+   "until": 38.0,
+   "fade_in": 2.0,
+   "fade_out": 3.0,
+   "gain_db": -3.0,
+   "eq": {
+    "hp": 500
+   },
+   "_doc": "water dripping off the pier's iron columns (mono studio recording, natural ring)"
+  },
+  {
+   "name": "am.wind.rise",
+   "file": "audio/assets/ambience/fs-826745_coast-wind-building.ogg",
+   "src_start": 44.0,
+   "src_end": 58.0,
+   "at": 33.5,
+   "until": 46.0,
+   "fade_in": 2.0,
+   "fade_out": 2.5,
+   "gain_db": 2.0,
+   "width": 1.0,
+   "eq": {
+    "hp": 90
+   },
+   "auto": [
+    [
+     33.5,
+     -12
+    ],
+    [
+     34.5,
+     -8
+    ],
+    [
+     37.6,
+     -7
+    ],
+    [
+     37.85,
+     -12
+    ],
+    [
+     38.8,
+     -12
+    ],
+    [
+     39.5,
+     -3
+    ],
+    [
+     42,
+     -2
+    ],
+    [
+     44,
+     -7
+    ],
+    [
+     46,
+     -16
+    ]
+   ],
+   "_doc": "the same 70 km/h coastal storm (an earlier stretch, src 44-58, realness 0.85) ridden up from -18 dB: the wind rising through the day/night flashes into the gale"
+  },
+  {
+   "name": "am.wind.gale",
+   "file": "audio/assets/ambience/fs-826745_coast-wind-building.ogg",
+   "src_start": 69.0,
+   "src_end": 82.0,
+   "at": 38.0,
+   "until": 46.0,
+   "fade_in": 1.5,
+   "fade_out": 2.5,
+   "gain_db": -2.0,
+   "width": 1.1,
+   "eq": {
+    "hp": 100
+   },
+   "auto": [
+    [
+     38,
+     -6
+    ],
+    [
+     39.5,
+     0
+    ],
+    [
+     42.5,
+     0
+    ],
+    [
+     44,
+     -6
+    ],
+    [
+     46,
+     -18
+    ]
+   ],
+   "_doc": "70 km/h coastal storm howl; its gusts at src 72-78 (-18..-20 dB) land on film 41-47; ridden off by 46"
+  },
+  {
+   "name": "am.wind.flap",
+   "file": "audio/assets/ambience/fs-826651_storm-beach-flag.ogg",
+   "src_start": 23.0,
+   "src_end": 32.0,
+   "at": 39.3,
+   "until": 45.0,
+   "fade_in": 0.4,
+   "fade_out": 1.8,
+   "gain_db": 0.0,
+   "width": 1.0,
+   "eq": {
+    "hp": 120
+   },
+   "_doc": "beach storm with a flag flapping; its strongest gust (src 26) = film 42.3",
+   "auto": [
+    [
+     39.3,
+     0
+    ],
+    [
+     42.5,
+     0
+    ],
+    [
+     45,
+     -10
+    ]
+   ]
+  },
+  {
+   "name": "am.thin.rumble",
+   "file": "audio/assets/ambience/fs-106398_train-tunnel-distant.ogg",
+   "src_start": 120.0,
+   "src_end": 156.0,
+   "at": 43.0,
+   "until": 53.0,
+   "fade_in": 2.5,
+   "fade_out": 1.5,
+   "gain_db": -3.0,
+   "width": 0.6,
+   "eq": {
+    "hp": 25,
+    "lp": 200
+   },
+   "_doc": "a distant underground train behind a wall, lowpassed to a muffled pressure rumble: the air is gone",
+   "auto": [
+    [
+     43,
+     0
+    ],
+    [
+     45.5,
+     0
+    ],
+    [
+     47,
+     -5
+    ],
+    [
+     52,
+     -5
+    ],
+    [
+     53,
+     -5
+    ]
+   ]
+  },
+  {
+   "name": "am.thin.heart",
+   "file": "audio/assets/sfx/fs-362374_stethoscope-heartbeat.ogg",
+   "src_start": 22.0,
+   "src_end": 48.0,
+   "at": 45.0,
+   "until": 52.4,
+   "fade_in": 1.5,
+   "fade_out": 0.8,
+   "gain_db": 0.0,
+   "width": 0.0,
+   "_doc": "a real heartbeat (contact mic on the chest), very quiet under the thin air",
+   "eq": {
+    "hp": 35,
+    "peq": [
+     [
+      110,
+      0.9,
+      3.0
+     ],
+     [
+      700,
+      0.8,
+      7.0
+     ],
+     [
+      1600,
+      0.9,
+      6.0
+     ]
+    ]
+   },
+   "_about": "stethoscope heartbeat (fuller than the contact-mic take), upper harmonics lifted at 700 Hz / 1.6 kHz so it reads on phones"
+  },
+  {
+   "name": "am.tilt.rumble",
+   "file": "audio/assets/ambience/fs-577316_thunder-rolling-distant.ogg",
+   "src_start": 126.0,
+   "src_end": 140.0,
+   "at": 51.0,
+   "until": 63.62,
+   "fade_in": 1.5,
+   "fade_out": 0.06,
+   "gain_db": 0.0,
+   "width": 0.7,
+   "eq": {
+    "hp": 25,
+    "lp": 220
+   },
+   "auto": [
+    [
+     51,
+     -6
+    ],
+    [
+     52.5,
+     0
+    ],
+    [
+     63.62,
+     0
+    ]
+   ],
+   "_doc": "long rolling distant thunder, lowpassed = the earth rumbling under the tilt; hard out at 63.6 for the black frame (the wheel act gets the steadier am.wheel.rumble: the thunder rolls read as booms that would compete with the SFX snaps)"
+  },
+  {
+   "name": "am.tilt.screams",
+   "file": "audio/assets/ambience/fs-491405_crowd-panic.ogg",
+   "src_start": 13.0,
+   "src_end": 22.0,
+   "at": 55.5,
+   "until": 63.6,
+   "fade_in": 1.5,
+   "fade_out": 0.12,
+   "gain_db": -5.0,
+   "width": 0.9,
+   "eq": {
+    "hp": 250,
+    "lp": 6000
+   },
+   "_doc": "a crowd screaming in panic, far and muffled (thin air); hard out at 63.6 for the black frame"
+  },
+  {
+   "name": "am.wheel.rumble",
+   "file": "audio/assets/ambience/fs-106398_train-tunnel-distant.ogg",
+   "src_start": 40.0,
+   "src_end": 76.0,
+   "at": 63.98,
+   "until": 74.5,
+   "fade_in": 0.25,
+   "fade_out": 3.0,
+   "gain_db": -6.0,
+   "width": 0.6,
+   "eq": {
+    "hp": 25,
+    "lp": 200
+   },
+   "auto": [
+    [
+     63.98,
+     0
+    ],
+    [
+     70,
+     -2
+    ],
+    [
+     74.5,
+     -14
+    ]
+   ],
+   "_doc": "steady low rumble (distant underground train behind a wall, lowpassed; src 40-76 is its flattest stretch, p90-p10 2.6 dB) under the snapping and rolling wheel, kept modest so the SFX carry 64-70; recedes 70-74.5"
+  },
+  {
+   "name": "am.end.wind",
+   "file": "audio/assets/ambience/fs-822585_windy-salt-marshes.ogg",
+   "src_start": 40.0,
+   "src_end": 50.0,
+   "at": 72.0,
+   "until": 80.0,
+   "fade_in": 2.0,
+   "fade_out": 4.5,
+   "gain_db": -17.0,
+   "width": 1.0,
+   "eq": {
+    "hp": 80,
+    "lp": 2500
+   },
+   "_doc": "a faint low wind tail into silence at 80"
+  },
+  {
+   "name": "am.pier.people",
+   "_about": "Brighton Pier itself: people walking and talking, funfair (earshot find \"people talking and laughing on a busy seaside pier\": 53-58 z +5.9, 3-8 z +5.6, 32-37 z +5.1). Mono source, centred.",
+   "file": "audio/assets/ambience/fs-639393_brighton-pier-people.ogg",
+   "src_start": 2.5,
+   "src_end": 57.5,
+   "at": 0.0,
+   "until": 25.0,
+   "fade_in": 0.05,
+   "fade_out": 6.0,
+   "gain_db": -3.0,
+   "eq": {
+    "hp": 120,
+    "lp": 9000
+   },
+   "auto": [
+    [
+     0,
+     0
+    ],
+    [
+     17,
+     0
+    ],
+    [
+     19,
+     -2
+    ],
+    [
+     23,
+     -6
+    ]
+   ]
+  },
+  {
+   "name": "am.pier.walla",
+   "_about": "close walla on the deck (English/French voices, men and women, outdoor)",
+   "file": "audio/assets/ambience/fs-741283_crowd-walla-ext.ogg",
+   "src_start": 1.0,
+   "src_end": 69.0,
+   "at": 0.0,
+   "until": 34.0,
+   "fade_in": 0.05,
+   "fade_out": 4.0,
+   "gain_db": 9.0,
+   "width": 1.0,
+   "eq": {
+    "hp": 180
+   },
+   "auto": [
+    [
+     0,
+     0
+    ],
+    [
+     17,
+     0
+    ],
+    [
+     18.5,
+     0
+    ],
+    [
+     24,
+     0
+    ],
+    [
+     30,
+     -2
+    ],
+    [
+     34,
+     -8
+    ]
+   ]
+  },
+  {
+   "name": "am.pier.kids",
+   "_about": "children playing on the beach below (klankbeeld, CC BY)",
+   "file": "audio/assets/ambience/fs-236950_kids-summer-beach.ogg",
+   "src_start": 20.0,
+   "src_end": 80.0,
+   "at": 0.0,
+   "until": 19.0,
+   "fade_in": 0.05,
+   "fade_out": 4.0,
+   "gain_db": 6.0,
+   "width": 1.0,
+   "eq": {
+    "hp": 300
+   }
+  },
+  {
+   "name": "am.pier.passers",
+   "_about": "people walking on a boardwalk (ORTF): passers-by footsteps around you",
+   "file": "audio/assets/ambience/fs-248273_people-walking-boardwalk.ogg",
+   "src_start": 4.0,
+   "src_end": 84.0,
+   "at": 0.0,
+   "until": 17.5,
+   "fade_in": 0.05,
+   "fade_out": 3.0,
+   "gain_db": 1.0,
+   "width": 1.0,
+   "eq": {
+    "hp": 120
+   }
+  },
+  {
+   "name": "am.drain.backwash",
+   "_about": "pebbles dragged by a draining wave (Benboncan, close at the water edge); trims from earshot find",
+   "file": "audio/assets/ambience/fs-88575_waves-pebble-beach-benboncan.ogg",
+   "src_start": 84.0,
+   "src_end": 118.0,
+   "at": 16.6,
+   "until": 32.0,
+   "fade_in": 0.8,
+   "fade_out": 4.0,
+   "gain_db": -3.0,
+   "width": 1.1,
+   "eq": {
+    "hp": 60
+   },
+   "auto": [
+    [
+     16.6,
+     -2
+    ],
+    [
+     18,
+     0
+    ],
+    [
+     22,
+     0
+    ],
+    [
+     25,
+     -5
+    ],
+    [
+     28,
+     -10
+    ],
+    [
+     32,
+     -18
+    ]
+   ]
+  },
+  {
+   "name": "am.drain.spill",
+   "_about": "water rushing out through a large pipe/spillway = the sea draining away (steady roar)",
+   "file": "audio/assets/ambience/fs-458269_spillway-water.ogg",
+   "src_start": 5.0,
+   "src_end": 140.0,
+   "at": 16.5,
+   "until": 30.0,
+   "fade_in": 1.5,
+   "fade_out": 4.0,
+   "gain_db": 2.0,
+   "width": 1.0,
+   "eq": {
+    "hp": 50,
+    "lp": 7000
+   },
+   "auto": [
+    [
+     16.5,
+     -8
+    ],
+    [
+     18.5,
+     0
+    ],
+    [
+     21.5,
+     0
+    ],
+    [
+     25,
+     -7
+    ],
+    [
+     30,
+     -18
+    ]
+   ]
+  },
+  {
+   "name": "am.drain.gulls",
+   "_about": "a flock of agitated gulls overhead (juskiddink, CC BY)",
+   "file": "audio/assets/ambience/fs-98479_flock-of-seagulls.ogg",
+   "src_start": 1.0,
+   "src_end": 58.0,
+   "at": 16.5,
+   "until": 34.0,
+   "fade_in": 1.5,
+   "fade_out": 3.0,
+   "gain_db": -1.0,
+   "width": 1.1,
+   "eq": {
+    "hp": 500
+   }
+  },
+  {
+   "name": "am.thin.wires",
+   "_about": "wind singing in electric cables: a thin, high, eerie real tone over the black sky",
+   "file": "audio/assets/ambience/fs-836523_wind-singing.ogg",
+   "src_start": 8.0,
+   "src_end": 50.0,
+   "at": 44.0,
+   "until": 53.5,
+   "fade_in": 2.5,
+   "fade_out": 2.0,
+   "gain_db": 10.0,
+   "width": 1.0,
+   "eq": {
+    "hp": 400
+   },
+   "auto": [
+    [
+     44,
+     -6
+    ],
+    [
+     46.5,
+     0
+    ],
+    [
+     52,
+     0
+    ],
+    [
+     53.5,
+     -6
+    ]
+   ]
+  },
+  {
+   "name": "am.thin.deep",
+   "_about": "a steady roaring wind low-passed to 350 Hz: the deep, muffled air pressure",
+   "file": "audio/assets/ambience/fs-117773_roaring-wind.ogg",
+   "src_start": 100.0,
+   "src_end": 140.0,
+   "at": 44.0,
+   "until": 53.0,
+   "fade_in": 2.0,
+   "fade_out": 1.5,
+   "gain_db": 2.0,
+   "width": 0.8,
+   "eq": {
+    "hp": 30,
+    "lp": 350,
+    "lp_order": 4
+   }
+  },
+  {
+   "name": "am.tilt.gale",
+   "_about": "strong steady blustering roar (klangfabrik, \"recorded not synthetic\"): the gale builds to the black frame",
+   "file": "audio/assets/ambience/fs-117773_roaring-wind.ogg",
+   "src_start": 36.0,
+   "src_end": 100.0,
+   "at": 51.0,
+   "until": 63.62,
+   "fade_in": 2.0,
+   "fade_out": 0.06,
+   "gain_db": 2.0,
+   "width": 1.1,
+   "eq": {
+    "hp": 40
+   },
+   "auto": [
+    [
+     51,
+     -6
+    ],
+    [
+     52.5,
+     -2
+    ],
+    [
+     56,
+     -1
+    ],
+    [
+     60,
+     0
+    ],
+    [
+     63.62,
+     1
+    ]
+   ]
+  },
+  {
+   "name": "am.tilt.howl",
+   "_about": "wind howling through an elevator shaft (phone recording): the howl on top of the roar",
+   "file": "audio/assets/ambience/fs-646874_burlingame-howling-wind.ogg",
+   "src_start": 2.0,
+   "src_end": 70.0,
+   "at": 52.5,
+   "until": 63.62,
+   "fade_in": 2.5,
+   "fade_out": 0.06,
+   "gain_db": 0.0,
+   "width": 0.0,
+   "eq": {
+    "hp": 150,
+    "lp": 8000
+   },
+   "auto": [
+    [
+     52.5,
+     -8
+    ],
+    [
+     57,
+     -3
+    ],
+    [
+     63.62,
+     0
+    ]
+   ]
+  },
+  {
+   "name": "am.tilt.creak",
+   "_about": "deep wood creaks (ship hull / old door): the pier deck straining",
+   "file": "audio/assets/sfx/fs-452107_wood-creaks-ship-hull.ogg",
+   "src_start": 0.0,
+   "src_end": 60.0,
+   "at": 52.5,
+   "until": 63.62,
+   "fade_in": 1.0,
+   "fade_out": 0.06,
+   "gain_db": -4.0,
+   "width": 0.6,
+   "eq": {
+    "hp": 60,
+    "lp": 6000
+   }
+  },
+  {
+   "name": "am.wheel.gale",
+   "_about": "the gale returns over the wheel, decays 70-80 into the card",
+   "file": "audio/assets/ambience/fs-117773_roaring-wind.ogg",
+   "src_start": 140.0,
+   "src_end": 200.0,
+   "at": 64.6,
+   "until": 79.0,
+   "fade_in": 1.0,
+   "fade_out": 4.0,
+   "gain_db": 5.0,
+   "width": 1.1,
+   "eq": {
+    "hp": 40
+   },
+   "auto": [
+    [
+     64.6,
+     -10
+    ],
+    [
+     65.6,
+     0
+    ],
+    [
+     68,
+     0
+    ],
+    [
+     70,
+     -2
+    ],
+    [
+     72,
+     -5
+    ],
+    [
+     74,
+     -9
+    ],
+    [
+     76,
+     -14
+    ],
+    [
+     79,
+     -24
+    ]
+   ]
+  },
+  {
+   "name": "am.wheel.screams",
+   "_about": "people screaming as the wheel rolls away",
+   "file": "audio/assets/ambience/fs-491405_crowd-panic.ogg",
+   "src_start": 22.0,
+   "src_end": 37.0,
+   "at": 65.5,
+   "until": 73.0,
+   "fade_in": 0.5,
+   "fade_out": 2.5,
+   "gain_db": -9.0,
+   "width": 0.9,
+   "eq": {
+    "hp": 250,
+    "lp": 6000
+   },
+   "auto": [
+    [
+     65.5,
+     0
+    ],
+    [
+     69,
+     0
+    ],
+    [
+     73,
+     -8
+    ]
+   ]
+  }
+ ]
+}

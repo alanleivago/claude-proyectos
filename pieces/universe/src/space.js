@@ -306,5 +306,5 @@ function spaceOverlay(t) { if (SPC.at !== TT || !SPC.cam) return; const cam = SP
     if (t > 32.4 && t < 35.3 && SPC.q && SPC.qa > 0.2) { const a = ss(32.4, 32.8, t) * (1 - ss(34.9, 35.3, t)), [x, y, ok] = pr(SPC.q); if (ok) label(clamp(x - 230, 260, 820), Math.max(300, y - 290), a, 'UN CUÁSAR', 'MÁS BRILLANTE QUE UN BILLÓN DE SOLES', x - 30, y - 60); }
   } else if (SPC.kind === 'cosmos') { const [x, y, ok] = pr(new THREE.Vector3(0, SPC.RE, 0)); if (ok) {
     if (t > 24.05 && t < 25.1) { const a = ss(24.05, 24.3, t) * (1 - ss(24.85, 25.1, t)); ring(x, y, 16, a); label(x, y + 58, a, 'TÚ'); }
-    if (t > 26.6 && t < 29.7) { const a = ss(26.6, 27.0, t) * (1 - ss(29.3, 29.7, t)); ring(x, y, 9, a); label(x, y - 64, a, 'LA TIERRA', 'CADA CIUDAD, AÚN ENCENDIDA'); } } }
+    if (t > 26.6 && t < 29.7) { const a = ss(26.6, 27.0, t) * (1 - ss(29.3, 29.7, t)); ring(x, y, 9, a); label(x, Math.min(y - 64, 1150), a, 'LA TIERRA', 'CADA CIUDAD, AÚN ENCENDIDA'); } } }
   if (items.length) { const f = () => items.forEach((g) => g()); if (DEFER) DEFER.push(f); else f(); } }

@@ -25,11 +25,11 @@ lay("paper", f("fire", "166449d3"), 48.0, 50.4, [[48, -40], [48.6, -24], [50.0, 
 lay("trees", f("fireroar", "2822466d"), 50.0, 61.6, [[50, -40], [50.6, -21], [61.5, -19], [61.6, -80]])
 lay("panic", f("panic", "a222b1dc"), 52.0, 58.0, [[52, -40], [52.6, -27], [57.6, -30], [58, -50]])
 # 4. the room outside the universe: a soft hum, the screen's whine; the click; then REWIND, everything backward
-lay("room", f("office", "759d6a11"), 62.4, 67.0, [[62.4, -40], [62.8, -34], [66.8, -34], [67.0, -60]], lp=2500)
+lay("room", f("office", "759d6a11"), 62.4, 67.0, [[62.4, -40], [62.8, -22], [66.8, -22], [67.0, -60]], lp=2500)
 one('c_click', K + 'click.wav', 66.6, 0.35, -18); one('c_rew', K + 'rewind.wav', 67.0, 3.0, -6)
 lay("frev", O + 'fount_rev.wav', 68.0, 70.2, [[68.0, -40], [68.6, -26], [70.0, -24], [70.2, -40]]); lay("crev", O + 'crowd_rev.wav', 68.3, 70.2, [[68.3, -40], [69, -28], [70.2, -40]])
 # 5. sunset again, then the card
-lay("fount2", f("fountain", "2a34f1c3"), 70.0, 73.0, [[70.0, -40], [70.3, -24], [72.2, -26], [73.0, -60]], src=40); lay("crowd2", f("murmur", "93fc7f6c"), 70.0, 73.0, [[70.0, -40], [70.3, -27], [72.2, -29], [73.0, -60]], src=30)
-one('c_end', K + 'end.wav', 73.0, 7.0, -26); lay('cardamb', f('birds', '98041fcc'), 73.0, 79.6, [[73.0, -50], [74, -40], [79, -42], [79.6, -70]], src=80, lp=3000)
+lay("fount2", f("fountain", "2a34f1c3"), 70.0, 73.0, [[70.0, -40], [70.3, -30], [72.2, -32], [73.0, -60]], src=40); lay("crowd2", f("murmur", "93fc7f6c"), 70.0, 73.0, [[70.0, -40], [70.3, -33], [72.2, -35], [73.0, -60]], src=30)
+one('c_end', K + 'end.wav', 73.0, 7.0, -32); lay('cardamb', f('birds', '98041fcc'), 73.0, 79.6, [[73.0, -50], [74, -40], [79, -42], [79.6, -70]], src=80, lp=3000)
 json.dump(dict(duration_s=80.0, layers=L), open("layers.json", "w"), indent=1)
 print(len(L), "layers")

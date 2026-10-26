@@ -1,0 +1,1752 @@
+{
+ "_doc": "faster: sfx fragment (sfx bus). Real Freesound recordings only (CC0 / CC BY, see audio/assets/manifests/sfx.json). Every name prefixed fx. Balance pass: running on wet sand 23-34, sun-flip wind whooshes on every sunrise/sunset 33.8-45.3 (cues sky:flip:n), a close stereo helicopter 33.3-47.3 struggling from 41 s, debris/chairs/metal tumbling and railing strain 55-63.6, louder thunder.",
+ "samples": {
+  "fx.plane": {
+   "file": "audio/assets/sfx/fs-251971_propeller-plane.ogg",
+   "start": 8.0,
+   "end": 22.0,
+   "mono": true,
+   "eq": {
+    "hp": 140,
+    "lp": 4500,
+    "highshelf": [
+     2500,
+     -4
+    ]
+   },
+   "norm_peak_db": -6,
+   "fade_in": 3.0,
+   "fade_out": 4.0
+  },
+  "fx.spin.roll": {
+   "file": "audio/assets/sfx/fs-572443_thunder-distant-rolling.ogg",
+   "start": 9.0,
+   "end": 12.9,
+   "eq": {
+    "hp": 30,
+    "lp": 380,
+    "lp_order": 4
+   },
+   "pitch": -5,
+   "env": [
+    [
+     0,
+     -30
+    ],
+    [
+     1.5,
+     -18
+    ],
+    [
+     3.3,
+     -4
+    ],
+    [
+     4.0,
+     0
+    ],
+    [
+     4.5,
+     -10
+    ],
+    [
+     5.0,
+     -40
+    ]
+   ],
+   "norm_peak_db": -6,
+   "fade_in": 0.5,
+   "fade_out": 0.6,
+   "_doc": "pitched -5 st distant rolling thunder: rises 12-16 s, peaks at 16.0, gone by ~17 when the sea surge takes over"
+  },
+  "fx.spin.low": {
+   "file": "audio/assets/sfx/fs-263461_earthquake-rumble-creaks.ogg",
+   "start": 0.0,
+   "end": 5.2,
+   "eq": {
+    "hp": 28,
+    "lp": 300
+   },
+   "env": [
+    [
+     0,
+     -24
+    ],
+    [
+     2.0,
+     -10
+    ],
+    [
+     3.8,
+     0
+    ],
+    [
+     4.3,
+     -10
+    ],
+    [
+     5.0,
+     -40
+    ]
+   ],
+   "norm_peak_db": -6,
+   "fade_in": 0.5,
+   "fade_out": 0.5
+  },
+  "fx.surge": {
+   "file": "audio/assets/sfx/fs-450634_waves-crash-big.ogg",
+   "start": 3.9,
+   "end": 11.7,
+   "eq": {
+    "hp": 50,
+    "lowshelf": [
+     200,
+     3
+    ]
+   },
+   "env": [
+    [
+     0,
+     0
+    ],
+    [
+     2.5,
+     0
+    ],
+    [
+     7.8,
+     -14
+    ]
+   ],
+   "norm_peak_db": -3,
+   "fade_in": 0.3,
+   "fade_out": 2.0
+  },
+  "fx.whoosh.a": {
+   "file": "audio/assets/sfx/fs-719636_bamboo-whoosh-1.ogg",
+   "pitch": -6,
+   "eq": {
+    "lp": 6000
+   },
+   "norm_peak_db": -6,
+   "fade_in": 0.01,
+   "fade_out": 0.08
+  },
+  "fx.whoosh.b": {
+   "file": "audio/assets/sfx/fs-60026_air-swosh.ogg",
+   "pitch": -7,
+   "eq": {
+    "lp": 5000
+   },
+   "norm_peak_db": -6,
+   "fade_in": 0.01,
+   "fade_out": 0.08
+  },
+  "fx.heli.a": {
+   "file": "audio/assets/sfx/fs-824994_helicopter-hover-yukon.ogg",
+   "start": 3.0,
+   "end": 11.2,
+   "mono": true,
+   "eq": {
+    "hp": 50,
+    "lp": 8000,
+    "highshelf": [
+     3000,
+     -3
+    ]
+   },
+   "norm_peak_db": -6,
+   "fade_in": 2.5,
+   "fade_out": 0.5
+  },
+  "fx.heli.b": {
+   "file": "audio/assets/sfx/fs-824994_helicopter-hover-yukon.ogg",
+   "start": 10.7,
+   "end": 17.0,
+   "mono": true,
+   "eq": {
+    "hp": 50,
+    "lp": 8000,
+    "highshelf": [
+     3000,
+     -3
+    ]
+   },
+   "glide": [
+    0,
+    -3
+   ],
+   "env": [
+    [
+     0,
+     0
+    ],
+    [
+     0.8,
+     0
+    ],
+    [
+     1.1,
+     -5
+    ],
+    [
+     1.5,
+     -1
+    ],
+    [
+     1.9,
+     -7
+    ],
+    [
+     2.3,
+     -2
+    ],
+    [
+     2.8,
+     -9
+    ],
+    [
+     3.2,
+     -4
+    ],
+    [
+     3.7,
+     -11
+    ],
+    [
+     4.2,
+     -8
+    ],
+    [
+     5.0,
+     -16
+    ],
+    [
+     6.5,
+     -30
+    ]
+   ],
+   "norm_peak_db": -6,
+   "fade_in": 0.5,
+   "fade_out": 1.0
+  },
+  "fx.thunder": {
+   "file": "audio/assets/sfx/fs-567945_thunder-close-crack.ogg",
+   "start": 1.25,
+   "end": 15.6,
+   "eq": {
+    "hp": 30
+   },
+   "norm_peak_db": -1,
+   "fade_in": 0.005,
+   "fade_out": 0.8
+  },
+  "fx.gust.flag": {
+   "file": "audio/assets/sfx/fs-154794_flag-flapping-atlas.ogg",
+   "start": 22.5,
+   "end": 27.5,
+   "eq": {
+    "hp": 120
+   },
+   "env": [
+    [
+     0,
+     -4
+    ],
+    [
+     0.8,
+     0
+    ],
+    [
+     3.4,
+     0
+    ],
+    [
+     5.0,
+     -10
+    ]
+   ],
+   "norm_peak_db": -3,
+   "fade_in": 0.15,
+   "fade_out": 1.0
+  },
+  "fx.gust.cloth": {
+   "file": "audio/assets/sfx/fs-80079_cotton-flapping.ogg",
+   "start": 24.7,
+   "end": 30.0,
+   "eq": {
+    "hp": 150
+   },
+   "env": [
+    [
+     0,
+     -10
+    ],
+    [
+     1.0,
+     0
+    ],
+    [
+     3.6,
+     0
+    ],
+    [
+     5.3,
+     -12
+    ]
+   ],
+   "norm_peak_db": -3,
+   "fade_in": 0.6,
+   "fade_out": 1.0
+  },
+  "fx.noon": {
+   "file": "audio/assets/sfx/fs-263461_earthquake-rumble-creaks.ogg",
+   "start": 2.0,
+   "end": 4.8,
+   "eq": {
+    "hp": 28,
+    "lp": 220
+   },
+   "env": [
+    [
+     0,
+     -14
+    ],
+    [
+     1.6,
+     0
+    ],
+    [
+     2.3,
+     -12
+    ],
+    [
+     2.8,
+     -30
+    ]
+   ],
+   "norm_peak_db": -6,
+   "fade_in": 0.8,
+   "fade_out": 0.5
+  },
+  "fx.groan.0": {
+   "file": "audio/assets/sfx/fs-380403_metal-creaks-groans.ogg",
+   "start": 27.5,
+   "end": 32.5,
+   "pitch": -3,
+   "eq": {
+    "hp": 40,
+    "highshelf": [
+     3000,
+     -6
+    ]
+   },
+   "norm_peak_db": -3,
+   "fade_in": 0.05,
+   "fade_out": 1.2
+  },
+  "fx.groan.1": {
+   "file": "audio/assets/sfx/fs-496836_metallic-groan.ogg",
+   "start": 3.75,
+   "end": 6.2,
+   "pitch": -4,
+   "eq": {
+    "hp": 40,
+    "highshelf": [
+     3000,
+     -6
+    ]
+   },
+   "norm_peak_db": -3,
+   "fade_in": 0.05,
+   "fade_out": 0.6,
+   "_doc": "trimmed so the pitched groan (x1.26 longer) ends by 63.55 s: nothing rings into the 63.6 black frame"
+  },
+  "fx.slide.gravel": {
+   "file": "audio/assets/sfx/fs-121637_gravel-sliding-3.ogg",
+   "start": 2.5,
+   "end": 10.58,
+   "eq": {
+    "hp": 80,
+    "lp": 7000
+   },
+   "env": [
+    [
+     0,
+     -14
+    ],
+    [
+     3.0,
+     -4
+    ],
+    [
+     8.0,
+     0
+    ]
+   ],
+   "norm_peak_db": -3,
+   "fade_in": 0.5,
+   "fade_out": 0.03,
+   "qa_ok": "choked on purpose at 63.6 s (black frame): 30 ms fade into true silence"
+  },
+  "fx.slide.rock": {
+   "file": "audio/assets/sfx/fs-655368_rock-slide.ogg",
+   "start": 2.8,
+   "end": 10.88,
+   "eq": {
+    "hp": 60,
+    "lp": 6000
+   },
+   "env": [
+    [
+     0,
+     -16
+    ],
+    [
+     4.0,
+     -6
+    ],
+    [
+     8.0,
+     0
+    ]
+   ],
+   "norm_peak_db": -3,
+   "fade_in": 0.5,
+   "fade_out": 0.03,
+   "qa_ok": "choked on purpose at 63.6 s (black frame)"
+  },
+  "fx.slide.chair": {
+   "file": "audio/assets/sfx/fs-753535_metal-chair-drags.ogg",
+   "start": 2.5,
+   "end": 7.5,
+   "eq": {
+    "hp": 150,
+    "lp": 5000
+   },
+   "pitch": -2,
+   "norm_peak_db": -3,
+   "fade_in": 0.3,
+   "fade_out": 0.03,
+   "qa_ok": "choked on purpose at 63.6 s (black frame)"
+  },
+  "fx.crack.ground": {
+   "file": "audio/assets/sfx/fs-222521_cracking-earthquake.ogg",
+   "start": 0.0,
+   "end": 2.6,
+   "eq": {
+    "hp": 35
+   },
+   "norm_peak_db": -3,
+   "fade_in": 0.02,
+   "fade_out": 0.4,
+   "env": [
+    [
+     0,
+     0
+    ],
+    [
+     1.6,
+     0
+    ],
+    [
+     2.6,
+     -25
+    ]
+   ],
+   "_doc": "a continuous soil/stone cracking texture: its crescendo (0-1 s) peaks at 1.05 s, which lands on the beach crack frame (align peak); the source starts here, so no cut entry"
+  },
+  "fx.plank.0": {
+   "file": "audio/assets/sfx/fs-873248_plywood-splinters.ogg",
+   "start": 9.975,
+   "end": 11.85,
+   "pitch": -2,
+   "eq": {
+    "hp": 70
+   },
+   "norm_peak_db": -3,
+   "fade_in": 0.003,
+   "fade_out": 0.2,
+   "_doc": "a plywood split whose loudest crack comes ~0.2 s into the take (envelope read at 0.1 s steps)"
+  },
+  "fx.plank.1": {
+   "file": "audio/assets/sfx/fs-400638_wood-panel-cracking.ogg",
+   "start": 11.589,
+   "end": 12.505,
+   "pitch": -2,
+   "eq": {
+    "hp": 70
+   },
+   "norm_peak_db": -3,
+   "fade_in": 0.003,
+   "fade_out": 0.25
+  },
+  "fx.plank.2": {
+   "file": "audio/assets/sfx/fs-400638_wood-panel-cracking.ogg",
+   "start": 5.668,
+   "end": 5.96,
+   "pitch": -2,
+   "eq": {
+    "hp": 70
+   },
+   "norm_peak_db": -3,
+   "fade_in": 0.003,
+   "fade_out": 0.08,
+   "_doc": "a single crisp board snap (0.29 s), pitched -2 st"
+  },
+  "fx.hit.door": {
+   "file": "audio/assets/sfx/fs-814881_large-metal-door-close.ogg",
+   "start": 1.385,
+   "end": 5.3,
+   "pitch": -3,
+   "eq": {
+    "hp": 30
+   },
+   "norm_peak_db": -1,
+   "fade_in": 0.006,
+   "fade_out": 0.6,
+   "qa_ok": "entry at the start of the slam's rise; masked by the structure hit's transient on the same frame"
+  },
+  "fx.hit.struct": {
+   "file": "audio/assets/sfx/fs-653294_big-structure-collision.ogg",
+   "start": 0.0,
+   "end": 6.4,
+   "pitch": -2,
+   "eq": {
+    "hp": 28
+   },
+   "norm_peak_db": -1,
+   "fade_in": 0.003,
+   "fade_out": 1.0
+  },
+  "fx.hit.debris": {
+   "file": "audio/assets/sfx/fs-703247_big-falling-debris.ogg",
+   "start": 0.0,
+   "end": 4.6,
+   "eq": {
+    "hp": 60
+   },
+   "norm_peak_db": -2,
+   "fade_in": 0.003,
+   "fade_out": 0.8
+  },
+  "fx.roll.cab": {
+   "file": "audio/assets/sfx/fs-616822_metal-cabinet-rolling.ogg",
+   "start": 7.16,
+   "end": 16.0,
+   "pitch": -5,
+   "eq": {
+    "hp": 30,
+    "lp": 6000
+   },
+   "env": [
+    [
+     0,
+     0
+    ],
+    [
+     2.0,
+     0
+    ],
+    [
+     5.0,
+     -6
+    ],
+    [
+     8.0,
+     -14
+    ],
+    [
+     11.8,
+     -30
+    ]
+   ],
+   "norm_peak_db": -2,
+   "fade_in": 0.15,
+   "fade_out": 1.5
+  },
+  "fx.roll.trolley": {
+   "file": "audio/assets/sfx/fs-216605_metal-trolley-rolling.ogg",
+   "start": 12.3,
+   "end": 20.0,
+   "pitch": -4,
+   "eq": {
+    "hp": 30,
+    "lp": 3000
+   },
+   "env": [
+    [
+     0,
+     0
+    ],
+    [
+     2.0,
+     0
+    ],
+    [
+     5.0,
+     -6
+    ],
+    [
+     8.0,
+     -14
+    ],
+    [
+     10.2,
+     -30
+    ]
+   ],
+   "norm_peak_db": -2,
+   "fade_in": 0.3,
+   "fade_out": 1.5
+  },
+  "fx.grip.squeak.0": {
+   "file": "audio/assets/sfx/fs-343777_squeaking-metal-piezo.ogg",
+   "start": 5.785,
+   "end": 6.33,
+   "norm_peak_db": -3,
+   "fade_in": 0.004,
+   "fade_out": 0.08
+  },
+  "fx.grip.squeak.1": {
+   "file": "audio/assets/sfx/fs-343777_squeaking-metal-piezo.ogg",
+   "start": 24.55,
+   "end": 25.165,
+   "norm_peak_db": -3,
+   "fade_in": 0.004,
+   "fade_out": 0.08
+  },
+  "fx.grip.slide.0": {
+   "file": "audio/assets/sfx/fs-492595_hand-slide-metal.ogg",
+   "start": 7.6,
+   "end": 8.67,
+   "norm_peak_db": -3,
+   "fade_in": 0.01,
+   "fade_out": 0.1
+  },
+  "fx.grip.slide.1": {
+   "file": "audio/assets/sfx/fs-492595_hand-slide-metal.ogg",
+   "start": 5.605,
+   "end": 6.58,
+   "norm_peak_db": -3,
+   "fade_in": 0.01,
+   "fade_out": 0.1
+  },
+  "fx.snap.gate": {
+   "file": "audio/assets/sfx/fs-833566_metal-gate-slam.ogg",
+   "start": 0.04,
+   "end": 3.0,
+   "pitch": -6,
+   "eq": {
+    "hp": 35,
+    "lp": 4000
+   },
+   "norm_peak_db": -3,
+   "fade_in": 0.003,
+   "fade_out": 0.8,
+   "_doc": "heavy metal gate slam pitched -6 st: the wrench/body of the first, biggest leg snap"
+  },
+  "fx.hit.scrap": {
+   "file": "audio/assets/sfx/fs-587443_scrap-metal-crash.ogg",
+   "start": 7.9,
+   "end": 10.3,
+   "pitch": -3,
+   "eq": {
+    "hp": 60
+   },
+   "norm_peak_db": -2,
+   "fade_in": 0.003,
+   "fade_out": 0.6,
+   "_doc": "variant 2 of the scrap pile drop (after a digital-silence edit at 7.85-7.9 s): metal debris raining after the wheel lands"
+  },
+  "fx.breath": {
+   "file": "audio/assets/sfx/fs-514224_heavy-breathing.ogg",
+   "start": 18.0,
+   "end": 26.0,
+   "mono": true,
+   "eq": {
+    "hp": 120
+   },
+   "fade_in": 0.3,
+   "fade_out": 0.6,
+   "_doc": "heavy exhausted breathing, close: you struggle for air at the black-sky noon"
+  },
+  "fx.run.sand.a": {
+   "file": "audio/assets/sfx/fs-852209_running-on-sand.ogg",
+   "start": 1.0,
+   "end": 9.6,
+   "eq": {
+    "hp": 90
+   },
+   "fade_in": 0.3,
+   "fade_out": 0.5,
+   "_doc": "running on sand"
+  },
+  "fx.run.sand.b": {
+   "file": "audio/assets/sfx/fs-852209_running-on-sand.ogg",
+   "start": 11.4,
+   "end": 18.4,
+   "eq": {
+    "hp": 90
+   },
+   "fade_in": 0.3,
+   "fade_out": 0.5
+  },
+  "fx.run.sand.c": {
+   "file": "audio/assets/sfx/fs-852210_running-walking-sand.ogg",
+   "start": 0.5,
+   "end": 9.5,
+   "eq": {
+    "hp": 90
+   },
+   "fade_in": 0.3,
+   "fade_out": 0.8,
+   "_doc": "running then walking on sand"
+  },
+  "fx.run.mud": {
+   "file": "audio/assets/sfx/fs-770097_mud-walk-run.ogg",
+   "start": 17.5,
+   "end": 29.5,
+   "mono": true,
+   "eq": {
+    "hp": 90,
+    "lp": 9000
+   },
+   "fade_in": 0.3,
+   "fade_out": 0.6,
+   "_doc": "running with wet shoes on mud = wet seabed"
+  },
+  "fx.heli.near": {
+   "file": "audio/assets/sfx/fs-573170_helicopter-pass-overhead.ogg",
+   "start": 15.0,
+   "end": 23.6,
+   "eq": {
+    "hp": 45,
+    "lp": 12000
+   },
+   "norm_peak_db": -6,
+   "fade_in": 1.5,
+   "fade_out": 0.6,
+   "env": [
+    [
+     0,
+     0
+    ],
+    [
+     4.5,
+     0
+    ],
+    [
+     4.58,
+     -9
+    ],
+    [
+     5.4,
+     -9
+    ],
+    [
+     6.4,
+     0
+    ]
+   ],
+   "_doc": "helicopter approaching and hovering overhead (Neumann KMR82i, Toronto); dips 9 dB under the 37.9 s thunder crack (4.58-5.4 s into the sample)"
+  },
+  "fx.heli.struggle": {
+   "file": "audio/assets/sfx/fs-573170_helicopter-pass-overhead.ogg",
+   "start": 24.0,
+   "end": 31.5,
+   "eq": {
+    "hp": 45,
+    "lp": 12000
+   },
+   "glide": [
+    0,
+    -2.5
+   ],
+   "env": [
+    [
+     0,
+     0
+    ],
+    [
+     0.7,
+     -1
+    ],
+    [
+     1.1,
+     -6
+    ],
+    [
+     1.5,
+     -1
+    ],
+    [
+     2.0,
+     -7
+    ],
+    [
+     2.4,
+     -2
+    ],
+    [
+     3.0,
+     -9
+    ],
+    [
+     3.4,
+     -3
+    ],
+    [
+     4.0,
+     -10
+    ],
+    [
+     4.5,
+     -6
+    ],
+    [
+     5.4,
+     -14
+    ],
+    [
+     7.0,
+     -26
+    ]
+   ],
+   "norm_peak_db": -6,
+   "fade_in": 0.5,
+   "fade_out": 1.0,
+   "_doc": "the same helicopter, slowed and wobbling: the rotor loses its grip on the thin air"
+  },
+  "fx.debris.rocks": {
+   "file": "audio/assets/sfx/fs-234360_bricks-stones-tumble.ogg",
+   "start": 1.0,
+   "end": 9.0,
+   "eq": {
+    "hp": 80
+   },
+   "fade_in": 0.2,
+   "fade_out": 0.8,
+   "_doc": "bricks and stones tumbling and scraping"
+  },
+  "fx.debris.metal.1": {
+   "file": "audio/assets/sfx/fs-518776_metal-object-falling-stone.ogg",
+   "start": 4.95,
+   "end": 6.9,
+   "eq": {
+    "hp": 100
+   },
+   "fade_in": 0.004,
+   "fade_out": 0.3
+  },
+  "fx.debris.metal.2": {
+   "file": "audio/assets/sfx/fs-518776_metal-object-falling-stone.ogg",
+   "start": 10.95,
+   "end": 12.6,
+   "eq": {
+    "hp": 100
+   },
+   "fade_in": 0.004,
+   "fade_out": 0.3
+  },
+  "fx.debris.metal1": {
+   "file": "audio/assets/sfx/fs-518776_metal-object-falling-stone.ogg",
+   "start": 2.95,
+   "end": 4.9,
+   "eq": {
+    "hp": 120
+   },
+   "fade_in": 0.004,
+   "fade_out": 0.3
+  },
+  "fx.debris.metal2": {
+   "file": "audio/assets/sfx/fs-518776_metal-object-falling-stone.ogg",
+   "start": 8.45,
+   "end": 10.05,
+   "eq": {
+    "hp": 120
+   },
+   "fade_in": 0.004,
+   "fade_out": 0.3
+  },
+  "fx.rail.rub": {
+   "file": "audio/assets/sfx/fs-832547_rubbing-railing.ogg",
+   "start": 0.0,
+   "end": 1.95,
+   "eq": {
+    "hp": 80
+   },
+   "fade_in": 0.01,
+   "fade_out": 0.3,
+   "_doc": "rubbing an iron railing (contact mic): the rail strains under your hands"
+  },
+  "fx.flip.0": {
+   "file": "audio/assets/sfx/fs-573289_strong-wind-kevp.ogg",
+   "start": 24.96,
+   "end": 26.46,
+   "eq": {
+    "hp": 80
+   },
+   "norm_peak_db": -3,
+   "fade_in": 0.15,
+   "fade_out": 0.35,
+   "_doc": "earshot find \"a single strong gust of wind roaring past\" (z +3.9..+5.3 strong)"
+  },
+  "fx.flip.1": {
+   "file": "audio/assets/sfx/fs-782907_wind-gale-gust-whistle.ogg",
+   "start": 53.0,
+   "end": 54.5,
+   "eq": {
+    "hp": 80
+   },
+   "norm_peak_db": -3,
+   "fade_in": 0.15,
+   "fade_out": 0.35,
+   "_doc": "earshot find \"a single strong gust of wind roaring past\" (z +3.9..+5.3 strong)"
+  },
+  "fx.flip.3": {
+   "file": "audio/assets/sfx/fs-782907_wind-gale-gust-whistle.ogg",
+   "start": 47.42,
+   "end": 48.92,
+   "eq": {
+    "hp": 80
+   },
+   "norm_peak_db": -3,
+   "fade_in": 0.15,
+   "fade_out": 0.35,
+   "_doc": "earshot find \"a single strong gust of wind roaring past\" (z +3.9..+5.3 strong)"
+  },
+  "fx.flip.4": {
+   "file": "audio/assets/sfx/fs-573289_strong-wind-kevp.ogg",
+   "start": 12.48,
+   "end": 13.98,
+   "eq": {
+    "hp": 80
+   },
+   "norm_peak_db": -3,
+   "fade_in": 0.15,
+   "fade_out": 0.35,
+   "_doc": "earshot find \"a single strong gust of wind roaring past\" (z +3.9..+5.3 strong)"
+  },
+  "fx.flip.5": {
+   "file": "audio/assets/sfx/fs-782907_wind-gale-gust-whistle.ogg",
+   "start": 50.21,
+   "end": 51.71,
+   "eq": {
+    "hp": 80
+   },
+   "norm_peak_db": -3,
+   "fade_in": 0.15,
+   "fade_out": 0.35,
+   "_doc": "earshot find \"a single strong gust of wind roaring past\" (z +3.9..+5.3 strong)"
+  },
+  "fx.flip.6": {
+   "file": "audio/assets/sfx/fs-573289_strong-wind-kevp.ogg",
+   "start": 8.32,
+   "end": 9.82,
+   "eq": {
+    "hp": 80
+   },
+   "norm_peak_db": -3,
+   "fade_in": 0.15,
+   "fade_out": 0.35,
+   "_doc": "earshot find \"a single strong gust of wind roaring past\" (z +3.9..+5.3 strong)"
+  },
+  "fx.flip.7": {
+   "file": "audio/assets/sfx/fs-782907_wind-gale-gust-whistle.ogg",
+   "start": 16.74,
+   "end": 18.24,
+   "eq": {
+    "hp": 80
+   },
+   "norm_peak_db": -3,
+   "fade_in": 0.15,
+   "fade_out": 0.35,
+   "_doc": "earshot find \"a single strong gust of wind roaring past\" (z +3.9..+5.3 strong)"
+  }
+ },
+ "slices": {
+  "fx.step": {
+   "file": "audio/assets/sfx/fs-399309_wood-deck-sneakers.ogg",
+   "start": 0.0,
+   "end": 56.6,
+   "delta": 0.07,
+   "min_gap": 0.25,
+   "gate_db": -14,
+   "pre": 0.004,
+   "len": 0.42,
+   "mono": true,
+   "eq": {
+    "hp": 70
+   },
+   "norm_peak_db": -3,
+   "fade_in": 0.002,
+   "fade_out": 0.06,
+   "pick": [
+    4,
+    5,
+    6,
+    2,
+    3,
+    22,
+    30,
+    8,
+    15,
+    29
+   ],
+   "_doc": "34 onsets in the take; picked 10 with head < -40 dB and tail < -50 dB re peak (dump _samples.json), heel at 2-17 ms"
+  },
+  "fx.snap": {
+   "file": "audio/assets/sfx/fs-453303_hydraulic-metal-cutter-1.ogg",
+   "start": 0.0,
+   "end": 35.3,
+   "delta": 0.1,
+   "min_gap": 0.25,
+   "gate_db": -8,
+   "pre": 0.004,
+   "len": 0.6,
+   "pitch": -6,
+   "eq": {
+    "hp": 40,
+    "lp": 7500,
+    "highshelf": [
+     3000,
+     -3
+    ]
+   },
+   "norm_peak_db": -1,
+   "fade_in": 0.002,
+   "fade_out": 0.12,
+   "pick": [
+    0,
+    2,
+    7,
+    6
+   ],
+   "_doc": "the hydraulic cutter shear snaps whose peak is within 45 ms of the onset (onsets 2.39, 6.71, 32.84, 28.58 s; dump _samples.json) pitched -6 st: steel-beam size"
+  },
+  "fx.clang": {
+   "file": "audio/assets/sfx/fs-426849_steel-pipe-concrete.ogg",
+   "start": 0.0,
+   "end": 52.6,
+   "delta": 0.1,
+   "min_gap": 1.0,
+   "gate_db": -12,
+   "pre": 0.004,
+   "len": 1.6,
+   "pitch": -4,
+   "eq": {
+    "hp": 80,
+    "lp": 6000
+   },
+   "norm_peak_db": -3,
+   "fade_in": 0.002,
+   "fade_out": 0.4
+  },
+  "fx.clanglow": {
+   "file": "audio/assets/sfx/fs-426849_steel-pipe-concrete.ogg",
+   "start": 0.0,
+   "end": 52.6,
+   "delta": 0.1,
+   "min_gap": 1.0,
+   "gate_db": -12,
+   "pre": 0.004,
+   "len": 1.6,
+   "pick": [
+    1,
+    3,
+    5
+   ],
+   "pitch": -9,
+   "eq": {
+    "hp": 35,
+    "lp": 2500
+   },
+   "norm_peak_db": -3,
+   "fade_in": 0.002,
+   "fade_out": 0.5,
+   "_doc": "the hollow steel pipe drops pitched -9 st and low-passed: the beam's body under each shear snap"
+  }
+ },
+ "pools": {
+  "fx.p.step": [
+   "fx.step#*"
+  ],
+  "fx.p.plane": [
+   "fx.plane"
+  ],
+  "fx.p.spin.roll": [
+   "fx.spin.roll"
+  ],
+  "fx.p.spin.low": [
+   "fx.spin.low"
+  ],
+  "fx.p.surge": [
+   "fx.surge"
+  ],
+  "fx.p.whoosh.days": [
+   "fx.whoosh.a"
+  ],
+  "fx.p.whoosh.card": [
+   "fx.whoosh.b"
+  ],
+  "fx.p.heli.a": [
+   "fx.heli.a"
+  ],
+  "fx.p.heli.b": [
+   "fx.heli.b"
+  ],
+  "fx.p.thunder": [
+   "fx.thunder"
+  ],
+  "fx.p.gust.flag": [
+   "fx.gust.flag"
+  ],
+  "fx.p.gust.cloth": [
+   "fx.gust.cloth"
+  ],
+  "fx.p.noon": [
+   "fx.noon"
+  ],
+  "fx.p.slide.gravel": [
+   "fx.slide.gravel"
+  ],
+  "fx.p.slide.rock": [
+   "fx.slide.rock"
+  ],
+  "fx.p.slide.chair": [
+   "fx.slide.chair"
+  ],
+  "fx.p.crack.ground": [
+   "fx.crack.ground"
+  ],
+  "fx.p.snap": [
+   "fx.snap#*"
+  ],
+  "fx.p.hit.door": [
+   "fx.hit.door"
+  ],
+  "fx.p.hit.struct": [
+   "fx.hit.struct"
+  ],
+  "fx.p.hit.debris": [
+   "fx.hit.debris"
+  ],
+  "fx.p.roll.cab": [
+   "fx.roll.cab"
+  ],
+  "fx.p.roll.trolley": [
+   "fx.roll.trolley"
+  ],
+  "fx.p.grip.squeak": [
+   "fx.grip.squeak.0",
+   "fx.grip.squeak.1"
+  ],
+  "fx.p.grip.slide": [
+   "fx.grip.slide.0",
+   "fx.grip.slide.1"
+  ],
+  "fx.p.groan.0": [
+   "fx.groan.0"
+  ],
+  "fx.p.groan.1": [
+   "fx.groan.1"
+  ],
+  "fx.p.plank.0": [
+   "fx.plank.0"
+  ],
+  "fx.p.plank.1": [
+   "fx.plank.1"
+  ],
+  "fx.p.plank.2": [
+   "fx.plank.2"
+  ],
+  "fx.p.snap.body": [
+   "fx.snap.gate",
+   "fx.clanglow#0",
+   "fx.clanglow#1",
+   "fx.clanglow#2"
+  ],
+  "fx.p.hit.scrap": [
+   "fx.hit.scrap"
+  ],
+  "fx.p.heli.near": [
+   "fx.heli.near"
+  ],
+  "fx.p.heli.struggle": [
+   "fx.heli.struggle"
+  ],
+  "fx.p.flip": [
+   "fx.flip.0",
+   "fx.flip.1",
+   "fx.flip.3",
+   "fx.flip.4",
+   "fx.flip.5",
+   "fx.flip.6",
+   "fx.flip.7"
+  ]
+ },
+ "rules": [
+  {
+   "name": "fx.step",
+   "match": {
+    "kind": "step"
+   },
+   "pool": "fx.p.step",
+   "mode": "cycle",
+   "gain_db": -8.0,
+   "jitter_db": 1.5,
+   "pitch": [
+    -0.3,
+    0.3
+   ],
+   "pan": 0.0,
+   "align": "attack"
+  },
+  {
+   "name": "fx.plane",
+   "match": {
+    "kind": "flyby"
+   },
+   "pool": "fx.p.plane",
+   "gain_db": -15.0,
+   "align": "peak",
+   "offset": -0.79,
+   "_doc": "qa measured the smoothed apex 794 ms after the 5 ms envelope peak: shifted so the apex sits at 7.0 s"
+  },
+  {
+   "name": "fx.spin.roll",
+   "match": {
+    "id": "^spin:spinup$"
+   },
+   "pool": "fx.p.spin.roll",
+   "gain_db": -12,
+   "pan": 0.0,
+   "align": "start",
+   "qa_ok": "a swell cue marks the START of a 4 s rise (dur 96 frames): its peak sits at 16.0 s and it hands over to the sea surge at ~17 s"
+  },
+  {
+   "name": "fx.spin.low",
+   "match": {
+    "id": "^spin:spinup$"
+   },
+   "pool": "fx.p.spin.low",
+   "gain_db": -14,
+   "pan": 0.0,
+   "align": "start",
+   "no_cue": true,
+   "qa_ok": "a swell cue marks the START of a 4 s rise (dur 96 frames): its peak sits at 16.0 s and it hands over to the sea surge at ~17 s"
+  },
+  {
+   "name": "fx.surge",
+   "match": {
+    "kind": "rush"
+   },
+   "pool": "fx.p.surge",
+   "gain_db": -12,
+   "pan": 0.0,
+   "align": "start",
+   "offset": -0.15
+  },
+  {
+   "name": "fx.whoosh.days",
+   "match": {
+    "id": "^sky:days:start$"
+   },
+   "pool": "fx.p.whoosh.days",
+   "gain_db": -14.0,
+   "pan": 0.0,
+   "align": "peak"
+  },
+  {
+   "name": "fx.whoosh.card",
+   "match": {
+    "id": "^card:in$"
+   },
+   "pool": "fx.p.whoosh.card",
+   "gain_db": -30,
+   "pan": 0.0,
+   "align": "peak"
+  },
+  {
+   "name": "fx.heli.a",
+   "match": {
+    "kind": "heli"
+   },
+   "pool": "fx.p.heli.near",
+   "gain_db": 2.0,
+   "align": "start",
+   "pan": 0.3,
+   "offset": 0.0
+  },
+  {
+   "name": "fx.heli.b",
+   "match": {
+    "kind": "heli"
+   },
+   "pool": "fx.p.heli.struggle",
+   "gain_db": 2.0,
+   "align": "start",
+   "offset": 8.0,
+   "no_cue": true,
+   "pan": 0.35
+  },
+  {
+   "name": "fx.thunder",
+   "match": {
+    "kind": "thunder"
+   },
+   "pool": "fx.p.thunder",
+   "gain_db": 4.0,
+   "pan": 0.0,
+   "align": "attack",
+   "offset": 0.0,
+   "qa_ok": "a close strike: the crack peaks 128 ms after the flash (light before sound, a strike ~40 m away)"
+  },
+  {
+   "name": "fx.gust.flag",
+   "match": {
+    "kind": "gust"
+   },
+   "pool": "fx.p.gust.flag",
+   "gain_db": -10.0,
+   "pan": -0.2,
+   "align": "start"
+  },
+  {
+   "name": "fx.gust.cloth",
+   "match": {
+    "kind": "gust"
+   },
+   "pool": "fx.p.gust.cloth",
+   "gain_db": -12.0,
+   "pan": 0.25,
+   "align": "start",
+   "offset": 0.3,
+   "no_cue": true
+  },
+  {
+   "name": "fx.noon",
+   "match": {
+    "id": "^sky:noon$"
+   },
+   "pool": "fx.p.noon",
+   "gain_db": -24,
+   "pan": 0.0,
+   "align": "start",
+   "qa_ok": "a swell cue marks the START of the 2 s noon swell (dur 48 frames): low pressure rumble 46-48.8 s"
+  },
+  {
+   "name": "fx.groan.0",
+   "match": {
+    "id": "^tilt:groan:0$"
+   },
+   "pool": "fx.p.groan.0",
+   "gain_db": -9.0,
+   "pan": 0.0,
+   "align": "peak"
+  },
+  {
+   "name": "fx.groan.1",
+   "match": {
+    "id": "^tilt:groan:1$"
+   },
+   "pool": "fx.p.groan.1",
+   "gain_db": -9.0,
+   "pan": 0.0,
+   "align": "peak",
+   "offset": -0.125
+  },
+  {
+   "name": "fx.slide.gravel",
+   "match": {
+    "kind": "slide"
+   },
+   "pool": "fx.p.slide.gravel",
+   "gain_db": -10.0,
+   "pan": -0.15,
+   "align": "start"
+  },
+  {
+   "name": "fx.slide.rock",
+   "match": {
+    "kind": "slide"
+   },
+   "pool": "fx.p.slide.rock",
+   "gain_db": -14.0,
+   "pan": 0.2,
+   "align": "start",
+   "no_cue": true
+  },
+  {
+   "name": "fx.slide.chair",
+   "match": {
+    "kind": "slide"
+   },
+   "pool": "fx.p.slide.chair",
+   "gain_db": -16.0,
+   "pan": -0.3,
+   "align": "start",
+   "offset": 2.468,
+   "no_cue": true,
+   "_doc": "ends at 63.58 s (5.612 s sample): choke before the black frame"
+  },
+  {
+   "name": "fx.crack.ground",
+   "match": {
+    "id": "^tilt:crack:beach"
+   },
+   "pool": "fx.p.crack.ground",
+   "gain_db": -8.0,
+   "align": "peak"
+  },
+  {
+   "name": "fx.plank.0",
+   "match": {
+    "id": "^tilt:plank:0$"
+   },
+   "pool": "fx.p.plank.0",
+   "gain_db": -1,
+   "pan_scale": 0.5,
+   "align": "peak",
+   "offset": -0.165
+  },
+  {
+   "name": "fx.plank.1",
+   "match": {
+    "id": "^tilt:plank:1$"
+   },
+   "pool": "fx.p.plank.1",
+   "gain_db": -1,
+   "pan_scale": 0.5,
+   "align": "peak",
+   "offset": 0.0
+  },
+  {
+   "name": "fx.plank.2",
+   "match": {
+    "id": "^tilt:plank:2$"
+   },
+   "pool": "fx.p.plank.2",
+   "gain_db": -3,
+   "pan_scale": 0.5,
+   "align": "peak",
+   "offset": 0.0,
+   "_doc": "a short crisp snap with a higher peak than the longer splits: 2 dB down so no plank out-peaks the wheel landing"
+  },
+  {
+   "name": "fx.snap",
+   "match": {
+    "kind": "snap"
+   },
+   "pool": "fx.p.snap",
+   "mode": "cycle",
+   "gain_db": -4,
+   "weight_db": 3,
+   "weight_ref": 1.3,
+   "jitter_db": 0.5,
+   "pitch": [
+    -0.5,
+    0.5
+   ],
+   "align": "attack",
+   "qa_ok": "four leg snaps 0.24-0.29 s apart: one leg's peak window reaches the next leg's snap and its low body; every attack sits on its frame (earshot timeline: +0, -5, +1 ms; leg 2 +68 ms)"
+  },
+  {
+   "name": "fx.snap.body",
+   "match": {
+    "kind": "snap"
+   },
+   "pool": "fx.p.snap.body",
+   "mode": "cycle",
+   "gain_db": -6,
+   "weight_db": 3,
+   "weight_ref": 1.3,
+   "jitter_db": 0.5,
+   "align": "attack",
+   "no_cue": true,
+   "_doc": "low steel body under each shear snap (the snaps alone read as small clicks: earshot tagged them 'camera shutter')"
+  },
+  {
+   "name": "fx.hit.struct",
+   "match": {
+    "kind": "hit"
+   },
+   "pool": "fx.p.hit.struct",
+   "gain_db": -2.5,
+   "pan": 0.0,
+   "align": "attack"
+  },
+  {
+   "name": "fx.hit.door",
+   "match": {
+    "kind": "hit"
+   },
+   "pool": "fx.p.hit.door",
+   "gain_db": -7.5,
+   "pan": 0.0,
+   "align": "attack",
+   "no_cue": true
+  },
+  {
+   "name": "fx.hit.debris",
+   "match": {
+    "kind": "hit"
+   },
+   "pool": "fx.p.hit.debris",
+   "gain_db": -7.5,
+   "pan": 0.0,
+   "align": "attack",
+   "offset": 0.03,
+   "no_cue": true
+  },
+  {
+   "name": "fx.hit.scrap",
+   "match": {
+    "kind": "hit"
+   },
+   "pool": "fx.p.hit.scrap",
+   "gain_db": -8.5,
+   "pan": 0.1,
+   "align": "attack",
+   "offset": 0.06,
+   "no_cue": true
+  },
+  {
+   "name": "fx.roll.cab",
+   "match": {
+    "kind": "roll"
+   },
+   "pool": "fx.p.roll.cab",
+   "gain_db": -10,
+   "pan": 0.0,
+   "align": "start"
+  },
+  {
+   "name": "fx.roll.trolley",
+   "match": {
+    "kind": "roll"
+   },
+   "pool": "fx.p.roll.trolley",
+   "gain_db": -12,
+   "pan": 0.0,
+   "align": "start",
+   "no_cue": true
+  },
+  {
+   "name": "fx.grip.squeak",
+   "match": {
+    "kind": "grip"
+   },
+   "pool": "fx.p.grip.squeak",
+   "mode": "cycle",
+   "gain_db": -14,
+   "pan": 0.1,
+   "align": "attack"
+  },
+  {
+   "name": "fx.grip.slide",
+   "match": {
+    "kind": "grip"
+   },
+   "pool": "fx.p.grip.slide",
+   "mode": "cycle",
+   "gain_db": -10,
+   "pan": 0.1,
+   "align": "start",
+   "offset": -0.02,
+   "no_cue": true
+  },
+  {
+   "name": "fx.flip",
+   "match": {
+    "id": "^sky:flip:([0-35-9]|1[0-7])$"
+   },
+   "pool": "fx.p.flip",
+   "mode": "cycle",
+   "gain_db": -10.0,
+   "weight_db": 6,
+   "weight_ref": 1.0,
+   "jitter_db": 1.0,
+   "pan": "cue",
+   "pan_scale": 1.0,
+   "align": "peak",
+   "_doc": "one real wind gust per sunrise/sunset (flips 4 and 5 sit under the thunder: rule fx.flip.thunder, 8 dB lower) of the time-lapse (src/skytime.js), rising with the spin rate"
+  },
+  {
+   "name": "fx.flip.thunder",
+   "match": {
+    "id": "^sky:flip:[45]$"
+   },
+   "pool": "fx.p.flip",
+   "mode": "cycle",
+   "gain_db": -18.0,
+   "weight_db": 6,
+   "weight_ref": 1.0,
+   "jitter_db": 1.0,
+   "pan": "cue",
+   "pan_scale": 1.0,
+   "align": "peak",
+   "_doc": "the two flips around the 37.9 s thunder, kept low so the strike reads"
+  }
+ ],
+ "place": [
+  {
+   "sample": "fx.clang#0",
+   "at": 66.4,
+   "gain_db": -12,
+   "pan": 0.1,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.clang#1",
+   "at": 67.9,
+   "gain_db": -15,
+   "pan": 0.05,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.clang#2",
+   "at": 69.3,
+   "gain_db": -19,
+   "pan": 0.0,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.clang#3",
+   "at": 70.9,
+   "gain_db": -24,
+   "pan": -0.05,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.clang#4",
+   "at": 72.4,
+   "gain_db": -30,
+   "pan": -0.1,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.breath",
+   "at": 46.2,
+   "gain_db": -6.0,
+   "pan": 0.0,
+   "align": "start",
+   "bus": "sfx"
+  },
+  {
+   "sample": "fx.run.sand.a",
+   "at": 23.5,
+   "gain_db": 2.0,
+   "pan": -0.35,
+   "align": "start"
+  },
+  {
+   "sample": "fx.run.mud",
+   "at": 26.0,
+   "gain_db": -2.0,
+   "pan": 0.3,
+   "align": "start"
+  },
+  {
+   "sample": "fx.run.sand.b",
+   "at": 29.0,
+   "gain_db": 0.0,
+   "pan": 0.1,
+   "align": "start"
+  },
+  {
+   "sample": "fx.run.sand.c",
+   "at": 31.0,
+   "gain_db": 0.0,
+   "pan": -0.15,
+   "align": "start"
+  },
+  {
+   "sample": "fx.run.sand.a",
+   "at": 37.0,
+   "gain_db": 1.0,
+   "pan": -0.25,
+   "align": "start"
+  },
+  {
+   "sample": "fx.run.mud",
+   "at": 39.5,
+   "gain_db": -2.0,
+   "pan": 0.3,
+   "align": "start"
+  },
+  {
+   "sample": "fx.gust.flag",
+   "at": 55.8,
+   "gain_db": -8.0,
+   "pan": -0.4,
+   "align": "start"
+  },
+  {
+   "sample": "fx.debris.rocks",
+   "at": 55.6,
+   "gain_db": -10.0,
+   "pan": 0.3,
+   "align": "start"
+  },
+  {
+   "sample": "fx.debris.metal.1",
+   "at": 57.4,
+   "gain_db": -8.0,
+   "pan": -0.3,
+   "align": "attack",
+   "qa_ok": "free debris placement in the slide (no single picture contact): the attack is placed, its later peak is the chair settling"
+  },
+  {
+   "sample": "fx.rail.rub",
+   "at": 57.9,
+   "gain_db": -6.0,
+   "pan": 0.05,
+   "align": "start"
+  },
+  {
+   "sample": "fx.debris.metal1",
+   "at": 59.3,
+   "gain_db": -10.0,
+   "pan": 0.4,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.gust.cloth",
+   "at": 58.2,
+   "gain_db": -8.0,
+   "pan": 0.35,
+   "align": "start"
+  },
+  {
+   "sample": "fx.debris.metal.2",
+   "at": 61.0,
+   "gain_db": -8.0,
+   "pan": 0.25,
+   "align": "attack",
+   "qa_ok": "free debris placement in the slide (no single picture contact)"
+  },
+  {
+   "sample": "fx.rail.rub",
+   "at": 61.5,
+   "gain_db": -5.0,
+   "pan": -0.05,
+   "align": "start"
+  },
+  {
+   "sample": "fx.debris.metal2",
+   "at": 61.9,
+   "gain_db": -9.0,
+   "pan": -0.35,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.debris.rocks",
+   "at": 66.8,
+   "gain_db": -10.0,
+   "pan": -0.3,
+   "align": "start"
+  }
+ ]
+}

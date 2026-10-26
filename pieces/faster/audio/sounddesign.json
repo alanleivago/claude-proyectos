@@ -1,0 +1,84 @@
+{
+ "_doc": "faster soundtrack (real-sound skill): real recordings only (NO music), credited in CREDITS.md. Built by <skill>/scripts/mix.py from this file and one fragment per category in audio/design/ (each designer owns one fragment; names are prefixed with the category). Keys starting with _ are comments.",
+ "duration": 80.0,
+ "cues": "out/cues.json",
+ "include": [
+  "audio/design/ambience.json",
+  "audio/design/sfx.json"
+ ],
+ "_buses_doc": "No music. Both buses ride -2.5 dB over the tilt act (40-63.6, steps under the gale onset and inside the black-frame silence) so the wheel payoff (63.98-70) is clearly the loudest act (review: gift p90 >= peak p90 + 1 dB). Balance pass: the amb bus also dips 5 dB under the 37.9 s thunder crack (37.88-38.9) so the strike reads over the wind, helicopter and crowd.",
+ "buses": {
+  "amb": {
+   "gain_db": 0.0,
+   "auto": [
+    [
+     0,
+     0
+    ],
+    [
+     37.75,
+     0
+    ],
+    [
+     37.88,
+     -8
+    ],
+    [
+     38.9,
+     -8
+    ],
+    [
+     39.5,
+     0
+    ],
+    [
+     39.6,
+     0
+    ],
+    [
+     40.2,
+     -2.5
+    ],
+    [
+     63.4,
+     -2.5
+    ],
+    [
+     63.6,
+     0
+    ]
+   ]
+  },
+  "sfx": {
+   "gain_db": 0.0,
+   "auto": [
+    [
+     0,
+     0
+    ],
+    [
+     39.6,
+     0
+    ],
+    [
+     40.2,
+     -2.5
+    ],
+    [
+     63.4,
+     -2.5
+    ],
+    [
+     63.6,
+     0
+    ]
+   ]
+  }
+ },
+ "_master_doc": "-14 LUFS integrated for web / social. Ceiling 0.77 linear (-2.3 dBFS) leaves room for the AAC encode.",
+ "master": {
+  "lufs": -14,
+  "ceiling": 0.77,
+  "no_glue": true
+ }
+}
