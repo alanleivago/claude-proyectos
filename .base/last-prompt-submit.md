@@ -1,1 +1,1 @@
-<context-bracket>[DEPLETED] (prompt 16)</context-bracket>
+<context-bracket>[CRITICAL] (prompt 6)</context-bracket>

@@ -571,6 +571,7 @@ function c3Render(scene, cam, o = {}) {
   if ((o.nearBlur ?? 0) > 0.3) ctx.filter = `blur(${o.nearBlur.toFixed(2)}px)`;
   ctx.drawImage(cv, 0, 0, W, H); ctx.filter = 'none';
   // 5. bloom (refs): the bright parts — white heads, lamps, signs — bleed a soft warm glow over everything around them
+  if (C3_HD && o.bloom == null) o = Object.assign({}, o, { bloom: 0.2 }); else if (C3_HD) o = Object.assign({}, o, { bloom: o.bloom * 0.6 });   // HD: less haze
   if ((o.bloom ?? 0.32) > 0) {
     const b = C3R.bloom ||= Object.assign(document.createElement('canvas'), { width: W / 4, height: H / 4 }), bx = b.getContext('2d');
     bx.filter = 'brightness(0.95) contrast(2.4) saturate(1.2)'; bx.clearRect(0, 0, b.width, b.height); bx.drawImage(ctx.canvas, 0, 0, b.width, b.height); bx.filter = 'none';
@@ -593,14 +594,28 @@ const C3_LOOKS = {
   golden:       { f: 'brightness(0.90) contrast(1.06) saturate(1.12)', shadow: [64, 36, 44], high: [255, 222, 172] },   // ref 1 t46, ref 3 t30
   storm:        { f: 'brightness(0.72) contrast(1.10) saturate(0.9)',  shadow: [26, 32, 70], high: [212, 220, 236] },
 };
+// C3_HD (set true by a piece, 2026-10-25): the refs measure ~6x sharper with whites at 88-98 L; the plain looks capped
+// whites near 80 and the shadow 'screen' lifted a haze. HD keeps the hue of each look but with lighter tints, then c3Crisp.
+let C3_HD = false;
 function c3Look(name) {
   const L = C3_LOOKS[name]; if (!L) return;
   const b = C3R.lookCv ||= Object.assign(document.createElement('canvas'), { width: W, height: H }), bx = b.getContext('2d');
-  bx.filter = L.f; bx.clearRect(0, 0, W, H); bx.drawImage(ctx.canvas, 0, 0); bx.filter = 'none';
+  const f = C3_HD ? L.f.replace(/brightness\(([\d.]+)\)/, (m, v) => `brightness(${(1 - (1 - v) * 0.35).toFixed(3)})`).replace(/contrast\(([\d.]+)\)/, (m, v) => `contrast(${(+v + 0.06).toFixed(2)})`) : L.f;
+  const sh = C3_HD ? L.shadow.map((v) => Math.round(v * 0.4)) : L.shadow, hi = C3_HD ? L.high.map((v) => Math.round(255 - (255 - v) * 0.45)) : L.high;
+  bx.filter = f; bx.clearRect(0, 0, W, H); bx.drawImage(ctx.canvas, 0, 0); bx.filter = 'none';
   ctx.save(); screen(); ctx.globalCompositeOperation = 'copy'; ctx.drawImage(b, 0, 0);
-  ctx.globalCompositeOperation = 'screen'; ctx.fillStyle = `rgb(${L.shadow})`; ctx.fillRect(0, 0, W, H);      // tints the shadows most
-  ctx.globalCompositeOperation = 'multiply'; ctx.fillStyle = `rgb(${L.high})`; ctx.fillRect(0, 0, W, H);    // tints the lights
+  ctx.globalCompositeOperation = 'screen'; ctx.fillStyle = `rgb(${sh})`; ctx.fillRect(0, 0, W, H);      // tints the shadows most
+  ctx.globalCompositeOperation = 'multiply'; ctx.fillStyle = `rgb(${hi})`; ctx.fillRect(0, 0, W, H);    // tints the lights
   ctx.restore();
+}
+// crisp finish (HD): an unsharp kernel over the whole frame, before vignette/grain/subtitles
+function c3Crisp(k = 0.45) {
+  if (k <= 0) return;
+  if (!document.getElementById('c3sharp')) document.body.insertAdjacentHTML('beforeend',
+    `<svg width="0" height="0" style="position:absolute"><filter id="c3sharp" color-interpolation-filters="sRGB"><feConvolveMatrix order="3" preserveAlpha="true" kernelMatrix="0 ${-k} 0 ${-k} ${1 + 4 * k} ${-k} 0 ${-k} 0"/></filter></svg>`);
+  const b = C3R.crispCv ||= Object.assign(document.createElement('canvas'), { width: W, height: H }), bx = b.getContext('2d');
+  bx.clearRect(0, 0, W, H); bx.drawImage(ctx.canvas, 0, 0);
+  ctx.save(); screen(); ctx.globalCompositeOperation = 'copy'; ctx.filter = 'url(#c3sharp)'; ctx.drawImage(b, 0, 0); ctx.restore();
 }
 // ---- 2D finishing: vignette, grain, one-word subtitles
 function c3Vignette(a = 0.3) {

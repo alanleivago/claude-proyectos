@@ -1,0 +1,33 @@
+# Sound credits — lego-sea
+- Music: "Short Pizzicato Song" — Freesound 529008 (CC0), same bed as phone-1pct.
+- Voice: VoiceStudio "3D cartoon 2", take 28.
+- SFX kit: sound-layer kit (CC0, see sound-layer/kit/CREDITS.md).
+- Freesound CC0 recordings (previews HQ):
+  - 520770 "Calm Waves ambience" by priesjensen (CC0) — https://freesound.org/s/520770/
+  - 479595 "R01-71-Close up Seagull.wav" by craigsmith (CC0) — https://freesound.org/s/479595/
+  - 861350 "Seabirds - Ring-billed Gull; Single Call, Take 2" by TheKingOfGeeks360 (CC0) — https://freesound.org/s/861350/
+  - 836859 "Seabirds - Ring-billed Gull; Single Call" by TheKingOfGeeks360 (CC0) — https://freesound.org/s/836859/
+  - 789511 "WATRSurf-EXT_WATER-Couple Of Wave Splashes Onto Exposed Coral Reef With Ocean Roar In Background_YMLT_NONE_72827696" by YouMightLikeThis (CC0) — https://freesound.org/s/789511/
+  - 630648 "single bark - small to medium dog" by haulaway (CC0) — https://freesound.org/s/630648/
+  - 841349 "Dog Panting Loop 2" by qubodup (CC0) — https://freesound.org/s/841349/
+  - 718503 "WATRImpt_Impact12_InMotionAudio_FREESampleSunday" by InMotionAudio (CC0) — https://freesound.org/s/718503/
+  - 418705 "alarm bell.mp3" by Mrtenant (CC0) — https://freesound.org/s/418705/
+  - 333412 "Gasp 1 with surprise.wav" by jayfrosting (CC0) — https://freesound.org/s/333412/
+  - 763988 "CRWDReac_Crowd Gasping In Surprise, Quick 05_ShaneVincent_GSC24_BIN-AmbeoVR.wav" by ShangusBurger (CC0) — https://freesound.org/s/763988/
+  - 398502 "lego - shakes 06.wav" by Anthousai (CC0) — https://freesound.org/s/398502/
+  - 398512 "lego 08.wav" by Anthousai (CC0) — https://freesound.org/s/398512/
+  - 398509 "lego 01.wav" by Anthousai (CC0) — https://freesound.org/s/398509/
+  - 484933 "Page Turn - 13" by SpaceJoe (CC0) — https://freesound.org/s/484933/
+  - 484940 "Page Turn - 20" by SpaceJoe (CC0) — https://freesound.org/s/484940/
+  - 237729 "Rain and Thunder 4" by FlatHill (CC0) — https://freesound.org/s/237729/
+  - 117136 "Wind__Artic__Cold.wav" by cobratronik (CC0) — https://freesound.org/s/117136/
+  - 193170 "thunder" by netaj (CC0) — https://freesound.org/s/193170/
+  - 9508 "SPLASH.wav" by petenice (CC0) — https://freesound.org/s/9508/
+  - 442773 "Big Water Splash" by qubodup (CC0) — https://freesound.org/s/442773/
+  - 398032 "Splash" by swordofkings128 (CC0) — https://freesound.org/s/398032/
+  - 339184 "squeak_01.wav" by joedeshon (CC0) — https://freesound.org/s/339184/
+  - 26349 "partypopper.flac" by Streety (CC0) — https://freesound.org/s/26349/
+  - 386174 "Chain pulley 750kg - Chain pull" by ldezem (CC0) — https://freesound.org/s/386174/
+  - 530486 "Metal Impact" by Rickplayer (CC0) — https://freesound.org/s/530486/
+  - 366159 "Underwater [Loop] AMB.wav" by DCSFX (CC0) — https://freesound.org/s/366159/
+  - 511485 "cartoon_wink_magic_sparkle.wav" by MLaudio (CC0) — https://freesound.org/s/511485/
