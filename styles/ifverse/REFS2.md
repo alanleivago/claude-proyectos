@@ -221,3 +221,33 @@ El nicho "What If You…" está **saturado**: decenas de canales clon (Ifquirky,
 | 15 | Understand Every Dog | ✅ no encontrado como historia |
 
 Regla para el futuro: antes de escribir un guion, buscar `ytsearch20:"<título>"` y 2–3 variantes; si existe una historia con el mismo poder, cambiar el poder o el ángulo.
+
+## 6. Análisis del nicho (2026-10-26, yt-dlp — vidIQ sin créditos hasta el 24-nov)
+Búsqueda en YouTube de "What if you…" de este mes y este año (848 resultados → 224 historias de 3–25 min) y catálogos de 25 canales del formato. **Casi todos los canales tienen 2–25 videos: el formato explotó en octubre de 2026.** Videos con más vistas y "× mediana" de su canal (un outlier):
+
+| vistas | × mediana | canal | título |
+|---|---|---|---|
+| 4.5M | 15 | Ifverse | Reaction Time 10x Faster |
+| 1.9M | 17 | Minute Zero | Time Sped Up and Couldn't Stop / You Sped Up and Couldn't Stop |
+| 1.7M | 2 | Awaken | Can 2 People Really Restart Humanity? |
+| 1.5M | 45 | Ifinite | See How Long Everyone Has Left |
+| 1.3M | 4 | Ifverse | 500 IQ |
+| 859K | 29 | Manifesting | IQ 10x Higher |
+| 856K | 7 | Oddly Elsewhere | Last Human on Earth |
+| 810K | 4.5 | IFOLOGY | 10x Faster |
+| 559K | 28 | Jeremy Bearimy | Heart Beat 10x Faster |
+| 442K | 28 | IFinity | Turn Invisible at Will |
+| 426K | 11.5 | Iflord | Immortal |
+| 358K | 4.4 | Miko | Everyone's Lie Count |
+| 213K | 6.7 | Ifquirky | Who Secretly Hates You |
+| 212K | 11 | If Catch | See Every Lie |
+| 202K | 27 | Ifsphere | Breathe Underwater |
+
+**Las 4 fórmulas que ganan:**
+1. **Contador sobre las cabezas** (tiempo que le queda, mentiras, quién te odia, secretos): Ifinite 1.5M (45×), Miko, Ifquirky, If Catch, Ifsphere. La más rentable en × mediana.
+2. **Cuerpo/mente × número** (reacción, IQ, corazón, golpes, curación): Ifverse, Manifesting, Jeremy, If Then Tales.
+3. **"…and Couldn't Stop"** (escalada sin freno: tiempo, velocidad, crecer): Minute Zero 1.9M ×2.
+4. **Escenario de supervivencia/humanidad** (último humano, 2 personas reinician la humanidad, vivir bajo el agua).
+Los poderes clásicos de superhéroe (volar, telaraña, gravedad, telepatía) ya están todos hechos por IFOLOGY y rinden ~1× su mediana.
+
+**Saturación:** al buscar cualquier premisa sale casi siempre algún canal diminuto (0–5K vistas) que ya la hizo. Criterio práctico de originalidad: que **ningún canal relevante (≥ 50K en ese video)** la haya hecho, y darle un ángulo/historia propios. Verificadas sin versión relevante: ver cuántas vidas salvó cada persona, ver cuántos días faltan para que alguien te olvide, dormir 1 hora, entender a los perros, el último que sabe leer, saborearlo todo, la sombra que hace lo que quieres. Ya hechas (descartar): arrepentimiento sobre la cabeza, oír latidos/10x mejor, sentir emociones ajenas, cambiar de cuerpo, suerte 100x, lo que escribes se cumple, rebobinar 10 s, saber quién te traicionará.
