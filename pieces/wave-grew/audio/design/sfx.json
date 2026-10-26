@@ -1,0 +1,628 @@
+{
+ "_doc": "point effects (sfx bus), see tools/design.py",
+ "samples": {
+  "fx.ring3": {
+   "file": "assets/glass/fs-62053_glass3-wav.ogg",
+   "start": 0.4,
+   "end": 27.5,
+   "pitch": -1.42,
+   "eq": {
+    "hp": 100
+   },
+   "fade_in": 1.5,
+   "fade_out": 3.0,
+   "norm_peak_db": -30
+  },
+  "fx.ring4": {
+   "file": "assets/glass/fs-62054_glass4-wav.ogg",
+   "start": 0.3,
+   "end": 21.5,
+   "pitch": -1.42,
+   "eq": {
+    "hp": 100
+   },
+   "fade_in": 1.5,
+   "fade_out": 3.0,
+   "norm_peak_db": -32
+  },
+  "fx.spray0": {
+   "file": "assets/spray/fs-166984_splash-008-wav.ogg",
+   "eq": {
+    "hp": 500
+   },
+   "norm_peak_db": -22.0,
+   "fade_out": 0.2
+  },
+  "fx.spray1": {
+   "file": "assets/spray/fs-166980_splash-007-wav.ogg",
+   "eq": {
+    "hp": 500
+   },
+   "norm_peak_db": -21.2,
+   "fade_out": 0.2
+  },
+  "fx.spray2": {
+   "file": "assets/spray/fs-166981_splash-006-wav.ogg",
+   "eq": {
+    "hp": 500
+   },
+   "norm_peak_db": -20.4,
+   "fade_out": 0.2
+  },
+  "fx.spray3": {
+   "file": "assets/spray/fs-166984_splash-008-wav.ogg",
+   "eq": {
+    "hp": 500
+   },
+   "norm_peak_db": -19.6,
+   "fade_out": 0.2
+  },
+  "fx.spray4": {
+   "file": "assets/spray/fs-166980_splash-007-wav.ogg",
+   "eq": {
+    "hp": 500
+   },
+   "norm_peak_db": -18.8,
+   "fade_out": 0.2
+  },
+  "fx.spray5": {
+   "file": "assets/spray/fs-166981_splash-006-wav.ogg",
+   "eq": {
+    "hp": 500
+   },
+   "norm_peak_db": -18.0,
+   "fade_out": 0.2
+  },
+  "fx.spray6": {
+   "file": "assets/spray/fs-166984_splash-008-wav.ogg",
+   "eq": {
+    "hp": 500
+   },
+   "norm_peak_db": -17.2,
+   "fade_out": 0.2
+  },
+  "fx.spray7": {
+   "file": "assets/spray/fs-166980_splash-007-wav.ogg",
+   "eq": {
+    "hp": 500
+   },
+   "norm_peak_db": -17.2,
+   "fade_out": 0.2
+  },
+  "fx.swimmers": {
+   "file": "assets/people/fs-491405_crowd-in-panic.ogg",
+   "start": 4.0,
+   "end": 11.5,
+   "eq": {
+    "lp": 2800,
+    "hp": 300
+   },
+   "fade_in": 1.2,
+   "fade_out": 2.5,
+   "norm_peak_db": -30
+  },
+  "fx.lighthouse": {
+   "file": "assets/whoosh/fs-351256_deep-whoosh-1.ogg",
+   "eq": {
+    "hp": 60
+   },
+   "norm_peak_db": -14,
+   "fade_out": 0.3
+  },
+  "fx.bell": {
+   "file": "assets/city/fs-554655_bec-low-bell-solo-wav.ogg",
+   "start": 0.35,
+   "end": 9.5,
+   "eq": {
+    "lp": 2600,
+    "hp": 150
+   },
+   "fade_out": 4.0,
+   "norm_peak_db": -30
+  },
+  "fx.cloud_in": {
+   "file": "assets/wind/fs-361487_wind-whipping-by-wav.ogg",
+   "start": 9.0,
+   "end": 15.0,
+   "eq": {
+    "lp": 2500
+   },
+   "fade_in": 0.8,
+   "fade_out": 1.5,
+   "norm_peak_db": -14
+  },
+  "fx.cloud_out": {
+   "file": "assets/whoosh/fs-351259_deep-whoosh-2.ogg",
+   "eq": {
+    "hp": 80
+   },
+   "norm_peak_db": -14,
+   "fade_out": 0.3
+  },
+  "fx.jet": {
+   "file": "assets/jet/fs-235956_airliner-flyby-wav.ogg",
+   "start": 1.2,
+   "end": 15.6,
+   "eq": {
+    "hp": 70,
+    "lp": 2500
+   },
+   "fade_in": 1.2,
+   "fade_out": 2.5,
+   "norm_peak_db": -11
+  },
+  "fx.jet2": {
+   "file": "assets/jet/fs-431206_airplane-flyby.ogg",
+   "start": 0.4,
+   "end": 15.8,
+   "eq": {
+    "hp": 120
+   },
+   "fade_in": 0.8,
+   "fade_out": 2.5,
+   "norm_peak_db": -4
+  },
+  "fx.jet3": {
+   "file": "assets/jet/fs-240573_low-approach-f-wav.ogg",
+   "start": 17.0,
+   "end": 36.0,
+   "eq": {
+    "hp": 1200
+   },
+   "fade_in": 2.0,
+   "fade_out": 3.0,
+   "norm_peak_db": -13
+  },
+  "fx.iss": {
+   "file": "assets/whoosh/fs-351256_deep-whoosh-1.ogg",
+   "pitch": -3.0,
+   "eq": {
+    "lp": 2200,
+    "hp": 60
+   },
+   "norm_peak_db": -22,
+   "fade_out": 0.4
+  },
+  "fx.riserA": {
+   "file": "assets/riser/fs-826672_first-sunlight-cinematic-riser-sound-abr.ogg",
+   "start": 0.0,
+   "end": 8.085,
+   "fade_in": 0.05,
+   "fade_out": 0.006,
+   "norm_peak_db": -13
+  },
+  "fx.riserB": {
+   "file": "assets/riser/fs-493542_tension-building-riser-whoosh-sfx-1-wav.ogg",
+   "start": 0.0,
+   "end": 9.62,
+   "fade_in": 0.5,
+   "fade_out": 0.008,
+   "norm_peak_db": -17,
+   "env": [
+    [
+     0,
+     -6
+    ],
+    [
+     6,
+     -2
+    ],
+    [
+     9.62,
+     0
+    ]
+   ]
+  },
+  "fx.hit_boom": {
+   "file": "assets/impact/fs-377303_deep-cinematic-impact.ogg",
+   "norm_peak_db": -5,
+   "fade_out": 0.4
+  },
+  "fx.hit_boom2": {
+   "file": "assets/impact/fs-195790_cinematic-boom-130730-06-wav.ogg",
+   "norm_peak_db": -5,
+   "fade_out": 0.6
+  },
+  "fx.hit_expl": {
+   "file": "assets/impact/fs-459973_huge-explosion.ogg",
+   "start": 8.2,
+   "end": 16.0,
+   "norm_peak_db": 3,
+   "fade_out": 3.0
+  },
+  "fx.hit_splash": {
+   "file": "assets/impact/fs-442773_big-water-splash.ogg",
+   "norm_peak_db": 4,
+   "fade_out": 0.3
+  },
+  "fx.hit_wave": {
+   "file": "assets/impact/fs-196676_big-wave-splash-mp3.ogg",
+   "start": 0.7,
+   "end": 5.2,
+   "norm_peak_db": -4,
+   "fade_out": 1.8,
+   "eq": {
+    "hp": 120
+   }
+  },
+  "fx.hit_crack": {
+   "file": "assets/ice/fs-268023_breaking-ice-01-wav.ogg",
+   "start": 7.82,
+   "end": 8.6,
+   "norm_peak_db": 0,
+   "fade_out": 0.08
+  },
+  "fx.hit_crack2": {
+   "file": "assets/ice/fs-268023_breaking-ice-01-wav.ogg",
+   "start": 5.5,
+   "end": 6.1,
+   "norm_peak_db": -12,
+   "fade_out": 0.08
+  },
+  "fx.tick": {
+   "file": "assets/glass/fs-338302_glass-hammer-on-a-crystal-bell-wav.ogg",
+   "start": 0.1,
+   "end": 3.0,
+   "eq": {
+    "hp": 900
+   },
+   "fade_out": 1.2,
+   "norm_peak_db": -34
+  },
+  "fx.endnote": {
+   "file": "assets/glass/fs-116315_big-singing-bowl.ogg",
+   "start": 0.0,
+   "end": 9.6,
+   "pitch": -1.64,
+   "eq": {
+    "hp": 150
+   },
+   "fade_in": 0.01,
+   "fade_out": 4.5,
+   "norm_peak_db": -19
+  }
+ },
+ "place": [
+  {
+   "sample": "fx.ring3",
+   "at": 290.0,
+   "gain_db": 0.0,
+   "pan": -0.35,
+   "align": "start"
+  },
+  {
+   "sample": "fx.ring4",
+   "at": 304.0,
+   "gain_db": 0.0,
+   "pan": 0.35,
+   "align": "start"
+  },
+  {
+   "sample": "fx.ring3",
+   "at": 318.0,
+   "gain_db": 0.0,
+   "pan": -0.35,
+   "align": "start"
+  },
+  {
+   "sample": "fx.ring4",
+   "at": 332.0,
+   "gain_db": 0.0,
+   "pan": 0.35,
+   "align": "start"
+  },
+  {
+   "sample": "fx.ring3",
+   "at": 346.0,
+   "gain_db": 0.0,
+   "pan": -0.35,
+   "align": "start"
+  },
+  {
+   "sample": "fx.ring4",
+   "at": 360.0,
+   "gain_db": 0.0,
+   "pan": 0.35,
+   "align": "start"
+  },
+  {
+   "sample": "fx.ring3",
+   "at": 374.0,
+   "gain_db": 0.0,
+   "pan": -0.35,
+   "align": "start"
+  },
+  {
+   "sample": "fx.ring4",
+   "at": 388.0,
+   "gain_db": 0.0,
+   "pan": 0.35,
+   "align": "start"
+  },
+  {
+   "sample": "fx.ring3",
+   "at": 402.0,
+   "gain_db": 0.0,
+   "pan": -0.35,
+   "align": "start"
+  },
+  {
+   "sample": "fx.ring4",
+   "at": 416.0,
+   "gain_db": 2.0,
+   "pan": 0.35,
+   "align": "start"
+  },
+  {
+   "sample": "fx.ring3",
+   "at": 430.0,
+   "gain_db": 2.0,
+   "pan": -0.35,
+   "align": "start"
+  },
+  {
+   "sample": "fx.ring4",
+   "at": 444.0,
+   "gain_db": 2.0,
+   "pan": 0.35,
+   "align": "start"
+  },
+  {
+   "sample": "fx.spray0",
+   "at": 13.2,
+   "gain_db": 0.0,
+   "pan": -0.3,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.spray1",
+   "at": 24.6,
+   "gain_db": 0.0,
+   "pan": 0.25,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.spray2",
+   "at": 33.9,
+   "gain_db": 0.0,
+   "pan": -0.15,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.spray3",
+   "at": 46.1,
+   "gain_db": 0.0,
+   "pan": 0.35,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.spray4",
+   "at": 55.4,
+   "gain_db": 0.0,
+   "pan": -0.4,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.spray5",
+   "at": 63.8,
+   "gain_db": 0.0,
+   "pan": 0.2,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.spray6",
+   "at": 77.3,
+   "gain_db": 0.0,
+   "pan": -0.25,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.spray7",
+   "at": 86.9,
+   "gain_db": 0.0,
+   "pan": 0.3,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.swimmers",
+   "at": 37.4,
+   "gain_db": 0.0,
+   "pan": -0.35,
+   "align": "start"
+  },
+  {
+   "sample": "fx.lighthouse",
+   "at": 101.0,
+   "gain_db": 0.0,
+   "align": "peak",
+   "pan": 0.0
+  },
+  {
+   "sample": "fx.bell",
+   "at": 126.0,
+   "gain_db": 0.0,
+   "align": "attack",
+   "pan": -0.4
+  },
+  {
+   "sample": "fx.cloud_in",
+   "at": 181.4,
+   "gain_db": 0.0,
+   "align": "start",
+   "pan": 0.0
+  },
+  {
+   "sample": "fx.cloud_out",
+   "at": 185.6,
+   "gain_db": 0.0,
+   "align": "peak",
+   "pan": -0.2
+  },
+  {
+   "sample": "fx.jet",
+   "at": 218.00900000000001,
+   "gain_db": 0.0,
+   "align": "start",
+   "pan": 0.45
+  },
+  {
+   "sample": "fx.jet2",
+   "at": 218.3,
+   "gain_db": 0.0,
+   "align": "start",
+   "pan": 0.35
+  },
+  {
+   "sample": "fx.jet3",
+   "at": 215.6,
+   "gain_db": 0.0,
+   "align": "start",
+   "pan": 0.5
+  },
+  {
+   "sample": "fx.iss",
+   "at": 299.2,
+   "gain_db": 0.0,
+   "align": "peak",
+   "pan": 0.3
+  },
+  {
+   "sample": "fx.riserA",
+   "at": 459.21500000000003,
+   "gain_db": 0.0,
+   "align": "start"
+  },
+  {
+   "sample": "fx.riserB",
+   "at": 457.68,
+   "gain_db": 0.0,
+   "align": "start"
+  },
+  {
+   "sample": "fx.hit_boom",
+   "at": 468.0,
+   "gain_db": 0.0,
+   "align": "attack",
+   "pan": 0.0
+  },
+  {
+   "sample": "fx.hit_boom2",
+   "at": 468.0,
+   "gain_db": 0.0,
+   "align": "attack",
+   "pan": 0.0
+  },
+  {
+   "sample": "fx.hit_expl",
+   "at": 468.0,
+   "gain_db": 0.0,
+   "align": "attack",
+   "pan": 0.0
+  },
+  {
+   "sample": "fx.hit_splash",
+   "at": 468.02,
+   "gain_db": 0.0,
+   "align": "attack",
+   "pan": -0.2
+  },
+  {
+   "sample": "fx.hit_wave",
+   "at": 468.25,
+   "gain_db": 0.0,
+   "align": "attack",
+   "pan": 0.2
+  },
+  {
+   "sample": "fx.hit_crack",
+   "at": 468.0,
+   "gain_db": 0.0,
+   "align": "attack",
+   "pan": 0.15
+  },
+  {
+   "sample": "fx.hit_crack2",
+   "at": 468.32,
+   "gain_db": 0.0,
+   "align": "attack",
+   "pan": -0.35
+  },
+  {
+   "sample": "fx.tick",
+   "at": 70.25,
+   "gain_db": 0.0,
+   "align": "attack",
+   "pan": 0.55
+  },
+  {
+   "sample": "fx.tick",
+   "at": 145.25,
+   "gain_db": 0.0,
+   "align": "attack",
+   "pan": 0.55
+  },
+  {
+   "sample": "fx.tick",
+   "at": 172.25,
+   "gain_db": 0.0,
+   "align": "attack",
+   "pan": 0.55
+  },
+  {
+   "sample": "fx.tick",
+   "at": 195.25,
+   "gain_db": 0.0,
+   "align": "attack",
+   "pan": 0.55
+  },
+  {
+   "sample": "fx.tick",
+   "at": 236.25,
+   "gain_db": 0.0,
+   "align": "attack",
+   "pan": 0.55
+  },
+  {
+   "sample": "fx.tick",
+   "at": 275.25,
+   "gain_db": 0.0,
+   "align": "attack",
+   "pan": 0.55
+  },
+  {
+   "sample": "fx.tick",
+   "at": 299.25,
+   "gain_db": 0.0,
+   "align": "attack",
+   "pan": 0.55
+  },
+  {
+   "sample": "fx.tick",
+   "at": 405.25,
+   "gain_db": 0.0,
+   "align": "attack",
+   "pan": 0.55
+  },
+  {
+   "sample": "fx.tick",
+   "at": 422.25,
+   "gain_db": 0.0,
+   "align": "attack",
+   "pan": 0.55
+  },
+  {
+   "sample": "fx.tick",
+   "at": 445.25,
+   "gain_db": 0.0,
+   "align": "attack",
+   "pan": 0.55
+  },
+  {
+   "sample": "fx.endnote",
+   "at": 498.0,
+   "gain_db": 0.0,
+   "align": "attack",
+   "pan": 0.0
+  }
+ ]
+}

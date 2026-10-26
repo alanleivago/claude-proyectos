@@ -1,15 +1,25 @@
-# Sound credits — jorogumo
+---
+type: credits
+status: active
+tags: [behemoth, sound, cc0]
+relatedTo: [pieces/jorogumo/sound/CREDITS.md]
+---
+# Sound credits — behemoth
 
-Recordings from Wikimedia Commons, all CC0 or public domain (credited though not required). Everything else is made in code (mix.py): temple bells, drones, the thread hum, the reveal hit, the mask split, footsteps, heartbeat. The whisper is macOS's built-in "Whisper" voice.
+Wikimedia Commons recordings, CC0 or public domain (credited though not required); everything else is made in code (mix.py): drones, bells, the dome motor, rockfall, steps, the reveal hit, the engine and the giant footfalls.
 
-- James_River_Rapids_1.ogg — CC0 — https://commons.wikimedia.org/wiki/File:James_River_Rapids_1.ogg
-- Cicada_20200619.wav — CC0 — https://commons.wikimedia.org/wiki/File:Cicada_20200619.wav
-- Jer-Cricket.ogg — Public domain — https://commons.wikimedia.org/wiki/File:Jer-Cricket.ogg
-- Heavy_breathing_2.ogg — Public domain — https://commons.wikimedia.org/wiki/File:Heavy_breathing_2.ogg
-- Holga_shuttersound.ogg — Public domain — https://commons.wikimedia.org/wiki/File:Holga_shuttersound.ogg
-- Bathtub_water_splashes.ogg — Public domain — https://commons.wikimedia.org/wiki/File:Bathtub_water_splashes.ogg
-- Creaky_wooden_casket.ogg — Public domain — https://commons.wikimedia.org/wiki/File:Creaky_wooden_casket.ogg
-- Dull_thud.ogg — Public domain — https://commons.wikimedia.org/wiki/File:Dull_thud.ogg
-- Howling_wind.ogg, Hemlock_stream.ogg, Earthquake.ogg, Walk_in_the_rainforest.ogg, Water_bubbles_chortling.ogg, Dawnchorus-uk.ogg, Bones_breaking_wood_fire_ice_crackling.ogg, Leaves_falling_from_the_trees_during_autumn_in_the_forest.wav — CC0 / public domain, reused from earlier pieces (see pieces/encoger and pieces/asteroide CREDITS.md)
+- Blue_Whale_NE_Pacific_1x.oga — CC0, NOAA — https://commons.wikimedia.org/wiki/File:Blue_Whale_NE_Pacific_1x.oga
+- Atlantic_minke_whale_call.ogg — Public domain, NOAA — https://commons.wikimedia.org/wiki/File:Atlantic_minke_whale_call.ogg
+- Listening to Raindrops (1035382 - heavy loop).mp3 — Public domain, NASA — https://commons.wikimedia.org/wiki/File:Listening_to_Raindrops_(1035382_-_heavy_loop).mp3
+- Rain_and_thunder.ogg, Howling_wind.ogg, Earthquake.ogg, Heavy_breathing_2.ogg, Holga_shuttersound.ogg, Dull_thud.ogg, Bones_breaking_wood_fire_ice_crackling.ogg, Creaky_wooden_casket.ogg — CC0 / public domain, reused from earlier pieces (see pieces/jorogumo and pieces/lluvia CREDITS.md)
 
-Card illustration: generated with Google Flow (Nano Banana Pro) in the style of an Edo-period print; no existing artwork copied.
+## Freesound (CC0), picked with earshot ("sonido pro")
+- 875619 "Rain Storm - Heavy Rain on Roof, Inside a Car" — justamudkip (z +6.4, p_real 0.88)
+- 574386 "Rolling thunder closer rain drops" — TRP (z +3.6, p_real 0.88)
+- 803037 "Creature Monster Alien Vocal FX-8" — CVLTIV8R (z +5.3, p_real 0.98)
+- 608957 "Rockslide_1" — NinjaSharkStudios (z +3.8, p_real 0.89)
+- 813053 "Big robot footstep 002" — AudioPapkin (z +3.1, p_real 0.97)
+- 487161 "R19-48-Old Large Truck Start Idle Out" — craigsmith (z +5.4, p_real 0.45, "uncertain": a real field recording, kept)
+- 385963 "Wet Pineapple Break" — minituffy (z +4.9, p_real 1.00)
+
+Card illustration: Google Flow (Nano Banana Pro), an Edo-print yōkai version of Trevor Henderson's Behemoth as seen in @theredarchivesyt's video.

@@ -1,0 +1,1079 @@
+{
+ "_doc": "ambience beds (amb bus): targets are pre-master LUFS of each bed at auto 0 dB; see tools/design.py",
+ "ambience": [
+  {
+   "name": "am.teaser_rumble",
+   "file": "assets/rumble/fs-184313_cinematic-deep-rumble.ogg",
+   "at": 0.0,
+   "until": 6.2,
+   "gain_db": -14.96,
+   "auto": [
+    [
+     0,
+     -14
+    ],
+    [
+     1.0,
+     -8
+    ],
+    [
+     3.0,
+     -4
+    ],
+    [
+     5.2,
+     0
+    ],
+    [
+     5.9,
+     -3
+    ],
+    [
+     6.2,
+     -40
+    ]
+   ],
+   "fade_in": 0.05,
+   "fade_out": 0.3
+  },
+  {
+   "name": "am.teaser_glass",
+   "file": "assets/glass/fs-62053_glass3-wav.ogg",
+   "at": 0.0,
+   "until": 6.2,
+   "gain_db": -14.73,
+   "auto": [
+    [
+     0,
+     -18
+    ],
+    [
+     1.5,
+     -8
+    ],
+    [
+     5.0,
+     0
+    ],
+    [
+     6.2,
+     -30
+    ]
+   ],
+   "fade_in": 0.1,
+   "fade_out": 0.35,
+   "src_start": 0.5,
+   "eq": {
+    "hp": 120
+   }
+  },
+  {
+   "name": "am.surf",
+   "file": "assets/amb/fs-827530_ocean-coast-04-092025-0659am.ogg",
+   "at": 7.0,
+   "until": 104.0,
+   "gain_db": -5.36,
+   "auto": [
+    [
+     7,
+     -6
+    ],
+    [
+     10,
+     0
+    ],
+    [
+     40,
+     -1
+    ],
+    [
+     60,
+     -3
+    ],
+    [
+     80,
+     -6
+    ],
+    [
+     92,
+     -10
+    ],
+    [
+     104,
+     -30
+    ]
+   ],
+   "src_start": 6.0,
+   "fade_in": 1.6,
+   "fade_out": 6.0
+  },
+  {
+   "name": "am.gulls",
+   "file": "assets/amb/fs-59492_20080807-seagulls-wav.ogg",
+   "at": 7.5,
+   "until": 72.0,
+   "gain_db": 0.02,
+   "auto": [
+    [
+     7.5,
+     0
+    ],
+    [
+     35,
+     -1
+    ],
+    [
+     52,
+     -5
+    ],
+    [
+     72,
+     -20
+    ]
+   ],
+   "fade_in": 2.0,
+   "fade_out": 8.0,
+   "eq": {
+    "hp": 400
+   },
+   "width": 0.8
+  },
+  {
+   "name": "am.crowd",
+   "file": "assets/people/fs-476099_ambience-crowded-beach.ogg",
+   "at": 7.0,
+   "until": 62.0,
+   "gain_db": -1.11,
+   "auto": [
+    [
+     7,
+     0
+    ],
+    [
+     30,
+     -2
+    ],
+    [
+     45,
+     -6
+    ],
+    [
+     62,
+     -20
+    ]
+   ],
+   "fade_in": 2.0,
+   "fade_out": 8.0,
+   "eq": {
+    "lp": 4500,
+    "hp": 150
+   }
+  },
+  {
+   "name": "am.hiss",
+   "file": "assets/board/fs-512126_sailboat-wake-hissing-light-breeze-wav.ogg",
+   "at": 7.0,
+   "until": 278.0,
+   "gain_db": 14.29,
+   "auto": [
+    [
+     7,
+     -4
+    ],
+    [
+     30,
+     -1
+    ],
+    [
+     60,
+     2
+    ],
+    [
+     90,
+     4
+    ],
+    [
+     181,
+     4
+    ],
+    [
+     182.5,
+     -6
+    ],
+    [
+     185,
+     -6
+    ],
+    [
+     187,
+     3
+    ],
+    [
+     240,
+     3
+    ],
+    [
+     262,
+     -6
+    ],
+    [
+     276,
+     -30
+    ]
+   ],
+   "fade_in": 1.2,
+   "fade_out": 4.0,
+   "eq": {
+    "hp": 180
+   }
+  },
+  {
+   "name": "am.rush",
+   "file": "assets/board/fs-17143_lg-water3-wav.ogg",
+   "at": 24.0,
+   "until": 278.0,
+   "gain_db": -14.46,
+   "auto": [
+    [
+     24,
+     -16
+    ],
+    [
+     45,
+     -7
+    ],
+    [
+     70,
+     -3
+    ],
+    [
+     90,
+     0
+    ],
+    [
+     160,
+     2
+    ],
+    [
+     181,
+     2
+    ],
+    [
+     182.5,
+     -9
+    ],
+    [
+     185,
+     -9
+    ],
+    [
+     187,
+     1
+    ],
+    [
+     240,
+     0
+    ],
+    [
+     262,
+     -8
+    ],
+    [
+     276,
+     -30
+    ]
+   ],
+   "fade_in": 4.0,
+   "fade_out": 4.0,
+   "eq": {
+    "hp": 300,
+    "lp": 9000
+   }
+  },
+  {
+   "name": "am.wind_low",
+   "file": "assets/wind/fs-146914_strong-wind-blowing-and-howling-in-the-m.ogg",
+   "at": 7.0,
+   "until": 112.0,
+   "gain_db": -16.01,
+   "auto": [
+    [
+     7,
+     -4
+    ],
+    [
+     40,
+     0
+    ],
+    [
+     70,
+     2
+    ],
+    [
+     90,
+     3
+    ],
+    [
+     112,
+     -10
+    ]
+   ],
+   "fade_in": 2.0,
+   "fade_out": 12.0,
+   "eq": {
+    "lp": 2200,
+    "hp": 80
+   }
+  },
+  {
+   "name": "am.wind",
+   "file": "assets/wind/fs-146914_strong-wind-blowing-and-howling-in-the-m.ogg",
+   "at": 88.0,
+   "until": 278.0,
+   "gain_db": -11.01,
+   "auto": [
+    [
+     88,
+     -12
+    ],
+    [
+     110,
+     -2
+    ],
+    [
+     160,
+     0
+    ],
+    [
+     181.5,
+     0
+    ],
+    [
+     182.5,
+     -8
+    ],
+    [
+     185,
+     -8
+    ],
+    [
+     187,
+     3
+    ],
+    [
+     240,
+     3
+    ],
+    [
+     255,
+     -2
+    ],
+    [
+     268,
+     -10
+    ],
+    [
+     276,
+     -30
+    ]
+   ],
+   "src_start": 20.0,
+   "fade_in": 8.0,
+   "fade_out": 4.0,
+   "eq": {
+    "hp": 60
+   }
+  },
+  {
+   "name": "am.howl",
+   "file": "assets/commons/cm-Howling_wind.wav",
+   "at": 186.0,
+   "until": 274.0,
+   "gain_db": -12.79,
+   "auto": [
+    [
+     186,
+     -12
+    ],
+    [
+     200,
+     0
+    ],
+    [
+     240,
+     0
+    ],
+    [
+     258,
+     -6
+    ],
+    [
+     274,
+     -24
+    ]
+   ],
+   "fade_in": 4.0,
+   "fade_out": 6.0,
+   "eq": {
+    "hp": 100
+   },
+   "width": 0.0
+  },
+  {
+   "name": "am.crash",
+   "file": "assets/roar/fs-861756_sea-waves-heavily-crashing-on-the-shorel.ogg",
+   "at": 18.0,
+   "until": 280.0,
+   "gain_db": -3.44,
+   "auto": [
+    [
+     18,
+     -16
+    ],
+    [
+     40,
+     -8
+    ],
+    [
+     60,
+     -4
+    ],
+    [
+     69,
+     -3
+    ],
+    [
+     71.5,
+     1
+    ],
+    [
+     90,
+     2
+    ],
+    [
+     110,
+     1
+    ],
+    [
+     160,
+     1
+    ],
+    [
+     181.5,
+     1
+    ],
+    [
+     182.5,
+     -12
+    ],
+    [
+     185,
+     -12
+    ],
+    [
+     187,
+     0
+    ],
+    [
+     235,
+     -1
+    ],
+    [
+     255,
+     -6
+    ],
+    [
+     268,
+     -14
+    ],
+    [
+     280,
+     -30
+    ]
+   ],
+   "fade_in": 6.0,
+   "fade_out": 3.0
+  },
+  {
+   "name": "am.roar",
+   "file": "assets/tube/fs-506443_seawaves-against-rocks.ogg",
+   "at": 66.0,
+   "until": 280.0,
+   "gain_db": -0.88,
+   "auto": [
+    [
+     66,
+     -20
+    ],
+    [
+     69,
+     -14
+    ],
+    [
+     72,
+     -3
+    ],
+    [
+     90,
+     0
+    ],
+    [
+     140,
+     2
+    ],
+    [
+     181.5,
+     2
+    ],
+    [
+     182.5,
+     -14
+    ],
+    [
+     185,
+     -14
+    ],
+    [
+     187,
+     1
+    ],
+    [
+     235,
+     0
+    ],
+    [
+     250,
+     -4
+    ],
+    [
+     266,
+     -12
+    ],
+    [
+     278,
+     -30
+    ]
+   ],
+   "fade_in": 3.0,
+   "fade_out": 3.0,
+   "eq": {
+    "lowshelf": [
+     200,
+     3.0
+    ]
+   }
+  },
+  {
+   "name": "am.roar_muffled",
+   "file": "assets/board/fs-497695_water-over-damn-spillway-wav.ogg",
+   "at": 180.5,
+   "until": 188.0,
+   "gain_db": -9.08,
+   "auto": [
+    [
+     180.5,
+     -20
+    ],
+    [
+     182.0,
+     0
+    ],
+    [
+     184.8,
+     0
+    ],
+    [
+     186.5,
+     -20
+    ]
+   ],
+   "src_start": 40.0,
+   "fade_in": 1.0,
+   "fade_out": 1.2,
+   "eq": {
+    "lp": 420,
+    "lp_order": 4
+   }
+  },
+  {
+   "name": "am.churn",
+   "file": "assets/board/fs-497695_water-over-damn-spillway-wav.ogg",
+   "at": 88.0,
+   "until": 262.0,
+   "gain_db": -12.08,
+   "auto": [
+    [
+     88,
+     -16
+    ],
+    [
+     100,
+     -2
+    ],
+    [
+     160,
+     0
+    ],
+    [
+     181.5,
+     0
+    ],
+    [
+     182.5,
+     -12
+    ],
+    [
+     185,
+     -12
+    ],
+    [
+     187,
+     0
+    ],
+    [
+     230,
+     -2
+    ],
+    [
+     262,
+     -20
+    ]
+   ],
+   "fade_in": 6.0,
+   "fade_out": 10.0,
+   "eq": {
+    "hp": 120
+   }
+  },
+  {
+   "name": "am.city",
+   "file": "assets/city/fs-553998_edge-of-city-ambience-wav.ogg",
+   "at": 86.0,
+   "until": 168.0,
+   "gain_db": -0.25,
+   "auto": [
+    [
+     86,
+     -14
+    ],
+    [
+     96,
+     0
+    ],
+    [
+     130,
+     -3
+    ],
+    [
+     150,
+     -8
+    ],
+    [
+     168,
+     -20
+    ]
+   ],
+   "fade_in": 5.0,
+   "fade_out": 10.0,
+   "eq": {
+    "hp": 120,
+    "lp": 3500
+   }
+  },
+  {
+   "name": "am.siren",
+   "file": "assets/city/fs-469363_distant-ambulance-siren.ogg",
+   "at": 109.0,
+   "until": 133.0,
+   "gain_db": -24.94,
+   "auto": [
+    [
+     109,
+     -10
+    ],
+    [
+     113,
+     0
+    ],
+    [
+     128,
+     -2
+    ],
+    [
+     133,
+     -20
+    ]
+   ],
+   "fade_in": 3.0,
+   "fade_out": 4.0,
+   "eq": {
+    "lp": 2400,
+    "hp": 300
+   },
+   "width": 0.5
+  },
+  {
+   "name": "am.drain_rush",
+   "file": "assets/drain/fs-348827_distant-waterfall-from-lookout.ogg",
+   "at": 195.0,
+   "until": 217.0,
+   "gain_db": -2.81,
+   "auto": [
+    [
+     195,
+     -14
+    ],
+    [
+     200,
+     0
+    ],
+    [
+     210,
+     0
+    ],
+    [
+     217,
+     -16
+    ]
+   ],
+   "fade_in": 3.0,
+   "fade_out": 4.0,
+   "eq": {
+    "lp": 5000
+   }
+  },
+  {
+   "name": "am.drain_gurgle",
+   "file": "assets/drain/fs-184304_emptying-the-bath-gurgle.ogg",
+   "at": 199.0,
+   "until": 214.0,
+   "gain_db": -16.83,
+   "auto": [
+    [
+     199,
+     -12
+    ],
+    [
+     203,
+     0
+    ],
+    [
+     210,
+     0
+    ],
+    [
+     214,
+     -16
+    ]
+   ],
+   "src_start": 6.0,
+   "fade_in": 2.0,
+   "fade_out": 3.0,
+   "eq": {
+    "lp": 1400,
+    "hp": 80
+   }
+  },
+  {
+   "name": "am.boil",
+   "file": "assets/boil/fs-420228_37-17-boiling-water-wav.ogg",
+   "at": 232.0,
+   "until": 254.0,
+   "gain_db": -3.21,
+   "auto": [
+    [
+     232,
+     -14
+    ],
+    [
+     237,
+     0
+    ],
+    [
+     246,
+     0
+    ],
+    [
+     254,
+     -18
+    ]
+   ],
+   "fade_in": 3.0,
+   "fade_out": 5.0,
+   "eq": {
+    "hp": 400
+   }
+  },
+  {
+   "name": "am.steam",
+   "file": "assets/boil/fs-119741_steam-hiss-wav.ogg",
+   "at": 234.0,
+   "until": 250.0,
+   "gain_db": -29.28,
+   "auto": [
+    [
+     234,
+     -14
+    ],
+    [
+     238,
+     0
+    ],
+    [
+     244,
+     0
+    ],
+    [
+     250,
+     -18
+    ]
+   ],
+   "fade_in": 2.5,
+   "fade_out": 4.0,
+   "eq": {
+    "hp": 1500,
+    "lp": 9000
+   },
+   "width": 0.0
+  },
+  {
+   "name": "am.ice",
+   "file": "assets/ice/fs-168712_ice-cracks.ogg",
+   "at": 277.0,
+   "until": 293.0,
+   "gain_db": -15.48,
+   "auto": [
+    [
+     277,
+     -12
+    ],
+    [
+     280,
+     0
+    ],
+    [
+     288,
+     0
+    ],
+    [
+     293,
+     -16
+    ]
+   ],
+   "fade_in": 2.0,
+   "fade_out": 3.0,
+   "eq": {
+    "hp": 2500
+   },
+   "width": 0.0
+  },
+  {
+   "name": "am.crystals",
+   "file": "assets/ice/fs-104762_conxiadora-flac.ogg",
+   "at": 292.0,
+   "until": 458.0,
+   "gain_db": -9.82,
+   "auto": [
+    [
+     292,
+     -10
+    ],
+    [
+     300,
+     0
+    ],
+    [
+     450,
+     0
+    ],
+    [
+     458,
+     -14
+    ]
+   ],
+   "fade_in": 4.0,
+   "fade_out": 6.0,
+   "eq": {
+    "hp": 3000
+   }
+  },
+  {
+   "name": "am.oceans",
+   "file": "assets/rumble/fs-203281_earthquake-or-distant-space-shuttle-rumb.ogg",
+   "at": 337.0,
+   "until": 369.0,
+   "gain_db": -13.14,
+   "auto": [
+    [
+     337,
+     -16
+    ],
+    [
+     346,
+     -6
+    ],
+    [
+     356,
+     0
+    ],
+    [
+     362,
+     -3
+    ],
+    [
+     369,
+     -20
+    ]
+   ],
+   "fade_in": 4.0,
+   "fade_out": 5.0
+  },
+  {
+   "name": "am.moon",
+   "file": "assets/rumble/fs-184313_cinematic-deep-rumble.ogg",
+   "at": 405.0,
+   "until": 467.3,
+   "gain_db": -16.96,
+   "auto": [
+    [
+     405,
+     -14
+    ],
+    [
+     430,
+     -6
+    ],
+    [
+     455,
+     0
+    ],
+    [
+     467.25,
+     3
+    ]
+   ],
+   "fade_in": 6.0,
+   "fade_out": 0.04
+  },
+  {
+   "name": "am.tube_under",
+   "file": "assets/tube/fs-366159_underwater-loop-amb-wav.ogg",
+   "at": 469.4,
+   "until": 497.5,
+   "gain_db": -9.18,
+   "auto": [
+    [
+     469.4,
+     -24
+    ],
+    [
+     471.5,
+     -4
+    ],
+    [
+     476,
+     0
+    ],
+    [
+     488,
+     0
+    ],
+    [
+     494,
+     -10
+    ],
+    [
+     497.5,
+     -40
+    ]
+   ],
+   "fade_in": 1.5,
+   "fade_out": 3.0
+  },
+  {
+   "name": "am.tube_howl",
+   "file": "assets/tube/fs-454353_wind-drone-howl-tunnel-stairwell2-flac.ogg",
+   "at": 469.6,
+   "until": 497.5,
+   "gain_db": -14.73,
+   "auto": [
+    [
+     469.6,
+     -24
+    ],
+    [
+     472,
+     -4
+    ],
+    [
+     478,
+     0
+    ],
+    [
+     488,
+     -1
+    ],
+    [
+     494,
+     -12
+    ],
+    [
+     497.5,
+     -40
+    ]
+   ],
+   "fade_in": 1.5,
+   "fade_out": 3.0,
+   "eq": {
+    "hp": 90
+   }
+  },
+  {
+   "name": "am.tube_roar",
+   "file": "assets/board/fs-497695_water-over-damn-spillway-wav.ogg",
+   "at": 469.4,
+   "until": 497.5,
+   "gain_db": -18.08,
+   "auto": [
+    [
+     469.4,
+     -24
+    ],
+    [
+     471.5,
+     -6
+    ],
+    [
+     476,
+     0
+    ],
+    [
+     488,
+     0
+    ],
+    [
+     494,
+     -12
+    ],
+    [
+     497.5,
+     -40
+    ]
+   ],
+   "src_start": 60.0,
+   "fade_in": 1.5,
+   "fade_out": 3.0,
+   "eq": {
+    "lp": 900,
+    "lp_order": 4,
+    "peq": [
+     [
+      350,
+      1.2,
+      4.0
+     ]
+    ]
+   }
+  }
+ ]
+}

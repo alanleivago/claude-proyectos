@@ -1,0 +1,39 @@
+{
+ "name": "wave-grew-high",
+ "title": "What If a Wave Grew and Couldn't Stop?",
+ "format": {
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "bpm": 120,
+  "duration": 510.0,
+  "frames": 15300
+ },
+ "storyFormat": "F5 fixed hero (POV surfer on a wave that doubles every ~17 s; one continuous shot, beach to the Moon)",
+ "style": "pov3d-hd",
+ "build": [
+  "../../src/head.html",
+  "kit/core.js",
+  "styles/pov3d/three.js",
+  "style",
+  "../../src/core3d.js",
+  "../../src/stage-near.js",
+  "../../src/stage-high.js",
+  "../../src/stage-space.js",
+  "../../src/scenes.js",
+  "../../src/bridges.js",
+  "kit/morph.js",
+  "kit/board.js",
+  "kit/score-head.js",
+  "../../src/score.js",
+  "kit/score-tail.js"
+ ],
+ "review": {
+  "safe": {
+   "top": 60,
+   "bottom": 60,
+   "right": 60
+  },
+  "refs": {}
+ }
+}

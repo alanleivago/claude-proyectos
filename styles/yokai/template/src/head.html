@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Jorōgumo</title>
+<title>Behemoth</title>
 <style>
   html, body { margin: 0; height: 100%; background: #020306; overflow: hidden; }
   body { display: flex; align-items: center; justify-content: center; }
@@ -30,15 +30,15 @@ const CX = 540;
 
 const ERA_LIST = [[0, 75, () => sceneTale()]];
 const SHOTS = [
-  ['open',   0, 0.0,  4.5,  'her shape in the mist on top of the falls; a thread glints'],
-  ['card',   0, 4.5,  9.0,  'the card: a framed print, Jorōgumo, the seal'],
-  ['nap',    0, 9.0,  18.0, 'the pool, the cedars; he sleeps on the bank, the axe beside him'],
-  ['legs',   0, 18.0, 27.0, 'his legs wrapped in threads that rise into the mist'],
-  ['stump',  0, 27.0, 36.0, 'he cuts them, ties them to an old stump, backs away'],
-  ['pull',   0, 36.0, 45.6, 'the stump is torn out and dragged into the pool; black'],
-  ['reveal', 0, 45.6, 56.0, 'the woman on the falls; eight legs holding the water'],
-  ['smile',  0, 56.0, 66.0, 'her smile, "qué listo"; he runs through the cedars'],
-  ['dawn',   0, 66.0, 75.0, 'dawn: tourists photograph the falls; a thread glints'],
+  ['open',   0, 0.0,  4.5,  'the head rises behind the rim over the sea of clouds'],
+  ['card',   0, 4.5,  9.0,  'the card: a found photo, Behemoth, the seal'],
+  ['night',  0, 9.0,  18.0, 'the domes at night; the uncle on the catwalk'],
+  ['shake',  0, 18.0, 27.0, 'the coffee shivers; the dome turns by itself'],
+  ['cloud',  0, 27.0, 36.0, 'a cloud rises against the wind, shedding scales'],
+  ['grip',   0, 36.0, 45.6, 'a hand over the rim, rocks fall; he runs; black'],
+  ['reveal', 0, 45.6, 56.0, 'the head above the domes, looking down'],
+  ['eye',    0, 56.0, 66.0, 'the eye; he drives down in the dark beside it'],
+  ['dusk',   0, 66.0, 75.0, 'today: tourists at sunset; one cloud does not move'],
 ];
 const TIMELINE = {
   width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
@@ -46,33 +46,32 @@ const TIMELINE = {
   shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
   cuts: [],
   morphs: [],
-  cues: { card: 4.5, nap: 9.0, wake: 18.0, tie: 27.0, pull: 38.6, black: 45.0, reveal: 45.6, smile: 56.0, run: 61.6, dawn: 66.0 },
+  cues: { card: 4.5, night: 9.0, shake: 18.4, cloud: 27.0, grip: 38.4, run: 40.6, black: 45.0, reveal: 45.6, eye: 56.0, drive: 60.4, dusk: 66.0 },
   acts: [
-    { name: '1 Juramento', role: 'build',   t0: 0.0,  t1: 9.0 },
-    { name: '2 Siesta',    role: 'turn',    t0: 9.0,  t1: 27.0 },
-    { name: '3 Tocón',     role: 'peak',    t0: 27.0, t1: 45.0 },
-    { name: '4 Silencio',  role: 'silence', t0: 45.0, t1: 45.6 },
-    { name: '5 Ella',      role: 'gift',    t0: 45.6, t1: 66.0 },
-    { name: '6 Hoy',       role: 'goodbye', t0: 66.0, t1: 75.0 },
+    { name: '1 Warning', role: 'build',   t0: 0.0,  t1: 9.0 },
+    { name: '2 Night',    role: 'turn',    t0: 9.0,  t1: 27.0 },
+    { name: '3 Climb',     role: 'peak',    t0: 27.0, t1: 45.0 },
+    { name: '4 Silence',  role: 'silence', t0: 45.0, t1: 45.6 },
+    { name: '5 Behemoth',      role: 'gift',    t0: 45.6, t1: 66.0 },
+    { name: '6 Today',       role: 'goodbye', t0: 66.0, t1: 75.0 },
   ],
   board: [
-    { t: 2.6,  title: 'Her shape in the mist', sound: 'low water, wind', next: 'dither to black' },
-    { t: 7.4,  title: 'Card: Jorogumo', sound: 'card hit', next: 'dither in' },
-    { t: 11.5, title: 'The pool, wide', sound: 'falls, cicadas', next: 'cut' },
-    { t: 15.5, title: 'Asleep, axe by him', sound: 'breathing', next: 'cut' },
-    { t: 19.4, title: 'Threads on his legs', sound: 'thread hum', next: 'tilt up' },
-    { t: 24.5, title: 'He sits up', sound: 'cicadas stop', next: 'cut' },
-    { t: 28.2, title: 'He cuts the threads', sound: 'axe chops', next: 'cut' },
-    { t: 33.5, title: 'Backs away', sound: 'taut thread creak', next: 'cut' },
-    { t: 38.8, title: 'The stump tears out', sound: 'roots snap', next: 'cut' },
-    { t: 41.0, title: 'Dragged into the pool', sound: 'splash; to black', next: '0.6 s silence' },
-    { t: 47.5, title: 'Her, from the water', sound: 'THE HIT (45.6 s)', next: 'cut' },
-    { t: 53.0, title: 'Eight legs, the falls', sound: 'drone', next: 'cut' },
-    { t: 58.4, title: 'The mask smiles', sound: 'whisper', next: 'split' },
-    { t: 60.8, title: 'The mask splits', sound: 'wet crack, chitter', next: 'cut' },
-    { t: 64.0, title: 'He runs', sound: 'breath, steps', next: 'cut' },
-    { t: 70.0, title: 'Today: tourists', sound: 'ambience fades', next: 'end' },
+    { t: 2.6,  title: 'Hook: the head rises', sound: 'wind, deep groan', next: 'dither to black' },
+    { t: 7.4,  title: 'Card: Behemoth', sound: 'card hit', next: 'dither in' },
+    { t: 11.0, title: 'The domes at night', sound: 'wind, dome motors', next: 'cut' },
+    { t: 16.0, title: 'The uncle, thermos', sound: 'wind', next: 'cut' },
+    { t: 20.5, title: 'The coffee shivers', sound: 'low rumble', next: 'cut' },
+    { t: 25.0, title: 'The dome turns', sound: 'motor whine, rumble', next: 'cut' },
+    { t: 32.0, title: 'A cloud with scales', sound: 'groan in the clouds', next: 'cut' },
+    { t: 39.5, title: 'A hand over the rim', sound: 'rock slides', next: 'cut' },
+    { t: 42.5, title: 'He runs', sound: 'steps, breath; to black', next: '0.6 s silence' },
+    { t: 48.0, title: 'It looks down', sound: 'THE HIT (45.6 s)', next: 'cut' },
+    { t: 53.0, title: 'Above the domes', sound: 'drone', next: 'cut' },
+    { t: 58.0, title: 'The eye', sound: 'wet breath', next: 'cut' },
+    { t: 63.5, title: 'Driving down, dark', sound: 'engine, footfalls', next: 'cut' },
+    { t: 70.0, title: 'Today: sunset', sound: 'wind fades', next: 'end' },
   ],
+
 
   narration: [],
 };

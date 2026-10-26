@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cómo te encuentra un AirTag</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0c0a08; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  CÓMO TE ENCUENTRA UN AIRTAG — scroll3d, 9:16, 30fps, voice-led (VoiceStudio "scroll 2 buena español").
+//  A Spanish remake of reference 2 (how an AirTag is found without GPS): a train station at night instead of the
+//  airport, a mustard suitcase, pov3d people, cyan Bluetooth, yellow reports. Shots authored in REFERENCE time R = refT(TT).
+// =====================================================================
+const FPS = 30, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const VL = (id) => VOICE.lines.find((l) => l.id === id);
+const DURATION = Math.round(VOICE.duration * FPS) / FPS;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 0 };
+const HAND = '"FreeSans", Helvetica, Arial, sans-serif';
+const CX = 540;
+
+// [reference time, Spanish time] — line starts and ends of both voices
+const ANCH = [
+  [0.0, 0.0], [4.88, 3.82], [5.42, 4.14], [8.38, 6.6], [8.86, 6.86], [10.48, 8.46], [10.9, 9.0], [13.56, 11.38], [14.06, 11.88],
+  [15.86, 14.2], [16.46, 15.02], [18.54, 17.84], [19.28, 18.16], [23.42, 21.54], [23.96, 21.96], [26.16, 24.04], [29.82, 27.88],
+  [30.54, 28.52], [32.6, 30.62], [33.22, 30.92], [35.06, 33.16], [35.56, 33.36], [38.24, 35.9], [38.72, 36.2], [43.1, 40.44],
+  [43.6, 40.66], [45.6, 42.68], [46.1, 42.92], [48.02, 44.94], [48.56, 45.6], [50.26, 47.04], [50.74, 47.4], [51.2, 47.84],
+  [51.8, 47.94], [54.7, 51.0], [59.2, 56.34], [64.2, 60.76], [64.74, 61.4], [67.04, 64.26], [67.7, 64.52], [70.2, 67.46],
+  [70.8, 67.68], [71.94, 69.22], [72.38, 69.58], [76.3, 73.98], [76.96, 74.76], [79.94, 78.88], [80.54, 79.52], [83.84, 82.64],
+  [88.9, 87.58], [89.46, 88.32], [92.96, 91.56], [97.14, 95.82], [97.62, DURATION]
+];
+function refT(t) {
+  if (t <= 0) return 0;
+  for (let i = 1; i < ANCH.length; i++) { const [r0, s0] = ANCH[i - 1], [r1, s1] = ANCH[i]; if (t <= s1) return r0 + (r1 - r0) * (t - s0) / (s1 - s0); }
+  return ANCH[ANCH.length - 1][0];
+}
+function esT(r) {
+  for (let i = 1; i < ANCH.length; i++) { const [r0, s0] = ANCH[i - 1], [r1, s1] = ANCH[i]; if (r <= r1) return s0 + (s1 - s0) * (r - r0) / (r1 - r0); }
+  return DURATION;
+}
+
+const ERA_LIST = [[0, DURATION, () => sceneMain()]];
+const SHOTS_R = [
+  ['tag', 0, 5.4, 'el AirTag: sin GPS, sin celular, sin Wi-Fi'],
+  ['city', 5.4, 10.9, 'la maleta, al otro lado de la ciudad'],
+  ['self', 10.9, 14.0, 'no se encuentra a sí mismo'],
+  ['borrow', 14.0, 16.4, 'usa los aparatos de alrededor'],
+  ['leave', 16.4, 19.3, 'la maleta olvidada en la estación'],
+  ['explode', 19.3, 24.0, 'emite una señal Bluetooth'],
+  ['dome', 24.0, 30.5, 'la señal llega unos metros: atorado'],
+  ['walker', 30.5, 35.5, 'alguien pasa con un iPhone'],
+  ['knows', 35.5, 38.7, 'el iPhone sabe dónde está'],
+  ['report', 38.7, 43.8, 'avisa, cifrado, a la red Buscar'],
+  ['nonet', 43.8, 46.3, 'el AirTag nunca se conectó'],
+  ['stranger', 46.3, 48.6, 'el desconocido lo hizo por él'],
+  ['another', 48.6, 54.7, 'otra persona, y otra'],
+  ['travel', 54.7, 57.2, 'la maleta cruza la estación'],
+  ['cityrun', 57.2, 64.7, 'la ubicación se sigue actualizando'],
+  ['close', 64.7, 67.7, 'cuando estás cerca'],
+  ['near', 67.7, 70.8, 'Bluetooth: está cerca'],
+  ['uwb', 70.8, 77.0, 'banda ultraancha: dirección y distancia'],
+  ['arrow', 77.0, 80.5, 'la flecha'],
+  ['beacon', 80.5, 84.5, 'un faro Bluetooth'],
+  ['network', 84.5, 89.5, 'una enorme red colaborativa'],
+  ['outro', 89.5, 97.62, 'te lleva de vuelta a tu maleta']
+];
+const SHOTS = SHOTS_R.map(([k, a, b, title]) => [k, 0, esT(a), esT(b), title]);
+const CUTS_R = [];   // no hard cuts: every boundary is a dissolve (shots.js)
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'voice-led explainer (scroll3d remake of reference 2, AirTag)',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: CUTS_R.map(esT),
+  morphs: SHOTS_R.slice(1).map((s) => esT(s[1])),
+  cues: { hit: esT(77.0) },
+  acts: [
+    { name: '1 Sin GPS',      role: 'build',   t0: 0,          t1: esT(16.4) },
+    { name: '2 Atorado',      role: 'journey', t0: esT(16.4),  t1: esT(30.5) },
+    { name: '3 Prestado',     role: 'peak',    t0: esT(30.5),  t1: esT(64.7) },
+    { name: '4 Cerca',        role: 'journey', t0: esT(64.7),  t1: esT(76.9) },
+    { name: '5 La flecha',    role: 'gift',    t0: esT(76.9),  t1: esT(80.5) },
+    { name: '6 Un faro',      role: 'end',     t0: esT(80.5),  t1: DURATION },
+  ],
+  board: [
+    { t: esT(2.6), title: 'el AirTag: sin GPS, sin celular, sin Wi-Fi', sound: '', next: '' },
+    { t: esT(8.9), title: 'la maleta, al otro lado de la ciudad', sound: '', next: '' },
+    { t: esT(12.4), title: 'no se encuentra a sí mismo', sound: '', next: '' },
+    { t: esT(15.2), title: 'usa los aparatos de alrededor', sound: '', next: '' },
+    { t: esT(17.9), title: 'la maleta olvidada en la estación', sound: '', next: '' },
+    { t: esT(22.4), title: 'emite una señal Bluetooth', sound: '', next: '' },
+    { t: esT(28.0), title: 'la señal llega unos metros: atorado', sound: '', next: '' },
+    { t: esT(33.6), title: 'alguien pasa con un iPhone', sound: '', next: '' },
+    { t: esT(37.0), title: 'el iPhone sabe dónde está', sound: '', next: '' },
+    { t: esT(41.0), title: 'avisa, cifrado, a la red Buscar', sound: '', next: '' },
+    { t: esT(45.0), title: 'el AirTag nunca se conectó', sound: '', next: '' },
+    { t: esT(47.6), title: 'el desconocido lo hizo por él', sound: '', next: '' },
+    { t: esT(52.6), title: 'otra persona, y otra', sound: '', next: '' },
+    { t: esT(56.0), title: 'la maleta cruza la estación', sound: '', next: '' },
+    { t: esT(61.0), title: 'la ubicación se sigue actualizando', sound: '', next: '' },
+    { t: esT(66.4), title: 'cuando estás cerca', sound: '', next: '' },
+    { t: esT(69.4), title: 'Bluetooth: está cerca', sound: '', next: '' },
+    { t: esT(74.4), title: 'banda ultraancha: dirección y distancia', sound: '', next: '' },
+    { t: esT(78.6), title: 'la flecha', sound: '', next: '' },
+    { t: esT(82.6), title: 'un faro Bluetooth', sound: '', next: '' },
+    { t: esT(87.6), title: 'una enorme red colaborativa', sound: '', next: '' },
+    { t: esT(95.6), title: 'te lleva de vuelta a tu maleta', sound: '', next: '' }
+  ],
+  narration: VOICE.lines.map((l) => ({ id: l.id, t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;

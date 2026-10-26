@@ -94,3 +94,47 @@ function texStone() {
   }, [1, 1]);
 }
 const TXM = (o) => new THREE.MeshStandardMaterial(Object.assign({ roughness: 0.9, metalness: 0 }, o));
+// pale scales: overlapping rounded plates, some lifted (dark undersides), cracks
+function texScales() {
+  return txCanvas('scales', 512, 512, (x, w, h, R) => {
+    x.fillStyle = '#b8bcb4'; x.fillRect(0, 0, w, h);
+    for (let r = 0; r < 26; r++) for (let c = 0; c < 22; c++) {
+      const cx = c * 24 + (r % 2) * 12 + R.n(3), cy = r * 20 + R.n(3), s = R.r(10, 15), lift = R.f() < 0.18;
+      tile(x, w, h, () => {
+        x.fillStyle = lift ? 'rgba(30,34,34,0.75)' : 'rgba(60,66,64,0.45)'; x.beginPath(); x.ellipse(cx, cy + 3, s, s * 0.8, 0, 0, TAU); x.fill();
+        x.fillStyle = lift ? R.pick(['#e8e6dc', '#f2efe4']) : R.pick(['#c8ccc4', '#d6d8cf', '#aeb3ab', '#bfc3ba']); x.beginPath(); x.ellipse(cx, cy - (lift ? 3 : 0), s * 0.92, s * 0.72, 0, 0, TAU); x.fill();
+        x.fillStyle = 'rgba(255,255,250,0.25)'; x.beginPath(); x.ellipse(cx - 3, cy - 4, s * 0.45, s * 0.25, 0, 0, TAU); x.fill();
+      });
+    }
+    for (let i = 0; i < 40; i++) { let px = R.r(0, w), py = R.r(0, h); x.strokeStyle = 'rgba(30,34,34,0.5)'; x.lineWidth = 1.5; x.beginPath(); x.moveTo(px, py); for (let k = 0; k < 6; k++) { px += R.n(14); py += R.r(4, 14); x.lineTo(px, py); } x.stroke(); }
+  }, [3, 3]);
+}
+// volcanic tephra: reddish-brown and grey cinders, a few pale stones
+function texTephra() {
+  return txCanvas('tephra', 512, 512, (x, w, h, R) => {
+    x.fillStyle = '#6a5446'; x.fillRect(0, 0, w, h);
+    for (let i = 0; i < 3200; i++) { const cx = R.r(0, w), cy = R.r(0, h), r = R.r(1.5, 6) * (R.f() < 0.08 ? 2 : 1), base = R.pick(['#8a6a56', '#5a463c', '#9a8270', '#4a3e38', '#7a7068', '#a89a8a', '#6e4a3a']);
+      tile(x, w, h, () => { blob(x, cx, cy + r * 0.3, r, RNG('tp', i)); x.fillStyle = 'rgba(20,14,10,0.5)'; x.fill(); blob(x, cx, cy, r, RNG('tp', i)); x.fillStyle = base; x.fill(); }); }
+  }, [40, 40]);
+}
+function texDome() {
+  return txCanvas('dome', 256, 256, (x, w, h, R) => {
+    x.fillStyle = '#e6e8e4'; x.fillRect(0, 0, w, h);
+    for (let i = 0; i < 16; i++) { x.fillStyle = 'rgba(80,90,90,0.35)'; x.fillRect(i * 16, 0, 2, h); }
+    for (let j = 0; j < 8; j++) { x.fillStyle = 'rgba(80,90,90,0.25)'; x.fillRect(0, j * 32, w, 2); }
+    for (let i = 0; i < 300; i++) { x.fillStyle = 'rgba(120,110,100,0.12)'; x.fillRect(R.r(0, w), R.r(0, h), R.r(1, 3), R.r(4, 18)); }
+  }, [1, 1]);
+}
+// the Behemoth's hide: grey with fine horizontal ridges, a few curved grooves, cracks and peeling patches
+function texRidges() {
+  return txCanvas('ridges', 512, 512, (x, w, h, R) => {
+    x.fillStyle = '#a9aca6'; x.fillRect(0, 0, w, h);
+    for (let y = 0; y < h; y += 8) { x.fillStyle = 'rgba(40,44,44,0.55)'; x.fillRect(0, y, w, 2); x.fillStyle = 'rgba(235,235,228,0.35)'; x.fillRect(0, y + 3, w, 2); }
+    for (let y = 0; y < h; y += 8) if (R.f() < 0.35) { x.fillStyle = R.pick(['rgba(176,96,52,0.55)', 'rgba(200,140,70,0.45)']); x.fillRect(R.r(-50, w * 0.6), y + 4, R.r(80, 300), 3); }
+    for (let i = 0; i < 300; i++) { x.fillStyle = 'rgba(60,64,62,0.15)'; x.fillRect(R.r(0, w), R.r(0, h), R.r(10, 60), 3); }
+    for (let i = 0; i < 26; i++) { const cx = R.r(0, w), cy = R.r(0, h), s = R.r(10, 34); tile(x, w, h, () => { blob(x, cx, cy, s, RNG('pp', i), 9); x.fillStyle = '#d8d8d0'; x.fill(); x.strokeStyle = 'rgba(30,32,32,0.8)'; x.lineWidth = 2; x.stroke(); }); }
+    for (let i = 0; i < 18; i++) { const cx = R.r(0, w), cy = R.r(0, h), s = R.r(6, 20); tile(x, w, h, () => { blob(x, cx, cy, s, RNG('raw', i), 8); x.fillStyle = '#6e2a1c'; x.fill(); blob(x, cx - 2, cy - 2, s * 0.5, RNG('raw2', i), 6); x.fillStyle = '#9a4430'; x.fill(); x.strokeStyle = '#e8e6dc'; x.lineWidth = 2; blob(x, cx, cy, s * 1.15, RNG('raw', i), 8); x.stroke(); }); }
+    for (let i = 0; i < 12; i++) { const cx = R.r(0, w), cy = R.r(0, h); x.strokeStyle = 'rgba(40,16,12,0.7)'; x.lineWidth = 3; x.beginPath(); x.moveTo(cx, cy); x.lineTo(cx + R.n(60), cy + R.n(20)); x.stroke(); }
+    for (let i = 0; i < 50; i++) { let px = R.r(0, w), py = R.r(0, h); x.strokeStyle = 'rgba(25,28,28,0.7)'; x.lineWidth = 1.5; x.beginPath(); x.moveTo(px, py); for (let k = 0; k < 5; k++) { px += R.n(16); py += R.n(10); x.lineTo(px, py); } x.stroke(); }
+  }, [1, 1]);
+}

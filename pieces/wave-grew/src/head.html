@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Wave That Kept Growing</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0b0d12; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { width: min(100vw, calc(100vh * 16 / 9)); height: auto; aspect-ratio: 16 / 9; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  WHAT IF A WAVE GREW AND COULDN'T STOP? — 16:9, 8:30, 30 fps, motion on 1s. Style pov3d-hd.
+//  F5 fixed hero: you are the surfer. The wave you caught doubles in height every ~17 s and you never fall off:
+//  beach -> town -> clouds -> the drained sea floor -> space -> the wave wraps the planet -> it reaches the Moon -> the barrel.
+//  One continuous shot. 0-6.2 s is a teaser from later in the ride (story time 380 s), then 0.8 s of black.
+//  Everything is a function of the STORY time ST (= TT, except in the teaser).
+// =====================================================================
+const FPS = 30, W = 1920, H = 1080;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 510.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 60, bottom: 60, right: 60 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = W / 2;
+
+// ---- story time: the teaser shows the ride at ST 380 s, then black, then the ride from the start
+const TEASE = { t1: 6.2, black: 7.0, at: 380 };
+const storyT = (t) => (t < TEASE.t1 ? TEASE.at + t : t);
+
+// ---- the wave's height (metres) as a smooth monotone curve through log10 knots, keyed to the approved beats
+function knots(K, t) {
+  if (t <= K[0][0]) return K[0][1];
+  if (t >= K[K.length - 1][0]) return K[K.length - 1][1];
+  let i = 0; while (t > K[i + 1][0]) i++;
+  const [t0, v0] = K[i], [t1, v1] = K[i + 1], h = t1 - t0, u = (t - t0) / h;
+  const sl = (j) => (K[Math.min(j + 1, K.length - 1)][1] - K[Math.max(j - 1, 0)][1]) / (K[Math.min(j + 1, K.length - 1)][0] - K[Math.max(j - 1, 0)][0]);
+  let m0 = sl(i) * h, m1 = sl(i + 1) * h; const d = v1 - v0;
+  if (d === 0) { m0 = m1 = 0; } else { m0 = Math.sign(d) * Math.min(Math.abs(m0), 3 * Math.abs(d)) * (Math.sign(m0) === Math.sign(d) ? 1 : 0); m1 = Math.sign(d) * Math.min(Math.abs(m1), 3 * Math.abs(d)) * (Math.sign(m1) === Math.sign(d) ? 1 : 0); }
+  const u2 = u * u, u3 = u2 * u;
+  return (2 * u3 - 3 * u2 + 1) * v0 + (u3 - 2 * u2 + u) * m0 + (-2 * u3 + 3 * u2) * v1 + (u3 - u2) * m1;
+}
+const LOGH = [[7, 0.08], [40, 0.75], [70, 1.418], [90, 1.6], [120, 2.2], [145, 2.719], [160, 2.92], [175, 3.176], [195, 3.566],
+  [215, 3.947], [222, 4.04], [236, 4.28], [275, 5.0], [315, 6.0], [360, 6.65], [405, 7.105], [440, 8.0], [468, 8.585], [510, 8.62]];
+const waveH = (st) => Math.pow(10, knots(LOGH, st));          // crest height above sea level, m
+const waveV = (st) => Math.sqrt(9.81 * waveH(st));            // its speed ~ sqrt(g h), m/s
+// distance travelled (m), integrated once at load on a 0.1 s grid
+const TRAVEL = (() => { const a = new Float64Array(5201); let s = 0; for (let i = 1; i <= 5200; i++) { s += waveV((i - 0.5) / 10) * 0.1; a[i] = s; } return a; })();
+const travel = (st) => { const x = clamp(st, 0, 520) * 10, i = Math.min(5199, Math.floor(x)); return lerp(TRAVEL[i], TRAVEL[i + 1], x - i); };
+
+// ---- what the wave is taller than (left HUD sub-label) and what it reaches next
+const MILES = [
+  [1.9, 'you'], [8, 'the pier'], [26.21, 'the biggest wave ever surfed'], [40, 'the lighthouse'], [93, 'the Statue of Liberty'],
+  [330, 'the Eiffel Tower'], [524, 'the Lituya Bay wave'], [828, 'the Burj Khalifa'], [1500, 'the dinosaur tsunami'],
+  [3682, 'the average ocean depth'], [8849, 'Mount Everest'], [11000, 'a cruising airliner'], [19000, 'the Armstrong limit'],
+  [100000, 'the edge of space'], [408000, 'the space station'], [12742000, 'the Earth'], [35786000, 'geostationary satellites'], [384400000, 'the Moon'],
+];
+
+// ---- the beats (story time)
+const SHOTS = [
+  ['teaser', 0, 0.0,   7.0,   'teaser: the wave rings the planet'],
+  ['beach',  0, 7.0,   90.0,  'beach: 1 m -> 40 m'],
+  ['town',   0, 90.0,  160.0, 'the town: 40 m -> 830 m'],
+  ['sky',    0, 160.0, 240.0, 'clouds, the drained sea, Everest: 0.8 -> 19 km'],
+  ['edge',   0, 240.0, 315.0, 'the sky goes black: 19 -> 1,000 km'],
+  ['planet', 0, 315.0, 405.0, 'it wraps the planet, the oceans are empty'],
+  ['moon',   0, 405.0, 470.0, 'it reaches the Moon'],
+  ['barrel', 0, 470.0, 510.0, 'the barrel, end card'],
+];
+const ERA_LIST = [[0, DURATION, () => sceneWave()]];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [6.2, 7.0],
+  morphs: [],
+  cues: { black: 6.2, start: 7.0, surfed: 70, lituya: 145, chicxulub: 175, empty: 195, armstrong: 236, space: 275, ring: 330, dry: 360, moonHit: 468, card: 498 },
+  anchor: null,
+  acts: [
+    { name: '0 Teaser',  role: 'hook',    t0: 0,   t1: 7 },
+    { name: '1 Beach',   role: 'build',   t0: 7,   t1: 90 },
+    { name: '2 Town',    role: 'journey', t0: 90,  t1: 160 },
+    { name: '3 Sky',     role: 'journey', t0: 160, t1: 240 },
+    { name: '4 Edge',    role: 'journey', t0: 240, t1: 315 },
+    { name: '5 Planet',  role: 'peak',    t0: 315, t1: 405 },
+    { name: '6 Moon',    role: 'peak',    t0: 405, t1: 470 },
+    { name: '7 Barrel',  role: 'goodbye', t0: 470, t1: 510 },
+  ],
+  board: [
+    { t: 3.0,   title: 'Teaser: the wave rings the planet', sound: 'low drone, then silence', next: 'black' },
+    { t: 40.0,  title: 'Beach, 4 m', sound: 'gulls, beach, hiss', next: 'it keeps growing' },
+    { t: 70.0,  title: '26 m: the biggest wave ever surfed', sound: 'roar starts', next: 'the town' },
+    { t: 145.0, title: '524 m over the town', sound: 'roar, wind', next: 'clouds' },
+    { t: 197.0, title: 'The sea ahead is empty', sound: 'wind', next: 'Everest' },
+    { t: 236.0, title: 'The crest is steaming', sound: 'thin roar', next: 'space' },
+    { t: 290.0, title: 'Space: past the horizon', sound: 'drone, ice', next: 'the planet' },
+    { t: 360.0, title: 'The oceans are empty', sound: 'deep drone', next: 'the Moon' },
+    { t: 468.5, title: 'The crest reaches the Moon', sound: 'SILENCE -> THE HIT', next: 'the barrel' },
+    { t: 490.0, title: 'Inside the barrel', sound: 'fade', next: 'end' },
+  ],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

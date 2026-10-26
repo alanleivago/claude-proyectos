@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Behemoth</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #020306; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; image-rendering: pixelated; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  JORŌGUMO — 9:16, 75s, 24fps, camera on 1s, bodies on 2s. A folk tale told in first person, paragraph by paragraph:
+//  the grandson's oath, the card, the woodcutter asleep by the Jōren falls, the threads, the stump, the reveal, the whisper,
+//  dawn with the tourists. Style: yokai (three.js at 360×640 through a Bayer-dithered palette).
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 75.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 75, () => sceneTale()]];
+const SHOTS = [
+  ['open',   0, 0.0,  4.5,  'the head rises behind the rim over the sea of clouds'],
+  ['card',   0, 4.5,  9.0,  'the card: a found photo, Behemoth, the seal'],
+  ['night',  0, 9.0,  18.0, 'the domes at night; the uncle on the catwalk'],
+  ['shake',  0, 18.0, 27.0, 'the coffee shivers; the dome turns by itself'],
+  ['cloud',  0, 27.0, 36.0, 'a cloud rises against the wind, shedding scales'],
+  ['grip',   0, 36.0, 45.6, 'a hand over the rim, rocks fall; he runs; black'],
+  ['reveal', 0, 45.6, 56.0, 'the head above the domes, looking down'],
+  ['eye',    0, 56.0, 66.0, 'the eye; he drives down in the dark beside it'],
+  ['dusk',   0, 66.0, 75.0, 'today: tourists at sunset; one cloud does not move'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { card: 4.5, night: 9.0, shake: 18.4, cloud: 27.0, grip: 38.4, run: 40.6, black: 45.0, reveal: 45.6, eye: 56.0, drive: 60.4, dusk: 66.0 },
+  acts: [
+    { name: '1 Warning', role: 'build',   t0: 0.0,  t1: 9.0 },
+    { name: '2 Night',    role: 'turn',    t0: 9.0,  t1: 27.0 },
+    { name: '3 Climb',     role: 'peak',    t0: 27.0, t1: 45.0 },
+    { name: '4 Silence',  role: 'silence', t0: 45.0, t1: 45.6 },
+    { name: '5 Behemoth',      role: 'gift',    t0: 45.6, t1: 66.0 },
+    { name: '6 Today',       role: 'goodbye', t0: 66.0, t1: 75.0 },
+  ],
+  board: [
+    { t: 2.6,  title: 'Hook: the head rises', sound: 'wind, deep groan', next: 'dither to black' },
+    { t: 7.4,  title: 'Card: Behemoth', sound: 'card hit', next: 'dither in' },
+    { t: 11.0, title: 'The domes at night', sound: 'wind, dome motors', next: 'cut' },
+    { t: 16.0, title: 'The uncle, thermos', sound: 'wind', next: 'cut' },
+    { t: 20.5, title: 'The coffee shivers', sound: 'low rumble', next: 'cut' },
+    { t: 25.0, title: 'The dome turns', sound: 'motor whine, rumble', next: 'cut' },
+    { t: 32.0, title: 'A cloud with scales', sound: 'groan in the clouds', next: 'cut' },
+    { t: 39.5, title: 'A hand over the rim', sound: 'rock slides', next: 'cut' },
+    { t: 42.5, title: 'He runs', sound: 'steps, breath; to black', next: '0.6 s silence' },
+    { t: 48.0, title: 'It looks down', sound: 'THE HIT (45.6 s)', next: 'cut' },
+    { t: 53.0, title: 'Above the domes', sound: 'drone', next: 'cut' },
+    { t: 58.0, title: 'The eye', sound: 'wet breath', next: 'cut' },
+    { t: 63.5, title: 'Driving down, dark', sound: 'engine, footfalls', next: 'cut' },
+    { t: 70.0, title: 'Today: sunset', sound: 'wind fades', next: 'end' },
+  ],
+
+
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

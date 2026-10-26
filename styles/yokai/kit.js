@@ -6,7 +6,7 @@
 //  The title card: black with stars, a framed print, the name and a red seal. Helpers are prefixed `yk`.
 // =====================================================================
 const YK = {
-  LW: 216, LH: 384,
+  LW: 216, LH: 384, VIG: 0, DOT: 52, DOTC: [0.9, 0.2, -0.8], SPREAD: 16,
   text: '#f4f0e4', shade: '#03050a', gold: '#b8995a', seal: '#b3271c',
   // the main palette: blue-blacks, teals, greys, earth, embers, yolk, and a few greens (measured from the references, plus forest)
   PAL: {
@@ -42,13 +42,14 @@ function ykBlit(src, o = {}) {
   if (src) x.drawImage(src, 0, 0, w, h); else { x.fillStyle = '#000'; x.fillRect(0, 0, w, h); }
   if (o.paint) o.paint(x, w, h);
   x.restore();
-  const id = x.getImageData(0, 0, w, h), d = id.data, lut = ykLUT(o.pal || 'main'), sp = o.spread ?? 34, vis = o.vis ?? 1, lift = o.lift ?? 0, sat = o.sat ?? 0.6, gr = o.grade ?? [0.9, 0.97, 1.0], gl = o.glift ?? [1, 5, 7], gn = o.gain ?? 0.9;
+  const id = x.getImageData(0, 0, w, h), d = id.data, lut = ykLUT(o.pal || 'main'), sp = o.spread ?? YK.SPREAD, vis = o.vis ?? 1, lift = o.lift ?? 0, sat = o.sat ?? 0.6, vig = o.vig ?? YK.VIG, dot = o.dot ?? YK.DOT, dc = YK.DOTC, gr = o.grade ?? [0.9, 0.97, 1.0], gl = o.glift ?? [1, 5, 7], gn = o.gain ?? 0.9;
   for (let yy = 0; yy < h; yy++) for (let xx = 0; xx < w; xx++) {
     const i = (yy * w + xx) * 4, bt = (YK_BAY[(yy & 3) * 4 + (xx & 3)] + 0.5) / 16;
     if (bt > vis) { d[i] = 2; d[i + 1] = 3; d[i + 2] = 6; continue; }
-    const off = (bt - 0.5) * sp;
+    const off = (bt - 0.5) * sp, dt = ((xx & 1) === 0 && (yy & 1) === 0) ? dot : ((xx & 1) !== (yy & 1) ? -dot * 0.25 : 0);
+    const vx = (xx / w - 0.5) * 2, vy = (yy / h - 0.42) * 1.6, vg = 1 - vig * Math.min(1, Math.pow(vx * vx * 0.8 + vy * vy, 1.3));
     const lum = d[i] * 0.3 + d[i + 1] * 0.59 + d[i + 2] * 0.11;
-    let r = (lum + (d[i] - lum) * sat) * gr[0] * gn + gl[0] + lift + off, g = (lum + (d[i + 1] - lum) * sat) * gr[1] * gn + gl[1] + lift + off, b = (lum + (d[i + 2] - lum) * sat) * gr[2] * gn + gl[2] + lift + off;
+    let r = (lum + (d[i] - lum) * sat) * gr[0] * gn * vg + gl[0] * vg + lift + off + dt * dc[0], g = (lum + (d[i + 1] - lum) * sat) * gr[1] * gn * vg + gl[1] * vg + lift + off + dt * dc[1], b = (lum + (d[i + 2] - lum) * sat) * gr[2] * gn * vg + gl[2] * vg + lift + off + dt * dc[2];
     r = r < 0 ? 0 : r > 255 ? 255 : r; g = g < 0 ? 0 : g > 255 ? 255 : g; b = b < 0 ? 0 : b > 255 ? 255 : b;
     const c = lut[((r >> 3) << 10) | ((g >> 3) << 5) | (b >> 3)];
     d[i] = c >> 16; d[i + 1] = (c >> 8) & 255; d[i + 2] = c & 255;
@@ -180,7 +181,7 @@ function ykCard(src, name, kIn, kName, o = {}) {
     ctx.save(); screen(); fr(); ctx.restore();
     const L = ykLow(), keep = [YK.LW, YK.LH], pw = o.pw ?? 132, ph = Math.round(pw * fh / fw);
     YK.LW = pw; YK.LH = ph; L.c.width = pw; L.c.height = ph;
-    ykBlit(src, { pal: 'print', spread: 26, sat: 1, grade: [1, 1, 1], glift: [0, 0, 0], gain: 1, vis: 1, dst: [fx, fy, fw, fh] });
+    ykBlit(src, { pal: 'print', spread: 26, sat: 1, vig: 0, dot: 0, grade: [1, 1, 1], glift: [0, 0, 0], gain: 1, vis: 1, dst: [fx, fy, fw, fh] });
     YK.LW = keep[0]; YK.LH = keep[1]; L.c.width = keep[0]; L.c.height = keep[1];
     if (kIn < 1) {   // the whole card dissolves in and out through the Bayer screen
       ctx.save(); screen(); ctx.fillStyle = '#020306'; const cs = 6;
@@ -193,6 +194,23 @@ function ykCard(src, name, kIn, kName, o = {}) {
     ykLine(name, CX - 34, yN, { u, reveal, key: 7 });
     if (kName > 0.4) ykSeal(Math.round(CX - 34 + wN / 2 + 22), yN - 6, 7, clamp((kName - 0.4) * 3));
   }
+}
+
+// the channel badge (as earlobe's, top-left there; ours centred at the top at the end): a navy plate with a woven pixel
+// texture, the profile picture pixelated on the left, the name in the pixel font. a = 0..1 dithered in.
+function ykBadge(img, name, cx, y, a = 1) {   // the channel badge: a navy plate with a woven pixel texture, the kodama figure
+  // (its black square keyed out) on the left, the name in the pixel font. a = 0..1 dithered in.
+  if (a <= 0) return; const u = 6, tw = ykWidth(name) * u, ic = 96, padX = 22, w = padX * 3 + ic + tw, h = ic + 30, x = Math.round(cx - w / 2);
+  ctx.save(); screen();
+  ctx.fillStyle = '#2a3552'; ctx.fillRect(x, y, w, h); ctx.fillStyle = '#1b2440';
+  for (let yy = 0; yy < h; yy += 6) for (let xx = (yy / 6) % 2 ? 3 : 0; xx < w; xx += 12) ctx.fillRect(x + xx, y + yy, 6, 3);
+  ctx.fillStyle = '#3a4a6e'; ctx.fillRect(x, y, w, 3); ctx.fillRect(x, y + h - 3, w, 3); ctx.fillRect(x, y, 3, h); ctx.fillRect(x + w - 3, y, 3, h);
+  if (img) { if (!ykBadge.k) { const c = document.createElement('canvas'); c.width = c.height = 36; const g = c.getContext('2d'); g.drawImage(img, 0, 0, 36, 36); const d = g.getImageData(0, 0, 36, 36);
+      for (let i = 0; i < d.data.length; i += 4) { if (Math.max(d.data[i], d.data[i + 1], d.data[i + 2]) < 40) d.data[i + 3] = 0; } g.putImageData(d, 0, 0); ykBadge.k = c; }
+    ctx.imageSmoothingEnabled = false; ctx.drawImage(ykBadge.k, x + padX, y + 15, ic, ic); }
+  ctx.restore();
+  ykLine(name, x + padX * 2 + ic + tw / 2, y + h / 2 - 4 * u, { u });
+  if (a < 1) { ctx.save(); screen(); ctx.fillStyle = '#020306'; const cs = 6; for (let yy = y; yy < y + h; yy += cs) for (let xx = x; xx < x + w; xx += cs) { const bt = (YK_BAY[((yy / cs) & 3) * 4 + ((xx / cs) & 3)] + 0.5) / 16; if (bt > a) ctx.fillRect(xx, yy, cs, cs); } ctx.restore(); }
 }
 
 // =====================================================================

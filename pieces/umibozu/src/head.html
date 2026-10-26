@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Umibōzu</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #020306; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; image-rendering: pixelated; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  JORŌGUMO — 9:16, 75s, 24fps, camera on 1s, bodies on 2s. A folk tale told in first person, paragraph by paragraph:
+//  the grandson's oath, the card, the woodcutter asleep by the Jōren falls, the threads, the stump, the reveal, the whisper,
+//  dawn with the tourists. Style: yokai (three.js at 360×640 through a Bayer-dithered palette).
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 71.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 71, () => sceneTale()]];
+const SHOTS = [
+  ['open',   0, 0.0,  4.5,  'the head rises behind the stern, the eyes light up'],
+  ['card',   0, 4.5,  9.0,  'the card: Umibōzu'],
+  ['night',  0, 9.0,  18.0, 'the squid boat under its lamps; the sea goes flat'],
+  ['sonar',  0, 18.0, 27.0, 'the sonar; the lamps go out one by one'],
+  ['rise',   0, 27.0, 36.0, 'eyes under the water; a hand on the rail'],
+  ['ladle',  0, 36.0, 45.6, 'he gives it the broken ladle; black'],
+  ['reveal', 0, 45.6, 56.0, 'the head over the boat, scooping, no water falls'],
+  ['bucket', 0, 56.0, 66.0, 'the hand reaches for the bucket; he kicks it overboard; it sinks'],
+  ['dawn',   0, 66.0, 71.0, 'today: the harbour, buckets with holes'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { card: 4.5, night: 9.0, calm: 13.0, sonar: 18.4, out: 22.8, rise: 27.5, eyes: 28.4, hand: 31.6, give: 39.0, black: 45.0, reveal: 45.6, reach: 56.4, kick: 61.6, sink: 62.4, dawn: 66.0 },
+  acts: [
+    { name: '1 Rule', role: 'build',   t0: 0.0,  t1: 9.0 },
+    { name: '2 Calm',    role: 'turn',    t0: 9.0,  t1: 27.0 },
+    { name: '3 Rising',     role: 'peak',    t0: 27.0, t1: 45.0 },
+    { name: '4 Silence',  role: 'silence', t0: 45.0, t1: 45.6 },
+    { name: '5 Umibozu',      role: 'gift',    t0: 45.6, t1: 66.0 },
+    { name: '6 Today',       role: 'goodbye', t0: 66.0, t1: 71.0 },
+  ],
+  board: [
+    { t: 3.2,  title: 'Hook: it rises astern', sound: 'deep water swell, groan', next: 'dither' },
+    { t: 7.4,  title: 'Card: Umibozu', sound: 'card hit', next: 'dither in' },
+    { t: 11.0, title: 'The squid boat', sound: 'rain, generator hum', next: 'cut' },
+    { t: 15.5, title: 'The sea goes flat', sound: 'rain stops, silence grows', next: 'cut' },
+    { t: 20.5, title: 'The sonar', sound: 'sonar pings', next: 'cut' },
+    { t: 25.0, title: 'Lamps go out', sound: 'bulbs pop one by one', next: 'cut' },
+    { t: 30.0, title: 'Eyes under water', sound: 'deep bubbling', next: 'cut' },
+    { t: 34.0, title: 'A hand on the rail', sound: 'wood creak, water pouring', next: 'cut' },
+    { t: 41.0, title: 'The broken ladle', sound: 'a voice like the tide', next: 'to black, 0.6 s silence' },
+    { t: 48.0, title: 'It scoops', sound: 'THE HIT (45.6 s)', next: 'cut' },
+    { t: 53.5, title: 'Over the boat', sound: 'drone, water', next: 'cut' },
+    { t: 58.5, title: 'It reaches for the bucket', sound: 'creak', next: 'cut' },
+    { t: 63.5, title: 'It sinks', sound: 'huge sinking gulp', next: 'cut' },
+    { t: 68.5, title: 'Today: holed buckets', sound: 'gulls, harbour', next: 'end' },
+  ],
+
+
+
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

@@ -1,157 +1,123 @@
 // =====================================================================
-//  RUN — the nine shots: cameras, bodies (stepped on 2s), threads, light; the paragraphs; dithered fades; the card.
+//  RUN — the nine shots on the summit: cameras, the uncle (stepped on 2s), the Behemoth, light; the paragraphs; dithered
+//  fades; the card.
 // =====================================================================
-const T2 = () => Math.floor(TT * 12 + 1e-6) / 12;   // bodies and the spider move on 2s
-const SH = Object.fromEntries(SHOTS.map(([k, , a, b]) => [k, [a, b]]));
-const inShot = (k) => TT >= SH[k][0] && TT < SH[k][1];
+const T2 = () => Math.floor(TT * 12 + 1e-6) / 12;   // bodies move on 2s
 const shake = (t, k) => V3(Math.sin(t * 61) * k, Math.sin(t * 47 + 1) * k, Math.sin(t * 53 + 2) * k);
-// the jorōgumo's eight feet: front pair on the boulders under the fall, then the wall, the rim, the plateau
-const TIPS = [[-6.5, 0.4, -8.0], [-6.4, 13.0, -11.4], [-9.4, 22.6, -10.0], [-13, 26.5, -22], [6.8, 0.3, -7.6], [6.6, 11.6, -11.3], [9.6, 22.2, -9.8], [13.5, 26.8, -21]];
-function poseSpider(Wd, t, o = {}) {
-  const sp = Wd.sp, U = sp.userData; sp.visible = o.show ?? true; if (!sp.visible) return;
-  const breathe = Math.sin(t * 0.9) * 0.08;
-  U.wo.rotation.x = -0.12 + breathe * 0.3 + (o.lean ?? 0); U.wo.rotation.y = Math.sin(t * 0.37) * 0.08; U.head.rotation.set(0.25 + (o.nod ?? 0), Math.sin(t * 0.31) * 0.1 + (o.turn ?? 0), Math.sin(t * 0.23) * 0.05);
-  U.ab.rotation.x = -0.5 + breathe; U.ab.position.y = 3.2 + breathe;
-  U.arms.forEach((a) => { const s = a.userData.s; a.rotation.set(-0.35 - (o.reach ?? 0), 0, s * (0.35 + 0.1 * Math.sin(t * 0.7 + s))); a.userData.lo.rotation.x = -0.4 - (o.reach ?? 0) * 0.6; });
-  legsTo(sp, TIPS.map(([x, y, z], i) => V3(x + Math.sin(t * 1.7 + i * 2.1) * 0.15 * (o.twitch ?? 1), y + Math.max(0, Math.sin(t * 0.9 + i * 1.3)) * 0.3 * (o.twitch ?? 1), z)));
-  U.head.rotation.z = 0.32 + 0.05 * Math.sin(t * 0.4) + (o.tilt ?? 0);
-  const sm = o.smile ?? 0, sp2 = o.split ?? 0;
-  U.halves.forEach((hg) => { const { sd, lip, teeth } = hg.userData; hg.rotation.y = sd * 0.85 * sp2; lip.scale.x = 1 + 1.6 * sm; lip.position.x = -sd * 0.38 + sd * (0.03 + 0.05 * sm); teeth.scale.x = 1 + 2.2 * sm; teeth.position.x = lip.position.x; });
-  U.fangs.forEach((f, i) => { f.rotation.z = (i ? -1 : 1) * (0.9 - 0.9 * sp2) + Math.sin(t * 7 + i) * 0.06 * sp2; f.scale.setScalar(0.2 + 0.8 * sp2); });
-  U.inEyes.forEach((e) => (e.visible = sp2 > 0.02));
-}
-const headW = (Wd) => Wd.sp.userData.head.getWorldPosition(V3(0, 0, 0));
-const handW = (Wd, s) => Wd.sp.userData.arms[s].userData.lo.localToWorld(V3(0, -1.1, 0));
-// the man on the ground at (x, z), facing ry, pose P; carry: 'hand' puts the axe in his right hand, else it lies at axeAt
-function placeMan(Wd, x, z, ry, P, lift = 0) { const m = Wd.man; m.position.set(x, th(x, z) + lift, z); m.rotation.y = ry; setPose(m, P); m.visible = true; m.updateMatrixWorld(true); }
-function axeIn(Wd, where) {
-  const a = Wd.axe;
-  if (where === 'hand') { const h = Wd.man.userData.J.handR; if (a.parent !== h) h.add(a); a.position.set(0, 0.02, 0); a.rotation.set(Math.PI / 2, 0, 0); a.scale.setScalar(1); return; }
-  if (a.parent !== Wd.scene) Wd.scene.add(a); a.position.copy(where); a.position.y = th(where.x, where.z) + 0.04; a.rotation.set(Math.PI / 2, 0, 0.4);
-}
-const shin = (Wd, side, u) => { const L = Wd.man.userData.J[side ? 'legR' : 'legL'].b; return L.localToWorld(V3(0, -0.45 * u, 0)); };
-const MIST = (i) => V3(Math.sin(i * 1.9) * 1.6, 14.5 + (i % 4) * 1.6, -11.8);
-
-let doSplashNow = null;
+const D1 = DOMES[0], DECK = () => th(D1.x, D1.z) - 0.5 + D1.h * 0.62 - 1.0;
+const DIR = V3(0.22, 0, -0.97).normalize(), SIDE = V3(0.97, 0, 0.22), RY = Math.atan2(DIR.x, DIR.z);
+const MAN0 = () => V3(D1.x, DECK(), D1.z).addScaledVector(DIR, D1.r + 0.65);       // on the catwalk, facing the sea of clouds
+const off = (p, s, d, y) => p.clone().addScaledVector(SIDE, s).addScaledVector(DIR, d).add(V3(0, y, 0));
+function placeMan(Wd, p, ry, P) { const m = Wd.man; m.position.copy(p); m.rotation.y = ry; setPose(m, P); m.visible = true; m.updateMatrixWorld(true); }
 function resetWorld(Wd) {
-  Wd.stump.visible = true; Wd.stump.position.set(STUMP.x, th(STUMP.x, STUMP.z) - 0.1, STUMP.z); Wd.stump.rotation.set(0, 0, 0);
-  Wd.man.visible = true; Wd.thr.visible = false; Wd.thr2.visible = false; Wd.thr2.userData.lines.forEach((l) => (l.visible = true)); Wd.deck.visible = false; Wd.sp.visible = true; Wd.splash.visible = false;
+  Wd.posts.visible = true;
+  Wd.domes.forEach((d) => (d.userData.shutter.visible = true));
+  Wd.man.visible = true; Wd.truck.visible = true; Wd.hand.visible = false; Wd.bh.visible = true; Wd.flakes.visible = false; Wd.falling.visible = false; Wd.cup.visible = false;
+  Wd.tour.forEach((m) => (m.visible = false)); Wd.cars.forEach((c) => (c.visible = false)); Wd.thermos.visible = true;
+  Wd.domes.forEach((d) => { d.scale.set(1, 1, 1); d.rotation.set(0, 0, 0); });
+  const tp = V3(-6, 0, -2); Wd.truck.position.set(tp.x, th(tp.x, tp.z), tp.z); Wd.truck.rotation.set(0, 0.6, 0); Wd.truck.userData.lights.forEach((l) => l.material.color.set('#3f4542'));
 }
 function render3D(preset, pos, tgt, o = {}) {
   const Wd = world(), { r, cv } = rend();
   setLight(Wd, Object.assign({}, LIGHT[preset], o.light || {}), o.focus);
   Wd.cam.fov = o.fov ?? 50; Wd.cam.position.copy(pos); if (o.shake) Wd.cam.position.add(shake(TT, o.shake)); Wd.cam.lookAt(tgt); if (o.roll) Wd.cam.rotateZ(o.roll); Wd.cam.updateProjectionMatrix();
-  animWorld(Wd, TT, o); if (doSplashNow) { doSplashNow(); doSplashNow = null; }
-  Wd.deck.visible = o.deck ?? false; Wd.key.intensity = o.key ?? 0; Wd.moon.visible = o.moon ?? false;
+  animWorld(Wd, TT, o);
   r.render(Wd.scene, Wd.cam);
-  ykBlit(cv, { vis: o.vis ?? 1, spread: o.spread ?? 30 });
+  ykBlit(cv, { vis: o.vis ?? 1 });
 }
-// a dithered fade window: in over [a, a+d], out over [b-d, b]
 const fadeWin = (a, b, d = 0.6) => Math.min(ss(a, a + d, TT), 1 - ss(b - d, b, TT));
+// flakes shed from a point, drifting down; rocks falling from the hand's grip
+function shed(Wd, at, spread, t) { const M = Wd.flakes; M.visible = true; Wd.flakeP.forEach((q, i) => { const k = mod(t * 0.05 * q.v + q.u, 1); M.setMatrixAt(i, M4c(at.x + Math.cos(q.a) * q.r * spread + Math.sin(t + q.ph) * spread * 0.1, at.y - k * spread * 3, at.z + Math.sin(q.a) * q.r * spread, t * 2 + q.ph, spread * 0.03, spread * 0.03, 1, t * 3 + q.ph, t)); }); M.instanceMatrix.needsUpdate = true; }
+function rockfall(Wd, at, sz, t, t0) { const M = Wd.falling; M.visible = true; Wd.rockP.forEach((q, i) => { const tt = t - t0 - q.t0, on = tt > 0 ? 1 : 0, u = Math.max(0, tt); M.setMatrixAt(i, M4c(at.x + q.x * sz, at.y - 4.9 * u * u * 6, at.z + q.z * sz + u * 6, u * 3, q.s * on, q.s * on, q.s * on, u * 2)); }); M.instanceMatrix.needsUpdate = true; }
 
-function shotOpen() {   // night; her shape in the mist on the brink; one thread glints down to the water
-  const Wd = world(), t = TT, k = (t - 0) / 4.5;
-  poseSpider(Wd, T2(), { twitch: 0.4 }); Wd.man.visible = false; axeIn(Wd, V3(40, 0, 40)); Wd.thr.visible = false; Wd.thr2.visible = true;
-  threadsTo(Wd.thr2, (i) => handW(Wd, i % 2), (i) => V3(-1 + i * 1.2, 0, -7 + i), t, 0.2, 1);
-  render3D('night', V3(lerp(0.6, 0, k), lerp(2.6, 3.6, k), lerp(18, 15, k)), V3(0, 22, -13), { vis: fadeWin(0, 4.5, 0.7), mist: 0.4, birds: false, fov: 60, moon: true });
+function shotOpen() {   // HOOK: the head rises behind the far rim, side-on, pale against the lit sea of clouds; the eye turns to us
+  const Wd = world(), t = TT, k = ss(0, 4.5, t);
+  Wd.man.visible = false; Wd.truck.visible = false;
+  poseBH(Wd, { pos: V3(lerp(330, 320, k), lerp(40, 115, ss(0, 3.2, t)), -560), s: 80, yaw: -Math.PI / 2 + 0.55, pitch: -0.08 + 0.06 * Math.sin(t * 0.8), hyaw: 0.32 * ss(1.0, 2.6, t), jaw: 0.14 + 0.1 * ss(2.4, 3.4, t) });
+  shed(Wd, V3(250, 60, -540), 50, t);
+  render3D('night', V3(lerp(46, 44, k), lerp(20, 21, k), lerp(70, 62, k)), V3(lerp(205, 200, k), lerp(78, 92, k), -500), { vis: fadeWin(0, 4.5, 0.4), fov: 46, focus: V3(300, 90, -560) });
 }
 const printSrc = () => asset('print.jpg');
 function shotCard() {
   fillAll('#020306'); ykStars(ss(4.5, 5.2, TT) * (1 - ss(8.3, 8.9, TT)));
   const kIn = TT < 8.3 ? ss(4.8, 5.6, TT) : 1 - ss(8.3, 8.9, TT), kN = TT < 8.3 ? ss(5.5, 6.3, TT) : 1 - ss(8.3, 8.7, TT);
-  ykCard(printSrc(), 'Jorōgumo', kIn, kN, { y: 320, w: 720, h: 540 });
+  ykCard(printSrc(), 'Behemoth', kIn, kN, { y: 320, w: 720, h: 540, pw: 90 });
 }
-function shotNap() {   // day; the wide, then him asleep with the axe beside him
-  const Wd = world(), t = TT, t2 = T2(); poseSpider(Wd, t2, { show: false }); Wd.thr2.visible = false;
-  const breath = Math.sin(t2 * 1.6) * 0.04, P = Object.assign({}, POSE.lie, { sp: [breath, 0, 0] });
-  placeMan(Wd, NAP.x, NAP.z, Math.PI + 0.2, P, 0.2); axeIn(Wd, V3(NAP.x + 0.6, 0, NAP.z - 0.2));
-  Wd.thr.visible = t > 15; if (Wd.thr.visible) threadsTo(Wd.thr, (i) => shin(Wd, i % 2, 0.5 + 0.1 * (i % 3)), (i) => MIST(i), t, 0.6, 0.25 * ss(15, 17.5, t));
-  if (t < 13.6) { const k = (t - 9) / 4.6; render3D('day', V3(lerp(3.8, 3.0, k), lerp(4.4, 4.0, k), lerp(20, 18.6, k)), V3(lerp(0.8, 0.4, k), 1.4, -4), { vis: ss(9, 9.6, t), fov: 58 }); }
-  else { const k = (t - 13.6) / 4.4; render3D('day', V3(lerp(4.2, 3.8, k), lerp(2.9, 2.6, k), lerp(10.9, 10.4, k)), V3(1.15, 0.55, 8.5), { fov: 46 }); }
+function shotNight() {   // the domes under the stars; the uncle on the catwalk with his thermos, the sea of clouds below
+  const Wd = world(), t = TT, t2 = T2(); poseBH(Wd, { show: false });
+  const P = mixPose(POSE.stand, POSE.drink, ss(14.2, 14.8, t2) * (1 - ss(16.6, 17.2, t2)));
+  placeMan(Wd, MAN0(), RY, P);
+  if (t < 13.4) { const k = (t - 9) / 4.4; render3D('night', V3(lerp(46, 40, k), lerp(16, 14, k), lerp(52, 46, k)), V3(lerp(-2, 0, k), 8, -40), { vis: ss(9, 9.6, t), fov: 52 }); }
+  else { const m = MAN0(), k = (t - 13.4) / 4.6; render3D('night', off(m, lerp(3.4, 2.9, k), lerp(1.6, 1.3, k), 1.7), off(m, 0, -0.2, 1.1), { fov: 50, focus: m }); }
 }
-function shotLegs() {   // threads round his shins, up into the mist; he sits up
-  const Wd = world(), t = TT, t2 = T2(); poseSpider(Wd, t2, { show: false }); Wd.thr2.visible = false;
-  const up = ss(22.6, 23.8, t2), P = mixPose(POSE.lie, POSE.sitUp, up);
-  placeMan(Wd, NAP.x, NAP.z, Math.PI + 0.2, P, 0.13 * (1 - up)); axeIn(Wd, V3(NAP.x + 0.6, 0, NAP.z - 0.2));
-  Wd.thr.visible = true; threadsTo(Wd.thr, (i) => shin(Wd, i % 2, 0.25 + 0.12 * (i % 5)), (i) => MIST(i), t, 0.15, 1);
-  const dim = { sunI: lerp(2.1, 1.2, ss(18, 26, t)), cover: lerp(0.5, 0.38, ss(18, 26, t)) };
-  if (t < 22.5) { const k = ss(20.4, 22.4, t); render3D('day', V3(lerp(3.0, 2.6, k), lerp(1.55, 1.7, k), lerp(9.4, 10.4, k)), V3(lerp(1.3, 0, k), lerp(1.0, 13, k), lerp(7.4, -11, k)), { fov: 48, light: dim }); }
-  else { const k = (t - 22.5) / 4.5; render3D('day', V3(NAP.x + 0.3, lerp(1.1, 1.0, k), NAP.z + lerp(3.3, 2.8, k)), V3(NAP.x, 0.55, NAP.z - 0.4), { fov: 50, light: dim }); }
+function shotShake() {   // the coffee shivers on the railing; the dome turns by itself
+  const Wd = world(), t = TT, t2 = T2(), m = MAN0(); poseBH(Wd, { show: false });
+  const cup = off(m, 0.9, 0.62, 1.02); Wd.cup.visible = true; Wd.cup.position.copy(cup); Wd.coffee.material.uniforms.t.value = t; Wd.coffee.material.uniforms.amp.value = ss(18.4, 19.4, t) * (0.6 + 0.4 * Math.sin(t * 2));
+  const sh = ss(18.4, 19.6, t) * 0.04;
+  if (t < 22.6) { placeMan(Wd, m, RY, POSE.look); const d1 = Wd.domes[0], cp = V3(D1.x + 34, th(D1.x + 34, D1.z + 30) + 2.5, D1.z + 30), ang = Math.atan2(cp.x - D1.x, cp.z - D1.z);
+    d1.userData.shutter.visible = false; const tube = d1.userData.tube; tube.rotation.x = 0.7 - 0.55 * ss(19.0, 22.0, t) + 0.03 * Math.sin(t * 40) * ss(18.4, 19, t); tube.rotation.z = 0.25 * ss(19.5, 22.4, t);
+    render3D('night', cp, V3(D1.x, D1.h + 4, D1.z), { fov: 44, focus: V3(D1.x, 8, D1.z), shake: sh, domeSpin: { i: 0, a: ang - d1.userData.ry0 } }); }
+  else { const g0 = V3(D1.x - 9, 0, D1.z + 20); g0.y = th(g0.x, g0.z); placeMan(Wd, g0, Math.atan2(D1.x - g0.x, D1.z - g0.z), POSE.look); const k = ss(22.6, 27, t);
+    render3D('night', g0.clone().add(V3(lerp(-2.2, -1.8, k), 0.5, lerp(3.4, 3.0, k))), V3(D1.x, D1.h + lerp(4, 7, k), D1.z), { fov: 62, domeSpin: { i: 0, a: -2.2 * ss(22.8, 26.8, t) }, shake: 0.05, focus: g0 }); }
 }
-function shotStump() {   // he chops the threads free, ties them to the old stump, backs away
-  const Wd = world(), t = TT, t2 = T2(); poseSpider(Wd, t2, { show: false }); Wd.thr2.visible = false;
-  const S = Wd.stump.position, top = V3(S.x, S.y + 0.7, S.z), light = { sunI: 1.1, cover: 0.36 };
-  if (t < 31.5) {
-    const ch = (t2 < 29.2) ? (mod(t2 - 27.4, 0.84) < 0.42 ? POSE.chopUp : POSE.chopDn) : POSE.kneel;
-    placeMan(Wd, S.x + 0.95, S.z + 0.25, -Math.PI / 2 - 0.15, ch); axeIn(Wd, t2 < 29.2 ? 'hand' : V3(S.x + 1.4, 0, S.z + 0.9));
-    Wd.thr.visible = true; threadsTo(Wd.thr, (i) => (t2 < 29.2 ? shin(Wd, i % 2, 0.5) : top.clone().add(V3(Math.sin(i) * 0.25, 0, Math.cos(i) * 0.25))), (i) => MIST(i), t, 0.1, 0.8);
-    const k = (t - 27) / 4.5; render3D('day', V3(lerp(-6.0, -5.4, k), 1.5, lerp(9.8, 9.3, k)), V3(S.x + 0.3, 0.6, S.z - 0.2), { fov: 48, light });
-  } else {
-    const k = ss(31.7, 35.6, t2), x = lerp(S.x + 0.9, S.x + 1.6, k), z = lerp(S.z + 0.5, S.z + 3.2, k), P = gait(t2 * 0.7, 0.45, true); P.nk = [0.15, 0, 0];
-    placeMan(Wd, x, z, Math.PI + 0.1, P); axeIn(Wd, 'hand');
-    Wd.thr.visible = true; threadsTo(Wd.thr, (i) => top.clone().add(V3(Math.sin(i) * 0.25, 0, Math.cos(i) * 0.25)), (i) => MIST(i), t, 0.05, 1);
-    const kk = (t - 31.5) / 4.5; render3D('day', V3(lerp(-0.4, -0.7, kk), lerp(1.5, 1.3, kk), lerp(13.6, 13.0, kk)), V3(-2.0, 3.0, -6), { fov: 50, light });
-  }
+function shotCloud() {   // over his shoulder: one cloud rises against the wind, shedding scales
+  const Wd = world(), t = TT, t2 = T2(), m = MAN0(), k = ss(27, 36, t);
+  placeMan(Wd, m, RY, t2 < 31 ? POSE.look : POSE.shock);
+  poseBH(Wd, { pos: V3(200, lerp(-60, 30, k), -900), s: 62, yaw: -Math.PI / 2 + 0.15, pitch: -0.25 + 0.15 * k, jaw: 0.02, hug: true, cloak: 0.85 - 0.6 * ss(29, 35, t) });
+  shed(Wd, V3(160, lerp(-20, 50, k), -860), 50, t);
+  render3D('night', off(m, lerp(-1.3, -1.1, k), -0.35, 2.0), V3(150, lerp(0, 30, k), -860), { fov: 40, focus: V3(180, 0, -880) });
 }
-// the stump's path: shaking, torn out at 38.6, dragged to the edge, in at 40.5, gone by 41.6
-function stumpAt(t) {
-  const S0 = V3(STUMP.x, th(STUMP.x, STUMP.z) - 0.1, STUMP.z);
-  if (t < 38.6) { const sh = ss(37.2, 38.5, t) * 0.06; return { p: S0.clone().add(V3(Math.sin(t * 70) * sh, 0, Math.sin(t * 53) * sh)), rx: 0 }; }
-  const k = ss(38.6, 40.5, t), e = V3(-1.8, 0, 4.4), p = S0.clone().lerp(e, Math.pow(k, 1.4)); p.y = th(p.x, p.z) + 0.25 * Math.sin(Math.PI * k);
-  if (t > 40.5) { const s = ss(40.5, 41.6, t); p.add(V3(0.3 * s, -2.8 * s, -2.4 * s)); }
-  return { p, rx: -0.9 * ss(38.6, 39.2, t) - 0.6 * ss(40.5, 41.4, t) };
+function shotGrip() {   // a hand comes over the rim, rocks fall; he runs for the truck; black
+  const Wd = world(), t = TT, t2 = T2(); poseBH(Wd, { show: false });
+  const H = Wd.hand; H.visible = true; const hp = V3(-3, th(-3, -96) + lerp(-25, 1, ss(36, 38.4, t)), -96); H.position.copy(hp); H.scale.setScalar(14); H.rotation.set(0.35, Math.PI + 0.6, 0); curlHand(H, lerp(0.05, 1.2, ss(37.6, 38.8, t)));
+  if (t > 38.4) rockfall(Wd, hp.clone().add(V3(0, 4, 0)), 18, t, 38.4);
+  if (t < 40.6) { const m = MAN0(); placeMan(Wd, m, RY, POSE.shock); render3D('night', hp.clone().add(V3(lerp(-55, -45, ss(36, 40.6, t)), 18, -70)), hp.clone().add(V3(0, 4, 8)), { fov: 40, shake: t > 38.4 && t < 39.6 ? 0.08 : 0.015, focus: hp }); }
+  else { const k = ss(40.6, 44.4, t2), a = V3(D1.x + 16, th(D1.x + 16, D1.z + 6), D1.z + 6), b = V3(-7, th(-7, -1), -1), p = a.clone().lerp(b, k); p.y = th(p.x, p.z);
+    placeMan(Wd, p, Math.atan2(b.x - a.x, b.z - a.z), gait(t2 * 1.6, 1));
+    render3D('night', p.clone().add(V3(9, 4, 10)), p.clone().add(V3(0, 1, -2)), { fov: 50, vis: 1 - ss(44.2, 45.0, t), shake: 0.04, focus: p }); }
 }
-function shotPull() {
-  const Wd = world(), t = TT, t2 = T2(); poseSpider(Wd, t2, { show: false }); Wd.thr2.visible = false;
-  const st = stumpAt(t2); Wd.stump.position.copy(st.p); Wd.stump.rotation.x = st.rx;
-  const sk = t - 40.5; const doSplash = () => { if (sk < 0 || sk > 1.8) return; const P = Wd.splash.geometry.attributes.position; Wd.splashP.forEach((q, i) => { const tt = Math.max(0, sk - q.d); P.setXYZ(i, -1.6 + Math.cos(q.a) * q.v * tt, Math.max(-0.2, q.u * tt - 4.9 * tt * tt), 3.8 + Math.sin(q.a) * q.v * tt); }); P.needsUpdate = true; Wd.splash.visible = true; };
-  const top = st.p.clone().add(V3(0, 0.7, 0)), light = { sunI: lerp(1.0, 0.3, ss(41, 45, t)), cover: 0.34 };
-  Wd.thr.visible = t < 41.6; threadsTo(Wd.thr, (i) => top.clone().add(V3(Math.sin(i) * 0.25, 0, Math.cos(i) * 0.25)), (i) => MIST(i), t, 0, 1);
-  placeMan(Wd, STUMP.x + 1.6, STUMP.z + 3.2, Math.PI + 0.1, Object.assign({}, POSE.look, { nk: [-0.1, 0, 0] })); axeIn(Wd, 'hand');
-  if (t < 39.4) render3D('day', V3(-1.0, 0.5, 9.8), V3(STUMP.x, 0.55, STUMP.z), { fov: 50, light, shake: ss(37.4, 38.6, t) * 0.03 + (t > 38.6 ? 0.08 * (1 - ss(38.6, 39.4, t)) : 0) });
-  else { const k = (t - 39.4) / 5.6; Wd.splash.onBeforeRender = () => {}; doSplashNow = doSplash; render3D('day', V3(lerp(3.8, 3.4, k), lerp(2.8, 2.6, k), lerp(11.8, 11.2, k)), V3(-1.8, 0.4, 3.0), { fov: 50, light, vis: 1 - ss(44.2, 45.0, t), shake: t > 40.5 && t < 41.2 ? 0.05 : 0 }); }
+function shotReveal() {   // low by the truck: the head above the domes, looking down, jaws open; a dome crushed
+  const Wd = world(), t = TT, t2 = T2(); Wd.man.visible = false;
+  const d2 = Wd.domes[1]; d2.scale.set(1.05, 0.45, 1.05); d2.rotation.set(0.25, 0, 0.18);
+  if (t < 50.6) { const k = (t - 45.6) / 5;
+    poseBH(Wd, { pos: V3(lerp(40, 30, k), lerp(150, 140, k), -170), s: 34, yaw: -Math.PI / 2 + 0.7, pitch: 0.55, hyaw: 0.1 * Math.sin(t2 * 0.8), jaw: 0.16 + 0.04 * Math.sin(t2 * 1.4), hug: false });
+    shed(Wd, V3(30, 120, -170), 30, t);
+    render3D('night', V3(lerp(-4, -3, k), 3.6, lerp(6, 4, k)), V3(20, lerp(80, 95, k), -120), { fov: 62, light: { sunI: 2.4 }, focus: V3(30, 120, -170), shake: t < 46.4 ? 0.12 * (1 - ss(45.6, 46.4, t)) : 0 }); }
+  else { const k = (t - 50.6) / 5.4;
+    poseBH(Wd, { pos: V3(30, lerp(135, 120, k), -160), s: 34, yaw: -Math.PI / 2 + 0.55, pitch: lerp(0.55, 0.75, k), jaw: 0.2, hug: false });
+    render3D('night', V3(lerp(70, 60, k), 22, lerp(30, 20, k)), V3(10, lerp(70, 60, k), -110), { fov: 58, focus: V3(30, 120, -160) }); }
 }
-function shotReveal() {   // dusk; from the water's edge up at her; then closer on her body and the eight legs
-  const Wd = world(), t = TT, t2 = T2(); Wd.stump.visible = false; Wd.thr.visible = false; Wd.thr2.visible = true;
-  poseSpider(Wd, t2, { reach: 0.2 }); threadsTo(Wd.thr2, (i) => handW(Wd, i % 2), (i) => V3(-2 + i * 2, 0, -6 + i), t, 0.2, 1);
-  placeMan(Wd, 1.0, 5.6, Math.PI - 0.05, POSE.look); axeIn(Wd, 'hand');
-  if (t < 50.6) { const k = (t - 45.6) / 5; render3D('dusk', V3(lerp(2.4, 2.0, k), lerp(1.2, 1.6, k), lerp(8.4, 7.2, k)), V3(0, 23, -13), { fov: 56, mist: 0.3, focus: V3(0, 20, -14), key: 1.6 }); }
-  else { const k = (t - 50.6) / 5.4; Wd.man.visible = false; render3D('dusk', V3(lerp(-3.5, 3.0, k), lerp(20, 23, k), lerp(4, 2.0, k)), V3(0, lerp(27, 29, k), -16), { fov: 60, mist: 0.35, focus: V3(0, 26, -16), key: 1.6 }); }
+function shotEye() {   // the eye, close; then he drives down in the dark with it walking beside him in the clouds
+  const Wd = world(), t = TT, t2 = T2();
+  if (t < 60.4) { poseBH(Wd, { pos: V3(30, 120, -160), s: 34, yaw: -Math.PI / 2 + 0.55, pitch: 0.75, jaw: 0.18 + 0.03 * Math.sin(t2 * 2), hyaw: 0.05 * Math.sin(t2), hug: false });
+    Wd.man.visible = false; Wd.bh.updateMatrixWorld(true); const e = Wd.bh.userData.eyes[1].getWorldPosition(V3(0, 0, 0)), k = (t - 56) / 4.4;
+    render3D('night', e.clone().add(V3(lerp(95, 78, k), lerp(-26, -18, k), lerp(85, 70, k))), e.clone().add(V3(-14, -12, 0)), { fov: 40, focus: e, light: { sunD: [0.8, 0.3, 0.5] } }); return; }
+  Wd.man.visible = false; const k = ss(60.4, 66, t), a = V3(8, 0, 32), b = V3(28, 0, 66), p = a.clone().lerp(b, k); p.y = th(p.x, p.z);
+  Wd.truck.position.copy(p); Wd.truck.rotation.set(0, Math.atan2(b.x - a.x, b.z - a.z), 0); Wd.truck.userData.wheels.forEach((w) => (w.rotation.x = t * 8)); Wd.truck.userData.tail.forEach((l) => l.material.color.set('#d9592a'));
+  poseBH(Wd, { pos: V3(lerp(-240, -200, k), lerp(60, 80, ss(60.4, 63, t)), lerp(-60, 40, k)), s: 50, yaw: lerp(0.2, 0.0, k), pitch: 0.1, jaw: 0.1, hug: true });
+  const fw = b.clone().sub(a).setY(0).normalize(), sd2 = V3(fw.z, 0, -fw.x), cpos = p.clone().addScaledVector(fw, -3.5).addScaledVector(sd2, 3.2); cpos.y = Math.max(p.y + 1.3, th(cpos.x, cpos.z) + 0.9); Wd.posts.visible = false; render3D('deep', cpos, p.clone().addScaledVector(fw, 1).addScaledVector(sd2, -12).add(V3(0, -1.5, 0)), { fov: 58, focus: p, shake: 0.03 });
 }
-function shotSmile() {   // her face: six eyes open, the smile; then he runs through the cedars
-  const Wd = world(), t = TT, t2 = T2(); Wd.stump.visible = false;
-  if (t < 61.6) {
-    poseSpider(Wd, t2, { smile: ss(57.6, 58.6, t2), split: ss(59.4, 60.2, t2), tilt: 0.25 * ss(56.4, 57.4, t2) + (t2 > 59.2 && t2 < 59.5 ? -0.12 : 0), nod: -0.2, twitch: 0.2 }); Wd.man.visible = false; Wd.thr.visible = false; Wd.thr2.visible = false;
-    const H0 = headW(Wd), k = (t - 56) / 5.6;
-    const pull = ss(59.2, 60.4, t); render3D('dusk', H0.clone().add(V3(lerp(0.8, 0.2, k), lerp(0.5, 0.25, k), lerp(9, 6.8, k) + 2.5 * pull)), H0.clone().add(V3(0, -0.75, 0)), { fov: 34, mist: 0, motes: false, light: { fn: 40, ff: 160, sunD: [-0.55, 0.3, 0.8], sunI: 2.6, hemI: 0.6, hemS: '#2a4f57' }, focus: H0, key: 0.25 });
-  } else {
-    poseSpider(Wd, t2, { show: true }); Wd.thr.visible = false; Wd.thr2.visible = false;
-    const k = (t2 - 61.6) / 4.4, x = lerp(9, 20, k), z = lerp(10, 17, k), P = gait(t2 * 1.6, 1);
-    placeMan(Wd, x, z, Math.atan2(11, 7), P); axeIn(Wd, V3(60, 0, 60));
-    const m = Wd.man.position, dv = V3(11, 0, 7).normalize(), sv = V3(-dv.z, 0, dv.x); render3D('dusk', m.clone().addScaledVector(dv, -3.2).addScaledVector(sv, 1.6).add(V3(0, 1.5, 0)), m.clone().addScaledVector(dv, 2.5).add(V3(0, 0.9, 0)), { fov: 55, light: { sunI: 2.6, exp: 1.2, hemI: 1.5, fn: 10, ff: 70 }, motes: true });
-  }
-}
-function shotDawn() {   // pale dawn; tourists on the deck photograph the fall; one thread glints over the water
-  const Wd = world(), t = TT, t2 = T2(); Wd.stump.visible = false; Wd.man.visible = false; Wd.thr.visible = false; Wd.thr2.visible = true; poseSpider(Wd, t2, { show: false });
-  Wd.tour.forEach((m, i) => { const P = i === 2 ? POSE.stand : mixPose(POSE.phone, POSE.stand, 0.15 * Math.sin(t2 * 0.5 + i) + 0.15); setPose(m, P); });
-  threadsTo(Wd.thr2, (i) => V3(-2.6 + i * 0.2, 23.5, -12.8), (i) => V3(-1.2 + i * 0.3, 0.05, -2 + i * 0.2), t, 0.08, 1);
-  Wd.thr2.userData.lines.forEach((l, i) => (l.visible = i === 0));
-  const k = (t - 66) / 9; render3D('dawn', V3(lerp(9.6, 8.6, k), lerp(4.0, 3.7, k), lerp(21, 19.5, k)), V3(lerp(0.5, 0, k), 8.5, -10), { fov: 54, deck: true, mist: 0.5, birds: true, vis: 1 - ss(73.8, 75, t) });
+function shotDusk() {   // today: tourists at sunset by the domes; one cloud does not drift with the others
+  const Wd = world(), t = TT, t2 = T2(); Wd.man.visible = false; Wd.truck.visible = false;
+  poseBH(Wd, { pos: V3(150, CLOUD_Y + 40, 720), s: 70, yaw: Math.PI / 2 + 0.4, pitch: -0.2, jaw: 0, hug: true, cloak: 0.5 });
+  const base = V3(14, 0, 18); Wd.tour.forEach((m, i) => { m.visible = true; const p = base.clone().add(V3(-6 + i * 3, 0, (i % 2) * 1.5)); m.position.set(p.x, th(p.x, p.z), p.z); m.rotation.y = Math.atan2(120 - p.x, 700 - p.z) + (hsh(i) - 0.5) * 0.3; setPose(m, i === 2 ? POSE.stand : POSE.phone); });
+  Wd.cars.forEach((c, i) => { c.visible = true; const x = 2 + i * 6, z = 8; c.position.set(x, th(x, z), z); c.rotation.y = 0.2 * i; });
+  const k = (t - 66) / 9, dv = V3(120, 0, 700).sub(base).setY(0).normalize(), cp = base.clone().addScaledVector(dv, -lerp(7, 6, k)).add(V3(1.5, 0, 0)); cp.y = th(cp.x, cp.z) + 1.4; render3D('dusk', cp, V3(120, lerp(-40, -30, k), 700), { fov: 50, vis: 1 - ss(73.8, 75, t), focus: base, rain: false });
 }
 
 const PARA = [
-  ['My grandfather cut firewood in Izu, and he made us swear we would never fall asleep beside the Jōren falls.', 0.4, 8.85],
-  ['One summer he did exactly that: the heat beat him on the bank, and he dozed off with his axe beside him.', 9.5, 17.75],
-  ['He woke with his legs wrapped in threads finer than hair, running up into the mist of the falls.', 18.4, 26.75],
-  ['Without a sound he cut them with his axe, tied them to an old stump, and slowly backed away.', 27.4, 35.75],
-  ['Then the stump creaked, tore out by its roots, and was dragged down to the bottom of the pool.', 36.4, 44.6],
-  ['In the spray he saw a woman with impossibly long hair, and behind her, eight huge legs holding up the falls.', 46.3, 55.75],
-  ['She smiled and whispered, "clever boy." My grandfather ran without looking back and never returned to that forest.', 56.4, 65.75],
-  ['Today tourists photograph the falls. None of them notice the thread glinting above the water.', 66.6, 74.4],
+  ['My uncle worked nights at the summit of Mauna Kea, and he warned me never to trust a cloud that moves against the wind.', 0.4, 8.85],
+  ['One winter night he was alone in the dome, four thousand metres up, above a sea of clouds as flat as milk.', 9.5, 17.75],
+  ['Around three in the morning the floor began to shake, and the telescope slid off the stars by itself.', 18.4, 26.75],
+  ['He stepped outside. One cloud was rising against the wind, and it was shedding scales.', 27.4, 35.75],
+  ['It was climbing over the mountain the way we climb over a fence.', 36.4, 44.6],
+  ['It only needed one step to reach the summit. Then it looked down.', 46.3, 55.75],
+  ['He drove down with the lights off, and for an hour he heard it walking beside him in the clouds.', 56.4, 65.75],
+  ['Today tourists drive up to watch the sunset. None of them notice the one cloud that never moves with the wind.', 66.6, 74.4],
 ];
 function sceneTale() {
   const t = TT; fillAll('#020306'); resetWorld(world());
-  if (t < 4.5) shotOpen(); else if (t < 9) shotCard(); else if (t < 18) shotNap(); else if (t < 27) shotLegs(); else if (t < 36) shotStump();
-  else if (t < 45.6) { if (t < 45.0) shotPull(); } else if (t < 56) shotReveal(); else if (t < 66) shotSmile(); else shotDawn();
+  if (t < 4.5) shotOpen(); else if (t < 9) shotCard(); else if (t < 18) shotNight(); else if (t < 27) shotShake(); else if (t < 36) shotCloud();
+  else if (t < 45.6) { if (t < 45.0) shotGrip(); } else if (t < 56) shotReveal(); else if (t < 66) shotEye(); else shotDusk();
   PARA.forEach(([s, a, b]) => ykPara(s, a, b, { cy: 1300 }));
 }
