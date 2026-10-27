@@ -11,6 +11,8 @@ const IV = {
   font: '"Arial Rounded MT Bold", "Avenir Next", "Nunito", "Helvetica Neue", Arial, sans-serif',
   sans: '"Avenir Next", "Helvetica Neue", "Segoe UI", Arial, sans-serif',
   dof: 16,                     // blur px for a layer one "depth unit" off focus
+  sphere: true,                // 2.5D: sphere shading on heads, light-turned cloth (user: more 2D→3D)
+  sat: 1.22,                   // global saturation (user, cats: "un poco más de saturación a todo")
   grain: 0,                    // film grain alpha (0 = none: the reference is clean; 0.085 was the first look)
 };
 // moods: light and grade for a whole set. rim = the edge light on the stick people; amb = a wash over the far layers
@@ -117,6 +119,11 @@ function ivGrainTiles() {
 }
 function ivPost(o = {}) {
   ctx.save(); ctx.setTransform(1, 0, 0, 1, 0, 0);
+  // colour: a little more saturation everywhere (user, cats), and a lift for night moods so dark scenes still read
+  const lift = IV_M.lift ?? (IV_M.vig >= 0.6 ? 1.14 : 1);
+  if (IV.sat !== 1 || lift !== 1) { const cv = ctx.canvas, tmp = ivCanvas(40, cv.width, cv.height), g = tmp.getContext('2d');
+    g.setTransform(1, 0, 0, 1, 0, 0); g.globalCompositeOperation = 'copy'; g.drawImage(cv, 0, 0); g.globalCompositeOperation = 'source-over';
+    ctx.filter = `saturate(${IV.sat}) brightness(${lift})`; ctx.globalCompositeOperation = 'copy'; ctx.drawImage(tmp, 0, 0); ctx.filter = 'none'; ctx.globalCompositeOperation = 'source-over'; }
   if (IV_M.tint) { ctx.fillStyle = IV_M.tint; ctx.fillRect(0, 0, W, H); }
   const v = ctx.createRadialGradient(W / 2, H / 2, H * 0.35, W / 2, H / 2, H * 1.05);
   v.addColorStop(0, 'rgba(0,0,0,0)'); v.addColorStop(1, `rgba(5,3,10,${IV_M.vig ?? 0.5})`);
@@ -223,13 +230,15 @@ function ivMan(o) {
     if (forced != null) return ivIK(...sh, ...t, J.ua * h, J.fa * h, forced * s);
     const A1 = ivIK(...sh, ...t, J.ua * h, J.fa * h, 1), A2 = ivIK(...sh, ...t, J.ua * h, J.fa * h, -1);
     const out = (side === 'L' ? -1 : 1) * s;
-    const score = (A) => (A.ey - sh[1]) * 3 + (af < 0.5 ? (A.ex - sh[0]) * out : -(A.ex - sh[0]) * s * 0.5);   // down first, then out (front) / back (profile)
+    // reaching forward (hand ahead of the shoulder): the elbow drops and never swings behind the back (user, cats panel 24)
+    const fwd = (t[0] - sh[0]) * s > 0.06 * h;
+    const score = (A) => (A.ey - sh[1]) * 3 + (fwd ? Math.min(0, (A.ex - sh[0]) * s) * 4 : (af < 0.5 ? (A.ex - sh[0]) * out : -(A.ex - sh[0]) * s * 0.5));   // down first, then out (front) / back (profile)
     return score(A1) >= score(A2) ? A1 : A2;
   };
   const armL = armIK(shL, P.hL, 'L', P.bendL), armR = armIK(shR, P.hR, 'R', P.bendR);
   const legL = ivIK(...hipL, ...foot(hipL, P.fL), J.th * h, J.sh * h, -s);
   const legR = ivIK(...hipR, ...foot(hipR, P.fR), J.th * h, J.sh * h, -s);
-  const sc = ctx.getTransform().a, pxR = R * sc;
+  const sc = Math.max(1e-3, Math.hypot(ctx.getTransform().a, ctx.getTransform().b)), pxR = R * sc;
   const handMode = o.hands || (pxR < 34 ? 'nub' : pxR < 105 ? 'mitten' : 'glove');
   const rw = Math.max(1.6 / sc, h * 0.009), k = IV_M.key, ghost = !!o._ghost;
   const top = who.top || 'tee', col = who.col || '#c0392b', col2 = who.col2 || ivShade(col, -0.35);
@@ -240,6 +249,9 @@ function ivMan(o) {
     const arm = (sh, A, hand, side) => {
       ivLine(sh[0], sh[1], A.ex, A.ey, Wd(lw), C(IV.ink)); ivLine(A.ex, A.ey, A.bx, A.by, Wd(lw), C(IV.ink));
       if (top !== 'none') { ivLine(sh[0], sh[1], A.ex, A.ey, Wd(sleeveW), C(col)); if (long) ivLine(A.ex, A.ey, lerp(A.ex, A.bx, 0.86), lerp(A.ey, A.by, 0.86), Wd(sleeveW * 0.92), C(col)); }
+      if (!rim && !ghost && IV.sphere && top !== 'none') { const kx = IV_M.key[0] * sleeveW * 0.22, ky = IV_M.key[1] * sleeveW * 0.22;
+        ctx.save(); ctx.globalAlpha = 0.16; ivLine(sh[0] + kx, sh[1] + ky, A.ex + kx, A.ey + ky, sleeveW * 0.32, '#ffffff'); if (long) ivLine(A.ex + kx, A.ey + ky, lerp(A.ex, A.bx, 0.8) + kx, lerp(A.ey, A.by, 0.8) + ky, sleeveW * 0.28, '#ffffff');
+        ctx.globalAlpha = 0.2; ivLine(sh[0] - kx, sh[1] - ky, A.ex - kx, A.ey - ky, sleeveW * 0.3, '#000000'); ctx.restore(); }
       const gr = o.grip || {}, hd2 = o.hold || {}, hf = hd2[hand] || hd2[side];
       ivHand(A.bx, A.by, Math.atan2(A.by - A.ey, A.bx - A.ex), h, handMode, gr[hand] || gr[side] || 'open', C, Wd, s);
       if (!rim && hf) hf(A.bx, A.by, Math.atan2(A.by - A.ey, A.bx - A.ex), h);
@@ -258,6 +270,13 @@ function ivMan(o) {
     ctx.beginPath(); ctx.moveTo(-tw, -tH + lw * 0.2); ctx.quadraticCurveTo(0, -tH - lw * 0.9, tw, -tH + lw * 0.2);
     ctx.lineTo(bw, bot); ctx.quadraticCurveTo(0, bot + lw * 0.5, -bw, bot); ctx.closePath();
     ctx.fillStyle = C(top === 'none' ? IV.ink : col); ctx.fill();
+    if (!rim && !ghost && IV.sphere && af > 0.15) { ctx.save(); ctx.clip(); const sw2 = tw * 2 * Math.min(0.42, af * 0.5), xs = -s * tw;
+      ctx.fillStyle = 'rgba(0,0,0,0.2)'; ctx.fillRect(Math.min(xs, xs + s * sw2), -tH - lw * 2, sw2, tH + bot + lw * 3); ctx.restore(); ctx.beginPath(); ctx.moveTo(-tw, -tH + lw * 0.2); ctx.quadraticCurveTo(0, -tH - lw * 0.9, tw, -tH + lw * 0.2); ctx.lineTo(bw, bot); ctx.quadraticCurveTo(0, bot + lw * 0.5, -bw, bot); ctx.closePath(); }
+    if (!rim && !ghost && IV.sphere) {   // cloth turns with the light: lit side lighter, far side darker (2.5D)
+      const kx = IV_M.key[0] * s, g = ctx.createLinearGradient(-tw * kx, 0, tw * kx, 0);
+      g.addColorStop(0, 'rgba(0,0,0,0.22)'); g.addColorStop(0.55, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(255,255,255,0.13)');
+      ctx.fillStyle = g; ctx.fill();
+    }
     if (rim) { ctx.lineWidth = rw * 2; ctx.strokeStyle = C(col); ctx.stroke(); }
     if (!rim) ivClothes(top, who, tw, tH, bw, bot, lw, s, af, col, col2);
     ctx.restore();
@@ -265,6 +284,7 @@ function ivMan(o) {
     ivLine(shC[0], shC[1], hd[0], hd[1], Wd(lw), C(IV.ink));
     if (who.hair) ivHair(who.hair, hd, R, s, af, C, Wd, true);
     ctx.beginPath(); ctx.arc(hd[0], hd[1], R + (rim ? rw : 0), 0, TAU); ctx.fillStyle = C(IV.ink); ctx.fill();
+    if (!rim && !ghost && IV.sphere) ivSphere(hd[0], hd[1], R);
     if (who.hair) ivHair(who.hair, hd, R, s, af, C, Wd, false);
     if (!rim) ivFace(hd, R, f, o.expr || {}, o, who);
     if (who.hat) ivHat(who.hat, hd, R, s, af, C, rim, who);
@@ -275,6 +295,19 @@ function ivMan(o) {
   if (!ghost) pass('rim');
   pass('body');
   return { head: hd, R, hip, handL: [armL.bx, armL.by], handR: [armR.bx, armR.by], sh: shC };
+}
+// a black head read as a sphere: a soft sheen toward the key light, a cool bounce on the far lower edge
+function ivSphere(x, y, R) {
+  const k = IV_M.key, hx = x + k[0] * R * 0.42, hy = y + k[1] * R * 0.42;
+  ctx.save(); ctx.beginPath(); ctx.arc(x, y, R, 0, TAU); ctx.clip();
+  let g = ctx.createRadialGradient(hx, hy, R * 0.05, hx, hy, R * 1.05);
+  g.addColorStop(0, 'rgba(255,240,225,0.22)'); g.addColorStop(0.45, 'rgba(255,240,225,0.07)'); g.addColorStop(1, 'rgba(255,240,225,0)');
+  ctx.fillStyle = g; ctx.fillRect(x - R, y - R, R * 2, R * 2);
+  const bx = x - k[0] * R * 0.7, by = y + R * 0.75;
+  g = ctx.createRadialGradient(bx, by, 0, bx, by, R * 0.8);
+  g.addColorStop(0, 'rgba(140,160,220,0.14)'); g.addColorStop(1, 'rgba(140,160,220,0)');
+  ctx.fillStyle = g; ctx.fillRect(x - R, y - R, R * 2, R * 2);
+  ctx.restore();
 }
 function ivClothes(top, who, tw, tH, bw, bot, lw, s, af, col, col2) {
   const fr = 1 - af;
@@ -475,3 +508,235 @@ const STYLE = {
   post() { ivPost(); },
   ones: true,
 };
+
+// =====================================================================
+//  2.5D — perspective rooms, cast shadows (user, after ten-seconds: "more 2D→3D, like the reference")
+// =====================================================================
+// ivRoom(o): a one-point perspective interior drawn on the current layer, in base-frame coords.
+//   o.back = [x0, y0, x1, y1] the far wall · o.vp = [x, y] vanishing point (default: centre of the far wall, at eye height)
+//   o.wall / o.side / o.floor / o.ceil colours · o.planks: floor lines toward the vanishing point · o.front: the frame edge depth
+//   returns { L(u, v), R(u, v), F(u, w) } mappers: left/right wall (u 0 far → 1 near, v 0 floor → 1 ceiling), floor (u depth, w 0..1 across)
+function ivRoom(o) {
+  const [x0, y0, x1, y1] = o.back, vp = o.vp || [(x0 + x1) / 2, y0 + (y1 - y0) * 0.45], ext = o.front ?? 2.6;
+  const far = (x, y) => [x, y], near = (x, y) => [vp[0] + (x - vp[0]) * ext, vp[1] + (y - vp[1]) * ext];
+  const corners = { lt: near(x0, y0), lb: near(x0, y1), rt: near(x1, y0), rb: near(x1, y1) };
+  ctx.fillStyle = o.ceil || ivShade(o.wall, -0.25); ivPoly([far(x0, y0), far(x1, y0), corners.rt, corners.lt], ctx.fillStyle);
+  ivPoly([far(x0, y0), corners.lt, corners.lb, far(x0, y1)], o.side || ivShade(o.wall, -0.18));
+  ivPoly([far(x1, y0), corners.rt, corners.rb, far(x1, y1)], o.sideR || ivShade(o.wall, -0.1));
+  ivPoly([far(x0, y1), far(x1, y1), corners.rb, corners.lb], o.floor || '#5a4636');
+  ivRR(x0, y0, x1 - x0, y1 - y0, 0, o.wall);
+  if (o.planks) for (let i = 0; i <= o.planks; i++) { const fx = lerp(x0, x1, i / o.planks); const n = near(fx, y1); ivLine(fx, y1, n[0], n[1], 2, o.plankCol || 'rgba(0,0,0,0.18)'); }
+  if (o.planks) for (let j = 1; j < 6; j++) { const u = 1 - Math.pow(0.62, j); const a = [lerp(x0, corners.lb[0], u), lerp(y1, corners.lb[1], u)], b = [lerp(x1, corners.rb[0], u), lerp(y1, corners.rb[1], u)]; ivLine(a[0], a[1], b[0], b[1], 1.5, o.plankCol || 'rgba(0,0,0,0.12)'); }
+  // depth shading: the near ends of walls/floor darker, a skirting line at the far wall
+  const g = ctx.createRadialGradient(vp[0], vp[1], 50, vp[0], vp[1], 1500); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,0.35)');
+  ctx.fillStyle = g; ctx.fillRect(-1500, -800, 5000, 3000);
+  ivLine(x0, y1, x1, y1, 3, 'rgba(0,0,0,0.25)');
+  ivAO(x0, y1, x1, y1, 46, 0.3); ivAO(x0, y0, x0, y1, 40, 0.22); ivAO(x1, y1, x1, y0, 40, 0.22); ivAO(x0, y1, corners.lb[0], corners.lb[1], 50, 0.25); ivAO(corners.rb[0], corners.rb[1], x1, y1, 50, 0.25);
+  const quad = (a, b, c, d) => (u, v) => { const p = [lerp(a[0], b[0], u), lerp(a[1], b[1], u)], q = [lerp(d[0], c[0], u), lerp(d[1], c[1], u)]; return [lerp(p[0], q[0], v), lerp(p[1], q[1], v)]; };
+  return {
+    L: quad(far(x0, y1), corners.lb, corners.lt, far(x0, y0)), R: quad(far(x1, y1), corners.rb, corners.rt, far(x1, y0)),
+    F: (u, w) => { const a = [lerp(x0, corners.lb[0], u), lerp(y1, corners.lb[1], u)], b = [lerp(x1, corners.rb[0], u), lerp(y1, corners.rb[1], u)]; return [lerp(a[0], b[0], w), lerp(a[1], b[1], w)]; },
+    vp, corners,
+  };
+}
+// a quad on a wall/floor mapper (a window, a door, a poster, a rug) — u0..u1 along the depth, v0..v1 up/across
+function ivQuad(map, u0, u1, v0, v1, fill, stroke, lw = 3) { ivPoly([map(u0, v0), map(u1, v0), map(u1, v1), map(u0, v1)], fill, stroke, lw); }
+// long soft shadow from the feet away from the key light, across the floor (draw before the actor)
+function ivCastShadow(x, y, h, o = {}) {
+  const k = IV_M.key, dir = -(k[0] || 0.5), len = h * (o.len ?? 0.9), w = h * (o.w ?? 0.16), a = o.a ?? 0.38;
+  ctx.save(); ctx.translate(x, y); ctx.transform(1, 0, dir * 1.6, 0.32, 0, 0);
+  const g = ctx.createLinearGradient(0, 0, 0, -len); g.addColorStop(0, `rgba(0,0,0,${a})`); g.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = g; ctx.beginPath(); ctx.moveTo(-w / 2, 0); ctx.lineTo(w / 2, 0); ctx.lineTo(w * 0.35, -len); ctx.lineTo(-w * 0.35, -len); ctx.closePath(); ctx.fill();
+  ctx.restore();
+  ctx.save(); ctx.globalAlpha = a; ctx.beginPath(); ctx.ellipse(x, y + 2, w * 0.75, w * 0.18, 0, 0, TAU); ctx.fillStyle = '#000'; ctx.fill(); ctx.restore();
+}
+// a light pool on the floor (window or lamp light, in perspective)
+function ivLightPool(pts, col = 'rgba(255,210,150,0.22)') { ctx.save(); ctx.globalCompositeOperation = 'lighter'; ivPoly(pts, col); ctx.restore(); }
+
+// =====================================================================
+//  ivCat({ x, y, s, f, coat, pose, expr, talk, look, ghost, phase, rot, arch })
+//    x, y ground point · s = sitting height in px (a sitting cat next to a 520-px actor ≈ 150)
+//    f facing (sign only: -1 left, 1 right) · pose: sit | loaf | stand | walk | sleep | yowl
+//    coat: { key, col, col2 (stripes/patches), belly, eye (iris), pattern: 'tabby'|'plain'|'fluffy'|'tux', oneEye, ear }
+//    expr: { eyes: open|half|closed|wide|happy|angry, blink: 0..1 (slow blink), mouth: closed|open|smile }
+//    talk: a VOICE line id (the mouth opens on its words) · look: [x, y] pupil shift · phase: walk cycle offset
+// =====================================================================
+function ivCat(o) {
+  if (o.ghost) return ivGhost(() => ivCat({ ...o, ghost: false, _ghost: true }), o.ghostA ?? 0.5);
+  const c = o.coat || {}, S = o.s / 100, sx = (o.f ?? 1) < 0 ? -1 : 1, pose = o.pose || 'sit', e = o.expr || {};
+  const col = c.col || '#e08a3c', col2 = c.col2 || ivShade(col, -0.3), belly = c.belly || ivShade(col, 0.35), key = (c.key || 'cat') + (o.blinkKey || '');
+  const T = TT + (hash(key) % 100) / 37, k = IV_M.key, sc = Math.max(1e-3, Math.hypot(ctx.getTransform().a, ctx.getTransform().b)) * S;
+  const tk = o.talk ? ivTalk(o.talk) : 0, mOpen = Math.max(tk, e.mouth === 'open' ? 0.8 : 0, pose === 'yowl' ? 1 : 0);
+  const walk = pose === 'walk', ph = (TT * 4 + (o.phase || 0)) * Math.PI;
+  // ---- the parts, in a 100-unit cat facing right (y up is negative)
+  const P = [];   // [Path2D, fill, shade?]
+  const el = (x, y, rx, ry, r = 0) => { const p = new Path2D(); p.ellipse(x, y, rx, ry, r, 0, TAU); return p; };
+  const cap = (x1, y1, x2, y2, w) => { const p = new Path2D(), a = Math.atan2(y2 - y1, x2 - x1), nx = -Math.sin(a) * w / 2, ny = Math.cos(a) * w / 2;
+    p.moveTo(x1 + nx, y1 + ny); p.lineTo(x2 + nx, y2 + ny); p.arc(x2, y2, w / 2, a + Math.PI / 2, a - Math.PI / 2, true); p.lineTo(x1 - nx, y1 - ny); p.arc(x1, y1, w / 2, a - Math.PI / 2, a + Math.PI / 2, true); p.closePath(); return p; };
+  const tailPath = (pts, w) => { const p = new Path2D(); for (let i = 0; i < pts.length - 1; i++) { const q = cap(...pts[i], ...pts[i + 1], w * (1 - i / pts.length * 0.35)); p.addPath(q); } return p; };
+  const sway = Math.sin(T * 1.7) * 0.5 + Math.sin(T * 0.6) * 0.5;
+  let head, earL, earR, tail, legs = [], body = [];
+  if (pose === 'sit') {
+    head = [16, -70, 19];
+    tail = [[-28, -6], [-40, -2 + sway * 2], [-30, 6], [0, 6], [22 + sway * 4, 2]];
+    body.push(el(-12, -22, 26, 23), el(3, -40, 19, 30, -0.25));
+    legs.push(cap(8, -30, 9, -2, 8), cap(18, -30, 20, -2, 8));
+  } else if (pose === 'loaf') {
+    head = [24, -44, 18];
+    tail = [[-34, -6], [-20, 2], [10, 2], [24 + sway * 3, -1]];
+    const p = new Path2D(); p.roundRect(-40, -38, 72, 38, 18); body.push(p);
+  } else if (pose === 'sleep') {
+    head = [20, -16, 13];
+    tail = [[-30, -8], [-26, 4], [0, 6], [18, 2]];
+    body.push(el(-2, -15, 32, 15));
+  } else {   // stand | walk | yowl
+    const arch = pose === 'yowl' ? 10 : (o.arch || 0), sw = walk ? Math.sin(ph) : 0;
+    head = [38, -54 + (pose === 'yowl' ? -4 : 0), 16];
+    tail = pose === 'yowl' ? [[-30, -44], [-38, -66], [-34, -86]] : [[-30, -44], [-44, -56 + sway * 3], [-48, -76 + sway * 5], [-40, -88 + sway * 4]];
+    body.push(el(0, -38 - arch * 0.6, 33, 15 + arch * 0.4), el(24, -44, 13, 13));
+    const lg = (x, a) => cap(x, -34, x + Math.sin(a) * 6, -2 + Math.max(0, -Math.cos(a)) * -3 * (walk ? 1 : 0), 7);
+    legs.push(lg(18, sw * 0.9), lg(-20, -sw * 0.9), lg(26, -sw * 0.9 + 0.2), lg(-12, sw * 0.9 + 0.2));
+  }
+  const [hx, hy, hr] = head;
+  earL = new Path2D(); earL.moveTo(hx - hr * 0.85, hy - hr * 0.35); earL.lineTo(hx - hr * 0.55, hy - hr * 1.45 - (pose === 'yowl' ? -6 : 0)); earL.lineTo(hx - hr * 0.05, hy - hr * 0.8); earL.closePath();
+  earR = new Path2D(); earR.moveTo(hx + hr * 0.1, hy - hr * 0.85); earR.lineTo(hx + hr * 0.7, hy - hr * 1.45 - (Math.sin(T * 0.9) > 0.97 ? 3 : 0)); earR.lineTo(hx + hr * 0.95, hy - hr * 0.3); earR.closePath();
+  const headP = el(hx, hy, hr * 1.08, hr * 0.95);
+  const tailStroke = (w, color) => { ctx.save(); ctx.strokeStyle = color; ctx.lineWidth = w; ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.beginPath(); ctx.moveTo(...tail[0]);
+    for (let i = 1; i < tail.length - 1; i++) ctx.quadraticCurveTo(tail[i][0], tail[i][1], (tail[i][0] + tail[i + 1][0]) / 2, (tail[i][1] + tail[i + 1][1]) / 2);
+    ctx.lineTo(...tail[tail.length - 1]); ctx.stroke(); ctx.restore(); };
+  const bodyU = new Path2D(); body.forEach((p) => bodyU.addPath(p));
+  const all = [...legs, bodyU, earL, earR, headP];
+  ctx.save(); ctx.translate(o.x, o.y); if (o.rot) ctx.rotate(o.rot); ctx.scale(sx * S, S);
+  // fluffy coats: a cloud of fur around body and head
+  const fluff = c.pattern === 'fluffy' ? (() => { const p = new Path2D(), r = RNG('fluff' + key).f; for (const [cx, cy, rr, n] of [[hx, hy, hr * 1.05, 14], ...(pose === 'sit' ? [[-12, -22, 24, 12], [3, -42, 20, 10]] : [[0, -36, 30, 12]])]) for (let i = 0; i < n * 2; i++) { const a = i / (n * 2) * TAU + r() * 0.2, rj = rr * (0.92 + r() * 0.12); p.addPath(el(cx + Math.cos(a) * rj, cy + Math.sin(a) * rj * 0.9, 2.6 + r() * 2.2, 3.4 + r() * 2.6, a)); } return p; })() : null;
+  // rim pass
+  if (!o._ghost) {
+    ctx.save(); ctx.translate(k[0] * 3.2 / sc * 1, k[1] * 3.2 / sc); ctx.fillStyle = IV_M.rim; ctx.strokeStyle = IV_M.rim; ctx.lineWidth = 4 / sc;
+    tailStroke(8 + 8 / sc, IV_M.rim); for (const p of all) { ctx.fill(p); ctx.stroke(p); } if (fluff) { ctx.fill(fluff); ctx.stroke(fluff); } ctx.restore();
+  }
+  // body pass: fill, then a 2.5D sheen toward the key light on each round part
+  tailStroke(8, col); ctx.fillStyle = col; for (const p of all) ctx.fill(p); if (fluff) ctx.fill(fluff);
+  ctx.fillStyle = ivShade(col, 0.45); ctx.fill(new Path2D()); // (keeps fillStyle state predictable)
+  ctx.save(); ctx.fillStyle = 'rgb(255,215,190)'; ctx.globalAlpha = 0.75; ctx.fill(earL); ctx.fill(earR); ctx.restore();
+  ctx.save(); ctx.fillStyle = col; ctx.beginPath(); ctx.moveTo(hx - hr * 0.62, hy - hr * 0.5); ctx.lineTo(hx - hr * 0.5, hy - hr * 1.2); ctx.lineTo(hx - hr * 0.2, hy - hr * 0.75); ctx.fill(); ctx.beginPath(); ctx.moveTo(hx + hr * 0.3, hy - hr * 0.75); ctx.lineTo(hx + hr * 0.68, hy - hr * 1.2); ctx.lineTo(hx + hr * 0.75, hy - hr * 0.5); ctx.fill(); ctx.restore();
+  if (c.pattern === 'tux' || c.belly) { ctx.save(); ctx.fillStyle = belly; if (pose === 'sit') ctx.fill(el(10, -36, 9, 18, -0.2)); else if (pose !== 'sleep') ctx.fill(el(6, -30, 20, 6)); ctx.fill(el(hx + hr * 0.25, hy + hr * 0.45, hr * 0.5, hr * 0.33)); ctx.restore(); }
+  if (c.pattern === 'tabby') { ctx.save(); ctx.strokeStyle = col2; ctx.lineCap = 'round'; ctx.lineWidth = 3;
+    const st = (x1, y1, x2, y2) => { ctx.beginPath(); ctx.moveTo(x1, y1); ctx.quadraticCurveTo((x1 + x2) / 2 + 3, (y1 + y2) / 2, x2, y2); ctx.stroke(); };
+    ctx.save(); for (const p of body) ctx.clip(p); ctx.restore();
+    if (pose === 'sit') { st(-26, -34, -18, -16); st(-18, -40, -8, -22); st(-8, -42, 0, -26); } else if (pose !== 'sleep') { st(-20, -50, -16, -30); st(-6, -52, -3, -30); st(8, -52, 9, -32); } else { st(-20, -26, -14, -6); st(-6, -28, -2, -6); }
+    st(hx - 6, hy - hr * 0.85, hx - 3, hy - hr * 0.45); st(hx + 1, hy - hr * 0.95, hx + 1, hy - hr * 0.5); st(hx + 7, hy - hr * 0.85, hx + 5, hy - hr * 0.45); ctx.restore(); }
+  for (const [p, cx, cy, rr] of [[headP, hx, hy, hr], [bodyU, pose === 'sit' ? -4 : 0, pose === 'sit' ? -30 : pose === 'loaf' ? -20 : pose === 'sleep' ? -14 : -38, pose === 'sit' ? 40 : 36]]) {
+    ctx.save(); ctx.clip(p); const gx = cx + k[0] * rr * 0.45, gy = cy + k[1] * rr * 0.45, g = ctx.createRadialGradient(gx, gy, rr * 0.05, cx, cy, rr * 1.25);
+    g.addColorStop(0, 'rgba(255,245,230,0.14)'); g.addColorStop(0.7, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,0.2)'); ctx.fillStyle = g; ctx.fillRect(cx - rr * 1.5, cy - rr * 1.5, rr * 3, rr * 3); ctx.restore();
+  }
+  // face: eyes (almond, slit pupils), nose, mouth, whiskers
+  let eyes = e.eyes || 'open', bl = e.blink ?? 0;
+  if (eyes === 'open' && mod(F + hash(key), Math.round(FPS * 4.6)) < 3) eyes = 'closed';
+  if (pose === 'sleep') eyes = 'closed';
+  const ey = hy - hr * 0.08, exs = [hx - hr * 0.02, hx + hr * 0.6], ew = hr * 0.27, eh = hr * 0.34, lk = o.look || [0, 0];
+  exs.forEach((ex, i) => {
+    const one = c.oneEye && i === 0;
+    if (one) { ctx.strokeStyle = ivShade(col, -0.5); ctx.lineWidth = 2.4; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(ex - ew, ey - eh * 1.3); ctx.lineTo(ex + ew, ey + eh * 1.2); ctx.stroke(); ctx.beginPath(); ctx.moveTo(ex - ew * 0.9, ey); ctx.lineTo(ex + ew * 0.9, ey); ctx.stroke(); return; }
+    if (eyes === 'closed' || bl >= 0.98) { ctx.strokeStyle = '#1a1210'; ctx.lineWidth = 2.2; ctx.lineCap = 'round'; ctx.beginPath(); ctx.arc(ex, ey - eh * 0.2, ew, Math.PI * 0.15, Math.PI * 0.85); ctx.stroke(); return; }
+    if (eyes === 'happy') { ctx.strokeStyle = '#1a1210'; ctx.lineWidth = 2.2; ctx.beginPath(); ctx.arc(ex, ey + eh * 0.4, ew, Math.PI * 1.15, Math.PI * 1.85); ctx.stroke(); return; }
+    const wk = eyes === 'wide' ? 1.25 : 1;
+    ctx.fillStyle = c.eye || '#e8c34a'; ctx.beginPath(); ctx.ellipse(ex, ey, ew * wk, eh * wk, 0, 0, TAU); ctx.fill();
+    ctx.fillStyle = '#0d0907'; ctx.beginPath(); ctx.ellipse(ex + lk[0] * ew * 0.35, ey + lk[1] * eh * 0.2, eyes === 'wide' ? ew * 0.62 : ew * 0.22, eh * 0.85 * wk, 0, 0, TAU); ctx.fill();
+    ctx.fillStyle = '#fff6e0'; ctx.beginPath(); ctx.arc(ex + ew * 0.35, ey - eh * 0.4, ew * 0.18, 0, TAU); ctx.fill();
+    // lids: half / angry / slow blink
+    const lid = Math.max(bl, eyes === 'half' ? 0.5 : 0), ang = eyes === 'angry' ? (i === 0 ? 0.35 : -0.35) : 0;
+    if (lid > 0 || ang) { ctx.save(); ctx.beginPath(); ctx.ellipse(ex, ey, ew * wk + 0.6, eh * wk + 0.6, 0, 0, TAU); ctx.clip(); ctx.translate(ex, ey - eh * wk + lid * eh * 2 * wk); ctx.rotate(ang); ctx.fillStyle = col; ctx.fillRect(-ew * 3, -eh * 3, ew * 6, eh * 3 + (ang ? eh * 0.55 : 0)); ctx.restore();
+      ctx.strokeStyle = '#1a1210'; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.moveTo(ex - ew * 1.05, ey - eh * wk + lid * eh * 2 * wk + (ang ? -Math.sign(ang) * 2 : 0)); ctx.lineTo(ex + ew * 1.05, ey - eh * wk + lid * eh * 2 * wk + (ang ? Math.sign(ang) * 2 : 0)); ctx.stroke(); }
+  });
+  const nx = hx + hr * 0.42, ny = hy + hr * 0.28;
+  ctx.fillStyle = '#e88a8a'; ctx.beginPath(); ctx.moveTo(nx - 2.6, ny - 1.6); ctx.lineTo(nx + 2.6, ny - 1.6); ctx.lineTo(nx, ny + 1.6); ctx.closePath(); ctx.fill();
+  ctx.strokeStyle = '#2a1a14'; ctx.lineWidth = 1.4; ctx.lineCap = 'round';
+  if (mOpen > 0.12) { ctx.fillStyle = '#3a1416'; ctx.beginPath(); ctx.ellipse(nx, ny + 4 + mOpen * 2.5, 3.2 + mOpen * 1.5, 1.5 + mOpen * 4, 0, 0, TAU); ctx.fill(); ctx.fillStyle = '#d96a72'; ctx.beginPath(); ctx.ellipse(nx, ny + 5.5 + mOpen * 4, 2 + mOpen, 0.8 + mOpen * 1.6, 0, 0, Math.PI); ctx.fill(); }
+  else { ctx.beginPath(); ctx.moveTo(nx, ny + 1.6); ctx.lineTo(nx, ny + 3.2); ctx.quadraticCurveTo(nx - 2.5, ny + 6, nx - 4.5, ny + 3.6); ctx.moveTo(nx, ny + 3.2); ctx.quadraticCurveTo(nx + 2.5, ny + 6, nx + 4.5, ny + 3.6); ctx.stroke(); }
+  ctx.strokeStyle = 'rgba(255,248,235,0.75)'; ctx.lineWidth = 0.9;
+  for (const [a, b] of [[-0.12, 1], [0.05, 1], [0.2, 0.92]]) { ctx.beginPath(); ctx.moveTo(nx + 3, ny + 2); ctx.lineTo(nx + 3 + 18 * b, ny + 2 + a * 22 + Math.sin(T * 1.3) * 0.6); ctx.stroke(); ctx.beginPath(); ctx.moveTo(nx - 3, ny + 2); ctx.lineTo(nx - 3 - 14 * b, ny + 2 + a * 20); ctx.stroke(); }
+  ctx.restore();
+  return { head: [o.x + sx * hx * S, o.y + hy * S], r: hr * S };
+}
+// coats used by the cats piece (reuse for any cat)
+const IV_COATS = {
+  orange: { key: 'orange', col: '#e0873a', col2: '#b45c1e', pattern: 'tabby', eye: '#c9e05a' },
+  white:  { key: 'white', col: '#f1ece4', col2: '#d9d0c4', pattern: 'fluffy', eye: '#5ab5e8' },
+  grey:   { key: 'grey', col: '#7c8088', col2: '#565a62', pattern: 'tabby', eye: '#e8c34a', oneEye: true },
+  kitten: { key: 'kitten', col: '#b9a48c', col2: '#7d6852', pattern: 'tabby', eye: '#8fd0ff', belly: '#efe4d4' },
+  black:  { key: 'black', col: '#1c1b22', col2: '#101016', pattern: 'plain', eye: '#7cf06a' },
+  tux:    { key: 'tux', col: '#26252c', pattern: 'tux', belly: '#f2efe9', eye: '#e8c34a' },
+  calico: { key: 'calico', col: '#efe6da', col2: '#c9762e', pattern: 'tabby', eye: '#e8c34a' },
+};
+
+// ---- more 3D (round 2): boxes in perspective, light shafts, contact occlusion ----------------------
+// ivBox(x, y, w, h, depth, vp, o): a box whose FRONT face is the rect (x, y, w, h); its top and the side facing the
+//   vanishing point recede `depth` (0..1 of the way to vp). o.front / o.top / o.side colours, o.line edge highlight.
+function ivBox(x, y, w, h, depth, vp, o = {}) {
+  const back = (px, py) => [px + (vp[0] - px) * depth, py + (vp[1] - py) * depth];
+  const fr = o.front || '#8a6a56', tp = o.top || ivShade(fr, 0.18), sd = o.side || ivShade(fr, -0.25);
+  const tl = [x, y], tr = [x + w, y], br = [x + w, y + h], bl = [x, y + h];
+  if (vp[1] < y) ivPoly([tl, tr, back(...tr), back(...tl)], tp);                 // the top shows when the eye is above it
+  else if (vp[1] > y + h) ivPoly([bl, br, back(...br), back(...bl)], tp);
+  if (vp[0] > x + w) ivPoly([tr, br, back(...br), back(...tr)], sd);             // the side toward the vanishing point
+  else if (vp[0] < x) ivPoly([tl, bl, back(...bl), back(...tl)], sd);
+  ivPoly([tl, tr, br, bl], fr);
+  if (o.line !== false) { ivLine(tl[0], tl[1], tr[0], tr[1], 2, o.line || 'rgba(255,240,220,0.35)'); }
+  const g = ctx.createLinearGradient(0, y, 0, y + h); g.addColorStop(0, 'rgba(255,255,255,0.06)'); g.addColorStop(1, 'rgba(0,0,0,0.22)');
+  ivPoly([tl, tr, br, bl], g);
+  return { back, tl, tr, br, bl };
+}
+// light shafts from a window/door: soft additive beams from the opening toward the floor
+function ivRays(src, dst, o = {}) {   // src = [[x,y],...] the opening's two edge points; dst = their two landing points
+  ctx.save(); ctx.globalCompositeOperation = 'lighter';
+  const n = o.n ?? 5, col = o.col || [255, 220, 160], a = o.a ?? 0.1;
+  for (let i = 0; i < n; i++) {
+    const u0 = i / n + 0.02, u1 = (i + 0.55) / n, fl = 0.6 + 0.4 * Math.sin(TT * 0.7 + i * 1.7);
+    const p0 = [lerp(src[0][0], src[1][0], u0), lerp(src[0][1], src[1][1], u0)], p1 = [lerp(src[0][0], src[1][0], u1), lerp(src[0][1], src[1][1], u1)];
+    const q0 = [lerp(dst[0][0], dst[1][0], u0), lerp(dst[0][1], dst[1][1], u0)], q1 = [lerp(dst[0][0], dst[1][0], u1), lerp(dst[0][1], dst[1][1], u1)];
+    const g = ctx.createLinearGradient(p0[0], p0[1], q0[0], q0[1]); g.addColorStop(0, `rgba(${col},${a * fl})`); g.addColorStop(1, `rgba(${col},0)`);
+    ivPoly([p0, p1, q1, q0], g);
+  }
+  // dust motes in the beam
+  const r = RNG('motes').f; for (let i = 0; i < 18; i++) { const u = r(), v = mod(r() + TT * 0.03 * (0.5 + r()), 1);
+    const x = lerp(lerp(src[0][0], src[1][0], u), lerp(dst[0][0], dst[1][0], u), v), y = lerp(lerp(src[0][1], src[1][1], u), lerp(dst[0][1], dst[1][1], u), v);
+    ivDot(x + Math.sin(TT + i) * 6, y, 1.6 + r() * 1.6, `rgba(${col},${0.35 * (1 - v)})`); }
+  ctx.restore();
+}
+// contact occlusion: a soft dark band where two surfaces meet (wall/floor), along a line
+function ivAO(x1, y1, x2, y2, w = 40, a = 0.35) {
+  const nx = -(y2 - y1), ny = x2 - x1, L = Math.hypot(nx, ny) || 1, ux = nx / L * w, uy = ny / L * w;
+  const g = ctx.createLinearGradient(x1, y1, x1 + ux, y1 + uy); g.addColorStop(0, `rgba(0,0,0,${a})`); g.addColorStop(1, 'rgba(0,0,0,0)');
+  ivPoly([[x1, y1], [x2, y2], [x2 + ux, y2 + uy], [x1 + ux, y1 + uy]], g);
+  const g2 = ctx.createLinearGradient(x1, y1, x1 - ux, y1 - uy); g2.addColorStop(0, `rgba(0,0,0,${a * 0.8})`); g2.addColorStop(1, 'rgba(0,0,0,0)');
+  ivPoly([[x1, y1], [x2, y2], [x2 - ux, y2 - uy], [x1 - ux, y1 - uy]], g2);
+}
+
+// ---- holding a phone in close-up, the right way (user, cats panel 9): the palm and fingers BEHIND the phone,
+//      only four fingertips peeking past the far edge, the thumb OVER the near edge, the sleeve coming in from below.
+//      ivPhoneHold(cx, cy, w, h, ang, drawPhone, o): cx, cy = phone centre (screen px), w, h = phone size on screen,
+//      drawPhone() draws the phone itself (e.g. () => P_phone(cx, cy, s, {...})); o.sleeve colour, o.side 1 (right hand) / -1
+function ivPhoneHold(cx, cy, w, h, ang, drawPhone, o = {}) {
+  const sd = o.side ?? 1, sleeve = o.sleeve || '#3c6fd1', ink = IV.ink, rim = IV_M.rim, k = w / 100;
+  ctx.save(); ctx.translate(cx, cy); ctx.rotate(ang || 0);
+  // sleeve + palm behind the phone (from the lower near corner)
+  const px = -sd * w * 0.18, py = h * 0.32;
+  ctx.save(); ctx.strokeStyle = rim; ctx.lineCap = 'round'; ctx.lineWidth = 46 * k + 6; ctx.beginPath(); ctx.moveTo(sd * w * 0.35, h * 1.4); ctx.lineTo(px + sd * w * 0.25, py + h * 0.25); ctx.stroke();
+  ctx.strokeStyle = sleeve; ctx.lineWidth = 46 * k; ctx.stroke(); ctx.restore();
+  ctx.beginPath(); ctx.ellipse(px + sd * w * 0.1, py, w * 0.42, h * 0.2, 0, 0, TAU); ctx.fillStyle = rim; ctx.fill();
+  ctx.beginPath(); ctx.ellipse(px + sd * w * 0.1, py, w * 0.39, h * 0.18, 0, 0, TAU); ctx.fillStyle = ink; ctx.fill();
+  // four fingertips peeking past the FAR edge (behind the phone: drawn first)
+  for (let i = 0; i < 4; i++) { const fy = -h * 0.05 + i * h * 0.12, fx = -sd * w * 0.5;
+    ctx.beginPath(); ctx.ellipse(fx - sd * w * 0.06, fy, w * 0.13 + 2, h * 0.05 + 2, 0, 0, TAU); ctx.fillStyle = rim; ctx.fill();
+    ctx.beginPath(); ctx.ellipse(fx - sd * w * 0.06, fy, w * 0.13, h * 0.05, 0, 0, TAU); ctx.fillStyle = ink; ctx.fill(); }
+  ctx.restore();
+  drawPhone();
+  // the thumb OVER the near edge
+  ctx.save(); ctx.translate(cx, cy); ctx.rotate(ang || 0);
+  const tx = sd * w * 0.5, ty = h * 0.05;
+  ctx.save(); ctx.translate(tx, ty); ctx.rotate(sd * -0.35);
+  ctx.beginPath(); ctx.ellipse(0, 0, w * 0.14 + 3, h * 0.13 + 3, 0, 0, TAU); ctx.fillStyle = rim; ctx.fill();
+  ctx.beginPath(); ctx.ellipse(0, 0, w * 0.14, h * 0.13, 0, 0, TAU); ctx.fillStyle = ink; ctx.fill();
+  ctx.beginPath(); ctx.ellipse(-sd * w * 0.06, -h * 0.08, w * 0.07, h * 0.04, sd * -0.4, 0, TAU); ctx.fillStyle = 'rgba(255,255,255,0.12)'; ctx.fill();
+  ctx.restore(); ctx.restore();
+}

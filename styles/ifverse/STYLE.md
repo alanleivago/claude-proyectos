@@ -47,3 +47,4 @@ head.html SHOT engine → sets.js (15 sets) + props.js (~35 props) → 8 section
 
 ## Proven on
 `pieces/ten-seconds` — "What If You Could See 10 Seconds Into the Future?" (8:22, 239 shots, 11 voices).
+`pieces/cats` — "What If You Could Understand Every Cat?" (8:31, 273 shots, 2.5D upgrade, cat rig).
