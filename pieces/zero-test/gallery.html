@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>fx gallery</title>
+<style>html,body{margin:0;background:#000}canvas{display:block;image-rendering:pixelated}</style>
+<script type="importmap">{ "imports": { "three": "./node_modules/three/build/three.module.js" } }</script>
+</head>
+<body>
+<script type="module">
+// fx_gallery.png: every effect of fx.js at 4 moments (left -> right), drawn at the real low-res grid and shown x3.
+// node render.mjs --page gallery.html --frames 0 --out gal  ->  gal/f_0000.png
+import { FX, TYPES } from './fx.js';
+const CW = 64, CH = 84, COLS = 4, GROUPS = 2, K = 3, HEAD = 16;
+const names = Object.keys(TYPES), rows = Math.ceil(names.length / GROUPS);
+const LW = CW * COLS * GROUPS, LH = CH * rows;
+const lo = document.createElement('canvas'); lo.width = LW; lo.height = LH; const lc = lo.getContext('2d');
+const out = document.createElement('canvas'); out.width = LW * K; out.height = LH * K + HEAD * K; document.body.appendChild(out);
+const oc = out.getContext('2d');
+// per type: anchor inside the cell, options, sample times (s)
+const T4 = [0.04, 0.25, 0.55, 0.9], EARLY = [0.04, 0.1, 0.2, 0.4];
+const CFG = {
+  stink: [[32, 40], {}, T4], heat: [[32, 40], {}, T4], sweat: [[40, 44], {}, [0.0, 0.04, 0.5, 1.1]],
+  sparkle: [[32, 42], { radius: 16 }, [0.1, 0.25, 0.4, 0.55]], question: [[32, 28], { scale: 1 }, [0.0, 0.04, 0.08, 0.6]],
+  exclaim: [[32, 28], { scale: 1 }, [0.0, 0.04, 0.08, 0.6]], idea: [[32, 28], { scale: 1.2 }, [0.0, 0.04, 0.15, 0.3]],
+  anger: [[42, 42], {}, [0.0, 0.04, 0.2, 0.4]], heart: [[32, 50], {}, T4], steam: [[32, 66], {}, [0.15, 0.4, 0.8, 1.4]],
+  dust: [[32, 70], {}, [0.04, 0.15, 0.3, 0.45]], splash: [[32, 66], {}, EARLY], drip: [[32, 20], {}, [0.1, 0.3, 0.45, 0.55]],
+  bubbles: [[32, 70], {}, [0.2, 0.5, 0.9, 1.4]], arrow: [[32, 42], { angle: -0.6, n: 2 }, [0.0, 0.04, 0.3, 0.6]],
+  wind: [[32, 42], {}, [0.05, 0.15, 0.3, 0.45]], thought: [[44, 70], { icon: 'heart', r: 12 }, [0.05, 0.25, 0.35, 0.9]],
+  zap: [[32, 42], {}, [0.0, 0.14, 0.27, 0.4]], snow: [[32, 42], { width: 56, height: 70 }, [0.0, 0.5, 1.0, 1.5]],
+  crack: [[32, 42], {}, [0.05, 0.15, 0.3, 0.6]], impact: [[32, 42], {}, [0.0, 0.08, 0.16, 0.28]],
+};
+const HEADS = new Set(['stink', 'heat', 'sweat', 'question', 'exclaim', 'idea', 'anger', 'thought']);
+window.renderFrame = () => {
+  // backdrop: the v3 sky gradient on top, grass at the bottom of each cell
+  for (let y = 0; y < LH; y++) { const k = (y % CH) / CH; lc.fillStyle = k < 0.82 ? `rgb(${88 + 80 * k | 0},${160 + 60 * k | 0},${250})` : '#5aa03a'; lc.fillRect(0, y, LW, 1); }
+  names.forEach((n, i) => {
+    const gx = Math.floor(i / rows), gy = i % rows, [[ax, ay], opt, times] = CFG[n];
+    times.forEach((t, c) => {
+      const x0 = (gx * COLS + c) * CW, y0 = gy * CH;
+      if (HEADS.has(n)) { lc.fillStyle = '#e8b878'; lc.beginPath(); lc.arc(x0 + 32, y0 + 58, 11, 0, 7); lc.fill(); lc.fillStyle = '#f0c040'; lc.fillRect(x0 + 21, y0 + 46, 22, 7); }
+      const fx = new FX(CW, CH); fx.add(n, { screen: [ax, ay], t0: 0, dur: 9, seed: 11, ...opt });
+      const tmp = document.createElement('canvas'); tmp.width = CW; tmp.height = CH; fx.draw(tmp.getContext('2d'), t, null);
+      lc.drawImage(tmp, x0, y0);
+      lc.fillStyle = '#00000055'; lc.fillRect(x0 + CW - 1, y0, 1, CH); lc.fillRect(x0, y0 + CH - 1, CW, 1);
+    });
+  });
+  oc.imageSmoothingEnabled = false; oc.fillStyle = '#111'; oc.fillRect(0, 0, out.width, out.height);
+  oc.drawImage(lo, 0, HEAD * K, LW * K, LH * K);
+  oc.font = 'bold 22px Verdana'; oc.textBaseline = 'top'; oc.lineWidth = 4; oc.strokeStyle = '#000';
+  oc.fillStyle = '#fff'; oc.fillText('fx.js gallery - each row: one effect at 4 moments (left to right), 270x480 grid pixels x3', 8, 12);
+  names.forEach((n, i) => {
+    const gx = Math.floor(i / rows), gy = i % rows, x = gx * COLS * CW * K + 6, y = (HEAD + gy * CH) * K + 4;
+    oc.strokeText(n, x, y); oc.fillStyle = '#ffe14a'; oc.fillText(n, x, y);
+  });
+};
+window.READY = true;
+</script>
+</body>
+</html>

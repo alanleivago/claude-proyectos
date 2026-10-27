@@ -2,6 +2,20 @@
 // Each shot: { t0, scene, camera, update(localT, globalT), overlay?(localT, drawText, weight) }.
 import * as THREE from 'three';
 import { makeGirl, POSES, blend } from './char.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import * as SkeletonUtils from 'three/addons/utils/SkeletonUtils.js';
+
+let NETO = null;   // the rigged low poly girl (models/neto.glb), cloned per shot
+function neto() {
+  const root = SkeletonUtils.clone(NETO);
+  root.traverse((o) => {
+    if (!o.isMesh) return;
+    const src = o.material;
+    if (src.map) { src.map.minFilter = src.map.magFilter = THREE.NearestFilter; src.map.generateMipmaps = false; }
+    o.material = new THREE.MeshLambertMaterial({ map: src.map, alphaTest: 0.5, side: THREE.DoubleSide });
+  });
+  return root;
+}
 
 export const SHOTS = [];
 const T = {};
@@ -257,6 +271,10 @@ function shotD() {   // 7.68-10.0: in the dark attic, saw raised, smoke column c
   const back = new THREE.Shape([new THREE.Vector2(-3, 0), new THREE.Vector2(3, 0), new THREE.Vector2(0, 3.6)]);
   const bw = new THREE.Mesh(new THREE.ShapeGeometry(back), wood); bw.position.set(0.4, 0, -2.2); scene.add(bw);
   const g = makeGirl(T); g.root.position.set(0.75, 0, 0.2); g.root.rotation.y = -0.5; scene.add(g.root);
+  g.root.visible = false;   // TEST: the real model stands in for the box girl
+  const n = neto(); const bb = new THREE.Box3().setFromObject(n);
+  n.scale.setScalar(1.62 / (bb.max.y - bb.min.y)); n.position.set(0.6, -bb.min.y * n.scale.y, 0.2); n.rotation.y = -0.4; scene.add(n);
+  console.log('neto bbox', JSON.stringify(bb));
   // hand saw in the raised right hand
   const saw = new THREE.Group(); g.J.wristR.add(saw); saw.position.set(0, -0.08, 0.02);
   const blade = box(0.05, 0.5, 0.008, lam(null, 0xd8dde4), 0, -0.3, 0, saw); blade.rotation.z = 0.1;
@@ -296,5 +314,6 @@ export async function loadAll() {
     T[n] = canvasTex(await loadTex(file, px, false, GAIN[n] || 1), ['floor', 'snow', 'gravel', 'soil', 'attic', 'roof', 'basement'].includes(n) ? [4, 4] : null);
   }
   for (const n of ['pine1', 'pine2', 'bare']) T[n] = canvasTex(await loadTex(n, 128, true));
+  NETO = (await new GLTFLoader().loadAsync('models/neto.glb')).scene;
   SHOTS.push(shotA(), shotB(), shotC(), shotD());
 }

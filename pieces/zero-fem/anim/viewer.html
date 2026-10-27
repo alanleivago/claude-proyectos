@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>zero_fem anim viewer</title>
+<style>html,body{margin:0;background:#111}canvas{display:block;image-rendering:pixelated}</style>
+<script type="importmap">{ "imports": { "three": "../../sina-test/node_modules/three/build/three.module.js", "three/addons/": "../../sina-test/node_modules/three/examples/jsm/" } }</script>
+</head>
+<body>
+<script type="module">
+// Visor de la biblioteca de animaciones (zero_anim.glb). Sin luces: MeshBasicMaterial + texturas Nearest.
+// API para render.mjs:  setAction(name, view) ; renderFrame(frame30)  -> dibuja el frame (30 fps) con la cara de face_tracks.json
+// En el navegador: viewer.html?a=walk&v=3q  reproduce en bucle a 15 fps (escalonado PS1).
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+const W = 300, H = 480;
+const renderer = new THREE.WebGLRenderer({ antialias: false, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1); renderer.setSize(W, H);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+document.body.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene(); scene.background = new THREE.Color(0x2b2f36);
+const grid = new THREE.GridHelper(40, 20, 0x6a7380, 0x454c57); grid.position.y = -9.0; scene.add(grid);
+const cam = new THREE.PerspectiveCamera(36, W / H, 0.5, 200);
+
+const gltf = await new GLTFLoader().loadAsync('zero_anim.glb');
+const char = gltf.scene;
+char.traverse((o) => {
+  if (!o.isMesh) return;
+  const s = o.material;
+  if (s.map) { s.map.minFilter = s.map.magFilter = THREE.NearestFilter; s.map.generateMipmaps = false; s.map.needsUpdate = true; }
+  const m = new THREE.MeshBasicMaterial({ map: s.map || null, color: s.map ? 0xffffff : s.color, alphaTest: 0.5, side: THREE.DoubleSide });
+  m.name = s.name;
+  o.material = m;
+});
+scene.add(char);
+const faces = await (await fetch('face_tracks.json')).json();
+const CELLS = 16;
+const FACE = {
+  face_eyes: ['open', 'half', 'blink', 'happy', 'surprised', 'angry', 'sad', 'wink', 'hearts', 'shocked', 'dizzy', 'relaxed'],
+  face_mouth: ['neutral', 'smile', 'smileOpen', 'talkA', 'talkO', 'surprised', 'frown', 'shout', 'blep', 'cat', 'gasp', 'bigShock'],
+};
+function setFace(eyes, mouth) {
+  char.traverse((o) => {
+    if (!o.isMesh || !FACE[o.material.name]) return;
+    const k = FACE[o.material.name].indexOf(o.material.name === 'face_eyes' ? eyes : mouth);
+    if (k >= 0) o.material.map.offset.x = k / CELLS;
+  });
+}
+function faceAt(name, f) {               // ultima key con frame <= f (interpolacion constante)
+  const tr = faces[name] || [[1, 'open', 'neutral']];
+  let cur = tr[0];
+  for (const k of tr) if (k[0] <= f) cur = k;
+  return cur;
+}
+
+// prop de prueba: addProp('HandR', [0, 0.8, 0]) -> cubo verde en el centro del puno
+window.addProp = (bone, off = [0, 0.8, 0], size = 0.9) => {
+  const b = char.getObjectByName(bone);
+  const m = new THREE.Mesh(new THREE.BoxGeometry(size, size * 1.4, size), new THREE.MeshBasicMaterial({ color: 0x33ff66 }));
+  m.position.set(...off); b.add(m); return !!b;
+};
+const mixer = new THREE.AnimationMixer(char);
+let action = null, name = null;
+const VIEWS = { '3q': 0.6, front: 0, side: Math.PI / 2, back: Math.PI, '3qL': -0.6 };
+window.ACTIONS = gltf.animations.map((c) => ({ name: c.name, duration: c.duration, frames: Math.round(c.duration * 30) }));
+window.setAction = (n, view = '3q') => {
+  mixer.stopAllAction();
+  name = n;
+  action = mixer.clipAction(THREE.AnimationClip.findByName(gltf.animations, n));
+  action.play();
+  const a = VIEWS[view] ?? 0.6, r = 29, h = -2.2;
+  cam.position.set(Math.sin(a) * r, h + 3, Math.cos(a) * r);
+  cam.lookAt(0, h, 0);
+};
+window.renderFrame = (f) => {           // f = frame de 30 fps desde 0
+  action.time = f / 30; mixer.update(0);
+  const k = faceAt(name, f + 1); setFace(k[1], k[2]);
+  renderer.render(scene, cam);
+};
+const q = new URLSearchParams(location.search);
+if (q.get('a')) {
+  window.setAction(q.get('a'), q.get('v') || '3q');
+  const dur = action.getClip().duration, t0 = performance.now();
+  const loop = () => {
+    const t = ((performance.now() - t0) / 1000) % dur;
+    window.renderFrame(Math.floor(t * 15) * 2);       // escalonado a 15 fps
+    requestAnimationFrame(loop);
+  };
+  loop();
+}
+window.READY = true;
+</script>
+</body>
+</html>
