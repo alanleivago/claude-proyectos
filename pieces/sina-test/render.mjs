@@ -26,9 +26,9 @@ const port = server.address().port;
 
 const browser = await chromium.launch({ args: ['--use-angle=d3d11', '--ignore-gpu-blocklist', '--enable-unsafe-swiftshader'] });
 const page = await browser.newPage({ viewport: { width: 400, height: 700 } });
-page.on('console', (m) => { if (m.type() === 'error') console.log('[page]', m.text()); });
+page.on('console', (m) => { if (m.type() === 'error' || m.type() === 'log') console.log('[page]', m.text()); });
 page.on('pageerror', (e) => console.log('[pageerror]', e.message));
-await page.goto(`http://localhost:${port}/index.html`);
+await page.goto(`http://localhost:${port}/${opt('--page', 'index.html')}`);
 await page.waitForFunction(() => window.READY === true, null, { timeout: 120000 });
 
 const t0 = Date.now();
