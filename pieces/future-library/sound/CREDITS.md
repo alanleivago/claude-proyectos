@@ -1,0 +1,30 @@
+# Sound credits — future-library
+- Music: "Short Pizzicato Song" — Freesound 529008 (CC0), same bed as phone-1pct and lego-sea (user prefers it, Ricks-like).
+- Voice: VoiceStudio "3D cartoon 2", v2 take 45.
+- SFX kit: sound-layer kit (CC0, see sound-layer/kit/CREDITS.md).
+- Freesound CC0 recordings (previews HQ):
+  - 613781 "Library ambience" by xkeril (CC0) — https://freesound.org/s/613781/
+  - 463903 "Birds In Spring (Scotland)" by BurghRecords (CC0) — https://freesound.org/s/463903/
+  - 474832 "RoomTone07" by richwise (CC0) — https://freesound.org/s/474832/
+  - 474830 "RoomTone06" by richwise (CC0) — https://freesound.org/s/474830/
+  - 136778 "Page Turn" by davidbain (CC0) — https://freesound.org/s/136778/
+  - 397548 "Page Turn 01" by LilMati (CC0) — https://freesound.org/s/397548/
+  - 457767 "turnPage.mp3" by partheeban (CC0) — https://freesound.org/s/457767/
+  - 360949 "Drawer" by marcusgar (CC0) — https://freesound.org/s/360949/
+  - 486082 "Object_Drawer_Wood_Close.wav" by Nox_Sound (CC0) — https://freesound.org/s/486082/
+  - 519661 "Sawing Wood" by Mateusz_Chenc (CC0) — https://freesound.org/s/519661/
+  - 205653 "20131106_Paper Shredder_ZoomH6XY.wav" by Soundscape_Leuphana (CC0) — https://freesound.org/s/205653/
+  - 82610 "scribble.mp3" by indigosierra (CC0) — https://freesound.org/s/82610/
+  - 211247 "Scribble" by Tomoyo Ichijouji (CC0) — https://freesound.org/s/211247/
+  - 611284 "mailbox metal open close" by miacx (CC0) — https://freesound.org/s/611284/
+  - 157766 "Keyboard click" by Enok123 (CC0) — https://freesound.org/s/157766/
+  - 585982 "Mouse Click" by septalium1 (CC0) — https://freesound.org/s/585982/
+  - 368995 "Chains Rattling" by evantheblonde (CC0) — https://freesound.org/s/368995/
+  - 593458 "Chain rattling" by georgesavic (CC0) — https://freesound.org/s/593458/
+  - 368682 "Knocking On Screen, 02.wav" by LilMati (CC0) — https://freesound.org/s/368682/
+  - 368680 "Knocking On Screen, 01.wav" by LilMati (CC0) — https://freesound.org/s/368680/
+  - 260121 "Indoor adult murmur, small group.wav" by SpliceSound (CC0) — https://freesound.org/s/260121/
+  - 245645 "Cartoon Pop (Clean)" by unfa (CC0) — https://freesound.org/s/245645/
+  - 511485 "cartoon_wink_magic_sparkle.wav" by MLaudio (CC0) — https://freesound.org/s/511485/
+  - 495645 "mug_wood1.wav" by robbeman (CC0) — https://freesound.org/s/495645/
+  - 495644 "mug_wood2.wav" by robbeman (CC0) — https://freesound.org/s/495644/

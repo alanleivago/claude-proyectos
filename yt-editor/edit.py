@@ -7,6 +7,8 @@
 cues.json (times are seconds in the RAW video):
   {
     "images":       [{"file": "raw/img/s01.jpg", "start": 4.0, "end": 8.0}],   # full screen
+    "pips":         [{"file": "v03/cards/tr1.mp4", "x": 24, "y": 192, "w": 703, "h": 405,
+                      "start": 292.5, "end": 302.4, "fade_in": 0.3}],          # side cards, video loops
     "titles":       [{"start": 0.3, "end": 5.0, "l1": "text *yellow* text", "l2": "..."}],
     "intro_at":     70.0,         # default: where he says "soy el agente ..."
     "intro_hold":   2.1,          # extra seconds the intro card stays (ref: ~7.5 s total)
@@ -15,6 +17,7 @@ cues.json (times are seconds in the RAW video):
   }
 """
 import json, os, re, subprocess, sys
+from PIL import Image, ImageDraw, ImageFilter
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ASSETS = os.path.join(HERE, "assets")
@@ -211,7 +214,8 @@ def build(raw, cues_path, out):
 
     # captions: one line, skipped while a title is on screen
     caps = caption_chunks(words, [(t["start"], t["end"]) for t in titles])
-    write_ass(os.path.join(work, "subs.ass"), caps, titles)
+    tvid = cues.get("titles_video")  # animated titles rendered with Remotion (yt-remotion), replace the ASS ones
+    write_ass(os.path.join(work, "subs.ass"), caps, [] if tvid else titles)
 
     blocked = [(im["start"], im["end"]) for im in images]
     intro_end = None
@@ -243,6 +247,42 @@ def build(raw, cues_path, out):
         filt.append(f"[{last}][im{i}]overlay=0:0:eof_action=pass[v{i}]")
         last = f"v{i}"
         cuts += [im["start"], im["end"]]
+    # side cards over the talking head (red card block): rounded corners, fades, videos loop
+    for j, p in enumerate(cues.get("pips", [])):
+        dur = p["end"] - p["start"]
+        src = os.path.join(HERE, p["file"])
+        idx = sum(1 for a in inputs if a == "-i")
+        if src.lower().endswith((".mp4", ".mov", ".webm")):
+            inputs += ["-stream_loop", "-1", "-t", f"{dur:.3f}", "-i", src]
+        else:
+            inputs += ["-loop", "1", "-framerate", str(FPS), "-t", f"{dur:.3f}", "-i", src]
+        pw, ph = p["w"], p["h"]
+        mask = os.path.join(work, f"pipmask_{pw}x{ph}.png")
+        m = Image.new("L", (pw, ph), 0)
+        ImageDraw.Draw(m).rounded_rectangle((0, 0, pw - 1, ph - 1), p.get("radius", 22), fill=255)
+        m.save(mask)
+        inputs += ["-loop", "1", "-framerate", str(FPS), "-t", f"{dur:.3f}", "-i", mask]
+        fades = ""
+        if p.get("fade_in"):
+            fades += f",fade=t=in:st=0:d={p['fade_in']}:alpha=1"
+        if p.get("fade_out"):
+            fades += f",fade=t=out:st={dur - p['fade_out']:.3f}:d={p['fade_out']}:alpha=1"
+        filt.append(f"[{idx}:v]fps={FPS},scale={pw}:{ph}:force_original_aspect_ratio=increase,crop={pw}:{ph},"
+                    f"setsar=1,format=rgba[pc{j}];[{idx + 1}:v]format=gray[pm{j}];"
+                    f"[pc{j}][pm{j}]alphamerge{fades},setpts=PTS-STARTPTS+{p['start']}/TB[pp{j}]")
+        # soft drop shadow under the card (user: "una ligera sombra")
+        pad, off = 40, 10
+        shadow = os.path.join(work, f"pipshadow_{pw}x{ph}.png")
+        s = Image.new("RGBA", (pw + 2 * pad, ph + 2 * pad), (0, 0, 0, 0))
+        ImageDraw.Draw(s).rounded_rectangle((pad, pad, pad + pw - 1, pad + ph - 1), p.get("radius", 22),
+                                            fill=(0, 0, 0, 150))
+        s.filter(ImageFilter.GaussianBlur(16)).save(shadow)
+        sidx = sum(1 for a in inputs if a == "-i")
+        inputs += ["-loop", "1", "-framerate", str(FPS), "-t", f"{dur:.3f}", "-i", shadow]
+        filt.append(f"[{sidx}:v]format=rgba{fades},setpts=PTS-STARTPTS+{p['start']}/TB[ps{j}]")
+        filt.append(f"[{last}][ps{j}]overlay={p['x'] - pad + off}:{p['y'] - pad + off}:eof_action=pass[vq{j}]")
+        filt.append(f"[vq{j}][pp{j}]overlay={p['x']}:{p['y']}:eof_action=pass[vp{j}]")
+        last = f"vp{j}"
     if intro_at is not None:
         filt.append(f"[3:v]scale={W}:{H},tpad=stop_mode=clone:stop_duration={hold},"
                     f"setpts=PTS-STARTPTS+{intro_at}/TB[intro]")
@@ -276,6 +316,12 @@ def build(raw, cues_path, out):
         filt.append(f"[sr{j}]scale={W}:{H},colorkey=0x000000:0.15:0.05,format=rgba,setpts=PTS-STARTPTS+{st}/TB[sub{j}]")
         filt.append(f"[{last}][sub{j}]overlay=0:-60:eof_action=pass[vs{j}]")
         last = f"vs{j}"
+    if tvid:
+        idx = sum(1 for a in inputs if a == "-i")
+        inputs += ["-i", os.path.join(HERE, tvid)]
+        filt.append(f"[{idx}:v]format=yuva444p,setpts=PTS-STARTPTS[tt]")
+        filt.append(f"[{last}][tt]overlay=0:0:eof_action=pass[vt]")
+        last = "vt"
     fonts = os.path.relpath(os.path.join(HERE, "fonts"), work).replace("\\", "/")
     filt.append(f"[{last}]ass=subs.ass:fontsdir={fonts}[vout]")
     bgm_gain = cues.get("bgm_lufs", -29) - BGM_LUFS  # user: -27 still a little loud

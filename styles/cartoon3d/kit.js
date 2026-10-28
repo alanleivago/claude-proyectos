@@ -425,7 +425,18 @@ function c3Person(o = {}) {
   const D = 0.915 * HS, hst = o.hairStyle ?? 'ref';
   const HAIR = { ref: ['hair_ref_cap', 1.09, 0.487], brown: ['hair_brown_cap', 1.05, 0.358], white: ['hair_white', 1.06, 0.55], long: ['hair_long_cap', 1.24, 0.236],
     side: ['hair_side_cap', 1.08, 0.358], spiky: ['hair_spiky_cap', 1.1, 0.743], messy: ['hair_messy_cap', 1.1, 0.635], swept: ['hair_swept_cap', 1.08, 0.494],
-    neat: ['hair_neat', 1.06, 0.459], neat2: ['hair_neat2', 1.06, 0.477] };   // every style glued by its measured hairline (no floating hair)
+    neat: ['hair_neat', 1.06, 0.459], neat2: ['hair_neat2', 1.06, 0.477],
+    // Ricks Clips library (2026-10-27, tools/slice_ricks.py): role hats and more hairstyles, same glue rule
+    policecap: ['hair_policecap', 1.153, 0.438], beanie: ['hair_beanie', 1.075, 0.519], buckethat: ['hair_buckethat', 1.312, 0.525], redcap: ['hair_redcap', 1.114, 0.538],
+    crown: ['hair_crown', 1.092, 0.497], scholar: ['hair_scholar', 1.097, 0.579], nightcap: ['hair_nightcap', 1.147, 0.52], beret: ['hair_beret', 1.171, 0.59],
+    hardhat: ['hair_hardhat', 1.136, 0.649], cowboy: ['hair_cowboy', 1.113, 0.661], tophat: ['hair_tophat', 1.087, 0.764], bun: ['hair_bun', 1.217, 0.486],
+    ponytail: ['hair_ponytail', 1.22, 0.52], bowl: ['hair_bowl', 1.058, 0.572], buzz: ['hair_buzz', 1.105, 0.446], baldsides: ['hair_baldsides', 1.15, 0.4],
+    curlygrey: ['hair_curlygrey', 1.132, 0.531], ginger: ['hair_ginger', 1.103, 0.575], sidepart: ['hair_sidepart', 1.06, 0.53], tuft: ['hair_tuft', 1.068, 0.635],
+    pigtails: ['hair_pigtails', 1.069, 0.369], afro: ['hair_afro', 1.059, 0.562], slick: ['hair_slick', 1.065, 0.527],
+    // exact Ricks Clips hairstyles (2026-10-27, tools/slice_ricks2.py: one Flow copy per real character crop)
+    rk_kyle: ['hair_rk_kyle', 1.06, 0.619], rk_bun: ['hair_rk_bun', 1.07, 0.445], rk_curly: ['hair_rk_curly', 1.2, 0.517], rk_genius: ['hair_rk_genius', 1.06, 0.446],
+    rk_edison: ['hair_rk_edison', 1.06, 0.472], rk_darkbowl: ['hair_rk_darkbowl', 1.06, 0.402], rk_darkfringe: ['hair_rk_darkfringe', 1.06, 0.426],
+    rk_brownshort: ['hair_rk_brownshort', 1.06, 0.388], rk_glasses: ['hair_rk_glasses', 1.06, 0.324], rk_boss: ['hair_rk_boss', 1.06, 0.451] };   // every style glued by its measured hairline (no floating hair)
   if (o.hair !== false && HAIR[hst] && c3Img(HAIR[hst][0])) {
     const [img, kw, hl] = HAIR[hst], im = c3Img(img), hw = D * kw * (o.hairW ?? 1), hh = hw * im.aspect;
     hp(hw, hh, im.tex, 0.032, 4).position.set(D * (o.hairX ?? 0), D * (0.24 + (o.hairUp ?? 0)) + hl * hh - hh / 2, 0.032);
@@ -602,7 +613,10 @@ function c3Look(name) {
   const b = C3R.lookCv ||= Object.assign(document.createElement('canvas'), { width: W, height: H }), bx = b.getContext('2d');
   const f = C3_HD ? L.f.replace(/brightness\(([\d.]+)\)/, (m, v) => `brightness(${(1 - (1 - v) * 0.35).toFixed(3)})`).replace(/contrast\(([\d.]+)\)/, (m, v) => `contrast(${(+v + 0.06).toFixed(2)})`) : L.f;
   const sh = C3_HD ? L.shadow.map((v) => Math.round(v * 0.4)) : L.shadow, hi = C3_HD ? L.high.map((v) => Math.round(255 - (255 - v) * 0.45)) : L.high;
-  bx.filter = f; bx.clearRect(0, 0, W, H); bx.drawImage(ctx.canvas, 0, 0); bx.filter = 'none';
+  // C3_RICKS (2026-10-27, measured on 24 Ricks Clips frames): median L 47 vs ours 74, highlights 1.5 % vs 11 %, deep
+  // shadows 10 % vs 2 %, saturation 36 vs 46 — Ricks is darker and moodier with real shadows: pull exposure down, contrast up
+  const rk = typeof C3_RICKS !== 'undefined' && C3_RICKS ? ` brightness(${C3_RICKS.b ?? 0.82}) contrast(${C3_RICKS.c ?? 1.14}) saturate(${C3_RICKS.s ?? 0.9})` : '';
+  bx.filter = f + rk; bx.clearRect(0, 0, W, H); bx.drawImage(ctx.canvas, 0, 0); bx.filter = 'none';
   ctx.save(); screen(); ctx.globalCompositeOperation = 'copy'; ctx.drawImage(b, 0, 0);
   ctx.globalCompositeOperation = 'screen'; ctx.fillStyle = `rgb(${sh})`; ctx.fillRect(0, 0, W, H);      // tints the shadows most
   ctx.globalCompositeOperation = 'multiply'; ctx.fillStyle = `rgb(${hi})`; ctx.fillRect(0, 0, W, H);    // tints the lights
@@ -667,3 +681,194 @@ const STYLE = {
   post() {},
   ones: true,
 };
+
+// =====================================================================
+//  RICKS LOOK (2026-10-27, from Ricks Clips frames: Ref 3D cartoon animations/ricks) — skies, clouds, soft shading,
+//  detailed exteriors. Measured on PLe2Gu3FDuA t17: sky top (107,155,208) -> mid (180,212,238) -> horizon (238,234,222);
+//  clouds are flat-bottomed clusters of round bumps: body (236,236,244), each bump shaded lower-right in lavender
+//  (200,204,228), a thin cool rim (165,180,214) on the shadow side, soft edges.
+// =====================================================================
+const C3_SKY = {
+  day:    { top: '#6b9bd0', mid: '#b4d4ee', hor: '#eeeade', body: '#ececf4', shade: '#c8cce4', rim: '#a5b4d6' },
+  golden: { top: '#e88a5a', mid: '#f6b880', hor: '#ffe6b0', body: '#fff0dc', shade: '#e8b0a8', rim: '#c88a9a' },
+  dusk:   { top: '#3a3a86', mid: '#a86aa0', hor: '#f6a070', body: '#f4c8d0', shade: '#a880b0', rim: '#7a6098' },
+  night:  { top: '#1a2050', mid: '#3a4a8a', hor: '#6a6aa0', body: '#c8c8ea', shade: '#8a8ac0', rim: '#5a5a98' },
+};
+// one Ricks cloud painted into a 2D context: (cx, cy) = centre of its flat bottom, w = width, R = RNG, p = palette
+function c3PaintCloud(x, cx, cy, w, R, p, o = {}) {
+  const n = o.bumps ?? Math.round(R.r(4, 7)), bumps = [];
+  for (let i = 0; i < n; i++) {   // big bumps in the middle, small ones at the ends; bottoms clipped flat
+    const u = (i + 0.5) / n, edge = 1 - Math.abs(u - 0.5) * 2, r = w * (0.11 + 0.13 * edge) * R.r(0.85, 1.15);
+    bumps.push([cx - w / 2 + u * w, cy - r * R.r(0.35, 0.75) - edge * w * 0.06, r]);
+  }
+  for (let i = 0; i < Math.round(n / 2); i++) { const u = R.r(0.25, 0.75), r = w * R.r(0.12, 0.2); bumps.push([cx - w / 2 + u * w, cy - w * R.r(0.16, 0.26), r]); }
+  const shape = (dx, dy, k) => { x.beginPath(); for (const [bx, by, r] of bumps) { x.moveTo(bx + dx + r * k, by + dy); x.arc(bx + dx, by + dy, r * k, 0, TAU); } };
+  x.save(); x.beginPath(); x.rect(cx - w, cy - w, w * 2, w); x.clip();   // flat bottom
+  x.filter = 'blur(1.2px)';
+  x.fillStyle = p.rim; shape(w * 0.012, w * 0.01, 1.02); x.fill();                         // thin cool rim on the shade side
+  x.fillStyle = p.shade; shape(0, 0, 1); x.fill();                                           // shaded body
+  x.fillStyle = p.body; shape(-w * 0.03, -w * 0.035, 0.9); x.fill();                         // lit bumps (shade shows lower-right)
+  x.globalAlpha = 0.55; x.fillStyle = '#ffffff'; shape(-w * 0.05, -w * 0.06, 0.6); x.fill(); // top highlights
+  x.globalAlpha = 1; x.filter = 'none';
+  x.restore();
+}
+// equirect sky texture for a BackSide sphere: Ricks gradient + a band of clouds (and optional sun/moon). Deterministic.
+// o: { mood: 'day'|'golden'|'dusk'|'night', seed, clouds: count, band: [v0, v1] (0 = top, 0.5 = horizon), sun: [u, v, r] }
+function c3SkyTex(o = {}) {
+  const p = Object.assign({}, C3_SKY[o.mood ?? 'day'], o.pal || {});
+  return c3Tex((x, w, h) => {
+    const g = x.createLinearGradient(0, 0, 0, h); g.addColorStop(0, p.top); g.addColorStop(o.midAt ?? 0.4, p.mid); g.addColorStop(0.5, p.hor); g.addColorStop(1, p.hor);
+    x.fillStyle = g; x.fillRect(0, 0, w, h);
+    if (o.sun) { const [u, v, r] = o.sun, sg = x.createRadialGradient(u * w, v * h, 0, u * w, v * h, r * 6); sg.addColorStop(0, 'rgba(255,250,230,1)'); sg.addColorStop(0.18, 'rgba(255,240,200,0.9)'); sg.addColorStop(1, 'rgba(255,230,180,0)'); x.fillStyle = sg; x.fillRect(0, 0, w, h); }
+    const R = RNG('c3sky', o.seed ?? 1), [v0, v1] = o.band ?? [0.2, 0.47], n = o.clouds ?? 14;
+    const list = [...Array(n)].map(() => ({ u: R.r(0, 1), v: R.r(v0, v1), s: R.r(0.6, 1.25) })).sort((a, b) => a.v - b.v);
+    for (const c of list) { const cw = w * 0.07 * (o.scale ?? 1) * c.s * (0.6 + (c.v - v0) / (v1 - v0 + 1e-6) * 0.6); for (const du of [0, -1, 1]) c3PaintCloud(x, (c.u + du) * w, c.v * h, cw, RNG('c3cl', Math.round(c.u * 1e5)), p); }
+  }, 4096, 2048);
+}
+// a cloud as a 3D billboard card (BG layer by default) for parallax near the horizon; drift it with .position
+function c3Cloud(o = {}) {
+  const p = Object.assign({}, C3_SKY[o.mood ?? 'day'], o.pal || {}), R = RNG('c3cloud', o.seed ?? 1);
+  const t = c3Tex((x, w, h) => c3PaintCloud(x, w / 2, h * 0.92, w * 0.82, R, p), 1024, 512);
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(2, 1), new THREE.MeshBasicMaterial({ map: t, transparent: true, depthWrite: false, fog: false }));
+  m.material.toneMapped = false; m.scale.set(o.size ?? 40, (o.size ?? 40) / 2, 1); m.renderOrder = -1; return m;
+}
+// a field of billboard clouds around (0,0,0): keep them facing the camera each frame with c3CloudsFace(group, cam)
+function c3Clouds(o = {}) {
+  const g = new THREE.Group(), R = RNG('c3clouds', o.seed ?? 1), n = o.n ?? 10;
+  for (let i = 0; i < n; i++) {
+    const a = (o.a0 ?? -0.9) + ((o.a1 ?? 0.9) - (o.a0 ?? -0.9)) * (i + R.r(0, 0.8)) / n, d = R.r(o.d0 ?? 300, o.d1 ?? 520);
+    const c = c3Cloud({ mood: o.mood, pal: o.pal, seed: (o.seed ?? 1) * 100 + i, size: R.r(o.s0 ?? 50, o.s1 ?? 110) });
+    c.position.set(Math.sin(a) * d, R.r(o.y0 ?? 40, o.y1 ?? 140), -Math.cos(a) * d); c.userData.base = c.position.clone(); g.add(c);
+  }
+  return g;
+}
+function c3CloudsFace(g, cam, t = 0, drift = 1.2) { g.children.forEach((c, i) => { c.position.copy(c.userData.base); c.position.x += drift * t * (0.6 + (i % 3) * 0.2); c.quaternion.copy(cam.quaternion); }); }
+
+// ---- soft shading (Ricks): every surface carries a gentle vertical gradient — lit and warm on top, a little darker
+// and cooler towards the bottom (soft AO where things meet the ground). Opt-in per object: c3Shade(obj, { dark, cool }).
+function c3Shade(obj, o = {}) {
+  if (obj.userData.shaded) return obj; obj.userData.shaded = true;
+  const dark = o.dark ?? 0.22, cool = new THREE.Color(o.cool ?? '#8a9ad0'), warm = new THREE.Color(o.warm ?? '#fff6e8');
+  obj.updateMatrixWorld(true); const box = new THREE.Box3().setFromObject(obj), y0 = box.min.y, y1 = Math.max(box.max.y, y0 + 1e-3);
+  obj.traverse((m) => {
+    if (!m.isMesh || !m.geometry || !m.geometry.attributes.position || m.userData.hull || m.userData.noShade || m.material?.isShaderMaterial || m.material?.transparent) return;
+    const pos = m.geometry.attributes.position, col = new Float32Array(pos.count * 3), v = new THREE.Vector3(), c = new THREE.Color();
+    for (let i = 0; i < pos.count; i++) {
+      v.fromBufferAttribute(pos, i).applyMatrix4(m.matrixWorld); const h = clamp((v.y - y0) / (y1 - y0)), ao = Math.pow(1 - h, 2.2);
+      c.setRGB(1, 1, 1).lerp(cool, ao * dark * 1.4).lerp(warm, h * 0.25).multiplyScalar(1 - ao * dark);
+      col.set([c.r, c.g, c.b], i * 3);
+    }
+    m.geometry = m.geometry.clone(); m.geometry.setAttribute('color', new THREE.BufferAttribute(col, 3));
+    const mats = Array.isArray(m.material) ? m.material : [m.material];
+    m.material = mats.map((mt) => { const n = mt.clone(); n.vertexColors = true; return n; }); if (m.material.length === 1) m.material = m.material[0];
+  });
+  return obj;
+}
+
+// ---- surface textures (Ricks: every wall has a material — siding boards, brick, shingles, plaster, paving, wood)
+const c3Shd = (hex, k) => { const c = new THREE.Color(hex); c.multiplyScalar(k); return '#' + c.getHexString(); };
+function c3TexWall(kind, color, o = {}) {
+  const t = c3Tex((x, w, h) => {
+    const R = RNG('c3wall', kind + color); x.fillStyle = color; x.fillRect(0, 0, w, h);
+    if (kind === 'siding') { const n = 12; for (let i = 0; i < n; i++) { const y = i * h / n; const g = x.createLinearGradient(0, y, 0, y + h / n); g.addColorStop(0, c3Shd(color, 1.06)); g.addColorStop(0.85, color); g.addColorStop(1, c3Shd(color, 0.72)); x.fillStyle = g; x.fillRect(0, y, w, h / n); } }
+    else if (kind === 'brick') { const rows = 16, cols = 6; x.fillStyle = c3Shd(color, 0.62); x.fillRect(0, 0, w, h);
+      for (let j = 0; j < rows; j++) for (let i = -1; i < cols; i++) { const bx = (i + (j % 2) * 0.5) * w / cols + 3, by = j * h / rows + 3; x.fillStyle = c3Shd(color, R.r(0.88, 1.1)); x.fillRect(bx, by, w / cols - 6, h / rows - 6); x.fillStyle = 'rgba(255,255,255,0.12)'; x.fillRect(bx, by, w / cols - 6, 3); } }
+    else if (kind === 'shingle') { const rows = 10, cols = 8; for (let j = 0; j < rows; j++) for (let i = -1; i <= cols; i++) { const bx = (i + (j % 2) * 0.5) * w / cols, by = j * h / rows, bw = w / cols, bh = h / rows;
+        x.fillStyle = c3Shd(color, R.r(0.86, 1.08)); x.beginPath(); x.moveTo(bx + 1, by); x.lineTo(bx + bw - 1, by); x.lineTo(bx + bw - 1, by + bh * 0.8); x.quadraticCurveTo(bx + bw / 2, by + bh * 1.15, bx + 1, by + bh * 0.8); x.fill();
+        x.fillStyle = c3Shd(color, 0.6); x.fillRect(bx, by + bh - 4, bw, 4); } }
+    else if (kind === 'paving') { const n = 8; x.fillStyle = c3Shd(color, 0.7); x.fillRect(0, 0, w, h); for (let j = 0; j < n; j++) for (let i = 0; i < n; i++) { x.fillStyle = c3Shd(color, R.r(0.9, 1.08)); x.fillRect(i * w / n + 3, j * h / n + 3, w / n - 6, h / n - 6); } }
+    else if (kind === 'wood') { for (let i = 0; i < 6; i++) { x.fillStyle = c3Shd(color, R.r(0.88, 1.08)); x.fillRect(i * w / 6, 0, w / 6, h); x.fillStyle = c3Shd(color, 0.6); x.fillRect(i * w / 6, 0, 3, h); }
+      x.strokeStyle = c3Shd(color, 0.75); x.lineWidth = 2; for (let k = 0; k < 30; k++) { const px = R.r(0, w); x.beginPath(); x.moveTo(px, 0); x.bezierCurveTo(px + R.n(8), h / 3, px + R.n(8), h * 2 / 3, px + R.n(4), h); x.stroke(); } }
+    else { for (let k = 0; k < 400; k++) { x.fillStyle = R.f() < 0.5 ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.05)'; x.fillRect(R.r(0, w), R.r(0, h), R.r(2, 8), R.r(2, 8)); } }   // plaster
+  }, 512, 512);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping; if (o.rep) t.repeat.set(o.rep[0], o.rep[1]); return t;
+}
+// window glass: sky reflection gradient with a diagonal sheen, or a warm lit room with curtains
+function c3TexGlass(lit) {
+  return c3Tex((x, w, h) => {
+    const g = x.createLinearGradient(0, 0, w * 0.4, h);
+    if (lit) { g.addColorStop(0, '#ffe8b0'); g.addColorStop(1, '#f0b060'); } else { g.addColorStop(0, '#cfe6ff'); g.addColorStop(0.6, '#7aa6d8'); g.addColorStop(1, '#4a6aa8'); }
+    x.fillStyle = g; x.fillRect(0, 0, w, h);
+    if (lit) { x.fillStyle = 'rgba(200,80,60,0.55)'; x.fillRect(0, 0, w * 0.22, h); x.fillRect(w * 0.78, 0, w * 0.22, h); }
+    x.fillStyle = 'rgba(255,255,255,0.45)'; x.beginPath(); x.moveTo(w * 0.15, h); x.lineTo(w * 0.45, 0); x.lineTo(w * 0.6, 0); x.lineTo(w * 0.3, h); x.fill();
+    x.fillStyle = 'rgba(255,255,255,0.25)'; x.beginPath(); x.moveTo(w * 0.42, h); x.lineTo(w * 0.72, 0); x.lineTo(w * 0.78, 0); x.lineTo(w * 0.48, h); x.fill();
+  }, 128, 192);
+}
+const C3_GLASS = {}; const c3GlassTex = (lit) => (C3_GLASS[lit ? 1 : 0] ||= c3TexGlass(lit));
+// a detailed building (Ricks exteriors): textured walls, framed windows with sills, mullions and optional shutters and
+// planters, a panelled door with frame, knob and steps, cornices, a gable shingle roof with chimney and gutters or a flat
+// roof with parapet, an optional sign over the door. Origin = centre of the footprint at ground level, front faces +z.
+// o: { w, h, d, floors, cols, wall: 'siding'|'brick'|'plaster'|'wood', color, trim, roof: 'gable'|'flat', roofH, roofColor,
+//      shutters, planters, door, doorCol (-1 = none), lit (0..1 share of lit windows), sign, signColor, chimney, seed, ink }
+function c3Building(o = {}) {
+  const g = new THREE.Group(), R = RNG('c3bld', o.seed ?? 1), W = o.w ?? 8, H = o.h ?? 7, D = o.d ?? 6, F = o.floors ?? 2, C = o.cols ?? 3;
+  const ink = o.ink ?? 0.03, trim = o.trim ?? '#f6f0e4', col = o.color ?? '#7cc0c0';
+  const box = (w, h, d, mat, x, y, z, k = ink) => { const m = c3Mesh(c3RBox(w, h, d, Math.min(0.06, w * 0.2, h * 0.2, d * 0.2)), mat, k); m.position.set(x, y, z); g.add(m); return m; };
+  const wall = c3Prop('#ffffff', { map: c3TexWall(o.wall ?? 'siding', col, { rep: [Math.max(1, W / (o.texS ?? 7)), Math.max(1, H / (o.texS ?? 7))] }), rough: 0.8 });
+  box(W, H, D, wall, 0, H / 2, 0);
+  const trimM = c3Prop(trim, { rough: 0.6 }), fh = (H - 0.6) / F, ww = Math.min(o.winW ?? 2.2, W / C * 0.5), wh = Math.min(fh * 0.6, o.winH ?? 3.0);
+  box(W + 0.3, 0.35, D + 0.3, trimM, 0, 0.17, 0);
+  for (let f = 1; f <= F; f++) box(W + 0.18, 0.16, D + 0.18, trimM, 0, Math.min(H, f * fh + 0.3), 0, ink * 0.6);
+  const doorCol = o.doorCol ?? Math.floor(C / 2);
+  for (let f = 0; f < F; f++) for (let c = 0; c < C; c++) {
+    const x = -W / 2 + (c + 0.5) * W / C, y = 0.35 + f * fh + fh * 0.55, z = D / 2;
+    if (f === 0 && c === doorCol) {
+      const dw = Math.min(1.5, W / C * 0.55), dh = Math.min(fh * 0.8, 2.6), dc = o.door ?? '#d8452e';
+      box(dw + 0.36, dh + 0.25, 0.14, trimM, x, 0.35 + dh / 2 + 0.06, z + 0.04);
+      box(dw, dh, 0.12, c3Prop(dc, { rough: 0.5 }), x, 0.35 + dh / 2, z + 0.1);
+      for (const [px, py] of [[-0.22, 0.25], [0.22, 0.25], [-0.22, -0.2], [0.22, -0.2]]) box(dw * 0.32, dh * 0.3, 0.05, c3Prop(c3Shd(dc, 0.82)), x + px * dw, 0.35 + dh / 2 + py * dh, z + 0.17, 0.015);
+      const knob = c3Mesh(new THREE.SphereGeometry(0.08, 12, 8), c3Prop('#f0c040', { metal: 0.8, rough: 0.25 }), 0.01); knob.position.set(x + dw * 0.36, 0.35 + dh * 0.48, z + 0.22); g.add(knob);
+      box(dw + 0.8, 0.18, 0.7, trimM, x, 0.09, z + 0.45); box(dw + 0.5, 0.18, 0.45, trimM, x, 0.27, z + 0.3);
+      if (o.sign) {
+        const st = c3Tex((cx, w2, h2) => { cx.fillStyle = o.signColor ?? '#2a5a8a'; cx.fillRect(0, 0, w2, h2); cx.strokeStyle = '#f0d890'; cx.lineWidth = 10; cx.strokeRect(8, 8, w2 - 16, h2 - 16);
+          let s = h2 * 0.5; cx.font = '900 ' + s + 'px ' + C3.sub; while (cx.measureText(o.sign).width > w2 * 0.86 && s > 10) { s *= 0.92; cx.font = '900 ' + s + 'px ' + C3.sub; }
+          cx.textAlign = 'center'; cx.textBaseline = 'middle'; cx.fillStyle = '#fff6e0'; cx.fillText(o.sign, w2 / 2, h2 / 2 + 2); }, 1024, 256);
+        const sw = o.signW ?? Math.min(W * 0.8, 6), sm = new THREE.Mesh(new THREE.PlaneGeometry(sw, sw / 4), new THREE.MeshBasicMaterial({ map: st })); sm.material.toneMapped = false; sm.position.set(x, 0.35 + dh + 0.75, z + 0.12); g.add(sm);
+      }
+      continue;
+    }
+    const lit = R.f() < (o.lit ?? 0.2);
+    box(ww + 0.26, wh + 0.26, 0.12, trimM, x, y, z + 0.03, ink * 0.7);
+    const glM = new THREE.MeshBasicMaterial({ map: c3GlassTex(lit) }); glM.toneMapped = false; if (lit) glM.userData.glow = '#ffd890';
+    const gl = new THREE.Mesh(new THREE.PlaneGeometry(ww, wh), glM); gl.position.set(x, y, z + 0.1); g.add(gl);
+    box(0.06, wh, 0.06, trimM, x, y, z + 0.13, 0); box(ww, 0.06, 0.06, trimM, x, y + wh * 0.1, z + 0.13, 0);
+    box(ww + 0.5, 0.12, 0.34, trimM, x, y - wh / 2 - 0.16, z + 0.16, ink * 0.6);
+    if (o.shutters) for (const sx of [-1, 1]) box(ww * 0.42, wh + 0.2, 0.08, c3Prop('#ffffff', { map: c3TexWall('siding', o.shutters, { rep: [1, 2] }), rough: 0.6 }), x + sx * (ww / 2 + ww * 0.26), y, z + 0.08, ink * 0.6);
+    if (o.planters && f === 0) {
+      box(ww + 0.3, 0.32, 0.34, c3Prop('#ffffff', { map: c3TexWall('wood', '#8a5a3a') }), x, y - wh / 2 - 0.42, z + 0.24, ink * 0.6);
+      for (let k = 0; k < 5; k++) { const b = c3Mesh(new THREE.SphereGeometry(0.16, 10, 8), c3Prop(['#e84a6a', '#ffd040', '#f080b0', '#ffffff'][k % 4]), 0.012); b.position.set(x - ww / 2 + (k + 0.5) * (ww + 0.2) / 5, y - wh / 2 - 0.2, z + 0.28); g.add(b); }
+    }
+  }
+  if ((o.roof ?? 'gable') === 'gable') {
+    const rh = o.roofH ?? Math.min(3.2, W * 0.38), sh = new THREE.Shape(); sh.moveTo(-W / 2 - 0.45, 0); sh.lineTo(W / 2 + 0.45, 0); sh.lineTo(0, rh); sh.lineTo(-W / 2 - 0.45, 0);
+    const rg = new THREE.ExtrudeGeometry(sh, { depth: D + 0.8, bevelEnabled: false }); rg.translate(0, 0, -(D + 0.8) / 2);
+    const roof = c3Mesh(rg, c3Prop('#ffffff', { map: c3TexWall('shingle', o.roofColor ?? '#8a3a2e', { rep: [W / 3, D / 3] }), rough: 0.85 }), ink); roof.position.y = H; g.add(roof);
+    const gutter = c3Mesh(new THREE.CylinderGeometry(0.1, 0.1, D + 0.8, 10), trimM, ink * 0.5); gutter.rotation.x = Math.PI / 2; gutter.position.set(W / 2 + 0.42, H - 0.05, 0); g.add(gutter);
+    const g2 = gutter.clone(); g2.position.x = -W / 2 - 0.42; g.add(g2);
+    if (o.chimney !== false) { box(0.9, rh + 0.6, 0.9, c3Prop('#ffffff', { map: c3TexWall('brick', '#b05a42') }), W * 0.22, H + rh * 0.55, -D * 0.15); box(1.1, 0.2, 1.1, trimM, W * 0.22, H + rh * 0.55 + rh / 2 + 0.38, -D * 0.15); }
+  } else { box(W + 0.4, 0.5, D + 0.4, trimM, 0, H + 0.2, 0); box(W - 0.2, 0.4, D - 0.2, c3Prop(o.roofColor ?? '#6a6a72'), 0, H + 0.05, 0, 0); }
+  g.userData.h = H; return g;
+}
+// small street furniture: a lamp post (warm glowing head) and a round tree, both inked
+function c3Lamp(h = 4.5) { const g = new THREE.Group(), M = c3Prop('#2a3a4a', { metal: 0.4, rough: 0.4 });
+  const p = c3Mesh(new THREE.CylinderGeometry(0.08, 0.12, h, 10), M, 0.02); p.position.y = h / 2; g.add(p);
+  const hd = c3Mesh(new THREE.SphereGeometry(0.32, 14, 10), c3Prop('#fff0c0', { emissive: '#ffd890', ei: 1, glow: '#ffd890' }), 0.02); hd.position.y = h + 0.2; g.add(hd);
+  const cap = c3Mesh(new THREE.ConeGeometry(0.42, 0.3, 12), M, 0.02); cap.position.y = h + 0.55; g.add(cap); return g; }
+function c3Tree(s = 1, color = '#5aa83a', seed = 1) { const g = new THREE.Group(), R = RNG('c3tree', seed);
+  const tr = c3Mesh(new THREE.CylinderGeometry(0.15 * s, 0.22 * s, 2 * s, 8), c3Prop('#7a4a2a'), 0.02); tr.position.y = s; g.add(tr);
+  for (let k = 0; k < 4; k++) { const b = c3Mesh(new THREE.SphereGeometry(s * R.r(0.75, 1.05), 16, 12), c3Prop(c3Shd(color, R.r(0.88, 1.08)), { rough: 0.8 }), 0.03); b.position.set(R.n(0.5 * s), 2.3 * s + R.r(0, 0.6 * s), R.n(0.4 * s)); g.add(b); }
+  return g; }
+
+// shade a whole built scene the Ricks way: c3Shade on each top-level object that has height (skips flat grounds,
+// the sky sphere, people/sprites and anything transparent). Call once at build, after the set is assembled.
+function c3ShadeScene(scene, o = {}) {
+  const box = new THREE.Box3(), size = new THREE.Vector3();
+  for (const c of scene.children) {
+    if (c.isLight || c.userData.noShade || c.userData.person) continue;
+    box.setFromObject(c); if (box.isEmpty()) continue; box.getSize(size);
+    if (size.y < (o.minH ?? 0.6) || Math.max(size.x, size.y, size.z) > (o.maxSize ?? 400)) continue;
+    let sprite = false; c.traverse((m) => { if (m.isMesh && m.material && m.material.transparent && m.material.map) sprite = true; });
+    if (sprite && size.y < (o.personH ?? 12) && !o.withSprites) continue;   // people (small groups of billboard sprites) keep their drawn shading
+    c3Shade(c, o);
+  }
+}

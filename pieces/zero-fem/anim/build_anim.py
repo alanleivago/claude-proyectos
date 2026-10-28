@@ -855,6 +855,302 @@ def A_drop_object():
         lag={"Head": 1, "Forearm": 1, "Hand": 0})
     face("drop_object", [[1, "open", "neutral"], [10, "happy", "smileOpen"], [21, "open", "surprised"], [27, "relaxed", "cat"]])
 
+
+# ---------------------------------------------------------------- digger-02 (squat, pinch_nose, pull_chain, throw_out_window, bend_pipe)
+# Puntos medidos en la pose (armature: x = su izquierda, -y = delante, z arriba). gw = (afuera, adelante, arriba) del lado.
+NOSE = None   # se rellena en measure() (centroide de los poligonos de la nariz, README de face)
+
+
+def A_squat():
+    """agachada profunda sobre un agujero, como sentada en un inodoro invisible (one-shot, se queda): abre los pies con dos
+    pasitos (pie en el aire, sin deslizar), baja con overshoot, pelvis baja y atras, espalda casi recta, punos en las
+    rodillas; balanceo leve."""
+    N = 40
+    fL = {"loc": (0.55, 0.35, 0), "rot": (0, 0, 22)}; fR = {"loc": (0.55, 0.35, 0), "rot": (0, 0, 22)}
+    air = lambda f: {"loc": (f["loc"][0], f["loc"][1], 0.75), "rot": (8, 0, f["rot"][2]), "piv": None}
+    poles = dict(poleL=(KNEE_OUT, 0, 0.4), poleR=(KNEE_OUT, 0, 0.4))
+    knee = lambda w, side: {"gw": (SQ_KNEE[0] - (w if side == "L" else -w) * 0.06, SQ_KNEE[1], SQ_KNEE[2]), "hw": (-0.3, 0.8, -0.5), "pw": (1, -0.3, 0.3)}
+    def sq(w=0.0, z=-3.1):
+        return P(pel={"loc": (w * 0.08, 0.75, z), "rot": (16, w * 2.5, 0)}, chest=(2, -w * 2, 0), neck=(2, 0, 0), head=(-10, w * 2, 0),
+                 armL=knee(w, "L"), armR=knee(w, "R"), footL=fL, footR=fR, **poles)
+    b0 = BASE
+    stepR = P(pel={"loc": (0.2, 0, -0.35), "rot": (2, -3, -3)}, chest=(2, 3, 3), head=(4, -2, -2), footR=air(fR), footL=b0["footL"])
+    plantR = P(pel={"loc": (-0.2, 0, -0.4), "rot": (2, 3, -3)}, chest=(2, -3, 3), head=(4, 2, -2), footR=fR, footL=b0["footL"])
+    stepL = P(pel={"loc": (-0.3, 0, -0.4), "rot": (2, 4, 3)}, chest=(2, -3, -3), head=(4, 2, 2), footR=fR, footL=air(fL))
+    plantL = P(pel={"loc": (0.0, 0.1, -0.6), "rot": (4, 0, 0)}, chest=(2, 0, 0), head=(4, 0, 0), footR=fR, footL=fL, **poles)
+    seq("squat", N, [(1, BASE), (4, stepR), (7, plantR), (9, stepL), (12, plantL), (17, sq(0, -3.35)), (23, sq(0, -3.05)),
+                     (30, sq(1)), (36, sq(-0.8)), (40, sq(0))], lag={"Head": 2, "Forearm": 1, "Hand": 1})
+    face("squat", [[1, "open", "neutral"], [10, "open", "surprised"], [17, "half", "frown"], [32, "half", "frown"], [33, "blink", "frown"],
+                   [35, "half", "frown"]])
+
+
+KNEE_OUT = -0.6                     # polo de la rodilla hacia fuera (unidades): rodillas adelante y algo abiertas
+SQ_KNEE = (1.85, 0.75, -3.72)         # puno sobre la rodilla (se ajusta con la medida de las rodillas)
+
+
+def A_pinch_nose():
+    """se echa atras, gira la cabeza un poco, el puno R pinza la nariz (delante de la cara) desde f12; la mano L abanica 2 veces."""
+    N = 36
+    body = dict(pel={"loc": (0.1, 0.25, -0.28), "rot": (-3, -2, 6)}, chest=(-4, -2, 8), neck=(-1, 0, 4), head=(-2, -6, 12))
+    nose = lambda dz=0.0: {"gw": (PINCH[0], PINCH[1], PINCH[2] + dz), "hw": (-0.75, 0.3, 0.6), "pw": (1, -0.2, -0.6)}
+    fan = lambda o: {"gw": (o, 2.55, -0.55), "hw": (o * 0.3, 0.35, 1), "pw": (1, -0.4, -0.7)}
+    sniff = P(pel={"loc": (-0.1, -0.1, -0.3), "rot": (3, 2, -3)}, chest=(6, -3, 2), neck=(4, 0, 0), head=(10, 2, -2),
+              armR=dict(ARM_DOWN, ik=(0.8, 0.9, -2.3)))
+    seq("pinch_nose", N, [(1, BASE), (5, sniff), (11, P(armR=nose(-0.15), armL=fan(0.9), **body)), (14, P(armR=nose(), armL=fan(-0.15), **body)),
+                          (18, P(armR=nose(), armL=fan(1.0), **body)), (22, P(armR=nose(), armL=fan(-0.1), **body)),
+                          (27, P(armR=nose(), armL=fan(0.55), **body)), (36, P(armR=nose(), armL=fan(0.55), **body))],
+        lag={"Head": 1, "Forearm": 1, "Hand": 0})
+    face("pinch_nose", [[1, "open", "neutral"], [4, "open", "surprised"], [8, "disgust", "disgust"]])
+
+
+def A_pull_chain():
+    """brazo R arriba y un poco delante-derecha, de puntillas; cierra el puno en la cadena en f10, tira hacia abajo hasta
+    la altura del hombro (f18), mantiene a f24, suelta y vuelve a la base en f36. Mano L en la cadera."""
+    N = 40
+    TOP = {"gw": (1.0, 0.9, 5.4), "hw": (0.05, 0.15, 1), "pw": (1, 0.2, -0.4), "ht": 0}
+    DOWN = {"gw": (1.95, 1.75, 0.55), "hw": (0.0, 0.35, 1), "pw": (1, -0.2, -0.8), "ht": 0}
+    toes = dict(footL={"loc": (-0.2, 0.55, 0), "rot": (18, 0, 14)}, footR={"loc": (0.0, -0.05, 0), "rot": (18, 0, 8)})
+    reach = P(pel={"loc": (-0.4, 0.05, 0.3), "rot": (-4, 6, -4)}, chest=(-6, 8, 4), neck=(-2, -2, 0), head=(-18, -4, -6),
+              armR=TOP, armL=dict(HIP), **toes)
+    pull = P(pel={"loc": (-0.2, 0.1, -0.55), "rot": (6, 4, -4)}, chest=(8, -4, 4), head=(-4, -2, -4), armR=DOWN, armL=dict(HIP))
+    ant = P(pel={"loc": (-0.22, 0, -0.45), "rot": (3, 4, -4)}, chest=(4, -4, 4), head=(-4, 2, -3),
+            armR={"gw": (2.15, 1.15, 0.9), "hw": (0.3, 0.2, 1), "pw": (1, 0, -0.6)}, armL=dict(HIP))
+    mid = raw_mix(C(reach), C(pull), 0.55)
+    seq("pull_chain", N, [(1, BASE), (5, ant), (10, reach), (12, reach), (15, mid), (18, pull), (21, raw_mix(C(pull), C(reach), -0.12)),
+                          (24, pull), (30, raw_mix(C(pull), C(BASE), 0.6)), (36, BASE), (40, BASE)],
+        lag={"Head": 1, "Forearm": 0, "Hand": 0, "UpperArm": 0})
+    face("pull_chain", [[1, "open", "neutral"], [5, "open", "smileOpen"], [17, "happy", "smile"], [32, "happy", "smile"], [36, "open", "smile"]])
+
+
+def A_throw_out_window():
+    """empieza sujetando un orinal con los dos punos delante del pecho; atras (f6-9), balanceo grande adelante-arriba
+    (brazos casi estirados a la altura del hombro f18), las munecas vuelcan f20-24 (suelta en f21), seguimiento y se queda."""
+    N = 45
+    hold = lambda f, u, hw: {"gw": (1.3, f, u), "hw": hw, "pw": (1, -0.3, -0.7)}
+    carry = P(pel={"loc": (-0.1, 0.1, -0.25), "rot": (0, 2, -2)}, chest=(-2, -2, 2), head=(8, 0, 0),
+              armL=hold(2.9, -0.45, (-0.4, 1, 0.25)), armR=hold(2.9, -0.45, (-0.4, 1, 0.25)))
+    back = P(pel={"loc": (-0.05, 0.45, -0.65), "rot": (-3, 2, -2)}, chest=(-9, -2, 2), head=(-2, 0, 0),
+             armL=hold(1.95, -1.6, (-0.4, 1, 0.6)), armR=hold(1.95, -1.6, (-0.4, 1, 0.6)))
+    swing_ = P(pel={"loc": (-0.05, -0.35, -0.3), "rot": (7, 2, -2)}, chest=(14, -2, 2), head=(-8, 0, 0),
+               armL=hold(4.5, 0.95, (-0.3, 1, 0.45)), armR=hold(4.5, 0.95, (-0.3, 1, 0.45)))
+    dump = deep(swing_, {"armL": hold(4.6, 0.85, (-0.3, 0.6, -1)), "armR": hold(4.6, 0.85, (-0.3, 0.6, -1)), "chest": (16, -2, 2)})
+    dump2 = deep(dump, {"armL": hold(4.6, 0.6, (-0.25, 0.15, -1)), "armR": hold(4.6, 0.6, (-0.25, 0.15, -1)), "head": (-2, 0, 0)})
+    follow = P(pel={"loc": (-0.05, -0.4, -0.38), "rot": (9, 2, -2)}, chest=(18, -2, 2), head=(0, 0, 0),
+               armL=hold(4.3, 0.25, (-0.25, 0.3, -1)), armR=hold(4.3, 0.25, (-0.25, 0.3, -1)))
+    settle = P(pel={"loc": (-0.1, -0.25, -0.3), "rot": (6, 2, -2)}, chest=(12, -2, 2), head=(-4, 2, 0),
+               armL=hold(3.9, -0.1, (-0.25, 0.5, -1)), armR=hold(3.9, -0.1, (-0.25, 0.5, -1)))
+    seq("throw_out_window", N, [(1, carry), (4, raw_mix(C(carry), C(back), 0.5)), (7, back), (9, back), (18, swing_), (20, swing_),
+                                (21, dump), (24, dump2), (30, follow), (36, settle), (45, settle)],
+        lag={"Head": 1, "Forearm": 0, "Hand": 0, "UpperArm": 0})
+    face("throw_out_window", [[1, "angry", "neutral"], [6, "angry", "shout"], [22, "happy", "smileOpen"], [38, "happy", "smile"]])
+
+
+def A_bend_pipe():
+    """sujeta un tubo horizontal con los dos punos delante del pecho (~0,5 m entre punos); esfuerzo: el puno R sube y se
+    acerca, el L baja y se acerca (doblar en S) entre f10 y f32 con sacudidas; luego se queda."""
+    N = 45
+    grip = lambda o, f, u: {"gw": (o, f, u), "hw": (-0.25, 1, 0.0), "pw": (1, -0.3, -0.8), "ht": 0}
+    def pose(k, j=0.0):
+        rL, rR = grip(2.06 - 0.3 * k, 2.7, -0.75 * k + j * 0.07), grip(2.06 - 0.3 * k, 2.7, 0.65 * k - j * 0.07)
+        return P(pel={"loc": (-0.1, 0.15, -0.45 - 0.1 * k), "rot": (3, j * 1.5, -2)}, chest=(4 + 2 * k, -2 - j * 1.5, 2), neck=(4, 0, 0),
+                 head=(10, j * 2, 0), armL=rL, armR=rR)
+    up = deep(pose(0), {"pel": {"loc": (-0.1, 0.1, -0.15)}, "chest": (-4, -2, 2), "head": (2, 0, 0)})
+    keys = [(1, pose(0)), (6, up), (10, pose(0.05))]
+    for i, f in enumerate(range(14, 31, 3)): keys.append((f, pose((f - 10) / 22, 1 if i % 2 == 0 else -1)))
+    keys += [(32, pose(1.0)), (37, pose(1.04)), (45, pose(1.0))]
+    seq("bend_pipe", N, keys, lag={"Head": 1, "Forearm": 0, "Hand": 0, "UpperArm": 0})
+    face("bend_pipe", [[1, "open", "neutral"], [5, "angry", "neutral"], [10, "angry", "shout"], [34, "happy", "smile"]])
+
+
+# ---------------------------------------------------------------- digger-03 (detector, melt beam, catch, push, door, bar, peek, key)
+# Puntos de puno en METROS de three.js (afuera de su lado, adelante, altura desde el suelo; raiz en los pies, 1,6 m de alto)
+S3 = 1.6 / 13.2
+def M(o, f, y): return (o / S3, f / S3, y / S3 - 9.0)
+
+
+def A_detector_walk():
+    """andar (loop 30 f, misma zancada que walk: 7,2 u/s) con un detector de metales en la mano R: puno bajo delante de la
+    cadera (~0,3 m), brazo estirado abajo/adelante, barrido izquierda-derecha una vez por ciclo (~0,25 m); mano L en la
+    cadera; cabeza mirando al suelo delante. Pies: las mismas fases de contacto que walk (sin deslizar)."""
+    N = 30
+    PZ = [-0.15, -0.42, -0.24, -0.12] * 2
+    PX = [0.0, 0.14, 0.24, 0.12, 0.0, -0.14, -0.24, -0.12]
+    YAW = [-8, -5, 0, 4, 8, 5, 0, -4]
+    ROLL = [0, -2.5, -6, -2.5, 0, 2.5, 6, 2.5]
+    CP = [-1, 1, 2, 0] * 2
+    HEADP = [0, 2.5, 1, -1.5] * 2
+    raws = []
+    for f in range(N + 1):
+        u = f / N
+        g = lambda tab: periodic(tab, u)
+        sweep = math.sin(2 * math.pi * (u - 2 / N))                       # el barrido va 2 f detras del cuerpo
+        det = {"gw": M(0.06 + 0.125 * sweep, 0.30, 0.72), "hw": (-0.15 - 0.25 * sweep, 0.75, -1), "pw": (1, -0.2, -0.3), "ht": 0}
+        pose = P(pel={"loc": (g(PX), -0.1, g(PZ)), "rot": (7, g(ROLL), g(YAW) * 0.6)},
+                 chest=(g(CP) + 7, -g(ROLL) * 0.5, -g(YAW) * 0.5 - 6 * sweep), neck=(4, 0, 0),
+                 head=(periodic(HEADP, u - 1 / N) + 16, -periodic(ROLL, u - 1 / N) * 0.3, -6 * periodic([1, 0.7, 0, -0.7, -1, -0.7, 0, 0.7], u - 3 / N)),
+                 footL=walk_foot(u), footR=walk_foot(u + 0.5), armR=det, armL=dict(HIP))
+        raws.append((f + 1, C(pose)))
+    build("detector_walk", raws, N, loop=True, lag={}, interp="AUTO_CLAMPED", per_frame=True)
+    LIB["detector_walk"]["stride_per_cycle"] = round(4 * WALK_S, 3)
+    LIB["detector_walk"]["speed_units_per_s"] = round(4 * WALK_S / (N / FPS), 3)
+    face("detector_walk", blinks(N, every=200, start=18, eyes="open", mouth="smile"))
+
+
+DET_HOLD = {"gw": M(0.06, 0.30, 0.72), "hw": (-0.15, 0.75, -1), "pw": (1, -0.2, -0.3), "ht": 0}
+
+
+def A_detector_stop():
+    """desde la base con el detector (mismo agarre), se para, se inclina, mira al suelo delante y se agacha un poco con el
+    detector sobre el punto (one-shot 40 f, se queda)."""
+    N = 40
+    knees = dict(poleL=(0, 0, 1.6), poleR=(0, 0, 1.6))
+    start = P(armR=DET_HOLD, armL=dict(HIP), chest=(4, -5, 6), head=(12, 4, -3))
+    ant = P(pel={"loc": (-0.22, -0.15, -0.1), "rot": (-2, 4, -5)}, chest=(-4, -5, 6), head=(4, 4, -3), armL=dict(HIP),
+            armR={"gw": M(0.08, 0.24, 0.78), "hw": (-0.15, 0.75, -1), "pw": (1, -0.2, -0.3), "ht": 0})
+    lean = P(pel={"loc": (-0.15, 0.2, -0.45), "rot": (10, 2, -3)}, chest=(16, -2, 3), neck=(4, 0, 0), head=(8, 2, 0), armL=dict(HIP),
+             armR={"gw": M(0.04, 0.40, 0.55), "hw": (-0.1, 0.6, -1), "pw": (1, -0.2, -0.3), "ht": 0}, **knees)
+    crouch = P(pel={"loc": (-0.1, 0.45, -1.5), "rot": (14, 1, -2)}, chest=(16, -1, 2), neck=(2, 0, 0), head=(4, 0, 0), armL=dict(HIP),
+               armR={"gw": M(0.03, 0.44, 0.42), "hw": (-0.05, 0.5, -1), "pw": (1, -0.2, -0.3), "ht": 0}, **knees)
+    seq("detector_stop", N, [(1, start), (5, ant), (12, lean), (19, raw_mix(C(lean), C(crouch), 1.12)), (24, crouch), (40, crouch)],
+        lag={"Head": 1, "Forearm": 1, "Hand": 1})
+    face("detector_stop", [[1, "open", "smile"], [8, "surprised", "surprised"], [20, "surprised", "gasp"]])
+
+
+def A_melt_beam():
+    """estocada baja con las DOS palmas hacia un punto del suelo ~0,5 m delante de los pies a ~0,25 m de altura (punos a
+    ~0,3 m entre si, munecas dobladas hacia el blanco); temblor de esfuerzo desde f15 (one-shot 45 f, se queda)."""
+    N = 45
+    feet = dict(footL={"loc": (-0.15, 1.6, 0), "rot": (0, 0, 10)}, footR={"loc": (0.05, -1.7, 0), "rot": (16, 0, 10)},
+                poleL=(0, 0, 1.8), poleR=(0, 0, -1.0))
+    def aim(j=0.0, k=1.0):
+        palm = lambda: {"gw": M(0.15, 0.36 + 0.02 * j, 0.6 + 0.012 * j), "hw": (-0.25, 0.55, -1), "pw": (1, -0.4, -0.5), "ht": 0}
+        return P(pel={"loc": (0.0, 0.55, -2.3 * k + 0.05 * j), "rot": (12, j * 1.2, 0)}, chest=(20 + j, j * 1.5, 0), neck=(6, 0, 0),
+                 head=(4, -j, 0), armL=palm(), armR=palm(), **feet)
+    ant = P(pel={"loc": (-0.1, -0.2, -0.6), "rot": (-4, 2, -2)}, chest=(-8, -2, 2), head=(-4, 0, 0),
+            armL={"gw": M(0.2, 0.05, 0.95), "hw": (0, 0.2, 1), "pw": (1, -0.5, -0.6)}, armR={"gw": M(0.2, 0.05, 0.95), "hw": (0, 0.2, 1), "pw": (1, -0.5, -0.6)})
+    air = lambda f: {"loc": (f["loc"][0], f["loc"][1], 0.75), "rot": (6, 0, f["rot"][2]), "piv": None}
+    stepL = deep(ant, {"footL": air(feet["footL"])}); plantL = deep(ant, {"footL": feet["footL"], "poleL": feet["poleL"]})
+    stepR = deep(plantL, {"footR": air(feet["footR"])})
+    keys = [(1, BASE), (4, stepL), (6, plantL), (8, stepR), (10, deep(plantL, {"footR": feet["footR"], "poleR": feet["poleR"]})),
+            (13, aim(0, 1.06)), (15, aim())]
+    for i, f in enumerate(range(17, 44, 2)): keys.append((f, aim(1 if i % 2 == 0 else -1)))
+    keys.append((45, aim()))
+    seq("melt_beam", N, keys, lag={"Head": 1, "Forearm": 0, "Hand": 0, "UpperArm": 0})
+    face("melt_beam", [[1, "open", "neutral"], [6, "angry", "neutral"], [12, "angry", "shout"]])
+
+
+def A_catch_object():
+    """mano R ahuecada palma arriba delante del pecho (~0,3 m) recibe un objeto en f14 (baja un poco f14-16 con el peso),
+    luego lo sube a la altura de los ojos (a su derecha, sin taparle la cara) en f30 y lo mira (one-shot 36 f, se queda)."""
+    N = 36
+    cup = lambda y, f=0.3, o=0.06: {"gw": M(o, f, y), "hw": (-0.2, 1, 0.05), "pw": (1, -0.3, -0.8), "ht": -80}
+    body = dict(pel={"loc": (0.1, 0, -0.22), "rot": (0, -4, 4)}, armL=dict(HIP))
+    wait = P(chest=(4, -2, 2), head=(14, 2, -6), armR=cup(1.0), **body)
+    look = P(chest=(-3, 3, -6), head=(2, -6, -22), armR={"gw": M(0.33, 0.3, 1.3), "hw": (0.1, 0.6, 0.6), "pw": (1, -0.2, -0.8), "ht": -80}, **body)
+    seq("catch_object", N, [(1, BASE), (6, P(armR=cup(0.95, 0.22), head=(6, 2, -3), **body)), (11, wait), (14, wait),
+                            (16, P(chest=(7, -2, 2), head=(16, 2, -6), armR=cup(0.93), **body)), (20, wait), (30, look), (36, look)],
+        lag={"Head": 1, "Forearm": 1, "Hand": 0})
+    face("catch_object", [[1, "open", "neutral"], [8, "open", "surprised"], [14, "surprised", "gasp"], [24, "happy", "smileOpen"]])
+
+
+def A_push_heavy():
+    """empujar algo pesado (loop 40 f): inclinada ~35 grados, las dos palmas delante a la altura del pecho (~0,45 m delante,
+    ~0,3 m entre punos), piernas en estocada con los pies plantados (three.js mueve la raiz), balanceo de esfuerzo."""
+    N = 40
+    feet = dict(footL={"loc": (-0.1, 1.2, 0), "rot": (0, 0, 10)}, footR={"loc": (0.05, -1.9, 0), "rot": (22, 0, 8)},
+                poleL=(0, 0, 1.8), poleR=(0, 0, -0.5))
+    def push(k):
+        palm = {"gw": M(0.15, 0.50 + 0.03 * k, 0.92 - 0.02 * k), "hw": (0.05, 0.45, 1), "pw": (1, -0.2, -0.8), "ht": 0}
+        return P(pel={"loc": (0.0, 0.7 + 0.1 * k, -0.95 - 0.25 * k), "rot": (16 + 3 * k, 0, 0)}, chest=(20 + 4 * k, 0, 0), neck=(-6, 0, 0),
+                 head=(-14 - 2 * k, 0, 0), armL=palm, armR=palm, **feet)
+    build("push_heavy", [(1, C(push(0))), (11, C(push(1))), (21, C(push(0.2))), (31, C(push(0.9))), (41, C(push(0)))], N,
+          loop=True, lag={"Head": 2, "Forearm": 1, "Hand": 1})
+    face("push_heavy", [[1, "angry", "shout"], [16, "angry", "frown"], [24, "angry", "shout"], [36, "angry", "frown"]])
+
+
+def A_push_door():
+    """dos empujones a una puerta delante (palmas a la altura del hombro, ~0,4 m delante), cada uno con rebote atras; pies
+    plantados; enfado -> triste (one-shot 40 f)."""
+    N = 40
+    palm = lambda f, y=1.0: {"gw": M(0.2, f, y), "hw": (0.05, 0.45, 1), "pw": (1, -0.2, -0.8), "ht": 0}
+    feet = {}   # pies de la base: plantados (sin deslizar)
+    ready = P(pel={"loc": (0, 0.0, -0.4), "rot": (2, 0, 0)}, chest=(0, 0, 0), head=(2, 0, 0), armL=palm(0.22), armR=palm(0.22), **feet)
+    shove = P(pel={"loc": (0, 0.55, -0.35), "rot": (8, 0, 0)}, chest=(10, 0, 0), head=(-2, 0, 0), armL=palm(0.42), armR=palm(0.42), **feet)
+    recoil = P(pel={"loc": (0, -0.25, -0.45), "rot": (-4, 0, 0)}, chest=(-6, 0, 0), head=(-6, 0, 0), armL=palm(0.28, 0.96), armR=palm(0.28, 0.96), **feet)
+    slump = P(pel={"loc": (0, 0.0, -0.5), "rot": (6, 2, -2)}, chest=(10, -2, 2), neck=(6, 0, 0), head=(14, 4, 0),
+              armL=dict(ARM_DOWN, ik=(1.0, 0.5, -2.85)), armR=dict(ARM_DOWN, ik=(0.95, 0.45, -2.9)), **feet)
+    seq("push_door", N, [(1, BASE), (5, ready), (8, shove), (13, recoil), (17, ready), (22, shove), (27, recoil), (33, slump), (40, slump)],
+        lag={"Head": 1, "Forearm": 1, "Hand": 0})
+    face("push_door", [[1, "open", "neutral"], [5, "angry", "neutral"], [8, "angry", "shout"], [14, "angry", "frown"], [22, "angry", "shout"],
+                       [30, "sad", "frown"]])
+
+
+def A_lift_bar():
+    """sujeta una tranca horizontal larga con los dos punos a la altura del hombro (~0,35 m delante, ~0,6 m entre punos),
+    la sube por encima de la cabeza (f15) y la baja hacia delante hasta el pecho (f30) como dejandola en los soportes."""
+    N = 45
+    grip = lambda f, y: {"gw": M(0.30, f, y), "hw": (-0.3, 1, 0.15), "pw": (1, -0.2, -0.8), "ht": 0}
+    hold = P(pel={"loc": (0, 0.0, -0.3), "rot": (0, 0, 0)}, chest=(0, 0, 0), head=(-4, 0, 0), armL=grip(0.35, 1.12), armR=grip(0.35, 1.12))
+    dip = P(pel={"loc": (0, 0.1, -0.85), "rot": (4, 0, 0)}, chest=(4, 0, 0), head=(0, 0, 0), armL=grip(0.33, 1.0), armR=grip(0.33, 1.0))
+    top = P(pel={"loc": (0, -0.1, -0.1), "rot": (-4, 0, 0)}, chest=(-10, 0, 0), neck=(-6, 0, 0), head=(-16, 0, 0),
+            armL=grip(0.18, 1.62), armR=grip(0.18, 1.62))
+    drop = P(pel={"loc": (0, 0.35, -0.55), "rot": (8, 0, 0)}, chest=(12, 0, 0), head=(4, 0, 0), armL=grip(0.45, 1.0), armR=grip(0.45, 1.0))
+    seq("lift_bar", N, [(1, hold), (6, dip), (15, top), (19, top), (30, drop), (34, raw_mix(C(top), C(drop), 1.1)), (38, drop), (45, drop)],
+        lag={"Head": 1, "Forearm": 0, "Hand": 0, "UpperArm": 0})
+    face("lift_bar", [[1, "open", "neutral"], [6, "angry", "neutral"], [12, "angry", "shout"], [32, "happy", "smile"]])
+
+
+def A_peek():
+    """asomarse por una esquina (loop 40 f): inclinada hacia su derecha ~25 grados, mano L plana en una pared imaginaria a
+    la altura del hombro a su izquierda, cabeza ladeada, balanceo curioso."""
+    N = 40
+    wall = {"gw": M(0.42, 0.04, 1.0), "hw": (0.15, 0.1, 1), "pw": (1, 0.2, -0.6), "ht": 90}
+    def lean(k):
+        return P(pel={"loc": (-0.45 - 0.08 * k, 0.05, -0.3), "rot": (2, -8 - 2 * k, 0)}, chest=(4, -14 - 3 * k, 0), neck=(0, -4, 0),
+                 head=(4 + 3 * k, -8 - 2 * k, -4 * k), armL=wall, armR=dict(ARM_DOWN, ik=(1.0, 0.45, -2.85)),
+                 footL={"loc": (-0.05, 0.4, 0), "rot": (0, 0, 10)}, footR={"loc": (-0.25, -0.1, 0), "rot": (0, 0, 8)})
+    build("peek", [(1, C(lean(0))), (11, C(lean(1))), (21, C(lean(0.2))), (31, C(lean(0.9))), (41, C(lean(0)))], N, loop=True,
+          lag={"Head": 2, "Forearm": 1, "Hand": 1})
+    face("peek", blinks(N, every=100, start=26, eyes="open", mouth="neutral"))
+
+
+def A_turn_key():
+    """el puno R llega a una cerradura a la altura de la cintura ~0,45 m delante (f10), gira la muneca 90 grados (f14-20)
+    y se retira (f28); se queda (one-shot 36 f)."""
+    N = 36
+    key = lambda f, y, t=0: {"gw": M(0.05, f, y), "hw": (-0.1, 1, 0.0), "pw": (1, -0.1, -0.8), "ht": t}
+    body = dict(pel={"loc": (-0.05, 0.4, -0.35), "rot": (8, 0, 2)}, chest=(12, 0, 2), neck=(4, 0, 0), head=(12, 0, 0), armL=dict(HIP))
+    reach = P(armR=key(0.45, 0.85), **body)
+    seq("turn_key", N, [(1, BASE), (5, P(armR=key(0.25, 0.8), head=(6, 0, 0), armL=dict(HIP))), (10, reach), (14, reach),
+                        (20, P(armR=key(0.45, 0.85, 90), **body)), (22, P(armR=key(0.45, 0.85, 90), **body)),
+                        (28, P(pel={"loc": (-0.15, 0.1, -0.25), "rot": (2, 2, -2)}, chest=(2, -2, 2), head=(4, 2, 0), armL=dict(HIP),
+                               armR=key(0.25, 0.86, 60))), (36, P(pel={"loc": (-0.15, 0.1, -0.25), "rot": (2, 2, -2)}, chest=(2, -2, 2), head=(2, 2, 0),
+                                                                    armL=dict(HIP), armR=key(0.25, 0.86, 60)))],
+        lag={"Head": 1, "Forearm": 0, "Hand": 0})
+    face("turn_key", [[1, "open", "neutral"], [10, "open", "smile"], [21, "happy", "smileOpen"]])
+
+
+PINCH = (0.2, 0.85, 1.2)    # se corrige con la medida de la nariz (measure: NOSE)
+
+
+def measure(name, frames):
+    """punos, coronilla y nariz en las keys: armature y three.js (m, raiz en los pies, mirando a +Z)"""
+    S3 = 1.6 / 13.2
+    act = bpy.data.actions[name]; arm.animation_data.action = act
+    head_m = bpy.data.objects["Head"]
+    cand = [head_m.matrix_world @ v.co for v in head_m.data.vertices]
+    nose_l = min((v for v in cand if abs(v.x) < 0.5 and 1.0 < v.z < 2.6), key=lambda v: v.y)   # punta de la nariz (lo mas adelantado)
+    hb = arm.data.bones["Head"]
+    for f in frames:
+        sc.frame_set(f); out = []
+        Mh = PB["Head"].matrix @ hb.matrix_local.inverted()
+        for side in "LR":
+            b = PB[f"Hand.{side}"]; fist = b.head + (b.tail - b.head).normalized() * GRIP
+            out.append(f"{side}=({fist.x:+.2f},{fist.y:+.2f},{fist.z:+.2f}) js({fist.x * S3:+.3f},{(fist.z + 9) * S3:.3f},{-fist.y * S3:+.3f})")
+        top = Mh @ Vector((0, 0, 4.24)); nose = Mh @ nose_l
+        print(f"MEAS {name} f{f:02d} {' '.join(out)} headtop_z={top.z:+.2f} nose=({nose.x:+.2f},{nose.y:+.2f},{nose.z:+.2f}) "
+              f"knees L({PB['Calf.L'].head.x:+.2f},{PB['Calf.L'].head.y:+.2f},{PB['Calf.L'].head.z:+.2f})")
+
 # ================================================================ verificacion
 def sole_pts(side):
     fb = PB[f"Foot.{side}"]; ML = arm.data.bones[f"Foot.{side}"].matrix_local
@@ -874,7 +1170,7 @@ def check(name):
             minz = min(minz, *[p.z for p in pts[s]])
             th = PB[f"Thigh.{s}"].head; tgt = PB[f"FootControl.{s}"].head
             reach = max(reach, (tgt - th).length / 5.367)
-        if prev and name != "walk":
+        if prev and name not in ("walk", "detector_walk"):
             for s in "LR":
                 for a, b in zip(prev[s], pts[s]):
                     if a.z < FLOOR + 0.05 and b.z < FLOOR + 0.05:
@@ -884,10 +1180,10 @@ def check(name):
     print(f"CHECK {name:16s} frames={N:3d} sole_min={minz - FLOOR:+.3f} reach={reach:.3f} slide={slide:.3f}")
 
 
-def check_walk():
+def check_walk(name="walk"):
     """en el walk, el punto de apoyo debe retroceder exactamente 4S/N por frame (luego three.js avanza el root)"""
-    act = bpy.data.actions["walk"]; arm.animation_data.action = act
-    N = LIB["walk"]["frames"]; v = 4 * WALK_S / N; err = 0
+    act = bpy.data.actions[name]; arm.animation_data.action = act
+    N = LIB[name]["frames"]; v = 4 * WALK_S / N; err = 0
     prev = None
     for f in range(1, N + 2):
         sc.frame_set(f); pts = sole_pts("L")
@@ -900,8 +1196,8 @@ def check_walk():
                     e = max(abs((b.y - a.y) - v), abs(b.x - a.x))
                     if e > err: err, ef = e, f
         prev = pts
-    LIB["walk"]["slide_error_per_frame"] = round(err, 4)
-    print(f"WALK slide error per frame {err:.4f} at f{ef if err else 0} (velocidad {v:.3f}/frame)")
+    LIB[name]["slide_error_per_frame"] = round(err, 4)
+    print(f"WALK {name} slide error per frame {err:.4f} at f{ef if err else 0} (velocidad {v:.3f}/frame)")
 
 
 # ================================================================ main
@@ -939,8 +1235,16 @@ if __name__ == "__main__":
     author("pose_author_a", "Render2") if not argv or "pose_author_a" in argv else None
     author("pose_author_b", "Render3") if not argv or "pose_author_b" in argv else None
     for name in LIB:
-        if name == "walk": check_walk()
+        if name in ("walk", "detector_walk"): check_walk(name)
         check(name)
+    MK = {"squat": (1, 12, 17, 23, 30, 40), "pinch_nose": (1, 11, 14, 36), "pull_chain": (1, 10, 12, 18, 24, 36),
+          "throw_out_window": (1, 7, 18, 21, 24, 45), "bend_pipe": (1, 10, 32, 45),
+          "detector_walk": (1, 8, 16, 23), "detector_stop": (1, 12, 24, 40), "melt_beam": (1, 15, 30, 45), "catch_object": (1, 14, 16, 30, 36),
+          "push_heavy": (1, 11, 21), "push_door": (1, 8, 13, 22, 40), "lift_bar": (1, 15, 30, 45), "peek": (1, 11, 21),
+          "turn_key": (1, 10, 14, 20, 28, 36)}
+    for name, fr in MK.items():
+        if name in LIB: measure(name, fr)
+    if "--dry" in argv: sys.exit(0)   # digger-02: medir sin exportar (no pisa glb/json)
     export()
     json.dump(FACE, open(os.path.join(HERE, "face_tracks.json"), "w"), indent=1)
     json.dump(LIB, open(os.path.join(HERE, "actions.json"), "w"), indent=1)
