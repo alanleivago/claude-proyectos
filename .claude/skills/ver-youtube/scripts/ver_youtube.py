@@ -1,23 +1,31 @@
-"""Mira videos de YouTube con Gemini y guarda notas de aprendizaje en fuentes/<tema>/<titulo>.md.
+"""Mira videos de YouTube con Claude (API, créditos del plan Max) y guarda notas de aprendizaje
+en fuentes/<tema>/<titulo>.md.
+
+Por cada video: yt-dlp lo baja, Whisper local transcribe el audio, ffmpeg saca fotogramas
+y Claude recibe fotogramas + transcripción con timestamps.
 
 Uso:
     python ver_youtube.py --tema "edicion de video" URL [URL ...]
 """
 import argparse
+import base64
 import datetime
 import json
 import os
 import re
+import subprocess
 import sys
-import time
+import tempfile
 import unicodedata
 import urllib.parse
 import urllib.request
 from pathlib import Path
 
-MODEL = "gemini-3.8-flash"
+MODEL = "claude-sonnet-5-5"
+MAX_FRAMES = 60
 
-PROMPT = """Mirá este video completo (imagen y audio) y escribí notas de aprendizaje en español.
+PROMPT = """Estos son fotogramas de un video (cada uno con su timestamp) y la transcripción de su audio.
+Miralos completos y escribí notas de aprendizaje en español.
 El tema que me interesa es: {tema}.
 
 No transcribas ni copies frases largas del video: resumí con tus palabras lo que hay que aprender.
@@ -44,7 +52,7 @@ Si todo queda claro, decilo en una línea.
 """
 
 
-def load_env_key(name="GEMINI_API_KEY"):
+def load_env_key(name="ANTHROPIC_API_KEY"):
     if os.environ.get(name):
         return os.environ[name]
     for folder in [Path.cwd(), *Path.cwd().parents]:
@@ -82,38 +90,55 @@ def canonical_url(url):
     return f"https://www.youtube.com/watch?v={m.group(1)}" if m else url
 
 
-def wait(client, interaction, retries=12, max_s=900):
-    """Espera una interacción en background; tolera errores temporales (500 'high demand') al consultar."""
-    deadline = time.time() + max_s
-    while interaction.status == "in_progress":
-        if time.time() > deadline:
-            raise TimeoutError(f"Gemini no terminó en {max_s} s")
-        time.sleep(5)
-        try:
-            interaction = client.interactions.get(interaction.id)
-        except Exception as e:
-            retries -= 1
-            if retries < 0:
-                raise
-            print(f"  aviso: {str(e)[:120]} — reintento", file=sys.stderr, flush=True)
-            time.sleep(20)
-    return interaction
+def mmss(t):
+    t = int(t)
+    return f"{t // 3600}:{t % 3600 // 60:02d}:{t % 60:02d}" if t >= 3600 else f"{t // 60:02d}:{t % 60:02d}"
 
 
-def ask_gemini(client, url, tema, model):
-    # background=True: el video puede tardar minutos en procesarse y la conexión directa se corta
-    interaction = client.interactions.create(
-        model=model,
-        input=[
-            {"type": "video", "uri": url},
-            {"type": "text", "text": PROMPT.format(tema=tema)},
-        ],
-        background=True,
-    )
-    interaction = wait(client, interaction)
-    if interaction.status != "completed":
-        raise RuntimeError(f"estado {interaction.status}")
-    return interaction.output_text
+def download(url, tmp):
+    # sin runtime JS YouTube esconde formatos; node viene con el proyecto
+    subprocess.run(["yt-dlp", "-q", "--no-warnings", "--js-runtimes", "node", "-S", "res:720", "-o", str(tmp / "v.%(ext)s"), url], check=True)
+    return next(tmp.glob("v.*"))
+
+
+def transcribe(video, tmp):
+    import wave
+    import numpy as np
+    from faster_whisper import WhisperModel
+
+    wav = tmp / "a.wav"
+    subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", str(video), "-ac", "1", "-ar", "16000", str(wav)], check=True)
+    # se pasan las muestras ya decodificadas: la versión instalada de av rompe el decode de faster-whisper
+    with wave.open(str(wav)) as w:
+        audio = np.frombuffer(w.readframes(w.getnframes()), np.int16).astype(np.float32) / 32768
+    segments, _ = WhisperModel("small", device="cpu", compute_type="int8").transcribe(audio)
+    return "\n".join(f"[{mmss(s.start)}] {s.text.strip()}" for s in segments), len(audio) / 16000
+
+
+def frames(video, tmp, duration):
+    step = max(2.0, duration / MAX_FRAMES)
+    subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", str(video), "-vf",
+                    f"fps=1/{step},scale='if(gt(iw,ih),768,-2)':'if(gt(iw,ih),-2,768)'",
+                    "-q:v", "4", str(tmp / "f%04d.jpg")], check=True)
+    return [(i * step, p) for i, p in enumerate(sorted(tmp.glob("f*.jpg")))]
+
+
+def ask_claude(client, url, tema, model):
+    with tempfile.TemporaryDirectory() as d:
+        tmp = Path(d)
+        video = download(url, tmp)
+        transcript, duration = transcribe(video, tmp)
+        content = []
+        for t, p in frames(video, tmp, duration):
+            content.append({"type": "text", "text": f"[{mmss(t)}]"})
+            content.append({"type": "image", "source": {"type": "base64", "media_type": "image/jpeg",
+                                                        "data": base64.b64encode(p.read_bytes()).decode()}})
+    content.append({"type": "text", "text": f"TRANSCRIPCIÓN:\n{transcript or '(sin voz)'}\n\n" + PROMPT.format(tema=tema)})
+    # stream: una respuesta larga sin streaming corta la conexión
+    with client.messages.stream(model=model, max_tokens=16000, messages=[{"role": "user", "content": content}]) as s:
+        r = s.get_final_message()
+    print(f"  tokens: {r.usage.input_tokens} entrada, {r.usage.output_tokens} salida", flush=True)
+    return "".join(b.text for b in r.content if b.type == "text")
 
 
 def main():
@@ -125,9 +150,9 @@ def main():
     p.add_argument("urls", nargs="+")
     args = p.parse_args()
 
-    from google import genai
+    import anthropic
 
-    client = genai.Client(api_key=load_env_key())
+    client = anthropic.Anthropic(api_key=load_env_key())
     folder = Path(args.out) / slug(args.tema)
     folder.mkdir(parents=True, exist_ok=True)
     today = datetime.date.today().isoformat()
@@ -141,10 +166,10 @@ def main():
             print(f"  ya existe {path} (usá --force para rehacer)")
             continue
         try:
-            notes = ask_gemini(client, url, args.tema, args.model).strip()
+            notes = ask_claude(client, url, args.tema, args.model).strip()
         except Exception as e:
             failed += 1
-            print(f"  ERROR con Gemini: {e}", file=sys.stderr)
+            print(f"  ERROR: {e}", file=sys.stderr)
             continue
         header = [f"# {title or url}", "", f"- Link: {url}"]
         if channel:
