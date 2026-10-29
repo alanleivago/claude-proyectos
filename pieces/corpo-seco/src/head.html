@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Corpo-Seco</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #020306; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; image-rendering: pixelated; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  CORPO-SECO — 9:16, 71s, 24fps. A first-person tale in on-screen paragraphs: the dry sertão of Minas Gerais at night;
+//  a dead tree at the bend of a dirt road; Tião, who beat his mother, and whom the earth would not keep; he dried and
+//  crawled into the tree; my grandfather's ox cart stops there one night, and something dry and grinning gets on his back.
+//  Style: yokai (three.js at 216×384, dithered).
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 71.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 71, () => sceneTale()]];
+const SHOTS = [
+  ['open',   0, 0.0,  4.5,  'a dead tree at the bend of a dirt road under the moon; a dry grinning face in the bark opens and turns to us'],
+  ['card',   0, 4.5,  8.5,  'the card: Corpo-Seco'],
+  ['house',  0, 8.5,  14.6, 'a farmhouse lit by an oil lamp: Tião over his cowering mother, his shadow on the wall'],
+  ['grave',  0, 14.6, 20.6, 'the chapel cemetery at dusk: an open grave, the coffin lying on the dirt'],
+  ['dried',  0, 20.6, 26.6, 'the dried body standing by its coffin'],
+  ['tree',   0, 26.6, 32.6, 'the dead tree at the bend; a long hand slips into the crack'],
+  ['cart',   0, 32.6, 38.6, 'my grandfather on his ox cart at night, a lantern on the yoke'],
+  ['stop',   0, 38.6, 45.6, 'the oxen balk at the tree; he climbs down with the lantern; black'],
+  ['hit',    0, 45.6, 56.0, 'THE HIT: something dry and grinning on his back'],
+  ['dawn',   0, 56.0, 71.0, 'dawn: the oxen still yoked, the lantern on the road; the tree has two faces'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { open: 0.6, turn: 1.0, card: 4.5, house: 8.5, raise: 10.2, grave: 14.6, dried: 20.6, tree: 26.6, hand: 29.6, cart: 32.6, stop: 38.6, down: 41.6, black: 45.0, hit: 45.6, low: 50.6, dawn: 56.0, faces: 63.0, badge: 66.2 },
+  acts: [
+    { name: '1 The rule',   role: 'build',   t0: 0.0,  t1: 8.5 },
+    { name: '2 Tião',       role: 'turn',    t0: 8.5,  t1: 32.6 },
+    { name: '3 The road',   role: 'peak',    t0: 32.6, t1: 45.0 },
+    { name: '4 Silence',    role: 'silence', t0: 45.0, t1: 45.6 },
+    { name: '5 On his back',role: 'gift',    t0: 45.6, t1: 56.0 },
+    { name: '6 Two faces',  role: 'goodbye', t0: 56.0, t1: 71.0 },
+  ],
+  board: [
+    { t: 1.7,  title: 'Hook: the face turns', sound: 'night wind in dry grass, crickets; a dry creak of bark as it turns', next: 'dither' },
+    { t: 6.9,  title: 'Card: Corpo-Seco', sound: 'card hit, a low viola string, a far owl', next: 'dither in' },
+    { t: 12.2, title: 'Tião and his mother', sound: 'oil lamp flutter, a chair scrapes, a leather strap snaps (off-screen)', next: 'cut' },
+    { t: 18.2, title: 'The coffin on the dirt', sound: 'chapel bell, dusk crickets, dry wind', next: 'cut' },
+    { t: 24.6, title: 'He only dried', sound: 'a dry crackle of skin, a low drone enters', next: 'cut' },
+    { t: 28.2, title: 'The tree at the bend', sound: 'wind, a nightjar, fence wire hums', next: 'cut' },
+    { t: 30.4, title: 'It sinks back into the tree', sound: 'bark creaks, a dry scrape of fingers', next: 'cut' },
+    { t: 34.6, title: 'Grandfather, ox cart', sound: 'the cart wheel\'s long wooden song, hooves, the lantern clinks', next: 'cut' },
+    { t: 37.6, title: 'A lantern on the yoke', sound: 'cart song, oxen breath', next: 'cut' },
+    { t: 40.4, title: 'The oxen will not move', sound: 'the song stops; oxen snort and stamp', next: 'cut' },
+    { t: 42.3, title: 'He climbs down', sound: 'the bed creaks, boots land on dirt; drone swells', next: 'walk → to black, 0.6 s silence' },
+    { t: 47.6, title: 'Already on his back', sound: 'THE HIT (45.6 s): bark splitting, a dry rasp', next: 'cut' },
+    { t: 54.0, title: 'It turns to us', sound: 'dry breathing, the lantern falls off the yoke, oxen bellow', next: 'dither out' },
+    { t: 59.2, title: 'Dawn: only his lantern', sound: 'dawn birds, an ox shifts, the yoke creaks', next: 'cut' },
+    { t: 68.4, title: 'The tree has two faces', sound: 'wind, a far rooster; a dry creak', next: 'end' },
+  ],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

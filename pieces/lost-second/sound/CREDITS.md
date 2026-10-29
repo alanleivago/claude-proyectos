@@ -1,0 +1,34 @@
+# Credits — The Lost Second (sound)
+
+No voice. Typing voice: `Talking 1 Loop.wav` from the user's Madfable reference folder.
+
+All other sounds are Freesound recordings under Creative Commons 0, processed in `mix.py` (resampled, filtered, reverb, levels).
+
+| id | sound | author | license |
+|---|---|---|---|
+| [162116](https://freesound.org/s/162116/) | Water Dripping (Large Echo) | editor_adp | CC0 |
+| [172325](https://freesound.org/s/172325/) | drone0003.flac | Trebblofang | CC0 |
+| [424269](https://freesound.org/s/424269/) | Souks Marrakesch 2.wav | jensfelger | CC0 |
+| [451720](https://freesound.org/s/451720/) | Underground Train Station Ambience | florianreichelt | CC0 |
+| [452902](https://freesound.org/s/452902/) | cassette tape deck rewind fast to slow +start,stop clicks.flac | kyles | CC0 |
+| [452999](https://freesound.org/s/452999/) | Postapocalyptic Drone | Breviceps | CC0 |
+| [483287](https://freesound.org/s/483287/) | R29-03-Long Rumble for Earthquake or Explosion.wav | craigsmith | CC0 |
+| [500657](https://freesound.org/s/500657/) | Deep.wav | Reg1n0ld | CC0 |
+| [521854](https://freesound.org/s/521854/) | Camera Manual Click.wav | D.jones | CC0 |
+| [560618](https://freesound.org/s/560618/) | Dark Ghost House | szegvari | CC0 |
+| [585471](https://freesound.org/s/585471/) | Super 8 camera LONG filming | keverlyhills | CC0 |
+| [596463](https://freesound.org/s/596463/) | Dark London Night Atmo Thriller Soundscape Experimental Music - EQ Mastered.wav | szegvari | CC0 |
+| [676385](https://freesound.org/s/676385/) | Fire Crackling | StevenMyat_ | CC0 |
+| [707835](https://freesound.org/s/707835/) | PAPER RUSTLING | stevielematt | CC0 |
+| [743257](https://freesound.org/s/743257/) | Short Grind Sound | qubodup | CC0 |
+| [756799](https://freesound.org/s/756799/) | CRT TV_High-band VHF Scan | telescapes | CC0 |
+| [785942](https://freesound.org/s/785942/) | SFX_GEOFON-HUM-ELECTRICAL-BOARD_4824_01 | pblzr | CC0 |
+| [790019](https://freesound.org/s/790019/) | Foley_Object_Clock_Old_Tick_Sequence_Stereo | Nox_Sound | CC0 |
+| [825392](https://freesound.org/s/825392/) | 010 LOW IMPACT | ROHHSADOTCOM | CC0 |
+| [826215](https://freesound.org/s/826215/) | ELECTRIC LONG BOOMY PUNCH | ROHHSADOTCOM | CC0 |
+| [826216](https://freesound.org/s/826216/) | POWERFUL RUMBLY HELLISH IMPACT | ROHHSADOTCOM | CC0 |
+| [834339](https://freesound.org/s/834339/) | Outdoors Walla | IENBA | CC0 |
+| [861757](https://freesound.org/s/861757/) | Wind - Low Frequency, Warm and Strong | bassimat | CC0 |
+| [871189](https://freesound.org/s/871189/) | Textured Low Drone - Loop | kkenny101 | CC0 |
+| [871766](https://freesound.org/s/871766/) | ELECArc_Sparking Electricity Bed | harrisonlace | CC0 |
+| [872936](https://freesound.org/s/872936/) | Dark Voice Drone 02 - Loop | kkenny101 | CC0 |

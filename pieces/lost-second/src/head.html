@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Lost Second</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { width: min(100vw, calc(100vh * 16 / 9)); height: auto; aspect-ratio: 16 / 9; display: block; cursor: pointer; image-rendering: pixelated; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  THE LOST SECOND — 16:9, 24fps, style "onebit" + Flow layers. Cosmic horror after Urbn.Theory's format, no voice:
+//  the captions carry it (clocked by a scratch voice), the talking loop types them. Madfable outro.
+// =====================================================================
+const FPS = 24, W = 1920, H = 1080;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const SAFE = { top: 60, bottom: 60, right: 80 };
+const HAND = 'sans-serif';
+const CX = 960;
+// ---- the voice is the clock: VL(id) = a line { t0, t1, words }, VW(id, word, n) = when its n-th `word` starts
+const VL = (id) => VOICE.lines.find((l) => l.id === id);
+const VW = (id, w, n = 1) => { let k = 0; for (const x of VL(id).words) if (x.w.toLowerCase().replace(/[^a-z']/g, '') === w && ++k === n) return x.t0; return VL(id).t0; };
+const AT = (id) => VL(id).t0 - 0.15;                                  // a shot starts just before its line
+const REVEAL = AT('left');                                             // the payoff: one step left
+const CARD = VL('face').t1 + 1.6;
+const LOGO = CARD + 6.4;                                              // the Madfable outro
+const DURATION = Math.round((LOGO + 21) * FPS) / FPS;   // a ~20 s end screen for the YouTube end cards
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+
+// [t0, scene] — cut just before each line (AT) or on a key word (VW)
+const SHOT_LIST = [
+  [0.0, 'clock'],                                  // 1  the clock tower skips 06 -> 08 (hook)
+  [AT('phones'), 'city'],                          // 2  phones, stations: the city from above
+  [VW('phones', 'wristwatches') - 0.12, 'watch'],  // 3  wristwatches: the tower face close
+  [AT('labs'), 'lab'],                             // 4  the atomic clocks confirm it
+  [AT('exact'), 'labClose'],                       // 5  "removed": her shock, close
+  [AT('govt'), 'govt'],                            // 5b every government: low over the rooftops, a slow lateral drift
+  [AT('strange'), 'monitors'],                    // 6  the strangest part: the monitor wall over her shoulder
+  [AT('frames'), 'monOne'],                        // 8  twenty-four frames: one screen, counting
+  [AT('tamper'), 'tamper'],                        // 8b engineers: close on the lower screens, scrubbing
+  [AT('every'), 'cam'],                            // 9  the same man in every camera (Tokyo)
+  [AT('places'), 'tokyo'],                         // 10 "on a subway platform in Tokyo": closer on him
+  [VW('places', 'in', 2) - 0.12, 'lagos'],         // 11 "in a market in Lagos"
+  [VW('places', 'on', 2) - 0.12, 'iowa'],          // 12 "on a farm in Iowa"
+  [AT('back'), 'lima'],                            // 13 always with his back to the lens (Lima)
+  [AT('thousands'), 'grid'],                       // 13b thousands of cameras: 2x2 feeds, then 3x3 on "cities"
+  [AT('closer'), 'closer'],                        // 14 frame by frame closer
+  [AT('turn'), 'turn'],                            // 15 he had started to turn around
+  [AT('noface'), 'noface'],                        // 15b one frame too soon: low close on his head, then the tape ends
+  [AT('before'), 'before'],                        // 16 older records: along the monk's handwriting, gliding into the doorway (1582)
+  [AT('cave'), 'cave'],                            // 17b the cave painting: a torch slides along the hunters to the tall figure
+  [AT('photo'), 'photo'],                          // 18 a photograph from 1888
+  [VW('photo', 'a', 2) - 0.12, 'film'],            // 19 a film reel from 1961
+  [AT('step'), 'step'],                            // 20 one step closer: three cuts, bigger each time
+  [AT('count'), 'count'],                          // 21 someone counted the steps
+  [REVEAL, 'reveal'],                              // 22 there is one left (inverted flicker)
+  [AT('facing'), 'facing'],                        // 22b he will be facing us: the shadowed face, extreme close, rare inversions
+  [AT('deleted'), 'walls'],                         // 24 cameras turned to face the walls
+  [AT('observ'), 'observ'],                        // 24b observatories: the empty lab, its clock display dark
+  [AT('vote'), 'vote'],                            // 25 2022: the leap-second vote
+  [AT('why'), 'why'],                              // 26 nobody explained why: the stuck second hand
+  [AT('clocks'), 'people'],                        // 27 people who won't look at a clock
+  [AT('tick'), 'tick'],                            // 27b the tick: the tower at night, low; one tick that belongs to no clock
+  [AT('face'), 'phone'],                           // 28 whose face: the phone reflection
+  [CARD, 'card'],                                  // 29 the end card
+  [LOGO, 'logo'],                                  // 30 the channel logo
+];
+const SCENE = {
+  clock: () => sceneClock(), city: () => sceneCity(), watch: () => sceneWatch(), lab: () => sceneLab(), labClose: () => sceneLabClose(),
+  monitors: () => sceneMonitors(), monWall: () => sceneMonWall(), monOne: () => sceneMonOne(), cam: () => sceneCam(false),
+  tokyo: () => scenePlace('tokyo'), lagos: () => scenePlace('lagos'), iowa: () => scenePlace('iowa'), lima: () => scenePlace('lima'),
+  closer: () => sceneCam(true), turn: () => sceneTurn(), before: () => sceneBefore(), monk: () => sceneMonk(), photo: () => scenePhoto(),
+  film: () => sceneFilm(), step: () => sceneStep(), count: () => sceneCount(), reveal: () => sceneReveal(), officer: () => sceneOfficer(),
+  walls: () => sceneWalls(), vote: () => sceneVote(), why: () => sceneWhy(), people: () => scenePeople(), phone: () => scenePhone(),
+  govt: () => sceneGovt(), tamper: () => sceneTamper(), grid: () => sceneGrid(), noface: () => sceneNoFace(), cave: () => sceneCave(),
+  facing: () => sceneFacing(), observ: () => sceneObserv(), tick: () => sceneTick(),
+  card: () => sceneCard(), logo: () => sceneLogo(),
+};
+const ERA_LIST = SHOT_LIST.map(([t0, sc], i) => [t0, i + 1 < SHOT_LIST.length ? SHOT_LIST[i + 1][0] : DURATION, SCENE[sc]]);
+const CUE = { sting: REVEAL, silence: VL('count').t1 + 0.1 };
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'held shots, caption-clocked',
+  shots: SHOT_LIST.map(([t0, sc], i) => ({ id: i + 1, key: sc, era: i, t0, t1: ERA_LIST[i][1], title: sc })),
+  cuts: SHOT_LIST.slice(1).map(([t0]) => t0),
+  morphs: [],
+  cues: CUE,
+  acts: [
+    { name: '1 The skip', role: 'build', t0: 0, t1: AT('strange') },
+    { name: '2 The cameras', role: 'journey', t0: AT('strange'), t1: AT('before') },
+    { name: '3 The records', role: 'journey', t0: AT('before'), t1: REVEAL },
+    { name: '4 Payoff', role: 'gift', t0: REVEAL, t1: DURATION },
+  ],
+  board: [
+    { t: VW('hook', 'skipped') + 0.4, title: 'the clock skips 06 -> 08', sound: 'tower ticks, one tick missing', next: 'cut on "phones"' },
+    { t: VW('phones', 'stations') + 0.6, title: 'city from above, tilt down', sound: 'bgm sub bed enters, far city hum', next: 'cut on "wristwatches"' },
+    { t: VW('phones', 'them') + 0.3, title: 'wristwatch close, 08 09 10', sound: 'loud ticks', next: 'cut' },
+    { t: VW('labs', 'paris') + 0.2, title: 'lab: she glances aside', sound: 'server hum, beeps', next: 'cut' },
+    { t: VW('exact', 'removed') + 0.3, title: 'close: shock on "removed"', sound: 'low hit on "removed"', next: 'cut' },
+    { t: VW('govt', 'where') + 0.4, title: 'governments: low drift over the roofs', sound: 'sub bed, far sirens', next: 'cut' },
+    { t: VW('strange', 'missing'), title: 'monitor wall over her shoulder', sound: 'static bed', next: 'cut' },
+    { t: VW('frames', 'never'), title: 'the subway screen: frames 01..24', sound: 'frame clicks x24', next: 'cut' },
+    { t: VW('tamper', 'none') + 0.2, title: 'engineers: the tape scrubbed back and forth', sound: 'tape scrub, static', next: 'cut' },
+    { t: VW('every', 'man') + 0.2, title: 'cam 04 tokyo: the man', sound: 'drone swells, static', next: 'cut' },
+    { t: VW('places', 'tokyo') + 0.1, title: 'tokyo, closer on him', sound: 'cctv hum', next: 'cut on "in a market"' },
+    { t: VW('places', 'lagos') + 0.1, title: 'cam 17 lagos: same man', sound: 'static burst on the cut', next: 'cut on "on a farm"' },
+    { t: VW('places', 'iowa') + 0.2, title: 'cam 02 iowa: in the light', sound: 'static burst, crickets', next: 'cut' },
+    { t: VW('back', 'lens'), title: 'cam 31 lima: his back', sound: 'drone', next: 'cut' },
+    { t: VW('thousands', 'same', 1) + 0.3, title: 'thousands: 2x2 -> 3x3 feeds, same man', sound: 'static layers multiply', next: 'cut' },
+    { t: VW('closer', 'camera'), title: 'frames step, he grows', sound: 'frame clicks speeding up', next: 'cut' },
+    { t: VW('turn', 'turn') + 0.5, title: 'he starts to turn (no face)', sound: 'riser, then cut dead', next: 'cut' },
+    { t: VW('noface', 'soon') + 0.5, title: 'one frame too soon: tape ends in snow', sound: 'tape cut, snow hiss', next: 'cut' },
+    { t: VW('monk', 'doorway'), title: 'monk writing, glide into the 1582 doorway', sound: 'bell-like boom', next: 'cut' },
+    { t: VW('cave', 'hunters'), title: 'cave painting: torch finds the tall figure', sound: 'torch crackle, cave drip', next: 'cut' },
+    { t: VW('photo', 'from', 1) + 0.5, title: '1888 photograph, push in', sound: 'camera flash pop', next: 'cut on "a film"' },
+    { t: VW('photo', 'from', 2) + 0.5, title: '1961 reel, pan frames', sound: 'projector rattle', next: 'cut' },
+    { t: VW('step', 'closer') + 0.3, title: 'step cuts: doorway, photo, film', sound: 'a hit per cut', next: 'cut' },
+    { t: VW('count', 'steps') + 0.2, title: 'tally marks 23/24', sound: 'scratches, then hard silence', next: 'cut' },
+    { t: VW('left', 'left') + 0.8, title: 'REVEAL: the neck, flicker', sound: 'sting, glitch bursts', next: 'cut to black' },
+    { t: VW('facing', 'facing') + 0.4, title: 'facing us: the shadowed face, extreme close', sound: 'low drone, breath', next: 'cut' },
+    { t: VW('walls', 'walls') + 0.2, title: 'cctv view: a wall', sound: 'servo whirr, static', next: 'cut' },
+    { t: VW('observ', 'clock') + 0.3, title: 'observatories: empty lab, display dark', sound: 'server hum dies', next: 'cut' },
+    { t: VW('vote', 'seconds'), title: '2022: city pull-out', sound: 'sub boom', next: 'cut' },
+    { t: VW('why', 'why') + 0.2, title: 'tower: second stuck 06/08', sound: 'tick, tick, missing tick', next: 'cut' },
+    { t: VW('clocks', 'at') + 0.3, title: 'backs, tilt to the clock', sound: 'street ambience thins out', next: 'cut' },
+    { t: VW('tick', 'tick') + 0.3, title: 'the tower at night: one stray tick', sound: 'single tick, ring', next: 'cut' },
+    { t: VW('face', 'face') + 0.3, title: 'phone reflection: the face', sound: 'drone, held breath', next: 'cut to black' },
+    { t: CARD + 2.0, title: 'card: whose face will he have?', sound: 'silence, one low hit', next: 'cut' },
+    { t: LOGO + 2.4, title: 'Madfable outro: red forest, name, card', sound: 'low hit on the power-on, silence', next: 'end' },
+  ],
+  narration: VOICE.lines.map((l) => ({ id: l.id, t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;

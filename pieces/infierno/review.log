@@ -1,0 +1,74 @@
+shot 1 (la fiesta de noche; título): 14 frames [0,6,12,18,24,30,36,42,48,54,60,66,72,78] -> review/shot01-sheet.jpg
+shot 2 (un estallido; caes al suelo): 5 frames [84,90,96,102,108] -> review/shot02-sheet.jpg
+shot 3 (te ves tirado en la calle; subes): 17 frames [114,120,126,132,138,144,150,156,162,168,174,180,186,192,198,204,210] -> review/shot03-sheet.jpg
+shot 4 (esperas subir: una luz arriba): 8 frames [216,222,228,234,240,246,252,258] -> review/shot04-sheet.jpg
+shot 5 (pero caes: el túnel de fuego): 20 frames [264,270,276,282,288,294,300,306,312,318,324,330,336,342,348,354,360,366,372,378] -> review/shot05-sheet.jpg
+shot 6 (cada segundo más calor: la bola de fuego): 8 frames [384,390,396,402,408,414,420,426] -> review/shot06-sheet.jpg
+shot 7 (un lago de fuego; millones de personas): 32 frames [432,438,444,450,456,462,468,474,480,486,492,498,504,510,516,522,528,534,540,546,552,558,564,570,576,582,588,594,600,606,612,618] -> review/shot07-sheet.jpg
+shot 8 (caes entre ellos; no hay salida): 20 frames [624,630,636,642,648,654,660,666,672,678,684,690,696,702,708,714,720,726,732,738] -> review/shot08-sheet.jpg
+shot 9 (recuerdas todo: la fiesta): 12 frames [744,750,756,762,768,774,780,786,792,798,804,810] -> review/shot09-sheet.jpg
+shot 10 (cada oportunidad que tuviste: el teléfono): 12 frames [816,822,828,834,840,846,852,858,864,870,876,882] -> review/shot10-sheet.jpg
+shot 11 (ruegas por una gota de agua): 24 frames [888,894,900,906,912,918,924,930,936,942,948,954,960,966,972,978,984,990,996,1002,1008,1014,1020,1026] -> review/shot11-sheet.jpg
+shot 12 (el cielo a lo lejos; el abismo): 24 frames [1032,1038,1044,1050,1056,1062,1068,1074,1080,1086,1092,1098,1104,1110,1116,1122,1128,1134,1140,1146,1152,1158,1164,1170] -> review/shot12-sheet.jpg
+shot 13 (sin descanso; el humo sube): 24 frames [1176,1182,1188,1194,1200,1206,1212,1218,1224,1230,1236,1242,1248,1254,1260,1266,1272,1278,1284,1290,1296,1302,1308,1314] -> review/shot13-sheet.jpg
+shot 14 (fue preparado para el diablo): 11 frames [1320,1326,1332,1338,1344,1350,1356,1362,1368,1374,1380] -> review/shot14-sheet.jpg
+shot 15 (silencio): 3 frames [1386,1392,1398] -> review/shot15-sheet.jpg
+shot 16 (no para ti: todo arde): 18 frames [1404,1410,1416,1422,1428,1434,1440,1446,1452,1458,1464,1470,1476,1482,1488,1494,1500,1506] -> review/shot16-sheet.jpg
+shot 17 (y nunca termina): 16 frames [1512,1518,1524,1530,1536,1542,1548,1554,1560,1566,1572,1578,1584,1590,1596,1602] -> review/shot17-sheet.jpg
+shot 18 (tarjeta): 12 frames [1608,1614,1620,1626,1632,1638,1644,1650,1656,1662,1668,1674] -> review/shot18-sheet.jpg
+
+CUTS vs beat grid @ 120 BPM, 24fps (8ths = 0.25s)
+ #   cut t     grid  grid#   nominal f  cut f   cut f t     err(f)  Δ@cut  peak(±2f)          shot change           result
+ 1    3.500s   8th    14       84.0     84   3.5000s  +0.0   146.3  f84 ok             shot 1 -> 2           PASS
+ 2    4.750s   8th    19      114.0    114   4.7500s  +0.0    60.7  f114 ok            shot 2 -> 3           PASS
+ 3    9.000s   8th    36      216.0    216   9.0000s  +0.0    27.9  f216 ok            shot 3 -> 4           PASS
+ 4   11.000s   8th    44      264.0    264   11.0000s  +0.0    31.1  f264 ok            shot 4 -> 5           PASS
+ 5   16.000s   8th    64      384.0    384   16.0000s  +0.0    44.9  f384 ok            shot 5 -> 6           PASS
+ 6   18.000s   8th    72      432.0    432   18.0000s  +0.0     5.3  f434 CHECK         shot 6 -> 7           PASS
+ 7   26.000s   8th   104      624.0    624   26.0000s  +0.0    46.0  f624 ok            shot 7 -> 8           PASS
+ 8   31.000s   8th   124      744.0    744   31.0000s  +0.0    71.5  f744 ok            shot 8 -> 9           PASS
+ 9   34.000s   8th   136      816.0    816   34.0000s  +0.0    98.6  f816 ok            shot 9 -> 10          PASS
+10   37.000s   8th   148      888.0    888   37.0000s  +0.0   117.0  f888 ok            shot 10 -> 11         PASS
+11   43.000s   8th   172     1032.0   1032   43.0000s  +0.0    73.2  f1032 ok           shot 11 -> 12         PASS
+12   49.000s   8th   196     1176.0   1176   49.0000s  +0.0    68.3  f1176 ok           shot 12 -> 13         PASS
+13   55.000s   8th   220     1320.0   1320   55.0000s  +0.0    42.5  f1320 ok           shot 13 -> 14         PASS
+14   57.750s   8th   231     1386.0   1386   57.7500s  +0.0    71.9  f1386 ok           shot 14 -> 15         PASS
+15   58.500s   8th   234     1404.0   1404   58.5000s  +0.0   204.0  f1404 ok           shot 15 -> 16         PASS
+16   63.000s   8th   252     1512.0   1512   63.0000s  +0.0    40.6  f1512 ok           shot 16 -> 17         PASS
+17   67.000s   8th   268     1608.0   1608   67.0000s  +0.0    11.8  f1608 ok           shot 17 -> 18         PASS
+all cuts on grid within 1 frame: PASS
+
+PACING: 17 hard cuts (1 in the last 5s), mean segment 3.89s, shortest 0.75s, plus 0 on-2s montage steps
+FLAT FRAMES (contrast < 6/255): 1386, 1387, 1388, 1389, 1390, 1391, 1392, 1393, 1394, 1395, 1396, 1397, 1398, 1399, 1400, 1401, 1402, 1403, 1607, 1608, 1609, 1610, 1611, 1612, 1613
+LOOP: diff(last=1679, first=0) = 62.48; typical consecutive diff in the first 40 frames = 5.71 (info: F4/F6 loop pixel-exactly and F4 checks it; other formats return to the opening image, changed)
+
+STORY ARC (loudness in dBFS over 100ms windows: median / 90th percentile; music = music stem median)
+ act          role       t0-t1         cuts  cuts/s  motion   mix med  mix p90  music
+ 1 La fiesta  build      0.00-4.75s      1    0.21     9.8    -16.8    -14.6     -  
+ 2 La caída   turn       4.75-18.00s      4    0.30    14.0    -14.3    -12.2     -  
+ 3 El lago    journey    18.00-43.00s      5    0.20    10.0    -20.2    -16.7     -  
+ 4 El abismo  peak       43.00-57.75s      3    0.20     8.8    -17.3    -12.5     -  
+ 5 Silencio   silence    57.75-58.50s      1    1.33     0.0   -120.0   -120.0     -  
+ 6 No para ti gift       58.50-63.00s      1    0.22     6.2    -21.0    -10.4     -  
+ 7 Nunca termina goodbye    63.00-70.00s      2    0.29     7.8    -30.4    -26.0     -  
+  PASS  gift is the loudest act (p90 -10.4 vs next -12.2)
+  PASS  gift p90 >= peak p90 + 1 dB (-10.4 vs -12.5): the busiest moment is not the loudest
+  PASS  silence median <= peak median - 15 dB (-120.0 vs -17.3)
+  FAIL  peak has the highest cut rate (0.20/s)
+  PASS  gift is held: <= 0.5 cuts/s (0.22)
+  PASS  goodbye decays: median <= gift median - 6 dB (-30.4 vs -21.0)
+story arc: FAIL (5/6 rules)
+
+TEXT (every string drawn, traced to screen; 298 frames sampled, morph windows skipped)
+text: PASS (0 cut-off/overlap, 0 in the safe zone)
+
+SOUND (mix: renders/audio.wav)
+  loudest 100ms window: 60.2s (-8.6 dBFS) - in the payoff act 58.5-63s
+  silence before it: 0.3s at <= -40 dBFS ending 58.5s in the 2s before (craft.md wants 0.5-4s when the story has a turn)
+  loudness: -15.0 LUFS integrated, range 8.4 LU, true peak -1.2 dBFS (phone target about -16 to -14 LUFS, peak <= -1)
+
+DEAD BEATS (the picture's change over 0.5s, every 0.25s; median 28.33, "still" below 7.08; silence acts are exempt)
+dead beats: PASS (0 stretches over 3s)
+PHONE SHEET: review/phone.jpg (one frame a second at 360px wide — read every caption at this size)
+
+video: 1080x1920, 1680 frames decoded

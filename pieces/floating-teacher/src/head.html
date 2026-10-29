@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Floating Teacher</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #020306; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; image-rendering: pixelated; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  THE FLOATING TEACHER — 9:16, 71s, 24fps. A first-person tale in on-screen paragraphs: a wooden mountain school,
+//  a rainy afternoon in 1987, the maths teacher stops writing, rises out of her shoes and presses herself to the
+//  ceiling; nobody looks up; the board writes DON'T LOOK UP; a boy looks. Style: yokai (three.js at 216×384, dithered).
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 71.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 71, () => sceneTale()]];
+const SHOTS = [
+  ['open',   0, 0.0,  4.5,  'the teacher pressed to the ceiling over the blackboard, her face upside down'],
+  ['card',   0, 4.5,  9.0,  'the card: The Floating Teacher'],
+  ['class',  0, 9.0,  18.0, 'the wooden classroom in the rain; she writes sums; the mother in the back row'],
+  ['stop',   0, 18.0, 27.0, 'she stops mid-number; the chalk falls; she does not turn'],
+  ['rise',   0, 27.0, 36.0, 'her heels leave the floor; she rises out of her shoes'],
+  ['still',  0, 36.0, 45.6, 'nobody moves; the mother stares at her desk; the clock stops; black'],
+  ['reveal', 0, 45.6, 55.0, 'low angle: she is pressed to the ceiling, face upside down, staring at the class'],
+  ['board',  0, 55.0, 64.0, 'the board writes DON\'T LOOK UP; a boy by the window looks up; his chair is empty'],
+  ['today',  0, 64.0, 71.0, 'today: the abandoned classroom; her shoes under the blackboard'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { card: 4.5, class: 9.0, mother: 13.5, stop: 19.6, chalk: 21.2, limp: 23.5, heels: 28.2, out: 30.0, rise: 31.5, mother2: 36.0, clock: 40.5, clockStop: 42.6, black: 45.0, reveal: 45.6, ceiling2: 50.5, write: 55.4, look: 59.5, empty: 62.0, today: 64.0 },
+  acts: [
+    { name: '1 Warning', role: 'build',   t0: 0.0,  t1: 9.0 },
+    { name: '2 Lesson',  role: 'turn',    t0: 9.0,  t1: 27.0 },
+    { name: '3 Rising',  role: 'peak',    t0: 27.0, t1: 45.0 },
+    { name: '4 Silence', role: 'silence', t0: 45.0, t1: 45.6 },
+    { name: '5 Ceiling', role: 'gift',    t0: 45.6, t1: 64.0 },
+    { name: '6 Today',   role: 'goodbye', t0: 64.0, t1: 71.0 },
+  ],
+  board: [
+    { t: 2.6,  title: 'Hook: on the ceiling', sound: 'rain on glass, a neck creaks', next: 'dither' },
+    { t: 7.4,  title: 'Card: The Floating Teacher', sound: 'card hit', next: 'dither in' },
+    { t: 11.2, title: 'Math, last period', sound: 'rain, chalk taps, a stove ticking', next: 'cut' },
+    { t: 15.8, title: 'My mother, back row', sound: 'chalk, pages', next: 'cut' },
+    { t: 20.6, title: 'She stops mid-number', sound: 'chalk stops; silence', next: 'cut' },
+    { t: 25.0, title: 'She does not turn', sound: 'chalk hits the floor', next: 'cut' },
+    { t: 29.4, title: 'Heels leave the floor', sound: 'a low creak', next: 'cut' },
+    { t: 34.2, title: 'Out of her shoes', sound: 'drone swells', next: 'cut' },
+    { t: 38.4, title: 'Nobody moves', sound: 'breaths, rain', next: 'cut' },
+    { t: 42.0, title: 'The clock stops', sound: 'ticking stops', next: 'to black, 0.6 s silence' },
+    { t: 47.6, title: 'She is on the ceiling', sound: 'THE HIT (45.6 s)', next: 'cut' },
+    { t: 51.5, title: 'Above them, breathing', sound: 'wet breathing, drone', next: 'cut' },
+    { t: 59.2, title: 'DON\'T LOOK UP', sound: 'chalk scraping by itself', next: 'cut' },
+    { t: 61.5, title: 'A boy looks up', sound: 'a breath in', next: 'hard cut' },
+    { t: 63.2, title: 'His chair is empty', sound: 'school bell', next: 'cut' },
+    { t: 68.2, title: 'Today: her shoes', sound: 'rain, empty room', next: 'end' },
+  ],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

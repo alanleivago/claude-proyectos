@@ -1,0 +1,16 @@
+Google Maps puede ver un embotellamiento a kilómetros de ti, sin necesitar cámaras, sensores en la vía, ni que alguien lo reporte. ¿Cómo lo sabe?
+Tu celular ya está calculando dónde estás con el GPS. Y mientras avanzas, Maps puede ver algo todavía más útil que tu ubicación: qué tan rápido está cambiando.
+Que un celular vaya más lento no dice mucho. Quizá alguien se orilló. Quizá está en un estacionamiento. O quizá su GPS está un poco desviado.
+Pero ahora imagina cientos de celulares avanzando por la misma vía. Google puede agrupar esas ubicaciones en tramos específicos del camino y estimar qué tan rápido se mueve el tráfico en cada uno.
+Si normalmente los autos pasan por ese tramo a cien kilómetros por hora, pero de pronto un gran grupo de aparatos va a veinticinco, es una señal clara de que el tráfico se frenó.
+Pero Google no confía ciegamente en el GPS crudo. La posición del GPS puede desviarse, sobre todo cerca de edificios, túneles o cruces complicados.
+Así que Maps tiene que averiguar por qué camino va realmente cada aparato. A eso se le llama map matching: emparejar con el mapa. Compara la posición del celular, su dirección, su velocidad y la forma de los caminos cercanos, para ver qué tramo encaja mejor con su movimiento.
+Luego, Google combina los datos de muchos aparatos, en vez de fiarse de uno solo. Así obtiene una estimación de la velocidad en cada tramo del camino. Y eso es solo parte de la predicción.
+Maps también compara el movimiento en vivo con patrones históricos. Una vía a cuarenta por hora puede ser terrible a medianoche… pero totalmente normal en hora pico.
+Así que el sistema combina lo que pasa ahora mismo con lo que suele pasar en esa vía a esa hora.
+Una vez que estima el tiempo de recorrido de cada tramo, tu ruta se vuelve un problema matemático mucho más grande.
+La red de caminos se puede representar como un grafo. Los cruces son nodos. Los tramos son aristas.
+Y en lugar de pesar cada arista solo por su distancia, Google puede pesarla por el tiempo estimado de recorrido. Luego, el sistema busca el camino con el menor costo total.
+Por eso la ruta más corta no siempre es la más rápida. Y cuando el tráfico cambia de golpe, esos pesos también cambian. Una vía que hace cinco minutos era la mejor opción puede volverse tan cara que Maps te desvía por otro lado.
+Así que, cuando ves una autopista pasar de verde a naranja y a rojo, Google Maps no está mirando el tráfico. Está estimando cómo se mueve la red misma.
+Y, en cierto modo, los celulares atrapados en el embotellamiento son los sensores que lo detectan.

@@ -41,7 +41,7 @@ const printSrc = () => asset('print.jpg');
 function shotCard() {
   fillAll('#020306'); ykStars(ss(4.5, 5.2, TT) * (1 - ss(8.3, 8.9, TT)));
   const kIn = TT < 8.3 ? ss(4.8, 5.6, TT) : 1 - ss(8.3, 8.9, TT), kN = TT < 8.3 ? ss(5.5, 6.3, TT) : 1 - ss(8.3, 8.7, TT);
-  ykCard(printSrc(), 'Behemoth', kIn, kN, { y: 320, w: 720, h: 540, pw: 90 });
+  ykCard(printSrc(), 'Behemoth', kIn, kN, { y: 320, w: 720, h: 540, pw: 90 /* , seal: '犬' — the creature's kanji for the red seal */ });
 }
 function shotNight() {   // the domes under the stars; the uncle on the catwalk with his thermos, the sea of clouds below
   const Wd = world(), t = TT, t2 = T2(); poseBH(Wd, { show: false });
