@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A la mitad</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0d14; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  ¿QUÉ PASARÍA SI TE ENCOGIERAS A LA MITAD CADA 2 SEGUNDOS? — 9:16, 61 s, 24 fps.
+//  Third person: a girl in a green hoodie halves every 2 s, from a flat's living room (sofa, cat, coin) through the
+//  cat's flea and fur, dust mites, a salt grain, a drop of milk, bacteria, a cell, viruses, molecules and DNA, to atoms.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 61.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = 540;
+// her height in metres: 1.60 m halving every 2 s
+const HGT = (t) => 1.6 * Math.pow(2, -t / 2);
+
+const ERA_LIST = [[0, 61, () => sceneMain()]];
+const SHOTS = [
+  ['room',   0,    4,    'el salón, empieza a encogerse'],
+  ['sofa',   4,    8,    'el sofá es una montaña'],
+  ['cat',    8,    11,   'el gato cree que es un juguete'],
+  ['coin',   11,   16,   'una moneda es un muro'],
+  ['flea',   16,   20,   'la pulga del gato'],
+  ['fur',    20,   24,   'el pelo del gato es una selva'],
+  ['mites',  24,   28,   'ácaros'],
+  ['salt',   28,   31,   'un grano de sal'],
+  ['fall',   31,   33.5, 'cae a una gota de leche'],
+  ['milk',   33.5, 36,   'dentro de la gota'],
+  ['bact',   36,   38,   'bacterias'],
+  ['bact2',  38,   40,   'bacterias de cerca'],
+  ['cell',   40,   42,   'aterriza en una célula'],
+  ['cell2',  42,   44,   'la célula como un planeta'],
+  ['virus',  44,   46,   'virus como rocas'],
+  ['virus2', 46,   48,   'un virus de cerca'],
+  ['mol',    48,   50,   'un mundo de moléculas'],
+  ['mol2',   50,   52,   'entre moléculas'],
+  ['dna',    52,   56,   'el ADN'],
+  ['atoms',  56,   57.5, 'unos pocos átomos'],
+  ['card',   57.5, 61,   'tarjeta final'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, t0, t1, title], i) => ({ id: i + 1, key, era: 0, t0, t1, title })),
+  cuts: SHOTS.slice(1).map((s) => s[1]), morphs: [],
+  cues: { fall: 31.0, drop: 52.0 },
+  acts: [
+    { name: '1 El salón', role: 'build', t0: 0, t1: 8 },
+    { name: '2 Lo pequeño', role: 'journey', t0: 8, t1: 31 },
+    { name: '3 Lo microscópico', role: 'peak', t0: 31, t1: 51.6 },
+    { name: '4 Silencio', role: 'silence', t0: 51.6, t1: 51.98 },
+    { name: '5 ADN y átomos', role: 'gift', t0: 51.98, t1: 57.5 },
+    { name: '6 Tarjeta', role: 'goodbye', t0: 57.5, t1: 61 },
+  ],
+  board: [[2, 'título, el salón'], [6, 'sofá montaña'], [9.5, 'el gato'], [13.5, 'la moneda'], [18, 'la pulga'], [22, 'pelo del gato'], [26, 'ácaros'], [29.5, 'grano de sal'], [32.2, 'cae a la leche'], [34.8, 'gota de leche'], [37, 'bacterias'], [39, 'bacterias'], [41, 'célula'], [43, 'célula planeta'], [45, 'virus'], [47, 'virus'], [49, 'moléculas'], [51, 'moléculas'], [54, 'ADN'], [56.8, 'átomos'], [60, 'tarjeta']].map(([t, title]) => ({ t, title, sound: '', next: '' })),
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

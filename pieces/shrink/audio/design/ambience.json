@@ -1,0 +1,337 @@
+{
+ "_doc": "Ambience fragment (prefix am.). One bed per world, cut with the picture, always under the music. Real field / foley recordings (manifest audio/assets/manifests/ambience.json); continuous foley textures (purr, fur rustle, mite scurry, fizz, marble ticks) ride the amb bus as beds.",
+ "ambience": [
+  {
+   "name": "am.room",
+   "_doc": "the flat's room tone (summer morning, window open), 0-16",
+   "file": "audio/assets/ambience/fs-720251_room-tone-summer-812am-220813-0497.ogg",
+   "src_start": 13.5,
+   "src_end": 34.0,
+   "at": 0.0,
+   "until": 16.05,
+   "fade_in": 0.02,
+   "fade_out": 0.4,
+   "gain_db": 4,
+   "eq": {
+    "hp": 60
+   },
+   "width": 0.9
+  },
+  {
+   "name": "am.window",
+   "_doc": "street and birds through the window, low-passed (behind glass); fades as she gets too small to hear it",
+   "file": "audio/assets/ambience/fs-844523_suburban-street-birds-ditche-s-hertogenb.ogg",
+   "src_start": 10.0,
+   "src_end": 40.0,
+   "at": 0.0,
+   "until": 16.05,
+   "fade_in": 0.02,
+   "fade_out": 0.4,
+   "gain_db": -8.5,
+   "eq": {
+    "hp": 200,
+    "lp": 5000
+   },
+   "width": 0.8,
+   "auto": [
+    [
+     0,
+     0
+    ],
+    [
+     8,
+     0
+    ],
+    [
+     11,
+     -3
+    ],
+    [
+     16,
+     -6
+    ]
+   ]
+  },
+  {
+   "name": "am.purr",
+   "_doc": "the cat purring close (cat shot)",
+   "file": "audio/assets/sfx/fs-463790_cat-purr.ogg",
+   "src_start": 1.4,
+   "src_end": 15.0,
+   "at": 7.9,
+   "until": 11.1,
+   "fade_in": 0.3,
+   "fade_out": 0.4,
+   "gain_db": 1,
+   "eq": {
+    "hp": 60,
+    "lp": 6000
+   },
+   "width": 0.4
+  },
+  {
+   "name": "am.floor",
+   "_doc": "16-31: the same room heard from 1 cm: a low drone with the house's wind",
+   "file": "audio/assets/ambience/fs-218751_room-tone-windy-house-short-140212-0078.ogg",
+   "src_start": 22.0,
+   "src_end": 60.0,
+   "at": 15.95,
+   "until": 31.05,
+   "fade_in": 0.1,
+   "fade_out": 0.3,
+   "gain_db": -11.5,
+   "eq": {
+    "hp": 40,
+    "lp": 2500
+   },
+   "width": 1.0
+  },
+  {
+   "name": "am.heart",
+   "_doc": "fur 20-24: the sleeping cat's heartbeat far below, pitched down",
+   "file": "audio/assets/ambience/fs-332821_heartbeat-60bpm.ogg",
+   "src_start": 0.0,
+   "src_end": 29.0,
+   "at": 19.95,
+   "until": 24.05,
+   "fade_in": 0.1,
+   "fade_out": 0.1,
+   "gain_db": -16,
+   "eq": {
+    "hp": 30,
+    "lp": 500
+   },
+   "width": 0
+  },
+  {
+   "name": "am.purr.deep",
+   "_doc": "fur 20-24: the purr as a rumble through the body",
+   "file": "audio/assets/sfx/fs-449926_cat-purring.ogg",
+   "src_start": 0.5,
+   "src_end": 13.5,
+   "at": 19.95,
+   "until": 24.05,
+   "fade_in": 0.15,
+   "fade_out": 0.1,
+   "gain_db": -16.5,
+   "eq": {
+    "hp": 40,
+    "lp": 700
+   },
+   "width": 0.3
+  },
+  {
+   "name": "am.fur",
+   "_doc": "fur 20-24: hairs brushing around her",
+   "file": "audio/assets/sfx/fs-371909_hair-brushing.ogg",
+   "src_start": 0.0,
+   "src_end": 9.9,
+   "at": 19.95,
+   "until": 24.05,
+   "fade_in": 0.15,
+   "fade_out": 0.1,
+   "gain_db": 16,
+   "eq": {
+    "hp": 300
+   },
+   "width": 0.8
+  },
+  {
+   "name": "am.mites",
+   "_doc": "mites 24-28: many legs scurrying on the weave",
+   "file": "audio/assets/sfx/fs-767054_cockroaches-scurrying-and-scratching-wit.ogg",
+   "src_start": 1.0,
+   "src_end": 21.0,
+   "at": 23.95,
+   "until": 28.05,
+   "fade_in": 0.1,
+   "fade_out": 0.1,
+   "gain_db": 26,
+   "eq": {
+    "hp": 400
+   },
+   "width": 0.8
+  },
+  {
+   "name": "am.kitchen",
+   "_doc": "salt + fall 28-32.45: the kitchen counter, fridge hum",
+   "file": "audio/assets/ambience/fs-637621_kitchen-restaurant-fridge-hum-room-tone-.ogg",
+   "src_start": 20.0,
+   "src_end": 60.0,
+   "at": 27.95,
+   "until": 32.5,
+   "fade_in": 0.1,
+   "fade_out": 0.05,
+   "gain_db": -3.5,
+   "eq": {
+    "hp": 50,
+    "lp": 4000
+   },
+   "width": 0.9
+  },
+  {
+   "name": "am.water",
+   "_doc": "inside the milk 32.45-44: underwater bed (muffled)",
+   "file": "audio/assets/ambience/fs-255597_underwater-ambience.ogg",
+   "src_start": 2.0,
+   "src_end": 60.0,
+   "at": 32.42,
+   "until": 48.05,
+   "fade_in": 0.05,
+   "fade_out": 0.3,
+   "gain_db": -1,
+   "eq": {
+    "hp": 40,
+    "lp": 3000
+   },
+   "width": 1.0,
+   "auto": [
+    [
+     32.42,
+     0
+    ],
+    [
+     40.0,
+     0
+    ],
+    [
+     44.0,
+     -4
+    ],
+    [
+     48.0,
+     -6
+    ]
+   ]
+  },
+  {
+   "name": "am.bubbles",
+   "_doc": "bubbles around her 32.45-40",
+   "file": "audio/assets/sfx/fs-68312_bubbles-cam.ogg",
+   "src_start": 0.7,
+   "src_end": 8.5,
+   "at": 32.45,
+   "until": 40.1,
+   "fade_in": 0.05,
+   "fade_out": 0.4,
+   "gain_db": -26,
+   "eq": {
+    "hp": 150,
+    "lp": 5000
+   },
+   "width": 0.8
+  },
+  {
+   "name": "am.membrane",
+   "_doc": "the cell 40-48: a squishy, bubbling membrane underfoot",
+   "file": "audio/assets/ambience/fs-76793_bubbling-liquid.ogg",
+   "src_start": 1.8,
+   "src_end": 33.0,
+   "at": 40.0,
+   "until": 48.05,
+   "fade_in": 0.3,
+   "fade_out": 0.3,
+   "gain_db": -4,
+   "eq": {
+    "hp": 80,
+    "lp": 2500
+   },
+   "width": 0.7,
+   "auto": [
+    [
+     40,
+     0
+    ],
+    [
+     44,
+     -2
+    ],
+    [
+     48,
+     -4
+    ]
+   ]
+  },
+  {
+   "name": "am.fizz",
+   "_doc": "molecules 48-51.56: a fizzing crowd of molecules; choked hard at the music stop",
+   "file": "audio/assets/ambience/fs-238564_fizzing.ogg",
+   "src_start": 0.5,
+   "src_end": 14.0,
+   "at": 47.95,
+   "until": 51.56,
+   "fade_in": 0.15,
+   "fade_out": 0.03,
+   "gain_db": -13,
+   "eq": {
+    "hp": 200
+   },
+   "width": 0.9
+  },
+  {
+   "name": "am.ticks",
+   "_doc": "water molecules knocking: marble clicks",
+   "file": "audio/assets/sfx/fs-875424_marble-coaster-clicks.ogg",
+   "src_start": 0.5,
+   "src_end": 9.5,
+   "at": 47.95,
+   "until": 51.56,
+   "fade_in": 0.15,
+   "fade_out": 0.03,
+   "gain_db": -8,
+   "eq": {
+    "hp": 800
+   },
+   "width": 0.7
+  },
+  {
+   "name": "am.chimes",
+   "_doc": "DNA 52-56: shimmering texture (real wind chimes), under the drop",
+   "file": "audio/assets/ambience/fs-867563_wind-chimes-gently-resonating-in-a-natur.ogg",
+   "src_start": 0.5,
+   "src_end": 30.0,
+   "at": 52.0,
+   "until": 57.5,
+   "fade_in": 0.4,
+   "fade_out": 0.3,
+   "gain_db": -10,
+   "eq": {
+    "hp": 400
+   },
+   "width": 1.0
+  },
+  {
+   "name": "am.bowl",
+   "_doc": "DNA + atoms 52-57.5: a singing bowl as the field's hum",
+   "file": "audio/assets/ambience/fs-59156_singingbowl5.ogg",
+   "src_start": 2.0,
+   "src_end": 50.0,
+   "at": 52.0,
+   "until": 57.5,
+   "fade_in": 0.3,
+   "fade_out": 0.3,
+   "gain_db": 4.5,
+   "eq": {
+    "hp": 80
+   },
+   "width": 0.8
+  },
+  {
+   "name": "am.atomhum",
+   "_doc": "atoms 56-57.5: a deep drone (hotel ventilation)",
+   "file": "audio/assets/ambience/fs-69874_hotel-drone-03-090324.ogg",
+   "src_start": 10.0,
+   "src_end": 60.0,
+   "at": 55.6,
+   "until": 57.5,
+   "fade_in": 0.4,
+   "fade_out": 0.3,
+   "gain_db": -9,
+   "eq": {
+    "hp": 40,
+    "lp": 3000
+   },
+   "width": 1.0
+  }
+ ]
+}

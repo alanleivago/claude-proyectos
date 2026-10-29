@@ -1,0 +1,5191 @@
+{
+ "summary": "QA WARN: clicks warn, loudness warn, audibility warn, sync warn. Master gain over the stems +3.7 dB (levels below are at master scale).",
+ "status": "warn",
+ "note": null,
+ "sections": {
+  "clicks": {
+   "status": "warn",
+   "summary": "1 click(s) in the master, 11 in the stems; 0 at a placement edge (a cut: fix the trim / fade), the rest inside a recording (its own crisp transient or a defect in the source)",
+   "counts": {
+    "master": {
+     "clicks": 1,
+     "attacks": 13
+    },
+    "sfx": {
+     "clicks": 10,
+     "attacks": 14
+    },
+    "amb": {
+     "clicks": 0,
+     "attacks": 0
+    },
+    "music": {
+     "clicks": 1,
+     "attacks": 0
+    }
+   },
+   "items": [
+    {
+     "in": "master",
+     "t": 9.3324,
+     "ch": 0,
+     "level_db": -21.8,
+     "conc": 0.95,
+     "kind": "click",
+     "owners": [
+      {
+       "bus": "sfx",
+       "what": "fx.cat.sniff.a",
+       "rule": "fx.cat.sniff",
+       "where": "body",
+       "from_start_ms": 806.4,
+       "level_db": -25.9
+      }
+     ],
+     "at_edge": false
+    },
+    {
+     "in": "sfx",
+     "t": 9.3324,
+     "ch": 0,
+     "level_db": -26.0,
+     "conc": 0.98,
+     "kind": "click",
+     "owners": [
+      {
+       "bus": "sfx",
+       "what": "fx.cat.sniff.a",
+       "rule": "fx.cat.sniff",
+       "where": "body",
+       "from_start_ms": 806.4,
+       "level_db": -25.9
+      }
+     ],
+     "at_edge": false
+    },
+    {
+     "in": "sfx",
+     "t": 10.1391,
+     "ch": 0,
+     "level_db": -30.5,
+     "conc": 0.95,
+     "kind": "click",
+     "owners": [
+      {
+       "bus": "sfx",
+       "what": "fx.cat.sniff.a",
+       "rule": "fx.cat.sniff",
+       "where": "body",
+       "from_start_ms": 1613.1,
+       "level_db": -30.6
+      }
+     ],
+     "at_edge": false
+    },
+    {
+     "in": "sfx",
+     "t": 16.9504,
+     "ch": 0,
+     "level_db": -39.8,
+     "conc": 0.84,
+     "kind": "click",
+     "owners": [
+      {
+       "bus": "sfx",
+       "what": "fx.chitin#1",
+       "rule": "fx.flea.click",
+       "where": "body",
+       "from_start_ms": 15.4,
+       "level_db": -39.8
+      }
+     ],
+     "at_edge": false
+    },
+    {
+     "in": "sfx",
+     "t": 18.0011,
+     "ch": 0,
+     "level_db": -31.6,
+     "conc": 0.87,
+     "kind": "click",
+     "owners": [
+      {
+       "bus": "sfx",
+       "what": "fx.chitin#4",
+       "rule": "fx.flea.click",
+       "where": "body",
+       "from_start_ms": 4.1,
+       "level_db": -31.6
+      }
+     ],
+     "at_edge": false
+    },
+    {
+     "in": "sfx",
+     "t": 18.1681,
+     "ch": 1,
+     "level_db": -39.0,
+     "conc": 0.83,
+     "kind": "click",
+     "owners": [
+      {
+       "bus": "sfx",
+       "what": "fx.chitin#5",
+       "rule": "fx.flea.click",
+       "where": "body",
+       "from_start_ms": 15.1,
+       "level_db": -39.0
+      }
+     ],
+     "at_edge": false
+    },
+    {
+     "in": "sfx",
+     "t": 20.9379,
+     "ch": 0,
+     "level_db": -34.2,
+     "conc": 0.86,
+     "kind": "click",
+     "owners": [
+      {
+       "bus": "sfx",
+       "what": "fx.step.grass#1",
+       "rule": "fx.step.grass",
+       "where": "body",
+       "from_start_ms": 77.9,
+       "level_db": -34.2
+      }
+     ],
+     "at_edge": false
+    },
+    {
+     "in": "sfx",
+     "t": 21.9565,
+     "ch": 0,
+     "level_db": -31.7,
+     "conc": 0.88,
+     "kind": "click",
+     "owners": [
+      {
+       "bus": "sfx",
+       "what": "fx.step.grass#3",
+       "rule": "fx.step.grass",
+       "where": "body",
+       "from_start_ms": 128.2,
+       "level_db": -31.9
+      }
+     ],
+     "at_edge": false
+    },
+    {
+     "in": "sfx",
+     "t": 22.7074,
+     "ch": 0,
+     "level_db": -39.4,
+     "conc": 0.86,
+     "kind": "click",
+     "owners": [
+      {
+       "bus": "sfx",
+       "what": "fx.step.grass#0",
+       "rule": "fx.step.grass",
+       "where": "body",
+       "from_start_ms": 52.9,
+       "level_db": -39.4
+      }
+     ],
+     "at_edge": false
+    },
+    {
+     "in": "sfx",
+     "t": 23.3929,
+     "ch": 0,
+     "level_db": -34.2,
+     "conc": 0.86,
+     "kind": "click",
+     "owners": [
+      {
+       "bus": "sfx",
+       "what": "fx.step.grass#1",
+       "rule": "fx.step.grass",
+       "where": "body",
+       "from_start_ms": 78.8,
+       "level_db": -34.2
+      }
+     ],
+     "at_edge": false
+    },
+    {
+     "in": "sfx",
+     "t": 41.7572,
+     "ch": 0,
+     "level_db": -36.1,
+     "conc": 0.94,
+     "kind": "click",
+     "owners": [
+      {
+       "bus": "sfx",
+       "what": "fx.squish.j",
+       "rule": "fx.squish",
+       "where": "body",
+       "from_start_ms": 184.7,
+       "level_db": -36.1
+      }
+     ],
+     "at_edge": false
+    },
+    {
+     "in": "music",
+     "t": 14.2885,
+     "ch": 0,
+     "level_db": -39.8,
+     "conc": 0.89,
+     "kind": "click",
+     "owners": [
+      {
+       "bus": "music",
+       "what": "mu.groove: src 0.00-51.56 (track bars -1..26 + 3 sixteenths of beat 4) -> film 0.00-51.56. Energetic from the first frame (the track opens on a full-band downbeat), its own funk groove for the build and journey, its louder drum-kit section (src bars 17-26) for the peak. Hard stop 7 ms before the 16th note at 51.573 so nothing is chopped; 25 ms fade = silent by 51.585 (black frame 51.6-51.98).",
+       "rule": "music",
+       "where": "body",
+       "from_start_ms": 14288.5,
+       "from_end_ms": -37296.5
+      }
+     ],
+     "at_edge": false
+    }
+   ]
+  },
+  "loudness": {
+   "lufs": -14.01,
+   "target": -14,
+   "true_peak_dbtp": -2.27,
+   "lra_lu": 4.0,
+   "premaster_lufs": -17.75,
+   "loudest_momentary": -8.7,
+   "loudest_at": 54.0,
+   "loudest_frac": 0.89,
+   "short_term_per_s": [
+    -14.2,
+    -14.2,
+    -14.2,
+    -14.1,
+    -13.9,
+    -14.0,
+    -13.9,
+    -14.2,
+    -14.0,
+    -13.9,
+    -13.5,
+    -14.0,
+    -14.0,
+    -15.1,
+    -15.0,
+    -16.2,
+    -16.0,
+    -16.9,
+    -16.2,
+    -16.8,
+    -15.3,
+    -14.5,
+    -13.8,
+    -15.1,
+    -15.4,
+    -15.6,
+    -15.7,
+    -15.5,
+    -15.4,
+    -14.1,
+    -15.3,
+    -15.3,
+    -15.5,
+    -14.0,
+    -14.1,
+    -14.1,
+    -14.7,
+    -13.9,
+    -14.4,
+    -13.6,
+    -13.5,
+    -12.8,
+    -13.0,
+    -13.4,
+    -13.2,
+    -12.8,
+    -12.3,
+    -12.0,
+    -12.5,
+    -12.8,
+    -12.6,
+    -11.6,
+    -11.4,
+    -12.1,
+    -12.6,
+    -12.7,
+    -13.4,
+    -16.3,
+    -21.8
+   ],
+   "head_5ms_peak_dbfs": -7.9,
+   "tail_50ms_rms_dbfs": -78.4,
+   "tail_10ms_peak_dbfs": -240.0,
+   "acts": {
+    "build": {
+     "from": 0.0,
+     "momentary_median": -14.0,
+     "momentary_max": -12.2
+    },
+    "journey": {
+     "from": 8.0,
+     "momentary_median": -14.9,
+     "momentary_max": -11.1
+    },
+    "peak": {
+     "from": 31.0,
+     "momentary_median": -13.4,
+     "momentary_max": -10.5
+    },
+    "silence": {
+     "from": 51.58,
+     "momentary_median": -18.3,
+     "momentary_max": -16.0
+    },
+    "payoff": {
+     "from": 52.0,
+     "momentary_median": -12.0,
+     "momentary_max": -8.7
+    },
+    "goodbye": {
+     "from": 57.5,
+     "momentary_median": -22.8,
+     "momentary_max": -12.3
+    }
+   },
+   "status": "warn",
+   "summary": "-14.0 LUFS (target -14), true peak -2.3 dBTP, LRA 4.0 LU, loudest momentary -8.7 LUFS at 0:54.00 (89% of the runtime); first 5 ms peak -8 dBFS: starts mid-sound or clicks on sample 0; LRA 4.0 LU: flat (launch films with an arc sit at 5-9 LU); the loudest moment is at 89% of the runtime: peak at the drop, resolve at the end"
+  },
+  "coverage": {
+   "status": "ok",
+   "partial": [],
+   "unsounded_classes": [],
+   "placed_but_silent": [],
+   "summary": "0 of 159 cue events have no sound; 0 class(es) of action sounded only in part"
+  },
+  "edges": {
+   "status": "ok",
+   "summary": "0 defect(s) (abrupt entries, chopped decays, chopped music), 27 with craft notes only (used samples, slices, music splices); 0 placement(s) run past the film ends",
+   "items": [
+    {
+     "what": "sample",
+     "name": "fx.cat.lift",
+     "file": "fs-495466_clothing-rustling-3.ogg",
+     "start": 0.4,
+     "end": 0.95,
+     "head_db": -19.1,
+     "tail_db": -19.8,
+     "pre20_db": -17.7,
+     "post20_db": -19.5,
+     "attack_ms": 0.0,
+     "late_onset": null,
+     "fade_in": 0.03,
+     "fade_out": 0.12,
+     "issues": [],
+     "notes": [
+      "the trim cuts into a sound already playing (source 20 ms before at -17.7 dB re peak), softened by the fade-in",
+      "the sound continues after the trim (tail -19.8 dB, source after -19.5 dB): decay faded early"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.cat.sniff.a",
+     "file": "fs-801809_cat-sniffing-mic.ogg",
+     "start": 0.011,
+     "end": 1.86,
+     "head_db": -25.5,
+     "tail_db": -22.8,
+     "pre20_db": -30.8,
+     "post20_db": -25.5,
+     "attack_ms": 84.0,
+     "late_onset": 1.435,
+     "fade_in": 0.002,
+     "fade_out": 0.15,
+     "issues": [],
+     "notes": [
+      "the attack starts in the first ms (head -25.5 dB): the 2 ms fade-in dulls it; start the trim 3-5 ms earlier",
+      "the sound continues after the trim (tail -22.8 dB, source after -25.5 dB): decay faded early",
+      "a second hit inside the sample at 1.435 s (fine for a rattle, wrong for a single hit)"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.cat.sniff.b",
+     "file": "fs-848385_adult-cat-sniffing.ogg",
+     "start": 0.7,
+     "end": 2.5,
+     "head_db": -25.9,
+     "tail_db": -27.0,
+     "pre20_db": -33.2,
+     "post20_db": -26.3,
+     "attack_ms": 0.0,
+     "late_onset": null,
+     "fade_in": 0.002,
+     "fade_out": 0.2,
+     "issues": [],
+     "notes": [
+      "the attack starts in the first ms (head -25.9 dB): the 2 ms fade-in dulls it; start the trim 3-5 ms earlier",
+      "the sound continues after the trim (tail -27.0 dB, source after -26.3 dB): decay faded early"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.cat.trill",
+     "file": "fs-668822_cat-trill-1.ogg",
+     "start": 0.06,
+     "end": 1.221,
+     "head_db": -37.9,
+     "tail_db": -59.5,
+     "pre20_db": -47.1,
+     "post20_db": -240.0,
+     "attack_ms": 72.0,
+     "late_onset": 0.95,
+     "fade_in": 0.002,
+     "fade_out": 0.12,
+     "issues": [],
+     "notes": [
+      "a second hit inside the sample at 0.95 s (fine for a rattle, wrong for a single hit)"
+     ]
+    },
+    {
+     "what": "slices",
+     "name": "fx.creak",
+     "n": 5,
+     "issues": [],
+     "notes": [
+      "a second hit inside the sample at 0.195 s",
+      "a second hit inside the sample at 0.22 s",
+      "a second hit inside the sample at 0.23 s"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.drop.boom",
+     "file": "fs-774865_sound-design-elements-sfx-ps-0037.ogg",
+     "start": 1.9,
+     "end": 4.6,
+     "head_db": -27.4,
+     "tail_db": -46.0,
+     "pre20_db": -14.1,
+     "post20_db": -41.2,
+     "attack_ms": 1.0,
+     "late_onset": null,
+     "fade_in": 0.002,
+     "fade_out": 0.8,
+     "issues": [],
+     "notes": [
+      "the trim cuts into a sound already playing (source 20 ms before at -14.1 dB re peak), softened by the fade-in"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.gasp.flea",
+     "file": "fs-812418_exaggerated-surprised-gasp.ogg",
+     "start": 0.02,
+     "end": 0.374,
+     "head_db": -46.6,
+     "tail_db": -31.7,
+     "pre20_db": -49.7,
+     "post20_db": -28.8,
+     "attack_ms": 17.0,
+     "late_onset": null,
+     "fade_in": 0.002,
+     "fade_out": 0.06,
+     "issues": [],
+     "notes": [
+      "the sound continues after the trim (tail -31.7 dB, source after -28.8 dB): decay faded early"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.gasp.trip",
+     "file": "fs-740310_female-gasp.ogg",
+     "start": 0.66,
+     "end": 1.0,
+     "head_db": -58.5,
+     "tail_db": -10.1,
+     "pre20_db": -57.0,
+     "post20_db": -11.1,
+     "attack_ms": 33.0,
+     "late_onset": null,
+     "fade_in": 0.002,
+     "fade_out": 0.12,
+     "issues": [],
+     "notes": [
+      "the sound continues after the trim (tail -10.1 dB, source after -11.1 dB): decay faded early"
+     ]
+    },
+    {
+     "what": "slices",
+     "name": "fx.ice",
+     "n": 4,
+     "issues": [],
+     "notes": [
+      "a second hit inside the sample at 0.385 s",
+      "the attack starts in the first ms",
+      "the sound continues after the trim"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.inject.hiss",
+     "file": "fs-234782_steam-hiss.ogg",
+     "start": 0.04,
+     "end": 1.0,
+     "head_db": -43.8,
+     "tail_db": -16.8,
+     "pre20_db": -48.8,
+     "post20_db": -12.4,
+     "attack_ms": 124.0,
+     "late_onset": null,
+     "fade_in": 0.05,
+     "fade_out": 0.2,
+     "issues": [],
+     "notes": [
+      "the sound continues after the trim (tail -16.8 dB, source after -12.4 dB): decay faded early"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.inject.suck",
+     "file": "fs-386360_power-hammer-billeter-klunz-50kg-suction.ogg",
+     "start": 0.04,
+     "end": 0.9,
+     "head_db": -13.0,
+     "tail_db": -12.8,
+     "pre20_db": -11.2,
+     "post20_db": -11.5,
+     "attack_ms": 0.0,
+     "late_onset": 0.625,
+     "fade_in": 0.02,
+     "fade_out": 0.2,
+     "issues": [],
+     "notes": [
+      "the trim cuts into a sound already playing (source 20 ms before at -11.2 dB re peak), softened by the fade-in",
+      "the sound continues after the trim (tail -12.8 dB, source after -11.5 dB): decay faded early",
+      "a second hit inside the sample at 0.625 s (fine for a rattle, wrong for a single hit)"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.land.squelch",
+     "file": "fs-217317_squelch-1.ogg",
+     "start": 0.6,
+     "end": 1.4,
+     "head_db": -40.0,
+     "tail_db": -51.0,
+     "pre20_db": -39.1,
+     "post20_db": -54.9,
+     "attack_ms": 19.0,
+     "late_onset": 0.645,
+     "fade_in": 0.002,
+     "fade_out": 0.15,
+     "issues": [],
+     "notes": [
+      "a second hit inside the sample at 0.645 s (fine for a rattle, wrong for a single hit)"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.phage.a",
+     "file": "fs-813053_big-robot-footstep-002.ogg",
+     "start": 0.09,
+     "end": 1.0,
+     "head_db": -45.9,
+     "tail_db": -22.4,
+     "pre20_db": -45.5,
+     "post20_db": -22.3,
+     "attack_ms": 102.0,
+     "late_onset": null,
+     "fade_in": 0.002,
+     "fade_out": 0.15,
+     "issues": [],
+     "notes": [
+      "the sound continues after the trim (tail -22.4 dB, source after -22.3 dB): decay faded early"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.phage.b",
+     "file": "fs-815039_big-robot-footstep-005.ogg",
+     "start": 0.27,
+     "end": 1.1,
+     "head_db": -50.6,
+     "tail_db": -15.4,
+     "pre20_db": -46.9,
+     "post20_db": -9.2,
+     "attack_ms": 141.0,
+     "late_onset": null,
+     "fade_in": 0.002,
+     "fade_out": 0.15,
+     "issues": [],
+     "notes": [
+      "the sound continues after the trim (tail -15.4 dB, source after -9.2 dB): decay faded early"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.phage.c",
+     "file": "fs-813055_big-robot-footstep-004.ogg",
+     "start": 0.16,
+     "end": 1.0,
+     "head_db": -47.1,
+     "tail_db": -11.6,
+     "pre20_db": -49.1,
+     "post20_db": -7.5,
+     "attack_ms": 72.0,
+     "late_onset": null,
+     "fade_in": 0.002,
+     "fade_out": 0.15,
+     "issues": [],
+     "notes": [
+      "the sound continues after the trim (tail -11.6 dB, source after -7.5 dB): decay faded early"
+     ]
+    },
+    {
+     "what": "slices",
+     "name": "fx.servo",
+     "n": 5,
+     "issues": [],
+     "notes": [
+      "the attack starts in the first ms",
+      "the sound continues after the trim"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.shr.pop.c",
+     "file": "fs-260614_pop.ogg",
+     "start": 0.0,
+     "end": 0.125,
+     "head_db": -29.8,
+     "tail_db": -44.8,
+     "pre20_db": -240.0,
+     "post20_db": -50.9,
+     "attack_ms": 3.0,
+     "late_onset": null,
+     "fade_in": 0.002,
+     "fade_out": 0.03,
+     "issues": [],
+     "notes": [
+      "the attack starts in the first ms (head -29.8 dB): the 2 ms fade-in dulls it; start the trim 3-5 ms earlier"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.splash",
+     "file": "fs-637823_splash-body-dive-into-water-pool.ogg",
+     "start": 0.476,
+     "end": 2.476,
+     "head_db": -70.7,
+     "tail_db": -41.2,
+     "pre20_db": -62.9,
+     "post20_db": -40.3,
+     "attack_ms": 69.0,
+     "late_onset": 1.55,
+     "fade_in": 0.002,
+     "fade_out": 0.4,
+     "issues": [],
+     "notes": [
+      "a second hit inside the sample at 1.55 s (fine for a rattle, wrong for a single hit)"
+     ]
+    },
+    {
+     "what": "slices",
+     "name": "fx.squish",
+     "n": 3,
+     "issues": [],
+     "notes": [
+      "a second hit inside the sample at 0.21 s",
+      "a second hit inside the sample at 0.215 s",
+      "the attack starts in the first ms",
+      "the sound continues after the trim"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.squish.j",
+     "file": "fs-181918_jelly-wobbling-on-plate-2.ogg",
+     "start": 0.48,
+     "end": 0.95,
+     "head_db": -30.0,
+     "tail_db": -26.2,
+     "pre20_db": -35.6,
+     "post20_db": -27.6,
+     "attack_ms": 2.0,
+     "late_onset": 0.44,
+     "fade_in": 0.002,
+     "fade_out": 0.08,
+     "issues": [],
+     "notes": [
+      "the sound continues after the trim (tail -26.2 dB, source after -27.6 dB): decay faded early",
+      "a second hit inside the sample at 0.44 s (fine for a rattle, wrong for a single hit)"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.squish.s",
+     "file": "fs-433816_slime-17.ogg",
+     "start": 0.04,
+     "end": 0.95,
+     "head_db": -45.3,
+     "tail_db": -62.3,
+     "pre20_db": -46.3,
+     "post20_db": -45.0,
+     "attack_ms": 233.0,
+     "late_onset": 0.6,
+     "fade_in": 0.002,
+     "fade_out": 0.08,
+     "issues": [],
+     "notes": [
+      "a second hit inside the sample at 0.6 s (fine for a rattle, wrong for a single hit)"
+     ]
+    },
+    {
+     "what": "slices",
+     "name": "fx.step.grass",
+     "n": 5,
+     "issues": [],
+     "notes": [
+      "a second hit inside the sample at 0.16 s",
+      "a second hit inside the sample at 0.165 s",
+      "a second hit inside the sample at 0.17 s",
+      "a second hit inside the sample at 0.185 s",
+      "the attack starts in the first ms",
+      "the sound continues after the trim"
+     ]
+    },
+    {
+     "what": "slices",
+     "name": "fx.step.gravel",
+     "n": 9,
+     "issues": [],
+     "notes": [
+      "a second hit inside the sample at 0.235 s",
+      "a second hit inside the sample at 0.27 s",
+      "a second hit inside the sample at 0.305 s",
+      "the sound continues after the trim"
+     ]
+    },
+    {
+     "what": "slices",
+     "name": "fx.stroke",
+     "n": 5,
+     "issues": [],
+     "notes": [
+      "a second hit inside the sample at 0.415 s",
+      "the attack starts in the first ms",
+      "the sound continues after the trim"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.tinkle.b",
+     "file": "fs-390735_glass-tinkle-4.ogg",
+     "start": 0.14,
+     "end": 0.75,
+     "head_db": -58.7,
+     "tail_db": -55.3,
+     "pre20_db": -53.0,
+     "post20_db": -51.1,
+     "attack_ms": 11.0,
+     "late_onset": 0.46,
+     "fade_in": 0.002,
+     "fade_out": 0.1,
+     "issues": [],
+     "notes": [
+      "a second hit inside the sample at 0.46 s (fine for a rattle, wrong for a single hit)"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.trip.cloth",
+     "file": "fs-495466_clothing-rustling-3.ogg",
+     "start": 0.4,
+     "end": 0.95,
+     "head_db": -20.4,
+     "tail_db": -18.9,
+     "pre20_db": -17.7,
+     "post20_db": -19.5,
+     "attack_ms": 0.0,
+     "late_onset": null,
+     "fade_in": 0.01,
+     "fade_out": 0.1,
+     "issues": [],
+     "notes": [
+      "the trim cuts into a sound already playing (source 20 ms before at -17.7 dB re peak), softened by the fade-in",
+      "the sound continues after the trim (tail -18.9 dB, source after -19.5 dB): decay faded early"
+     ]
+    }
+   ],
+   "splices": [
+    {
+     "segment": "mu.groove: src 0.00-51.56 (track bars -1..26 + 3 sixteenths of beat 4) -> film 0.00-51.56. Energetic from the first frame (the track opens on a full-band downbeat), its own funk groove for the build and journey, its louder drum-kit section (src bars 17-26) for the peak. Hard stop 7 ms before the 16th note at 51.573 so nothing is chopped; 25 ms fade = silent by 51.585 (black frame 51.6-51.98).",
+     "film_end": 51.56,
+     "out_db": -18.3,
+     "cut_off_db": -15.7,
+     "next_in_db": -18.8,
+     "issues": [],
+     "notes": [
+      "440 ms of no music before 52.000 s (deliberate silence?)"
+     ]
+    }
+   ],
+   "cut_by_film_ends": []
+  },
+  "audibility": {
+   "status": "warn",
+   "counts": {
+    "clear": 91,
+    "ok": 21,
+    "barely": 23,
+    "masked": 24
+   },
+   "summary": "159 events: clear 91, ok 21, barely 23, masked 24; masked at 10.62 step:catback:03 (by music/amb), 12.83 step:coin:03 (by music/amb), 18.00 flea:click:4 (by music/amb), 19.20 flea:click:8 (by music/amb), 21.83 step:fur:03 (by music/amb), 23.32 step:fur:06 (by music/amb); 7 layer(s) in multi-layer events add nothing measurable (read < 0 dB)",
+   "items": [
+    {
+     "t": 10.619,
+     "label": "step:catback:03",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -12.1,
+     "vs_bed_db": -12.2,
+     "vs_bed_hz": 316,
+     "vs_all_db": -12.3,
+     "first20_db": -10.8,
+     "first20_hz": 12589,
+     "read_db": -10.8,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 19.2,
+     "label": "flea:click:8",
+     "kind": "chitin",
+     "n_layers": 1,
+     "rules": [
+      "fx.flea.click"
+     ],
+     "peak_db": -22.8,
+     "vs_bed_db": -19.0,
+     "vs_bed_hz": 5012,
+     "vs_all_db": -19.0,
+     "first20_db": -6.8,
+     "first20_hz": 10000,
+     "read_db": -6.8,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 18.0,
+     "label": "flea:click:4",
+     "kind": "chitin",
+     "n_layers": 1,
+     "rules": [
+      "fx.flea.click"
+     ],
+     "peak_db": -19.7,
+     "vs_bed_db": -14.1,
+     "vs_bed_hz": 10000,
+     "vs_all_db": -14.1,
+     "first20_db": -6.7,
+     "first20_hz": 10000,
+     "read_db": -6.7,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 28.35,
+     "label": "salt:creak:0",
+     "kind": "crystal",
+     "n_layers": 1,
+     "rules": [
+      "fx.salt.creak"
+     ],
+     "peak_db": -21.4,
+     "vs_bed_db": -5.2,
+     "vs_bed_hz": 200,
+     "vs_all_db": -5.2,
+     "first20_db": -7.0,
+     "first20_hz": 200,
+     "read_db": -5.2,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 44.61,
+     "label": "virus:servo:7",
+     "kind": "servo",
+     "n_layers": 1,
+     "rules": [
+      "fx.phage.servo"
+     ],
+     "peak_db": -19.4,
+     "vs_bed_db": -5.2,
+     "vs_bed_hz": 1000,
+     "vs_all_db": -5.2,
+     "first20_db": -10.3,
+     "first20_hz": 1585,
+     "read_db": -5.2,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 27.175,
+     "label": "mites:creak:3",
+     "kind": "creak",
+     "n_layers": 1,
+     "rules": [
+      "fx.mite.creak"
+     ],
+     "peak_db": -17.4,
+     "vs_bed_db": -14.0,
+     "vs_bed_hz": 1585,
+     "vs_all_db": -14.0,
+     "first20_db": -4.8,
+     "first20_hz": 10000,
+     "read_db": -4.8,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 8.62,
+     "label": "cat:sniff:0",
+     "kind": "sniff",
+     "n_layers": 1,
+     "rules": [
+      "fx.cat.sniff"
+     ],
+     "peak_db": -10.6,
+     "vs_bed_db": -4.5,
+     "vs_bed_hz": 158,
+     "vs_all_db": -4.3,
+     "first20_db": -4.4,
+     "first20_hz": 12589,
+     "read_db": -4.3,
+     "verdict": "masked",
+     "covered_by": "music/amb",
+     "qa_ok": "each take is a sniffing train covering the cat's visible sniffs 8.6-10.4 s; its loudest sniff lands on a later visible sniff, the train starts on the first"
+    },
+    {
+     "t": 30.6,
+     "label": "salt:tinkle:2",
+     "kind": "tinkle",
+     "n_layers": 1,
+     "rules": [
+      "fx.salt.tinkle"
+     ],
+     "peak_db": -25.7,
+     "vs_bed_db": -2.7,
+     "vs_bed_hz": 12589,
+     "vs_all_db": -3.1,
+     "first20_db": -3.1,
+     "first20_hz": 631,
+     "read_db": -3.1,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 46.11,
+     "label": "virus:servo:6",
+     "kind": "servo",
+     "n_layers": 1,
+     "rules": [
+      "fx.phage.servo"
+     ],
+     "peak_db": -18.1,
+     "vs_bed_db": -4.1,
+     "vs_bed_hz": 2512,
+     "vs_all_db": -4.1,
+     "first20_db": -3.1,
+     "first20_hz": 1995,
+     "read_db": -3.1,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 39.294,
+     "label": "swim:bact:06",
+     "kind": "stroke",
+     "n_layers": 1,
+     "rules": [
+      "fx.swim"
+     ],
+     "peak_db": -24.5,
+     "vs_bed_db": -3.0,
+     "vs_bed_hz": 1259,
+     "vs_all_db": -3.0,
+     "first20_db": -6.6,
+     "first20_hz": 501,
+     "read_db": -3.0,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 47.3,
+     "label": "virus:inject:3",
+     "kind": "inject",
+     "n_layers": 2,
+     "rules": [
+      "fx.inject.hiss",
+      "fx.inject.suck"
+     ],
+     "peak_db": -19.8,
+     "vs_bed_db": 3.5,
+     "vs_bed_hz": 6310,
+     "vs_all_db": -3.0,
+     "first20_db": -17.4,
+     "first20_hz": 5012,
+     "read_db": -3.0,
+     "verdict": "masked",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 45.61,
+     "label": "virus:servo:0",
+     "kind": "servo",
+     "n_layers": 1,
+     "rules": [
+      "fx.phage.servo"
+     ],
+     "peak_db": -11.8,
+     "vs_bed_db": -2.0,
+     "vs_bed_hz": 1585,
+     "vs_all_db": -2.4,
+     "first20_db": -5.8,
+     "first20_hz": 1995,
+     "read_db": -2.4,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 52.288,
+     "label": "step:dna:00",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.sock"
+     ],
+     "peak_db": -15.6,
+     "vs_bed_db": -4.0,
+     "vs_bed_hz": 501,
+     "vs_all_db": -4.8,
+     "first20_db": -1.7,
+     "first20_hz": 1585,
+     "read_db": -1.7,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 47.46,
+     "label": "virus:servo:5",
+     "kind": "servo",
+     "n_layers": 1,
+     "rules": [
+      "fx.phage.servo"
+     ],
+     "peak_db": -20.3,
+     "vs_bed_db": 12.1,
+     "vs_bed_hz": 12589,
+     "vs_all_db": -4.0,
+     "first20_db": -1.6,
+     "first20_hz": 1585,
+     "read_db": -1.6,
+     "verdict": "masked",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 45.825,
+     "label": "virus:land:3",
+     "kind": "phage",
+     "n_layers": 1,
+     "rules": [
+      "fx.phage.land"
+     ],
+     "peak_db": -19.3,
+     "vs_bed_db": -1.4,
+     "vs_bed_hz": 126,
+     "vs_all_db": -1.4,
+     "first20_db": -6.2,
+     "first20_hz": 100,
+     "read_db": -1.4,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 46.996,
+     "label": "virus:land:5",
+     "kind": "phage",
+     "n_layers": 1,
+     "rules": [
+      "fx.phage.land"
+     ],
+     "peak_db": -15.1,
+     "vs_bed_db": -1.3,
+     "vs_bed_hz": 158,
+     "vs_all_db": -1.4,
+     "first20_db": -2.9,
+     "first20_hz": 1000,
+     "read_db": -1.4,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 26.049,
+     "label": "mites:creak:2",
+     "kind": "creak",
+     "n_layers": 1,
+     "rules": [
+      "fx.mite.creak"
+     ],
+     "peak_db": -14.8,
+     "vs_bed_db": -1.3,
+     "vs_bed_hz": 10000,
+     "vs_all_db": -1.3,
+     "first20_db": -39.9,
+     "first20_hz": 6310,
+     "read_db": -1.3,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 21.832,
+     "label": "step:fur:03",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.grass"
+     ],
+     "peak_db": -14.5,
+     "vs_bed_db": -11.3,
+     "vs_bed_hz": 3162,
+     "vs_all_db": -11.4,
+     "first20_db": -1.1,
+     "first20_hz": 3162,
+     "read_db": -1.1,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 12.829,
+     "label": "step:coin:03",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -10.1,
+     "vs_bed_db": -2.4,
+     "vs_bed_hz": 1995,
+     "vs_all_db": -2.4,
+     "first20_db": -0.9,
+     "first20_hz": 1995,
+     "read_db": -0.9,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 23.315,
+     "label": "step:fur:06",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.grass"
+     ],
+     "peak_db": -12.3,
+     "vs_bed_db": -1.5,
+     "vs_bed_hz": 12589,
+     "vs_all_db": -1.5,
+     "first20_db": -0.6,
+     "first20_hz": 12589,
+     "read_db": -0.6,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 24.425,
+     "label": "mites:creak:0",
+     "kind": "creak",
+     "n_layers": 1,
+     "rules": [
+      "fx.mite.creak"
+     ],
+     "peak_db": -16.3,
+     "vs_bed_db": -6.3,
+     "vs_bed_hz": 10000,
+     "vs_all_db": -6.3,
+     "first20_db": -0.6,
+     "first20_hz": 5012,
+     "read_db": -0.6,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 57.267,
+     "label": "card:whoosh",
+     "kind": "swish",
+     "n_layers": 1,
+     "rules": [
+      "fx.card.whoosh"
+     ],
+     "peak_db": -14.3,
+     "vs_bed_db": -4.1,
+     "vs_bed_hz": 100,
+     "vs_all_db": -4.1,
+     "first20_db": -0.6,
+     "first20_hz": 200,
+     "read_db": -0.6,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 9.08,
+     "label": "cat:sniff:1",
+     "kind": "sniff",
+     "n_layers": 1,
+     "rules": [
+      "fx.cat.sniff"
+     ],
+     "peak_db": -10.6,
+     "vs_bed_db": -6.6,
+     "vs_bed_hz": 126,
+     "vs_all_db": -7.1,
+     "first20_db": -0.5,
+     "first20_hz": 10000,
+     "read_db": -0.5,
+     "verdict": "masked",
+     "covered_by": "music/amb",
+     "qa_ok": "each take is a sniffing train covering the cat's visible sniffs 8.6-10.4 s; its loudest sniff lands on a later visible sniff, the train starts on the first"
+    },
+    {
+     "t": 41.575,
+     "label": "cell:wobble:0",
+     "kind": "squish",
+     "n_layers": 1,
+     "rules": [
+      "fx.squish"
+     ],
+     "peak_db": -17.2,
+     "vs_bed_db": -0.5,
+     "vs_bed_hz": 3981,
+     "vs_all_db": -0.5,
+     "first20_db": -2.0,
+     "first20_hz": 1585,
+     "read_db": -0.5,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 46.36,
+     "label": "virus:servo:3",
+     "kind": "servo",
+     "n_layers": 1,
+     "rules": [
+      "fx.phage.servo"
+     ],
+     "peak_db": -19.8,
+     "vs_bed_db": -0.6,
+     "vs_bed_hz": 1000,
+     "vs_all_db": -0.6,
+     "first20_db": 0.0,
+     "first20_hz": 794,
+     "read_db": 0.0,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 11.781,
+     "label": "step:coin:01",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -12.4,
+     "vs_bed_db": -3.0,
+     "vs_bed_hz": 1585,
+     "vs_all_db": -3.0,
+     "first20_db": 0.1,
+     "first20_hz": 3981,
+     "read_db": 0.1,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 5.185,
+     "label": "step:sofa:03",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -11.0,
+     "vs_bed_db": -4.7,
+     "vs_bed_hz": 7943,
+     "vs_all_db": -4.7,
+     "first20_db": 0.3,
+     "first20_hz": 7943,
+     "read_db": 0.3,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 6.119,
+     "label": "step:sofa:06",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -11.1,
+     "vs_bed_db": 0.3,
+     "vs_bed_hz": 794,
+     "vs_all_db": 0.3,
+     "first20_db": 0.5,
+     "first20_hz": 794,
+     "read_db": 0.5,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 22.308,
+     "label": "step:fur:04",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.grass"
+     ],
+     "peak_db": -14.2,
+     "vs_bed_db": -0.0,
+     "vs_bed_hz": 3162,
+     "vs_all_db": -0.0,
+     "first20_db": 0.9,
+     "first20_hz": 1259,
+     "read_db": 0.9,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 53.429,
+     "label": "step:dna:02",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.sock"
+     ],
+     "peak_db": -16.0,
+     "vs_bed_db": 4.4,
+     "vs_bed_hz": 251,
+     "vs_all_db": -2.5,
+     "first20_db": 0.9,
+     "first20_hz": 251,
+     "read_db": 0.9,
+     "verdict": "barely",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 13.877,
+     "label": "step:coin:05",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -12.8,
+     "vs_bed_db": -1.2,
+     "vs_bed_hz": 1000,
+     "vs_all_db": -1.5,
+     "first20_db": 1.0,
+     "first20_hz": 1995,
+     "read_db": 1.0,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 44.425,
+     "label": "virus:land:7",
+     "kind": "phage",
+     "n_layers": 1,
+     "rules": [
+      "fx.phage.land"
+     ],
+     "peak_db": -12.9,
+     "vs_bed_db": 1.2,
+     "vs_bed_hz": 158,
+     "vs_all_db": 1.1,
+     "first20_db": -2.8,
+     "first20_hz": 631,
+     "read_db": 1.1,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 54.0,
+     "label": "step:dna:03",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.sock"
+     ],
+     "peak_db": -15.0,
+     "vs_bed_db": -0.5,
+     "vs_bed_hz": 6310,
+     "vs_all_db": -0.6,
+     "first20_db": 1.1,
+     "first20_hz": 6310,
+     "read_db": 1.1,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 8.785,
+     "label": "step:catin:01",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -11.5,
+     "vs_bed_db": -3.4,
+     "vs_bed_hz": 158,
+     "vs_all_db": 1.2,
+     "first20_db": -4.2,
+     "first20_hz": 316,
+     "read_db": 1.2,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 55.925,
+     "label": "shrink:28",
+     "kind": "shrink",
+     "n_layers": 2,
+     "rules": [
+      "fx.shrink.air",
+      "fx.shrink.pop"
+     ],
+     "peak_db": -11.9,
+     "vs_bed_db": 0.2,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 0.2,
+     "first20_db": 1.2,
+     "first20_hz": 12589,
+     "read_db": 1.2,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 36.474,
+     "label": "swim:bact:01",
+     "kind": "stroke",
+     "n_layers": 1,
+     "rules": [
+      "fx.swim"
+     ],
+     "peak_db": -25.4,
+     "vs_bed_db": 1.8,
+     "vs_bed_hz": 126,
+     "vs_all_db": 1.4,
+     "first20_db": -6.3,
+     "first20_hz": 398,
+     "read_db": 1.4,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 45.926,
+     "label": "shrink:23",
+     "kind": "shrink",
+     "n_layers": 2,
+     "rules": [
+      "fx.shrink.air",
+      "fx.shrink.pop"
+     ],
+     "peak_db": -12.4,
+     "vs_bed_db": 5.1,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 1.2,
+     "first20_db": 1.8,
+     "first20_hz": 2512,
+     "read_db": 1.8,
+     "verdict": "barely",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 34.389,
+     "label": "bact:squish:0",
+     "kind": "squish",
+     "n_layers": 1,
+     "rules": [
+      "fx.squish"
+     ],
+     "peak_db": -18.6,
+     "vs_bed_db": 1.9,
+     "vs_bed_hz": 7943,
+     "vs_all_db": 1.9,
+     "first20_db": 1.2,
+     "first20_hz": 7943,
+     "read_db": 1.9,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 35.212,
+     "label": "bact:squish:1",
+     "kind": "squish",
+     "n_layers": 1,
+     "rules": [
+      "fx.squish"
+     ],
+     "peak_db": -18.0,
+     "vs_bed_db": 1.9,
+     "vs_bed_hz": 3981,
+     "vs_all_db": 1.9,
+     "first20_db": -15.6,
+     "first20_hz": 3981,
+     "read_db": 1.9,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 7.594,
+     "label": "step:sofa:09",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -10.3,
+     "vs_bed_db": 2.0,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 2.0,
+     "first20_db": -1.5,
+     "first20_hz": 1259,
+     "read_db": 2.0,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    }
+   ],
+   "events": [
+    {
+     "t": 0.62,
+     "label": "room:gasp",
+     "kind": "voice",
+     "n_layers": 1,
+     "rules": [
+      "fx.voice.room"
+     ],
+     "peak_db": -17.5,
+     "vs_bed_db": 9.7,
+     "vs_bed_hz": 3981,
+     "vs_all_db": 9.7,
+     "first20_db": 10.2,
+     "first20_hz": 3981,
+     "read_db": 10.2,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 1.942,
+     "label": "shrink:01",
+     "kind": "shrink",
+     "n_layers": 2,
+     "rules": [
+      "fx.shrink.air",
+      "fx.shrink.pop"
+     ],
+     "peak_db": -12.5,
+     "vs_bed_db": 4.9,
+     "vs_bed_hz": 631,
+     "vs_all_db": 4.9,
+     "first20_db": -0.3,
+     "first20_hz": 794,
+     "read_db": 4.9,
+     "verdict": "ok",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 3.894,
+     "label": "shrink:02",
+     "kind": "shrink",
+     "n_layers": 2,
+     "rules": [
+      "fx.shrink.air",
+      "fx.shrink.pop"
+     ],
+     "peak_db": -12.7,
+     "vs_bed_db": 6.6,
+     "vs_bed_hz": 631,
+     "vs_all_db": 6.6,
+     "first20_db": -0.3,
+     "first20_hz": 398,
+     "read_db": 6.6,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 4.242,
+     "label": "step:sofa:00",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -11.2,
+     "vs_bed_db": 0.0,
+     "vs_bed_hz": 631,
+     "vs_all_db": 0.0,
+     "first20_db": 4.5,
+     "first20_hz": 794,
+     "read_db": 4.5,
+     "verdict": "ok",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 4.556,
+     "label": "step:sofa:01",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -9.9,
+     "vs_bed_db": 3.7,
+     "vs_bed_hz": 1585,
+     "vs_all_db": 3.7,
+     "first20_db": 8.5,
+     "first20_hz": 1585,
+     "read_db": 8.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 4.871,
+     "label": "step:sofa:02",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -10.7,
+     "vs_bed_db": 5.1,
+     "vs_bed_hz": 316,
+     "vs_all_db": 5.1,
+     "first20_db": 7.3,
+     "first20_hz": 794,
+     "read_db": 7.3,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 5.185,
+     "label": "step:sofa:03",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -11.0,
+     "vs_bed_db": -4.7,
+     "vs_bed_hz": 7943,
+     "vs_all_db": -4.7,
+     "first20_db": 0.3,
+     "first20_hz": 7943,
+     "read_db": 0.3,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 5.498,
+     "label": "step:sofa:04",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -12.5,
+     "vs_bed_db": 4.1,
+     "vs_bed_hz": 794,
+     "vs_all_db": 4.1,
+     "first20_db": 11.4,
+     "first20_hz": 501,
+     "read_db": 11.4,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 5.812,
+     "label": "step:sofa:05",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -12.1,
+     "vs_bed_db": 5.9,
+     "vs_bed_hz": 1585,
+     "vs_all_db": 5.9,
+     "first20_db": 18.1,
+     "first20_hz": 1585,
+     "read_db": 18.1,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 5.913,
+     "label": "shrink:03",
+     "kind": "shrink",
+     "n_layers": 2,
+     "rules": [
+      "fx.shrink.air",
+      "fx.shrink.pop"
+     ],
+     "peak_db": -12.7,
+     "vs_bed_db": 5.3,
+     "vs_bed_hz": 794,
+     "vs_all_db": 5.3,
+     "first20_db": 15.5,
+     "first20_hz": 3162,
+     "read_db": 15.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 6.119,
+     "label": "step:sofa:06",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -11.1,
+     "vs_bed_db": 0.3,
+     "vs_bed_hz": 794,
+     "vs_all_db": 0.3,
+     "first20_db": 0.5,
+     "first20_hz": 794,
+     "read_db": 0.5,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 6.546,
+     "label": "step:sofa:07",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -11.5,
+     "vs_bed_db": -1.7,
+     "vs_bed_hz": 7943,
+     "vs_all_db": -1.7,
+     "first20_db": 8.1,
+     "first20_hz": 7943,
+     "read_db": 8.1,
+     "verdict": "clear",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 7.069,
+     "label": "step:sofa:08",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -11.4,
+     "vs_bed_db": 8.6,
+     "vs_bed_hz": 794,
+     "vs_all_db": 8.6,
+     "first20_db": 13.8,
+     "first20_hz": 794,
+     "read_db": 13.8,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 7.594,
+     "label": "step:sofa:09",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -10.3,
+     "vs_bed_db": 2.0,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 2.0,
+     "first20_db": -1.5,
+     "first20_hz": 1259,
+     "read_db": 2.0,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 7.904,
+     "label": "shrink:04",
+     "kind": "shrink",
+     "n_layers": 2,
+     "rules": [
+      "fx.shrink.air",
+      "fx.shrink.pop"
+     ],
+     "peak_db": -11.6,
+     "vs_bed_db": 4.6,
+     "vs_bed_hz": 631,
+     "vs_all_db": 4.6,
+     "first20_db": 5.0,
+     "first20_hz": 1259,
+     "read_db": 5.0,
+     "verdict": "ok",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 8.262,
+     "label": "step:catin:00",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -11.8,
+     "vs_bed_db": 4.0,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 4.0,
+     "first20_db": 6.3,
+     "first20_hz": 794,
+     "read_db": 6.3,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 8.62,
+     "label": "cat:sniff:0",
+     "kind": "sniff",
+     "n_layers": 1,
+     "rules": [
+      "fx.cat.sniff"
+     ],
+     "peak_db": -10.6,
+     "vs_bed_db": -4.5,
+     "vs_bed_hz": 158,
+     "vs_all_db": -4.3,
+     "first20_db": -4.4,
+     "first20_hz": 12589,
+     "read_db": -4.3,
+     "verdict": "masked",
+     "covered_by": "music/amb",
+     "qa_ok": "each take is a sniffing train covering the cat's visible sniffs 8.6-10.4 s; its loudest sniff lands on a later visible sniff, the train starts on the first"
+    },
+    {
+     "t": 8.785,
+     "label": "step:catin:01",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -11.5,
+     "vs_bed_db": -3.4,
+     "vs_bed_hz": 158,
+     "vs_all_db": 1.2,
+     "first20_db": -4.2,
+     "first20_hz": 316,
+     "read_db": 1.2,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 9.08,
+     "label": "cat:sniff:1",
+     "kind": "sniff",
+     "n_layers": 1,
+     "rules": [
+      "fx.cat.sniff"
+     ],
+     "peak_db": -10.6,
+     "vs_bed_db": -6.6,
+     "vs_bed_hz": 126,
+     "vs_all_db": -7.1,
+     "first20_db": -0.5,
+     "first20_hz": 10000,
+     "read_db": -0.5,
+     "verdict": "masked",
+     "covered_by": "music/amb",
+     "qa_ok": "each take is a sniffing train covering the cat's visible sniffs 8.6-10.4 s; its loudest sniff lands on a later visible sniff, the train starts on the first"
+    },
+    {
+     "t": 9.261,
+     "label": "cat:pawlift",
+     "kind": "swish",
+     "n_layers": 1,
+     "rules": [
+      "fx.cat.lift"
+     ],
+     "peak_db": -21.3,
+     "vs_bed_db": -6.2,
+     "vs_bed_hz": 316,
+     "vs_all_db": -6.4,
+     "first20_db": 2.3,
+     "first20_hz": 200,
+     "read_db": 2.3,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 9.4,
+     "label": "cat:yelp",
+     "kind": "voice",
+     "n_layers": 1,
+     "rules": [
+      "fx.voice.cat"
+     ],
+     "peak_db": -19.2,
+     "vs_bed_db": 0.1,
+     "vs_bed_hz": 12589,
+     "vs_all_db": -0.2,
+     "first20_db": 2.4,
+     "first20_hz": 1995,
+     "read_db": 2.4,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 9.571,
+     "label": "step:catback:00",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -11.4,
+     "vs_bed_db": 4.7,
+     "vs_bed_hz": 794,
+     "vs_all_db": 3.6,
+     "first20_db": 6.4,
+     "first20_hz": 794,
+     "read_db": 6.4,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 9.921,
+     "label": "step:catback:01",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -10.5,
+     "vs_bed_db": 5.2,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 3.0,
+     "first20_db": 6.6,
+     "first20_hz": 1585,
+     "read_db": 6.6,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 9.941,
+     "label": "shrink:05",
+     "kind": "shrink",
+     "n_layers": 2,
+     "rules": [
+      "fx.shrink.air",
+      "fx.shrink.pop"
+     ],
+     "peak_db": -12.8,
+     "vs_bed_db": 6.0,
+     "vs_bed_hz": 794,
+     "vs_all_db": 5.5,
+     "first20_db": 0.9,
+     "first20_hz": 1000,
+     "read_db": 5.5,
+     "verdict": "ok",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 9.973,
+     "label": "cat:chirp",
+     "kind": "meow",
+     "n_layers": 1,
+     "rules": [
+      "fx.cat.chirp"
+     ],
+     "peak_db": -12.6,
+     "vs_bed_db": 11.4,
+     "vs_bed_hz": 158,
+     "vs_all_db": 6.7,
+     "first20_db": 3.8,
+     "first20_hz": 200,
+     "read_db": 6.7,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 10.05,
+     "label": "cat:paw",
+     "kind": "thump",
+     "n_layers": 1,
+     "rules": [
+      "fx.cat.paw"
+     ],
+     "peak_db": -12.6,
+     "vs_bed_db": 6.2,
+     "vs_bed_hz": 158,
+     "vs_all_db": -3.3,
+     "first20_db": 5.6,
+     "first20_hz": 158,
+     "read_db": 5.6,
+     "verdict": "ok",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 10.271,
+     "label": "step:catback:02",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -11.4,
+     "vs_bed_db": 2.5,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 1.5,
+     "first20_db": 4.4,
+     "first20_hz": 316,
+     "read_db": 4.4,
+     "verdict": "ok",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 10.619,
+     "label": "step:catback:03",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -12.1,
+     "vs_bed_db": -12.2,
+     "vs_bed_hz": 316,
+     "vs_all_db": -12.3,
+     "first20_db": -10.8,
+     "first20_hz": 12589,
+     "read_db": -10.8,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 11.258,
+     "label": "step:coin:00",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -12.6,
+     "vs_bed_db": 2.6,
+     "vs_bed_hz": 794,
+     "vs_all_db": 2.6,
+     "first20_db": 8.7,
+     "first20_hz": 794,
+     "read_db": 8.7,
+     "verdict": "clear",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 11.781,
+     "label": "step:coin:01",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -12.4,
+     "vs_bed_db": -3.0,
+     "vs_bed_hz": 1585,
+     "vs_all_db": -3.0,
+     "first20_db": 0.1,
+     "first20_hz": 3981,
+     "read_db": 0.1,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 11.898,
+     "label": "shrink:06",
+     "kind": "shrink",
+     "n_layers": 2,
+     "rules": [
+      "fx.shrink.air",
+      "fx.shrink.pop"
+     ],
+     "peak_db": -12.4,
+     "vs_bed_db": 11.4,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 11.4,
+     "first20_db": 7.0,
+     "first20_hz": 1259,
+     "read_db": 11.4,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 12.306,
+     "label": "step:coin:02",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -12.4,
+     "vs_bed_db": 3.7,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 3.7,
+     "first20_db": 10.8,
+     "first20_hz": 1995,
+     "read_db": 10.8,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 12.829,
+     "label": "step:coin:03",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -10.1,
+     "vs_bed_db": -2.4,
+     "vs_bed_hz": 1995,
+     "vs_all_db": -2.4,
+     "first20_db": -0.9,
+     "first20_hz": 1995,
+     "read_db": -0.9,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 13.352,
+     "label": "step:coin:04",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -10.8,
+     "vs_bed_db": -4.2,
+     "vs_bed_hz": 1000,
+     "vs_all_db": -4.2,
+     "first20_db": 14.4,
+     "first20_hz": 794,
+     "read_db": 14.4,
+     "verdict": "clear",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 13.877,
+     "label": "step:coin:05",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -12.8,
+     "vs_bed_db": -1.2,
+     "vs_bed_hz": 1000,
+     "vs_all_db": -1.5,
+     "first20_db": 1.0,
+     "first20_hz": 1995,
+     "read_db": 1.0,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 13.916,
+     "label": "shrink:07",
+     "kind": "shrink",
+     "n_layers": 2,
+     "rules": [
+      "fx.shrink.air",
+      "fx.shrink.pop"
+     ],
+     "peak_db": -12.9,
+     "vs_bed_db": 3.4,
+     "vs_bed_hz": 794,
+     "vs_all_db": 3.2,
+     "first20_db": 0.6,
+     "first20_hz": 7943,
+     "read_db": 3.2,
+     "verdict": "ok",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 14.4,
+     "label": "step:coin:06",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -11.8,
+     "vs_bed_db": 0.9,
+     "vs_bed_hz": 398,
+     "vs_all_db": 0.9,
+     "first20_db": 5.5,
+     "first20_hz": 398,
+     "read_db": 5.5,
+     "verdict": "ok",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 15.22,
+     "label": "coin:touch",
+     "kind": "ring",
+     "n_layers": 1,
+     "rules": [
+      "fx.coin"
+     ],
+     "peak_db": -19.3,
+     "vs_bed_db": 7.5,
+     "vs_bed_hz": 12589,
+     "vs_all_db": 7.5,
+     "first20_db": 15.6,
+     "first20_hz": 12589,
+     "read_db": 15.6,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 15.908,
+     "label": "shrink:08",
+     "kind": "shrink",
+     "n_layers": 2,
+     "rules": [
+      "fx.shrink.air",
+      "fx.shrink.pop"
+     ],
+     "peak_db": -12.1,
+     "vs_bed_db": 11.6,
+     "vs_bed_hz": 794,
+     "vs_all_db": 11.6,
+     "first20_db": 4.0,
+     "first20_hz": 1585,
+     "read_db": 11.6,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 16.35,
+     "label": "flea:click:0",
+     "kind": "chitin",
+     "n_layers": 1,
+     "rules": [
+      "fx.flea.click"
+     ],
+     "peak_db": -22.5,
+     "vs_bed_db": -11.0,
+     "vs_bed_hz": 5012,
+     "vs_all_db": -11.0,
+     "first20_db": 5.4,
+     "first20_hz": 7943,
+     "read_db": 5.4,
+     "verdict": "ok",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 16.725,
+     "label": "step:flea:00",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -12.0,
+     "vs_bed_db": 7.3,
+     "vs_bed_hz": 1995,
+     "vs_all_db": 7.3,
+     "first20_db": 14.2,
+     "first20_hz": 1995,
+     "read_db": 14.2,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 16.95,
+     "label": "flea:click:1",
+     "kind": "chitin",
+     "n_layers": 1,
+     "rules": [
+      "fx.flea.click"
+     ],
+     "peak_db": -23.1,
+     "vs_bed_db": 1.4,
+     "vs_bed_hz": 7943,
+     "vs_all_db": 1.4,
+     "first20_db": 8.5,
+     "first20_hz": 6310,
+     "read_db": 8.5,
+     "verdict": "clear",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 17.208,
+     "label": "step:flea:01",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -12.0,
+     "vs_bed_db": 25.0,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 25.0,
+     "first20_db": 25.3,
+     "first20_hz": 1000,
+     "read_db": 25.3,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 17.692,
+     "label": "step:flea:02",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -10.5,
+     "vs_bed_db": 21.8,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 21.7,
+     "first20_db": 19.7,
+     "first20_hz": 1585,
+     "read_db": 21.7,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 17.72,
+     "label": "flea:click:2",
+     "kind": "chitin",
+     "n_layers": 1,
+     "rules": [
+      "fx.flea.click"
+     ],
+     "peak_db": -23.0,
+     "vs_bed_db": -0.6,
+     "vs_bed_hz": 7943,
+     "vs_all_db": -0.8,
+     "first20_db": 10.2,
+     "first20_hz": 7943,
+     "read_db": 10.2,
+     "verdict": "clear",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 17.86,
+     "label": "flea:click:3",
+     "kind": "chitin",
+     "n_layers": 1,
+     "rules": [
+      "fx.flea.click"
+     ],
+     "peak_db": -21.4,
+     "vs_bed_db": 5.8,
+     "vs_bed_hz": 5012,
+     "vs_all_db": 5.8,
+     "first20_db": 20.6,
+     "first20_hz": 5012,
+     "read_db": 20.6,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 17.945,
+     "label": "shrink:09",
+     "kind": "shrink",
+     "n_layers": 2,
+     "rules": [
+      "fx.shrink.air",
+      "fx.shrink.pop"
+     ],
+     "peak_db": -12.5,
+     "vs_bed_db": 9.0,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 9.0,
+     "first20_db": 23.1,
+     "first20_hz": 1000,
+     "read_db": 23.1,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 18.0,
+     "label": "flea:click:4",
+     "kind": "chitin",
+     "n_layers": 1,
+     "rules": [
+      "fx.flea.click"
+     ],
+     "peak_db": -19.7,
+     "vs_bed_db": -14.1,
+     "vs_bed_hz": 10000,
+     "vs_all_db": -14.1,
+     "first20_db": -6.7,
+     "first20_hz": 10000,
+     "read_db": -6.7,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 18.16,
+     "label": "flea:click:5",
+     "kind": "chitin",
+     "n_layers": 1,
+     "rules": [
+      "fx.flea.click"
+     ],
+     "peak_db": -23.6,
+     "vs_bed_db": 10.3,
+     "vs_bed_hz": 5012,
+     "vs_all_db": 1.6,
+     "first20_db": 9.3,
+     "first20_hz": 7943,
+     "read_db": 9.3,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 18.175,
+     "label": "step:flea:03",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -10.6,
+     "vs_bed_db": 18.4,
+     "vs_bed_hz": 1995,
+     "vs_all_db": 18.3,
+     "first20_db": 20.5,
+     "first20_hz": 1995,
+     "read_db": 20.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 18.658,
+     "label": "step:flea:04",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -12.8,
+     "vs_bed_db": -0.9,
+     "vs_bed_hz": 1000,
+     "vs_all_db": -0.9,
+     "first20_db": 20.9,
+     "first20_hz": 3981,
+     "read_db": 20.9,
+     "verdict": "clear",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 18.8,
+     "label": "flea:click:6",
+     "kind": "chitin",
+     "n_layers": 1,
+     "rules": [
+      "fx.flea.click"
+     ],
+     "peak_db": -20.7,
+     "vs_bed_db": 3.7,
+     "vs_bed_hz": 10000,
+     "vs_all_db": 3.7,
+     "first20_db": 20.6,
+     "first20_hz": 6310,
+     "read_db": 20.6,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 19.02,
+     "label": "flea:click:7",
+     "kind": "chitin",
+     "n_layers": 1,
+     "rules": [
+      "fx.flea.click"
+     ],
+     "peak_db": -20.3,
+     "vs_bed_db": 3.1,
+     "vs_bed_hz": 10000,
+     "vs_all_db": 3.1,
+     "first20_db": 9.1,
+     "first20_hz": 10000,
+     "read_db": 9.1,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 19.142,
+     "label": "step:flea:05",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.wood"
+     ],
+     "peak_db": -10.0,
+     "vs_bed_db": 11.9,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 11.9,
+     "first20_db": 24.9,
+     "first20_hz": 1000,
+     "read_db": 24.9,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 19.2,
+     "label": "flea:click:8",
+     "kind": "chitin",
+     "n_layers": 1,
+     "rules": [
+      "fx.flea.click"
+     ],
+     "peak_db": -22.8,
+     "vs_bed_db": -19.0,
+     "vs_bed_hz": 5012,
+     "vs_all_db": -19.0,
+     "first20_db": -6.8,
+     "first20_hz": 10000,
+     "read_db": -6.8,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 19.33,
+     "label": "flea:click:9",
+     "kind": "chitin",
+     "n_layers": 1,
+     "rules": [
+      "fx.flea.click"
+     ],
+     "peak_db": -22.3,
+     "vs_bed_db": 5.5,
+     "vs_bed_hz": 3981,
+     "vs_all_db": 5.5,
+     "first20_db": 9.3,
+     "first20_hz": 3981,
+     "read_db": 9.3,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 19.45,
+     "label": "flea:jump",
+     "kind": "snap",
+     "n_layers": 2,
+     "rules": [
+      "fx.flea.air",
+      "fx.flea.snap"
+     ],
+     "peak_db": -14.6,
+     "vs_bed_db": 16.0,
+     "vs_bed_hz": 7943,
+     "vs_all_db": 14.7,
+     "first20_db": 26.9,
+     "first20_hz": 7943,
+     "read_db": 26.9,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 19.5,
+     "label": "flea:flinch",
+     "kind": "voice",
+     "n_layers": 1,
+     "rules": [
+      "fx.voice.flea"
+     ],
+     "peak_db": -20.2,
+     "vs_bed_db": 27.2,
+     "vs_bed_hz": 631,
+     "vs_all_db": 26.9,
+     "first20_db": 19.8,
+     "first20_hz": 631,
+     "read_db": 26.9,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 19.904,
+     "label": "shrink:10",
+     "kind": "shrink",
+     "n_layers": 2,
+     "rules": [
+      "fx.shrink.air",
+      "fx.shrink.pop"
+     ],
+     "peak_db": -13.2,
+     "vs_bed_db": 19.2,
+     "vs_bed_hz": 794,
+     "vs_all_db": 19.2,
+     "first20_db": 20.4,
+     "first20_hz": 1259,
+     "read_db": 20.4,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 20.227,
+     "label": "step:fur:00",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.grass"
+     ],
+     "peak_db": -13.8,
+     "vs_bed_db": 5.6,
+     "vs_bed_hz": 3981,
+     "vs_all_db": 5.6,
+     "first20_db": 7.6,
+     "first20_hz": 3981,
+     "read_db": 7.6,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 20.861,
+     "label": "step:fur:01",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.grass"
+     ],
+     "peak_db": -13.5,
+     "vs_bed_db": 2.0,
+     "vs_bed_hz": 12589,
+     "vs_all_db": 2.0,
+     "first20_db": 0.2,
+     "first20_hz": 12589,
+     "read_db": 2.0,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 21.24,
+     "label": "step:fur:02",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.grass"
+     ],
+     "peak_db": -12.9,
+     "vs_bed_db": -1.3,
+     "vs_bed_hz": 6310,
+     "vs_all_db": -1.3,
+     "first20_db": 3.2,
+     "first20_hz": 1259,
+     "read_db": 3.2,
+     "verdict": "ok",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 21.832,
+     "label": "step:fur:03",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.grass"
+     ],
+     "peak_db": -14.5,
+     "vs_bed_db": -11.3,
+     "vs_bed_hz": 3162,
+     "vs_all_db": -11.4,
+     "first20_db": -1.1,
+     "first20_hz": 3162,
+     "read_db": -1.1,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 21.919,
+     "label": "shrink:11",
+     "kind": "shrink",
+     "n_layers": 2,
+     "rules": [
+      "fx.shrink.air",
+      "fx.shrink.pop"
+     ],
+     "peak_db": -12.5,
+     "vs_bed_db": 9.7,
+     "vs_bed_hz": 794,
+     "vs_all_db": 9.5,
+     "first20_db": 7.1,
+     "first20_hz": 1995,
+     "read_db": 9.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 22.308,
+     "label": "step:fur:04",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.grass"
+     ],
+     "peak_db": -14.2,
+     "vs_bed_db": -0.0,
+     "vs_bed_hz": 3162,
+     "vs_all_db": -0.0,
+     "first20_db": 0.9,
+     "first20_hz": 1259,
+     "read_db": 0.9,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 22.678,
+     "label": "step:fur:05",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.grass"
+     ],
+     "peak_db": -12.1,
+     "vs_bed_db": 8.4,
+     "vs_bed_hz": 3162,
+     "vs_all_db": 8.4,
+     "first20_db": 23.6,
+     "first20_hz": 10000,
+     "read_db": 23.6,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 23.315,
+     "label": "step:fur:06",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.grass"
+     ],
+     "peak_db": -12.3,
+     "vs_bed_db": -1.5,
+     "vs_bed_hz": 12589,
+     "vs_all_db": -1.5,
+     "first20_db": -0.6,
+     "first20_hz": 12589,
+     "read_db": -0.6,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 23.694,
+     "label": "step:fur:07",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.grass"
+     ],
+     "peak_db": -14.1,
+     "vs_bed_db": 5.8,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 5.8,
+     "first20_db": 7.3,
+     "first20_hz": 6310,
+     "read_db": 7.3,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 23.91,
+     "label": "shrink:12",
+     "kind": "shrink",
+     "n_layers": 2,
+     "rules": [
+      "fx.shrink.air",
+      "fx.shrink.pop"
+     ],
+     "peak_db": -13.0,
+     "vs_bed_db": 21.5,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 21.5,
+     "first20_db": 9.8,
+     "first20_hz": 1259,
+     "read_db": 21.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 24.425,
+     "label": "mites:creak:0",
+     "kind": "creak",
+     "n_layers": 1,
+     "rules": [
+      "fx.mite.creak"
+     ],
+     "peak_db": -16.3,
+     "vs_bed_db": -6.3,
+     "vs_bed_hz": 10000,
+     "vs_all_db": -6.3,
+     "first20_db": -0.6,
+     "first20_hz": 5012,
+     "read_db": -0.6,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 24.9,
+     "label": "mites:click:0",
+     "kind": "chitin",
+     "n_layers": 1,
+     "rules": [
+      "fx.mite.click"
+     ],
+     "peak_db": -22.1,
+     "vs_bed_db": -7.8,
+     "vs_bed_hz": 12589,
+     "vs_all_db": -7.8,
+     "first20_db": 7.1,
+     "first20_hz": 5012,
+     "read_db": 7.1,
+     "verdict": "clear",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 25.346,
+     "label": "mites:creak:1",
+     "kind": "creak",
+     "n_layers": 1,
+     "rules": [
+      "fx.mite.creak"
+     ],
+     "peak_db": -18.0,
+     "vs_bed_db": 7.1,
+     "vs_bed_hz": 10000,
+     "vs_all_db": 7.1,
+     "first20_db": 7.4,
+     "first20_hz": 10000,
+     "read_db": 7.4,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 25.8,
+     "label": "mites:click:1",
+     "kind": "chitin",
+     "n_layers": 1,
+     "rules": [
+      "fx.mite.click"
+     ],
+     "peak_db": -26.2,
+     "vs_bed_db": -14.4,
+     "vs_bed_hz": 12589,
+     "vs_all_db": -14.4,
+     "first20_db": 10.1,
+     "first20_hz": 10000,
+     "read_db": 10.1,
+     "verdict": "clear",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 25.944,
+     "label": "shrink:13",
+     "kind": "shrink",
+     "n_layers": 2,
+     "rules": [
+      "fx.shrink.air",
+      "fx.shrink.pop"
+     ],
+     "peak_db": -12.9,
+     "vs_bed_db": 20.0,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 20.0,
+     "first20_db": 18.5,
+     "first20_hz": 1000,
+     "read_db": 20.0,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 26.049,
+     "label": "mites:creak:2",
+     "kind": "creak",
+     "n_layers": 1,
+     "rules": [
+      "fx.mite.creak"
+     ],
+     "peak_db": -14.8,
+     "vs_bed_db": -1.3,
+     "vs_bed_hz": 10000,
+     "vs_all_db": -1.3,
+     "first20_db": -39.9,
+     "first20_hz": 6310,
+     "read_db": -1.3,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 26.75,
+     "label": "mites:click:2",
+     "kind": "chitin",
+     "n_layers": 1,
+     "rules": [
+      "fx.mite.click"
+     ],
+     "peak_db": -23.0,
+     "vs_bed_db": -9.8,
+     "vs_bed_hz": 5012,
+     "vs_all_db": -9.8,
+     "first20_db": 7.2,
+     "first20_hz": 6310,
+     "read_db": 7.2,
+     "verdict": "clear",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 27.175,
+     "label": "mites:creak:3",
+     "kind": "creak",
+     "n_layers": 1,
+     "rules": [
+      "fx.mite.creak"
+     ],
+     "peak_db": -17.4,
+     "vs_bed_db": -14.0,
+     "vs_bed_hz": 1585,
+     "vs_all_db": -14.0,
+     "first20_db": -4.8,
+     "first20_hz": 10000,
+     "read_db": -4.8,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 27.6,
+     "label": "mites:click:3",
+     "kind": "chitin",
+     "n_layers": 1,
+     "rules": [
+      "fx.mite.click"
+     ],
+     "peak_db": -23.7,
+     "vs_bed_db": -10.2,
+     "vs_bed_hz": 12589,
+     "vs_all_db": -10.2,
+     "first20_db": 5.2,
+     "first20_hz": 12589,
+     "read_db": 5.2,
+     "verdict": "ok",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 27.907,
+     "label": "shrink:14",
+     "kind": "shrink",
+     "n_layers": 2,
+     "rules": [
+      "fx.shrink.air",
+      "fx.shrink.pop"
+     ],
+     "peak_db": -12.9,
+     "vs_bed_db": 14.2,
+     "vs_bed_hz": 794,
+     "vs_all_db": 14.2,
+     "first20_db": 10.1,
+     "first20_hz": 1259,
+     "read_db": 14.2,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 28.123,
+     "label": "step:salt:00",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.gravel"
+     ],
+     "peak_db": -22.5,
+     "vs_bed_db": -10.2,
+     "vs_bed_hz": 7943,
+     "vs_all_db": -10.2,
+     "first20_db": 28.5,
+     "first20_hz": 12589,
+     "read_db": 28.5,
+     "verdict": "clear",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 28.35,
+     "label": "salt:creak:0",
+     "kind": "crystal",
+     "n_layers": 1,
+     "rules": [
+      "fx.salt.creak"
+     ],
+     "peak_db": -21.4,
+     "vs_bed_db": -5.2,
+     "vs_bed_hz": 200,
+     "vs_all_db": -5.2,
+     "first20_db": -7.0,
+     "first20_hz": 200,
+     "read_db": -5.2,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 28.629,
+     "label": "step:salt:01",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.gravel"
+     ],
+     "peak_db": -22.6,
+     "vs_bed_db": 8.5,
+     "vs_bed_hz": 12589,
+     "vs_all_db": 8.5,
+     "first20_db": 9.5,
+     "first20_hz": 3981,
+     "read_db": 9.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 28.8,
+     "label": "salt:tinkle:0",
+     "kind": "tinkle",
+     "n_layers": 1,
+     "rules": [
+      "fx.salt.tinkle"
+     ],
+     "peak_db": -27.2,
+     "vs_bed_db": -2.1,
+     "vs_bed_hz": 1000,
+     "vs_all_db": -2.1,
+     "first20_db": 3.9,
+     "first20_hz": 10000,
+     "read_db": 3.9,
+     "verdict": "ok",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 29.137,
+     "label": "step:salt:02",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.gravel"
+     ],
+     "peak_db": -21.8,
+     "vs_bed_db": 3.5,
+     "vs_bed_hz": 631,
+     "vs_all_db": 3.5,
+     "first20_db": 5.3,
+     "first20_hz": 631,
+     "read_db": 5.3,
+     "verdict": "ok",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 29.2,
+     "label": "salt:creak:1",
+     "kind": "crystal",
+     "n_layers": 1,
+     "rules": [
+      "fx.salt.creak"
+     ],
+     "peak_db": -21.3,
+     "vs_bed_db": 16.7,
+     "vs_bed_hz": 12589,
+     "vs_all_db": 16.2,
+     "first20_db": 16.6,
+     "first20_hz": 12589,
+     "read_db": 16.6,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 29.644,
+     "label": "step:salt:03",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.gravel"
+     ],
+     "peak_db": -21.2,
+     "vs_bed_db": 14.0,
+     "vs_bed_hz": 12589,
+     "vs_all_db": 14.0,
+     "first20_db": 27.3,
+     "first20_hz": 12589,
+     "read_db": 27.3,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 29.75,
+     "label": "salt:tinkle:1",
+     "kind": "tinkle",
+     "n_layers": 1,
+     "rules": [
+      "fx.salt.tinkle"
+     ],
+     "peak_db": -28.3,
+     "vs_bed_db": 6.7,
+     "vs_bed_hz": 10000,
+     "vs_all_db": 6.7,
+     "first20_db": 17.3,
+     "first20_hz": 10000,
+     "read_db": 17.3,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 29.922,
+     "label": "shrink:15",
+     "kind": "shrink",
+     "n_layers": 2,
+     "rules": [
+      "fx.shrink.air",
+      "fx.shrink.pop"
+     ],
+     "peak_db": -12.2,
+     "vs_bed_db": 8.2,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 8.2,
+     "first20_db": 28.5,
+     "first20_hz": 12589,
+     "read_db": 28.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 30.1,
+     "label": "salt:creak:2",
+     "kind": "crystal",
+     "n_layers": 1,
+     "rules": [
+      "fx.salt.creak"
+     ],
+     "peak_db": -18.0,
+     "vs_bed_db": 7.6,
+     "vs_bed_hz": 12589,
+     "vs_all_db": 6.8,
+     "first20_db": 11.6,
+     "first20_hz": 398,
+     "read_db": 11.6,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 30.15,
+     "label": "step:salt:04",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.gravel"
+     ],
+     "peak_db": -26.8,
+     "vs_bed_db": 17.2,
+     "vs_bed_hz": 12589,
+     "vs_all_db": 8.4,
+     "first20_db": 10.3,
+     "first20_hz": 6310,
+     "read_db": 10.3,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 30.6,
+     "label": "salt:tinkle:2",
+     "kind": "tinkle",
+     "n_layers": 1,
+     "rules": [
+      "fx.salt.tinkle"
+     ],
+     "peak_db": -25.7,
+     "vs_bed_db": -2.7,
+     "vs_bed_hz": 12589,
+     "vs_all_db": -3.1,
+     "first20_db": -3.1,
+     "first20_hz": 631,
+     "read_db": -3.1,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 30.656,
+     "label": "step:salt:05",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.gravel"
+     ],
+     "peak_db": -19.8,
+     "vs_bed_db": 13.2,
+     "vs_bed_hz": 631,
+     "vs_all_db": 13.2,
+     "first20_db": 19.9,
+     "first20_hz": 7943,
+     "read_db": 19.9,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 31.225,
+     "label": "step:fall:00",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.gravel"
+     ],
+     "peak_db": -20.4,
+     "vs_bed_db": 30.3,
+     "vs_bed_hz": 12589,
+     "vs_all_db": 30.3,
+     "first20_db": 35.0,
+     "first20_hz": 12589,
+     "read_db": 35.0,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 31.675,
+     "label": "step:fall:01",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.gravel"
+     ],
+     "peak_db": -22.0,
+     "vs_bed_db": 14.0,
+     "vs_bed_hz": 12589,
+     "vs_all_db": 14.0,
+     "first20_db": 15.9,
+     "first20_hz": 12589,
+     "read_db": 15.9,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 31.872,
+     "label": "fall:stumble",
+     "kind": "swish",
+     "n_layers": 1,
+     "rules": [
+      "fx.fall.cloth"
+     ],
+     "peak_db": -25.2,
+     "vs_bed_db": 8.1,
+     "vs_bed_hz": 12589,
+     "vs_all_db": 4.9,
+     "first20_db": 2.9,
+     "first20_hz": 12589,
+     "read_db": 4.9,
+     "verdict": "ok",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 31.913,
+     "label": "shrink:16",
+     "kind": "shrink",
+     "n_layers": 2,
+     "rules": [
+      "fx.shrink.air",
+      "fx.shrink.pop"
+     ],
+     "peak_db": -12.9,
+     "vs_bed_db": 9.1,
+     "vs_bed_hz": 12589,
+     "vs_all_db": 5.9,
+     "first20_db": 5.7,
+     "first20_hz": 12589,
+     "read_db": 5.9,
+     "verdict": "ok",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 32.0,
+     "label": "fall:trip",
+     "kind": "voice",
+     "n_layers": 1,
+     "rules": [
+      "fx.voice.trip"
+     ],
+     "peak_db": -20.5,
+     "vs_bed_db": 11.9,
+     "vs_bed_hz": 501,
+     "vs_all_db": 11.8,
+     "first20_db": 12.5,
+     "first20_hz": 631,
+     "read_db": 12.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 32.45,
+     "label": "fall:splash",
+     "kind": "splash",
+     "n_layers": 1,
+     "rules": [
+      "fx.fall.splash"
+     ],
+     "peak_db": -9.3,
+     "vs_bed_db": 9.0,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 9.0,
+     "first20_db": 43.8,
+     "first20_hz": 12589,
+     "read_db": 43.8,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 33.445,
+     "label": "swim:milk:00",
+     "kind": "stroke",
+     "n_layers": 1,
+     "rules": [
+      "fx.swim"
+     ],
+     "peak_db": -23.5,
+     "vs_bed_db": 2.4,
+     "vs_bed_hz": 1259,
+     "vs_all_db": 1.4,
+     "first20_db": 2.3,
+     "first20_hz": 1000,
+     "read_db": 2.3,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 33.947,
+     "label": "shrink:17",
+     "kind": "shrink",
+     "n_layers": 2,
+     "rules": [
+      "fx.shrink.air",
+      "fx.shrink.pop"
+     ],
+     "peak_db": -12.8,
+     "vs_bed_db": 7.9,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 8.1,
+     "first20_db": 9.3,
+     "first20_hz": 1000,
+     "read_db": 9.3,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 34.047,
+     "label": "swim:milk:01",
+     "kind": "stroke",
+     "n_layers": 1,
+     "rules": [
+      "fx.swim"
+     ],
+     "peak_db": -17.3,
+     "vs_bed_db": 3.0,
+     "vs_bed_hz": 1259,
+     "vs_all_db": 3.0,
+     "first20_db": 10.9,
+     "first20_hz": 1259,
+     "read_db": 10.9,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 34.389,
+     "label": "bact:squish:0",
+     "kind": "squish",
+     "n_layers": 1,
+     "rules": [
+      "fx.squish"
+     ],
+     "peak_db": -18.6,
+     "vs_bed_db": 1.9,
+     "vs_bed_hz": 7943,
+     "vs_all_db": 1.9,
+     "first20_db": 1.2,
+     "first20_hz": 7943,
+     "read_db": 1.9,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 34.676,
+     "label": "swim:milk:02",
+     "kind": "stroke",
+     "n_layers": 1,
+     "rules": [
+      "fx.swim"
+     ],
+     "peak_db": -15.2,
+     "vs_bed_db": 6.0,
+     "vs_bed_hz": 631,
+     "vs_all_db": 6.0,
+     "first20_db": 8.5,
+     "first20_hz": 631,
+     "read_db": 8.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 35.212,
+     "label": "bact:squish:1",
+     "kind": "squish",
+     "n_layers": 1,
+     "rules": [
+      "fx.squish"
+     ],
+     "peak_db": -18.0,
+     "vs_bed_db": 1.9,
+     "vs_bed_hz": 3981,
+     "vs_all_db": 1.9,
+     "first20_db": -15.6,
+     "first20_hz": 3981,
+     "read_db": 1.9,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 35.451,
+     "label": "swim:milk:03",
+     "kind": "stroke",
+     "n_layers": 1,
+     "rules": [
+      "fx.swim"
+     ],
+     "peak_db": -16.9,
+     "vs_bed_db": 0.7,
+     "vs_bed_hz": 631,
+     "vs_all_db": 0.7,
+     "first20_db": 5.1,
+     "first20_hz": 398,
+     "read_db": 5.1,
+     "verdict": "ok",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 35.91,
+     "label": "shrink:18",
+     "kind": "shrink",
+     "n_layers": 2,
+     "rules": [
+      "fx.shrink.air",
+      "fx.shrink.pop"
+     ],
+     "peak_db": -13.0,
+     "vs_bed_db": 16.1,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 15.1,
+     "first20_db": 6.1,
+     "first20_hz": 1585,
+     "read_db": 15.1,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 35.92,
+     "label": "swim:bact:00",
+     "kind": "stroke",
+     "n_layers": 1,
+     "rules": [
+      "fx.swim"
+     ],
+     "peak_db": -15.8,
+     "vs_bed_db": 8.5,
+     "vs_bed_hz": 631,
+     "vs_all_db": 8.5,
+     "first20_db": 6.8,
+     "first20_hz": 794,
+     "read_db": 8.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 36.191,
+     "label": "bact:squish:2",
+     "kind": "squish",
+     "n_layers": 1,
+     "rules": [
+      "fx.squish"
+     ],
+     "peak_db": -19.9,
+     "vs_bed_db": 7.6,
+     "vs_bed_hz": 3981,
+     "vs_all_db": 7.6,
+     "first20_db": 11.8,
+     "first20_hz": 3981,
+     "read_db": 11.8,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 36.474,
+     "label": "swim:bact:01",
+     "kind": "stroke",
+     "n_layers": 1,
+     "rules": [
+      "fx.swim"
+     ],
+     "peak_db": -25.4,
+     "vs_bed_db": 1.8,
+     "vs_bed_hz": 126,
+     "vs_all_db": 1.4,
+     "first20_db": -6.3,
+     "first20_hz": 398,
+     "read_db": 1.4,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 36.779,
+     "label": "bact:squish:3",
+     "kind": "squish",
+     "n_layers": 1,
+     "rules": [
+      "fx.squish"
+     ],
+     "peak_db": -20.1,
+     "vs_bed_db": 9.2,
+     "vs_bed_hz": 10000,
+     "vs_all_db": 9.2,
+     "first20_db": 16.8,
+     "first20_hz": 5012,
+     "read_db": 16.8,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 37.048,
+     "label": "swim:bact:02",
+     "kind": "stroke",
+     "n_layers": 1,
+     "rules": [
+      "fx.swim"
+     ],
+     "peak_db": -17.6,
+     "vs_bed_db": 8.2,
+     "vs_bed_hz": 631,
+     "vs_all_db": 8.5,
+     "first20_db": 14.4,
+     "first20_hz": 794,
+     "read_db": 14.4,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 37.172,
+     "label": "bact:squish:4",
+     "kind": "squish",
+     "n_layers": 1,
+     "rules": [
+      "fx.squish"
+     ],
+     "peak_db": -18.7,
+     "vs_bed_db": -1.5,
+     "vs_bed_hz": 3981,
+     "vs_all_db": -1.5,
+     "first20_db": 11.1,
+     "first20_hz": 5012,
+     "read_db": 11.1,
+     "verdict": "clear",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 37.619,
+     "label": "swim:bact:03",
+     "kind": "stroke",
+     "n_layers": 1,
+     "rules": [
+      "fx.swim"
+     ],
+     "peak_db": -17.2,
+     "vs_bed_db": 2.8,
+     "vs_bed_hz": 126,
+     "vs_all_db": 2.3,
+     "first20_db": 12.0,
+     "first20_hz": 631,
+     "read_db": 12.0,
+     "verdict": "clear",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 37.923,
+     "label": "shrink:19",
+     "kind": "shrink",
+     "n_layers": 2,
+     "rules": [
+      "fx.shrink.air",
+      "fx.shrink.pop"
+     ],
+     "peak_db": -11.6,
+     "vs_bed_db": 21.7,
+     "vs_bed_hz": 12589,
+     "vs_all_db": 21.7,
+     "first20_db": 27.2,
+     "first20_hz": 12589,
+     "read_db": 27.2,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 38.234,
+     "label": "bact:squish:5",
+     "kind": "squish",
+     "n_layers": 1,
+     "rules": [
+      "fx.squish"
+     ],
+     "peak_db": -16.3,
+     "vs_bed_db": 14.6,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 14.6,
+     "first20_db": 21.8,
+     "first20_hz": 6310,
+     "read_db": 21.8,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 38.361,
+     "label": "swim:bact:04",
+     "kind": "stroke",
+     "n_layers": 1,
+     "rules": [
+      "fx.swim"
+     ],
+     "peak_db": -16.6,
+     "vs_bed_db": 8.4,
+     "vs_bed_hz": 1259,
+     "vs_all_db": 8.4,
+     "first20_db": 10.1,
+     "first20_hz": 1259,
+     "read_db": 10.1,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 38.715,
+     "label": "swim:bact:05",
+     "kind": "stroke",
+     "n_layers": 1,
+     "rules": [
+      "fx.swim"
+     ],
+     "peak_db": -17.5,
+     "vs_bed_db": 7.3,
+     "vs_bed_hz": 398,
+     "vs_all_db": 7.3,
+     "first20_db": 3.1,
+     "first20_hz": 398,
+     "read_db": 7.3,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 38.717,
+     "label": "bact:squish:6",
+     "kind": "squish",
+     "n_layers": 1,
+     "rules": [
+      "fx.squish"
+     ],
+     "peak_db": -19.2,
+     "vs_bed_db": 9.7,
+     "vs_bed_hz": 5012,
+     "vs_all_db": 9.7,
+     "first20_db": 0.2,
+     "first20_hz": 5012,
+     "read_db": 9.7,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 39.294,
+     "label": "swim:bact:06",
+     "kind": "stroke",
+     "n_layers": 1,
+     "rules": [
+      "fx.swim"
+     ],
+     "peak_db": -24.5,
+     "vs_bed_db": -3.0,
+     "vs_bed_hz": 1259,
+     "vs_all_db": -3.0,
+     "first20_db": -6.6,
+     "first20_hz": 501,
+     "read_db": -3.0,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 39.331,
+     "label": "bact:squish:7",
+     "kind": "squish",
+     "n_layers": 1,
+     "rules": [
+      "fx.squish"
+     ],
+     "peak_db": -17.8,
+     "vs_bed_db": 1.4,
+     "vs_bed_hz": 3162,
+     "vs_all_db": 1.4,
+     "first20_db": 7.1,
+     "first20_hz": 3162,
+     "read_db": 7.1,
+     "verdict": "clear",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 39.916,
+     "label": "shrink:20",
+     "kind": "shrink",
+     "n_layers": 2,
+     "rules": [
+      "fx.shrink.air",
+      "fx.shrink.pop"
+     ],
+     "peak_db": -12.6,
+     "vs_bed_db": 10.0,
+     "vs_bed_hz": 1585,
+     "vs_all_db": 10.0,
+     "first20_db": 12.7,
+     "first20_hz": 1585,
+     "read_db": 12.7,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 40.75,
+     "label": "cell:land",
+     "kind": "land",
+     "n_layers": 2,
+     "rules": [
+      "fx.land.body",
+      "fx.land.squelch"
+     ],
+     "peak_db": -12.3,
+     "vs_bed_db": 11.2,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 11.2,
+     "first20_db": 5.3,
+     "first20_hz": 2512,
+     "read_db": 11.2,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 41.575,
+     "label": "cell:wobble:0",
+     "kind": "squish",
+     "n_layers": 1,
+     "rules": [
+      "fx.squish"
+     ],
+     "peak_db": -17.2,
+     "vs_bed_db": -0.5,
+     "vs_bed_hz": 3981,
+     "vs_all_db": -0.5,
+     "first20_db": -2.0,
+     "first20_hz": 1585,
+     "read_db": -0.5,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 41.946,
+     "label": "shrink:21",
+     "kind": "shrink",
+     "n_layers": 2,
+     "rules": [
+      "fx.shrink.air",
+      "fx.shrink.pop"
+     ],
+     "peak_db": -12.2,
+     "vs_bed_db": 10.1,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 10.0,
+     "first20_db": 4.6,
+     "first20_hz": 1259,
+     "read_db": 10.0,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 42.033,
+     "label": "cell:wobble:1",
+     "kind": "squish",
+     "n_layers": 1,
+     "rules": [
+      "fx.squish"
+     ],
+     "peak_db": -18.3,
+     "vs_bed_db": -5.9,
+     "vs_bed_hz": 3981,
+     "vs_all_db": -5.9,
+     "first20_db": 4.1,
+     "first20_hz": 3981,
+     "read_db": 4.1,
+     "verdict": "ok",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 43.289,
+     "label": "cell:wobble:2",
+     "kind": "squish",
+     "n_layers": 1,
+     "rules": [
+      "fx.squish"
+     ],
+     "peak_db": -19.0,
+     "vs_bed_db": 9.6,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 9.6,
+     "first20_db": 13.8,
+     "first20_hz": 6310,
+     "read_db": 13.8,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 43.913,
+     "label": "shrink:22",
+     "kind": "shrink",
+     "n_layers": 2,
+     "rules": [
+      "fx.shrink.air",
+      "fx.shrink.pop"
+     ],
+     "peak_db": -12.0,
+     "vs_bed_db": 5.2,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 5.2,
+     "first20_db": 7.1,
+     "first20_hz": 6310,
+     "read_db": 7.1,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 44.425,
+     "label": "virus:land:7",
+     "kind": "phage",
+     "n_layers": 1,
+     "rules": [
+      "fx.phage.land"
+     ],
+     "peak_db": -12.9,
+     "vs_bed_db": 1.2,
+     "vs_bed_hz": 158,
+     "vs_all_db": 1.1,
+     "first20_db": -2.8,
+     "first20_hz": 631,
+     "read_db": 1.1,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 44.477,
+     "label": "virus:land:1",
+     "kind": "phage",
+     "n_layers": 1,
+     "rules": [
+      "fx.phage.land"
+     ],
+     "peak_db": -11.5,
+     "vs_bed_db": 12.3,
+     "vs_bed_hz": 158,
+     "vs_all_db": 8.6,
+     "first20_db": 6.0,
+     "first20_hz": 501,
+     "read_db": 8.6,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 44.61,
+     "label": "virus:servo:7",
+     "kind": "servo",
+     "n_layers": 1,
+     "rules": [
+      "fx.phage.servo"
+     ],
+     "peak_db": -19.4,
+     "vs_bed_db": -5.2,
+     "vs_bed_hz": 1000,
+     "vs_all_db": -5.2,
+     "first20_db": -10.3,
+     "first20_hz": 1585,
+     "read_db": -5.2,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 44.816,
+     "label": "virus:land:2",
+     "kind": "phage",
+     "n_layers": 1,
+     "rules": [
+      "fx.phage.land"
+     ],
+     "peak_db": -19.1,
+     "vs_bed_db": 5.6,
+     "vs_bed_hz": 158,
+     "vs_all_db": 5.6,
+     "first20_db": -1.6,
+     "first20_hz": 200,
+     "read_db": 5.6,
+     "verdict": "ok",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 44.91,
+     "label": "virus:servo:1",
+     "kind": "servo",
+     "n_layers": 1,
+     "rules": [
+      "fx.phage.servo"
+     ],
+     "peak_db": -16.5,
+     "vs_bed_db": 19.3,
+     "vs_bed_hz": 12589,
+     "vs_all_db": 6.0,
+     "first20_db": 13.2,
+     "first20_hz": 1585,
+     "read_db": 13.2,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 45.31,
+     "label": "virus:servo:2",
+     "kind": "servo",
+     "n_layers": 1,
+     "rules": [
+      "fx.phage.servo"
+     ],
+     "peak_db": -18.7,
+     "vs_bed_db": 11.2,
+     "vs_bed_hz": 12589,
+     "vs_all_db": 2.0,
+     "first20_db": 8.8,
+     "first20_hz": 1585,
+     "read_db": 8.8,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 45.419,
+     "label": "virus:land:0",
+     "kind": "phage",
+     "n_layers": 1,
+     "rules": [
+      "fx.phage.land"
+     ],
+     "peak_db": -5.9,
+     "vs_bed_db": 29.2,
+     "vs_bed_hz": 100,
+     "vs_all_db": 29.0,
+     "first20_db": 19.0,
+     "first20_hz": 158,
+     "read_db": 29.0,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 45.61,
+     "label": "virus:servo:0",
+     "kind": "servo",
+     "n_layers": 1,
+     "rules": [
+      "fx.phage.servo"
+     ],
+     "peak_db": -11.8,
+     "vs_bed_db": -2.0,
+     "vs_bed_hz": 1585,
+     "vs_all_db": -2.4,
+     "first20_db": -5.8,
+     "first20_hz": 1995,
+     "read_db": -2.4,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 45.669,
+     "label": "virus:land:6",
+     "kind": "phage",
+     "n_layers": 1,
+     "rules": [
+      "fx.phage.land"
+     ],
+     "peak_db": -12.0,
+     "vs_bed_db": 9.4,
+     "vs_bed_hz": 158,
+     "vs_all_db": 7.8,
+     "first20_db": 5.6,
+     "first20_hz": 3981,
+     "read_db": 7.8,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 45.825,
+     "label": "virus:land:3",
+     "kind": "phage",
+     "n_layers": 1,
+     "rules": [
+      "fx.phage.land"
+     ],
+     "peak_db": -19.3,
+     "vs_bed_db": -1.4,
+     "vs_bed_hz": 126,
+     "vs_all_db": -1.4,
+     "first20_db": -6.2,
+     "first20_hz": 100,
+     "read_db": -1.4,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 45.926,
+     "label": "shrink:23",
+     "kind": "shrink",
+     "n_layers": 2,
+     "rules": [
+      "fx.shrink.air",
+      "fx.shrink.pop"
+     ],
+     "peak_db": -12.4,
+     "vs_bed_db": 5.1,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 1.2,
+     "first20_db": 1.8,
+     "first20_hz": 2512,
+     "read_db": 1.8,
+     "verdict": "barely",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 46.11,
+     "label": "virus:servo:6",
+     "kind": "servo",
+     "n_layers": 1,
+     "rules": [
+      "fx.phage.servo"
+     ],
+     "peak_db": -18.1,
+     "vs_bed_db": -4.1,
+     "vs_bed_hz": 2512,
+     "vs_all_db": -4.1,
+     "first20_db": -3.1,
+     "first20_hz": 1995,
+     "read_db": -3.1,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 46.36,
+     "label": "virus:servo:3",
+     "kind": "servo",
+     "n_layers": 1,
+     "rules": [
+      "fx.phage.servo"
+     ],
+     "peak_db": -19.8,
+     "vs_bed_db": -0.6,
+     "vs_bed_hz": 1000,
+     "vs_all_db": -0.6,
+     "first20_db": 0.0,
+     "first20_hz": 794,
+     "read_db": 0.0,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 46.6,
+     "label": "virus:duck",
+     "kind": "voice",
+     "n_layers": 1,
+     "rules": [
+      "fx.voice.duck"
+     ],
+     "peak_db": -20.0,
+     "vs_bed_db": 3.9,
+     "vs_bed_hz": 12589,
+     "vs_all_db": 2.7,
+     "first20_db": -8.2,
+     "first20_hz": 2512,
+     "read_db": 2.7,
+     "verdict": "barely",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 46.75,
+     "label": "virus:inject:0",
+     "kind": "inject",
+     "n_layers": 2,
+     "rules": [
+      "fx.inject.hiss",
+      "fx.inject.suck"
+     ],
+     "peak_db": -12.9,
+     "vs_bed_db": 9.8,
+     "vs_bed_hz": 5012,
+     "vs_all_db": 9.3,
+     "first20_db": -4.2,
+     "first20_hz": 7943,
+     "read_db": 9.3,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 46.767,
+     "label": "virus:land:4",
+     "kind": "phage",
+     "n_layers": 1,
+     "rules": [
+      "fx.phage.land"
+     ],
+     "peak_db": -12.6,
+     "vs_bed_db": 2.6,
+     "vs_bed_hz": 100,
+     "vs_all_db": 2.8,
+     "first20_db": 0.6,
+     "first20_hz": 794,
+     "read_db": 2.8,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 46.96,
+     "label": "virus:servo:4",
+     "kind": "servo",
+     "n_layers": 1,
+     "rules": [
+      "fx.phage.servo"
+     ],
+     "peak_db": -19.3,
+     "vs_bed_db": 3.3,
+     "vs_bed_hz": 1585,
+     "vs_all_db": 2.1,
+     "first20_db": 4.8,
+     "first20_hz": 1585,
+     "read_db": 4.8,
+     "verdict": "ok",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 46.996,
+     "label": "virus:land:5",
+     "kind": "phage",
+     "n_layers": 1,
+     "rules": [
+      "fx.phage.land"
+     ],
+     "peak_db": -15.1,
+     "vs_bed_db": -1.3,
+     "vs_bed_hz": 158,
+     "vs_all_db": -1.4,
+     "first20_db": -2.9,
+     "first20_hz": 1000,
+     "read_db": -1.4,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 47.3,
+     "label": "virus:inject:3",
+     "kind": "inject",
+     "n_layers": 2,
+     "rules": [
+      "fx.inject.hiss",
+      "fx.inject.suck"
+     ],
+     "peak_db": -19.8,
+     "vs_bed_db": 3.5,
+     "vs_bed_hz": 6310,
+     "vs_all_db": -3.0,
+     "first20_db": -17.4,
+     "first20_hz": 5012,
+     "read_db": -3.0,
+     "verdict": "masked",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 47.46,
+     "label": "virus:servo:5",
+     "kind": "servo",
+     "n_layers": 1,
+     "rules": [
+      "fx.phage.servo"
+     ],
+     "peak_db": -20.3,
+     "vs_bed_db": 12.1,
+     "vs_bed_hz": 12589,
+     "vs_all_db": -4.0,
+     "first20_db": -1.6,
+     "first20_hz": 1585,
+     "read_db": -1.6,
+     "verdict": "masked",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 47.919,
+     "label": "shrink:24",
+     "kind": "shrink",
+     "n_layers": 2,
+     "rules": [
+      "fx.shrink.air",
+      "fx.shrink.pop"
+     ],
+     "peak_db": -12.9,
+     "vs_bed_db": 6.4,
+     "vs_bed_hz": 1259,
+     "vs_all_db": 6.5,
+     "first20_db": 1.0,
+     "first20_hz": 1995,
+     "read_db": 6.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 49.944,
+     "label": "shrink:25",
+     "kind": "shrink",
+     "n_layers": 2,
+     "rules": [
+      "fx.shrink.air",
+      "fx.shrink.pop"
+     ],
+     "peak_db": -11.5,
+     "vs_bed_db": 4.6,
+     "vs_bed_hz": 1259,
+     "vs_all_db": 4.6,
+     "first20_db": 7.5,
+     "first20_hz": 1259,
+     "read_db": 7.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 52.0,
+     "label": "shrink:26",
+     "kind": "shrink",
+     "n_layers": 1,
+     "rules": [
+      "fx.shrink.pop"
+     ],
+     "peak_db": -12.5,
+     "vs_bed_db": -1.8,
+     "vs_bed_hz": 1000,
+     "vs_all_db": -9.1,
+     "first20_db": 3.6,
+     "first20_hz": 1000,
+     "read_db": 3.6,
+     "verdict": "ok",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 52.0,
+     "label": "drop:boom",
+     "kind": "boom",
+     "n_layers": 2,
+     "rules": [
+      "fx.drop.air",
+      "fx.drop.boom"
+     ],
+     "peak_db": -7.3,
+     "vs_bed_db": 11.7,
+     "vs_bed_hz": 501,
+     "vs_all_db": 11.7,
+     "first20_db": 12.4,
+     "first20_hz": 1000,
+     "read_db": 12.4,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 52.288,
+     "label": "step:dna:00",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.sock"
+     ],
+     "peak_db": -15.6,
+     "vs_bed_db": -4.0,
+     "vs_bed_hz": 501,
+     "vs_all_db": -4.8,
+     "first20_db": -1.7,
+     "first20_hz": 1585,
+     "read_db": -1.7,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 52.858,
+     "label": "step:dna:01",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.sock"
+     ],
+     "peak_db": -15.9,
+     "vs_bed_db": -1.5,
+     "vs_bed_hz": 10000,
+     "vs_all_db": -1.6,
+     "first20_db": 5.5,
+     "first20_hz": 10000,
+     "read_db": 5.5,
+     "verdict": "ok",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 53.429,
+     "label": "step:dna:02",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.sock"
+     ],
+     "peak_db": -16.0,
+     "vs_bed_db": 4.4,
+     "vs_bed_hz": 251,
+     "vs_all_db": -2.5,
+     "first20_db": 0.9,
+     "first20_hz": 251,
+     "read_db": 0.9,
+     "verdict": "barely",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 53.916,
+     "label": "shrink:27",
+     "kind": "shrink",
+     "n_layers": 2,
+     "rules": [
+      "fx.shrink.air",
+      "fx.shrink.pop"
+     ],
+     "peak_db": -11.6,
+     "vs_bed_db": 9.9,
+     "vs_bed_hz": 1259,
+     "vs_all_db": 9.7,
+     "first20_db": 6.1,
+     "first20_hz": 12589,
+     "read_db": 9.7,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 54.0,
+     "label": "step:dna:03",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.sock"
+     ],
+     "peak_db": -15.0,
+     "vs_bed_db": -0.5,
+     "vs_bed_hz": 6310,
+     "vs_all_db": -0.6,
+     "first20_db": 1.1,
+     "first20_hz": 6310,
+     "read_db": 1.1,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 54.571,
+     "label": "step:dna:04",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.sock"
+     ],
+     "peak_db": -15.0,
+     "vs_bed_db": 1.8,
+     "vs_bed_hz": 251,
+     "vs_all_db": 1.7,
+     "first20_db": 2.4,
+     "first20_hz": 251,
+     "read_db": 2.4,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 55.925,
+     "label": "shrink:28",
+     "kind": "shrink",
+     "n_layers": 2,
+     "rules": [
+      "fx.shrink.air",
+      "fx.shrink.pop"
+     ],
+     "peak_db": -11.9,
+     "vs_bed_db": 0.2,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 0.2,
+     "first20_db": 1.2,
+     "first20_hz": 12589,
+     "read_db": 1.2,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 57.267,
+     "label": "card:whoosh",
+     "kind": "swish",
+     "n_layers": 1,
+     "rules": [
+      "fx.card.whoosh"
+     ],
+     "peak_db": -14.3,
+     "vs_bed_db": -4.1,
+     "vs_bed_hz": 100,
+     "vs_all_db": -4.1,
+     "first20_db": -0.6,
+     "first20_hz": 200,
+     "read_db": -0.6,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    }
+   ],
+   "dead_layers": [
+    {
+     "t": 1.942,
+     "rule": "fx.shrink.air",
+     "sample": "fx.shr.air.a",
+     "read_db": -1.5
+    },
+    {
+     "t": 3.894,
+     "rule": "fx.shrink.air",
+     "sample": "fx.shr.air.c",
+     "read_db": -3.2
+    },
+    {
+     "t": 45.926,
+     "rule": "fx.shrink.air",
+     "sample": "fx.shr.air.d",
+     "read_db": -2.1
+    },
+    {
+     "t": 47.3,
+     "rule": "fx.inject.hiss",
+     "sample": "fx.inject.hiss",
+     "read_db": -9.8
+    },
+    {
+     "t": 47.4,
+     "rule": "fx.inject.suck",
+     "sample": "fx.inject.suck",
+     "read_db": -0.5
+    },
+    {
+     "t": 47.919,
+     "rule": "fx.shrink.air",
+     "sample": "fx.shr.air.e",
+     "read_db": -3.5
+    },
+    {
+     "t": 55.925,
+     "rule": "fx.shrink.air",
+     "sample": "fx.shr.air.d",
+     "read_db": -2.8
+    }
+   ]
+  },
+  "harshness": {
+   "status": "ok",
+   "music_max_db": -18.4,
+   "summary": "0 event(s) more than 6 dB over the music's loudest 2-6 kHz peak (-18.4 dBFS); note: 11 bright event(s) (centroid > 6.5 kHz, above launch-film effects)",
+   "items": [
+    {
+     "t": 52.0,
+     "label": "drop:boom",
+     "rules": [
+      "fx.drop.air",
+      "fx.drop.boom"
+     ],
+     "pres_db": -24.5,
+     "pres_minus_low_db": -2.2,
+     "centroid_hz": 1015,
+     "music_pres_db": -35.2,
+     "over_music_max_db": -6.1,
+     "issues": [],
+     "bright": false
+    },
+    {
+     "t": 42.033,
+     "label": "cell:wobble:1",
+     "rules": [
+      "fx.squish"
+     ],
+     "pres_db": -26.0,
+     "pres_minus_low_db": 35.5,
+     "centroid_hz": 4013,
+     "music_pres_db": -32.1,
+     "over_music_max_db": -7.6,
+     "issues": [],
+     "bright": false
+    },
+    {
+     "t": 39.331,
+     "label": "bact:squish:7",
+     "rules": [
+      "fx.squish"
+     ],
+     "pres_db": -26.5,
+     "pres_minus_low_db": 22.3,
+     "centroid_hz": 3590,
+     "music_pres_db": -32.3,
+     "over_music_max_db": -8.0,
+     "issues": [],
+     "bright": false
+    },
+    {
+     "t": 45.419,
+     "label": "virus:land:0",
+     "rules": [
+      "fx.phage.land"
+     ],
+     "pres_db": -26.6,
+     "pres_minus_low_db": -12.3,
+     "centroid_hz": 512,
+     "music_pres_db": -37.2,
+     "over_music_max_db": -8.2,
+     "issues": [],
+     "bright": false
+    },
+    {
+     "t": 17.692,
+     "label": "step:flea:02",
+     "rules": [
+      "fx.step.wood"
+     ],
+     "pres_db": -26.8,
+     "pres_minus_low_db": 8.0,
+     "centroid_hz": 1587,
+     "music_pres_db": -40.8,
+     "over_music_max_db": -8.4,
+     "issues": [],
+     "bright": false
+    },
+    {
+     "t": 37.172,
+     "label": "bact:squish:4",
+     "rules": [
+      "fx.squish"
+     ],
+     "pres_db": -26.9,
+     "pres_minus_low_db": 34.5,
+     "centroid_hz": 4374,
+     "music_pres_db": -35.7,
+     "over_music_max_db": -8.5,
+     "issues": [],
+     "bright": false
+    },
+    {
+     "t": 9.973,
+     "label": "cat:chirp",
+     "rules": [
+      "fx.cat.chirp"
+     ],
+     "pres_db": -27.2,
+     "pres_minus_low_db": -9.7,
+     "centroid_hz": 459,
+     "music_pres_db": -34.4,
+     "over_music_max_db": -8.7,
+     "issues": [],
+     "bright": false
+    },
+    {
+     "t": 38.234,
+     "label": "bact:squish:5",
+     "rules": [
+      "fx.squish"
+     ],
+     "pres_db": -27.3,
+     "pres_minus_low_db": 15.7,
+     "centroid_hz": 3742,
+     "music_pres_db": -34.4,
+     "over_music_max_db": -8.8,
+     "issues": [],
+     "bright": false
+    },
+    {
+     "t": 35.212,
+     "label": "bact:squish:1",
+     "rules": [
+      "fx.squish"
+     ],
+     "pres_db": -27.7,
+     "pres_minus_low_db": 43.1,
+     "centroid_hz": 4329,
+     "music_pres_db": -32.9,
+     "over_music_max_db": -9.3,
+     "issues": [],
+     "bright": false
+    },
+    {
+     "t": 22.678,
+     "label": "step:fur:05",
+     "rules": [
+      "fx.step.grass"
+     ],
+     "pres_db": -28.1,
+     "pres_minus_low_db": 14.8,
+     "centroid_hz": 3678,
+     "music_pres_db": -28.1,
+     "over_music_max_db": -9.7,
+     "issues": [],
+     "bright": false
+    }
+   ],
+   "bright": [
+    {
+     "t": 19.02,
+     "label": "flea:click:7",
+     "centroid_hz": 6602
+    },
+    {
+     "t": 18.0,
+     "label": "flea:click:4",
+     "centroid_hz": 7222
+    },
+    {
+     "t": 18.8,
+     "label": "flea:click:6",
+     "centroid_hz": 7384
+    },
+    {
+     "t": 15.22,
+     "label": "coin:touch",
+     "centroid_hz": 13413
+    },
+    {
+     "t": 16.35,
+     "label": "flea:click:0",
+     "centroid_hz": 6671
+    },
+    {
+     "t": 19.2,
+     "label": "flea:click:8",
+     "centroid_hz": 6991
+    },
+    {
+     "t": 16.95,
+     "label": "flea:click:1",
+     "centroid_hz": 6836
+    },
+    {
+     "t": 26.75,
+     "label": "mites:click:2",
+     "centroid_hz": 7219
+    },
+    {
+     "t": 29.75,
+     "label": "salt:tinkle:1",
+     "centroid_hz": 8850
+    },
+    {
+     "t": 27.6,
+     "label": "mites:click:3",
+     "centroid_hz": 7769
+    },
+    {
+     "t": 25.8,
+     "label": "mites:click:1",
+     "centroid_hz": 8322
+    }
+   ]
+  },
+  "sync": {
+   "status": "warn",
+   "checked": 159,
+   "items": [
+    {
+     "t_cue": 21.846,
+     "label": "step:fur:03",
+     "kind": "step",
+     "test": "apex",
+     "align": "peak",
+     "attack_ms": -13,
+     "peak_ms": 0,
+     "apex_ms": 79,
+     "long": true,
+     "issue": "apex +79 ms from the cue (want +-45)"
+    },
+    {
+     "t_cue": 25.35,
+     "label": "mites:creak:1",
+     "kind": "creak",
+     "test": "apex",
+     "align": "peak",
+     "attack_ms": -5,
+     "peak_ms": 0,
+     "apex_ms": 230,
+     "long": true,
+     "issue": "apex +230 ms from the cue (want +-45)"
+    },
+    {
+     "t_cue": 36.95,
+     "label": "bact:squish:3",
+     "kind": "squish",
+     "test": "apex",
+     "align": "peak",
+     "attack_ms": -171,
+     "peak_ms": 0,
+     "apex_ms": -137,
+     "long": true,
+     "issue": "apex -137 ms from the cue (want +-45)"
+    },
+    {
+     "t_cue": 37.963,
+     "label": "swim:bact:03",
+     "kind": "stroke",
+     "test": "apex",
+     "align": "peak",
+     "attack_ms": -344,
+     "peak_ms": 0,
+     "apex_ms": 53,
+     "long": true,
+     "issue": "apex +53 ms from the cue (want +-45)"
+    },
+    {
+     "t_cue": 40.75,
+     "label": "cell:land",
+     "kind": "land",
+     "test": "impact",
+     "align": "attack",
+     "attack_ms": 0,
+     "peak_ms": 118,
+     "apex_ms": 24,
+     "long": false,
+     "issue": "peak +118 ms (lands late)"
+    },
+    {
+     "t_cue": 44.61,
+     "label": "virus:servo:7",
+     "kind": "servo",
+     "test": "impact",
+     "align": "attack",
+     "attack_ms": 0,
+     "peak_ms": 112,
+     "apex_ms": 120,
+     "long": false,
+     "issue": "peak +112 ms (lands late)"
+    },
+    {
+     "t_cue": 45.25,
+     "label": "virus:land:2",
+     "kind": "phage",
+     "test": "apex",
+     "align": "peak",
+     "attack_ms": -434,
+     "peak_ms": 0,
+     "apex_ms": -75,
+     "long": true,
+     "issue": "apex -75 ms from the cue (want +-45)"
+    },
+    {
+     "t_cue": 46.3,
+     "label": "virus:land:3",
+     "kind": "phage",
+     "test": "apex",
+     "align": "peak",
+     "attack_ms": -474,
+     "peak_ms": 0,
+     "apex_ms": -81,
+     "long": true,
+     "issue": "apex -81 ms from the cue (want +-45)"
+    },
+    {
+     "t_cue": 46.11,
+     "label": "virus:servo:6",
+     "kind": "servo",
+     "test": "impact",
+     "align": "attack",
+     "attack_ms": 0,
+     "peak_ms": 129,
+     "apex_ms": 116,
+     "long": false,
+     "issue": "peak +129 ms (lands late)"
+    },
+    {
+     "t_cue": 46.36,
+     "label": "virus:servo:3",
+     "kind": "servo",
+     "test": "impact",
+     "align": "attack",
+     "attack_ms": 0,
+     "peak_ms": 112,
+     "apex_ms": 120,
+     "long": false,
+     "issue": "peak +112 ms (lands late)"
+    },
+    {
+     "t_cue": 46.6,
+     "label": "virus:duck",
+     "kind": "voice",
+     "test": "impact",
+     "align": "attack",
+     "attack_ms": 0,
+     "peak_ms": 230,
+     "apex_ms": 217,
+     "long": false,
+     "issue": "peak +230 ms (lands late)"
+    },
+    {
+     "t_cue": 46.75,
+     "label": "virus:inject:0",
+     "kind": "inject",
+     "test": "impact",
+     "align": "attack",
+     "attack_ms": 0,
+     "peak_ms": 724,
+     "apex_ms": 135,
+     "long": false,
+     "issue": "peak +724 ms (lands late)",
+     "offsets_tried_s": [
+      0.1
+     ]
+    },
+    {
+     "t_cue": 47.3,
+     "label": "virus:inject:3",
+     "kind": "inject",
+     "test": "impact",
+     "align": "attack",
+     "attack_ms": 0,
+     "peak_ms": 724,
+     "apex_ms": 135,
+     "long": false,
+     "issue": "peak +724 ms (lands late)",
+     "offsets_tried_s": [
+      0.1
+     ]
+    }
+   ],
+   "deliberate": [
+    {
+     "t_cue": 8.62,
+     "label": "cat:sniff:0",
+     "kind": "sniff",
+     "test": "impact",
+     "align": "attack",
+     "attack_ms": 0,
+     "peak_ms": 1419,
+     "apex_ms": 1431,
+     "long": false,
+     "issue": "peak +1419 ms (lands late)",
+     "qa_ok": "each take is a sniffing train covering the cat's visible sniffs 8.6-10.4 s; its loudest sniff lands on a later visible sniff, the train starts on the first"
+    },
+    {
+     "t_cue": 9.08,
+     "label": "cat:sniff:1",
+     "kind": "sniff",
+     "test": "impact",
+     "align": "attack",
+     "attack_ms": 0,
+     "peak_ms": 851,
+     "apex_ms": 864,
+     "long": false,
+     "issue": "peak +851 ms (lands late)",
+     "qa_ok": "each take is a sniffing train covering the cat's visible sniffs 8.6-10.4 s; its loudest sniff lands on a later visible sniff, the train starts on the first"
+    },
+    {
+     "t_cue": 57.5,
+     "label": "card:whoosh",
+     "kind": "swish",
+     "test": "apex",
+     "align": "peak",
+     "attack_ms": -233,
+     "peak_ms": 100,
+     "apex_ms": 121,
+     "long": true,
+     "issue": "apex +121 ms from the cue (want +-45)",
+     "offset_s": 0.1,
+     "offset_rule": "fx.card.whoosh",
+     "explained": "apex +121 ms from the cue = rule fx.card.whoosh's offset +0.100 s"
+    }
+   ],
+   "summary": "159 events checked, 13 off their cue: 21.85 step:fur:03 apex +79 ms from the cue (want +-45), 25.35 mites:creak:1 apex +230 ms from the cue (want +-45), 36.95 bact:squish:3 apex -137 ms from the cue (want +-45), 37.96 swim:bact:03 apex +53 ms from the cue (want +-45), 40.75 cell:land peak +118 ms (lands late); 3 more sit off the cue by exactly a rule offset or carry a qa_ok note (check those on the frames)"
+  },
+  "density": {
+   "status": "ok",
+   "events_per_s": [
+    1,
+    1,
+    0,
+    1,
+    3,
+    4,
+    2,
+    3,
+    3,
+    7,
+    3,
+    3,
+    2,
+    3,
+    1,
+    2,
+    3,
+    5,
+    5,
+    7,
+    2,
+    3,
+    2,
+    3,
+    2,
+    3,
+    2,
+    3,
+    4,
+    5,
+    4,
+    4,
+    2,
+    2,
+    3,
+    4,
+    3,
+    4,
+    4,
+    3,
+    1,
+    2,
+    1,
+    2,
+    5,
+    6,
+    7,
+    3,
+    0,
+    1,
+    0,
+    0,
+    4,
+    2,
+    2,
+    1,
+    0,
+    1,
+    0,
+    0,
+    0
+   ],
+   "busiest_s": [
+    [
+     9,
+     7
+    ],
+    [
+     19,
+     7
+    ],
+    [
+     46,
+     7
+    ],
+    [
+     45,
+     6
+    ],
+    [
+     17,
+     5
+    ]
+   ],
+   "most_used_samples": [
+    [
+     "fx.shr.pop.a",
+     10
+    ],
+    [
+     "fx.shr.pop.b",
+     9
+    ],
+    [
+     "fx.shr.pop.c",
+     9
+    ],
+    [
+     "fx.step.wood#0",
+     8
+    ],
+    [
+     "fx.shr.air.a",
+     7
+    ],
+    [
+     "fx.shr.air.c",
+     7
+    ],
+    [
+     "fx.shr.air.d",
+     7
+    ],
+    [
+     "fx.step.wood#1",
+     7
+    ]
+   ],
+   "rules": [
+    {
+     "rule": "fx.shrink.air",
+     "n": 27,
+     "distinct_samples": 4,
+     "ioi_s": 2.077,
+     "ioi_cv": 0.19,
+     "gain_sd_db": 0.0,
+     "pitch_sd_st": 2.1
+    },
+    {
+     "rule": "fx.shrink.pop",
+     "n": 28,
+     "distinct_samples": 3,
+     "ioi_s": 2.0,
+     "ioi_cv": 0.0,
+     "gain_sd_db": 0.49,
+     "pitch_sd_st": 2.09
+    },
+    {
+     "rule": "fx.step.wood",
+     "n": 29,
+     "distinct_samples": 4,
+     "ioi_s": 0.532,
+     "ioi_cv": 0.69,
+     "gain_sd_db": 0.84,
+     "pitch_sd_st": 1.21
+    },
+    {
+     "rule": "fx.step.grass",
+     "n": 8,
+     "distinct_samples": 5,
+     "ioi_s": 0.491,
+     "ioi_cv": 0.0,
+     "gain_sd_db": 0.78,
+     "pitch_sd_st": 0.29
+    },
+    {
+     "rule": "fx.step.gravel",
+     "n": 8,
+     "distinct_samples": 8,
+     "ioi_s": 0.507,
+     "ioi_cv": 0.06,
+     "gain_sd_db": 0.76,
+     "pitch_sd_st": 0.33
+    },
+    {
+     "rule": "fx.step.sock",
+     "n": 5,
+     "distinct_samples": 4,
+     "ioi_s": 0.571,
+     "ioi_cv": 0.0,
+     "gain_sd_db": 0.34,
+     "pitch_sd_st": 0.31
+    },
+    {
+     "rule": "fx.flea.click",
+     "n": 10,
+     "distinct_samples": 10,
+     "ioi_s": 0.331,
+     "ioi_cv": 0.74,
+     "gain_sd_db": 1.29,
+     "pitch_sd_st": 0.72
+    },
+    {
+     "rule": "fx.mite.creak",
+     "n": 4,
+     "distinct_samples": 4,
+     "ioi_s": 0.933,
+     "ioi_cv": 0.03,
+     "gain_sd_db": 0.98,
+     "pitch_sd_st": 0.12
+    },
+    {
+     "rule": "fx.mite.click",
+     "n": 4,
+     "distinct_samples": 4,
+     "ioi_s": 0.9,
+     "ioi_cv": 0.05,
+     "gain_sd_db": 1.25,
+     "pitch_sd_st": 0.45
+    },
+    {
+     "rule": "fx.swim",
+     "n": 11,
+     "distinct_samples": 5,
+     "ioi_s": 0.584,
+     "ioi_cv": 0.06,
+     "gain_sd_db": 0.84,
+     "pitch_sd_st": 0.27
+    },
+    {
+     "rule": "fx.squish",
+     "n": 11,
+     "distinct_samples": 5,
+     "ioi_s": 0.89,
+     "ioi_cv": 0.48,
+     "gain_sd_db": 1.06,
+     "pitch_sd_st": 0.66
+    },
+    {
+     "rule": "fx.phage.land",
+     "n": 8,
+     "distinct_samples": 3,
+     "ioi_s": 0.407,
+     "ioi_cv": 0.3,
+     "gain_sd_db": 2.46,
+     "pitch_sd_st": 0.57
+    },
+    {
+     "rule": "fx.phage.servo",
+     "n": 8,
+     "distinct_samples": 5,
+     "ioi_s": 0.407,
+     "ioi_cv": 0.3,
+     "gain_sd_db": 2.99,
+     "pitch_sd_st": 0.55
+    }
+   ],
+   "machine_gun": [],
+   "summary": "159 effect events in 61 s (26.1 per 10 s); busiest seconds 9s:7, 19s:7, 46s:7, 45s:6, 17s:5; 0 machine-gun rule(s)"
+  }
+ },
+ "inputs": {
+  "design": "audio/sounddesign.json",
+  "report": "out/qa/mix_report.json",
+  "trace": "out/qa/adds.json",
+  "stems": "out/audio/stems",
+  "master": "out/audio/soundtrack.wav",
+  "only": null
+ }
+}

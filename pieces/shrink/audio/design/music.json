@@ -1,0 +1,38 @@
+{
+ "_doc": "Music edit (music supervisor). Track: 'Cherry on Top' by Michael Ramir C. (Mixkit, Mixkit Stock Music Free License). Measured grid (arrange.py, transient-fitted): 129.995 BPM, 4/4, downbeats at 1.840 + 1.8462*n s (residual 4.1 ms, 100 % of beats on the grid; the track's own first bar starts at 0.00). Key C major. No stretch: the picture is not cut to a musical grid, so the film plays the track at its own tempo and each segment is placed by its own downbeat.",
+ "music": {
+  "file": "audio/assets/music/mk-983_cherry-on-top.mp3",
+  "src_bpm": 129.995,
+  "target_bpm": 129.995,
+  "stretch": "none",
+  "gain_db": -1.0,
+  "segments": [
+   {
+    "label": "mu.groove: src 0.00-51.56 (track bars -1..26 + 3 sixteenths of beat 4) -> film 0.00-51.56. Energetic from the first frame (the track opens on a full-band downbeat), its own funk groove for the build and journey, its louder drum-kit section (src bars 17-26) for the peak. Hard stop 7 ms before the 16th note at 51.573 so nothing is chopped; 25 ms fade = silent by 51.585 (black frame 51.6-51.98).",
+    "src_from": 0.0,
+    "src_to": 51.56,
+    "at": 0.0,
+    "fade_in": 0.004,
+    "fade_out": 0.025,
+    "qa_ok": "deliberate hard stop: the picture cuts to black 51.6-51.98 and the music must stop dead"
+   },
+   {
+    "label": "mu.drop: src bars 41-42 (77.535-81.227) -> film 52.00-55.69. Bar 41 is the track's top drop candidate (+5.3 dB rise after the bar 39-40 breakdown): its downbeat transient lands on 52.00 (DNA/atoms payoff), the loudest part of the film. Enters from silence.",
+    "src_from": 77.535,
+    "src_to": 81.227,
+    "at": 52.0,
+    "fade_in": 0.006,
+    "fade_out": 0.03
+   },
+   {
+    "label": "mu.ending: src bars 52-53 + final chord ring (97.843-103.151) -> film 55.69-61.00. Bar 52 is the track's own cadence bar into its final chord (bar 53 downbeat 99.689 -> film 57.535, on the goodbye/end card at 57.5); the chord rings down naturally (-18 -> -37 dB rms over 3.3 s) and tail_fade takes it to silence at 61.0. Splice bar 42 end -> bar 52 start: both full-groove bars at the same level (-1.7 / -1.0 rel dB), downbeat to downbeat.",
+    "src_from": 97.843,
+    "src_to": 103.151,
+    "at": 55.692,
+    "fade_in": 0.008,
+    "fade_out": 0.06,
+    "tail_fade": 1.6
+   }
+  ]
+ }
+}

@@ -1,0 +1,94 @@
+index.html: 1080x1920, 1464 frames @ 24fps (61.0000s)
+console: THREE.WebGLProgram: Shader Error 0 - VALIDATE_STATUS false
+
+Program Info Log: Fragment shader is not compiled.
+
+FRAGMENT
+
+ERROR: 0:1243: '909.9999999999999.0' : invalid number
+ERROR: 0:1243: ';' : syntax error
+
+  1238: 	#ifdef DECODE_VIDEO_TEXTURE
+  1239: 		sampledDiffuseColor = vec4( mix( pow( sampledDiffuseColor.rgb * 0.9478672986 + vec3( 0.0521327014 ), vec3( 2.4 ) ), sampledDiffuseColor.rgb * 0.0773993808, vec3( lessThanEqual( sampledDiffuseColor.rgb, vec3( 0.04045 ) ) ) ), sampledDiffuseColor.w );
+  1240: 	#endif
+  1241: 	diffuseColor *= sampledDiffuseColor;
+  1242: #endif
+> 1243: { vec3 n = abs(hWn); vec2 p = n.y > 0.6 ? hWp.xz : (n.x > n.z ? hWp.zy : hWp.xy); vec2 q = p * 909.9999999999999.0; float k = 1.0 - smoothstep(0.3, 0.9, max(fwidth(q.x), fwidth(q.y)));
+  1244:     float c = mod(floor(q.x) + floor(q.y), 2.0); float v = mix(sqrt(abs(sin(q.y * 3.1416))), sqrt(abs(sin(q.x * 3.1416))), c); float sl = hmN(p * 125.99999999999999.0);
+  1245:     diffuseColor.rgb *= mix(1.0, 0.7 + 0.34 * v + 0.12 * sl, k); diffuseColor.rgb *= 0.94 + 0.12 * hmN(p * 6.0); }
+  1246: #if defined( USE_COLOR_ALPHA )
+  1247: 	diffuseColor *= vColor;
+  1248: #elif defined( USE_COLOR )
+  1249: 	diffuseColor.rgb *= vColor;
+console: THREE.WebGLProgram: Shader Error 0 - VALIDATE_STATUS false
+
+Program Info Log: Fragment shader is not compiled.
+
+FRAGMENT
+
+ERROR: 0:1243: '909.9999999999999.0' : invalid number
+ERROR: 0:1243: ';' : syntax error
+
+  1238: 	#ifdef DECODE_VIDEO_TEXTURE
+  1239: 		sampledDiffuseColor = vec4( mix( pow( sampledDiffuseColor.rgb * 0.9478672986 + vec3( 0.0521327014 ), vec3( 2.4 ) ), sampledDiffuseColor.rgb * 0.0773993808, vec3( lessThanEqual( sampledDiffuseColor.rgb, vec3( 0.04045 ) ) ) ), sampledDiffuseColor.w );
+  1240: 	#endif
+  1241: 	diffuseColor *= sampledDiffuseColor;
+  1242: #endif
+> 1243: { vec3 n = abs(hWn); vec2 p = n.y > 0.6 ? hWp.xz : (n.x > n.z ? hWp.zy : hWp.xy); vec2 q = p * 909.9999999999999.0; float k = 1.0 - smoothstep(0.3, 0.9, max(fwidth(q.x), fwidth(q.y)));
+  1244:     float c = mod(floor(q.x) + floor(q.y), 2.0); float v = mix(sqrt(abs(sin(q.y * 3.1416))), sqrt(abs(sin(q.x * 3.1416))), c); float sl = hmN(p * 125.99999999999999.0);
+  1245:     diffuseColor.rgb *= mix(1.0, 0.7 + 0.34 * v + 0.12 * sl, k); diffuseColor.rgb *= 0.94 + 0.12 * hmN(p * 6.0); }
+  1246: #if defined( USE_COLOR_ALPHA )
+  1247: 	diffuseColor *= vColor;
+  1248: #elif defined( USE_COLOR )
+  1249: 	diffuseColor.rgb *= vColor;
+console: THREE.WebGLProgram: Shader Error 0 - VALIDATE_STATUS false
+
+Program Info Log: Fragment shader is not compiled.
+
+FRAGMENT
+
+ERROR: 0:1243: '909.9999999999999.0' : invalid number
+ERROR: 0:1243: ';' : syntax error
+
+  1238: 	#ifdef DECODE_VIDEO_TEXTURE
+  1239: 		sampledDiffuseColor = vec4( mix( pow( sampledDiffuseColor.rgb * 0.9478672986 + vec3( 0.0521327014 ), vec3( 2.4 ) ), sampledDiffuseColor.rgb * 0.0773993808, vec3( lessThanEqual( sampledDiffuseColor.rgb, vec3( 0.04045 ) ) ) ), sampledDiffuseColor.w );
+  1240: 	#endif
+  1241: 	diffuseColor *= sampledDiffuseColor;
+  1242: #endif
+> 1243: { vec3 n = abs(hWn); vec2 p = n.y > 0.6 ? hWp.xz : (n.x > n.z ? hWp.zy : hWp.xy); vec2 q = p * 909.9999999999999.0; float k = 1.0 - smoothstep(0.3, 0.9, max(fwidth(q.x), fwidth(q.y)));
+  1244:     float c = mod(floor(q.x) + floor(q.y), 2.0); float v = mix(sqrt(abs(sin(q.y * 3.1416))), sqrt(abs(sin(q.x * 3.1416))), c); float sl = hmN(p * 125.99999999999999.0);
+  1245:     diffuseColor.rgb *= mix(1.0, 0.7 + 0.34 * v + 0.12 * sl, k); diffuseColor.rgb *= 0.94 + 0.12 * hmN(p * 6.0); }
+  1246: #if defined( USE_COLOR_ALPHA )
+  1247: 	diffuseColor *= vColor;
+  1248: #elif defined( USE_COLOR )
+  1249: 	diffuseColor.rgb *= vColor;
+console: THREE.WebGLProgram: Shader Error 0 - VALIDATE_STATUS false
+
+Program Info Log: Fragment shader is not compiled.
+
+FRAGMENT
+
+ERROR: 0:1243: '909.9999999999999.0' : invalid number
+ERROR: 0:1243: ';' : syntax error
+
+  1238: 	#ifdef DECODE_VIDEO_TEXTURE
+  1239: 		sampledDiffuseColor = vec4( mix( pow( sampledDiffuseColor.rgb * 0.9478672986 + vec3( 0.0521327014 ), vec3( 2.4 ) ), sampledDiffuseColor.rgb * 0.0773993808, vec3( lessThanEqual( sampledDiffuseColor.rgb, vec3( 0.04045 ) ) ) ), sampledDiffuseColor.w );
+  1240: 	#endif
+  1241: 	diffuseColor *= sampledDiffuseColor;
+  1242: #endif
+> 1243: { vec3 n = abs(hWn); vec2 p = n.y > 0.6 ? hWp.xz : (n.x > n.z ? hWp.zy : hWp.xy); vec2 q = p * 909.9999999999999.0; float k = 1.0 - smoothstep(0.3, 0.9, max(fwidth(q.x), fwidth(q.y)));
+  1244:     float c = mod(floor(q.x) + floor(q.y), 2.0); float v = mix(sqrt(abs(sin(q.y * 3.1416))), sqrt(abs(sin(q.x * 3.1416))), c); float sl = hmN(p * 125.99999999999999.0);
+  1245:     diffuseColor.rgb *= mix(1.0, 0.7 + 0.34 * v + 0.12 * sl, k); diffuseColor.rgb *= 0.94 + 0.12 * hmN(p * 6.0); }
+  1246: #if defined( USE_COLOR_ALPHA )
+  1247: 	diffuseColor *= vColor;
+  1248: #elif defined( USE_COLOR )
+  1249: 	diffuseColor.rgb *= vColor;
+  24/192 frames  2736ms/frame
+  48/192 frames  2277ms/frame
+  72/192 frames  2071ms/frame
+  96/192 frames  1974ms/frame
+  120/192 frames  1994ms/frame
+  144/192 frames  2031ms/frame
+  168/192 frames  2041ms/frame
+  192/192 frames  2032ms/frame
+frames 0..191 written in 390.1s

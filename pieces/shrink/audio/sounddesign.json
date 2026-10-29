@@ -1,0 +1,62 @@
+{
+ "_doc": "Shrink film soundtrack (real-sound skill): real licensed recordings only, credited in CREDITS.md. Built by <skill>/scripts/mix.py from this file and one fragment per category in audio/design/. Music first; sfx/amb fragments get added to include.",
+ "duration": 61.0,
+ "cues": "out/cues.json",
+ "include": [
+  "audio/design/music.json",
+  "audio/design/sfx.json",
+  "audio/design/ambience.json"
+ ],
+ "_buses_doc": "Music rides: flat groove 0-44.3; a 1.5 dB lift across the track's own loud run 44.3-51.5 (the build into the stop); the step to +3 dB happens inside the black-frame silence (51.7-51.95) so the drop at 52.0 is the loudest part of the film; back to 0 dB just before the final chord's downbeat at 57.54 (resolve on the end card).",
+ "buses": {
+  "music": {
+   "gain_db": 0.0,
+   "auto": [
+    [
+     0,
+     0
+    ],
+    [
+     44.3,
+     0
+    ],
+    [
+     51.5,
+     1.5
+    ],
+    [
+     51.7,
+     1.5
+    ],
+    [
+     51.95,
+     3.0
+    ],
+    [
+     57.45,
+     3.0
+    ],
+    [
+     57.52,
+     0.0
+    ],
+    [
+     61.0,
+     0.0
+    ]
+   ]
+  },
+  "amb": {
+   "gain_db": 0.0
+  },
+  "sfx": {
+   "gain_db": 0.0
+  }
+ },
+ "_master_doc": "-14 LUFS integrated for TikTok/Reels/Shorts; ceiling 0.77 linear leaves room for the AAC encode.",
+ "master": {
+  "lufs": -14,
+  "ceiling": 0.77,
+  "no_glue": true
+ }
+}
