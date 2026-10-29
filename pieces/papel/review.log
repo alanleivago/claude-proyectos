@@ -1,0 +1,72 @@
+shot 1 (la hoja se dobla sobre el escritorio; título): 16 frames [0,6,12,18,24,30,36,42,48,54,60,66,72,78,84,90] -> review/shot01-sheet.jpg
+shot 2 (cada pliegue duplica el grosor): 24 frames [96,102,108,114,120,126,132,138,144,150,156,162,168,174,180,186,192,198,204,210,216,222,228,234] -> review/shot02-sheet.jpg
+shot 3 (14 pliegues: tan alta como tú): 16 frames [240,246,252,258,264,270,276,282,288,294,300,306,312,318,324,330] -> review/shot03-sheet.jpg
+shot 4 (atraviesa el techo; salimos por la ventana): 20 frames [336,342,348,354,360,366,372,378,384,390,396,402,408,414,420,426,432,438,444,450] -> review/shot04-sheet.jpg
+shot 5 (sobre la ciudad: la Torre Latino, el Popocatépetl): 24 frames [456,462,468,474,480,486,492,498,504,510,516,522,528,534,540,546,552,558,564,570,576,582,588,594] -> review/shot05-sheet.jpg
+shot 6 (las nubes, un avión, el Everest): 16 frames [600,606,612,618,624,630,636,642,648,654,660,666,672,678,684,690] -> review/shot06-sheet.jpg
+shot 7 (llega al espacio: la EEI): 16 frames [696,702,708,714,720,726,732,738,744,750,756,762,768,774,780,786] -> review/shot07-sheet.jpg
+shot 8 (la Tierra se aleja): 20 frames [792,798,804,810,816,822,828,834,840,846,852,858,864,870,876,882,888,894,900,906] -> review/shot08-sheet.jpg
+shot 9 (pasa la Luna): 24 frames [912,918,924,930,936,942,948,954,960,966,972,978,984,990,996,1002,1008,1014,1020,1026,1032,1038,1044,1050] -> review/shot09-sheet.jpg
+shot 10 (pasa el Sol; Neptuno): 16 frames [1056,1062,1068,1074,1080,1086,1092,1098,1104,1110,1116,1122,1128,1134,1140,1146] -> review/shot10-sheet.jpg
+shot 11 (la estrella más cercana): 20 frames [1152,1158,1164,1170,1176,1182,1188,1194,1200,1206,1212,1218,1224,1230,1236,1242,1248,1254,1260,1266] -> review/shot11-sheet.jpg
+shot 12 (más ancha que la Vía Láctea): 16 frames [1272,1278,1284,1290,1296,1302,1308,1314,1320,1326,1332,1338,1344,1350,1356,1362] -> review/shot12-sheet.jpg
+shot 13 (Andrómeda; la red cósmica): 18 frames [1368,1374,1380,1386,1392,1398,1404,1410,1416,1422,1428,1434,1440,1446,1452,1458,1464,1470] -> review/shot13-sheet.jpg
+shot 14 (silencio): 2 frames [1476,1482] -> review/shot14-sheet.jpg
+shot 15 (103: más alta que el universo observable): 16 frames [1488,1494,1500,1506,1512,1518,1524,1530,1536,1542,1548,1554,1560,1566,1572,1578] -> review/shot15-sheet.jpg
+shot 16 (el récord real: 12 pliegues): 8 frames [1584,1590,1596,1602,1608,1614,1620,1626] -> review/shot16-sheet.jpg
+shot 17 (tarjeta): 8 frames [1632,1638,1644,1650,1656,1662,1668,1674] -> review/shot17-sheet.jpg
+
+CUTS vs beat grid @ 120 BPM, 24fps (8ths = 0.25s)
+ #   cut t     grid  grid#   nominal f  cut f   cut f t     err(f)  Δ@cut  peak(±2f)          shot change           result
+ 1    4.000s   8th    16       96.0     96   4.0000s  +0.0    24.8  f96 ok             shot 1 -> 2           PASS
+ 2   10.000s   8th    40      240.0    240   10.0000s  +0.0    48.3  f240 ok            shot 2 -> 3           PASS
+ 3   14.000s   8th    56      336.0    336   14.0000s  +0.0    52.2  f336 ok            shot 3 -> 4           PASS
+ 4   19.000s   8th    76      456.0    456   19.0000s  +0.0    40.1  f456 ok            shot 4 -> 5           PASS
+ 5   25.000s   8th   100      600.0    600   25.0000s  +0.0    36.4  f600 ok            shot 5 -> 6           PASS
+ 6   29.000s   8th   116      696.0    696   29.0000s  +0.0    68.9  f696 ok            shot 6 -> 7           PASS
+ 7   33.000s   8th   132      792.0    792   33.0000s  +0.0     6.2  f794 CHECK         shot 7 -> 8           PASS
+ 8   38.000s   8th   152      912.0    912   38.0000s  +0.0    15.1  f912 ok            shot 8 -> 9           PASS
+ 9   44.000s   8th   176     1056.0   1056   44.0000s  +0.0    69.0  f1056 ok           shot 9 -> 10          PASS
+10   48.000s   8th   192     1152.0   1152   48.0000s  +0.0    17.5  f1152 ok           shot 10 -> 11         PASS
+11   53.000s   8th   212     1272.0   1272   53.0000s  +0.0    24.6  f1272 ok           shot 11 -> 12         PASS
+12   57.000s   8th   228     1368.0   1368   57.0000s  +0.0    19.2  f1368 ok           shot 12 -> 13         PASS
+13   61.500s   8th   246     1476.0   1476   61.5000s  +0.0    30.2  f1476 ok           shot 13 -> 14         PASS
+14   62.000s   8th   248     1488.0   1488   62.0000s  +0.0   176.1  f1488 ok           shot 14 -> 15         PASS
+15   66.000s   8th   264     1584.0   1584   66.0000s  +0.0    17.9  f1584 ok           shot 15 -> 16         PASS
+16   68.000s   8th   272     1632.0   1632   68.0000s  +0.0    12.0  f1632 ok           shot 16 -> 17         PASS
+all cuts on grid within 1 frame: PASS
+
+PACING: 16 hard cuts (2 in the last 5s), mean segment 4.12s, shortest 0.50s, plus 0 on-2s montage steps
+FLAT FRAMES (contrast < 6/255): 1476, 1477, 1478, 1479, 1480, 1481, 1482, 1483, 1484, 1485, 1486, 1487, 1632, 1633, 1634
+LOOP: diff(last=1679, first=0) = 106.54; typical consecutive diff in the first 40 frames = 6.75 (info: F4/F6 loop pixel-exactly and F4 checks it; other formats return to the opening image, changed)
+
+STORY ARC (loudness in dBFS over 100ms windows: median / 90th percentile; music = music stem median)
+ act          role       t0-t1         cuts  cuts/s  motion   mix med  mix p90  music
+ 1 La hoja    build      0.00-10.00s      1    0.10     5.1    -22.9    -16.8     -  
+ 2 Tan alta como tú turn       10.00-19.00s      2    0.22     8.2    -21.5    -14.3     -  
+ 3 Hacia el cielo journey    19.00-38.00s      4    0.21     8.2    -19.3    -13.7     -  
+ 4 El cosmos  peak       38.00-61.50s      5    0.21     7.9    -16.2    -14.1     -  
+ 5 Silencio   silence    61.50-62.00s      1    2.00     0.0   -120.0   -116.6     -  
+ 6 El universo gift       62.00-66.00s      1    0.25     2.0    -15.2     -8.5     -  
+ 7 El récord  goodbye    66.00-70.00s      2    0.50     1.8    -41.3    -23.0     -  
+  PASS  gift is the loudest act (p90 -8.5 vs next -13.7)
+  PASS  gift p90 >= peak p90 + 1 dB (-8.5 vs -14.1): the busiest moment is not the loudest
+  PASS  silence median <= peak median - 15 dB (-120.0 vs -16.2)
+  FAIL  peak has the highest cut rate (0.21/s)
+  PASS  gift is held: <= 0.5 cuts/s (0.25)
+  PASS  goodbye decays: median <= gift median - 6 dB (-41.3 vs -15.2)
+story arc: FAIL (5/6 rules)
+
+TEXT (every string drawn, traced to screen; 297 frames sampled, morph windows skipped)
+text: PASS (0 cut-off/overlap, 0 in the safe zone)
+
+SOUND (mix: renders/audio.wav)
+  loudest 100ms window: 62.5s (-7.6 dBFS) - in the payoff act 62-66s
+  silence before it: 0.5s at <= -40 dBFS ending 62.0s in the 2s before (craft.md wants 0.5-4s when the story has a turn)
+  loudness: -15.8 LUFS integrated, range 5.8 LU, true peak -1.8 dBFS (phone target about -16 to -14 LUFS, peak <= -1)
+
+DEAD BEATS (the picture's change over 0.5s, every 0.25s; median 18.94, "still" below 4.73; silence acts are exempt)
+dead beats: PASS (0 stretches over 3s)
+PHONE SHEET: review/phone.jpg (one frame a second at 360px wide — read every caption at this size)
+
+video: 1080x1920, 1680 frames decoded

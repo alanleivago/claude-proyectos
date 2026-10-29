@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cómo sabe Google Maps del tráfico</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #e8e6e0; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  CÓMO SABE GOOGLE MAPS DEL TRÁFICO — scroll3d, 9:16, 30fps, voice-led (VoiceStudio "scroll 2 buena español").
+//  A Spanish remake of reference 3 (Google Maps traffic) in its light daytime world: an urban expressway with palms and
+//  terracotta blocks, km/h, cyan phone dots, white labels. Shots authored in REFERENCE time R = refT(TT).
+// =====================================================================
+const FPS = 30, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const VL = (id) => VOICE.lines.find((l) => l.id === id);
+const DURATION = Math.round(VOICE.duration * FPS) / FPS;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 0 };
+const HAND = '"FreeSans", Helvetica, Arial, sans-serif';
+const CX = 540;
+
+// [reference time, Spanish time] — line starts and ends of both voices
+const ANCH = [
+  [0.0, 0.0], [2.94, 3.52], [6.56, 7.96], [6.86, 8.08], [8.26, 8.72], [8.9, 9.36], [12.02, 12.28], [12.76, 12.66],
+  [17.14, 16.94], [17.74, 17.14], [19.68, 19.04], [20.26, 19.5], [22.56, 22.26], [22.98, 22.48], [23.98, 23.8], [24.46, 23.92],
+  [25.54, 25.48], [26.0, 25.82], [28.62, 28.08], [33.18, 32.76], [33.78, 32.92], [37.16, 37.28], [40.46, 40.48], [41.1, 41.08],
+  [44.64, 45.2], [44.78, 45.38], [48.1, 48.5], [48.52, 48.76], [51.2, 51.36], [51.82, 51.92], [54.54, 54.6], [55.16, 54.78],
+  [56.68, 56.72], [60.54, 60.8], [61.34, 61.52], [65.44, 66.1], [65.98, 66.28], [68.0, 69.42], [68.46, 69.76], [71.52, 73.12],
+  [76.38, 78.08], [77.02, 78.82], [79.78, 81.78], [80.04, 82.02], [82.06, 83.58], [82.54, 84.02], [85.92, 87.82], [88.16, 90.3],
+  [88.8, 90.96], [92.26, 94.78], [92.92, 94.92], [96.78, 98.34], [97.12, 98.62], [99.32, 100.98], [99.8, 101.26], [102.32, 103.7],
+  [105.42, 106.64], [106.04, 107.26], [108.58, 110.26], [111.48, 113.82], [112.0, 114.46], [114.24, 117.16], [114.88, 117.44], [116.22, 118.7],
+  [116.86, 118.92], [118.08, 120.42], [118.76, 121.02], [121.5, 124.24], [122.1, 124.38], [124.28, 127.5], [124.82, 127.62], [128.74, 131.4],
+  [129.34, 132.02], [132.22, 135.34], [132.72, 135.5], [135.94, 139.28], [136.6, 139.54], [139.06, 142.22], [142.62, 145.64], [147.7, 150.34],
+  [148.08, 150.64], [150.1, 152.48], [150.56, 152.74], [153.14, 154.94], [153.62, 155.64], [156.7, 159.14], [158.3, 161.32], [158.6, DURATION]
+];
+function refT(t) {
+  if (t <= 0) return 0;
+  for (let i = 1; i < ANCH.length; i++) { const [r0, s0] = ANCH[i - 1], [r1, s1] = ANCH[i]; if (t <= s1) return r0 + (r1 - r0) * (t - s0) / (s1 - s0); }
+  return ANCH[ANCH.length - 1][0];
+}
+function esT(r) {
+  for (let i = 1; i < ANCH.length; i++) { const [r0, s0] = ANCH[i - 1], [r1, s1] = ANCH[i]; if (r <= r1) return s0 + (s1 - s0) * (r - r0) / (r1 - r0); }
+  return DURATION;
+}
+
+const ERA_LIST = [[0, DURATION, () => sceneMain()]];
+const SHOTS_R = [
+  ['open', 0, 3.3, 'cada punto es un celular'],
+  ['nocam', 3.3, 6.7, 'sin cámaras, sin sensores, sin reportes'],
+  ['how', 6.7, 8.5, '¿cómo lo sabe?'],
+  ['gps', 8.5, 12.7, 'tu celular calcula dónde estás'],
+  ['follow', 12.7, 17.7, 'mientras avanzas'],
+  ['spacing', 17.7, 19.7, 'qué tan rápido cambia'],
+  ['one', 19.7, 23.0, 'un celular más lento'],
+  ['pulled', 23.0, 26.7, 'se orilló, o está estacionado'],
+  ['off', 26.7, 29.2, 'GPS desviado'],
+  ['hundreds', 29.2, 33.1, 'cientos de celulares'],
+  ['segments', 33.1, 37.4, 'tramos del camino'],
+  ['speeds', 37.4, 40.6, 'velocidad por tramo'],
+  ['usual', 40.6, 44.8, 'normalmente 100 km/h'],
+  ['slow', 44.8, 51.8, 'de pronto 25 km/h'],
+  ['raw', 51.8, 55.1, 'el GPS crudo'],
+  ['drift', 55.1, 61.3, 'edificios, túneles, cruces'],
+  ['which', 61.3, 65.8, '¿por qué camino va?'],
+  ['mm', 65.8, 68.2, 'map matching'],
+  ['compare', 68.2, 73.1, 'posición, dirección, velocidad, forma'],
+  ['fit', 73.1, 76.8, 'el tramo que mejor encaja'],
+  ['many', 76.8, 82.6, 'muchos aparatos, no uno'],
+  ['estimate', 82.6, 86.4, 'velocidad por tramo'],
+  ['hist', 86.4, 92.0, 'en vivo contra lo histórico'],
+  ['night', 92.0, 97.3, 'medianoche: terrible'],
+  ['rush', 97.3, 105.5, 'hora pico: normal'],
+  ['travel', 105.5, 111.7, 'tiempo por tramo'],
+  ['graph', 111.7, 118.6, 'nodos y aristas'],
+  ['weights', 118.6, 124.8, 'peso = tiempo'],
+  ['search', 124.8, 129.2, 'el menor costo total'],
+  ['shortest', 129.2, 132.5, 'la más corta no es la más rápida'],
+  ['change', 132.5, 135.9, 'los pesos cambian'],
+  ['reroute', 135.9, 142.6, 'te desvía'],
+  ['colors', 142.6, 150.5, 'verde, naranja, rojo'],
+  ['end', 150.5, 158.6, 'los celulares son los sensores']
+];
+const SHOTS = SHOTS_R.map(([k, a, b, title]) => [k, 0, esT(a), esT(b), title]);
+const CUTS_R = [];   // no hard cuts: every boundary is a dissolve (shots.js)
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'voice-led explainer (scroll3d remake of reference 3, Google Maps)',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: CUTS_R.map(esT),
+  morphs: SHOTS_R.slice(1).map((s) => esT(s[1])),
+  cues: { hit: esT(47.6) },
+  acts: [
+    { name: '1 Sin cámaras',  role: 'build',   t0: 0,           t1: esT(29.2) },
+    { name: '2 Cientos',      role: 'journey', t0: esT(29.2),   t1: esT(47.5) },
+    { name: '3 Se frena',     role: 'gift',    t0: esT(47.5),   t1: esT(51.8) },
+    { name: '4 Map matching', role: 'peak',    t0: esT(51.8),   t1: esT(105.5) },
+    { name: '5 El grafo',     role: 'journey', t0: esT(105.5),  t1: esT(142.6) },
+    { name: '6 Los sensores', role: 'end',     t0: esT(142.6),  t1: DURATION },
+  ],
+  board: [
+    { t: esT(1.98), title: 'cada punto es un celular', sound: '', next: '' },
+    { t: esT(5.34), title: 'sin cámaras, sin sensores, sin reportes', sound: '', next: '' },
+    { t: esT(7.78), title: '¿cómo lo sabe?', sound: '', next: '' },
+    { t: esT(11.02), title: 'tu celular calcula dónde estás', sound: '', next: '' },
+    { t: esT(15.7), title: 'mientras avanzas', sound: '', next: '' },
+    { t: esT(18.9), title: 'qué tan rápido cambia', sound: '', next: '' },
+    { t: esT(21.68), title: 'un celular más lento', sound: '', next: '' },
+    { t: esT(25.22), title: 'se orilló, o está estacionado', sound: '', next: '' },
+    { t: esT(28.2), title: 'GPS desviado', sound: '', next: '' },
+    { t: esT(31.54), title: 'cientos de celulares', sound: '', next: '' },
+    { t: esT(35.68), title: 'tramos del camino', sound: '', next: '' },
+    { t: esT(39.32), title: 'velocidad por tramo', sound: '', next: '' },
+    { t: esT(43.12), title: 'normalmente 100 km/h', sound: '', next: '' },
+    { t: esT(49.0), title: 'de pronto 25 km/h', sound: '', next: '' },
+    { t: esT(53.78), title: 'el GPS crudo', sound: '', next: '' },
+    { t: esT(58.82), title: 'edificios, túneles, cruces', sound: '', next: '' },
+    { t: esT(64.0), title: '¿por qué camino va?', sound: '', next: '' },
+    { t: esT(67.24), title: 'map matching', sound: '', next: '' },
+    { t: esT(71.14), title: 'posición, dirección, velocidad, forma', sound: '', next: '' },
+    { t: esT(75.32), title: 'el tramo que mejor encaja', sound: '', next: '' },
+    { t: esT(80.28), title: 'muchos aparatos, no uno', sound: '', next: '' },
+    { t: esT(84.88), title: 'velocidad por tramo', sound: '', next: '' },
+    { t: esT(89.76), title: 'en vivo contra lo histórico', sound: '', next: '' },
+    { t: esT(95.18), title: 'medianoche: terrible', sound: '', next: '' },
+    { t: esT(102.22), title: 'hora pico: normal', sound: '', next: '' },
+    { t: esT(109.22), title: 'tiempo por tramo', sound: '', next: '' },
+    { t: esT(115.84), title: 'nodos y aristas', sound: '', next: '' },
+    { t: esT(122.32), title: 'peso = tiempo', sound: '', next: '' },
+    { t: esT(127.44), title: 'el menor costo total', sound: '', next: '' },
+    { t: esT(131.18), title: 'la más corta no es la más rápida', sound: '', next: '' },
+    { t: esT(134.54), title: 'los pesos cambian', sound: '', next: '' },
+    { t: esT(139.92), title: 'te desvía', sound: '', next: '' },
+    { t: esT(147.34), title: 'verde, naranja, rojo', sound: '', next: '' },
+    { t: esT(155.36), title: 'los celulares son los sensores', sound: '', next: '' }
+  ],
+  narration: VOICE.lines.map((l) => ({ id: l.id, t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;

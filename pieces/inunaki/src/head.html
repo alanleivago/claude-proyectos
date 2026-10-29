@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Inunaki</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #020306; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; image-rendering: pixelated; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  INUNAKI — 9:16, 71s, 24fps. A first-person tale in on-screen paragraphs: the old Inunaki tunnel on a mountain road
+//  in Fukuoka, sealed with concrete blocks; a hand-painted sign says the law of Japan does not apply beyond; on his
+//  eighteenth birthday my brother walks in with a flashlight; lanterns of a drowned village at the far end; tall
+//  bandaged villagers on both sides turn to look; I run; in the mirror a wrapped hand picks up his flashlight.
+//  Style: yokai (three.js at 216×384, dithered).
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 71.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 71, () => sceneTale()]];
+const SHOTS = [
+  ['open',   0, 0.0,  4.5,  'a very tall bandaged figure with a sickle at the mouth of the sealed tunnel, in the headlights'],
+  ['card',   0, 4.5,  9.0,  'the card: Inunaki'],
+  ['road',   0, 9.0,  18.0, 'the old mountain road at night, the car; headlights on the tunnel sealed with concrete blocks'],
+  ['sign',   0, 18.0, 27.0, 'the hand-painted sign by the entrance'],
+  ['walk',   0, 27.0, 36.0, 'my brother walks toward the tunnel with the flashlight; the blocks are gone'],
+  ['far',    0, 36.0, 45.6, 'lanterns at the far end, dogs howling, a village that should not exist; black'],
+  ['reveal', 0, 45.6, 55.0, 'the villagers on both sides of the tunnel turn to look at me'],
+  ['mirror', 0, 55.0, 64.0, 'I run to the car; in the mirror a wrapped hand picks up his flashlight'],
+  ['today',  0, 64.0, 71.0, 'today: the sealed tunnel by day, a lit flashlight at the entrance'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { lift: 1.2, card: 4.5, road: 9.0, park: 13.5, sign: 18.0, signClose: 22.5, laugh: 28.0, walk: 27.0, inside: 31.5, deep: 36.0, village: 40.5, black: 45.0, reveal: 45.6, turn: 45.9, face: 50.5, run: 55.0, mirror: 59.0, grab: 61.6, today: 64.0, badge: 66.2 },
+  acts: [
+    { name: '1 Birthday', role: 'build',   t0: 0.0,  t1: 18.0 },
+    { name: '2 The sign', role: 'turn',    t0: 18.0, t1: 36.0 },
+    { name: '3 Far end',  role: 'peak',    t0: 36.0, t1: 45.0 },
+    { name: '4 Silence',  role: 'silence', t0: 45.0, t1: 45.6 },
+    { name: '5 Villagers',role: 'gift',    t0: 45.6, t1: 64.0 },
+    { name: '6 Today',    role: 'goodbye', t0: 64.0, t1: 71.0 },
+  ],
+  board: [
+    { t: 1.9,  title: 'Hook: it lifts its head', sound: 'rain, engine idling, a wet breath', next: 'dither' },
+    { t: 7.4,  title: 'Card: Inunaki', sound: 'card hit, a far dog', next: 'dither in' },
+    { t: 11.6, title: 'The old mountain road', sound: 'engine, wipers, rain on cedars', next: 'cut' },
+    { t: 16.0, title: 'Sealed with concrete', sound: 'handbrake, idle, rain', next: 'cut' },
+    { t: 20.6, title: 'A sign by the entrance', sound: 'rain dripping on wood', next: 'cut' },
+    { t: 25.2, title: 'The law does not apply', sound: 'a low drone enters', next: 'cut' },
+    { t: 28.6, title: 'He laughs, walks in', sound: 'his laugh, footsteps on wet asphalt', next: 'cut' },
+    { t: 34.0, title: 'The blocks are gone', sound: 'footsteps echo in the tunnel, drips', next: 'cut' },
+    { t: 38.6, title: 'Lanterns at the far end', sound: 'echoes; distant festival flute', next: 'cut' },
+    { t: 43.2, title: 'Dogs howling', sound: 'dogs howl, drone swells', next: 'to black, 0.6 s silence' },
+    { t: 47.4, title: 'Both sides of the tunnel', sound: 'THE HIT (45.6 s)', next: 'cut' },
+    { t: 52.6, title: 'They look at me', sound: 'wet breathing, bandage rustle', next: 'cut' },
+    { t: 57.2, title: 'I ran', sound: 'running steps, gasps, car door', next: 'cut' },
+    { t: 61.9, title: 'A wrapped hand takes it', sound: 'engine roar, tyres; the flashlight rattles', next: 'cut' },
+    { t: 68.0, title: 'A lit flashlight, every year', sound: 'day rain, birds, a far dog', next: 'end' },
+  ],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

@@ -95,7 +95,7 @@ const YK_G = {};
   Object.entries(lo).forEach(([k, v]) => def(k, v.split('|')));
   const acc = (base, a0, a1) => { const g = YK_G[base].rows.slice(); g[0] = a0; g[1] = a1; return g; };
   def('á', acc('a', '...#.', '..#..')); def('é', acc('e', '...#.', '..#..')); def('ó', acc('o', '...#.', '..#..')); def('ú', acc('u', '...#.', '..#..'));
-  def('í', ['.#', '#.', '#.', '#.', '#.', '#.', '#.']); def('ñ', acc('n', '.##.#', '#..#.')); def('ü', acc('u', '.#.#.', '.....')); def('ō', acc('o', '.###.', '.....'));
+  def('í', ['.#', '#.', '#.', '#.', '#.', '#.', '#.']); def('ñ', acc('n', '.##.#', '#..#.')); def('ü', acc('u', '.#.#.', '.....')); def('ō', acc('o', '.###.', '.....')); def('ã', acc('a', '.##.#', '#..#.'));
   const p = {
     '.': '.|.|.|.|.|.|#', ',': '.|.|.|.|.|.|#|#', ':': '.|.|#|.|.|.|#', ';': '.|.|#|.|.|.|#|#', '!': '#|#|#|#|#|.|#', '¡': '#|.|#|#|#|#|#',
     '?': '.###.|#...#|....#|...#.|..#..|.....|..#..', '¿': '..#..|.....|..#..|.#...|#....|#...#|.###.',
@@ -163,13 +163,29 @@ function ykStars(a = 1, key = 'stars') {
     ctx.globalAlpha = clamp(a * (0.25 + 0.6 * tw) * (R.f() < 0.5 ? 0.6 : 1)); ctx.fillStyle = R.f() < 0.2 ? '#9fb3c8' : '#d8dde2'; ctx.fillRect(x, y, s, s); }
   ctx.restore();
 }
-// the seal: a small red square with a pale pixel mark (a stylised spider sign)
-function ykSeal(x, y, u, a = 1) {
-  const M = ['.#####.', '#.#.#.#', '##.#.##', '#..#..#', '##.#.##', '#.#.#.#', '.#####.'];
+// the seal: a small red square (9u) with a pale pixel mark on a 7×7 grid of u-sized pixels. glyph (optional): the
+// creature's kanji — ONE character, drawn from a real font (heavy Hiragino gothic) at 7×7 and laid down the same way as the old
+// mark; without it, the old stylised spider sign (backward compatible).
+const _ykGlyphs = {}, YK_SEALF = "'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', sans-serif";
+try { document.fonts.load('900 56px ' + YK_SEALF, '犬鬼蜘蛛海坊主屍'); } catch (e) { /* no FontFace API: drawn on first use */ }   // system fonts load lazily: ask early
+// hand-drawn 7×7 grids for kanji too dense to survive the 7×7 raster (the raster turns them into a blob)
+const YK_SEALG = { '屍': ['######.', '#....#.', '######.', '#.#####', '#..#.#.', '#.##.#.', '##.#.##'] };
+function ykGlyphGrid(ch, G = 7) {
+  if (G === 7 && YK_SEALG[ch]) return YK_SEALG[ch];
+  const k = ch + G; if (_ykGlyphs[k]) return _ykGlyphs[k];
+  const S = G * 8, c = document.createElement('canvas'); c.width = c.height = S; const g = c.getContext('2d', { willReadFrequently: true });
+  g.fillStyle = '#fff'; g.font = "900 " + Math.round(S * 1.02) + "px " + YK_SEALF; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(ch, S / 2, S / 2 + S * 0.03);
+  const d = g.getImageData(0, 0, S, S).data, M = [];   // a heavy gothic keeps every stroke at 7×7: area coverage per cell (box filter), then a threshold
+  for (let y = 0; y < G; y++) { let row = ''; for (let x = 0; x < G; x++) { let a = 0; for (let yy = 0; yy < 8; yy++) for (let xx = 0; xx < 8; xx++) a += d[((y * 8 + yy) * S + x * 8 + xx) * 4 + 3]; row += a / (64 * 255) > 0.45 ? '#' : '.'; } M.push(row); }
+  if (!M.some((r) => r.includes('#'))) return M;   // the font was not ready yet: do not cache the blank
+  return (_ykGlyphs[k] = M);
+}
+function ykSeal(x, y, u, a = 1, glyph = null) {
+  const M = glyph ? ykGlyphGrid([...glyph][0]) : ['.#####.', '#.#.#.#', '##.#.##', '#..#..#', '##.#.##', '#.#.#.#', '.#####.'];
   ctx.save(); screen(); ctx.globalAlpha = clamp(a); ctx.fillStyle = YK.seal; ctx.fillRect(x, y, u * 9, u * 9);
   ctx.fillStyle = '#f3d9c8'; M.forEach((row, r) => [...row].forEach((c, k) => { if (c === '#') ctx.fillRect(x + u + k * u, y + u + r * u, u, u); })); ctx.restore();
 }
-// k: 0..1 how much of the card is in (a dithered dissolve); the print is src drawn through the print palette
+// k: 0..1 how much of the card is in (a dithered dissolve); the print is src drawn through the print palette; o.seal = ONE kanji for the seal
 function ykCard(src, name, kIn, kName, o = {}) {
   const fw = o.w ?? 720, fh = o.h ?? 540, fx = Math.round(CX - fw / 2), fy = o.y ?? 380, b = 15;
   if (kIn > 0) {
@@ -192,7 +208,7 @@ function ykCard(src, name, kIn, kName, o = {}) {
   if (kName > 0) {
     const u = 8, wN = ykWidth(name) * u, yN = fy + fh + 54, reveal = (i) => (kName >= 1 ? 1 : clamp(kName * 1.6 - i * 0.06));
     ykLine(name, CX - 34, yN, { u, reveal, key: 7 });
-    if (kName > 0.4) ykSeal(Math.round(CX - 34 + wN / 2 + 22), yN - 6, 7, clamp((kName - 0.4) * 3));
+    if (kName > 0.4) ykSeal(Math.round(CX - 34 + wN / 2 + 22), yN - 6, 7, clamp((kName - 0.4) * 3), o.seal || null);   // o.seal: the creature's kanji
   }
 }
 

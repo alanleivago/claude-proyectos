@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cómo te ve Face ID</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #07090d; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  CÓMO TE VE FACE ID — scroll3d, 9:16, 30fps, voice-led (VoiceStudio "scroll 2 buena español").
+//  A Spanish remake of reference 5 (Face ID) with a code-sculpted head (src/head3d.js) in a dark room: IR flood,
+//  projected dots, depth map, photo vs face, mesh match, unlock. Shots authored in REFERENCE time R = refT(TT).
+// =====================================================================
+const FPS = 30, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const VL = (id) => VOICE.lines.find((l) => l.id === id);
+const DURATION = Math.round(VOICE.duration * FPS) / FPS;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 0 };
+const HAND = '"FreeSans", Helvetica, Arial, sans-serif';
+const CX = 540;
+
+// [reference time, Spanish time] — line starts and ends of both voices
+const ANCH = [
+  [0.0, 0.0], [3.34, 3.64], [3.8, 3.84], [6.36, 6.34], [7.12, 6.94], [8.04, 8.3], [8.4, 8.78], [12.5, 13.08],
+  [13.04, 13.38], [15.16, 15.46], [15.86, 16.06], [20.02, 20.14], [20.62, 20.34], [22.34, 22.66], [23.0, 22.92], [25.08, 25.36],
+  [30.34, 31.14], [30.98, 31.4], [33.56, 34.18], [37.16, 37.86], [37.82, 38.22], [40.46, 41.76], [41.16, 41.9], [43.5, 44.06],
+  [44.04, 44.3], [47.04, 46.82], [47.72, 47.46], [52.8, 52.48], [56.82, 57.16], [59.88, 59.72], [60.58, 60.46], [62.92, 63.68],
+  [63.46, 63.94], [65.92, 66.56], [66.5, 66.86], [68.64, 69.1], [69.14, 69.48], [71.64, 71.98], [75.8, 75.9], [76.5, DURATION]
+];
+function refT(t) {
+  if (t <= 0) return 0;
+  for (let i = 1; i < ANCH.length; i++) { const [r0, s0] = ANCH[i - 1], [r1, s1] = ANCH[i]; if (t <= s1) return r0 + (r1 - r0) * (t - s0) / (s1 - s0); }
+  return ANCH[ANCH.length - 1][0];
+}
+function esT(r) {
+  for (let i = 1; i < ANCH.length; i++) { const [r0, s0] = ANCH[i - 1], [r1, s1] = ANCH[i]; if (r <= r1) return s0 + (s1 - s0) * (r - r0) / (r1 - r0); }
+  return DURATION;
+}
+
+const ERA_LIST = [[0, DURATION, () => sceneMain()]];
+const SHOTS_R = [
+  ['intro', 0, 3.8, 'te reconoce a oscuras'],
+  ['notcam', 3.8, 7.1, 'no solo la cámara'],
+  ['pickup', 7.1, 8.4, 'levantas el celular'],
+  ['flood', 8.4, 13.0, 'luz infrarroja invisible'],
+  ['irsee', 13.0, 15.6, 'los sensores sí la ven'],
+  ['project', 15.6, 20.6, 'miles de puntos'],
+  ['interesting', 20.6, 23.0, 'aquí se pone interesante'],
+  ['bend', 23.0, 30.9, 'nariz, ojos, mejillas, mandíbula'],
+  ['distort', 30.9, 33.6, 'cómo se deformaron'],
+  ['depth', 33.6, 41.1, 'mapa de profundidad: forma 3D'],
+  ['photo', 41.1, 47.7, 'una foto no basta'],
+  ['mesh', 47.7, 53.4, 'compara con lo guardado'],
+  ['match', 53.4, 57.5, 'coincide: se desbloquea'],
+  ['fraction', 57.5, 60.5, 'una fracción de segundo'],
+  ['dark', 60.5, 66.5, 'no te ve como tus ojos'],
+  ['ir2', 66.5, 69.1, 'luz invisible'],
+  ['measure', 69.1, 72.3, 'cómo se dobla la luz'],
+  ['rebuild', 72.3, 76.5, 'reconstruye tu cara']
+];
+const SHOTS = SHOTS_R.map(([k, a, b, title]) => [k, 0, esT(a), esT(b), title]);
+const CUTS_R = [];   // no hard cuts: every boundary is a dissolve (shots.js)
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'voice-led explainer (scroll3d remake of reference 5, Face ID)',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: CUTS_R.map(esT),
+  morphs: SHOTS_R.slice(1).map((s) => esT(s[1])),
+  cues: { hit: esT(56.4) },
+  acts: [
+    { name: '1 A oscuras',    role: 'build',   t0: 0,          t1: esT(15.6) },
+    { name: '2 Los puntos',   role: 'journey', t0: esT(15.6),  t1: esT(33.6) },
+    { name: '3 Forma 3D',     role: 'peak',    t0: esT(33.6),  t1: esT(56.3) },
+    { name: '4 Desbloquea',   role: 'gift',    t0: esT(56.3),  t1: esT(60.5) },
+    { name: '5 Luz invisible',role: 'end',     t0: esT(60.5),  t1: DURATION },
+  ],
+  board: [
+    { t: esT(2.28), title: 'te reconoce a oscuras', sound: '', next: '' },
+    { t: esT(5.78), title: 'no solo la cámara', sound: '', next: '' },
+    { t: esT(7.88), title: 'levantas el celular', sound: '', next: '' },
+    { t: esT(11.16), title: 'luz infrarroja invisible', sound: '', next: '' },
+    { t: esT(14.56), title: 'los sensores sí la ven', sound: '', next: '' },
+    { t: esT(18.6), title: 'miles de puntos', sound: '', next: '' },
+    { t: esT(22.04), title: 'aquí se pone interesante', sound: '', next: '' },
+    { t: esT(27.74), title: 'nariz, ojos, mejillas, mandíbula', sound: '', next: '' },
+    { t: esT(32.52), title: 'cómo se deformaron', sound: '', next: '' },
+    { t: esT(38.1), title: 'mapa de profundidad: forma 3D', sound: '', next: '' },
+    { t: esT(45.06), title: 'una foto no basta', sound: '', next: '' },
+    { t: esT(51.12), title: 'compara con lo guardado', sound: '', next: '' },
+    { t: esT(55.86), title: 'coincide: se desbloquea', sound: '', next: '' },
+    { t: esT(59.3), title: 'una fracción de segundo', sound: '', next: '' },
+    { t: esT(64.1), title: 'no te ve como tus ojos', sound: '', next: '' },
+    { t: esT(68.06), title: 'luz invisible', sound: '', next: '' },
+    { t: esT(71.02), title: 'cómo se dobla la luz', sound: '', next: '' },
+    { t: esT(74.82), title: 'reconstruye tu cara', sound: '', next: '' }
+  ],
+  narration: VOICE.lines.map((l) => ({ id: l.id, t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;

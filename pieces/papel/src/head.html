@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Doblar el papel</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0d14; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  ¿QUÉ PASARÍA SI DOBLARAS UNA HOJA DE PAPEL POR LA MITAD 103 VECES? — 9:16, 70 s, 24 fps.
+//  A studio at the top of a tower over Mexico City at dusk. A sheet 0.1 mm thick on the desk, folded in half again and
+//  again: every fold doubles it. 14 folds: as tall as you. It breaks through the ceiling, passes the Torre Latinoamericana,
+//  the Popocatépetl, the airliners; reaches space, the Moon, the Sun, the nearest star; wider than the Milky Way, past
+//  Andromeda; at 103 folds, taller than the observable universe. In real life, the record is 12.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 70.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 70, () => sceneMain()]];
+// [key, t0, t1, title] — owners: studio.js (fold, double, tall, ceiling, record), ascent.js (city, clouds, space, earth),
+// cosmos.js (moon, sun, star, galaxy, andromeda, universe), main.js (silence, card); column.js = the shared paper column
+const SHOTS = [
+  ['fold',      0,    4.0,  'la hoja se dobla sobre el escritorio; título'],
+  ['double',    4.0,  10.0, 'cada pliegue duplica el grosor'],
+  ['tall',      10.0, 14.0, '14 pliegues: tan alta como tú'],
+  ['ceiling',   14.0, 19.0, 'atraviesa el techo; salimos por la ventana'],
+  ['city',      19.0, 25.0, 'sobre la ciudad: la Torre Latino, el Popocatépetl'],
+  ['clouds',    25.0, 29.0, 'las nubes, un avión, el Everest'],
+  ['space',     29.0, 33.0, 'llega al espacio: la EEI'],
+  ['earth',     33.0, 38.0, 'la Tierra se aleja'],
+  ['moon',      38.0, 44.0, 'pasa la Luna'],
+  ['sun',       44.0, 48.0, 'pasa el Sol; Neptuno'],
+  ['star',      48.0, 53.0, 'la estrella más cercana'],
+  ['galaxy',    53.0, 57.0, 'más ancha que la Vía Láctea'],
+  ['andromeda', 57.0, 61.5, 'Andrómeda; la red cósmica'],
+  ['silence',   61.5, 62.0, 'silencio'],
+  ['universe',  62.0, 66.0, '103: más alta que el universo observable'],
+  ['record',    66.0, 68.0, 'el récord real: 12 pliegues'],
+  ['card',      68.0, 70.0, 'tarjeta'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, t0, t1, title], i) => ({ id: i + 1, key, era: 0, t0, t1, title })),
+  cuts: SHOTS.slice(1).map((s) => s[1]), morphs: [],
+  cues: { tall: 10.0, ceiling: 14.0, space: 29.0, moon: 38.0, universe: 62.0, card: 68.0 },
+  acts: [
+    { name: '1 La hoja', role: 'build', t0: 0, t1: 10 },
+    { name: '2 Tan alta como tú', role: 'turn', t0: 10, t1: 19 },
+    { name: '3 Hacia el cielo', role: 'journey', t0: 19, t1: 38 },
+    { name: '4 El cosmos', role: 'peak', t0: 38, t1: 61.5 },
+    { name: '5 Silencio', role: 'silence', t0: 61.5, t1: 62 },
+    { name: '6 El universo', role: 'gift', t0: 62, t1: 66 },
+    { name: '7 El récord', role: 'goodbye', t0: 66, t1: 70 },
+  ],
+  board: [[1.5, 'título, el primer pliegue'], [5.5, 'cada pliegue duplica'], [8.5, 'una columna'], [12.0, 'tan alta como tú'], [16.5, 'atraviesa el techo'], [18.5, 'la Torre Latino'], [22.0, 'la ciudad'], [24.0, 'el Popocatépetl'], [27.0, 'los aviones'], [30.5, 'el espacio'], [35.5, 'la Tierra'], [41.0, 'la Luna'], [46.0, 'el Sol'], [50.5, 'la estrella más cercana'], [55.0, 'la Vía Láctea'], [59.0, 'Andrómeda'], [64.0, 'el universo observable'], [67.0, 'el récord'], [69.5, 'tarjeta']].map(([t, title]) => ({ t, title, sound: '', next: '' })),
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

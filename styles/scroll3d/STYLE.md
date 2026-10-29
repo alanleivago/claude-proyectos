@@ -23,6 +23,8 @@ A voice-led explainer in a simple clay-like 3D world on a near-black warm backgr
 - Small grey notes for honesty ("esquemático: …", the arithmetic under a number).
 
 ## Pitfalls met
+- The documentary track lasts 133.5 s (fades out at ~128 s): a piece longer than ~2:05 lost all audio and the `-shortest` remux cut the video (pieces/maps, 2026-10-26). Loop it in `sound/layer.py` (4–126 s, then 2 s crossfades into 29 s; see pieces/maps) and check the final video and audio durations match the piece.
+- Light worlds: white labels need a dark box behind them (pieces/maps `tag`/`chip`).
 - Big outdoor worlds (a track hundreds of units long): the road flickered in and out on wide shots (coplanar ground/road/pad + depth precision) → `logarithmicDepthBuffer: true`, near plane 0.3, planes lifted apart (0.04–0.06) with polygonOffset.
 - A crowd seen in a shot should react: instanced people jump on their own phase (`cheer(u)` in pieces/roadster/src/world.js) when something big happens.
 - r149 `Color.getHexString(SRGBColorSpace)` returns linear hex → mix hex colours by hand for canvas textures.

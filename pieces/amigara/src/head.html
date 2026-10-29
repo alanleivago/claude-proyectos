@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Amigara Fault</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; image-rendering: pixelated; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  THE ENIGMA OF AMIGARA FAULT — 9:16, 24fps, style "onebit" + Flow layers (src/scenes.js: flowShot quantizes them to the 1-bit ramp).
+//  F5 fixed-hero journey: the heroine stays in the elevator, the world outside the doors changes. Voice-clocked.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'sans-serif';
+const CX = 540;
+// ---- the voice is the clock: VL(id) = a line { t0, t1, words }, VW(id, word, n) = when its n-th `word` starts
+const VL = (id) => VOICE.lines.find((l) => l.id === id);
+const VW = (id, w, n = 1) => { let k = 0; for (const x of VL(id).words) if (x.w.toLowerCase().replace(/[^a-z']/g, '') === w && ++k === n) return x.t0; return VL(id).t0; };
+const AT = (id) => VL(id).t0 - 0.15;                                  // a shot starts just before its line
+const REVEAL = VL('anymore').t1 + 0.95;                               // the payoff lands in the pause after the last line
+const CARD = REVEAL + 2.6;
+const LOGO = CARD + 2.9;                                              // the Madfable outro
+const DURATION = Math.round((LOGO + 3.6) * FPS) / FPS;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+
+// [t0, scene]
+const SHOT_LIST = [
+  [0.0, 'fault'],                    // 1  the fault (hook)
+  [AT('holes'), 'crowd'],            // 2  hundreds of holes, the crowd
+  [AT('found'), 'man'],              // 3-4 the man and his hole: "this hole was made for me"
+  [AT('inside'), 'manFit'],          // 4b he steps inside: it fits him exactly
+  [AT('light'), 'empty'],            // 5  the empty hole, a flashlight that can't reach the end
+  [AT('yoshida'), 'yoshida'],        // 6  Yoshida stares at hers
+  [AT('pulled'), 'path'],            // 7  Owaki pulls her away; on the path down...
+  [VW('pulled', 'saw') - 0.1, 'hisHole'],  // 7b ...his shape
+  [AT('shape'), 'owaki'],            // 8  Owaki: calling him
+  [VL('shape').t1 + 0.35, 'enter'],  // 8b into the black
+  [AT('months'), 'tunnel'],          // 9  months later, the other side
+  [AT('anymore'), 'stretch'],        // 10 the stretched holes
+  [REVEAL, 'reveal'],                // 11 what crawls out
+  [CARD, 'card'],                    // 12 the end card
+  [LOGO, 'logo'],                    // 13 the channel logo
+];
+const SCENE = { fault: () => sceneFault(), crowd: () => sceneCrowd(), man: () => sceneMan(), manFit: () => sceneManFit(), empty: () => sceneEmpty(), yoshida: () => sceneYoshida(), path: () => scenePath(), hisHole: () => sceneHisHole(), owaki: () => sceneOwaki(), enter: () => sceneEnter(), tunnel: () => sceneTunnel(), stretch: () => sceneStretch(), reveal: () => sceneReveal(), card: () => sceneCard(), logo: () => sceneLogo() };
+const ERA_LIST = SHOT_LIST.map(([t0, sc], i) => [t0, i + 1 < SHOT_LIST.length ? SHOT_LIST[i + 1][0] : DURATION, SCENE[sc]]);
+const CUE = { sting: REVEAL, silence: VL('anymore').t1 + 0.1 };
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'held shots, voice-clocked',
+  shots: SHOT_LIST.map(([t0, sc], i) => ({ id: i + 1, key: sc, era: i, t0, t1: ERA_LIST[i][1], title: sc })),
+  cuts: SHOT_LIST.slice(1).map(([t0]) => t0),
+  morphs: [],
+  cues: CUE,
+  acts: [
+    { name: '1 The fault', role: 'build', t0: 0, t1: AT('found') },
+    { name: '2 Made for me', role: 'journey', t0: AT('found'), t1: AT('yoshida') },
+    { name: '3 Calling him', role: 'journey', t0: AT('yoshida'), t1: AT('months') },
+    { name: '4 The other side', role: 'silence', t0: AT('months'), t1: REVEAL },
+    { name: '5 Payoff', role: 'gift', t0: REVEAL, t1: DURATION },
+  ],
+  board: [
+    { t: VW('open', 'amigara'), title: 'the fault', sound: 'wind, deep rumble', next: 'cut' },
+    { t: VW('holes', 'people'), title: 'hundreds of holes', sound: 'crowd murmur', next: 'cut' },
+    { t: VW('found', 'exactly'), title: 'one shaped like him', sound: 'murmur thins', next: 'expression swaps' },
+    { t: VW('made', 'made'), title: '"made for me"', sound: 'his voice, breath', next: 'cut' },
+    { t: VW('inside', 'inside') + 0.3, title: 'it fits him', sound: 'rock scrape', next: 'cut' },
+    { t: VW('light', 'end'), title: 'no light reaches the end', sound: 'near silence, a drip', next: 'cut' },
+    { t: VW('yoshida', 'staring'), title: 'Yoshida stares', sound: 'low drone', next: 'cut' },
+    { t: VW('pulled', 'path'), title: 'on the path down', sound: 'footsteps on gravel', next: 'cut on "saw"' },
+    { t: VW('pulled', 'saw') + 0.3, title: 'his shape', sound: 'a low swell', next: 'cut' },
+    { t: VW('shape', 'calling') + 0.3, title: 'calling him', sound: 'breath, drone', next: 'push into the black' },
+    { t: VL('shape').t1 + 0.9, title: 'into the black', sound: 'rock closes, silence', next: 'cut' },
+    { t: VW('months', 'side'), title: 'the other side', sound: 'work lamps buzz', next: 'cut' },
+    { t: REVEAL - 0.4, title: 'not shaped like people', sound: 'silence before the hit', next: 'cut on the hit' },
+    { t: REVEAL + 1.0, title: 'what crawls out', sound: 'loudest hit, scrape', next: 'cut to black' },
+    { t: CARD + 2.4, title: 'end card', sound: 'ring-out', next: 'logo' },
+    { t: LOGO + 3.0, title: 'madfable', sound: 'low hit', next: 'end' },
+  ],
+  narration: VOICE.lines.map((l) => ({ id: l.id, t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;
