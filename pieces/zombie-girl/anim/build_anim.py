@@ -1192,6 +1192,65 @@ def A_fall_back():
     face("fall_back", [[1, "surprised", "gasp"], [4, "shocked", "bigShock"], [16, "dizzy", "frown"], [20, "sad", "frown"]])
 
 
+# ================================================================ zombie-02-window (Ava): martillo, pose de pelicula, taladro, golpecito
+def A_hammer():
+    """clavar tablas en una pared delante (loop 36 f = 3 martillazos): mano L plana sujetando la tabla (~0,5 m delante, 1,3 m),
+    puno R con el martillo: arriba con la muneca atras (f1) -> golpe con la mano vertical a la altura de la tabla (f8)."""
+    N = 36
+    hold = {"gw": M(0.10, 0.46, 1.30), "hw": (0.05, 0.45, 1), "pw": (1, -0.2, -0.8), "ht": 0}
+    up = {"gw": M(0.22, 0.02, 1.58), "hw": (0.0, -0.75, 0.65), "pw": (0.9, -0.3, -0.6)}
+    hit = {"gw": M(0.18, 0.24, 1.26), "hw": (0.0, 0.2, 1), "pw": (0.9, -0.4, -0.7)}
+    body = lambda p: dict(pel={"loc": (-0.1, 0.25, -0.3), "rot": (4 + p, 2, -2)}, chest=(6 + p, -6, 2), head=(6, -4, 0),
+                          footR={"loc": (0.05, -0.6, 0), "rot": (0, 0, 12)})
+    keys = []
+    for k in range(3):
+        f0 = 1 + 12 * k
+        keys += [(f0, P(armL=hold, armR=up, **body(0))), (f0 + 5, P(armL=hold, armR=up, **body(-1))),
+                 (f0 + 8, P(armL=hold, armR=hit, **body(3))), (f0 + 10, P(armL=hold, armR=hit, **body(2)))]
+    keys.append((N + 1, keys[0][1]))
+    build("hammer", [(f, C(p)) for f, p in keys], N, loop=True, lag={"Head": 1})
+    face("hammer", [[1, "angry", "neutral"], [8, "angry", "shout"], [11, "angry", "neutral"], [20, "angry", "shout"],
+                    [23, "angry", "neutral"], [32, "angry", "shout"], [35, "angry", "neutral"]])
+
+
+def A_hammer_high():
+    """pose de pelicula: desde el martillazo, el puno R con el martillo sube recto por encima de la cabeza (f8) y se queda;
+    mano L sigue plana en la tabla (one-shot 30 f)."""
+    N = 30
+    hold = {"gw": M(0.10, 0.46, 1.30), "hw": (0.05, 0.45, 1), "pw": (1, -0.2, -0.8), "ht": 0}
+    hit = {"gw": M(0.18, 0.24, 1.26), "hw": (0.0, 0.2, 1), "pw": (0.9, -0.4, -0.7)}
+    high = {"gw": M(0.16, 0.10, 2.02), "hw": (0.0, -0.2, 1), "pw": (1, 0.1, -0.3)}
+    a = P(pel={"loc": (-0.1, 0.25, -0.3), "rot": (6, 2, -2)}, chest=(8, -6, 2), head=(6, -4, 0), armL=hold, armR=hit,
+          footR={"loc": (0.05, -0.6, 0), "rot": (0, 0, 12)})
+    b = P(pel={"loc": (-0.12, 0.15, -0.22), "rot": (0, 3, -3)}, chest=(-6, -8, 4), head=(-8, -10, -2), armL=hold, armR=high,
+          footR={"loc": (0.05, -0.6, 0), "rot": (0, 0, 12)})
+    oneshot("hammer_high", C(b), N=N, start=C(a), t_antic=3, t_hit=8, t_settle=13, over=1.06, lag={"Head": 1})
+    face("hammer_high", [[1, "angry", "neutral"], [6, "happy", "smileOpen"], [22, "happy", "smile"]])
+
+
+def A_drill():
+    """atornillar con un taladro (loop 30 f): puno R delante a la altura del pecho (~0,3 m delante), mano recta adelante
+    (la empunadura vertical en el puno, el taladro apunta a la pared); mano L plana en la lamina; pequeno retroceso f8/f22."""
+    N = 30
+    palm = {"gw": M(0.28, 0.50, 1.36), "hw": (0.05, 0.45, 1), "pw": (1, -0.2, -0.8), "ht": 0}
+    dr = lambda f: {"gw": M(0.10, f, 1.22), "hw": (0.0, 1, 0.0), "pw": (0.9, -0.3, -0.7)}
+    body = lambda p: P(pel={"loc": (-0.05, 0.3 + 0.08 * p, -0.32), "rot": (5 + 2 * p, 0, 0)}, chest=(6 + 2 * p, -2, 0), head=(4, 0, 0),
+                       armL=palm, armR=dr(0.30 + 0.025 * p), footR={"loc": (0.05, -0.6, 0), "rot": (0, 0, 10)})
+    build("drill", [(1, C(body(1))), (8, C(body(0))), (12, C(body(1))), (22, C(body(0.2))), (26, C(body(1))), (31, C(body(1)))], N,
+          loop=True, lag={"Head": 1})
+    face("drill", [[1, "angry", "neutral"], [6, "angry", "frown"], [14, "angry", "neutral"]])
+
+
+def A_knock():
+    """golpecito de comprobacion: dos toques con el puno R delante a la altura del pecho (~0,45 m) y se retira (one-shot 30 f)"""
+    N = 30
+    k = lambda f: {"gw": M(0.08, f, 1.15), "hw": (0.0, 0.35, 1), "pw": (0.9, -0.3, -0.8)}
+    body = dict(pel={"loc": (-0.1, 0.2, -0.2), "rot": (4, 2, -3)}, chest=(6, -3, 3), head=(4, 0, 0), armL=dict(HIP))
+    seq("knock", N, [(1, BASE), (6, P(armR=k(0.32), **body)), (9, P(armR=k(0.42), **body)), (12, P(armR=k(0.33), **body)),
+                     (15, P(armR=k(0.42), **body)), (19, P(armR=k(0.33), **body)), (30, P(armR=k(0.25), **body))], lag={"Head": 1})
+    face("knock", [[1, "open", "neutral"], [9, "open", "smile"], [16, "happy", "smile"]])
+
+
 PINCH = (0.2, 0.85, 1.2)    # se corrige con la medida de la nariz (measure: NOSE)
 
 
@@ -1303,7 +1362,7 @@ if __name__ == "__main__":
           "throw_out_window": (1, 7, 18, 21, 24, 45), "bend_pipe": (1, 10, 32, 45),
           "detector_walk": (1, 8, 16, 23), "detector_stop": (1, 12, 24, 40), "melt_beam": (1, 15, 30, 45), "catch_object": (1, 14, 16, 30, 36),
           "push_heavy": (1, 11, 21), "push_door": (1, 8, 13, 22, 40), "lift_bar": (1, 15, 30, 45), "peek": (1, 11, 21),
-          "turn_key": (1, 10, 14, 20, 28, 36)}
+          "turn_key": (1, 10, 14, 20, 28, 36), "hammer": (1, 8), "hammer_high": (13,), "drill": (1, 8), "knock": (9, 15)}
     for name, fr in MK.items():
         if name in LIB: measure(name, fr)
     if "--dry" in argv: sys.exit(0)   # digger-02: medir sin exportar (no pisa glb/json)

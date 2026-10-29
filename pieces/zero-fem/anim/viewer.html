@@ -38,8 +38,8 @@ scene.add(char);
 const faces = await (await fetch('face_tracks.json')).json();
 const CELLS = 16;
 const FACE = {
-  face_eyes: ['open', 'half', 'blink', 'happy', 'surprised', 'angry', 'sad', 'wink', 'hearts', 'shocked', 'dizzy', 'relaxed'],
-  face_mouth: ['neutral', 'smile', 'smileOpen', 'talkA', 'talkO', 'surprised', 'frown', 'shout', 'blep', 'cat', 'gasp', 'bigShock'],
+  face_eyes: ['open', 'half', 'blink', 'happy', 'surprised', 'angry', 'sad', 'wink', 'hearts', 'shocked', 'dizzy', 'relaxed', 'disgust', 'smirk', 'soft', 'sparkle'],
+  face_mouth: ['neutral', 'smile', 'smileOpen', 'talkA', 'talkO', 'surprised', 'frown', 'shout', 'blep', 'cat', 'gasp', 'bigShock', 'disgust', 'smirk', 'blushSmile', 'blushGasp'],
 };
 function setFace(eyes, mouth) {
   char.traverse((o) => {

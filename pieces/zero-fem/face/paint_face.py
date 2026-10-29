@@ -16,9 +16,11 @@ SRC = os.path.join(os.path.dirname(HERE), "tex", "ZeroVolnuttTexture.png")
 CELL_W, CELL_H, N = 64, 64, 16
 EYES_RECT = MOUTH_RECT = (0, 112)     # top-left of a cell inside the 192px texture
 EYES = ["open", "half", "blink", "happy", "surprised", "angry", "sad", "wink",
-        "hearts", "shocked", "dizzy", "relaxed", "disgust"]       # cell 12 disgust (digger-01 v3); 13-15 free (copy of open)
+        "hearts", "shocked", "dizzy", "relaxed", "disgust",       # cell 12 disgust (digger-01 v3)
+        "smirk", "soft", "sparkle"]                               # cells 13-15 (2026-10-28): feminine expressions
 MOUTHS = ["neutral", "smile", "smileOpen", "talkA", "talkO", "surprised", "frown", "shout",
-          "blep", "cat", "gasp", "bigShock", "disgust"]           # cell 12 disgust (digger-01 v3); 13-15 free (copy of neutral)
+          "blep", "cat", "gasp", "bigShock", "disgust",           # cell 12 disgust (digger-01 v3)
+          "smirk", "blushSmile", "blushGasp"]                     # cells 13-15 (2026-10-28): feminine expressions
 
 G, J = (243, 174, 126), (255, 212, 159)          # side skin, front (lit) skin
 K, L, Z, B = (38, 20, 26), (92, 44, 40), (128, 106, 80), (191, 117, 0)   # lash, lash2, outline, brow
@@ -35,6 +37,7 @@ PAL = {  # char -> (colour, alpha)
     "W": ((255, 255, 255), 1), "w": ((236, 246, 246), 1), "a": ((211, 227, 228), 1), "e": ((182, 212, 213), 1),
     "I": ((15, 48, 61), 1), "S": ((40, 67, 116), 1), "s": ((26, 56, 85), 1),
     "N": ((87, 172, 207), 1), "O": ((111, 213, 255), 1), "n": ((69, 141, 171), 1),
+    "U": ((240, 120, 140), 1), "u": ((240, 120, 140), .43), "v": ((240, 120, 140), .25),   # blush (2026-10-28)
 }
 
 
@@ -282,6 +285,27 @@ def eye_cell(name, base):
                     f.put(x, y, "P" if edge else ("h" if y >= 140 else "p"), side)
         for y, r in HEART.items():
             f.grid(y, [r])
+    elif name == "smirk":       # confident smirk: the visible eye (R, not under the bangs) half closed, flat low brow;
+        for y, r in HALF.items():                                   # the other eye open with the brow raised
+            f.grid(y, [r], sides="R")
+        pts(f, UNFLICK, 0, "R"); pts(f, FLICK, 2, "R")
+        f.clear(5, 119, 24, 126, sides="R")
+        f.grid(124, ["    BBBBBBbc            "], sides="R"); f.grid(125, ["          cbBBb         "], sides="R")
+        f.clear(5, 120, 22, 126, sides="L")
+        for y, r in BROWS_UP.items():
+            f.grid(y - 1, [r], sides="L")
+    elif name == "soft":        # gentle, softly lowered lid (3 px) with the same lash line; relaxed brows
+        f.clear(10, 125, 25, 129)
+        f.grid(128, ["      qkKKKKKKKKKKKKKkq  "]); f.grid(129, ["      KKKKKKKKKKKKKKKKK  "])
+        f.clear(5, 120, 22, 126)
+        for y, r in BROWS_UP.items():
+            f.grid(y + 1, [r])
+    elif name == "sparkle":     # sweet surprise: brows high, eyes wide with extra star highlights
+        f.clear(5, 119, 22, 126)
+        for y, r in BROWS_UP.items():
+            f.grid(y - 2, [r])
+        pts(f, [(15, 131, "W"), (16, 131, "W"), (15, 132, "W"), (16, 132, "W"), (17, 133, "w"),
+                (19, 139, "W"), (20, 140, "w"), (14, 141, "W"), (24, 129, "W"), (25, 128, "a"), (23, 128, "a"), (24, 127, "a")])
     return f.im
 
 
@@ -343,6 +367,14 @@ MOUTH = {
                   160: " L  LL      ",
                   161: "L           "},
 }
+MOUTH_SIDED = {   # 2026-10-28: asymmetric / blush mouths (sides -> rows)
+    "smirk": {"L": {157: "    Z       ", 158: "     zZ     ", 159: "      yZZz  ", 160: "         zZz", 161: "           Z"},
+              "R": {161: "        zZZZ"}},
+    "blushSmile": {"LR": {159: "      zZ    ", 160: "       yZZz ", 161: "          zZ"}},
+    "blushGasp": {"LR": {159: "          zZ", 160: "          LL", 161: "          LL", 162: "          zZ"}},
+}
+BLUSH = {146: "   vvvvvvvvvv  ", 147: "  vvvvuvvuvvuv ", 148: "  vvvuUvuUvuUv ", 149: "  vvuUvuUvuUvv ",   # soft pink patch +
+         150: "  vvUvvUvvUvvv ", 151: "   vvvvvvvvvv  "}                                                       # 3 diagonal strokes
 BLEP_TONGUE = {161: "       rRR  ",                    # tongue hanging out under the screen-right side
                162: "       RRDRR",
                163: "       RRDRR",
@@ -355,6 +387,14 @@ def mouth_cell(name, base):
     if name == "neutral" or name not in MOUTHS:
         return f.im
     f.clear(20, 157, 32, 168)
+    if name in MOUTH_SIDED:
+        for sides, rows in MOUTH_SIDED[name].items():
+            for y, r in rows.items():
+                f.grid(y, [r], x0=20, sides=sides)
+        if name.startswith("blush"):
+            for y, r in BLUSH.items():
+                f.grid(y, [r], x0=5)
+        return f.im
     for y, r in MOUTH[name].items():
         f.grid(y, [r], x0=20)
     if name == "disgust":

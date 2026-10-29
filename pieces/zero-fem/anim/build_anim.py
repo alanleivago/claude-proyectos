@@ -19,6 +19,8 @@ from bpy_extras import anim_utils
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ASSET = os.path.join(HERE, "..", "..", "..", "assets", "crashsune", "MegamanLegendsModel", "ZeroVolnutt.blend")
+OUTD = os.environ.get("ZF_OUT", HERE)   # v2 body: ZF_OUT=v2/anim (default: anim/, unchanged)
+V2 = bool(os.environ.get("ZF_V2"))       # v2 only: the extra feminine expression actions
 FPS = 30
 sc = bpy.context.scene
 sc.render.fps = FPS
@@ -1151,6 +1153,47 @@ def measure(name, frames):
         print(f"MEAS {name} f{f:02d} {' '.join(out)} headtop_z={top.z:+.2f} nose=({nose.x:+.2f},{nose.y:+.2f},{nose.z:+.2f}) "
               f"knees L({PB['Calf.L'].head.x:+.2f},{PB['Calf.L'].head.y:+.2f},{PB['Calf.L'].head.z:+.2f})")
 
+
+# ---------------------------------------------------------------- 2026-10-28: feminine expression poses (new face cells 13-15, v1 atlas)
+# eyes: smirk, soft, sparkle (cells 13-15) / mouths: smirk, blushSmile, blushGasp (cells 13-15), see face/paint_face.py
+def A_smirk_pose():
+    """confident smirk: hand on hip, weight on one leg, head tilted, one eye half closed (one-shot 40 f, holds)"""
+    tgt = P(pel={"loc": (-0.4, 0, -0.2), "rot": (0, 9, -10)}, chest=(-5, -8, 10), head=(-4, 12, -8), armL=dict(HIP))
+    ant = P(pel={"loc": (-0.15, 0, -0.3), "rot": (2, 3, -4)}, chest=(4, -3, 3), head=(4, 3, -2))
+    oneshot("smirk_pose", C(tgt), N=40, antic=C(ant), t_antic=5, t_hit=11, t_settle=18, over=1.1)
+    face("smirk_pose", [[1, "open", "neutral"], [8, "smirk", "smirk"]])
+
+def A_proud_pose():
+    """flirty / proud: both hands on hips, chin up, eyes closed, smirk (one-shot 40 f, holds)"""
+    tgt = P(pel={"loc": (-0.35, 0, -0.18), "rot": (-2, 8, -10)}, chest=(-9, -8, 12), head=(-14, 10, 6),
+            armL=dict(HIP), armR=dict(HIP), footL={"loc": (-0.25, 0.55, 0), "rot": (0, 0, 18)})
+    ant = P(pel={"loc": (-0.1, 0, -0.32), "rot": (3, 2, -3)}, chest=(5, -2, 2), head=(8, 2, 0))
+    oneshot("proud_pose", C(tgt), N=40, antic=C(ant), t_antic=5, t_hit=11, t_settle=18, over=1.1)
+    face("proud_pose", [[1, "open", "neutral"], [8, "relaxed", "smirk"], [30, "wink", "smirk"]])
+
+def A_flirty_wink():
+    """wink + blush: R fist beside the face (two-finger salute feel), head tilt (one-shot 40 f, holds)"""
+    up = {"gw": M(-0.3, 0.1, 1.22), "hw": (-0.3, 0.2, 1), "pw": (1, -0.2, -0.8)}   # fist beside the cheek, face clear
+    tgt = P(pel={"loc": (-0.3, 0, -0.2), "rot": (0, 7, -8)}, chest=(-4, -6, 8), head=(-3, 14, -6), armR=up, armL=dict(HIP))
+    seq("flirty_wink", 40, [(1, BASE), (6, P(head=(4, 4, -3), chest=(3, -3, 2))), (12, tgt), (18, P(pel={"loc": (-0.3, 0, -0.22), "rot": (0, 7, -8)}, chest=(-4, -6, 8), head=(-3, 16, -6), armR=up, armL=dict(HIP))), (40, tgt)],
+        lag={"Head": 2, "Forearm": 1, "Hand": 2})
+    face("flirty_wink", [[1, "open", "smile"], [10, "wink", "smirk"], [20, "wink", "blushSmile"]])
+
+def A_shy_smile():
+    """soft smile with blush: fists together low in front, shoulders in, head tilted (one-shot 45 f, holds)"""
+    hand = lambda o: {"gw": M(o, 0.22, 0.78), "hw": (-0.3, 0.5, -1), "pw": (1, 0.2, -0.6)}
+    tgt = P(pel={"loc": (0.1, 0, -0.25), "rot": (2, -4, 4)}, chest=(6, 3, -4), head=(8, -12, 4), armL=hand(0.03), armR=hand(0.03))
+    oneshot("shy_smile", C(tgt), N=45, antic=None, t_hit=12, t_settle=20, over=1.06)
+    face("shy_smile", [[1, "open", "neutral"], [8, "soft", "blushSmile"], [30, "happy", "blushSmile"], [36, "soft", "blushSmile"]])
+
+def A_sweet_surprise():
+    """sweet surprise: small hop back, fists up by the cheeks, eyes sparkling, blush (one-shot 36 f, holds)"""
+    cheek = lambda o: {"gw": M(o, 0.2, 1.12), "hw": (-0.2, 0.4, 1), "pw": (1, -0.3, -0.7)}   # fists under the cheeks
+    tgt = P(pel={"loc": (0, 0.15, -0.15), "rot": (-3, 0, 0)}, chest=(-5, 0, 0), head=(-6, 0, 0), armL=cheek(0.24), armR=cheek(0.24))
+    ant = P(pel={"loc": (0, 0, -0.45), "rot": (4, 0, 0)}, chest=(6, 0, 0), head=(4, 0, 0))
+    oneshot("sweet_surprise", C(tgt), N=36, antic=C(ant), t_antic=4, t_hit=9, t_settle=15, over=1.08)
+    face("sweet_surprise", [[1, "open", "neutral"], [6, "sparkle", "blushGasp"], [26, "sparkle", "blushSmile"]])
+
 # ================================================================ verificacion
 def sole_pts(side):
     fb = PB[f"Foot.{side}"]; ML = arm.data.bones[f"Foot.{side}"].matrix_local
@@ -1213,12 +1256,12 @@ def export():
     ad.action = None
     for pb in PB: pb.location, pb.rotation_quaternion, pb.scale = Vector(), Quaternion(), Vector((1, 1, 1))
     sc.frame_start, sc.frame_end = 1, max(v["frames"] + 1 for v in LIB.values())
-    bpy.ops.wm.save_as_mainfile(filepath=os.path.join(HERE, "zero_anim.blend"), copy=False)
+    bpy.ops.wm.save_as_mainfile(filepath=os.path.join(OUTD, "zero_anim.blend"), copy=False)
     for o in bpy.data.objects:
         if o.type in ("MESH", "ARMATURE"): o.hide_set(False)
         o.select_set(o.type in ("MESH", "ARMATURE"))
     bpy.context.view_layer.objects.active = arm
-    bpy.ops.export_scene.gltf(filepath=os.path.join(HERE, "zero_anim.glb"), use_selection=True, export_apply=True,
+    bpy.ops.export_scene.gltf(filepath=os.path.join(OUTD, "zero_anim.glb"), use_selection=True, export_apply=True,
         export_animations=True, export_animation_mode="NLA_TRACKS", export_force_sampling=True, export_frame_step=1,
         export_anim_slide_to_zero=True, export_optimize_animation_size=False, export_reset_pose_bones=True,
         export_yup=True)
@@ -1246,6 +1289,6 @@ if __name__ == "__main__":
         if name in LIB: measure(name, fr)
     if "--dry" in argv: sys.exit(0)   # digger-02: medir sin exportar (no pisa glb/json)
     export()
-    json.dump(FACE, open(os.path.join(HERE, "face_tracks.json"), "w"), indent=1)
-    json.dump(LIB, open(os.path.join(HERE, "actions.json"), "w"), indent=1)
+    json.dump(FACE, open(os.path.join(OUTD, "face_tracks.json"), "w"), indent=1)
+    json.dump(LIB, open(os.path.join(OUTD, "actions.json"), "w"), indent=1)
     print("DONE", list(LIB))

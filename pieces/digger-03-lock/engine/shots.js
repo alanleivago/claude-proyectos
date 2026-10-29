@@ -332,8 +332,8 @@ function holdIn(ch, prop, side, off = [0, 0.8, 0], rot = [0, 0, 0]) { const h = 
 // ---------- the character (zero_fem, from zero-test) ----------
 const CELLS = 16;
 const FACE = {
-  face_eyes: ['open', 'half', 'blink', 'happy', 'surprised', 'angry', 'sad', 'wink', 'hearts', 'shocked', 'dizzy', 'relaxed', 'disgust'],
-  face_mouth: ['neutral', 'smile', 'smileOpen', 'talkA', 'talkO', 'surprised', 'frown', 'shout', 'blep', 'cat', 'gasp', 'bigShock', 'disgust'],
+  face_eyes: ['open', 'half', 'blink', 'happy', 'surprised', 'angry', 'sad', 'wink', 'hearts', 'shocked', 'dizzy', 'relaxed', 'disgust', 'smirk', 'soft', 'sparkle'],   // 13-15: 2026-10-28
+  face_mouth: ['neutral', 'smile', 'smileOpen', 'talkA', 'talkO', 'surprised', 'frown', 'shout', 'blep', 'cat', 'gasp', 'bigShock', 'disgust', 'smirk', 'blushSmile', 'blushGasp'],
 };
 function setFace(root, { eyes, mouth } = {}) {
   root.traverse((o) => {
