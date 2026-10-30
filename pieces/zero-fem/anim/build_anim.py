@@ -265,7 +265,7 @@ def build(name, keys, N, loop=False, lag=None, interp="AUTO_CLAMPED", per_frame=
     act.use_frame_range = True
     act.frame_start, act.frame_end = 1, N + 1 if loop else N
     act.use_cyclic = loop
-    hair_spring(act, N, loop)
+    hair_spring(act, N, loop, grav=HAIR_GRAV.get(name, 0.7))   # ep04: lying -> the ponytail follows the head (lies on the pillow)
     LIB[name] = dict(frames=N, loop=loop, fps=FPS)
     return act
 
@@ -274,8 +274,15 @@ def build(name, keys, N, loop=False, lag=None, interp="AUTO_CLAMPED", per_frame=
 BACK_MIN = 0.3        # componente minima hacia atras (+Y del pecho) de la coleta, que ahora cuelga (feminize.py)
 
 
+HAIR_GRAV = {}
+_LIE_H, _SIT_H = tuple(map(float, os.environ.get('ZF_LIEH', '0.32,-0.9,0.02').split(','))), (0.0, 0.88, -0.42)
+def _wake_h(f): k = min(1, max(0, (f - 6) / 11)); return tuple(a + (b - a) * k for a, b in zip(_LIE_H, _SIT_H))
+HAIR_DIR = {'sleep_lie': lambda f: _LIE_H, 'slap_snooze': lambda f: _LIE_H, 'wake_sit_up': _wake_h}
+
+
 def hair_spring(act, N, loop, k_hz=2.2, zeta=0.32, gain=1.0, clamp=45, grav=0.7):
     arm.animation_data.action = act
+    if HAIR_DIR.get(act.name): clamp = 180   # ep04: the forced pillow direction must not be clamped to the head-follow cone
     hb = "Hair"; H0, T0 = HEAD0[hb], TAIL0[hb]; L = (T0 - H0).length
     rest_dir_head = REST["Head"].inverted() @ (T0 - H0).normalized()
     frames = list(range(1, N + 2)) if loop else list(range(1, N + 1))
@@ -287,6 +294,8 @@ def hair_spring(act, N, loop, k_hz=2.2, zeta=0.32, gain=1.0, clamp=45, grav=0.7)
         root = arm.pose.bones[hb].head.copy()
         rw = REST["Head"] @ rest_dir_head; fd = Dh @ rw
         g = unit(Vector((fd.x, fd.y, fd.z * (1 - grav) + rw.z * grav)))   # la gravedad la mantiene en su caida de reposo
+        hd = HAIR_DIR.get(act.name)
+        if hd: g = unit(Vector(hd(f)))   # ep04: lying/sitting in bed -> the ponytail lies back on the pillow / mattress
         Dc = (arm.pose.bones["Chest"].matrix.to_3x3() @ REST["Chest"].inverted()).to_quaternion()
         seq.append((Dh, root, root + g * L, root + fd * L, Dc))
     w = 2 * math.pi * k_hz; c = 2 * zeta * w; dt = 1 / FPS / 4
@@ -312,7 +321,7 @@ def hair_spring(act, N, loop, k_hz=2.2, zeta=0.32, gain=1.0, clamp=45, grav=0.7)
         Dh, root, tgt, fol, Dc = seq[i]
         want = unit((out[i] - tgt) * gain + (tgt - root))
         wc = Dc.inverted() @ want                             # coleta colgando: nunca hacia dentro de la espalda
-        if wc.y < BACK_MIN:
+        if wc.y < BACK_MIN and not HAIR_DIR.get(act.name):
             wc.y = BACK_MIN; want = Dc @ unit(wc)
         cur = unit(fol - root)
         dq = rotdiff(cur, want); ax, ang = dq.to_axis_angle()
@@ -1193,6 +1202,125 @@ def A_sweet_surprise():
     ant = P(pel={"loc": (0, 0, -0.45), "rot": (4, 0, 0)}, chest=(6, 0, 0), head=(4, 0, 0))
     oneshot("sweet_surprise", C(tgt), N=36, antic=C(ant), t_antic=4, t_hit=9, t_settle=15, over=1.08)
     face("sweet_surprise", [[1, "open", "neutral"], [6, "sparkle", "blushGasp"], [26, "sparkle", "blushSmile"]])
+
+# ---------------------------------------------------------------- 2026-10-29: digger-04 (alarm clock) actions
+# lying is authored on the rig (pelvis pitched back ~88 deg, legs straight forward, heels on the "floor" = the mattress),
+# so three.js just puts the root ON the mattress top: no rigid rotation, nothing sinks into the bed.
+LIE_FEET = dict(footL={"loc": (-0.05, 7.6, 0.95), "rot": (-72, 0, 4)}, footR={"loc": (-0.05, 7.4, 0.95), "rot": (-70, 0, 4)},
+                poleL=(0, 0, 6), poleR=(0, 0, 6))
+BELLY = lambda o, f: {"gw": M(o, f, 0.25), "hw": (-0.6, -0.3, 0.6), "pw": (1, 0, 0.6)}     # hands resting on the belly
+
+
+def LIE(k=0.0, head=(14, 0, 0), **kw):
+    """lying on the back; k 0..1 = breath (chest rises)"""
+    d = dict(pel={"loc": (0.0, 0.8, -5.0), "rot": (-88, 0, 0)}, chest=(-2 - 2 * k, 0, 0), neck=(4, 0, 0), head=head,
+             armL=BELLY(0.06, -0.18), armR=BELLY(0.08, -0.32))
+    d.update(LIE_FEET); d.update(kw)
+    return P(**d)
+
+
+def A_sleep_lie():
+    """asleep on her back in bed (loop 90 f): slow breathing, hands on the belly, head a little to her right"""
+    N = 90
+    build("sleep_lie", [(1, C(LIE(0, head=(14, 0, -10)))), (46, C(LIE(1, head=(15, 0, -11)))), (91, C(LIE(0, head=(14, 0, -10))))], N,
+          loop=True, lag={})
+    face("sleep_lie", [[1, "blink", "cat"]])
+
+
+HANDS_BED = lambda o: {"gw": M(o * 0.5, 0.22, 0.32), "hw": (-0.3, 0.6, -0.4), "pw": (1, 0.2, -0.6)}   # palms on the mattress behind the hips
+
+
+def SIT_BED(**kw):
+    d = dict(pel={"loc": (0.0, 0.8, -5.95), "rot": (-8, 0, 0)}, chest=(6, 0, 0), neck=(2, 0, 0), head=(6, 0, 0),
+             armL=HANDS_BED(0.24), armR=HANDS_BED(0.24))
+    d.update(LIE_FEET); d.update(kw)
+    return P(**d)
+
+
+def A_wake_sit_up():
+    """jolt awake: from lying, sits bolt upright in bed (palms on the mattress), small overshoot, then squints (one-shot 36 f)"""
+    lie = C(LIE(0)); sit = C(SIT_BED())
+    mid = C(P(**dict(LIE_FEET, pel={"loc": (0.0, 0.8, -5.2), "rot": (-50, 0, 0)}, chest=(4, 0, 0), head=(-6, 0, 0),
+                     armL=HANDS_BED(0.3), armR=HANDS_BED(0.3))))
+    build("wake_sit_up", [(1, lie), (4, lie), (8, mid), (12, raw_mix(mid, sit, 1.12)), (17, sit), (36, sit)], 36,
+          lag={"Head": 2, "Forearm": 1, "Hand": 1})
+    face("wake_sit_up", [[1, "blink", "cat"], [5, "surprised", "gasp"], [20, "half", "frown"]])
+
+
+def A_slap_snooze():
+    """still lying, the R arm swings up and out and slaps down on the bedside clock (out to her right, ~0.5 m), then flops
+    back asleep (one-shot 45 f)"""
+    up = {"gw": M(0.42, -0.25, 0.75), "hw": (0.6, 0, -1), "pw": (0.2, 0, 1)}
+    slap = {"gw": M(0.58, -0.3, 0.28), "hw": (0.8, 0, -1), "pw": (0.2, 0, 1)}
+    lie = C(LIE(0)); a = C(LIE(0, armR=up, head=(14, 0, -18))); b = C(LIE(0, armR=slap, head=(14, 0, -20)))
+    build("slap_snooze", [(1, lie), (6, a), (12, raw_mix(a, b, 1.1)), (14, b), (26, b), (34, C(LIE(0.5, head=(14, 0, -10)))), (45, lie)], 45,
+          lag={"Head": 1, "Forearm": 1, "Hand": 1})
+    face("slap_snooze", [[1, "angry", "frown"], [13, "angry", "shout"], [24, "blink", "cat"]])
+
+
+def A_push_nail():
+    """at a table: L hand steadies the candle (~0.33 m ahead, ~1.0 m up), the R fist pushes a nail into it twice (one-shot 40 f)"""
+    N = 40
+    nail = lambda f: {"gw": M(-0.02, f, 1.03), "hw": (-0.2, 1, 0.1), "pw": (1, -0.1, -0.8)}
+    hold = {"gw": M(-0.06, 0.34, 1.0), "hw": (0.3, 1, 0.3), "pw": (1, -0.2, -0.8)}
+    body = dict(pel={"loc": (0.0, 0.25, -0.3), "rot": (5, 0, 0)}, chest=(8, 0, 0), neck=(2, 0, 0), head=(12, 0, 0), armL=hold)
+    seq("push_nail", N, [(1, BASE), (6, P(armR=nail(0.22), armL=hold, head=(8, 0, 0))), (12, P(armR=nail(0.32), **body)),
+                         (16, P(armR=nail(0.39), **body)), (20, P(armR=nail(0.33), **body)), (24, P(armR=nail(0.4), **body)),
+                         (30, P(armR=nail(0.36), **body)), (40, P(armR=nail(0.36), **body))],
+        lag={"Head": 1, "Forearm": 0, "Hand": 0})
+    face("push_nail", [[1, "open", "neutral"], [12, "half", "frown"], [26, "happy", "smileOpen"]])
+
+
+def A_run():
+    """run cycle (18 f loop): the walk tables with a forward lean, a deeper bounce and big pumping arms (bent elbows)"""
+    N = 18
+    PZ = [-0.3, -0.75, -0.4, -0.05] * 2
+    PX = [0.0, 0.1, 0.18, 0.1, 0.0, -0.1, -0.18, -0.1]
+    YAW = [-10, -6, 0, 6, 10, 6, 0, -6]
+    ARM = [36, 40, 10, -26, -36, -40, -10, 26]
+    raws = []
+    for f in range(N + 1):
+        u = f / N
+        g = lambda tab: periodic(tab, u)
+        pose = P(pel={"loc": (g(PX), 0.2, g(PZ)), "rot": (14, 0, g(YAW))}, chest=(10, 0, -g(YAW) * 0.8), neck=(-4, 0, 0),
+                 head=(-8, 0, -g(YAW) * 0.2), footL=walk_foot(u), footR=walk_foot(u + 0.5))
+        for side, sg in (("L", 1), ("R", -1)):
+            sw = periodic(ARM, u - 1 / N) * sg
+            up = swing((0.35, 0, -1), sw)
+            fore = swing((0.35, 0, -1), sw - 85)
+            hand = swing((0.5, 0.0, -1), sw - 80)
+            pose["arm" + side] = {"up": up, "fore": fore, "hand": hand, "pole": (0.3, -1, 0), "ft": -10}
+        raws.append((f + 1, C(pose)))
+    build("run", raws, N, loop=True, lag={}, interp="AUTO_CLAMPED", per_frame=True)
+    LIB["run"]["stride_per_cycle"] = round(4 * WALK_S, 3)
+    face("run", [[1, "surprised", "gasp"]])
+
+
+def A_tap_pole():
+    """both hands up on a long pole (R low ~1.2 m, L high ~1.55 m, slightly ahead), looking up; the pole jabs forward-up
+    twice a second (loop 30 f)"""
+    N = 30
+    pole = lambda k: ({"gw": M(-0.02, 0.2 + 0.05 * k, 1.18 + 0.04 * k), "hw": (-0.4, 0.4, 1), "pw": (1, -0.3, -0.6)},
+                      {"gw": M(-0.06, 0.3 + 0.06 * k, 1.5 + 0.05 * k), "hw": (0.4, 0.3, 1), "pw": (1, -0.3, -0.4)})
+    def pose(k):
+        r, l = pole(k)
+        return C(P(pel={"loc": (0.0, -0.1, -0.25), "rot": (-6, 0, 0)}, chest=(-12, 0, 0), neck=(-8, 0, 0), head=(-26, 0, 0), armR=r, armL=l))
+    build("tap_pole", [(1, pose(0)), (6, pose(1)), (9, pose(0)), (16, pose(1)), (19, pose(0)), (31, pose(0))], N, loop=True,
+          lag={"Head": 1, "Forearm": 1, "Hand": 1})
+    face("tap_pole", [[1, "open", "smile"], [15, "happy", "smileOpen"]])
+
+
+def A_blow_tube():
+    """pea shooter: both fists bring a tube to the mouth (R at the lips, L ~0.15 m ahead), the tube points up-forward at a
+    window; three puffs (head jerks), cheeks out (one-shot 45 f)"""
+    N = 45
+    r = {"gw": M(0.05, 0.16, 1.33), "hw": (-0.3, 0.6, 0.6), "pw": (1, -0.3, -0.7)}
+    l = {"gw": M(-0.06, 0.3, 1.45), "hw": (0.2, 0.6, 0.6), "pw": (1, -0.3, -0.6)}
+    body = lambda h: dict(pel={"loc": (0.0, -0.05, -0.22), "rot": (-4, 0, 0)}, chest=(-8, 0, 0), neck=(-6, 0, 0), head=(h, 0, 0), armR=r, armL=l)
+    seq("blow_tube", N, [(1, BASE), (8, P(**body(-18))), (14, P(**body(-18))), (16, P(**body(-12))), (20, P(**body(-18))),
+                         (24, P(**body(-12))), (28, P(**body(-18))), (32, P(**body(-12))), (36, P(**body(-18))), (45, P(**body(-18)))],
+        lag={"Head": 1, "Forearm": 1, "Hand": 1})
+    face("blow_tube", [[1, "open", "neutral"], [8, "half", "talkO"], [36, "half", "smirk"]])
 
 # ================================================================ verificacion
 def sole_pts(side):

@@ -556,13 +556,20 @@ function c3Renderer() {
 // o: { bg: '#hex', bgBlur, nearBlur, glow (0..1), glowBlur }
 function c3Render(scene, cam, o = {}) {
   const { r, cv } = c3Renderer();
+  if (C3_VIVID) o = Object.assign({}, o, { bgBlur: (o.bgBlur ?? 0) * C3_VIVID.bgBlur, glow: (o.glow ?? 0) * C3_VIVID.glow, glowBlur: Math.min(o.glowBlur ?? 18, C3_VIVID.glowBlur) });
+  if (C3_SHADOW) {   // shadow maps only see objects on the CAMERA's layers: build them once per frame with every layer on
+    c3ShadowSetup(scene); r.shadowMap.autoUpdate = false; r.shadowMap.needsUpdate = true;
+    const km = cam.layers.mask; cam.layers.enableAll(); r.setClearColor(0x000000, 0); r.render(scene, cam); cam.layers.mask = km;
+  }
   ctx.save(); screen();
   // 1. background: drawn sharp, then blurred on top (so the blur never shows transparent edges)
   cam.layers.set(C3.L_BG); r.setClearColor(o.bg ?? '#000000', 1); r.render(scene, cam);
   ctx.filter = o.grade ?? 'saturate(1.3) contrast(1.06)'; ctx.drawImage(cv, 0, 0, W, H); ctx.filter = 'none';
   if ((o.bgBlur ?? 0) > 0.3) { ctx.filter = `blur(${o.bgBlur.toFixed(2)}px) ${o.grade ?? 'saturate(1.3) contrast(1.06)'}`; ctx.drawImage(cv, 0, 0, W, H); ctx.filter = 'none'; }
+  if (C3_INK2) c3EdgePass(scene, cam, C3.L_BG, o.bgBlur ?? 0);   // Ricks marker ink on the background
   // 2. the subject layer, sharp
   cam.layers.set(C3.L_FOCUS); r.setClearColor(0x000000, 0); r.render(scene, cam); ctx.drawImage(cv, 0, 0, W, H);
+  if (C3_INK2) c3EdgePass(scene, cam, C3.L_FOCUS, 0);
   // 3. emissive glow: emitters in their glow colour, everything else black; blurred and added
   if ((o.glow ?? 0) > 0) {
     const swap = [];
@@ -583,6 +590,7 @@ function c3Render(scene, cam, o = {}) {
   ctx.drawImage(cv, 0, 0, W, H); ctx.filter = 'none';
   // 5. bloom (refs): the bright parts — white heads, lamps, signs — bleed a soft warm glow over everything around them
   if (C3_HD && o.bloom == null) o = Object.assign({}, o, { bloom: 0.2 }); else if (C3_HD) o = Object.assign({}, o, { bloom: o.bloom * 0.6 });   // HD: less haze
+  if (C3_VIVID) o = Object.assign({}, o, { bloom: Math.min(o.bloom ?? 0, C3_VIVID.bloom) });   // VIVID: no milky bloom veil
   if ((o.bloom ?? 0.32) > 0) {
     const b = C3R.bloom ||= Object.assign(document.createElement('canvas'), { width: W / 4, height: H / 4 }), bx = b.getContext('2d');
     bx.filter = 'brightness(0.95) contrast(2.4) saturate(1.2)'; bx.clearRect(0, 0, b.width, b.height); bx.drawImage(ctx.canvas, 0, 0, b.width, b.height); bx.filter = 'none';
@@ -608,9 +616,37 @@ const C3_LOOKS = {
 // C3_HD (set true by a piece, 2026-10-25): the refs measure ~6x sharper with whites at 88-98 L; the plain looks capped
 // whites near 80 and the shadow 'screen' lifted a haze. HD keeps the hue of each look but with lighter tints, then c3Crisp.
 let C3_HD = false;
+// C3_VIVID (2026-10-29, measured on 30 Ricks frames vs slow-checkout): ours read milky — dark-channel haze 41 vs Ricks 31,
+// mean L 68 vs 60, mean saturation 37 vs 43, sharpness 114 vs 136. Cause: the look's shadow 'screen' tint + warm highlight
+// multiply (a cream veil), the bloom pass and wide glow/bg blur. VIVID drops the screen tint, keeps only a hint of the
+// light tint, grades with one clean exposure/contrast/saturation filter and caps bloom/glow/blur. Opt-in: a piece sets
+// `C3_VIVID = C3_VIVID_DEF` (or its own object) in shots.js; older pieces are unchanged.
+let C3_VIVID = null;
+const C3_VIVID_DEF = { b: 0.9, c: 1.2, s: 1.2, vib: 1.6, tint: 0, bloom: 0.04, glow: 0.55, glowBlur: 10, bgBlur: 0.55 };
+// vibrance: pale-but-tinted surfaces (cream walls, beige floors) gain colour, strong colours barely move (no clipping) and
+// neutral whites/greys (the white heads) stay neutral — gain = vib * sat * (1 - sat)^2 per pixel
+function c3Vibrance(k) {
+  if (!(k > 0)) return;
+  const im = ctx.getImageData(0, 0, W, H), d = im.data;
+  for (let i = 0; i < d.length; i += 4) {
+    const r = d[i], g = d[i + 1], b = d[i + 2], mx = Math.max(r, g, b), mn = Math.min(r, g, b);
+    if (mx < 8) continue;
+    const s = (mx - mn) / mx, a = k * s * (1 - s) * (1 - s); if (a < 0.01) continue;
+    const l = 0.299 * r + 0.587 * g + 0.114 * b, f = 1 + a;
+    d[i] = l + (r - l) * f; d[i + 1] = l + (g - l) * f; d[i + 2] = l + (b - l) * f;   // Uint8Clamped clamps
+  }
+  ctx.putImageData(im, 0, 0);
+}
 function c3Look(name) {
   const L = C3_LOOKS[name]; if (!L) return;
   const b = C3R.lookCv ||= Object.assign(document.createElement('canvas'), { width: W, height: H }), bx = b.getContext('2d');
+  if (C3_VIVID) {
+    const V = C3_VIVID, hiV = L.high.map((v) => Math.round(255 - (255 - v) * V.tint));
+    bx.filter = `brightness(${V.b}) contrast(${V.c}) saturate(${V.s})`; bx.clearRect(0, 0, W, H); bx.drawImage(ctx.canvas, 0, 0); bx.filter = 'none';
+    ctx.save(); screen(); ctx.globalCompositeOperation = 'copy'; ctx.drawImage(b, 0, 0);
+    ctx.globalCompositeOperation = 'multiply'; ctx.fillStyle = `rgb(${hiV})`; ctx.fillRect(0, 0, W, H);   // a hint of the look's light colour only
+    ctx.restore(); c3Vibrance(V.vib); return;
+  }
   const f = C3_HD ? L.f.replace(/brightness\(([\d.]+)\)/, (m, v) => `brightness(${(1 - (1 - v) * 0.35).toFixed(3)})`).replace(/contrast\(([\d.]+)\)/, (m, v) => `contrast(${(+v + 0.06).toFixed(2)})`) : L.f;
   const sh = C3_HD ? L.shadow.map((v) => Math.round(v * 0.4)) : L.shadow, hi = C3_HD ? L.high.map((v) => Math.round(255 - (255 - v) * 0.45)) : L.high;
   // C3_RICKS (2026-10-27, measured on 24 Ricks Clips frames): median L 47 vs ours 74, highlights 1.5 % vs 11 %, deep
@@ -871,4 +907,101 @@ function c3ShadeScene(scene, o = {}) {
     if (sprite && size.y < (o.personH ?? 12) && !o.withSprites) continue;   // people (small groups of billboard sprites) keep their drawn shading
     c3Shade(c, o);
   }
+}
+
+// =====================================================================
+// C3_INK2 + C3_SHADOW (2026-10-29, opt-in, slow-checkout): Ricks Clips draws a marker-like dark outline on EVERY edge
+// (silhouettes, desk/drawer/shelf creases, signs) and lights rooms with real cast shadows. Older pieces leave both null.
+//  C3_INK2 = { px: line half-width in px at 1080 wide, color, normal: crease threshold, depth: silhouette threshold }
+//  C3_SHADOW = { size: shadow map px, dark: 0..1 (hemi/ambient scale while shadows are on) }
+// The outline is a screen-space pass: every mesh is redrawn as view-normal + linear depth (billboard people as their
+// alpha-cut silhouettes with a flat normal, so only their outline counts), then normal/depth jumps become ink.
+// =====================================================================
+let C3_INK2 = null, C3_SHADOW = null;
+const C3_INK2_DEF = { px: 3.4, color: [0.10, 0.06, 0.05], normal: 0.22, depth: 0.008, alpha: 0.95 };
+const C3_SHADOW_DEF = { size: 2048, dark: 0.55, key: 1.5, dir: [-0.55, 0.78, 0.3], catch: 0.34 };
+const C3E = {};
+function c3EdgeMats() {
+  if (C3E.solid) return C3E;
+  const vs = 'varying vec3 vN; varying float vD; varying vec2 vUv;\n' +
+    'void main(){ vUv = uv; vec4 mv = modelViewMatrix * vec4(position,1.0); vN = normalize(normalMatrix * normal); vD = -mv.z; gl_Position = projectionMatrix * mv; }';
+  C3E.solid = new THREE.ShaderMaterial({ vertexShader: vs, uniforms: { far: { value: 300 } }, side: THREE.DoubleSide,
+    fragmentShader: 'uniform float far; varying vec3 vN; varying float vD; void main(){ vec3 n = normalize(vN); if(!gl_FrontFacing) n = -n; gl_FragColor = vec4(n*0.5+0.5, vD/far); }' });
+  C3E.sprite = (map) => new THREE.ShaderMaterial({ vertexShader: vs, uniforms: { far: { value: 300 }, map: { value: map } }, side: THREE.DoubleSide,
+    fragmentShader: 'uniform float far; uniform sampler2D map; varying float vD; varying vec2 vUv; void main(){ if(texture2D(map,vUv).a < 0.5) discard; gl_FragColor = vec4(0.5,0.5,1.0, vD/far); }' });
+  C3E.rt = new THREE.WebGLRenderTarget(W, H, { type: THREE.HalfFloatType, minFilter: THREE.NearestFilter, magFilter: THREE.NearestFilter });
+  C3E.quadScene = new THREE.Scene(); C3E.quadCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+  C3E.edge = new THREE.ShaderMaterial({ transparent: true, depthTest: false, depthWrite: false,
+    uniforms: { tex: { value: C3E.rt.texture }, px: { value: new THREE.Vector2(1 / W, 1 / H) }, r: { value: 2 }, col: { value: new THREE.Vector3() }, tn: { value: 0.35 }, td: { value: 0.012 }, al: { value: 0.9 } },
+    vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = vec4(position.xy,0.0,1.0); }',
+    fragmentShader: [
+      'uniform sampler2D tex; uniform vec2 px; uniform float r, tn, td, al; uniform vec3 col; varying vec2 vUv;',
+      'void main(){ vec4 c = texture2D(tex, vUv); float e = 0.0;',
+      '  for (int i = 0; i < 8; i++) { float a = float(i) * 0.7853982; vec2 o = vec2(cos(a), sin(a)) * px * r;',
+      '    vec4 s = texture2D(tex, vUv + o);',
+      '    bool ce = c.a > 0.0; bool se = s.a > 0.0;',
+      '    if (ce != se) { e = 1.0; break; }',
+      '    if (!ce) continue;',
+      '    float dd = abs(c.a - s.a) / max(min(c.a, s.a), 1e-4);',
+      '    float dn = 1.0 - dot(c.rgb * 2.0 - 1.0, s.rgb * 2.0 - 1.0);',
+      '    if (dd > td * 6.0 || dn > tn) { e = 1.0; break; } }',
+      '  gl_FragColor = vec4(col, e * al); }'].join('\n') });
+  C3E.quadScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), C3E.edge));
+  return C3E;
+}
+// draw the ink of `layer` straight into ctx (blurred like that layer when blurPx > 0)
+function c3EdgePass(scene, cam, layer, blurPx) {
+  const { r, cv } = c3Renderer(), E = c3EdgeMats(), K = C3_INK2, swap = [];
+  scene.traverse((m) => {
+    if (!m.isMesh || !m.visible) return;
+    const mat = m.material;
+    if (m.userData.hull || m.userData.noInk2 || (mat && mat.side === THREE.BackSide)) { swap.push([m, mat, true]); m.visible = false; return; }
+    const sprite = mat && mat.transparent && (mat.alphaTest > 0 || mat.map);
+    swap.push([m, mat, true]);
+    if (sprite && mat.map) { m.userData.c3e ||= E.sprite(mat.map); m.material = m.userData.c3e; m.material.uniforms.far.value = cam.far; }
+    else if (sprite) { m.visible = false; }
+    else { m.material = E.solid; E.solid.uniforms.far.value = cam.far; }
+  });
+  const bg = scene.background; scene.background = null;
+  const keep = cam.layers.mask; cam.layers.set(layer);
+  r.setRenderTarget(E.rt); r.setClearColor(0x000000, 0); r.clear(); r.render(scene, cam); r.setRenderTarget(null);
+  scene.background = bg; cam.layers.mask = keep;
+  swap.forEach(([m, mat, v]) => { m.material = mat; m.visible = v; });
+  const U = E.edge.uniforms; U.r.value = K.px * W / 1080; U.col.value.set(...K.color); U.tn.value = K.normal; U.td.value = K.depth; U.al.value = K.alpha;
+  const tm = r.toneMapping; r.toneMapping = THREE.NoToneMapping;
+  r.setClearColor(0x000000, 0); r.clear(); r.render(E.quadScene, E.quadCam); r.toneMapping = tm;
+  ctx.save(); screen(); if (blurPx > 0.3) ctx.filter = `blur(${blurPx.toFixed(2)}px)`; ctx.drawImage(cv, 0, 0, W, H); ctx.restore();
+}
+// real cast shadows from the scene's key light (the strongest DirectionalLight), set up once per scene
+function c3ShadowSetup(scene) {
+  if (scene.userData.c3shadow) return;
+  const { r } = c3Renderer(); r.shadowMap.enabled = true; r.shadowMap.type = THREE.PCFSoftShadowMap;
+  let key = null; const hemi = [];
+  scene.traverse((o) => { if (o.isDirectionalLight && (!key || o.intensity > key.intensity)) key = o; if (o.isHemisphereLight || o.isAmbientLight) hemi.push(o); });
+  scene.userData.c3shadow = true; if (!key) return;
+  scene.updateMatrixWorld(true);
+  const box = new THREE.Box3(), tmp = new THREE.Box3();
+  scene.traverse((m) => {
+    if (!m.isMesh || m.userData.hull) return;
+    const mat = m.material; if (!mat || mat.side === THREE.BackSide) return;
+    const lit = mat.isMeshStandardMaterial || mat.isMeshToonMaterial || mat.isMeshLambertMaterial || mat.isMeshPhongMaterial;
+    if (!m.geometry.boundingBox) m.geometry.computeBoundingBox();
+    tmp.copy(m.geometry.boundingBox).applyMatrix4(m.matrixWorld); const sz = tmp.getSize(new THREE.Vector3());
+    if (lit) { m.receiveShadow = true; m.castShadow = Math.max(sz.x, sz.y, sz.z) < 120; if (m.castShadow) box.union(tmp); }
+    if (!m.userData.c3catch && !mat.transparent && Math.max(sz.x, sz.y, sz.z) > 6 && [sz.x, sz.y, sz.z].filter((d) => d > 3).length >= 2) {   // big floors/walls (often emissive-bright): a shadow catcher on top, so shadows read like Ricks
+      const sm = new THREE.ShadowMaterial({ opacity: C3_SHADOW.catch ?? 0.32, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2, depthWrite: false });
+      const cm = new THREE.Mesh(m.geometry, sm); cm.receiveShadow = true; cm.userData.c3catch = true; cm.userData.noInk2 = true; cm.layers.mask = m.layers.mask; cm.renderOrder = m.renderOrder + 1; m.add(cm);
+    }
+    else if (mat.transparent && mat.map && mat.alphaTest > 0) {   // billboard people cast their silhouette
+      m.castShadow = true; m.customDepthMaterial = new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking, map: mat.map, alphaTest: 0.5 });
+    }
+  });
+  if (box.isEmpty()) return;
+  const c = box.getCenter(new THREE.Vector3()), rad = Math.min(90, box.getSize(new THREE.Vector3()).length() * 0.5);
+  const dir = C3_SHADOW.dir ? new THREE.Vector3(...C3_SHADOW.dir).normalize() : key.position.clone().sub(key.target.position).normalize();   // Ricks: a raking key so shadows read on the floor
+  key.target.position.copy(c); scene.add(key.target); key.position.copy(c).addScaledVector(dir, rad * 2);
+  key.castShadow = true; key.shadow.mapSize.set(C3_SHADOW.size, C3_SHADOW.size); key.shadow.bias = -0.0004; key.shadow.normalBias = 0.03; key.shadow.radius = 4;
+  const sc = key.shadow.camera; sc.left = -rad; sc.right = rad; sc.top = rad; sc.bottom = -rad; sc.near = 0.5; sc.far = rad * 4; sc.updateProjectionMatrix();
+  sc.layers.enableAll();
+  hemi.forEach((h) => { h.intensity *= C3_SHADOW.dark; }); key.intensity *= C3_SHADOW.key ?? 1;
 }
