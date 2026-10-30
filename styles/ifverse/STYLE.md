@@ -48,3 +48,9 @@ head.html SHOT engine → sets.js (15 sets) + props.js (~35 props) → 8 section
 ## Proven on
 `pieces/ten-seconds` — "What If You Could See 10 Seconds Into the Future?" (8:22, 239 shots, 11 voices).
 `pieces/cats` — "What If You Could Understand Every Cat?" (8:31, 273 shots, 2.5D upgrade, cat rig).
+
+## Thumbnails (from the channel's 14 thumbs, sheet in `thumbs/sheet.jpg`)
+- 1280×720. Caption top-left, 2 short lines, Montserrat Black (`fonts/Montserrat-Black.ttf`), line 1 white, line 2 yellow `#ffc93c`, ends with a period ("TOO SLOW.", "CATCH ME.") — never repeats the title, it is what the hero would say.
+- The hero's head BIG on the right half (≈ 55% of the height), cropped by the bottom, smug face: flat-lidded eyes, a four-point star in one eye, one-sided smirk. Warm glow behind the head, rim light.
+- One glowing prop/opponent on the other side (bullet, IQ meter, the cat), an accent in red (tags "PART 2", a red word). Dark navy night, blurred bokeh background.
+- Template: `pieces/cats-thumb` (scene + `ivPost` override that draws face, bubble and caption on top of the grade, `IV.bar = 0`). Copy it, change the scene.
