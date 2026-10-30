@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cats — thumbnail</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { max-width: 100vw; max-height: 100vh; width: auto; height: auto; display: block; }
+  @font-face { font-family: 'MontB'; src: url('../../styles/ifverse/fonts/Montserrat-Black.ttf'); }
+</style>
+</head>
+<body>
+<div style="font-family:MontB;position:absolute;opacity:0">A</div>
+<canvas id="c" width="1920" height="1080"></canvas>
+<script>
+"use strict";
+// style frames for the ifverse look: one shot per second
+const FPS = 24, W = 1920, H = 1080, FORMAT = '16:9';
+const BPM = 120, GRID0 = 0, BEAT = 0.5, E8 = 0.25, E16 = 0.125;
+const DURATION = 1.0, NFRAMES = 24, LOOP_T = 1.0;
+const SAFE = { top: 62, bottom: 62, right: 0 };
+const HAND = '"Avenir Next", Arial, sans-serif', CX = 960;
+const onBeat = (t) => t;
+const ERA_LIST = [[0, DURATION, () => sceneThumb()]];
+const SHOTS = [['thumb', 0, 0, 1, 'thumbnail']];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, gridOffset: 0, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE, aspect: FORMAT, format: 'beat-cut',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [], morphs: [], cues: {}, acts: [], board: SHOTS.map(([k, e, t0, t1, title]) => ({ t: t0 + 0.5, title, sound: '', next: '' })), narration: [],
+};
+window.TIMELINE = TIMELINE;
