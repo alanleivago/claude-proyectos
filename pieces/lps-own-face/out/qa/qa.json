@@ -1,0 +1,2617 @@
+{
+ "summary": "QA WARN: clicks warn, loudness warn, edges warn, harshness warn. Master gain over the stems +13.3 dB (levels below are at master scale).",
+ "status": "warn",
+ "note": null,
+ "sections": {
+  "clicks": {
+   "status": "warn",
+   "summary": "0 click(s) in the master, 2 in the stems; 0 at a placement edge (a cut: fix the trim / fade), the rest inside a recording (its own crisp transient or a defect in the source)",
+   "counts": {
+    "master": {
+     "clicks": 0,
+     "attacks": 3
+    },
+    "sfx": {
+     "clicks": 2,
+     "attacks": 1
+    },
+    "amb": {
+     "clicks": 0,
+     "attacks": 0
+    },
+    "music": {
+     "clicks": 0,
+     "attacks": 0
+    }
+   },
+   "items": [
+    {
+     "in": "sfx",
+     "t": 10.7811,
+     "ch": 0,
+     "level_db": -39.1,
+     "conc": 0.88,
+     "kind": "click",
+     "owners": [
+      {
+       "bus": "sfx",
+       "what": "fx.stretch",
+       "rule": "r.stretch",
+       "where": "body",
+       "from_start_ms": 131.1,
+       "level_db": -39.1
+      }
+     ],
+     "at_edge": false
+    },
+    {
+     "in": "sfx",
+     "t": 11.1249,
+     "ch": 0,
+     "level_db": -39.8,
+     "conc": 0.9,
+     "kind": "click",
+     "owners": [
+      {
+       "bus": "sfx",
+       "what": "fx.stretch",
+       "rule": "r.stretch",
+       "where": "body",
+       "from_start_ms": 474.9,
+       "level_db": -39.8
+      }
+     ],
+     "at_edge": false
+    }
+   ]
+  },
+  "loudness": {
+   "lufs": -14.0,
+   "target": -14,
+   "true_peak_dbtp": -2.27,
+   "lra_lu": 2.2,
+   "premaster_lufs": -27.29,
+   "loudest_momentary": -11.0,
+   "loudest_at": 14.3,
+   "loudest_frac": 0.38,
+   "short_term_per_s": [
+    -13.5,
+    -13.6,
+    -13.6,
+    -14.3,
+    -14.8,
+    -15.0,
+    -15.2,
+    -15.3,
+    -14.9,
+    -14.2,
+    -13.9,
+    -13.6,
+    -13.0,
+    -12.8,
+    -12.9,
+    -13.3,
+    -13.4,
+    -13.7,
+    -13.8,
+    -14.5,
+    -14.9,
+    -15.1,
+    -15.0,
+    -14.1,
+    -14.5,
+    -13.4,
+    -13.9,
+    -13.9,
+    -14.6,
+    -14.4,
+    -14.5,
+    -13.8,
+    -14.1,
+    -14.0,
+    -13.9
+   ],
+   "head_5ms_peak_dbfs": -46.2,
+   "tail_50ms_rms_dbfs": -140.7,
+   "tail_10ms_peak_dbfs": -240.0,
+   "status": "warn",
+   "summary": "-14.0 LUFS (target -14), true peak -2.3 dBTP, LRA 2.2 LU, loudest momentary -11.0 LUFS at 0:14.30 (38% of the runtime); LRA 2.2 LU: flat (launch films with an arc sit at 5-9 LU)"
+  },
+  "coverage": {
+   "status": "ok",
+   "partial": [],
+   "unsounded_classes": [],
+   "placed_but_silent": [],
+   "summary": "0 of 62 cue events have no sound; 0 class(es) of action sounded only in part"
+  },
+  "edges": {
+   "status": "warn",
+   "summary": "1 defect(s) (abrupt entries, chopped decays, chopped music), 8 with craft notes only (used samples, slices, music splices); 0 placement(s) run past the film ends",
+   "items": [
+    {
+     "what": "slices",
+     "name": "fx.crk",
+     "n": 12,
+     "issues": [
+      "the sound continues after the trim"
+     ],
+     "notes": [
+      "a second hit inside the sample at 0.05 s",
+      "a second hit inside the sample at 0.055 s",
+      "a second hit inside the sample at 0.06 s",
+      "the attack starts in the first ms"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.buzz",
+     "file": "fs-384485_cell-phone-vibrate-wood-table-loopable-w.ogg",
+     "start": 0.005,
+     "end": 1.079,
+     "head_db": -27.1,
+     "tail_db": -7.9,
+     "pre20_db": -33.2,
+     "post20_db": -16.1,
+     "attack_ms": 0.0,
+     "late_onset": null,
+     "fade_in": 0.004,
+     "fade_out": 0.03,
+     "issues": [],
+     "notes": [
+      "the attack starts in the first ms (head -27.1 dB): the 4 ms fade-in dulls it; start the trim 3-5 ms earlier",
+      "the sound continues after the trim (tail -7.9 dB, source after -16.1 dB): decay faded early"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.pop.a",
+     "file": "fs-328117_pop-8.ogg",
+     "start": 0,
+     "end": 0.04,
+     "head_db": -22.5,
+     "tail_db": -53.3,
+     "pre20_db": -240.0,
+     "post20_db": -49.3,
+     "attack_ms": 0.0,
+     "late_onset": null,
+     "fade_in": 0.002,
+     "fade_out": 0.01,
+     "issues": [],
+     "notes": [
+      "the attack starts in the first ms (head -22.5 dB): the 2 ms fade-in dulls it; start the trim 3-5 ms earlier"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.sizzle",
+     "file": "fs-109072_glitch-sfx-109-wav.ogg",
+     "start": 0.0,
+     "end": 1.2,
+     "head_db": -23.7,
+     "tail_db": -25.3,
+     "pre20_db": -240.0,
+     "post20_db": -14.3,
+     "attack_ms": 0.0,
+     "late_onset": null,
+     "fade_in": 0.005,
+     "fade_out": 0.04,
+     "issues": [],
+     "notes": [
+      "the attack starts in the first ms (head -23.7 dB): the 5 ms fade-in dulls it; start the trim 3-5 ms earlier",
+      "the sound continues after the trim (tail -25.3 dB, source after -14.3 dB): decay faded early"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.snap.cloth",
+     "file": "fs-320144_blanket-movement-6.ogg",
+     "start": 0.1,
+     "end": 0.4,
+     "head_db": -24.9,
+     "tail_db": -13.5,
+     "pre20_db": -26.2,
+     "post20_db": -5.6,
+     "attack_ms": 0.0,
+     "late_onset": 0.19,
+     "fade_in": 0.002,
+     "fade_out": 0.08,
+     "issues": [],
+     "notes": [
+      "the attack starts in the first ms (head -24.9 dB): the 2 ms fade-in dulls it; start the trim 3-5 ms earlier",
+      "the sound continues after the trim (tail -13.5 dB, source after -5.6 dB): decay faded early",
+      "a second hit inside the sample at 0.19 s (fine for a rattle, wrong for a single hit)"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.stretch",
+     "file": "fs-234177_balloon-creak-long-rub-1-wav.ogg",
+     "start": 0.025,
+     "end": 0.7,
+     "head_db": -70.0,
+     "tail_db": -27.0,
+     "pre20_db": -68.0,
+     "post20_db": -22.1,
+     "attack_ms": 5.0,
+     "late_onset": 0.43,
+     "fade_in": 0.002,
+     "fade_out": 0.08,
+     "issues": [],
+     "notes": [
+      "the sound continues after the trim (tail -27.0 dB, source after -22.1 dB): decay faded early",
+      "a second hit inside the sample at 0.43 s (fine for a rattle, wrong for a single hit)"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.swish",
+     "file": "fs-320144_blanket-movement-6.ogg",
+     "start": 0.6,
+     "end": 0.95,
+     "head_db": -12.3,
+     "tail_db": -32.2,
+     "pre20_db": -2.9,
+     "post20_db": -19.9,
+     "attack_ms": 0.0,
+     "late_onset": null,
+     "fade_in": 0.025,
+     "fade_out": 0.08,
+     "issues": [],
+     "notes": [
+      "the trim cuts into a sound already playing (source 20 ms before at -2.9 dB re peak), softened by the fade-in",
+      "the sound continues after the trim (tail -32.2 dB, source after -19.9 dB): decay faded early"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.wobble",
+     "file": "fs-708182_elastic-band-c-note.ogg",
+     "start": 0.0,
+     "end": 0.75,
+     "head_db": -18.9,
+     "tail_db": -41.5,
+     "pre20_db": -240.0,
+     "post20_db": -39.3,
+     "attack_ms": 0.0,
+     "late_onset": null,
+     "fade_in": 0.002,
+     "fade_out": 0.2,
+     "issues": [],
+     "notes": [
+      "the attack starts in the first ms (head -18.9 dB): the 2 ms fade-in dulls it; start the trim 3-5 ms earlier"
+     ]
+    }
+   ],
+   "splices": [
+    {
+     "segment": "mu.B: track bars 61-64, its own ending; final hit at film ~36.81 s, tail faded by 37.65",
+     "film_end": 37.582,
+     "out_db": -30.6,
+     "cut_off_db": -29.9,
+     "next_in_db": null,
+     "issues": [],
+     "notes": [
+      "begins inside a sustained sound (the source before 105.217 s is as loud): no fresh attack on the splice"
+     ]
+    }
+   ],
+   "cut_by_film_ends": []
+  },
+  "audibility": {
+   "status": "ok",
+   "counts": {
+    "clear": 63
+   },
+   "summary": "63 events: clear 63, ok 0, barely 0, masked 0; 1 layer(s) in multi-layer events add nothing measurable (read < 0 dB)",
+   "items": [
+    {
+     "t": 33.443,
+     "label": "pov:nose:delete:6",
+     "kind": "glitch",
+     "n_layers": 1,
+     "rules": [
+      "r.glitch"
+     ],
+     "peak_db": 5.9,
+     "vs_bed_db": 9.0,
+     "vs_bed_hz": 5012,
+     "vs_all_db": 6.0,
+     "first20_db": 2.7,
+     "first20_hz": 7943,
+     "read_db": 6.0,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 26.465,
+     "label": "cam:punch:s13",
+     "kind": "punch",
+     "n_layers": 1,
+     "rules": [
+      "r.punch"
+     ],
+     "peak_db": -5.1,
+     "vs_bed_db": 10.1,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 10.1,
+     "first20_db": 12.3,
+     "first20_hz": 6310,
+     "read_db": 12.3,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 21.168,
+     "label": "cam:punch:s10",
+     "kind": "punch",
+     "n_layers": 1,
+     "rules": [
+      "r.punch"
+     ],
+     "peak_db": -6.0,
+     "vs_bed_db": 19.8,
+     "vs_bed_hz": 1995,
+     "vs_all_db": 14.4,
+     "first20_db": 12.7,
+     "first20_hz": 316,
+     "read_db": 14.4,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 13.062,
+     "label": "mind:title:12",
+     "kind": "lpop",
+     "n_layers": 1,
+     "rules": [
+      "r.lpop"
+     ],
+     "peak_db": -2.4,
+     "vs_bed_db": 9.3,
+     "vs_bed_hz": 1259,
+     "vs_all_db": 9.3,
+     "first20_db": 14.8,
+     "first20_hz": 1259,
+     "read_db": 14.8,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 32.923,
+     "label": "pov:nose:delete:2",
+     "kind": "glitch",
+     "n_layers": 1,
+     "rules": [
+      "r.glitch"
+     ],
+     "peak_db": 6.0,
+     "vs_bed_db": 20.3,
+     "vs_bed_hz": 5012,
+     "vs_all_db": 12.4,
+     "first20_db": 15.9,
+     "first20_hz": 1995,
+     "read_db": 15.9,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 33.053,
+     "label": "pov:nose:delete:3",
+     "kind": "glitch",
+     "n_layers": 1,
+     "rules": [
+      "r.glitch"
+     ],
+     "peak_db": 4.4,
+     "vs_bed_db": 17.8,
+     "vs_bed_hz": 7943,
+     "vs_all_db": 10.3,
+     "first20_db": 16.0,
+     "first20_hz": 6310,
+     "read_db": 16.0,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 32.664,
+     "label": "place:fx.sizzle",
+     "kind": "place",
+     "n_layers": 1,
+     "rules": [
+      "place"
+     ],
+     "peak_db": -6.2,
+     "vs_bed_db": 16.2,
+     "vs_bed_hz": 3162,
+     "vs_all_db": 16.2,
+     "first20_db": 12.5,
+     "first20_hz": 3162,
+     "read_db": 16.2,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 33.183,
+     "label": "pov:nose:delete:4",
+     "kind": "glitch",
+     "n_layers": 1,
+     "rules": [
+      "r.glitch"
+     ],
+     "peak_db": 5.3,
+     "vs_bed_db": 20.4,
+     "vs_bed_hz": 7943,
+     "vs_all_db": 14.3,
+     "first20_db": 16.2,
+     "first20_hz": 6310,
+     "read_db": 16.2,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 34.167,
+     "label": "cam:punch:s17",
+     "kind": "punch",
+     "n_layers": 1,
+     "rules": [
+      "r.punch"
+     ],
+     "peak_db": -5.6,
+     "vs_bed_db": 13.6,
+     "vs_bed_hz": 3162,
+     "vs_all_db": 13.6,
+     "first20_db": 16.2,
+     "first20_hz": 7943,
+     "read_db": 16.2,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 33.573,
+     "label": "pov:nose:delete:7",
+     "kind": "glitch",
+     "n_layers": 1,
+     "rules": [
+      "r.glitch"
+     ],
+     "peak_db": 7.9,
+     "vs_bed_db": 17.5,
+     "vs_bed_hz": 7943,
+     "vs_all_db": 14.4,
+     "first20_db": 16.5,
+     "first20_hz": 7943,
+     "read_db": 16.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 33.313,
+     "label": "pov:nose:delete:5",
+     "kind": "glitch",
+     "n_layers": 1,
+     "rules": [
+      "r.glitch"
+     ],
+     "peak_db": 6.4,
+     "vs_bed_db": 13.9,
+     "vs_bed_hz": 398,
+     "vs_all_db": 13.3,
+     "first20_db": 18.0,
+     "first20_hz": 398,
+     "read_db": 18.0,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 32.663,
+     "label": "pov:nose:delete:0",
+     "kind": "glitch",
+     "n_layers": 1,
+     "rules": [
+      "r.glitch"
+     ],
+     "peak_db": 2.9,
+     "vs_bed_db": 23.4,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 18.1,
+     "first20_db": 19.5,
+     "first20_hz": 7943,
+     "read_db": 19.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 32.793,
+     "label": "pov:nose:delete:1",
+     "kind": "glitch",
+     "n_layers": 1,
+     "rules": [
+      "r.glitch"
+     ],
+     "peak_db": 2.5,
+     "vs_bed_db": 27.7,
+     "vs_bed_hz": 7943,
+     "vs_all_db": 17.7,
+     "first20_db": 20.1,
+     "first20_hz": 7943,
+     "read_db": 20.1,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 28.311,
+     "label": "cam:punch:s14",
+     "kind": "punch",
+     "n_layers": 1,
+     "rules": [
+      "r.punch"
+     ],
+     "peak_db": -4.2,
+     "vs_bed_db": 21.5,
+     "vs_bed_hz": 2512,
+     "vs_all_db": 10.4,
+     "first20_db": 20.3,
+     "first20_hz": 2512,
+     "read_db": 20.3,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 33.703,
+     "label": "pov:nose:delete:8",
+     "kind": "glitch",
+     "n_layers": 1,
+     "rules": [
+      "r.glitch"
+     ],
+     "peak_db": 8.5,
+     "vs_bed_db": 19.8,
+     "vs_bed_hz": 7943,
+     "vs_all_db": 16.2,
+     "first20_db": 21.7,
+     "first20_hz": 7943,
+     "read_db": 21.7,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 28.337,
+     "label": "apt:crosseyed",
+     "kind": "wobble",
+     "n_layers": 1,
+     "rules": [
+      "r.wobble"
+     ],
+     "peak_db": -1.2,
+     "vs_bed_db": 20.0,
+     "vs_bed_hz": 12589,
+     "vs_all_db": 15.9,
+     "first20_db": 21.8,
+     "first20_hz": 631,
+     "read_db": 21.8,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 12.882,
+     "label": "mind:title:8",
+     "kind": "lpop",
+     "n_layers": 1,
+     "rules": [
+      "r.lpop"
+     ],
+     "peak_db": -3.4,
+     "vs_bed_db": 17.7,
+     "vs_bed_hz": 7943,
+     "vs_all_db": 11.1,
+     "first20_db": 22.2,
+     "first20_hz": 7943,
+     "read_db": 22.2,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 12.927,
+     "label": "mind:title:9",
+     "kind": "lpop",
+     "n_layers": 1,
+     "rules": [
+      "r.lpop"
+     ],
+     "peak_db": -3.8,
+     "vs_bed_db": 11.9,
+     "vs_bed_hz": 1259,
+     "vs_all_db": 11.9,
+     "first20_db": 24.3,
+     "first20_hz": 7943,
+     "read_db": 24.3,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 19.32,
+     "label": "lab:real:3",
+     "kind": "pop",
+     "n_layers": 1,
+     "rules": [
+      "r.pop"
+     ],
+     "peak_db": 3.8,
+     "vs_bed_db": 19.6,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 19.6,
+     "first20_db": 24.6,
+     "first20_hz": 398,
+     "read_db": 24.6,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 20.005,
+     "label": "lab:mirror:2",
+     "kind": "pop",
+     "n_layers": 1,
+     "rules": [
+      "r.pop"
+     ],
+     "peak_db": 4.5,
+     "vs_bed_db": 19.3,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 6.6,
+     "first20_db": 24.8,
+     "first20_hz": 1000,
+     "read_db": 24.8,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 26.619,
+     "label": "street:heads:snap",
+     "kind": "snap",
+     "n_layers": 2,
+     "rules": [
+      "r.snap.air",
+      "r.snap.cloth"
+     ],
+     "peak_db": 4.8,
+     "vs_bed_db": 21.4,
+     "vs_bed_hz": 1585,
+     "vs_all_db": 21.4,
+     "first20_db": 25.5,
+     "first20_hz": 1585,
+     "read_db": 25.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 15.139,
+     "label": "lab:1977:1",
+     "kind": "pop",
+     "n_layers": 1,
+     "rules": [
+      "r.pop"
+     ],
+     "peak_db": 5.5,
+     "vs_bed_db": 19.5,
+     "vs_bed_hz": 3981,
+     "vs_all_db": 19.5,
+     "first20_db": 25.7,
+     "first20_hz": 3981,
+     "read_db": 25.7,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 19.185,
+     "label": "lab:real:0",
+     "kind": "pop",
+     "n_layers": 1,
+     "rules": [
+      "r.pop"
+     ],
+     "peak_db": 4.2,
+     "vs_bed_db": 22.6,
+     "vs_bed_hz": 501,
+     "vs_all_db": 5.0,
+     "first20_db": 26.7,
+     "first20_hz": 1000,
+     "read_db": 26.7,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 33.833,
+     "label": "pov:nose:delete:9",
+     "kind": "glitch",
+     "n_layers": 1,
+     "rules": [
+      "r.glitch"
+     ],
+     "peak_db": 9.1,
+     "vs_bed_db": 9.1,
+     "vs_bed_hz": 398,
+     "vs_all_db": 9.1,
+     "first20_db": 26.9,
+     "first20_hz": 398,
+     "read_db": 26.9,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 11.38,
+     "label": "phone:plus30:2",
+     "kind": "pop",
+     "n_layers": 1,
+     "rules": [
+      "r.pop"
+     ],
+     "peak_db": 4.7,
+     "vs_bed_db": 16.9,
+     "vs_bed_hz": 631,
+     "vs_all_db": 4.1,
+     "first20_db": 27.9,
+     "first20_hz": 1000,
+     "read_db": 27.9,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 20.14,
+     "label": "lab:mirror:5",
+     "kind": "pop",
+     "n_layers": 1,
+     "rules": [
+      "r.pop"
+     ],
+     "peak_db": 4.7,
+     "vs_bed_db": 22.4,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 22.4,
+     "first20_db": 27.9,
+     "first20_hz": 1000,
+     "read_db": 27.9,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 13.017,
+     "label": "mind:title:11",
+     "kind": "lpop",
+     "n_layers": 1,
+     "rules": [
+      "r.lpop"
+     ],
+     "peak_db": -4.4,
+     "vs_bed_db": 10.4,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 9.2,
+     "first20_db": 28.6,
+     "first20_hz": 7943,
+     "read_db": 28.6,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 15.079,
+     "label": "lab:1977:0",
+     "kind": "pop",
+     "n_layers": 1,
+     "rules": [
+      "r.pop"
+     ],
+     "peak_db": 5.2,
+     "vs_bed_db": 24.0,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 24.0,
+     "first20_db": 28.6,
+     "first20_hz": 1259,
+     "read_db": 28.6,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 0.096,
+     "label": "cam:punch:s1",
+     "kind": "punch",
+     "n_layers": 1,
+     "rules": [
+      "r.punch.open"
+     ],
+     "peak_db": -7.2,
+     "vs_bed_db": 24.1,
+     "vs_bed_hz": 7943,
+     "vs_all_db": 24.1,
+     "first20_db": 29.2,
+     "first20_hz": 1995,
+     "read_db": 29.2,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 25.28,
+     "label": "apt:phone:error",
+     "kind": "buzz",
+     "n_layers": 1,
+     "rules": [
+      "r.buzz"
+     ],
+     "peak_db": -0.5,
+     "vs_bed_db": 30.2,
+     "vs_bed_hz": 158,
+     "vs_all_db": 30.2,
+     "first20_db": 29.7,
+     "first20_hz": 158,
+     "read_db": 30.2,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 2.71,
+     "label": "bath:arrow:0",
+     "kind": "pop",
+     "n_layers": 1,
+     "rules": [
+      "r.pop"
+     ],
+     "peak_db": 5.7,
+     "vs_bed_db": 25.8,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 25.8,
+     "first20_db": 31.0,
+     "first20_hz": 1000,
+     "read_db": 31.0,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 5.681,
+     "label": "bath:mirror:flip",
+     "kind": "whoosh",
+     "n_layers": 1,
+     "rules": [
+      "r.whoosh.flip"
+     ],
+     "peak_db": 5.8,
+     "vs_bed_db": 31.0,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 31.0,
+     "first20_db": 27.1,
+     "first20_hz": 6310,
+     "read_db": 31.0,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 11.425,
+     "label": "phone:plus30:3",
+     "kind": "pop",
+     "n_layers": 1,
+     "rules": [
+      "r.pop"
+     ],
+     "peak_db": 5.2,
+     "vs_bed_db": 29.1,
+     "vs_bed_hz": 631,
+     "vs_all_db": 29.0,
+     "first20_db": 31.5,
+     "first20_hz": 631,
+     "read_db": 31.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 10.655,
+     "label": "phone:nose:stretch",
+     "kind": "stretch",
+     "n_layers": 1,
+     "rules": [
+      "r.stretch"
+     ],
+     "peak_db": 5.8,
+     "vs_bed_db": 25.7,
+     "vs_bed_hz": 1995,
+     "vs_all_db": 25.7,
+     "first20_db": 32.8,
+     "first20_hz": 1995,
+     "read_db": 32.8,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 12.972,
+     "label": "mind:title:10",
+     "kind": "lpop",
+     "n_layers": 1,
+     "rules": [
+      "r.lpop"
+     ],
+     "peak_db": -2.5,
+     "vs_bed_db": 27.1,
+     "vs_bed_hz": 12589,
+     "vs_all_db": 4.0,
+     "first20_db": 32.9,
+     "first20_hz": 10000,
+     "read_db": 32.9,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 20.893,
+     "label": "lab:arm:point",
+     "kind": "swish",
+     "n_layers": 1,
+     "rules": [
+      "r.swish"
+     ],
+     "peak_db": 0.0,
+     "vs_bed_db": 32.6,
+     "vs_bed_hz": 10000,
+     "vs_all_db": 32.6,
+     "first20_db": 33.7,
+     "first20_hz": 10000,
+     "read_db": 33.7,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 12.657,
+     "label": "mind:title:3",
+     "kind": "lpop",
+     "n_layers": 1,
+     "rules": [
+      "r.lpop"
+     ],
+     "peak_db": -1.9,
+     "vs_bed_db": 12.5,
+     "vs_bed_hz": 1259,
+     "vs_all_db": 12.5,
+     "first20_db": 34.3,
+     "first20_hz": 7943,
+     "read_db": 34.3,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 19.915,
+     "label": "lab:mirror:0",
+     "kind": "pop",
+     "n_layers": 1,
+     "rules": [
+      "r.pop"
+     ],
+     "peak_db": 4.8,
+     "vs_bed_db": 31.6,
+     "vs_bed_hz": 794,
+     "vs_all_db": 17.0,
+     "first20_db": 34.3,
+     "first20_hz": 794,
+     "read_db": 34.3,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 12.522,
+     "label": "mind:title:0",
+     "kind": "lpop",
+     "n_layers": 1,
+     "rules": [
+      "r.lpop"
+     ],
+     "peak_db": -3.1,
+     "vs_bed_db": 11.8,
+     "vs_bed_hz": 1259,
+     "vs_all_db": 11.8,
+     "first20_db": 34.6,
+     "first20_hz": 6310,
+     "read_db": 34.6,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 11.29,
+     "label": "phone:plus30:0",
+     "kind": "pop",
+     "n_layers": 1,
+     "rules": [
+      "r.pop"
+     ],
+     "peak_db": 5.7,
+     "vs_bed_db": 29.2,
+     "vs_bed_hz": 794,
+     "vs_all_db": 20.2,
+     "first20_db": 34.8,
+     "first20_hz": 794,
+     "read_db": 34.8,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    }
+   ],
+   "events": [
+    {
+     "t": 0.096,
+     "label": "cam:punch:s1",
+     "kind": "punch",
+     "n_layers": 1,
+     "rules": [
+      "r.punch.open"
+     ],
+     "peak_db": -7.2,
+     "vs_bed_db": 24.1,
+     "vs_bed_hz": 7943,
+     "vs_all_db": 24.1,
+     "first20_db": 29.2,
+     "first20_hz": 1995,
+     "read_db": 29.2,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 2.076,
+     "label": "apt:eye:blink",
+     "kind": "blink",
+     "n_layers": 1,
+     "rules": [
+      "r.blink"
+     ],
+     "peak_db": 1.8,
+     "vs_bed_db": 30.2,
+     "vs_bed_hz": 3981,
+     "vs_all_db": 30.2,
+     "first20_db": 38.3,
+     "first20_hz": 3981,
+     "read_db": 38.3,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 2.71,
+     "label": "bath:arrow:0",
+     "kind": "pop",
+     "n_layers": 1,
+     "rules": [
+      "r.pop"
+     ],
+     "peak_db": 5.7,
+     "vs_bed_db": 25.8,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 25.8,
+     "first20_db": 31.0,
+     "first20_hz": 1000,
+     "read_db": 31.0,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 2.84,
+     "label": "bath:arrow:1",
+     "kind": "pop",
+     "n_layers": 1,
+     "rules": [
+      "r.pop"
+     ],
+     "peak_db": 7.2,
+     "vs_bed_db": 26.3,
+     "vs_bed_hz": 10000,
+     "vs_all_db": 26.3,
+     "first20_db": 35.7,
+     "first20_hz": 7943,
+     "read_db": 35.7,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 5.239,
+     "label": "cam:punch:s4",
+     "kind": "punch",
+     "n_layers": 1,
+     "rules": [
+      "r.punch"
+     ],
+     "peak_db": -5.1,
+     "vs_bed_db": 44.2,
+     "vs_bed_hz": 12589,
+     "vs_all_db": 44.2,
+     "first20_db": 43.6,
+     "first20_hz": 12589,
+     "read_db": 44.2,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 5.681,
+     "label": "bath:mirror:flip",
+     "kind": "whoosh",
+     "n_layers": 1,
+     "rules": [
+      "r.whoosh.flip"
+     ],
+     "peak_db": 5.8,
+     "vs_bed_db": 31.0,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 31.0,
+     "first20_db": 27.1,
+     "first20_hz": 6310,
+     "read_db": 31.0,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 7.196,
+     "label": "phone:drop",
+     "kind": "whoosh",
+     "n_layers": 1,
+     "rules": [
+      "r.whoosh.drop"
+     ],
+     "peak_db": 3.8,
+     "vs_bed_db": 41.2,
+     "vs_bed_hz": 3162,
+     "vs_all_db": 41.2,
+     "first20_db": 36.0,
+     "first20_hz": 5012,
+     "read_db": 41.2,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 7.435,
+     "label": "phone:shutter",
+     "kind": "shutter",
+     "n_layers": 2,
+     "rules": [
+      "r.shutter",
+      "r.shutter.holga"
+     ],
+     "peak_db": 11.7,
+     "vs_bed_db": 46.2,
+     "vs_bed_hz": 3162,
+     "vs_all_db": 44.0,
+     "first20_db": 49.2,
+     "first20_hz": 3981,
+     "read_db": 49.2,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 10.655,
+     "label": "phone:nose:stretch",
+     "kind": "stretch",
+     "n_layers": 1,
+     "rules": [
+      "r.stretch"
+     ],
+     "peak_db": 5.8,
+     "vs_bed_db": 25.7,
+     "vs_bed_hz": 1995,
+     "vs_all_db": 25.7,
+     "first20_db": 32.8,
+     "first20_hz": 1995,
+     "read_db": 32.8,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 11.29,
+     "label": "phone:plus30:0",
+     "kind": "pop",
+     "n_layers": 1,
+     "rules": [
+      "r.pop"
+     ],
+     "peak_db": 5.7,
+     "vs_bed_db": 29.2,
+     "vs_bed_hz": 794,
+     "vs_all_db": 20.2,
+     "first20_db": 34.8,
+     "first20_hz": 794,
+     "read_db": 34.8,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 11.335,
+     "label": "phone:plus30:1",
+     "kind": "pop",
+     "n_layers": 1,
+     "rules": [
+      "r.pop"
+     ],
+     "peak_db": 5.6,
+     "vs_bed_db": 35.3,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 35.1,
+     "first20_db": 42.0,
+     "first20_hz": 1000,
+     "read_db": 42.0,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 11.38,
+     "label": "phone:plus30:2",
+     "kind": "pop",
+     "n_layers": 1,
+     "rules": [
+      "r.pop"
+     ],
+     "peak_db": 4.7,
+     "vs_bed_db": 16.9,
+     "vs_bed_hz": 631,
+     "vs_all_db": 4.1,
+     "first20_db": 27.9,
+     "first20_hz": 1000,
+     "read_db": 27.9,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 11.425,
+     "label": "phone:plus30:3",
+     "kind": "pop",
+     "n_layers": 1,
+     "rules": [
+      "r.pop"
+     ],
+     "peak_db": 5.2,
+     "vs_bed_db": 29.1,
+     "vs_bed_hz": 631,
+     "vs_all_db": 29.0,
+     "first20_db": 31.5,
+     "first20_hz": 631,
+     "read_db": 31.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 12.522,
+     "label": "mind:title:0",
+     "kind": "lpop",
+     "n_layers": 1,
+     "rules": [
+      "r.lpop"
+     ],
+     "peak_db": -3.1,
+     "vs_bed_db": 11.8,
+     "vs_bed_hz": 1259,
+     "vs_all_db": 11.8,
+     "first20_db": 34.6,
+     "first20_hz": 6310,
+     "read_db": 34.6,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 12.567,
+     "label": "mind:title:1",
+     "kind": "lpop",
+     "n_layers": 1,
+     "rules": [
+      "r.lpop"
+     ],
+     "peak_db": -3.5,
+     "vs_bed_db": 38.7,
+     "vs_bed_hz": 12589,
+     "vs_all_db": 7.7,
+     "first20_db": 43.8,
+     "first20_hz": 12589,
+     "read_db": 43.8,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 12.612,
+     "label": "mind:title:2",
+     "kind": "lpop",
+     "n_layers": 1,
+     "rules": [
+      "r.lpop"
+     ],
+     "peak_db": -4.5,
+     "vs_bed_db": 31.0,
+     "vs_bed_hz": 7943,
+     "vs_all_db": 9.8,
+     "first20_db": 43.7,
+     "first20_hz": 7943,
+     "read_db": 43.7,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 12.657,
+     "label": "mind:title:3",
+     "kind": "lpop",
+     "n_layers": 1,
+     "rules": [
+      "r.lpop"
+     ],
+     "peak_db": -1.9,
+     "vs_bed_db": 12.5,
+     "vs_bed_hz": 1259,
+     "vs_all_db": 12.5,
+     "first20_db": 34.3,
+     "first20_hz": 7943,
+     "read_db": 34.3,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 12.702,
+     "label": "mind:title:4",
+     "kind": "lpop",
+     "n_layers": 1,
+     "rules": [
+      "r.lpop"
+     ],
+     "peak_db": -4.4,
+     "vs_bed_db": 30.3,
+     "vs_bed_hz": 12589,
+     "vs_all_db": 0.3,
+     "first20_db": 38.7,
+     "first20_hz": 12589,
+     "read_db": 38.7,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 12.747,
+     "label": "mind:title:5",
+     "kind": "lpop",
+     "n_layers": 1,
+     "rules": [
+      "r.lpop"
+     ],
+     "peak_db": -2.1,
+     "vs_bed_db": 36.1,
+     "vs_bed_hz": 7943,
+     "vs_all_db": 6.8,
+     "first20_db": 39.6,
+     "first20_hz": 7943,
+     "read_db": 39.6,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 12.792,
+     "label": "mind:title:6",
+     "kind": "lpop",
+     "n_layers": 1,
+     "rules": [
+      "r.lpop"
+     ],
+     "peak_db": -2.1,
+     "vs_bed_db": 21.0,
+     "vs_bed_hz": 1259,
+     "vs_all_db": 21.0,
+     "first20_db": 44.0,
+     "first20_hz": 7943,
+     "read_db": 44.0,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 12.837,
+     "label": "mind:title:7",
+     "kind": "lpop",
+     "n_layers": 1,
+     "rules": [
+      "r.lpop"
+     ],
+     "peak_db": -4.1,
+     "vs_bed_db": 24.0,
+     "vs_bed_hz": 12589,
+     "vs_all_db": 5.1,
+     "first20_db": 58.2,
+     "first20_hz": 12589,
+     "read_db": 58.2,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 12.882,
+     "label": "mind:title:8",
+     "kind": "lpop",
+     "n_layers": 1,
+     "rules": [
+      "r.lpop"
+     ],
+     "peak_db": -3.4,
+     "vs_bed_db": 17.7,
+     "vs_bed_hz": 7943,
+     "vs_all_db": 11.1,
+     "first20_db": 22.2,
+     "first20_hz": 7943,
+     "read_db": 22.2,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 12.927,
+     "label": "mind:title:9",
+     "kind": "lpop",
+     "n_layers": 1,
+     "rules": [
+      "r.lpop"
+     ],
+     "peak_db": -3.8,
+     "vs_bed_db": 11.9,
+     "vs_bed_hz": 1259,
+     "vs_all_db": 11.9,
+     "first20_db": 24.3,
+     "first20_hz": 7943,
+     "read_db": 24.3,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 12.972,
+     "label": "mind:title:10",
+     "kind": "lpop",
+     "n_layers": 1,
+     "rules": [
+      "r.lpop"
+     ],
+     "peak_db": -2.5,
+     "vs_bed_db": 27.1,
+     "vs_bed_hz": 12589,
+     "vs_all_db": 4.0,
+     "first20_db": 32.9,
+     "first20_hz": 10000,
+     "read_db": 32.9,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 13.017,
+     "label": "mind:title:11",
+     "kind": "lpop",
+     "n_layers": 1,
+     "rules": [
+      "r.lpop"
+     ],
+     "peak_db": -4.4,
+     "vs_bed_db": 10.4,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 9.2,
+     "first20_db": 28.6,
+     "first20_hz": 7943,
+     "read_db": 28.6,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 13.062,
+     "label": "mind:title:12",
+     "kind": "lpop",
+     "n_layers": 1,
+     "rules": [
+      "r.lpop"
+     ],
+     "peak_db": -2.4,
+     "vs_bed_db": 9.3,
+     "vs_bed_hz": 1259,
+     "vs_all_db": 9.3,
+     "first20_db": 14.8,
+     "first20_hz": 1259,
+     "read_db": 14.8,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 13.107,
+     "label": "mind:title:13",
+     "kind": "lpop",
+     "n_layers": 1,
+     "rules": [
+      "r.lpop"
+     ],
+     "peak_db": -2.2,
+     "vs_bed_db": 31.4,
+     "vs_bed_hz": 12589,
+     "vs_all_db": 31.4,
+     "first20_db": 34.9,
+     "first20_hz": 12589,
+     "read_db": 34.9,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 14.398,
+     "label": "mind:title:spin",
+     "kind": "whoosh",
+     "n_layers": 1,
+     "rules": [
+      "r.whoosh.spin"
+     ],
+     "peak_db": 4.8,
+     "vs_bed_db": 35.9,
+     "vs_bed_hz": 3162,
+     "vs_all_db": 35.9,
+     "first20_db": 33.9,
+     "first20_hz": 1000,
+     "read_db": 35.9,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 15.079,
+     "label": "lab:1977:0",
+     "kind": "pop",
+     "n_layers": 1,
+     "rules": [
+      "r.pop"
+     ],
+     "peak_db": 5.2,
+     "vs_bed_db": 24.0,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 24.0,
+     "first20_db": 28.6,
+     "first20_hz": 1259,
+     "read_db": 28.6,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 15.139,
+     "label": "lab:1977:1",
+     "kind": "pop",
+     "n_layers": 1,
+     "rules": [
+      "r.pop"
+     ],
+     "peak_db": 5.5,
+     "vs_bed_db": 19.5,
+     "vs_bed_hz": 3981,
+     "vs_all_db": 19.5,
+     "first20_db": 25.7,
+     "first20_hz": 3981,
+     "read_db": 25.7,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 15.199,
+     "label": "lab:1977:2",
+     "kind": "pop",
+     "n_layers": 1,
+     "rules": [
+      "r.pop"
+     ],
+     "peak_db": 5.5,
+     "vs_bed_db": 31.8,
+     "vs_bed_hz": 794,
+     "vs_all_db": 31.8,
+     "first20_db": 34.8,
+     "first20_hz": 794,
+     "read_db": 34.8,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 15.259,
+     "label": "lab:1977:3",
+     "kind": "pop",
+     "n_layers": 1,
+     "rules": [
+      "r.pop"
+     ],
+     "peak_db": 5.7,
+     "vs_bed_db": 29.2,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 29.2,
+     "first20_db": 36.8,
+     "first20_hz": 1000,
+     "read_db": 36.8,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 19.185,
+     "label": "lab:real:0",
+     "kind": "pop",
+     "n_layers": 1,
+     "rules": [
+      "r.pop"
+     ],
+     "peak_db": 4.2,
+     "vs_bed_db": 22.6,
+     "vs_bed_hz": 501,
+     "vs_all_db": 5.0,
+     "first20_db": 26.7,
+     "first20_hz": 1000,
+     "read_db": 26.7,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 19.23,
+     "label": "lab:real:1",
+     "kind": "pop",
+     "n_layers": 1,
+     "rules": [
+      "r.pop"
+     ],
+     "peak_db": 5.2,
+     "vs_bed_db": 31.0,
+     "vs_bed_hz": 794,
+     "vs_all_db": 17.8,
+     "first20_db": 35.4,
+     "first20_hz": 794,
+     "read_db": 35.4,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 19.275,
+     "label": "lab:real:2",
+     "kind": "pop",
+     "n_layers": 1,
+     "rules": [
+      "r.pop"
+     ],
+     "peak_db": 5.8,
+     "vs_bed_db": 31.3,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 31.4,
+     "first20_db": 38.6,
+     "first20_hz": 1000,
+     "read_db": 38.6,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 19.32,
+     "label": "lab:real:3",
+     "kind": "pop",
+     "n_layers": 1,
+     "rules": [
+      "r.pop"
+     ],
+     "peak_db": 3.8,
+     "vs_bed_db": 19.6,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 19.6,
+     "first20_db": 24.6,
+     "first20_hz": 398,
+     "read_db": 24.6,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 19.915,
+     "label": "lab:mirror:0",
+     "kind": "pop",
+     "n_layers": 1,
+     "rules": [
+      "r.pop"
+     ],
+     "peak_db": 4.8,
+     "vs_bed_db": 31.6,
+     "vs_bed_hz": 794,
+     "vs_all_db": 17.0,
+     "first20_db": 34.3,
+     "first20_hz": 794,
+     "read_db": 34.3,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 19.96,
+     "label": "lab:mirror:1",
+     "kind": "pop",
+     "n_layers": 1,
+     "rules": [
+      "r.pop"
+     ],
+     "peak_db": 4.8,
+     "vs_bed_db": 29.3,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 29.2,
+     "first20_db": 35.5,
+     "first20_hz": 1000,
+     "read_db": 35.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 20.005,
+     "label": "lab:mirror:2",
+     "kind": "pop",
+     "n_layers": 1,
+     "rules": [
+      "r.pop"
+     ],
+     "peak_db": 4.5,
+     "vs_bed_db": 19.3,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 6.6,
+     "first20_db": 24.8,
+     "first20_hz": 1000,
+     "read_db": 24.8,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 20.05,
+     "label": "lab:mirror:3",
+     "kind": "pop",
+     "n_layers": 1,
+     "rules": [
+      "r.pop"
+     ],
+     "peak_db": 4.7,
+     "vs_bed_db": 36.3,
+     "vs_bed_hz": 794,
+     "vs_all_db": 17.8,
+     "first20_db": 38.1,
+     "first20_hz": 794,
+     "read_db": 38.1,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 20.095,
+     "label": "lab:mirror:4",
+     "kind": "pop",
+     "n_layers": 1,
+     "rules": [
+      "r.pop"
+     ],
+     "peak_db": 5.4,
+     "vs_bed_db": 30.8,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 30.9,
+     "first20_db": 37.9,
+     "first20_hz": 1000,
+     "read_db": 37.9,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 20.14,
+     "label": "lab:mirror:5",
+     "kind": "pop",
+     "n_layers": 1,
+     "rules": [
+      "r.pop"
+     ],
+     "peak_db": 4.7,
+     "vs_bed_db": 22.4,
+     "vs_bed_hz": 1000,
+     "vs_all_db": 22.4,
+     "first20_db": 27.9,
+     "first20_hz": 1000,
+     "read_db": 27.9,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 20.893,
+     "label": "lab:arm:point",
+     "kind": "swish",
+     "n_layers": 1,
+     "rules": [
+      "r.swish"
+     ],
+     "peak_db": 0.0,
+     "vs_bed_db": 32.6,
+     "vs_bed_hz": 10000,
+     "vs_all_db": 32.6,
+     "first20_db": 33.7,
+     "first20_hz": 10000,
+     "read_db": 33.7,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 21.168,
+     "label": "cam:punch:s10",
+     "kind": "punch",
+     "n_layers": 1,
+     "rules": [
+      "r.punch"
+     ],
+     "peak_db": -6.0,
+     "vs_bed_db": 19.8,
+     "vs_bed_hz": 1995,
+     "vs_all_db": 14.4,
+     "first20_db": 12.7,
+     "first20_hz": 316,
+     "read_db": 14.4,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 21.243,
+     "label": "lab:check:0",
+     "kind": "check",
+     "n_layers": 2,
+     "rules": [
+      "r.check.pop",
+      "r.check.tick"
+     ],
+     "peak_db": 9.6,
+     "vs_bed_db": 34.0,
+     "vs_bed_hz": 5012,
+     "vs_all_db": 31.0,
+     "first20_db": 36.2,
+     "first20_hz": 1259,
+     "read_db": 36.2,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 22.966,
+     "label": "lab:check:1",
+     "kind": "check",
+     "n_layers": 2,
+     "rules": [
+      "r.check.pop",
+      "r.check.tick"
+     ],
+     "peak_db": 9.6,
+     "vs_bed_db": 38.1,
+     "vs_bed_hz": 1259,
+     "vs_all_db": 38.1,
+     "first20_db": 43.5,
+     "first20_hz": 1259,
+     "read_db": 43.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 25.28,
+     "label": "apt:phone:error",
+     "kind": "buzz",
+     "n_layers": 1,
+     "rules": [
+      "r.buzz"
+     ],
+     "peak_db": -0.5,
+     "vs_bed_db": 30.2,
+     "vs_bed_hz": 158,
+     "vs_all_db": 30.2,
+     "first20_db": 29.7,
+     "first20_hz": 158,
+     "read_db": 30.2,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 26.465,
+     "label": "cam:punch:s13",
+     "kind": "punch",
+     "n_layers": 1,
+     "rules": [
+      "r.punch"
+     ],
+     "peak_db": -5.1,
+     "vs_bed_db": 10.1,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 10.1,
+     "first20_db": 12.3,
+     "first20_hz": 6310,
+     "read_db": 12.3,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 26.619,
+     "label": "street:heads:snap",
+     "kind": "snap",
+     "n_layers": 2,
+     "rules": [
+      "r.snap.air",
+      "r.snap.cloth"
+     ],
+     "peak_db": 4.8,
+     "vs_bed_db": 21.4,
+     "vs_bed_hz": 1585,
+     "vs_all_db": 21.4,
+     "first20_db": 25.5,
+     "first20_hz": 1585,
+     "read_db": 25.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 28.311,
+     "label": "cam:punch:s14",
+     "kind": "punch",
+     "n_layers": 1,
+     "rules": [
+      "r.punch"
+     ],
+     "peak_db": -4.2,
+     "vs_bed_db": 21.5,
+     "vs_bed_hz": 2512,
+     "vs_all_db": 10.4,
+     "first20_db": 20.3,
+     "first20_hz": 2512,
+     "read_db": 20.3,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 28.337,
+     "label": "apt:crosseyed",
+     "kind": "wobble",
+     "n_layers": 1,
+     "rules": [
+      "r.wobble"
+     ],
+     "peak_db": -1.2,
+     "vs_bed_db": 20.0,
+     "vs_bed_hz": 12589,
+     "vs_all_db": 15.9,
+     "first20_db": 21.8,
+     "first20_hz": 631,
+     "read_db": 21.8,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 32.663,
+     "label": "pov:nose:delete:0",
+     "kind": "glitch",
+     "n_layers": 1,
+     "rules": [
+      "r.glitch"
+     ],
+     "peak_db": 2.9,
+     "vs_bed_db": 23.4,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 18.1,
+     "first20_db": 19.5,
+     "first20_hz": 7943,
+     "read_db": 19.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 32.664,
+     "label": "place:fx.sizzle",
+     "kind": "place",
+     "n_layers": 1,
+     "rules": [
+      "place"
+     ],
+     "peak_db": -6.2,
+     "vs_bed_db": 16.2,
+     "vs_bed_hz": 3162,
+     "vs_all_db": 16.2,
+     "first20_db": 12.5,
+     "first20_hz": 3162,
+     "read_db": 16.2,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 32.793,
+     "label": "pov:nose:delete:1",
+     "kind": "glitch",
+     "n_layers": 1,
+     "rules": [
+      "r.glitch"
+     ],
+     "peak_db": 2.5,
+     "vs_bed_db": 27.7,
+     "vs_bed_hz": 7943,
+     "vs_all_db": 17.7,
+     "first20_db": 20.1,
+     "first20_hz": 7943,
+     "read_db": 20.1,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 32.923,
+     "label": "pov:nose:delete:2",
+     "kind": "glitch",
+     "n_layers": 1,
+     "rules": [
+      "r.glitch"
+     ],
+     "peak_db": 6.0,
+     "vs_bed_db": 20.3,
+     "vs_bed_hz": 5012,
+     "vs_all_db": 12.4,
+     "first20_db": 15.9,
+     "first20_hz": 1995,
+     "read_db": 15.9,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 33.053,
+     "label": "pov:nose:delete:3",
+     "kind": "glitch",
+     "n_layers": 1,
+     "rules": [
+      "r.glitch"
+     ],
+     "peak_db": 4.4,
+     "vs_bed_db": 17.8,
+     "vs_bed_hz": 7943,
+     "vs_all_db": 10.3,
+     "first20_db": 16.0,
+     "first20_hz": 6310,
+     "read_db": 16.0,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 33.183,
+     "label": "pov:nose:delete:4",
+     "kind": "glitch",
+     "n_layers": 1,
+     "rules": [
+      "r.glitch"
+     ],
+     "peak_db": 5.3,
+     "vs_bed_db": 20.4,
+     "vs_bed_hz": 7943,
+     "vs_all_db": 14.3,
+     "first20_db": 16.2,
+     "first20_hz": 6310,
+     "read_db": 16.2,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 33.313,
+     "label": "pov:nose:delete:5",
+     "kind": "glitch",
+     "n_layers": 1,
+     "rules": [
+      "r.glitch"
+     ],
+     "peak_db": 6.4,
+     "vs_bed_db": 13.9,
+     "vs_bed_hz": 398,
+     "vs_all_db": 13.3,
+     "first20_db": 18.0,
+     "first20_hz": 398,
+     "read_db": 18.0,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 33.443,
+     "label": "pov:nose:delete:6",
+     "kind": "glitch",
+     "n_layers": 1,
+     "rules": [
+      "r.glitch"
+     ],
+     "peak_db": 5.9,
+     "vs_bed_db": 9.0,
+     "vs_bed_hz": 5012,
+     "vs_all_db": 6.0,
+     "first20_db": 2.7,
+     "first20_hz": 7943,
+     "read_db": 6.0,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 33.573,
+     "label": "pov:nose:delete:7",
+     "kind": "glitch",
+     "n_layers": 1,
+     "rules": [
+      "r.glitch"
+     ],
+     "peak_db": 7.9,
+     "vs_bed_db": 17.5,
+     "vs_bed_hz": 7943,
+     "vs_all_db": 14.4,
+     "first20_db": 16.5,
+     "first20_hz": 7943,
+     "read_db": 16.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 33.703,
+     "label": "pov:nose:delete:8",
+     "kind": "glitch",
+     "n_layers": 1,
+     "rules": [
+      "r.glitch"
+     ],
+     "peak_db": 8.5,
+     "vs_bed_db": 19.8,
+     "vs_bed_hz": 7943,
+     "vs_all_db": 16.2,
+     "first20_db": 21.7,
+     "first20_hz": 7943,
+     "read_db": 21.7,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 33.833,
+     "label": "pov:nose:delete:9",
+     "kind": "glitch",
+     "n_layers": 1,
+     "rules": [
+      "r.glitch"
+     ],
+     "peak_db": 9.1,
+     "vs_bed_db": 9.1,
+     "vs_bed_hz": 398,
+     "vs_all_db": 9.1,
+     "first20_db": 26.9,
+     "first20_hz": 398,
+     "read_db": 26.9,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 34.167,
+     "label": "cam:punch:s17",
+     "kind": "punch",
+     "n_layers": 1,
+     "rules": [
+      "r.punch"
+     ],
+     "peak_db": -5.6,
+     "vs_bed_db": 13.6,
+     "vs_bed_hz": 3162,
+     "vs_all_db": 13.6,
+     "first20_db": 16.2,
+     "first20_hz": 7943,
+     "read_db": 16.2,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    }
+   ],
+   "dead_layers": [
+    {
+     "t": 7.435,
+     "rule": "r.shutter.holga",
+     "sample": "fx.shutter.holga",
+     "read_db": -6.2
+    }
+   ]
+  },
+  "harshness": {
+   "status": "warn",
+   "music_max_db": -19.2,
+   "summary": "17 event(s) more than 6 dB over the music's loudest 2-6 kHz peak (-19.2 dBFS): 7.43 phone:shutter, 33.05 pov:nose:delete:3, 33.70 pov:nose:delete:8, 32.66 pov:nose:delete:0, 26.62 street:heads:snap, 32.79 pov:nose:delete:1; note: 0 bright event(s) (centroid > 6.5 kHz, above launch-film effects)",
+   "items": [
+    {
+     "t": 7.435,
+     "label": "phone:shutter",
+     "rules": [
+      "r.shutter",
+      "r.shutter.holga"
+     ],
+     "pres_db": -0.6,
+     "pres_minus_low_db": 32.9,
+     "centroid_hz": 6415,
+     "music_pres_db": -48.2,
+     "over_music_max_db": 18.7,
+     "issues": [
+      "2-6 kHz peak -0.6 dBFS, +18.7 dB over the music's loudest"
+     ],
+     "bright": false
+    },
+    {
+     "t": 33.053,
+     "label": "pov:nose:delete:3",
+     "rules": [
+      "r.glitch"
+     ],
+     "pres_db": -6.6,
+     "pres_minus_low_db": 14.8,
+     "centroid_hz": 3449,
+     "music_pres_db": -45.2,
+     "over_music_max_db": 12.6,
+     "issues": [
+      "2-6 kHz peak -6.6 dBFS, +12.6 dB over the music's loudest"
+     ],
+     "bright": false
+    },
+    {
+     "t": 33.703,
+     "label": "pov:nose:delete:8",
+     "rules": [
+      "r.glitch"
+     ],
+     "pres_db": -6.8,
+     "pres_minus_low_db": 12.9,
+     "centroid_hz": 3115,
+     "music_pres_db": -44.3,
+     "over_music_max_db": 12.5,
+     "issues": [
+      "2-6 kHz peak -6.8 dBFS, +12.5 dB over the music's loudest"
+     ],
+     "bright": false
+    },
+    {
+     "t": 32.663,
+     "label": "pov:nose:delete:0",
+     "rules": [
+      "r.glitch"
+     ],
+     "pres_db": -7.2,
+     "pres_minus_low_db": 13.5,
+     "centroid_hz": 3143,
+     "music_pres_db": -44.6,
+     "over_music_max_db": 12.0,
+     "issues": [
+      "2-6 kHz peak -7.2 dBFS, +12.0 dB over the music's loudest"
+     ],
+     "bright": false
+    },
+    {
+     "t": 26.619,
+     "label": "street:heads:snap",
+     "rules": [
+      "r.snap.air",
+      "r.snap.cloth"
+     ],
+     "pres_db": -7.4,
+     "pres_minus_low_db": 5.0,
+     "centroid_hz": 1908,
+     "music_pres_db": -44.2,
+     "over_music_max_db": 11.8,
+     "issues": [
+      "2-6 kHz peak -7.4 dBFS, +11.8 dB over the music's loudest"
+     ],
+     "bright": false
+    },
+    {
+     "t": 32.793,
+     "label": "pov:nose:delete:1",
+     "rules": [
+      "r.glitch"
+     ],
+     "pres_db": -7.9,
+     "pres_minus_low_db": 14.1,
+     "centroid_hz": 3581,
+     "music_pres_db": -42.8,
+     "over_music_max_db": 11.4,
+     "issues": [
+      "2-6 kHz peak -7.9 dBFS, +11.4 dB over the music's loudest"
+     ],
+     "bright": false
+    },
+    {
+     "t": 33.183,
+     "label": "pov:nose:delete:4",
+     "rules": [
+      "r.glitch"
+     ],
+     "pres_db": -7.9,
+     "pres_minus_low_db": 12.4,
+     "centroid_hz": 3253,
+     "music_pres_db": -44.8,
+     "over_music_max_db": 11.4,
+     "issues": [
+      "2-6 kHz peak -7.9 dBFS, +11.4 dB over the music's loudest"
+     ],
+     "bright": false
+    },
+    {
+     "t": 33.573,
+     "label": "pov:nose:delete:7",
+     "rules": [
+      "r.glitch"
+     ],
+     "pres_db": -8.8,
+     "pres_minus_low_db": 15.0,
+     "centroid_hz": 3392,
+     "music_pres_db": -47.1,
+     "over_music_max_db": 10.4,
+     "issues": [
+      "2-6 kHz peak -8.8 dBFS, +10.4 dB over the music's loudest"
+     ],
+     "bright": false
+    },
+    {
+     "t": 21.243,
+     "label": "lab:check:0",
+     "rules": [
+      "r.check.pop",
+      "r.check.tick"
+     ],
+     "pres_db": -9.2,
+     "pres_minus_low_db": 18.2,
+     "centroid_hz": 1591,
+     "music_pres_db": -40.4,
+     "over_music_max_db": 10.0,
+     "issues": [
+      "2-6 kHz peak -9.2 dBFS, +10.0 dB over the music's loudest"
+     ],
+     "bright": false
+    },
+    {
+     "t": 22.966,
+     "label": "lab:check:1",
+     "rules": [
+      "r.check.pop",
+      "r.check.tick"
+     ],
+     "pres_db": -9.2,
+     "pres_minus_low_db": 18.2,
+     "centroid_hz": 1591,
+     "music_pres_db": -50.4,
+     "over_music_max_db": 10.0,
+     "issues": [
+      "2-6 kHz peak -9.2 dBFS, +10.0 dB over the music's loudest"
+     ],
+     "bright": false
+    },
+    {
+     "t": 7.196,
+     "label": "phone:drop",
+     "rules": [
+      "r.whoosh.drop"
+     ],
+     "pres_db": -9.3,
+     "pres_minus_low_db": 4.3,
+     "centroid_hz": 1881,
+     "music_pres_db": -48.5,
+     "over_music_max_db": 9.9,
+     "issues": [
+      "2-6 kHz peak -9.3 dBFS, +9.9 dB over the music's loudest"
+     ],
+     "bright": false
+    },
+    {
+     "t": 10.655,
+     "label": "phone:nose:stretch",
+     "rules": [
+      "r.stretch"
+     ],
+     "pres_db": -9.9,
+     "pres_minus_low_db": 7.2,
+     "centroid_hz": 1983,
+     "music_pres_db": -49.0,
+     "over_music_max_db": 9.3,
+     "issues": [
+      "2-6 kHz peak -9.9 dBFS, +9.3 dB over the music's loudest"
+     ],
+     "bright": false
+    },
+    {
+     "t": 32.923,
+     "label": "pov:nose:delete:2",
+     "rules": [
+      "r.glitch"
+     ],
+     "pres_db": -9.9,
+     "pres_minus_low_db": 10.1,
+     "centroid_hz": 3074,
+     "music_pres_db": -45.3,
+     "over_music_max_db": 9.3,
+     "issues": [
+      "2-6 kHz peak -9.9 dBFS, +9.3 dB over the music's loudest"
+     ],
+     "bright": false
+    },
+    {
+     "t": 14.398,
+     "label": "mind:title:spin",
+     "rules": [
+      "r.whoosh.spin"
+     ],
+     "pres_db": -10.8,
+     "pres_minus_low_db": 5.1,
+     "centroid_hz": 920,
+     "music_pres_db": -36.4,
+     "over_music_max_db": 8.4,
+     "issues": [
+      "2-6 kHz peak -10.8 dBFS, +8.4 dB over the music's loudest"
+     ],
+     "bright": false
+    },
+    {
+     "t": 2.076,
+     "label": "apt:eye:blink",
+     "rules": [
+      "r.blink"
+     ],
+     "pres_db": -11.4,
+     "pres_minus_low_db": 25.0,
+     "centroid_hz": 6362,
+     "music_pres_db": -47.4,
+     "over_music_max_db": 7.8,
+     "issues": [
+      "2-6 kHz peak -11.4 dBFS, +7.8 dB over the music's loudest"
+     ],
+     "bright": false
+    },
+    {
+     "t": 33.833,
+     "label": "pov:nose:delete:9",
+     "rules": [
+      "r.glitch"
+     ],
+     "pres_db": -11.4,
+     "pres_minus_low_db": -1.7,
+     "centroid_hz": 1130,
+     "music_pres_db": -44.1,
+     "over_music_max_db": 7.8,
+     "issues": [
+      "2-6 kHz peak -11.4 dBFS, +7.8 dB over the music's loudest"
+     ],
+     "bright": false
+    },
+    {
+     "t": 5.681,
+     "label": "bath:mirror:flip",
+     "rules": [
+      "r.whoosh.flip"
+     ],
+     "pres_db": -12.6,
+     "pres_minus_low_db": -9.1,
+     "centroid_hz": 1157,
+     "music_pres_db": -47.2,
+     "over_music_max_db": 6.7,
+     "issues": [
+      "2-6 kHz peak -12.6 dBFS, +6.7 dB over the music's loudest"
+     ],
+     "bright": false
+    }
+   ],
+   "bright": []
+  },
+  "sync": {
+   "status": "ok",
+   "checked": 59,
+   "items": [],
+   "deliberate": [],
+   "summary": "59 events checked, 0 off their cue; 0 more sit off the cue by exactly a rule offset or carry a qa_ok note (check those on the frames)"
+  },
+  "density": {
+   "status": "ok",
+   "events_per_s": [
+    1,
+    0,
+    3,
+    0,
+    0,
+    2,
+    0,
+    2,
+    0,
+    0,
+    1,
+    4,
+    11,
+    3,
+    1,
+    4,
+    0,
+    0,
+    0,
+    6,
+    5,
+    2,
+    1,
+    0,
+    0,
+    1,
+    2,
+    0,
+    2,
+    0,
+    0,
+    0,
+    4,
+    7,
+    1,
+    0,
+    0,
+    0
+   ],
+   "busiest_s": [
+    [
+     12,
+     11
+    ],
+    [
+     33,
+     7
+    ],
+    [
+     19,
+     6
+    ],
+    [
+     20,
+     5
+    ],
+    [
+     11,
+     4
+    ]
+   ],
+   "most_used_samples": [
+    [
+     "fx.pop.a",
+     14
+    ],
+    [
+     "fx.pop.b",
+     12
+    ],
+    [
+     "fx.pop.c",
+     10
+    ],
+    [
+     "fx.punch.a",
+     4
+    ],
+    [
+     "fx.tick",
+     2
+    ],
+    [
+     "fx.punch.b",
+     2
+    ],
+    [
+     "fx.blink",
+     1
+    ],
+    [
+     "fx.flip",
+     1
+    ]
+   ],
+   "rules": [
+    {
+     "rule": "r.pop",
+     "n": 20,
+     "distinct_samples": 3,
+     "ioi_s": 0.917,
+     "ioi_cv": 2.3,
+     "gain_sd_db": 0.53,
+     "pitch_sd_st": 0.48
+    },
+    {
+     "rule": "r.lpop",
+     "n": 14,
+     "distinct_samples": 3,
+     "ioi_s": 0.045,
+     "ioi_cv": 0.0,
+     "gain_sd_db": 0.96,
+     "pitch_sd_st": 0.72
+    },
+    {
+     "rule": "r.glitch",
+     "n": 10,
+     "distinct_samples": 10,
+     "ioi_s": 0.13,
+     "ioi_cv": 0.0,
+     "gain_sd_db": 2.18,
+     "pitch_sd_st": 0.0
+    },
+    {
+     "rule": "r.punch",
+     "n": 5,
+     "distinct_samples": 2,
+     "ioi_s": 7.234,
+     "ioi_cv": 0.72,
+     "gain_sd_db": 0.6,
+     "pitch_sd_st": 0.59
+    }
+   ],
+   "machine_gun": [],
+   "summary": "63 effect events in 38 s (16.7 per 10 s); busiest seconds 12s:11, 33s:7, 19s:6, 20s:5, 11s:4; 0 machine-gun rule(s)"
+  }
+ },
+ "inputs": {
+  "design": "audio/sounddesign.json",
+  "report": "out/qa/mix_report.json",
+  "trace": "out/qa/adds.json",
+  "stems": "out/audio/stems",
+  "master": "audio/final_mix.wav",
+  "only": null
+ }
+}

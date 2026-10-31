@@ -36,7 +36,7 @@ const CAPS = [];
 for (const L of VOICE.lines) { const ws = L.text.split(/\s+/); let cur = null;
   ws.forEach((w, i) => { const t = L.words[i] ? L.words[i].t0 : L.t0; if (!cur) { cur = [t, [], []]; CAPS.push(cur); } cur[1].push(w); cur[2].push(t); if (/[.,:;?!]$/.test(w) || cur[1].length >= 4) cur = null; }); }
 CAPS.forEach((c) => (c[1] = c[1].join(' ')));
-const IDS = ['strait', 'charybdis', 'scylla', 'circe', 'price', 'choice', 'armour', 'steer', 'heads', 'lifted', 'save', 'silence', 'pitiful', 'sign'];
+const IDS = ['strait', 'charybdis', 'scylla', 'circe', 'price', 'choice', 'armour', 'steer', 'heads', 'save', 'silence', 'pitiful', 'sign'];
 const SIGN_T = VL('pitiful').t1 + 0.6;
 const HIT = VW('heads', 'down') - 0.05;                           // the payoff: the six heads strike on "down"
 const TB = IDS.map((id) => (id === 'sign' ? SIGN_T : S(id)));
