@@ -1,0 +1,21 @@
+# Sound credits — slow-checkout
+- Music: "Short Pizzicato Song" — Freesound 529008 (CC0), the approved bed (same as lego-sea / future-library).
+- Voice: VoiceStudio "3D cartoon 2", take 58.
+- SFX kit: sound-layer kit (CC0, see sound-layer/kit/CREDITS.md).
+- Freesound CC0 recordings (previews HQ):
+  - 617520 "Supermarket Ambience" by neilraouf (CC0) — https://freesound.org/s/617520/
+  - 582919 "Melbourne City Intersection Trams & Cars Traffic Afternoon" by melbourne.atmospheres (CC0) — https://freesound.org/s/582919/
+  - 398843 "170720_SmallAppartment_Kitchen_F.wav" by blaukreuz (CC0) — https://freesound.org/s/398843/
+  - 556390 "Quiet City Atmos.mp3" by Anya_Media (CC0) — https://freesound.org/s/556390/
+  - 144418 "Store Scanner Beep" by zerolagtime (CC0) — https://freesound.org/s/144418/
+  - 202530 "scanner beep.wav" by kalisemorrison (CC0) — https://freesound.org/s/202530/
+  - 867051 "Medium Crowd Walla" by IENBA (CC0) — https://freesound.org/s/867051/
+  - 166134 "Laugh_old_man_5.wav" by deleted_user_2104797 (CC0) — https://freesound.org/s/166134/
+  - 800973 "Noises - Short laugh" by Sadiquecat (CC0) — https://freesound.org/s/800973/
+  - 253778 "exasperated.wav" by Reitanna (CC0) — https://freesound.org/s/253778/
+  - 383602 "bicycle-bell_09.wav" by newagesoup (CC0) — https://freesound.org/s/383602/
+  - 383627 "bicycle-bell_18.wav" by newagesoup (CC0) — https://freesound.org/s/383627/
+  - 642770 "Paper shuffling.mp3" by meeser9 (CC0) — https://freesound.org/s/642770/
+  - 792927 "Fine Water Drop" by qubodup (CC0) — https://freesound.org/s/792927/
+  - 817884 "Cat Meow #1" by huw2k8 (CC0) — https://freesound.org/s/817884/
+- Photos (s08 grandson, s09 knee x-ray, s10 cat): generated in Google Flow (Nano Banana 2.1).

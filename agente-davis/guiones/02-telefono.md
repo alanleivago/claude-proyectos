@@ -1,3 +1,5 @@
+# Título: Si ICE te pide tu TELÉFONO, di ESTO (Solo UNA palabra) · Miniatura: NO LO DESBLOQUEES
+
 Imagina que vas caminando a tu trabajo, como cualquier mañana. De repente un agente de ICE se te acerca, te mira con calma, señala el bolsillo de tu pantalón y te dice… "Déme su teléfono. Y desbloquéelo, por favor." Y sin darte cuenta, tu mano ya lo está sacando.
 
 Quiero que te detengas justo ahí. Porque en ese teléfono está toda tu vida. Las fotos de tus documentos, los mensajes con tu familia, los nombres y números de la gente que quieres, y hasta los lugares por donde has estado. Lo que entregas en esos treinta segundos puede abrir un caso contra ti, y también contra las personas que más quieres. Y hay una sola palabra que puede evitarlo. En este video te la voy a dar, y también te voy a decir qué hacer si de todos modos se quieren llevar tu teléfono.

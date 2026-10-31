@@ -28,7 +28,7 @@ def tts(text, out):
 
 
 def main(script, outdir):
-    paras = [p.strip() for p in open(script, encoding="utf-8").read().split("\n\n") if p.strip()]
+    paras = [p.strip() for p in open(script, encoding="utf-8").read().split("\n\n") if p.strip() and not p.lstrip().startswith("#")]  # "# Título" header is not voiced
     os.makedirs(outdir, exist_ok=True)
     for i, p in enumerate(paras, 1):
         out = os.path.join(outdir, f"p{i:02d}.wav")
