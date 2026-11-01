@@ -2,7 +2,9 @@
 
 A first-person folk tale told in on-screen paragraphs over a low-res 3D world, cold and foggy, pushed through a fixed palette with ordered dither. Made from `Ref earlobe horror/` (reel 5 the main reference).
 
-**Quality bar (2026-10-25, approved by the user): `pieces/behemoth`** (before it, pieces/jorogumo). Its full source is in `template/` (src, piece.json, brief, the card print, sound/mix.py). Start every new yokai piece from `template/` and go further from there — this level is the minimum.
+**Rules and workflow: read `RULES.md` first** (every user correction, the QA steps, sound, card, badge). QA tools are in `tools/`; the card's Flow style refs are earlobe's prints in `references/earlobe/` (local only).
+
+**Start new pieces from the newest piece's `src/` (currently `pieces/gashadokuro`)**: it has the rigs, grips, IK, card/seal/badge and QA hooks. `template/` is the older behemoth-level base. Quality bar: behemoth → inunaki → corpo-seco → gashadokuro.
 
 ## The look (measured, then pushed by the user's notes)
 - **Pixels:** three.js renders at `YK.LW × YK.LH` = 216×384 (5 px pixel at 1080), no antialias, blown up with no smoothing.
