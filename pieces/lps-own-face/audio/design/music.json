@@ -1,0 +1,30 @@
+{
+ "_doc": "Music edit. Track: 'Comical' by Ahjay Stelino (Mixkit, Mixkit Stock Music Free License). Measured 140.3 BPM, downbeats at 0.895 + 1.7102*n s (matches earshot's tracker at 100.07/101.78 s). Played at its own tempo (no stretch). Two segments spliced on a downbeat: src 0 -> bar 18 (31.679 s) at film 0, then src bar 61 (105.217 s) -> the track's own ending, so its final hit (bar 64, ~110.35 s) lands at ~36.81 s, right after the last word, and rings out into the film's end (tail_fade).",
+ "music": {
+  "file": "audio/assets/music/mk-2_comical.mp3",
+  "src_bpm": 140.338,
+  "target_bpm": 140.338,
+  "stretch": "none",
+  "gain_db": -8.5,
+  "segments": [
+   {
+    "src_from": 0.0,
+    "src_to": 31.679,
+    "at": 0.26,
+    "fade_in": 0.0,
+    "fade_in_at_start": false,
+    "fade_out": 0.02,
+    "label": "mu.A: track bars -1..17 (intro + theme) under shots 1-14"
+   },
+   {
+    "src_from": 105.217,
+    "src_to": 111.12,
+    "at": 31.939,
+    "fade_in": 0.008,
+    "fade_out": 0.05,
+    "tail_fade": 0.6,
+    "label": "mu.B: track bars 61-64, its own ending; final hit at film ~36.81 s, tail faded by 37.65"
+   }
+  ]
+ }
+}

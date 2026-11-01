@@ -149,7 +149,8 @@ function pHeads() {   // THE STRIKE: the six heads drop on the ship and snatch s
   sea(1180, 1330, 'hd');
   ship(540, 1230, 860);
   necks(540, 0, 1100, (i) => { const t = HIT + [0, 0.1, 0.04, 0.14, 0.07, 0.17][i], d = EZ.i2(clamp((TT - t + 0.25) / 0.25)), up = EZ.o2(clamp((TT - t - 0.35) / 0.9));
-    return { dy: lerp(-1300, 150, d) - up * 230, rot: 0.04 * Math.sin(TT * 4 + i), a: TT < t - 0.3 ? 0 : 1 }; });
+    const w = EZ.io(clamp((TT - HIT - 1.3) / 1.0)), rise = 200 * EZ.io(clamp((TT - VL('lifted').t0 + 0.25) / 5.5));   // then they hang there, thrashing, and climb
+    return { dy: lerp(-1300, 150, d) - up * 230 - rise + w * 30 * Math.sin(TT * 2.2 + i * 1.3), dx: w * 18 * Math.sin(TT * 1.7 + i * 2.1), rot: lerp(0.04 * Math.sin(TT * 4 + i), 0.05 * Math.sin(TT * 1.9 + i), w), a: TT < t - 0.3 ? 0 : 1 }; });
   if (TT > HIT && TT < HIT + 0.45) { ctx.save(); ctx.globalAlpha = 0.5 * (1 - (TT - HIT) / 0.45); ctx.fillStyle = '#fff0d0'; ctx.fillRect(0, PIC0, W, PIC1 - PIC0); ctx.restore(); }
   for (let i = 0; i < 14; i++) { const R = RNG('sp', i), t = TT - HIT - R.r(0, 0.2); if (t < 0 || t > 1) continue; bfDot(540 + R.r(-430, 430), 1200 - t * R.r(200, 420) + t * t * 500, R.r(6, 12) * (1 - t), BF.black); }
 }
@@ -160,8 +161,8 @@ function pLifted() {   // six men lifted into the air, struggling, calling his n
   necks(540, -80 - u * 200, 1100, (i) => ({ dy: 0 + 30 * Math.sin(TT * 2.2 + i * 1.3), dx: 18 * Math.sin(TT * 1.7 + i * 2.1), rot: 0.05 * Math.sin(TT * 1.9 + i) }));
 }
 function pSave() {   // the last feet vanish upward; he hurls a spear at the empty sky, then lowers his head
-  const out = EZ.i2(clamp(since('save') / 0.9));
-  necks(700, -280 - out * 1200, 1100, (i) => ({ dy: 0, rot: 0.04 * Math.sin(TT * 2 + i), a: 1 - out }));
+  const out = EZ.i2(clamp((since('save') + 0.3) / 0.6));
+  necks(700, -480 - out * 1200, 1100, (i) => ({ dy: 0, rot: 0.04 * Math.sin(TT * 2 + i), a: 1 - out }));
   const tT = VW('save', 'save') - 0.2, g = EZ.io(clamp((TT - tT - 0.15) / 0.35));
   if (g < 1) fig('ody_throw', 380, 1000, { a: 1 - g }); if (g > 0) fig('ody_grief', 380, 1000, { a: g });
   const f = clamp((TT - tT) / 0.8); if (f > 0 && f < 1) spear(lerp(640, 1180, f), lerp(640, -100, f), -0.95, 300);
@@ -185,7 +186,7 @@ function prop(n, x, y, wd, o = {}) { const im = asset(n + '.webp'); if (!im) ret
 // captions (Dalek Pinpoint, brown): a phrase at a time, up to two lines, each word written on its spoken word,
 // the phrase complete on screen until the next one; placed per panel just above the figures
 const K_FONT = '"DalekPinpointBold", "Dalek Pinpoint", Georgia, serif', K_SIZE = 78, K_LH = 92, K_MAXW = 760;
-const CAP_LAST = { strait: 560, charybdis: 560, scylla: 470, circe: 560, price: 600, choice: 560, armour: 520, steer: 620, heads: 1540, lifted: 1540, save: 560, silence: 600, pitiful: 520 };
+const CAP_LAST = { strait: 560, charybdis: 560, scylla: 470, circe: 560, price: 600, choice: 560, armour: 520, steer: 620, heads: 1470, lifted: 1470, save: 560, silence: 600, pitiful: 520 };
 const KCH = [];
 for (const L of VOICE.lines) { const ws = L.text.split(/\s+/); let cur = null;
   ws.forEach((w, i) => { const t = L.words[i] ? L.words[i].t0 : L.t0; if (!cur) { cur = { id: L.id, ws: [], ts: [] }; KCH.push(cur); } cur.ws.push(w); cur.ts.push(t);
@@ -196,7 +197,7 @@ function kLayout(ws, size = K_SIZE) { ctx.font = `${size}px ${K_FONT}`; ctx.lett
   for (const it of items) { if (lw + it.ww > K_MAXW && lines[lines.length - 1].length) { lines.push([]); lw = 0; } lines[lines.length - 1].push(it); lw += it.ww + sp; } return { lines, sp }; }
 function kCaptions(pi) {
   const id = IDS[pi], dx = BF_PDX; if (id === 'sign') return;
-  const mine = KCH.filter((c) => c.id === id);
+  const mine = KCH.filter((c) => c.id === id || (id === 'heads' && c.id === 'lifted'));   // the strike and the lifting share one panel
   mine.forEach((c, k) => {
     const t0 = c.show, last = k + 1 >= mine.length, tEnd = last ? SUBEND(id) + BF_SLIDE : mine[k + 1].show;
     if (TT < t0 || TT >= tEnd) return;
@@ -220,7 +221,7 @@ function kPen(str, x, y, ww, prog, size) {
   ctx.fillStyle = '#6e2a18'; ctx.fillText(str, x, y);
   ctx.restore();
 }
-const PANELS = { strait: pStrait, charybdis: pCharybdis, scylla: pScylla, circe: pCirce, price: pPrice, choice: pChoice, armour: pArmour, steer: pSteer, heads: pHeads, lifted: pLifted, save: pSave, silence: pSilence, pitiful: pPitiful, sign: pSign };
+const PANELS = { strait: pStrait, charybdis: pCharybdis, scylla: pScylla, circe: pCirce, price: pPrice, choice: pChoice, armour: pArmour, steer: pSteer, heads: pHeads, save: pSave, silence: pSilence, pitiful: pPitiful, sign: pSign };
 function sceneStage() {
   ctx.setTransform(1, 0, 0, 1, 0, 0); drawAsset('bg.jpg', 0, 0, W, H);   // the ground and its friezes stay put
   const p = bfStripPos(), off = p * W, i0 = Math.min(IDS.length - 1, Math.floor(p)), i1 = Math.min(IDS.length - 1, i0 + 1);

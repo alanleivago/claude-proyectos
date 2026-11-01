@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bells</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { width: min(100vw, calc(100vh * 16 / 9)); height: auto; aspect-ratio: 16 / 9; display: block; cursor: pointer; image-rendering: pixelated; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  BELLS — 16:9, 24fps, style "onebit" + Flow layers. Cosmic horror after Urbn.Theory's format, no voice:
+//  the captions carry it (clocked by a scratch voice), the talking loop types them. Madfable outro.
+// =====================================================================
+const FPS = 24, W = 1920, H = 1080;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const SAFE = { top: 60, bottom: 60, right: 80 };
+const HAND = 'sans-serif';
+const CX = 960;
+// ---- the voice is the clock: VL(id) = a line { t0, t1, words }, VW(id, word, n) = when its n-th `word` starts
+const VL = (id) => VOICE.lines.find((l) => l.id === id);
+const VW = (id, w, n = 1) => { let k = 0; for (const x of VL(id).words) if (x.w.toLowerCase().replace(/[^a-z']/g, '') === w && ++k === n) return x.t0; return VL(id).t0; };
+const AT = (id) => VL(id).t0 - 0.15;                                  // a shot starts just before its line
+const REVEAL = AT('looking');                                          // the payoff: it was looking at the village
+const CARD = VL('who').t1 + 2.2;
+const LOGO = CARD + 6.4;                                              // the Madfable outro
+const DURATION = Math.round((LOGO + 21) * FPS) / FPS;   // a ~20 s end screen for the YouTube end cards
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+
+// [t0, scene] — one shot per line (29 beats), then the card and the Madfable outro
+const IDS = VOICE.lines.map((l) => l.id);
+const SHOT_LIST = [...IDS.map((id, i) => [i ? AT(id) : 0, id]), [CARD, 'card'], [LOGO, 'logo']];
+const SCENE = { card: () => sceneCard(), logo: () => sceneLogo() };
+for (const id of IDS) SCENE[id] = id === 'face' ? () => sceneFace() : id === 'asleep' ? () => sceneLog() : id === 'looking' ? () => sceneReveal() : () => sceneBeat(id);
+const ERA_LIST = SHOT_LIST.map(([t0, sc], i) => [t0, i + 1 < SHOT_LIST.length ? SHOT_LIST[i + 1][0] : DURATION, SCENE[sc]]);
+const CUE = { sting: REVEAL, silence: VL('open').t1 + 0.1 };
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'held shots, caption-clocked',
+  shots: SHOT_LIST.map(([t0, sc], i) => ({ id: i + 1, key: sc, era: i, t0, t1: ERA_LIST[i][1], title: sc })),
+  cuts: SHOT_LIST.slice(1).map(([t0]) => t0),
+  morphs: [],
+  cues: CUE,
+  acts: [
+    { name: '1 The silence', role: 'build', t0: 0, t1: AT('log') },
+    { name: '2 The log and the bells', role: 'journey', t0: AT('log'), t1: AT('seventh') },
+    { name: '3 The seventh night', role: 'journey', t0: AT('seventh'), t1: REVEAL },
+    { name: '4 Payoff', role: 'gift', t0: REVEAL, t1: DURATION },
+  ],
+  board: [
+    { t: VW('hook', 'bell') + 0.6, title: '1 the monastery rings every hour', sound: 'bell toll, wind', next: 'cut' },
+    { t: VW('never', 'plague') + 0.4, title: '2 plague (then war on "war"): the bell goes on', sound: 'cart wheels / far shelling, bell', next: 'cut' },
+    { t: VW('why', 'asked') + 0.2, title: '3 the monks at the rope', sound: 'rope creak, toll', next: 'cut' },
+    { t: VW('died', 'died') + 0.4, title: '4 the last monk dead under the rope', sound: 'wind, silence', next: 'cut' },
+    { t: VW('silent', 'silent') + 0.8, title: '5 03:00 AM: the frozen bell', sound: 'tick stops, sub drone', next: 'cut' },
+    { t: VW('dogs', 'howled') + 0.3, title: '6 the dogs howl at the mountain', sound: 'dog howls', next: 'cut' },
+    { t: VW('strange', 'silence') + 0.5, title: '7 a woman at the window', sound: 'room tone, breath', next: 'cut' },
+    { t: VW('fog', 'stopped') + 0.4, title: '8 the fog pours down and stops', sound: 'low rumble', next: 'cut' },
+    { t: VW('sunrise', 'shape') + 0.4, title: '9 sunrise: a shape in the fog', sound: 'wind, crowd murmur', next: 'cut' },
+    { t: VW('face', 'mountain') + 0.6, title: '10 the sleeping face', sound: 'sub swell', next: 'cut' },
+    { t: VW('hour', 'more') + 0.6, title: '11 hours silent: eyes open in its skin', sound: 'wet creak per eye', next: 'cut' },
+    { t: VW('rope', 'above') + 0.3, title: '12 the rope cut from above', sound: 'rope slap, hit on "above"', next: 'cut' },
+    { t: VW('log', 'years') + 0.2, title: '13 the archive of logs', sound: 'footsteps, dust', next: 'cut' },
+    { t: VW('asleep', 'asleep') + 0.7, title: '14 every line: asleep', sound: 'pen scratch, low hit', next: 'cut' },
+    { t: VW('oldest', 'knew') + 0.2, title: '15 the oldest page', sound: 'parchment, drone', next: 'cut' },
+    { t: VW('other', 'bells') + 0.3, title: '16 historians and other bells', sound: 'flashlight click, storeroom hum', next: 'cut' },
+    { t: VW('inscr', 'lightning') + 0.5, title: '17 vivos voco, mortuos plango, fulgura frango', sound: 'a bell hit per phrase', next: 'cut' },
+    { t: VW('fourth', 'out') + 0.4, title: '18 the fourth line, scratched out', sound: 'metal scrape', next: 'cut' },
+    { t: VW('war', 'melted') + 0.3, title: '19 175,000 bells', sound: 'train, foundry roar', next: 'cut' },
+    { t: VW('winter', 'fog') + 0.4, title: '20 empty towers, the same fog', sound: 'wind, silence', next: 'cut' },
+    { t: VW('seventh', 'mountain') + 0.3, title: '21 night 7: the bell carried up', sound: 'snow steps, strain', next: 'cut' },
+    { t: VW('hung', 'bleeding') + 0.3, title: '22 hands bleeding on the rope', sound: 'rope creak, drips', next: 'cut' },
+    { t: VW('open', 'open') + 0.5, title: '23 above them: the eyes already open', sound: 'drone, then HARD SILENCE', next: 'cut to black' },
+    { t: VW('looking', 'village') + 0.9, title: '24 REVEAL: it was looking at the village', sound: 'loudest hit + bell, glitch', next: 'cut' },
+    { t: VW('rang', 'closed') + 0.4, title: '25 the bell rings, the eyes close', sound: 'bell toll x3', next: 'cut' },
+    { t: VW('notall', 'way') + 0.6, title: '26 not all the way', sound: 'silence, one wet blink', next: 'cut' },
+    { t: VW('road', 'him') + 0.3, title: '27 the new monk', sound: 'wind, distant toll', next: 'cut' },
+    { t: VW('near', 'hour') + 0.4, title: '28 somewhere near you', sound: 'town night, bell', next: 'cut' },
+    { t: VW('who', 'gone') + 0.6, title: '29 who will ring them?', sound: 'rope creak, silence', next: 'cut' },
+    { t: CARD + 3.6, title: 'card', sound: 'silence, one low toll', next: 'cut' },
+    { t: LOGO + 2.4, title: 'Madfable outro (~20 s red)', sound: 'low hit, silence', next: 'end' },
+  ],
+  narration: VOICE.lines.map((l) => ({ id: l.id, t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;

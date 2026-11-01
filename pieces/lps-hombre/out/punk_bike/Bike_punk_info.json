@@ -1,0 +1,366 @@
+{
+ "file": "/Users/alanleiva/claude-proyectos/pieces/lps-hombre/punk/bike/Bike_punk.blend",
+ "unit_scale": 1.0,
+ "objects": [
+  {
+   "name": "Bike",
+   "type": "MESH",
+   "parent": "Armature",
+   "parent_type": "OBJECT",
+   "hidden": false,
+   "mods": [
+    "MIRROR",
+    "ARMATURE"
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "faces": 126,
+   "tris": 226,
+   "verts": 138,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "mats": [
+    "Material",
+    "Bike",
+    "BikeTransparent"
+   ],
+   "vgroups": 1,
+   "shape_keys": []
+  },
+  {
+   "name": "Light",
+   "type": "LIGHT",
+   "parent": null,
+   "parent_type": "OBJECT",
+   "hidden": false,
+   "mods": [],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "name": "Camera",
+   "type": "CAMERA",
+   "parent": null,
+   "parent_type": "OBJECT",
+   "hidden": false,
+   "mods": [],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "name": "Bike.001",
+   "type": "MESH",
+   "parent": "Armature",
+   "parent_type": "OBJECT",
+   "hidden": false,
+   "mods": [
+    "ARMATURE"
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "faces": 24,
+   "tris": 34,
+   "verts": 37,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "mats": [
+    "Bike"
+   ],
+   "vgroups": 1,
+   "shape_keys": []
+  },
+  {
+   "name": "Plane",
+   "type": "MESH",
+   "parent": "Armature",
+   "parent_type": "OBJECT",
+   "hidden": false,
+   "mods": [
+    "ARMATURE"
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "faces": 24,
+   "tris": 33,
+   "verts": 61,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "mats": [
+    "Bike"
+   ],
+   "vgroups": 1,
+   "shape_keys": []
+  },
+  {
+   "name": "Armature",
+   "type": "ARMATURE",
+   "parent": null,
+   "parent_type": "OBJECT",
+   "hidden": false,
+   "mods": [],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "bones": [
+    [
+     "Bone",
+     null
+    ]
+   ],
+   "pose_lib": "Rotate"
+  }
+ ],
+ "materials": [
+  {
+   "name": "Bike",
+   "users": 3,
+   "nodes": [
+    "OUTPUT_MATERIAL",
+    "TEX_IMAGE"
+   ],
+   "tex": [
+    [
+     "Bike_punk.png",
+     [
+      192,
+      128
+     ],
+     "Closest"
+    ]
+   ]
+  },
+  {
+   "name": "BikeTransparent",
+   "users": 1,
+   "nodes": [
+    "OUTPUT_MATERIAL",
+    "MIX_SHADER",
+    "BSDF_TRANSPARENT",
+    "TEX_IMAGE",
+    "EMISSION"
+   ],
+   "tex": [
+    [
+     "Bike_punk.png",
+     [
+      192,
+      128
+     ],
+     "Closest"
+    ]
+   ]
+  },
+  {
+   "name": "Dots Stroke",
+   "users": 2,
+   "nodes": [
+    "FRAME",
+    "OUTPUT_MATERIAL",
+    "BSDF_PRINCIPLED",
+    "OUTPUT_MATERIAL",
+    "BSDF_DIFFUSE"
+   ],
+   "tex": []
+  },
+  {
+   "name": "Material",
+   "users": 1,
+   "nodes": [
+    "OUTPUT_MATERIAL",
+    "RGB"
+   ],
+   "tex": []
+  }
+ ],
+ "images": [
+  [
+   "Back.png",
+   [
+    0,
+    0
+   ],
+   "//../../modelo-comprado/AkiraModels/Bike/Back.png"
+  ],
+  [
+   "BackSide.png",
+   [
+    0,
+    0
+   ],
+   "//../../modelo-comprado/AkiraModels/Bike/BackSide.png"
+  ],
+  [
+   "Bike_punk.png",
+   [
+    192,
+    128
+   ],
+   "/Users/alanleiva/claude-proyectos/pieces/lps-hombre/punk/bike/Bike_punk.png"
+  ],
+  [
+   "Controls.png",
+   [
+    0,
+    0
+   ],
+   "//../../modelo-comprado/AkiraModels/Bike/Controls.png"
+  ],
+  [
+   "ControlsSide.png",
+   [
+    0,
+    0
+   ],
+   "//../../modelo-comprado/AkiraModels/Bike/ControlsSide.png"
+  ],
+  [
+   "FootRest.png",
+   [
+    0,
+    0
+   ],
+   "//../../modelo-comprado/AkiraModels/Bike/FootRest.png"
+  ],
+  [
+   "FootRestRidge.png",
+   [
+    0,
+    0
+   ],
+   "//../../modelo-comprado/AkiraModels/Bike/FootRestRidge.png"
+  ],
+  [
+   "Front.png",
+   [
+    0,
+    0
+   ],
+   "//../../modelo-comprado/AkiraModels/Bike/Front.png"
+  ],
+  [
+   "Hole.png",
+   [
+    0,
+    0
+   ],
+   "//../../modelo-comprado/AkiraModels/Bike/Hole.png"
+  ],
+  [
+   "Light.png",
+   [
+    0,
+    0
+   ],
+   "//../../modelo-comprado/AkiraModels/Bike/Light.png"
+  ],
+  [
+   "Render Result",
+   [
+    0,
+    0
+   ],
+   ""
+  ],
+  [
+   "Seat.png",
+   [
+    0,
+    0
+   ],
+   "//../../modelo-comprado/AkiraModels/Bike/Seat.png"
+  ],
+  [
+   "Steps.png",
+   [
+    0,
+    0
+   ],
+   "//../../modelo-comprado/AkiraModels/Bike/Steps.png"
+  ],
+  [
+   "StepsRidge.png",
+   [
+    0,
+    0
+   ],
+   "//../../modelo-comprado/AkiraModels/Bike/StepsRidge.png"
+  ],
+  [
+   "TireRubber.png",
+   [
+    0,
+    0
+   ],
+   "//../../modelo-comprado/AkiraModels/Bike/TireRubber.png"
+  ],
+  [
+   "WheelFront.png",
+   [
+    0,
+    0
+   ],
+   "//../../modelo-comprado/AkiraModels/Bike/WheelFront.png"
+  ],
+  [
+   "WheelsBack.png",
+   [
+    0,
+    0
+   ],
+   "//../../modelo-comprado/AkiraModels/Bike/WheelsBack.png"
+  ],
+  [
+   "WheelsBackRidge.png",
+   [
+    0,
+    0
+   ],
+   "//../../modelo-comprado/AkiraModels/Bike/WheelsBackRidge.png"
+  ]
+ ],
+ "actions": [
+  [
+   "Rotate",
+   [
+    0.0,
+    100.0
+   ],
+   1
+  ]
+ ],
+ "bounds_min": [
+  -3.337691307067871,
+  -0.5723252296447754,
+  -1.1405787467956543
+ ],
+ "bounds_max": [
+  3.33769154548645,
+  1.318941354751587,
+  1.069239616394043
+ ],
+ "size": [
+  6.675382614135742,
+  1.8912665843963623,
+  2.2098183631896973
+ ]
+}

@@ -1,0 +1,654 @@
+{
+ "file": "/Users/alanleiva/claude-proyectos/pieces/lps-hombre/modelo-comprado/AkiraModels/Bike/Bike.blend",
+ "unit_scale": 1.0,
+ "objects": [
+  {
+   "name": "Bike",
+   "type": "MESH",
+   "parent": "Armature",
+   "parent_type": "OBJECT",
+   "hidden": false,
+   "mods": [
+    "MIRROR",
+    "ARMATURE"
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "faces": 126,
+   "tris": 226,
+   "verts": 138,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "mats": [
+    "Material",
+    "Bike",
+    "BikeTransparent"
+   ],
+   "vgroups": 1,
+   "shape_keys": []
+  },
+  {
+   "name": "Light",
+   "type": "LIGHT",
+   "parent": null,
+   "parent_type": "OBJECT",
+   "hidden": false,
+   "mods": [],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "name": "Camera",
+   "type": "CAMERA",
+   "parent": null,
+   "parent_type": "OBJECT",
+   "hidden": false,
+   "mods": [],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "name": "Bike.001",
+   "type": "MESH",
+   "parent": "Armature",
+   "parent_type": "OBJECT",
+   "hidden": false,
+   "mods": [
+    "ARMATURE"
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "faces": 24,
+   "tris": 34,
+   "verts": 37,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "mats": [
+    "Bike"
+   ],
+   "vgroups": 1,
+   "shape_keys": []
+  },
+  {
+   "name": "Plane",
+   "type": "MESH",
+   "parent": "Armature",
+   "parent_type": "OBJECT",
+   "hidden": false,
+   "mods": [
+    "ARMATURE"
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "faces": 24,
+   "tris": 33,
+   "verts": 61,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "mats": [
+    "Bike"
+   ],
+   "vgroups": 1,
+   "shape_keys": []
+  },
+  {
+   "name": "Armature",
+   "type": "ARMATURE",
+   "parent": null,
+   "parent_type": "OBJECT",
+   "hidden": false,
+   "mods": [],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "bones": [
+    [
+     "Bone",
+     null
+    ]
+   ],
+   "pose_lib": "Rotate"
+  }
+ ],
+ "materials": [
+  {
+   "name": "Back",
+   "users": 0,
+   "nodes": [
+    "OUTPUT_MATERIAL",
+    "TEX_IMAGE"
+   ],
+   "tex": [
+    [
+     "Back.png",
+     [
+      0,
+      0
+     ],
+     "Closest"
+    ]
+   ]
+  },
+  {
+   "name": "BackSide",
+   "users": 0,
+   "nodes": [
+    "OUTPUT_MATERIAL",
+    "TEX_IMAGE"
+   ],
+   "tex": [
+    [
+     "BackSide.png",
+     [
+      0,
+      0
+     ],
+     "Closest"
+    ]
+   ]
+  },
+  {
+   "name": "Bike",
+   "users": 3,
+   "nodes": [
+    "OUTPUT_MATERIAL",
+    "TEX_IMAGE"
+   ],
+   "tex": [
+    [
+     "BikeTexture.png",
+     [
+      192,
+      128
+     ],
+     "Closest"
+    ]
+   ]
+  },
+  {
+   "name": "BikeTransparent",
+   "users": 1,
+   "nodes": [
+    "OUTPUT_MATERIAL",
+    "MIX_SHADER",
+    "BSDF_TRANSPARENT",
+    "TEX_IMAGE",
+    "EMISSION"
+   ],
+   "tex": [
+    [
+     "BikeTexture.png",
+     [
+      192,
+      128
+     ],
+     "Closest"
+    ]
+   ]
+  },
+  {
+   "name": "Controls",
+   "users": 0,
+   "nodes": [
+    "OUTPUT_MATERIAL",
+    "TEX_IMAGE"
+   ],
+   "tex": [
+    [
+     "Controls.png",
+     [
+      0,
+      0
+     ],
+     "Closest"
+    ]
+   ]
+  },
+  {
+   "name": "ControlsSide",
+   "users": 0,
+   "nodes": [
+    "OUTPUT_MATERIAL",
+    "TEX_IMAGE"
+   ],
+   "tex": [
+    [
+     "ControlsSide.png",
+     [
+      0,
+      0
+     ],
+     "Closest"
+    ]
+   ]
+  },
+  {
+   "name": "Dots Stroke",
+   "users": 2,
+   "nodes": [
+    "FRAME",
+    "OUTPUT_MATERIAL",
+    "BSDF_PRINCIPLED",
+    "OUTPUT_MATERIAL",
+    "BSDF_DIFFUSE"
+   ],
+   "tex": []
+  },
+  {
+   "name": "FootRest",
+   "users": 0,
+   "nodes": [
+    "OUTPUT_MATERIAL",
+    "TEX_IMAGE"
+   ],
+   "tex": [
+    [
+     "FootRest.png",
+     [
+      0,
+      0
+     ],
+     "Closest"
+    ]
+   ]
+  },
+  {
+   "name": "FootRestRidge",
+   "users": 0,
+   "nodes": [
+    "OUTPUT_MATERIAL",
+    "TEX_IMAGE"
+   ],
+   "tex": [
+    [
+     "FootRestRidge.png",
+     [
+      0,
+      0
+     ],
+     "Closest"
+    ]
+   ]
+  },
+  {
+   "name": "Front",
+   "users": 0,
+   "nodes": [
+    "OUTPUT_MATERIAL",
+    "TEX_IMAGE"
+   ],
+   "tex": [
+    [
+     "Front.png",
+     [
+      0,
+      0
+     ],
+     "Closest"
+    ]
+   ]
+  },
+  {
+   "name": "Hole",
+   "users": 0,
+   "nodes": [
+    "OUTPUT_MATERIAL",
+    "TEX_IMAGE"
+   ],
+   "tex": [
+    [
+     "Hole.png",
+     [
+      0,
+      0
+     ],
+     "Closest"
+    ]
+   ]
+  },
+  {
+   "name": "Light",
+   "users": 0,
+   "nodes": [
+    "OUTPUT_MATERIAL",
+    "TEX_IMAGE"
+   ],
+   "tex": [
+    [
+     "Light.png",
+     [
+      0,
+      0
+     ],
+     "Closest"
+    ]
+   ]
+  },
+  {
+   "name": "Material",
+   "users": 1,
+   "nodes": [
+    "OUTPUT_MATERIAL",
+    "RGB"
+   ],
+   "tex": []
+  },
+  {
+   "name": "Seat",
+   "users": 0,
+   "nodes": [
+    "OUTPUT_MATERIAL",
+    "TEX_IMAGE"
+   ],
+   "tex": [
+    [
+     "Seat.png",
+     [
+      0,
+      0
+     ],
+     "Closest"
+    ]
+   ]
+  },
+  {
+   "name": "Steps",
+   "users": 0,
+   "nodes": [
+    "OUTPUT_MATERIAL",
+    "TEX_IMAGE"
+   ],
+   "tex": [
+    [
+     "Steps.png",
+     [
+      0,
+      0
+     ],
+     "Closest"
+    ]
+   ]
+  },
+  {
+   "name": "StepsRidge",
+   "users": 0,
+   "nodes": [
+    "OUTPUT_MATERIAL",
+    "TEX_IMAGE"
+   ],
+   "tex": [
+    [
+     "StepsRidge.png",
+     [
+      0,
+      0
+     ],
+     "Closest"
+    ]
+   ]
+  },
+  {
+   "name": "Tire",
+   "users": 0,
+   "nodes": [
+    "OUTPUT_MATERIAL",
+    "TEX_IMAGE"
+   ],
+   "tex": [
+    [
+     "TireRubber.png",
+     [
+      0,
+      0
+     ],
+     "Closest"
+    ]
+   ]
+  },
+  {
+   "name": "WheelBackRidge",
+   "users": 0,
+   "nodes": [
+    "OUTPUT_MATERIAL",
+    "TEX_IMAGE"
+   ],
+   "tex": [
+    [
+     "WheelsBackRidge.png",
+     [
+      0,
+      0
+     ],
+     "Closest"
+    ]
+   ]
+  },
+  {
+   "name": "WheelFront",
+   "users": 0,
+   "nodes": [
+    "OUTPUT_MATERIAL",
+    "TEX_IMAGE"
+   ],
+   "tex": [
+    [
+     "WheelFront.png",
+     [
+      0,
+      0
+     ],
+     "Closest"
+    ]
+   ]
+  },
+  {
+   "name": "WheelsBack",
+   "users": 0,
+   "nodes": [
+    "OUTPUT_MATERIAL",
+    "TEX_IMAGE"
+   ],
+   "tex": [
+    [
+     "WheelsBack.png",
+     [
+      0,
+      0
+     ],
+     "Closest"
+    ]
+   ]
+  }
+ ],
+ "images": [
+  [
+   "Back.png",
+   [
+    0,
+    0
+   ],
+   "//Back.png"
+  ],
+  [
+   "BackSide.png",
+   [
+    0,
+    0
+   ],
+   "//BackSide.png"
+  ],
+  [
+   "BikeTexture.png",
+   [
+    192,
+    128
+   ],
+   "//BikeTexture.png"
+  ],
+  [
+   "Controls.png",
+   [
+    0,
+    0
+   ],
+   "//Controls.png"
+  ],
+  [
+   "ControlsSide.png",
+   [
+    0,
+    0
+   ],
+   "//ControlsSide.png"
+  ],
+  [
+   "FootRest.png",
+   [
+    0,
+    0
+   ],
+   "//FootRest.png"
+  ],
+  [
+   "FootRestRidge.png",
+   [
+    0,
+    0
+   ],
+   "//FootRestRidge.png"
+  ],
+  [
+   "Front.png",
+   [
+    0,
+    0
+   ],
+   "//Front.png"
+  ],
+  [
+   "Hole.png",
+   [
+    0,
+    0
+   ],
+   "//Hole.png"
+  ],
+  [
+   "Light.png",
+   [
+    0,
+    0
+   ],
+   "//Light.png"
+  ],
+  [
+   "Render Result",
+   [
+    0,
+    0
+   ],
+   ""
+  ],
+  [
+   "Seat.png",
+   [
+    0,
+    0
+   ],
+   "//Seat.png"
+  ],
+  [
+   "Steps.png",
+   [
+    0,
+    0
+   ],
+   "//Steps.png"
+  ],
+  [
+   "StepsRidge.png",
+   [
+    0,
+    0
+   ],
+   "//StepsRidge.png"
+  ],
+  [
+   "TireRubber.png",
+   [
+    0,
+    0
+   ],
+   "//TireRubber.png"
+  ],
+  [
+   "WheelFront.png",
+   [
+    0,
+    0
+   ],
+   "//WheelFront.png"
+  ],
+  [
+   "WheelsBack.png",
+   [
+    0,
+    0
+   ],
+   "//WheelsBack.png"
+  ],
+  [
+   "WheelsBackRidge.png",
+   [
+    0,
+    0
+   ],
+   "//WheelsBackRidge.png"
+  ]
+ ],
+ "actions": [
+  [
+   "Rotate",
+   [
+    0.0,
+    100.0
+   ],
+   1
+  ]
+ ],
+ "bounds_min": [
+  -0.9456331133842468,
+  -2.9643826484680176,
+  -1.1405787467956543
+ ],
+ "bounds_max": [
+  0.9456331133842468,
+  3.710999011993408,
+  1.069239616394043
+ ],
+ "size": [
+  1.8912662267684937,
+  6.675381660461426,
+  2.2098183631896973
+ ]
+}

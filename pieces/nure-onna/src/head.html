@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nure-onna</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; image-rendering: pixelated; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  NURE-ONNA — 9:16, 24fps, style "onebit" + Flow layers (src/scenes.js: flowShot draws native-grid Flow images).
+//  Madfable yokai short: no voice, the captions carry it (clocked by a scratch voice); Madfable red outro.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'sans-serif';
+const CX = 540;
+const VL = (id) => VOICE.lines.find((l) => l.id === id);
+const VW = (id, w, n = 1) => { let k = 0; for (const x of VL(id).words) if (x.w.toLowerCase().replace(/[^a-z']/g, '') === w && ++k === n) return x.t0; return VL(id).t0; };
+const AT = (id) => VL(id).t0 - 0.15;
+const REVEAL = AT('slid') + 1.1;                                       // exact silence on her face, then the loudest hit
+const SMILE_CU = VW('smile', 'she', 2) - 0.12;                         // "She smiled too wide": cut to the extreme close-up
+const GRAN_CU = VW('grandma', 'i') - 0.12;                             // "I thought...": cut in to her eye
+const CARD = VL('stone').t1 + 1.6;
+const LOGO = CARD + 3.4;                                               // the Madfable red outro (9:16)
+const DURATION = Math.round((LOGO + 5) * FPS) / FPS;   // user: in 9:16 the red end screen is 5 s   // ~20 s end screen, as lost-second
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+// [t0, scene]
+const SHOT_LIST = [
+  [0.0, 'hook'],          // 1  she rises out of the sea, stares; the slit smile splits on "don't"   (frontal, close)
+  [AT('grandma'), 'gran'],// 2  grandmother in the doorway, child's-height LOW angle
+  [GRAN_CU, 'granCU'],    // 2b her face, extreme close-up: one eye staring, one drooping
+  [AT('shore'), 'shore'], // 3  the shoreline from HIGH above, the small kneeling figure; slow push down the footprints
+  [VW('shore', 'a') - 0.12, 'shoreHer'], // 3b "A woman was kneeling": her own shot (kneel.png), side-on with the bundle
+  [AT('smile'), 'ots'],   // 4  OVER-THE-SHOULDER: she offers the bundle
+  [SMILE_CU, 'smile'],    // 4b EXTREME CLOSE-UP: the smile stretches
+  [AT('heavy'), 'stone'], // 5  HIGH-angle POV: his hands, the stone infant; sinks on each "heavy"
+  [AT('slid'), 'silence'],// 6  silence, tight on her face
+  [REVEAL, 'reveal'],     // 6b the hit: WIDE, the body comes out of the sea
+  [AT('body'), 'tower'],  // 7  WORM'S-EYE: tilt up the body to her head and the moon
+  [AT('stone'), 'oldman'],// 8  years later: HIGH angle from the ceiling, the old man and the bundle
+  [VW('stone', "it's") - 0.12, 'stoneCU'], // 8b "It's a stone shaped like a baby": the stone in the old cloth, from above (stone_old.png)
+  [VW('stone', 'and') - 0.12, 'grandpa'],   // 8c the old man, close, terrified, the stone baby in his arms (grandpa.png)
+  [CARD, 'card'],         // 9  creature card NURE-ONNA 濡女
+  [LOGO, 'logo'],         // 10 Madfable red outro
+];
+const SCENE = { hook: () => sceneHook(), gran: () => sceneGran(), granCU: () => sceneGranCU(), shore: () => sceneShore(), ots: () => sceneOts(), smile: () => sceneSmile(), stone: () => sceneStone(), silence: () => sceneSilence(), reveal: () => sceneReveal(), tower: () => sceneTower(), oldman: () => sceneOldman(), shoreHer: () => sceneShoreHer(), stoneCU: () => sceneStoneCU(), grandpa: () => sceneGrandpa(), card: () => sceneCard(), logo: () => sceneLogo() };
+const ERA_LIST = SHOT_LIST.map(([t0, sc], i) => [t0, i + 1 < SHOT_LIST.length ? SHOT_LIST[i + 1][0] : DURATION, SCENE[sc]]);
+const CUE = { sting: REVEAL, silence: AT('slid') };
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'held shots, caption-clocked',
+  shots: SHOT_LIST.map(([t0, sc], i) => ({ id: i + 1, key: sc, era: i, t0, t1: ERA_LIST[i][1], title: sc })),
+  cuts: SHOT_LIST.slice(1).map(([t0]) => t0),
+  morphs: [], cues: CUE,
+  acts: [
+    { name: '1 Hook', role: 'build', t0: 0, t1: AT('grandma') },
+    { name: '2 The story', role: 'journey', t0: AT('grandma'), t1: AT('heavy') },
+    { name: '3 The weight', role: 'journey', t0: AT('heavy'), t1: AT('slid') },
+    { name: '4 Reveal', role: 'silence', t0: AT('slid'), t1: AT('stone') },
+    { name: '5 Payoff', role: 'gift', t0: AT('stone'), t1: DURATION },
+  ],
+  board: [],   // filled in scenes.js (needs the caption chunks)
+  narration: VOICE.lines.map((l) => ({ id: l.id, t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;

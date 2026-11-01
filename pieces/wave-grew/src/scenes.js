@@ -93,6 +93,7 @@ function sceneWave() {
   bloom(L.bloom ?? 0.28);
   if (L.post) L.post(st);
   if (st >= 494) pvFade(ss(494, 498, st));
+  if (typeof THUMB !== "undefined") { THUMB(st); return; }
   hud(st); captions(st);
 }
 function pvFade(k) { if (k <= 0) return; ctx.save(); screen(); ctx.globalAlpha = clamp(k); ctx.fillStyle = '#050608'; ctx.fillRect(0, 0, W, H); ctx.restore(); }

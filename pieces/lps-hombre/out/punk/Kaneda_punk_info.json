@@ -1,0 +1,644 @@
+{
+ "file": "/Users/alanleiva/claude-proyectos/pieces/lps-hombre/punk/Kaneda_punk.blend",
+ "unit_scale": 1.0,
+ "objects": [
+  {
+   "name": "Mirrored",
+   "type": "MESH",
+   "parent": "Kaneda",
+   "parent_type": "OBJECT",
+   "hidden": false,
+   "mods": [
+    "MIRROR",
+    "ARMATURE"
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "faces": 98,
+   "tris": 172,
+   "verts": 112,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "mats": [
+    "Material",
+    "PelvisFront",
+    "PelvisBack",
+    "CollarOutside",
+    "Kaneda"
+   ],
+   "vgroups": 17,
+   "shape_keys": []
+  },
+  {
+   "name": "Head",
+   "type": "MESH",
+   "parent": "Kaneda",
+   "parent_type": "OBJECT",
+   "hidden": false,
+   "mods": [
+    "ARMATURE"
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "faces": 74,
+   "tris": 120,
+   "verts": 62,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "mats": [
+    "Material",
+    "Kaneda"
+   ],
+   "vgroups": 17,
+   "shape_keys": []
+  },
+  {
+   "name": "NonMirrored",
+   "type": "MESH",
+   "parent": "Kaneda",
+   "parent_type": "OBJECT",
+   "hidden": false,
+   "mods": [
+    "ARMATURE"
+   ],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "faces": 36,
+   "tris": 60,
+   "verts": 48,
+   "uv_layers": [
+    "UVMap"
+   ],
+   "mats": [
+    "Material",
+    "Neck",
+    "Jacket",
+    "Hand",
+    "Thumb",
+    "Cuff",
+    "Shoulders",
+    "UnderShirt",
+    "JacketSide",
+    "PelvisFront",
+    "PelvisBack",
+    "Collar",
+    "CollarOutside",
+    "Kaneda"
+   ],
+   "vgroups": 17,
+   "shape_keys": []
+  },
+  {
+   "name": "Kaneda",
+   "type": "ARMATURE",
+   "parent": null,
+   "parent_type": "OBJECT",
+   "hidden": false,
+   "mods": [],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ],
+   "bones": [
+    [
+     "Torso",
+     null
+    ],
+    [
+     "Chest",
+     "Torso"
+    ],
+    [
+     "Neck",
+     "Chest"
+    ],
+    [
+     "Head",
+     "Neck"
+    ],
+    [
+     "Upperarm.L",
+     "Chest"
+    ],
+    [
+     "Forearm.L",
+     "Upperarm.L"
+    ],
+    [
+     "Hand.L",
+     "Forearm.L"
+    ],
+    [
+     "Upperarm.R",
+     "Chest"
+    ],
+    [
+     "Forearm.R",
+     "Upperarm.R"
+    ],
+    [
+     "Hand.R",
+     "Forearm.R"
+    ],
+    [
+     "Thigh.L",
+     "Torso"
+    ],
+    [
+     "Calf.L",
+     "Thigh.L"
+    ],
+    [
+     "Foot.L",
+     "Calf.L"
+    ],
+    [
+     "Thigh.R",
+     "Torso"
+    ],
+    [
+     "Calf.R",
+     "Thigh.R"
+    ],
+    [
+     "Foot.R",
+     "Calf.R"
+    ],
+    [
+     "LegControl.L",
+     null
+    ],
+    [
+     "FootRoll.L",
+     "LegControl.L"
+    ],
+    [
+     "LegPoletarget.L",
+     null
+    ],
+    [
+     "LegControl.R",
+     null
+    ],
+    [
+     "FootRoll.R",
+     "LegControl.R"
+    ],
+    [
+     "LegPoletarget.R",
+     null
+    ]
+   ],
+   "pose_lib": "KanedaAction"
+  },
+  {
+   "name": "Camera",
+   "type": "CAMERA",
+   "parent": null,
+   "parent_type": "OBJECT",
+   "hidden": false,
+   "mods": [],
+   "scale": [
+    1.0,
+    1.0,
+    1.0
+   ]
+  }
+ ],
+ "materials": [
+  {
+   "name": "Collar",
+   "users": 1,
+   "nodes": [
+    "BSDF_PRINCIPLED",
+    "OUTPUT_MATERIAL",
+    "TEX_IMAGE"
+   ],
+   "tex": [
+    [
+     "CollarInside.png",
+     [
+      0,
+      0
+     ],
+     "Closest"
+    ]
+   ]
+  },
+  {
+   "name": "CollarOutside",
+   "users": 2,
+   "nodes": [
+    "BSDF_PRINCIPLED",
+    "OUTPUT_MATERIAL",
+    "TEX_IMAGE"
+   ],
+   "tex": [
+    [
+     "CollarOutside.png",
+     [
+      0,
+      0
+     ],
+     "Closest"
+    ]
+   ]
+  },
+  {
+   "name": "Cuff",
+   "users": 1,
+   "nodes": [
+    "BSDF_PRINCIPLED",
+    "OUTPUT_MATERIAL",
+    "TEX_IMAGE"
+   ],
+   "tex": [
+    [
+     "Cuff.png",
+     [
+      0,
+      0
+     ],
+     "Closest"
+    ]
+   ]
+  },
+  {
+   "name": "Dots Stroke",
+   "users": 2,
+   "nodes": [
+    "FRAME",
+    "OUTPUT_MATERIAL",
+    "BSDF_PRINCIPLED",
+    "OUTPUT_MATERIAL",
+    "BSDF_DIFFUSE"
+   ],
+   "tex": []
+  },
+  {
+   "name": "Hand",
+   "users": 1,
+   "nodes": [
+    "BSDF_PRINCIPLED",
+    "OUTPUT_MATERIAL",
+    "TEX_IMAGE"
+   ],
+   "tex": [
+    [
+     "Hand.png",
+     [
+      0,
+      0
+     ],
+     "Closest"
+    ]
+   ]
+  },
+  {
+   "name": "Jacket",
+   "users": 1,
+   "nodes": [
+    "BSDF_PRINCIPLED",
+    "OUTPUT_MATERIAL",
+    "TEX_IMAGE"
+   ],
+   "tex": [
+    [
+     "JacketFront.png",
+     [
+      0,
+      0
+     ],
+     "Closest"
+    ]
+   ]
+  },
+  {
+   "name": "JacketSide",
+   "users": 1,
+   "nodes": [
+    "BSDF_PRINCIPLED",
+    "OUTPUT_MATERIAL",
+    "TEX_IMAGE"
+   ],
+   "tex": [
+    [
+     "JacketSide.png",
+     [
+      0,
+      0
+     ],
+     "Closest"
+    ]
+   ]
+  },
+  {
+   "name": "Material",
+   "users": 3,
+   "nodes": [
+    "OUTPUT_MATERIAL",
+    "BSDF_PRINCIPLED"
+   ],
+   "tex": []
+  },
+  {
+   "name": "Kaneda",
+   "users": 3,
+   "nodes": [
+    "OUTPUT_MATERIAL",
+    "TEX_IMAGE"
+   ],
+   "tex": [
+    [
+     "Kaneda_punk.png",
+     [
+      192,
+      160
+     ],
+     "Closest"
+    ]
+   ]
+  },
+  {
+   "name": "Neck",
+   "users": 1,
+   "nodes": [
+    "BSDF_PRINCIPLED",
+    "OUTPUT_MATERIAL",
+    "TEX_IMAGE"
+   ],
+   "tex": [
+    [
+     "Neck.png",
+     [
+      0,
+      0
+     ],
+     "Closest"
+    ]
+   ]
+  },
+  {
+   "name": "PelvisBack",
+   "users": 2,
+   "nodes": [
+    "BSDF_PRINCIPLED",
+    "OUTPUT_MATERIAL",
+    "TEX_IMAGE"
+   ],
+   "tex": [
+    [
+     "PelvisBack.png",
+     [
+      0,
+      0
+     ],
+     "Closest"
+    ]
+   ]
+  },
+  {
+   "name": "PelvisFront",
+   "users": 2,
+   "nodes": [
+    "BSDF_PRINCIPLED",
+    "OUTPUT_MATERIAL",
+    "TEX_IMAGE"
+   ],
+   "tex": [
+    [
+     "PelvisFront.png",
+     [
+      0,
+      0
+     ],
+     "Closest"
+    ]
+   ]
+  },
+  {
+   "name": "Shoulders",
+   "users": 1,
+   "nodes": [
+    "BSDF_PRINCIPLED",
+    "OUTPUT_MATERIAL",
+    "TEX_IMAGE"
+   ],
+   "tex": [
+    [
+     "Shoulders.png",
+     [
+      0,
+      0
+     ],
+     "Closest"
+    ]
+   ]
+  },
+  {
+   "name": "Thumb",
+   "users": 1,
+   "nodes": [
+    "BSDF_PRINCIPLED",
+    "OUTPUT_MATERIAL",
+    "TEX_IMAGE"
+   ],
+   "tex": [
+    [
+     "Thumb.png",
+     [
+      0,
+      0
+     ],
+     "Closest"
+    ]
+   ]
+  },
+  {
+   "name": "UnderShirt",
+   "users": 1,
+   "nodes": [
+    "BSDF_PRINCIPLED",
+    "OUTPUT_MATERIAL",
+    "TEX_IMAGE"
+   ],
+   "tex": [
+    [
+     "UnderShirt.png",
+     [
+      0,
+      0
+     ],
+     "Closest"
+    ]
+   ]
+  }
+ ],
+ "images": [
+  [
+   "BG.png",
+   [
+    160,
+    160
+   ],
+   "//../modelo-comprado/AkiraModels/BG.png"
+  ],
+  [
+   "CollarInside.png",
+   [
+    0,
+    0
+   ],
+   "//../modelo-comprado/AkiraModels/Kaneda/CollarInside.png"
+  ],
+  [
+   "CollarOutside.png",
+   [
+    0,
+    0
+   ],
+   "//../modelo-comprado/AkiraModels/Kaneda/CollarOutside.png"
+  ],
+  [
+   "Cuff.png",
+   [
+    0,
+    0
+   ],
+   "//../modelo-comprado/AkiraModels/Kaneda/Cuff.png"
+  ],
+  [
+   "Hand.png",
+   [
+    0,
+    0
+   ],
+   "//../modelo-comprado/AkiraModels/Kaneda/Hand.png"
+  ],
+  [
+   "JacketFront.png",
+   [
+    0,
+    0
+   ],
+   "//../modelo-comprado/AkiraModels/Kaneda/JacketFront.png"
+  ],
+  [
+   "JacketSide.png",
+   [
+    0,
+    0
+   ],
+   "//../modelo-comprado/AkiraModels/Kaneda/JacketSide.png"
+  ],
+  [
+   "Kaneda_punk.png",
+   [
+    192,
+    160
+   ],
+   "/Users/alanleiva/claude-proyectos/pieces/lps-hombre/punk/Kaneda_punk.png"
+  ],
+  [
+   "Neck.png",
+   [
+    0,
+    0
+   ],
+   "//../modelo-comprado/AkiraModels/Kaneda/Neck.png"
+  ],
+  [
+   "PelvisBack.png",
+   [
+    0,
+    0
+   ],
+   "//../modelo-comprado/AkiraModels/Kaneda/PelvisBack.png"
+  ],
+  [
+   "PelvisFront.png",
+   [
+    0,
+    0
+   ],
+   "//../modelo-comprado/AkiraModels/Kaneda/PelvisFront.png"
+  ],
+  [
+   "Render Result",
+   [
+    0,
+    0
+   ],
+   ""
+  ],
+  [
+   "Shoulders.png",
+   [
+    0,
+    0
+   ],
+   "//../modelo-comprado/AkiraModels/Kaneda/Shoulders.png"
+  ],
+  [
+   "Thumb.png",
+   [
+    0,
+    0
+   ],
+   "//../modelo-comprado/AkiraModels/Kaneda/Thumb.png"
+  ],
+  [
+   "UnderShirt.png",
+   [
+    0,
+    0
+   ],
+   "//../modelo-comprado/AkiraModels/Kaneda/UnderShirt.png"
+  ]
+ ],
+ "actions": [
+  [
+   "KanedaAction",
+   [
+    0.0,
+    120.0
+   ],
+   1
+  ],
+  [
+   "Walk",
+   [
+    0.0,
+    0.0
+   ],
+   1
+  ]
+ ],
+ "bounds_min": [
+  -1.4253945350646973,
+  -0.6647629737854004,
+  -3.4944915771484375
+ ],
+ "bounds_max": [
+  1.4253945350646973,
+  0.5254154801368713,
+  1.9232685565948486
+ ],
+ "size": [
+  2.8507890701293945,
+  1.190178394317627,
+  5.417759895324707
+ ]
+}

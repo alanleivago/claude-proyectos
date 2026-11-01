@@ -38,13 +38,13 @@
   vortex(SUB('steer') + 0.1, 4, 0.2); for (let i = 0; i < 3; i++) noiseHit(SUB('steer') + 0.5 + i * 0.4, 0.3, 'bandpass', 1300, 2, 0.06, 0.3 + i * 0.2, 0.2, 500);
   // THE STRIKE: a hush before (the music dips), six heads dive, the deck splinters, a deep hit
   [0, 0.1, 0.04, 0.14, 0.07, 0.17].forEach((d, i) => { whoosh(HIT + d, 0.25, 0.14, 2600, 300, -0.5 + i * 0.2); stone(HIT + d + 0.02, 0.2, -0.5 + i * 0.2); });
-  sub(HIT, 1.0); noiseHit(HIT, 1.2, 'lowpass', 3000, 0.7, 0.8, 0, 0.6, 180); clang(HIT, 0.4, 0, 147); roar(HIT + 0.1, 1.6, 0.3, 60, 0); roar(HIT + 0.3, 1.2, 0.22, 95, 0.4);
+  sub(HIT, 1.0); sub(HIT + 0.08, 0.8); noiseHit(HIT, 1.2, 'lowpass', 3000, 0.7, 1.0, 0, 0.6, 180); noiseHit(HIT, 0.25, 'highpass', 1800, 0.7, 0.5, 0, 0.3); clang(HIT, 0.4, 0, 147); roar(HIT + 0.1, 1.6, 0.3, 60, 0); roar(HIT + 0.3, 1.2, 0.22, 95, 0.4);
   // the men lifted, struggling: growls, thrashing, cries far up (high breathy bursts)
-  for (let i = 0; i < 6; i++) { roar(SUB('lifted') + 0.3 + i * 0.9, 0.7, 0.1, 80 + i * 12, -0.6 + i * 0.25); noiseHit(SUB('lifted') + 0.5 + i * 0.85, 0.35, 'bandpass', 1500 + i * 120, 3, 0.07, 0.6 - i * 0.2, 0.25, 600); }
+  for (let i = 0; i < 6; i++) { roar((VL('lifted').t0 - 0.25) + 0.3 + i * 0.9, 0.7, 0.1, 80 + i * 12, -0.6 + i * 0.25); noiseHit((VL('lifted').t0 - 0.25) + 0.5 + i * 0.85, 0.35, 'bandpass', 1500 + i * 120, 3, 0.07, 0.6 - i * 0.2, 0.25, 600); }
   // the spear thrown at nothing
   { const t = VW('save', 'save') - 0.2; whoosh(t + 0.3, 0.4, 0.2, 300, 3600, 0.4); }
   // silence: only the oars and the sea; then a low bell for the last line
-  clang(VL('pitiful').t0 + 0.2, 0.12, 0, 110);
-  [['D3', 0], ['A3', 0.01], ['D4', 0.02], ['F4', 0.03]].forEach(([n, dt], i) => pluck(VW('pitiful', 'pitiful') + dt, nz(n), 0.16 - i * 0.02, (i - 2) * 0.2, 0.9, 2400, 0.6));
+  clang(VL('pitiful').t0 + 0.2, 0.08, 0, 110);
+  [['D3', 0], ['A3', 0.01], ['D4', 0.02], ['F4', 0.03]].forEach(([n, dt], i) => pluck(VW('pitiful', 'pitiful') + dt, nz(n), 0.08 - i * 0.01, (i - 2) * 0.2, 0.9, 2400, 0.6));
   // sign-off
-  thud(SIGN_T + 0.1, 0.22); chime(SIGN_T + 0.4, [783.99, 1174.66, 1567.98], 0.07, 0); chime(SIGN_T + 1.2, [1567.98, 2349.32], 0.05, 0.2);
+  thud(SIGN_T + 0.1, 0.14); chime(SIGN_T + 0.4, [783.99, 1174.66, 1567.98], 0.045, 0); chime(SIGN_T + 1.2, [1567.98, 2349.32], 0.03, 0.2);

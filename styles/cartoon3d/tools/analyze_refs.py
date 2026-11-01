@@ -43,8 +43,9 @@ def transcribe(wav, out, model):
     path = out / "words.json"
     if path.exists():
         return json.loads(path.read_text(encoding="utf-8"))
-    import soundfile as sf
-    audio = sf.read(str(wav), dtype="float32")[0]  # array: evita el decode de PyAV (versión incompatible)
+    import wave
+    with wave.open(str(wav)) as f:  # array: evita el decode de PyAV (versión incompatible)
+        audio = np.frombuffer(f.readframes(f.getnframes()), np.int16).astype(np.float32) / 32768
     segs, _ = model.transcribe(audio, language="en", word_timestamps=True, vad_filter=False)
     words = [{"w": w.word.strip(), "s": round(w.start, 3), "e": round(w.end, 3)}
              for seg in segs for w in seg.words]
@@ -166,10 +167,12 @@ def speech_stats(words, dur):
 
 def loudness(video):
     import pyloudnorm as pyln
-    import soundfile as sf
+    import wave
     tmp = Path(video).with_suffix(".tmp48k.wav")
     run(["ffmpeg", "-y", "-i", str(video), "-ac", "2", "-ar", "48000", str(tmp)])
-    data, rate = sf.read(str(tmp))
+    with wave.open(str(tmp)) as f:
+        rate = f.getframerate()
+        data = np.frombuffer(f.readframes(f.getnframes()), np.int16).astype(np.float64).reshape(-1, 2) / 32768
     tmp.unlink()
     return round(float(pyln.Meter(rate).integrated_loudness(data)), 1)
 
