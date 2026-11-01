@@ -1,0 +1,1008 @@
+{
+ "_doc": "SFX (real recordings only). Every doubling (2..50 s) = a rubber stretch + a whoosh-boom, pitched down across the film (bigger = lower), with a sub drop added once she is a giant. Footfalls from the gait phase (girl.js ph = TT*6): sneakers 0-3, heavy thuds 3-8, giant booms 8-20 that grow with her. City events from city.js, airliners from above.js AB_PL, space events from the space shots.",
+ "samples": {
+  "fx.gr.stretch": {
+   "file": "audio/assets/sfx/fs-676986_stretch-long.ogg",
+   "start": 0.0,
+   "end": 1.6,
+   "eq": {
+    "hp": 60,
+    "lp": 9000
+   },
+   "norm_peak_db": -6,
+   "fade_out": 0.3
+  },
+  "fx.gr.boom": {
+   "file": "audio/assets/sfx/fs-118934_whoosh-boom.ogg",
+   "start": 0.3,
+   "end": 4.15,
+   "eq": {
+    "hp": 30
+   },
+   "norm_peak_db": -4,
+   "fade_out": 0.8
+  },
+  "fx.gr.sub": {
+   "file": "audio/assets/sfx/fs-856174_subterranean-deep-sub-bass-rumble-drop.ogg",
+   "start": 0.0,
+   "end": 3.6,
+   "eq": {
+    "hp": 28,
+    "lp": 400
+   },
+   "norm_peak_db": -4,
+   "fade_out": 0.8
+  },
+  "fx.st.robot.a": {
+   "file": "audio/assets/sfx/fs-813053_big-robot-footstep-002.ogg",
+   "start": 0.09,
+   "end": 1.0,
+   "mono": true,
+   "eq": {
+    "hp": 40
+   },
+   "norm_peak_db": -5,
+   "fade_out": 0.2
+  },
+  "fx.st.robot.b": {
+   "file": "audio/assets/sfx/fs-815039_big-robot-footstep-005.ogg",
+   "start": 0.27,
+   "end": 1.1,
+   "mono": true,
+   "eq": {
+    "hp": 40
+   },
+   "norm_peak_db": -5,
+   "fade_out": 0.2
+  },
+  "fx.st.robot.c": {
+   "file": "audio/assets/sfx/fs-813055_big-robot-footstep-004.ogg",
+   "start": 0.16,
+   "end": 1.0,
+   "mono": true,
+   "eq": {
+    "hp": 40
+   },
+   "norm_peak_db": -5,
+   "fade_out": 0.2
+  },
+  "fx.st.rumble": {
+   "file": "audio/assets/ambience/fs-870683_earthquake-rumble-low.ogg",
+   "start": 13.0,
+   "end": 14.6,
+   "eq": {
+    "hp": 28,
+    "lp": 250
+   },
+   "norm_peak_db": -5,
+   "fade_in": 0.02,
+   "fade_out": 0.6
+  },
+  "fx.gasp": {
+   "file": "audio/assets/sfx/fs-264376_small-crowd-gasp.ogg",
+   "start": 0.0,
+   "end": 8.4,
+   "eq": {
+    "hp": 150,
+    "lp": 8000
+   },
+   "norm_peak_db": -6,
+   "fade_out": 1.0
+  },
+  "fx.murmur": {
+   "file": "audio/assets/sfx/fs-763982_crowd-gasp-gossip.ogg",
+   "start": 0.5,
+   "end": 11.8,
+   "eq": {
+    "hp": 150
+   },
+   "norm_peak_db": -6,
+   "fade_out": 1.0
+  },
+  "fx.scream": {
+   "file": "audio/assets/ambience/fs-214147_crowd-screaming-yelling.ogg",
+   "start": 0.0,
+   "end": 9.0,
+   "eq": {
+    "hp": 250,
+    "lp": 6000
+   },
+   "norm_peak_db": -6,
+   "fade_out": 2.0
+  },
+  "fx.runners": {
+   "file": "audio/assets/ambience/fs-873254_thousands-runners.ogg",
+   "start": 271.0,
+   "end": 280.0,
+   "eq": {
+    "hp": 120
+   },
+   "norm_peak_db": -6,
+   "fade_in": 0.3,
+   "fade_out": 2.0
+  },
+  "fx.skid": {
+   "file": "audio/assets/sfx/fs-76804_ae0090-volvo-740-gle-handbrake-turn-01.ogg",
+   "start": 6.85,
+   "end": 8.7,
+   "eq": {
+    "hp": 150
+   },
+   "norm_peak_db": -6,
+   "fade_in": 0.08,
+   "fade_out": 0.25
+  },
+  "fx.skid.stop": {
+   "file": "audio/assets/sfx/fs-637161_auto-car-or-van-stop-brake-skid-gravel-s.ogg",
+   "start": 0.0,
+   "end": 1.12,
+   "eq": {
+    "hp": 80
+   },
+   "norm_peak_db": -6,
+   "fade_out": 0.2
+  },
+  "fx.horn.a": {
+   "file": "audio/assets/sfx/fs-406169_auto-horn-honks-angry-close-echo-car-blo.ogg",
+   "start": 12.715,
+   "end": 13.6,
+   "eq": {
+    "hp": 200
+   },
+   "norm_peak_db": -6,
+   "fade_out": 0.15
+  },
+  "fx.horn.b": {
+   "file": "audio/assets/sfx/fs-636503_car-horn-from-outside-of-1990-volvo-240.ogg",
+   "start": 0.0,
+   "end": 1.16,
+   "eq": {
+    "hp": 200
+   },
+   "norm_peak_db": -6,
+   "fade_out": 0.2
+  },
+  "fx.alarm.a": {
+   "file": "audio/assets/sfx/fs-383219_car-alarm-siren.ogg",
+   "start": 17.5,
+   "end": 27.5,
+   "eq": {
+    "hp": 300,
+    "lp": 7000
+   },
+   "norm_peak_db": -6,
+   "fade_in": 0.05,
+   "fade_out": 3.0
+  },
+  "fx.alarm.b": {
+   "file": "audio/assets/sfx/fs-588245_car-alarm-distant.ogg",
+   "start": 0.0,
+   "end": 9.5,
+   "eq": {
+    "hp": 300,
+    "lp": 6000
+   },
+   "norm_peak_db": -6,
+   "fade_out": 3.0
+  },
+  "fx.col.hit": {
+   "file": "audio/assets/sfx/fs-653294_big-structure-collision.ogg",
+   "start": 0.0,
+   "end": 6.4,
+   "pitch": -2,
+   "eq": {
+    "hp": 28
+   },
+   "norm_peak_db": -3,
+   "fade_out": 1.5
+  },
+  "fx.col.debris": {
+   "file": "audio/assets/sfx/fs-703247_big-falling-debris.ogg",
+   "start": 0.0,
+   "end": 4.6,
+   "eq": {
+    "hp": 60
+   },
+   "norm_peak_db": -4,
+   "fade_out": 1.0
+  },
+  "fx.col.wood": {
+   "file": "audio/assets/sfx/fs-487142_r29-04-crashing-collapse-of-wood-buildin.ogg",
+   "start": 0.0,
+   "end": 8.1,
+   "eq": {
+    "hp": 60
+   },
+   "norm_peak_db": -4,
+   "fade_in": 0.3,
+   "fade_out": 0.3
+  },
+  "fx.col.bricks": {
+   "file": "audio/assets/sfx/fs-234360_bricks-stones-tumble.ogg",
+   "start": 1.0,
+   "end": 7.0,
+   "eq": {
+    "hp": 80
+   },
+   "norm_peak_db": -6,
+   "fade_out": 1.5
+  },
+  "fx.col.slide": {
+   "file": "audio/assets/sfx/fs-655368_rock-slide.ogg",
+   "start": 2.0,
+   "end": 10.88,
+   "eq": {
+    "hp": 60,
+    "lp": 6000
+   },
+   "norm_peak_db": -5,
+   "fade_in": 0.05,
+   "fade_out": 2.0
+  },
+  "fx.col.crack": {
+   "file": "audio/assets/sfx/fs-222521_cracking-earthquake.ogg",
+   "start": 0.0,
+   "end": 2.6,
+   "eq": {
+    "hp": 35
+   },
+   "norm_peak_db": -4,
+   "fade_out": 0.5
+  },
+  "fx.jet.a": {
+   "file": "audio/assets/ambience/fs-567070_airliner-flyby.ogg",
+   "start": 12.0,
+   "end": 24.0,
+   "eq": {
+    "hp": 60
+   },
+   "norm_peak_db": -5,
+   "fade_in": 1.0,
+   "fade_out": 2.0
+  },
+  "fx.jet.b": {
+   "file": "audio/assets/sfx/fs-235957_airplane-overhead.ogg",
+   "start": 3.0,
+   "end": 12.0,
+   "eq": {
+    "hp": 60
+   },
+   "norm_peak_db": -5,
+   "fade_in": 1.0,
+   "fade_out": 2.0
+  },
+  "fx.jet.c": {
+   "file": "audio/assets/ambience/fs-847113_heavy-aircraft-passby.ogg",
+   "start": 66.0,
+   "end": 79.0,
+   "eq": {
+    "hp": 60
+   },
+   "norm_peak_db": -5,
+   "fade_in": 1.0,
+   "fade_out": 2.0
+  },
+  "fx.cloud": {
+   "file": "audio/assets/sfx/fs-648540_cinematic-woosh-sfx-006.ogg",
+   "start": 0.9,
+   "end": 3.4,
+   "eq": {
+    "hp": 120,
+    "lp": 8000
+   },
+   "pitch": -2,
+   "norm_peak_db": -6,
+   "fade_out": 0.4
+  },
+  "fx.space.in": {
+   "file": "audio/assets/sfx/fs-648610_cinematic-woosh-sfx-008.ogg",
+   "start": 0.0,
+   "end": 2.6,
+   "pitch": -5,
+   "eq": {
+    "hp": 40,
+    "lp": 4000
+   },
+   "norm_peak_db": -5,
+   "fade_out": 0.8
+  },
+  "fx.iss.whoosh": {
+   "file": "audio/assets/sfx/fs-648610_cinematic-woosh-sfx-008.ogg",
+   "start": 0.0,
+   "end": 2.6,
+   "pitch": -7,
+   "eq": {
+    "hp": 50,
+    "lp": 3000
+   },
+   "norm_peak_db": -6,
+   "fade_out": 0.8
+  },
+  "fx.iss.hum": {
+   "file": "audio/assets/ambience/fs-721812_bpsn-electrical-hum-1.ogg",
+   "start": 0.5,
+   "end": 5.5,
+   "eq": {
+    "hp": 80,
+    "lp": 2500
+   },
+   "norm_peak_db": -6,
+   "fade_in": 1.2,
+   "fade_out": 1.6
+  },
+  "fx.iss.servo": {
+   "file": "audio/assets/sfx/fs-165861_servo-motors.ogg",
+   "start": 0.0,
+   "end": 3.7,
+   "eq": {
+    "hp": 300,
+    "lp": 6000
+   },
+   "pitch": -3,
+   "norm_peak_db": -6,
+   "fade_in": 0.2,
+   "fade_out": 0.6
+  },
+  "fx.iss.radio": {
+   "file": "audio/assets/sfx/fs-81177_radio-interruption.ogg",
+   "start": 0.0,
+   "end": 2.5,
+   "eq": {
+    "hp": 400,
+    "lp": 4000
+   },
+   "norm_peak_db": -6,
+   "fade_in": 0.05,
+   "fade_out": 0.6
+  },
+  "fx.sp.step": {
+   "file": "audio/assets/sfx/fs-263461_earthquake-rumble-creaks.ogg",
+   "start": 24.0,
+   "end": 29.0,
+   "eq": {
+    "hp": 28,
+    "lp": 300
+   },
+   "norm_peak_db": -5,
+   "fade_in": 0.3,
+   "fade_out": 1.5
+  },
+  "fx.sat": {
+   "file": "audio/assets/sfx/fs-248143_coin-flip-shimmer.ogg",
+   "start": 0.0,
+   "end": 0.82,
+   "eq": {
+    "hp": 1500
+   },
+   "pitch": 3,
+   "norm_peak_db": -6,
+   "fade_out": 0.3
+  },
+  "fx.sat.swish": {
+   "file": "audio/assets/sfx/fs-60026_air-swosh.ogg",
+   "start": 0.0,
+   "end": 0.49,
+   "eq": {
+    "hp": 300
+   },
+   "pitch": 2,
+   "norm_peak_db": -6
+  },
+  "fx.moon.boom": {
+   "file": "audio/assets/sfx/fs-856174_subterranean-deep-sub-bass-rumble-drop.ogg",
+   "start": 0.0,
+   "end": 4.0,
+   "eq": {
+    "hp": 28
+   },
+   "norm_peak_db": -2,
+   "fade_out": 1.2
+  },
+  "fx.moon.hit": {
+   "file": "audio/assets/sfx/fs-653294_big-structure-collision.ogg",
+   "start": 0.0,
+   "end": 4.0,
+   "pitch": -7,
+   "eq": {
+    "hp": 28,
+    "lp": 2500
+   },
+   "norm_peak_db": -3,
+   "fade_out": 1.5
+  },
+  "fx.moon.shimmer": {
+   "file": "audio/assets/ambience/fs-240934_neptun-solo-07-tibetan-singing-bowl.ogg",
+   "start": 0.15,
+   "end": 6.0,
+   "eq": {
+    "hp": 200
+   },
+   "norm_peak_db": -6,
+   "fade_out": 2.0
+  },
+  "fx.card.whoosh": {
+   "file": "audio/assets/sfx/fs-648540_cinematic-woosh-sfx-006.ogg",
+   "start": 0.9,
+   "end": 3.4,
+   "eq": {
+    "hp": 120,
+    "lp": 8000
+   },
+   "pitch": -2,
+   "norm_peak_db": -6,
+   "fade_out": 0.4
+  },
+  "fx.card.ting": {
+   "file": "audio/assets/sfx/fs-248143_coin-flip-shimmer.ogg",
+   "start": 0.0,
+   "end": 0.82,
+   "eq": {
+    "hp": 400
+   },
+   "pitch": -2,
+   "norm_peak_db": -6,
+   "fade_out": 0.3
+  }
+ },
+ "slices": {
+  "fx.st.shoe": {
+   "file": "audio/assets/sfx/fs-702399_generic-footsteps.ogg",
+   "pre": 0.004,
+   "len": 0.3,
+   "min_gap": 0.2,
+   "gate_db": -12,
+   "mono": true,
+   "eq": {
+    "hp": 90
+   },
+   "norm_peak_db": -6,
+   "fade_out": 0.04
+  }
+ },
+ "pools": {
+  "fx.gr.stretch": [
+   "fx.gr.stretch"
+  ],
+  "fx.gr.boom": [
+   "fx.gr.boom"
+  ],
+  "fx.gr.sub": [
+   "fx.gr.sub"
+  ],
+  "fx.st.shoe": [
+   "fx.st.shoe#*"
+  ],
+  "fx.st.robot": [
+   "fx.st.robot.a",
+   "fx.st.robot.b",
+   "fx.st.robot.c"
+  ],
+  "fx.st.rumble": [
+   "fx.st.rumble"
+  ],
+  "fx.gasp": [
+   "fx.gasp"
+  ],
+  "fx.murmur": [
+   "fx.murmur"
+  ],
+  "fx.scream": [
+   "fx.scream"
+  ],
+  "fx.runners": [
+   "fx.runners"
+  ],
+  "fx.skid": [
+   "fx.skid"
+  ],
+  "fx.skid.stop": [
+   "fx.skid.stop"
+  ],
+  "fx.horn": [
+   "fx.horn.a",
+   "fx.horn.b"
+  ],
+  "fx.alarm": [
+   "fx.alarm.a",
+   "fx.alarm.b"
+  ],
+  "fx.col.hit": [
+   "fx.col.hit",
+   "fx.col.debris"
+  ],
+  "fx.col.tex": [
+   "fx.col.wood",
+   "fx.col.bricks",
+   "fx.col.slide"
+  ],
+  "fx.col.crack": [
+   "fx.col.crack"
+  ],
+  "fx.jet": [
+   "fx.jet.a",
+   "fx.jet.b",
+   "fx.jet.c"
+  ],
+  "fx.space.in": [
+   "fx.space.in"
+  ],
+  "fx.iss.whoosh": [
+   "fx.iss.whoosh"
+  ],
+  "fx.sp.step": [
+   "fx.sp.step"
+  ],
+  "fx.sat": [
+   "fx.sat"
+  ],
+  "fx.sat.swish": [
+   "fx.sat.swish"
+  ],
+  "fx.moon.boom": [
+   "fx.moon.boom"
+  ],
+  "fx.moon.hit": [
+   "fx.moon.hit"
+  ],
+  "fx.moon.shimmer": [
+   "fx.moon.shimmer"
+  ],
+  "fx.card.whoosh": [
+   "fx.card.whoosh"
+  ],
+  "fx.card.ting": [
+   "fx.card.ting"
+  ]
+ },
+ "rules": [
+  {
+   "name": "fx.grow.stretch",
+   "match": {
+    "kind": "grow"
+   },
+   "pool": "fx.gr.stretch",
+   "mode": "fixed",
+   "gain_db": -9,
+   "pitch_ramp": [
+    0,
+    -12
+   ],
+   "pan": 0,
+   "align": "peak",
+   "offset": -0.04
+  },
+  {
+   "name": "fx.grow.boom",
+   "match": {
+    "kind": "grow"
+   },
+   "pool": "fx.gr.boom",
+   "mode": "fixed",
+   "gain_db": -6,
+   "pitch_ramp": [
+    0,
+    -8
+   ],
+   "gain_ramp": [
+    -2,
+    -2
+   ],
+   "pan": 0,
+   "align": "peak",
+   "no_cue": true,
+   "offset": -0.04
+  },
+  {
+   "name": "fx.grow.sub",
+   "match": {
+    "kind": "grow",
+    "from": 8,
+    "to": 51
+   },
+   "pool": "fx.gr.sub",
+   "mode": "fixed",
+   "gain_db": -16,
+   "pitch_ramp": [
+    0,
+    -4
+   ],
+   "gain_ramp": [
+    -3,
+    1
+   ],
+   "pan": 0,
+   "align": "attack",
+   "no_cue": true
+  },
+  {
+   "name": "fx.step.shoe",
+   "match": {
+    "kind": "step",
+    "variant": "shoe"
+   },
+   "pool": "fx.st.shoe",
+   "mode": "cycle",
+   "gain_db": -12,
+   "jitter_db": 1.5,
+   "pan_scale": 1.0,
+   "align": "attack"
+  },
+  {
+   "name": "fx.step.heavy",
+   "match": {
+    "kind": "step",
+    "variant": "heavy"
+   },
+   "pool": "fx.st.robot",
+   "mode": "cycle",
+   "gain_db": -14,
+   "gain_ramp": [
+    0,
+    5
+   ],
+   "pitch": [
+    1,
+    2
+   ],
+   "pitch_ramp": [
+    0,
+    -3
+   ],
+   "jitter_db": 1.0,
+   "align": "peak"
+  },
+  {
+   "name": "fx.step.giant",
+   "match": {
+    "kind": "step",
+    "variant": "giant"
+   },
+   "pool": "fx.st.robot",
+   "mode": "cycle",
+   "gain_db": -11,
+   "gain_ramp": [
+    0,
+    3
+   ],
+   "pitch": [
+    -1,
+    0
+   ],
+   "pitch_ramp": [
+    -2,
+    -9
+   ],
+   "jitter_db": 1.0,
+   "pan_scale": 0.5,
+   "align": "peak"
+  },
+  {
+   "name": "fx.step.giant.low",
+   "match": {
+    "kind": "step",
+    "variant": "giant"
+   },
+   "pool": "fx.st.rumble",
+   "mode": "fixed",
+   "gain_db": -15,
+   "gain_ramp": [
+    0,
+    4
+   ],
+   "pitch_ramp": [
+    0,
+    -5
+   ],
+   "align": "attack",
+   "no_cue": true
+  },
+  {
+   "name": "fx.crowd.gasp",
+   "match": {
+    "id": "^crowd:gasp"
+   },
+   "pool": "fx.gasp",
+   "mode": "fixed",
+   "gain_db": -9,
+   "pan": 0,
+   "align": "attack"
+  },
+  {
+   "name": "fx.crowd.murmur",
+   "match": {
+    "id": "^crowd:gasp"
+   },
+   "pool": "fx.murmur",
+   "mode": "fixed",
+   "gain_db": -6,
+   "pan": 0,
+   "align": "start",
+   "offset": 0.5,
+   "no_cue": true
+  },
+  {
+   "name": "fx.crowd.scream",
+   "match": {
+    "id": "^crowd:scream"
+   },
+   "pool": "fx.scream",
+   "mode": "fixed",
+   "gain_db": -5,
+   "pan": 0,
+   "align": "start",
+   "qa_ok": "the crowd scream starts on the flee frame (5.2) and swells as people run; its peak comes later on purpose"
+  },
+  {
+   "name": "fx.crowd.run",
+   "match": {
+    "id": "^crowd:scream"
+   },
+   "pool": "fx.runners",
+   "mode": "fixed",
+   "gain_db": -10,
+   "pan": 0,
+   "align": "start",
+   "offset": 0.1,
+   "no_cue": true
+  },
+  {
+   "name": "fx.car.skid",
+   "match": {
+    "id": "^car:skid"
+   },
+   "pool": "fx.skid",
+   "mode": "fixed",
+   "gain_db": -10,
+   "pan": 0.35,
+   "align": "start"
+  },
+  {
+   "name": "fx.car.stop",
+   "match": {
+    "id": "^car:skid"
+   },
+   "pool": "fx.skid.stop",
+   "mode": "fixed",
+   "gain_db": -11,
+   "pan": 0.35,
+   "align": "attack",
+   "offset": 0.95,
+   "no_cue": true
+  },
+  {
+   "name": "fx.car.horn",
+   "match": {
+    "id": "^car:horn"
+   },
+   "pool": "fx.horn",
+   "mode": "cycle",
+   "gain_db": -11,
+   "align": "peak"
+  },
+  {
+   "name": "fx.car.alarm",
+   "match": {
+    "id": "^car:alarm"
+   },
+   "pool": "fx.alarm",
+   "mode": "cycle",
+   "gain_db": -19,
+   "align": "start"
+  },
+  {
+   "name": "fx.col.hit",
+   "match": {
+    "kind": "collapse"
+   },
+   "pool": "fx.col.hit",
+   "mode": "cycle",
+   "gain_db": -6,
+   "weight_db": 6,
+   "align": "attack"
+  },
+  {
+   "name": "fx.col.tex",
+   "match": {
+    "kind": "collapse"
+   },
+   "pool": "fx.col.tex",
+   "mode": "cycle",
+   "gain_db": -11,
+   "weight_db": 6,
+   "align": "start",
+   "offset": 0.1,
+   "no_cue": true
+  },
+  {
+   "name": "fx.col.crack",
+   "match": {
+    "kind": "collapse",
+    "to": 15
+   },
+   "pool": "fx.col.crack",
+   "mode": "fixed",
+   "gain_db": -14,
+   "align": "peak",
+   "no_cue": true
+  },
+  {
+   "name": "fx.plane",
+   "match": {
+    "kind": "plane"
+   },
+   "pool": "fx.jet",
+   "mode": "cycle",
+   "gain_db": -10,
+   "align": "peak"
+  },
+  {
+   "name": "fx.space.in",
+   "match": {
+    "id": "^space:enter"
+   },
+   "pool": "fx.space.in",
+   "mode": "fixed",
+   "gain_db": -10,
+   "pan": 0,
+   "align": "peak"
+  },
+  {
+   "name": "fx.iss.whoosh",
+   "match": {
+    "id": "^iss:pass"
+   },
+   "pool": "fx.iss.whoosh",
+   "mode": "fixed",
+   "gain_db": -11,
+   "pan": -0.3,
+   "align": "peak"
+  },
+  {
+   "name": "fx.space.step",
+   "match": {
+    "id": "^step:space"
+   },
+   "pool": "fx.sp.step",
+   "mode": "fixed",
+   "gain_db": -6,
+   "weight_db": 4,
+   "pan": 0,
+   "align": "peak"
+  },
+  {
+   "name": "fx.earth.stand",
+   "match": {
+    "id": "^earth:stand"
+   },
+   "pool": "fx.sp.step",
+   "mode": "fixed",
+   "gain_db": -12,
+   "pitch": [
+    -3,
+    -3
+   ],
+   "pan": 0,
+   "align": "peak"
+  },
+  {
+   "name": "fx.sat",
+   "match": {
+    "kind": "sat"
+   },
+   "pool": "fx.sat",
+   "mode": "fixed",
+   "gain_db": -20,
+   "pitch_ramp": [
+    0,
+    2
+   ],
+   "align": "attack"
+  },
+  {
+   "name": "fx.sat.swish",
+   "match": {
+    "kind": "sat"
+   },
+   "pool": "fx.sat.swish",
+   "mode": "fixed",
+   "gain_db": -18,
+   "align": "peak",
+   "no_cue": true
+  },
+  {
+   "name": "fx.moon.boom",
+   "match": {
+    "kind": "drop"
+   },
+   "pool": "fx.moon.boom",
+   "mode": "fixed",
+   "gain_db": -5,
+   "pan": 0,
+   "align": "attack"
+  },
+  {
+   "name": "fx.moon.hit",
+   "match": {
+    "kind": "drop"
+   },
+   "pool": "fx.moon.hit",
+   "mode": "fixed",
+   "gain_db": -11,
+   "pan": 0,
+   "align": "attack",
+   "no_cue": true
+  },
+  {
+   "name": "fx.moon.shimmer",
+   "match": {
+    "kind": "drop"
+   },
+   "pool": "fx.moon.shimmer",
+   "mode": "fixed",
+   "gain_db": -16,
+   "pan": 0,
+   "align": "attack",
+   "offset": 0.15,
+   "no_cue": true
+  },
+  {
+   "name": "fx.card.in",
+   "match": {
+    "id": "^card:in"
+   },
+   "pool": "fx.card.whoosh",
+   "mode": "fixed",
+   "gain_db": -16,
+   "pan": 0,
+   "align": "peak"
+  },
+  {
+   "name": "fx.card.orsi",
+   "match": {
+    "id": "^card:orsi"
+   },
+   "pool": "fx.card.ting",
+   "mode": "fixed",
+   "gain_db": -20,
+   "pan": 0,
+   "align": "attack"
+  }
+ ],
+ "place": [
+  {
+   "sample": "fx.iss.hum",
+   "at": 34.3,
+   "gain_db": -15,
+   "pan": -0.2,
+   "align": "start"
+  },
+  {
+   "sample": "fx.iss.servo",
+   "at": 36.0,
+   "gain_db": -17,
+   "pan": -0.3,
+   "align": "start"
+  },
+  {
+   "sample": "fx.iss.radio",
+   "at": 34.8,
+   "gain_db": -26,
+   "pan": -0.35,
+   "align": "start"
+  },
+  {
+   "sample": "fx.cloud",
+   "at": 20.3,
+   "gain_db": -12,
+   "pan": -0.3,
+   "align": "peak"
+  },
+  {
+   "sample": "fx.cloud",
+   "at": 22.4,
+   "gain_db": -14,
+   "pan": 0.3,
+   "align": "peak"
+  }
+ ]
+}

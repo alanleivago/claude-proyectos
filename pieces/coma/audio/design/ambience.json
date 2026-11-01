@@ -1,0 +1,540 @@
+{
+ "_doc": "Beds (real recordings): party on the pier (DJ speakers = the funk track band-passed, crowd chatter, water lapping and creaks, night crickets) 0-9.95, the same world muffled under water to 15.5; hospital room tone + ventilator + ICU 16-24; dream lake + far party 24-28; rain/wind/waves storm 28-31; an eerie still lake + muffled doctors 31-36; the room in weeks 3-6 with a distant PA; MRI 47-52 (dulled at the control room 50); kitchen, fridge, birds 52-56.6; control room 57-64; evening room + far birds 64-75.",
+ "ambience": [
+  {
+   "name": "am.dj",
+   "file": "audio/assets/music/mk-1077_sounds-good.mp3",
+   "src_start": 16.0,
+   "src_end": 60.0,
+   "at": 0.0,
+   "until": 9.95,
+   "gain_db": -9,
+   "fade_in": 0.01,
+   "fade_out": 0.04,
+   "width": 0.6,
+   "eq": {
+    "hp": 180,
+    "lp": 2600,
+    "peq": [
+     [
+      900,
+      0.8,
+      3
+     ]
+    ]
+   }
+  },
+  {
+   "name": "am.party",
+   "file": "audio/assets/ambience/fs-396683_party-background-chatter-real-2-snatches.ogg",
+   "src_start": 20.0,
+   "src_end": 110.0,
+   "at": 0.0,
+   "until": 9.95,
+   "gain_db": -4,
+   "fade_in": 0.01,
+   "fade_out": 0.04,
+   "eq": {
+    "hp": 150
+   }
+  },
+  {
+   "name": "am.pier",
+   "file": "audio/assets/ambience/fs-91912_dock-wood-creak-water-laping.ogg",
+   "src_start": 40.0,
+   "src_end": 100.0,
+   "at": 0.0,
+   "until": 9.95,
+   "gain_db": -1,
+   "fade_in": 0.01,
+   "fade_out": 0.04,
+   "eq": {
+    "hp": 90
+   }
+  },
+  {
+   "name": "am.night",
+   "file": "audio/assets/ambience/fs-399594_lake-night-summer-11pm-nl-short-170814-1.ogg",
+   "src_start": 5.0,
+   "src_end": 80.0,
+   "at": 0.0,
+   "until": 9.95,
+   "gain_db": -8,
+   "fade_in": 0.01,
+   "fade_out": 0.04,
+   "eq": {
+    "hp": 200
+   }
+  },
+  {
+   "name": "am.dj.under",
+   "file": "audio/assets/music/mk-1077_sounds-good.mp3",
+   "src_start": 25.95,
+   "src_end": 40.0,
+   "at": 9.95,
+   "until": 15.45,
+   "gain_db": -24,
+   "fade_in": 0.02,
+   "fade_out": 1.5,
+   "width": 0.2,
+   "eq": {
+    "lp": 380
+   },
+   "auto": [
+    [
+     9.95,
+     0
+    ],
+    [
+     12,
+     -3
+    ],
+    [
+     15.4,
+     -12
+    ]
+   ]
+  },
+  {
+   "name": "am.party.under",
+   "file": "audio/assets/ambience/fs-396683_party-background-chatter-real-2-snatches.ogg",
+   "src_start": 29.95,
+   "src_end": 60.0,
+   "at": 9.95,
+   "until": 15.45,
+   "gain_db": -6,
+   "fade_in": 0.02,
+   "fade_out": 1.5,
+   "eq": {
+    "lp": 450
+   },
+   "auto": [
+    [
+     9.95,
+     0
+    ],
+    [
+     12,
+     -3
+    ],
+    [
+     15.4,
+     -12
+    ]
+   ]
+  },
+  {
+   "name": "am.under",
+   "file": "audio/assets/ambience/fs-255597_underwater-ambience.ogg",
+   "src_start": 2.0,
+   "src_end": 40.0,
+   "at": 9.95,
+   "until": 15.5,
+   "gain_db": 2,
+   "fade_in": 0.02,
+   "fade_out": 1.2,
+   "eq": {
+    "hp": 40,
+    "lp": 2500
+   },
+   "auto": [
+    [
+     9.95,
+     0
+    ],
+    [
+     13,
+     0
+    ],
+    [
+     15.3,
+     -10
+    ]
+   ]
+  },
+  {
+   "name": "am.room.n",
+   "file": "audio/assets/ambience/fs-670070_room-tone-empty-hospital.ogg",
+   "src_start": 10.0,
+   "src_end": 100.0,
+   "at": 16.0,
+   "until": 24.05,
+   "gain_db": 8,
+   "fade_in": 0.4,
+   "fade_out": 0.05,
+   "eq": {
+    "hp": 50
+   }
+  },
+  {
+   "name": "am.vent.n",
+   "file": "audio/assets/ambience/fs-703025_breathing-machine.ogg",
+   "src_start": 2.0,
+   "src_end": 34.0,
+   "at": 16.0,
+   "until": 24.05,
+   "gain_db": -8,
+   "fade_in": 0.4,
+   "fade_out": 0.05,
+   "eq": {
+    "hp": 120
+   }
+  },
+  {
+   "name": "am.icu.n",
+   "file": "audio/assets/ambience/fs-678673_hospital-icu-atmo-ambient.ogg",
+   "src_start": 10.0,
+   "src_end": 100.0,
+   "at": 16.0,
+   "until": 24.05,
+   "gain_db": 4,
+   "fade_in": 0.4,
+   "fade_out": 0.05,
+   "eq": {
+    "hp": 80,
+    "lp": 6000
+   }
+  },
+  {
+   "name": "am.lake.d",
+   "file": "audio/assets/ambience/fs-91912_dock-wood-creak-water-laping.ogg",
+   "src_start": 112.0,
+   "src_end": 160.0,
+   "at": 24.0,
+   "until": 28.6,
+   "gain_db": 4,
+   "fade_in": 0.05,
+   "fade_out": 0.7,
+   "eq": {
+    "hp": 60
+   }
+  },
+  {
+   "name": "am.night.d",
+   "file": "audio/assets/ambience/fs-399594_lake-night-summer-11pm-nl-short-170814-1.ogg",
+   "src_start": 90.0,
+   "src_end": 160.0,
+   "at": 24.0,
+   "until": 29.0,
+   "gain_db": -4,
+   "fade_in": 0.05,
+   "fade_out": 1.0,
+   "eq": {
+    "hp": 150
+   }
+  },
+  {
+   "name": "am.party.d",
+   "file": "audio/assets/ambience/fs-396683_party-background-chatter-real-2-snatches.ogg",
+   "src_start": 130.0,
+   "src_end": 200.0,
+   "at": 24.0,
+   "until": 28.4,
+   "gain_db": -14,
+   "fade_in": 0.05,
+   "fade_out": 0.5,
+   "eq": {
+    "hp": 200,
+    "lp": 1800
+   }
+  },
+  {
+   "name": "am.dj.d",
+   "file": "audio/assets/music/mk-1077_sounds-good.mp3",
+   "src_start": 44.0,
+   "src_end": 60.0,
+   "at": 24.0,
+   "until": 28.4,
+   "gain_db": -28,
+   "fade_in": 0.05,
+   "fade_out": 0.5,
+   "width": 0.4,
+   "eq": {
+    "hp": 200,
+    "lp": 1500
+   }
+  },
+  {
+   "name": "am.rain",
+   "file": "audio/assets/ambience/fs-768870_heavy-rain-outside.ogg",
+   "src_start": 1.0,
+   "src_end": 25.0,
+   "at": 28.0,
+   "until": 31.3,
+   "gain_db": 0,
+   "fade_in": 0.7,
+   "fade_out": 0.6,
+   "eq": {
+    "hp": 100
+   }
+  },
+  {
+   "name": "am.wind",
+   "file": "audio/assets/ambience/fs-117773_roaring-wind.ogg",
+   "src_start": 36.0,
+   "src_end": 80.0,
+   "at": 28.0,
+   "until": 31.3,
+   "gain_db": -2,
+   "fade_in": 0.8,
+   "fade_out": 0.6,
+   "eq": {
+    "hp": 50
+   }
+  },
+  {
+   "name": "am.waves",
+   "file": "audio/assets/ambience/fs-826442_ocean-pier-sloshing-water-salt-spray.ogg",
+   "src_start": 20.0,
+   "src_end": 60.0,
+   "at": 28.0,
+   "until": 31.3,
+   "gain_db": 0,
+   "fade_in": 0.6,
+   "fade_out": 0.6,
+   "eq": {
+    "hp": 50
+   }
+  },
+  {
+   "name": "am.lake.off",
+   "file": "audio/assets/ambience/fs-412941_lake-at-night-2.ogg",
+   "src_start": 20.0,
+   "src_end": 90.0,
+   "at": 31.0,
+   "until": 36.05,
+   "gain_db": 12,
+   "fade_in": 0.6,
+   "fade_out": 0.05,
+   "eq": {
+    "hp": 60
+   }
+  },
+  {
+   "name": "am.voices.off",
+   "file": "audio/assets/ambience/fs-762124_hospital-ambience-indoor-medical-clinic.ogg",
+   "src_start": 20.0,
+   "src_end": 80.0,
+   "at": 31.2,
+   "until": 36.05,
+   "gain_db": 10,
+   "fade_in": 0.8,
+   "fade_out": 0.05,
+   "eq": {
+    "hp": 150,
+    "lp": 650
+   }
+  },
+  {
+   "name": "am.room.d",
+   "file": "audio/assets/ambience/fs-670070_room-tone-empty-hospital.ogg",
+   "src_start": 100.0,
+   "src_end": 170.0,
+   "at": 36.0,
+   "until": 47.05,
+   "gain_db": 8,
+   "fade_in": 0.05,
+   "fade_out": 0.05,
+   "eq": {
+    "hp": 50
+   }
+  },
+  {
+   "name": "am.icu.d",
+   "file": "audio/assets/ambience/fs-678673_hospital-icu-atmo-ambient.ogg",
+   "src_start": 40.0,
+   "src_end": 110.0,
+   "at": 36.0,
+   "until": 47.05,
+   "gain_db": 4,
+   "fade_in": 0.05,
+   "fade_out": 0.05,
+   "eq": {
+    "hp": 80
+   }
+  },
+  {
+   "name": "am.vent.d",
+   "file": "audio/assets/ambience/fs-703025_breathing-machine.ogg",
+   "src_start": 2.0,
+   "src_end": 34.0,
+   "at": 36.0,
+   "until": 47.05,
+   "gain_db": -12,
+   "fade_in": 0.05,
+   "fade_out": 0.05,
+   "eq": {
+    "hp": 120
+   }
+  },
+  {
+   "name": "am.pa",
+   "file": "audio/assets/ambience/fs-640626_pediatric-hospital-waiting-room-speaker.ogg",
+   "src_start": 4.0,
+   "src_end": 30.0,
+   "at": 36.0,
+   "until": 47.05,
+   "gain_db": -10,
+   "fade_in": 0.3,
+   "fade_out": 0.05,
+   "eq": {
+    "hp": 300,
+    "lp": 3500
+   }
+  },
+  {
+   "name": "am.mri",
+   "file": "audio/assets/sfx/fs-442834_mri-tirm-turbo-inversion-recovery-magnit.ogg",
+   "src_start": 5.0,
+   "src_end": 30.0,
+   "at": 47.0,
+   "until": 52.05,
+   "gain_db": -6,
+   "fade_in": 0.05,
+   "fade_out": 0.05,
+   "eq": {
+    "hp": 60
+   },
+   "auto": [
+    [
+     47.0,
+     -8
+    ],
+    [
+     48.1,
+     -8
+    ],
+    [
+     48.3,
+     0
+    ],
+    [
+     49.95,
+     0
+    ],
+    [
+     50.05,
+     -9
+    ],
+    [
+     52.05,
+     -9
+    ]
+   ]
+  },
+  {
+   "name": "am.mri.room",
+   "file": "audio/assets/ambience/fs-670070_room-tone-empty-hospital.ogg",
+   "src_start": 20.0,
+   "src_end": 60.0,
+   "at": 47.0,
+   "until": 50.05,
+   "gain_db": 6,
+   "fade_in": 0.05,
+   "fade_out": 0.05,
+   "eq": {
+    "hp": 50
+   }
+  },
+  {
+   "name": "am.ctrl",
+   "file": "audio/assets/ambience/fs-762124_hospital-ambience-indoor-medical-clinic.ogg",
+   "src_start": 85.0,
+   "src_end": 130.0,
+   "at": 50.0,
+   "until": 52.05,
+   "gain_db": 4,
+   "fade_in": 0.05,
+   "fade_out": 0.05,
+   "eq": {
+    "hp": 80
+   }
+  },
+  {
+   "name": "am.fridge",
+   "file": "audio/assets/ambience/fs-637621_kitchen-restaurant-fridge-hum-room-tone.ogg",
+   "src_start": 5.0,
+   "src_end": 60.0,
+   "at": 52.0,
+   "until": 56.6,
+   "gain_db": 4,
+   "fade_in": 0.3,
+   "fade_out": 0.03,
+   "eq": {
+    "hp": 50
+   }
+  },
+  {
+   "name": "am.kitchen",
+   "file": "audio/assets/ambience/fs-669154_230109-2302-fr-kitchenatmosphere.ogg",
+   "src_start": 10.0,
+   "src_end": 100.0,
+   "at": 52.0,
+   "until": 56.6,
+   "gain_db": 8,
+   "fade_in": 0.3,
+   "fade_out": 0.03,
+   "eq": {
+    "hp": 60
+   }
+  },
+  {
+   "name": "am.birds.h",
+   "file": "audio/assets/ambience/fs-844906_suburban-street-birds-ditche-s-hertogenb.ogg",
+   "src_start": 10.0,
+   "src_end": 80.0,
+   "at": 52.0,
+   "until": 56.6,
+   "gain_db": -14,
+   "fade_in": 0.3,
+   "fade_out": 0.03,
+   "eq": {
+    "hp": 1200,
+    "lp": 9000
+   }
+  },
+  {
+   "name": "am.ctrl2",
+   "file": "audio/assets/ambience/fs-762124_hospital-ambience-indoor-medical-clinic.ogg",
+   "src_start": 30.0,
+   "src_end": 80.0,
+   "at": 57.0,
+   "until": 64.3,
+   "gain_db": 2,
+   "fade_in": 0.4,
+   "fade_out": 0.5,
+   "eq": {
+    "hp": 80
+   }
+  },
+  {
+   "name": "am.evening",
+   "file": "audio/assets/ambience/fs-720251_room-tone-summer-812am-220813-0497.ogg",
+   "src_start": 10.0,
+   "src_end": 80.0,
+   "at": 64.0,
+   "until": 75.0,
+   "gain_db": 4,
+   "fade_in": 0.8,
+   "fade_out": 2.5,
+   "eq": {
+    "hp": 50
+   }
+  },
+  {
+   "name": "am.birds.e",
+   "file": "audio/assets/ambience/fs-844906_suburban-street-birds-ditche-s-hertogenb.ogg",
+   "src_start": 80.0,
+   "src_end": 118.0,
+   "at": 64.0,
+   "until": 75.0,
+   "gain_db": -18,
+   "fade_in": 1.0,
+   "fade_out": 2.5,
+   "eq": {
+    "hp": 1800,
+    "lp": 8000
+   }
+  }
+ ]
+}
