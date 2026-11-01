@@ -1,0 +1,14 @@
+{
+ "_doc": "Coma film soundtrack (real-sound skill): real licensed recordings only, credited in CREDITS.md. mix.py renders this file + the fragments in audio/design/.",
+ "duration": 75.0,
+ "cues": "out/cues.json",
+ "include": ["audio/design/music.json", "audio/design/sfx.json", "audio/design/ambience.json"],
+ "_buses_doc": "Music: low under the party, the strings swell at 'No despiertas' and sink to silence at 15.5 (black); out through day 1, back very low under the mom, soft in the dream, uneasy (and under the thunder) in the storm, out in 'off'; weeks 3-6 build from -12 to -3; hard cut 56.6; the bloom at 57.0 is the loudest moment; the piano outro sits low for the card. SFX/amb choked in the 56.6-57.0 silence.",
+ "buses": {
+  "music": {"gain_db": 0.0, "auto": [[0, -9], [4, -9], [7, -6], [11.5, -3], [12.4, 0], [14.0, -2], [15.2, -14], [15.48, -40], [20.5, -12], [24.0, -6], [27.5, -6], [28.2, -8], [31.5, -8], [35.9, -14], [38.0, -11], [44.0, -8], [47.0, -7], [51.9, -5], [52.4, -8], [55.6, -7], [56.5, -4], [56.6, -4], [56.9, 1.5], [63.0, 1.5], [65.3, -1], [75, -1]]},
+  "amb": {"gain_db": 0.0, "auto": [[0, 0], [56.55, 0], [56.62, -60], [56.97, -60], [57.0, 0], [75, 0]]},
+  "sfx": {"gain_db": 0.0, "auto": [[0, 0], [56.55, 0], [56.62, -60], [56.97, -60], [57.0, 0], [75, 0]]}
+ },
+ "_master_doc": "-14 LUFS integrated; ceiling 0.77 linear leaves room for the AAC encode.",
+ "master": {"lufs": -14, "ceiling": 0.77, "no_glue": true}
+}

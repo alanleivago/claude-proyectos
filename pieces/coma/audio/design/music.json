@@ -1,0 +1,19 @@
+{
+ "_doc": "Music edit. Track: 'Discover' by Eugenio Mininni (Mixkit, Mixkit Stock Music Free License), instrumental strings + piano outro. No stretch (the picture is not cut to its tempo); every splice sits on the track's own bar lines (arrange.py grid 113.37 BPM, downbeats 1.969 + 2.117*n s) and the levels are shaped on the music bus.",
+ "music": {
+  "file": "audio/assets/music/mk-587_discover.mp3",
+  "src_bpm": 113.369, "target_bpm": 113.369, "stretch": "none", "gain_db": 0.0,
+  "segments": [
+   {"label": "mu.intro: src bars 1-6 (4.09-15.50) -> film 4.0-15.41. The cello intro under the dare and the jump; the track's own string swell (bar 5, src 12.55) lands on 12.46, the caption 'No despiertas'; ridden down to silence for the black at 15.5.",
+    "src_from": 4.0858, "src_to": 15.5, "at": 4.0, "fade_in": 0.6, "fade_out": 0.08, "qa_ok": "deliberate: the music bus is ridden to -40 dB by 15.48 for the black frame 15.5-16, so the cut is inaudible"},
+   {"label": "mu.dream: src bars 8-12 (18.91-29.40) -> film 20.9-31.39. Enters very low under the mom (21-24), the dream (24-28), the dark bar 10-12 strings under the storm; fades out into 'off'.",
+    "src_from": 18.91, "src_to": 29.4, "at": 20.9, "fade_in": 1.2, "fade_out": 0.9},
+   {"label": "mu.weeks: src bars 13-23 (29.49-50.09) -> film 36.0-56.6. The track's own build (bar 13) into its tutti (bar 14, film 38.1) under weeks 3-6, ridden up from -14 to -3 dB. Hard cut at 56.6 (the black frame).",
+    "src_from": 29.49, "src_to": 50.09, "at": 36.0, "fade_in": 1.0, "fade_out": 0.015, "qa_ok": "deliberate hard cut: the picture cuts to black 56.6-57.0 and the music must stop dead"},
+   {"label": "mu.bloom: src bars 44-47 (95.12-103.58) -> film 57.0-65.46. Bar 44 is the track's loudest (top drop candidate, +2.1 rel dB); its downbeat enters from silence on 57.0 as the brain lights up.",
+    "src_from": 95.12, "src_to": 103.58, "at": 57.0, "fade_in": 0.01, "fade_out": 0.35},
+   {"label": "mu.outro: src bars 61-66 (131.10-141.6) -> film 65.46-75.0. The solo-piano resolution (hopeful), bar line to bar line from the bloom; rings down to silence on the end card.",
+    "src_from": 131.1, "src_to": 140.6, "at": 65.46, "fade_in": 0.3, "fade_out": 0.4, "tail_fade": 2.0}
+  ]
+ }
+}

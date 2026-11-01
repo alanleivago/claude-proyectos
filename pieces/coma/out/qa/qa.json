@@ -1,0 +1,3721 @@
+{
+ "summary": "QA WARN: clicks warn, loudness warn, audibility warn, sync warn. Master gain over the stems +2.8 dB (levels below are at master scale).",
+ "status": "warn",
+ "note": null,
+ "sections": {
+  "clicks": {
+   "status": "warn",
+   "summary": "0 click(s) in the master, 1 in the stems; 0 at a placement edge (a cut: fix the trim / fade), the rest inside a recording (its own crisp transient or a defect in the source)",
+   "counts": {
+    "master": {
+     "clicks": 0,
+     "attacks": 6
+    },
+    "sfx": {
+     "clicks": 1,
+     "attacks": 0
+    },
+    "amb": {
+     "clicks": 0,
+     "attacks": 4
+    },
+    "music": {
+     "clicks": 0,
+     "attacks": 0
+    }
+   },
+   "items": [
+    {
+     "in": "sfx",
+     "t": 7.3395,
+     "ch": 1,
+     "level_db": -33.5,
+     "conc": 0.81,
+     "kind": "click",
+     "owners": [
+      {
+       "bus": "sfx",
+       "what": "fx.cheer.app",
+       "rule": "fx.cheer",
+       "where": "body",
+       "from_start_ms": 2622.0,
+       "level_db": -33.5
+      }
+     ],
+     "at_edge": false
+    }
+   ]
+  },
+  "loudness": {
+   "lufs": -14.04,
+   "target": -14,
+   "true_peak_dbtp": -2.27,
+   "lra_lu": 17.9,
+   "premaster_lufs": -16.88,
+   "loudest_momentary": -7.5,
+   "loudest_at": 59.0,
+   "loudest_frac": 0.79,
+   "short_term_per_s": [
+    -18.8,
+    -19.2,
+    -19.1,
+    -17.2,
+    -16.8,
+    -17.1,
+    -16.8,
+    -16.7,
+    -14.3,
+    -13.4,
+    -13.1,
+    -12.9,
+    -14.0,
+    -15.1,
+    -20.2,
+    -28.5,
+    -27.7,
+    -27.6,
+    -27.4,
+    -27.1,
+    -25.5,
+    -25.0,
+    -21.3,
+    -20.0,
+    -18.9,
+    -19.3,
+    -16.8,
+    -14.9,
+    -12.4,
+    -12.7,
+    -13.8,
+    -18.7,
+    -22.9,
+    -25.9,
+    -27.5,
+    -26.5,
+    -24.0,
+    -20.8,
+    -20.0,
+    -20.0,
+    -21.4,
+    -22.0,
+    -20.1,
+    -17.5,
+    -16.4,
+    -15.5,
+    -14.2,
+    -12.6,
+    -12.7,
+    -13.6,
+    -16.0,
+    -16.1,
+    -15.8,
+    -14.9,
+    -14.2,
+    -11.2,
+    -9.6,
+    -8.5,
+    -9.0,
+    -9.3,
+    -9.6,
+    -9.5,
+    -9.7,
+    -10.4,
+    -12.0,
+    -14.3,
+    -17.4,
+    -19.3,
+    -23.2,
+    -28.4,
+    -29.4,
+    -30.8,
+    -32.7
+   ],
+   "head_5ms_peak_dbfs": -18.4,
+   "tail_50ms_rms_dbfs": -86.1,
+   "tail_10ms_peak_dbfs": -240.0,
+   "acts": {
+    "build": {
+     "from": 0.0,
+     "momentary_median": -17.5,
+     "momentary_max": -10.6
+    },
+    "journey": {
+     "from": 16.0,
+     "momentary_median": -23.3,
+     "momentary_max": -9.9
+    },
+    "peak": {
+     "from": 36.0,
+     "momentary_median": -16.6,
+     "momentary_max": -10.5
+    },
+    "silence": {
+     "from": 56.6,
+     "momentary_median": -15.3,
+     "momentary_max": -13.7
+    },
+    "gift": {
+     "from": 57.0,
+     "momentary_median": -9.2,
+     "momentary_max": -7.5
+    },
+    "goodbye": {
+     "from": 64.0,
+     "momentary_median": -26.9,
+     "momentary_max": -9.8
+    }
+   },
+   "status": "warn",
+   "summary": "-14.0 LUFS (target -14), true peak -2.3 dBTP, LRA 17.9 LU, loudest momentary -7.5 LUFS at 0:59.00 (79% of the runtime); first 5 ms peak -18 dBFS: starts mid-sound or clicks on sample 0; LRA 17.9 LU: wider than launch films (5-9 LU); quiet passages may vanish on phones"
+  },
+  "coverage": {
+   "status": "ok",
+   "partial": [],
+   "unsounded_classes": [],
+   "placed_but_silent": [],
+   "summary": "0 of 87 cue events have no sound; 0 class(es) of action sounded only in part"
+  },
+  "edges": {
+   "status": "ok",
+   "summary": "0 defect(s) (abrupt entries, chopped decays, chopped music), 29 with craft notes only (used samples, slices, music splices); 0 placement(s) run past the film ends",
+   "items": [
+    {
+     "what": "sample",
+     "name": "fx.alarm",
+     "file": "fs-459826_alarm-3.ogg",
+     "start": 4.35,
+     "end": 6.3,
+     "head_db": -43.4,
+     "tail_db": -42.0,
+     "pre20_db": -40.4,
+     "post20_db": -44.6,
+     "attack_ms": 1266.0,
+     "late_onset": 1.265,
+     "fade_in": 0.003,
+     "fade_out": 0.25,
+     "issues": [],
+     "notes": [
+      "a second hit inside the sample at 1.265 s (fine for a rattle, wrong for a single hit)"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.beep.b",
+     "file": "fs-790709_hospital-machine-beeping.ogg",
+     "start": 175.42,
+     "end": 175.78,
+     "head_db": -48.4,
+     "tail_db": -31.4,
+     "pre20_db": -44.9,
+     "post20_db": -29.5,
+     "attack_ms": 26.0,
+     "late_onset": null,
+     "fade_in": 0.003,
+     "fade_out": 0.08,
+     "issues": [],
+     "notes": [
+      "the sound continues after the trim (tail -31.4 dB, source after -29.5 dB): decay faded early"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.bowl",
+     "file": "fs-415139_singing-bowl-single-strike-2.ogg",
+     "start": 0.0,
+     "end": 7.0,
+     "head_db": -127.6,
+     "tail_db": -17.8,
+     "pre20_db": -240.0,
+     "post20_db": -19.5,
+     "attack_ms": 84.0,
+     "late_onset": null,
+     "fade_in": 0.003,
+     "fade_out": 2.5,
+     "issues": [],
+     "notes": [
+      "the sound continues after the trim (tail -17.8 dB, source after -19.5 dB): decay faded early"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.breath.a",
+     "file": "fs-724232_relief-sigh.ogg",
+     "start": 2.2,
+     "end": 3.65,
+     "head_db": -27.8,
+     "tail_db": -29.0,
+     "pre20_db": -25.1,
+     "post20_db": -25.2,
+     "attack_ms": 11.0,
+     "late_onset": null,
+     "fade_in": 0.003,
+     "fade_out": 0.25,
+     "issues": [],
+     "notes": [
+      "the attack starts in the first ms (head -27.8 dB): the 3 ms fade-in dulls it; start the trim 3-5 ms earlier",
+      "the sound continues after the trim (tail -29.0 dB, source after -25.2 dB): decay faded early"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.bub.big",
+     "file": "fs-823209_underwaterhugebubble.ogg",
+     "start": 0.03,
+     "end": 2.78,
+     "head_db": -83.1,
+     "tail_db": -27.4,
+     "pre20_db": -73.6,
+     "post20_db": -20.0,
+     "attack_ms": 26.0,
+     "late_onset": 1.845,
+     "fade_in": 0.003,
+     "fade_out": 0.4,
+     "issues": [],
+     "notes": [
+      "the sound continues after the trim (tail -27.4 dB, source after -20.0 dB): decay faded early",
+      "a second hit inside the sample at 1.845 s (fine for a rattle, wrong for a single hit)"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.buzz.a",
+     "file": "fs-384485_cell-phone-vibrate-wood-table-loopable.ogg",
+     "start": 0.01,
+     "end": 0.24,
+     "head_db": -27.7,
+     "tail_db": -11.5,
+     "pre20_db": -32.0,
+     "post20_db": -14.2,
+     "attack_ms": 3.0,
+     "late_onset": null,
+     "fade_in": 0.003,
+     "fade_out": 0.03,
+     "issues": [],
+     "notes": [
+      "the attack starts in the first ms (head -27.7 dB): the 3 ms fade-in dulls it; start the trim 3-5 ms earlier",
+      "the sound continues after the trim (tail -11.5 dB, source after -14.2 dB): decay faded early"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.buzz.b",
+     "file": "fs-384485_cell-phone-vibrate-wood-table-loopable.ogg",
+     "start": 1.0,
+     "end": 1.23,
+     "head_db": -47.0,
+     "tail_db": -13.7,
+     "pre20_db": -55.6,
+     "post20_db": -15.8,
+     "attack_ms": 19.0,
+     "late_onset": null,
+     "fade_in": 0.003,
+     "fade_out": 0.03,
+     "issues": [],
+     "notes": [
+      "the sound continues after the trim (tail -13.7 dB, source after -15.8 dB): decay faded early"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.buzz.c",
+     "file": "fs-384485_cell-phone-vibrate-wood-table-loopable.ogg",
+     "start": 1.99,
+     "end": 2.22,
+     "head_db": -240.0,
+     "tail_db": -18.9,
+     "pre20_db": -240.0,
+     "post20_db": -15.6,
+     "attack_ms": 35.0,
+     "late_onset": null,
+     "fade_in": 0.003,
+     "fade_out": 0.03,
+     "issues": [],
+     "notes": [
+      "the sound continues after the trim (tail -18.9 dB, source after -15.6 dB): decay faded early"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.cheer.app",
+     "file": "fs-830415_cheer-applause.ogg",
+     "start": 1.9,
+     "end": 5.4,
+     "head_db": -17.9,
+     "tail_db": -26.8,
+     "pre20_db": -14.0,
+     "post20_db": -24.3,
+     "attack_ms": 0.0,
+     "late_onset": 2.62,
+     "fade_in": 0.003,
+     "fade_out": 0.8,
+     "issues": [],
+     "notes": [
+      "the trim cuts into a sound already playing (source 20 ms before at -14.0 dB re peak), softened by the fade-in",
+      "the sound continues after the trim (tail -26.8 dB, source after -24.3 dB): decay faded early",
+      "a second hit inside the sample at 2.62 s (fine for a rattle, wrong for a single hit)"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.cheer.woo",
+     "file": "fs-329331_crowd-woos.ogg",
+     "start": 2.75,
+     "end": 3.95,
+     "head_db": -34.9,
+     "tail_db": -24.8,
+     "pre20_db": -25.3,
+     "post20_db": -25.9,
+     "attack_ms": 4.0,
+     "late_onset": null,
+     "fade_in": 0.003,
+     "fade_out": 0.3,
+     "issues": [],
+     "notes": [
+      "the sound continues after the trim (tail -24.8 dB, source after -25.9 dB): decay faded early"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.creak.a",
+     "file": "fs-506664_wood-creak-single-v9.ogg",
+     "start": 0.03,
+     "end": 0.4,
+     "head_db": -56.0,
+     "tail_db": -12.7,
+     "pre20_db": -60.6,
+     "post20_db": -13.6,
+     "attack_ms": 24.0,
+     "late_onset": 0.315,
+     "fade_in": 0.003,
+     "fade_out": 0.05,
+     "issues": [],
+     "notes": [
+      "the sound continues after the trim (tail -12.7 dB, source after -13.6 dB): decay faded early",
+      "a second hit inside the sample at 0.315 s (fine for a rattle, wrong for a single hit)"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.creak.b",
+     "file": "fs-191497_creaking-pier.ogg",
+     "start": 99.0,
+     "end": 100.1,
+     "head_db": -46.7,
+     "tail_db": -40.7,
+     "pre20_db": -41.1,
+     "post20_db": -38.3,
+     "attack_ms": 101.0,
+     "late_onset": 0.705,
+     "fade_in": 0.003,
+     "fade_out": 0.15,
+     "issues": [],
+     "notes": [
+      "a second hit inside the sample at 0.705 s (fine for a rattle, wrong for a single hit)"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.cry.mom",
+     "file": "fs-449439_woman-crying.ogg",
+     "start": 0.0,
+     "end": 3.2,
+     "head_db": -69.6,
+     "tail_db": -19.8,
+     "pre20_db": -240.0,
+     "post20_db": -18.8,
+     "attack_ms": 241.0,
+     "late_onset": null,
+     "fade_in": 0.15,
+     "fade_out": 0.5,
+     "issues": [],
+     "notes": [
+      "the sound continues after the trim (tail -19.8 dB, source after -18.8 dB): decay faded early"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.hit",
+     "file": "fs-653294_big-structure-collision-heard-from-insid.ogg",
+     "start": 0.0,
+     "end": 3.0,
+     "head_db": -18.5,
+     "tail_db": -35.8,
+     "pre20_db": -240.0,
+     "post20_db": -40.2,
+     "attack_ms": 0.0,
+     "late_onset": null,
+     "fade_in": 0.003,
+     "fade_out": 0.8,
+     "issues": [],
+     "notes": [
+      "the attack starts in the first ms (head -18.5 dB): the 3 ms fade-in dulls it; start the trim 3-5 ms earlier"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.hit.sub",
+     "file": "fs-856174_subterranean-deep-sub-bass-rumble-drop.ogg",
+     "start": 0.0,
+     "end": 3.6,
+     "head_db": -18.3,
+     "tail_db": -43.4,
+     "pre20_db": -240.0,
+     "post20_db": -45.1,
+     "attack_ms": 0.0,
+     "late_onset": null,
+     "fade_in": 0.003,
+     "fade_out": 0.8,
+     "issues": [],
+     "notes": [
+      "the attack starts in the first ms (head -18.3 dB): the 3 ms fade-in dulls it; start the trim 3-5 ms earlier"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.intercom",
+     "file": "fs-264995_intercom-static-and-buttons.ogg",
+     "start": 34.14,
+     "end": 34.7,
+     "head_db": -43.0,
+     "tail_db": -47.6,
+     "pre20_db": -34.2,
+     "post20_db": -28.7,
+     "attack_ms": 59.0,
+     "late_onset": 0.4,
+     "fade_in": 0.003,
+     "fade_out": 0.08,
+     "issues": [],
+     "notes": [
+      "a second hit inside the sample at 0.4 s (fine for a rattle, wrong for a single hit)"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.laugh",
+     "file": "fs-687349_woman-s-soft-laughter.ogg",
+     "start": 4.72,
+     "end": 6.0,
+     "head_db": -58.1,
+     "tail_db": -67.4,
+     "pre20_db": -51.5,
+     "post20_db": -42.6,
+     "attack_ms": 115.0,
+     "late_onset": 0.78,
+     "fade_in": 0.003,
+     "fade_out": 0.25,
+     "issues": [],
+     "notes": [
+      "a second hit inside the sample at 0.78 s (fine for a rattle, wrong for a single hit)"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.page",
+     "file": "fs-457916_turn-over-the-book-page-2.ogg",
+     "start": 0.9,
+     "end": 1.9,
+     "head_db": -26.5,
+     "tail_db": -51.4,
+     "pre20_db": -25.0,
+     "post20_db": -51.3,
+     "attack_ms": 27.0,
+     "late_onset": null,
+     "fade_in": 0.003,
+     "fade_out": 0.15,
+     "issues": [],
+     "notes": [
+      "the attack starts in the first ms (head -26.5 dB): the 3 ms fade-in dulls it; start the trim 3-5 ms earlier"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.penlight",
+     "file": "fs-410359_torch-click-1.ogg",
+     "start": 0.02,
+     "end": 0.38,
+     "head_db": -52.3,
+     "tail_db": -69.7,
+     "pre20_db": -51.1,
+     "post20_db": -69.4,
+     "attack_ms": 12.0,
+     "late_onset": 0.25,
+     "fade_in": 0.003,
+     "fade_out": 0.05,
+     "issues": [],
+     "notes": [
+      "a second hit inside the sample at 0.25 s (fine for a rattle, wrong for a single hit)"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.sob.mom",
+     "file": "fs-272093_sobbing-young-lady.ogg",
+     "start": 4.4,
+     "end": 7.6,
+     "head_db": -28.1,
+     "tail_db": -78.3,
+     "pre20_db": -27.1,
+     "post20_db": -41.5,
+     "attack_ms": 5.0,
+     "late_onset": 2.255,
+     "fade_in": 0.2,
+     "fade_out": 0.6,
+     "issues": [],
+     "notes": [
+      "the attack starts in the first ms (head -28.1 dB): the 200 ms fade-in dulls it; start the trim 3-5 ms earlier",
+      "a second hit inside the sample at 2.255 s (fine for a rattle, wrong for a single hit)"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.thunder.1",
+     "file": "fs-567945_200817-thunder-pretty-close-crack-4pm.ogg",
+     "start": 4.68,
+     "end": 9.5,
+     "head_db": -27.7,
+     "tail_db": -30.2,
+     "pre20_db": -27.3,
+     "post20_db": -29.5,
+     "attack_ms": 8.0,
+     "late_onset": null,
+     "fade_in": 0.003,
+     "fade_out": 1.5,
+     "issues": [],
+     "notes": [
+      "the attack starts in the first ms (head -27.7 dB): the 3 ms fade-in dulls it; start the trim 3-5 ms earlier",
+      "the sound continues after the trim (tail -30.2 dB, source after -29.5 dB): decay faded early"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.thunder.2",
+     "file": "fs-576041_huge-thunderclap.ogg",
+     "start": 1.76,
+     "end": 6.5,
+     "head_db": -44.1,
+     "tail_db": -32.4,
+     "pre20_db": -40.3,
+     "post20_db": -30.8,
+     "attack_ms": 26.0,
+     "late_onset": null,
+     "fade_in": 0.003,
+     "fade_out": 1.5,
+     "issues": [],
+     "notes": [
+      "the sound continues after the trim (tail -32.4 dB, source after -30.8 dB): decay faded early"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.thunder.3",
+     "file": "fs-505113_thunder-close.ogg",
+     "start": 4.33,
+     "end": 9.0,
+     "head_db": -27.6,
+     "tail_db": -41.1,
+     "pre20_db": -24.5,
+     "post20_db": -32.1,
+     "attack_ms": 72.0,
+     "late_onset": null,
+     "fade_in": 0.003,
+     "fade_out": 1.5,
+     "issues": [],
+     "notes": [
+      "the attack starts in the first ms (head -27.6 dB): the 3 ms fade-in dulls it; start the trim 3-5 ms earlier"
+     ]
+    },
+    {
+     "what": "sample",
+     "name": "fx.whoosh.fall",
+     "file": "fs-648540_cinematic-woosh-sfx-006.ogg",
+     "start": 0.0,
+     "end": 2.2,
+     "head_db": -240.0,
+     "tail_db": -22.0,
+     "pre20_db": -240.0,
+     "post20_db": -19.0,
+     "attack_ms": 1257.0,
+     "late_onset": null,
+     "fade_in": 0.3,
+     "fade_out": 0.05,
+     "issues": [],
+     "notes": [
+      "the sound continues after the trim (tail -22.0 dB, source after -19.0 dB): decay faded early"
+     ]
+    }
+   ],
+   "splices": [
+    {
+     "segment": "mu.intro: src bars 1-6 (4.09-15.50) -> film 4.0-15.41. The cello intro under the dare and the jump; the track's own string swell (bar 5, src 12.55) lands on 12.46, the caption 'No despiertas'; ridden down to silence for the black at 15.5.",
+     "film_end": 15.414,
+     "out_db": -17.4,
+     "cut_off_db": -17.5,
+     "next_in_db": -27.8,
+     "issues": [],
+     "notes": [
+      "acknowledged (deliberate: the music bus is ridden to -40 dB by 15.48 for the black frame 15.5-16, so the cut is inaudible): chops the music at 15.414 s: the source keeps sounding at -18 dBFS and the next material enters at -28 (fade_out 80 ms)",
+      "5486 ms of no music before 20.900 s (deliberate silence?)",
+      "begins inside a sustained sound (the source before 4.0858 s is as loud): no fresh attack on the splice"
+     ]
+    },
+    {
+     "segment": "mu.dream: src bars 8-12 (18.91-29.40) -> film 20.9-31.39. Enters very low under the mom (21-24), the dream (24-28), the dark bar 10-12 strings under the storm; fades out into 'off'.",
+     "film_end": 31.39,
+     "out_db": -33.0,
+     "cut_off_db": -32.0,
+     "next_in_db": -29.2,
+     "issues": [],
+     "notes": [
+      "4610 ms of no music before 36.000 s (deliberate silence?)",
+      "begins inside a sustained sound (the source before 18.91 s is as loud): no fresh attack on the splice"
+     ]
+    },
+    {
+     "segment": "mu.weeks: src bars 13-23 (29.49-50.09) -> film 36.0-56.6. The track's own build (bar 13) into its tutti (bar 14, film 38.1) under weeks 3-6, ridden up from -14 to -3 dB. Hard cut at 56.6 (the black frame).",
+     "film_end": 56.6,
+     "out_db": -13.7,
+     "cut_off_db": -13.5,
+     "next_in_db": -12.8,
+     "issues": [],
+     "notes": [
+      "400 ms of no music before 57.000 s (deliberate silence?)",
+      "begins inside a sustained sound (the source before 29.49 s is as loud): no fresh attack on the splice"
+     ]
+    },
+    {
+     "segment": "mu.bloom: src bars 44-47 (95.12-103.58) -> film 57.0-65.46. Bar 44 is the track's loudest (top drop candidate, +2.1 rel dB); its downbeat enters from silence on 57.0 as the brain lights up.",
+     "film_end": 65.46,
+     "out_db": -15.7,
+     "cut_off_db": -16.2,
+     "next_in_db": -25.6,
+     "issues": [],
+     "notes": [
+      "begins inside a sustained sound (the source before 95.12 s is as loud): no fresh attack on the splice"
+     ]
+    },
+    {
+     "segment": "mu.outro: src bars 61-66 (131.10-141.6) -> film 65.46-75.0. The solo-piano resolution (hopeful), bar line to bar line from the bloom; rings down to silence on the end card.",
+     "film_end": 74.96,
+     "out_db": -60.0,
+     "cut_off_db": -63.0,
+     "next_in_db": null,
+     "issues": [],
+     "notes": [
+      "begins inside a sustained sound (the source before 131.1 s is as loud): no fresh attack on the splice"
+     ]
+    }
+   ],
+   "cut_by_film_ends": []
+  },
+  "audibility": {
+   "status": "warn",
+   "counts": {
+    "masked": 9,
+    "clear": 77,
+    "barely": 4,
+    "ok": 4
+   },
+   "summary": "94 events: clear 77, ok 4, barely 4, masked 9; masked at 1.00 place:fx.creak.a (by music/amb), 4.80 place:fx.creak.a (by music/amb), 14.40 place:fx.bub.b (by music/amb), 28.49 beep:2849 (by music/amb), 30.50 storm:flash:3 (by music/amb), 31.57 beep:3157 (by other effects); 2 layer(s) in multi-layer events add nothing measurable (read < 0 dB)",
+   "items": [
+    {
+     "t": 30.5,
+     "label": "storm:flash:3",
+     "kind": "thunder",
+     "n_layers": 1,
+     "rules": [
+      "fx.thunder3"
+     ],
+     "peak_db": -10.2,
+     "vs_bed_db": -3.3,
+     "vs_bed_hz": 200,
+     "vs_all_db": -7.0,
+     "first20_db": -5.8,
+     "first20_hz": 398,
+     "read_db": -5.8,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 28.49,
+     "label": "beep:2849",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.lake"
+     ],
+     "peak_db": -32.1,
+     "vs_bed_db": -7.3,
+     "vs_bed_hz": 6310,
+     "vs_all_db": -7.2,
+     "first20_db": -5.6,
+     "first20_hz": 6310,
+     "read_db": -5.6,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 57.4,
+     "label": "lights:detected",
+     "kind": "ui",
+     "n_layers": 1,
+     "rules": [
+      "fx.detected"
+     ],
+     "peak_db": -28.5,
+     "vs_bed_db": -2.0,
+     "vs_bed_hz": 3981,
+     "vs_all_db": -2.6,
+     "first20_db": -2.1,
+     "first20_hz": 3981,
+     "read_db": -2.1,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 4.796,
+     "label": "place:fx.creak.a",
+     "kind": "place",
+     "n_layers": 1,
+     "rules": [
+      "place"
+     ],
+     "peak_db": -15.8,
+     "vs_bed_db": -1.8,
+     "vs_bed_hz": 6310,
+     "vs_all_db": -1.8,
+     "first20_db": -9.5,
+     "first20_hz": 1995,
+     "read_db": -1.8,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 14.398,
+     "label": "place:fx.bub.b",
+     "kind": "place",
+     "n_layers": 1,
+     "rules": [
+      "place"
+     ],
+     "peak_db": -26.5,
+     "vs_bed_db": -2.0,
+     "vs_bed_hz": 126,
+     "vs_all_db": -1.7,
+     "first20_db": -14.5,
+     "first20_hz": 100,
+     "read_db": -1.7,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 31.57,
+     "label": "beep:3157",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.lake"
+     ],
+     "peak_db": -31.9,
+     "vs_bed_db": 14.1,
+     "vs_bed_hz": 2512,
+     "vs_all_db": -3.4,
+     "first20_db": -1.3,
+     "first20_hz": 2512,
+     "read_db": -1.3,
+     "verdict": "masked",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 53.842,
+     "label": "house:step:4",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.house"
+     ],
+     "peak_db": -12.1,
+     "vs_bed_db": -3.3,
+     "vs_bed_hz": 1585,
+     "vs_all_db": -3.3,
+     "first20_db": -1.1,
+     "first20_hz": 398,
+     "read_db": -1.1,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 55.421,
+     "label": "house:step:7",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.house"
+     ],
+     "peak_db": -12.6,
+     "vs_bed_db": -1.8,
+     "vs_bed_hz": 1585,
+     "vs_all_db": -1.8,
+     "first20_db": -1.0,
+     "first20_hz": 398,
+     "read_db": -1.0,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 0.997,
+     "label": "place:fx.creak.a",
+     "kind": "place",
+     "n_layers": 1,
+     "rules": [
+      "place"
+     ],
+     "peak_db": -15.8,
+     "vs_bed_db": -0.1,
+     "vs_bed_hz": 2512,
+     "vs_all_db": -0.1,
+     "first20_db": -3.2,
+     "first20_hz": 2512,
+     "read_db": -0.1,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 46.61,
+     "label": "doctor:step:3",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.doctor"
+     ],
+     "peak_db": -11.9,
+     "vs_bed_db": 1.3,
+     "vs_bed_hz": 1259,
+     "vs_all_db": 1.3,
+     "first20_db": 1.2,
+     "first20_hz": 6310,
+     "read_db": 1.3,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 32.34,
+     "label": "beep:3234",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.lake"
+     ],
+     "peak_db": -32.2,
+     "vs_bed_db": 17.1,
+     "vs_bed_hz": 1585,
+     "vs_all_db": 1.5,
+     "first20_db": -0.1,
+     "first20_hz": 2512,
+     "read_db": 1.5,
+     "verdict": "barely",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 30.466,
+     "label": "storm:alarm",
+     "kind": "alarm",
+     "n_layers": 1,
+     "rules": [
+      "fx.alarm"
+     ],
+     "peak_db": -16.0,
+     "vs_bed_db": 4.8,
+     "vs_bed_hz": 2512,
+     "vs_all_db": 1.6,
+     "first20_db": 1.1,
+     "first20_hz": 7943,
+     "read_db": 1.6,
+     "verdict": "barely",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 13.521,
+     "label": "place:fx.bub.a",
+     "kind": "place",
+     "n_layers": 1,
+     "rules": [
+      "place"
+     ],
+     "peak_db": -24.2,
+     "vs_bed_db": 2.5,
+     "vs_bed_hz": 501,
+     "vs_all_db": 2.5,
+     "first20_db": -2.1,
+     "first20_hz": 501,
+     "read_db": 2.5,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 45.05,
+     "label": "doctor:step:0",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.doctor"
+     ],
+     "peak_db": -13.9,
+     "vs_bed_db": 0.4,
+     "vs_bed_hz": 1259,
+     "vs_all_db": 0.4,
+     "first20_db": 3.0,
+     "first20_hz": 398,
+     "read_db": 3.0,
+     "verdict": "ok",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 52.263,
+     "label": "house:step:1",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.house"
+     ],
+     "peak_db": -11.5,
+     "vs_bed_db": 1.8,
+     "vs_bed_hz": 251,
+     "vs_all_db": 1.8,
+     "first20_db": 3.9,
+     "first20_hz": 251,
+     "read_db": 3.9,
+     "verdict": "ok",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 56.474,
+     "label": "house:step:9",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.house"
+     ],
+     "peak_db": -12.2,
+     "vs_bed_db": -1.6,
+     "vs_bed_hz": 251,
+     "vs_all_db": -1.6,
+     "first20_db": 4.3,
+     "first20_hz": 398,
+     "read_db": 4.3,
+     "verdict": "ok",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 39.77,
+     "label": "phone:buzz:2",
+     "kind": "buzz",
+     "n_layers": 1,
+     "rules": [
+      "fx.buzz"
+     ],
+     "peak_db": -17.9,
+     "vs_bed_db": 5.0,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 5.0,
+     "first20_db": 4.0,
+     "first20_hz": 3162,
+     "read_db": 5.0,
+     "verdict": "ok",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 5.566,
+     "label": "dare:cheer:3",
+     "kind": "cheer",
+     "n_layers": 1,
+     "rules": [
+      "fx.cheer"
+     ],
+     "peak_db": -17.5,
+     "vs_bed_db": 6.4,
+     "vs_bed_hz": 631,
+     "vs_all_db": 6.3,
+     "first20_db": 5.6,
+     "first20_hz": 501,
+     "read_db": 6.3,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 39.385,
+     "label": "phone:buzz:1",
+     "kind": "buzz",
+     "n_layers": 1,
+     "rules": [
+      "fx.buzz"
+     ],
+     "peak_db": -18.7,
+     "vs_bed_db": 7.1,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 6.5,
+     "first20_db": 7.8,
+     "first20_hz": 5012,
+     "read_db": 7.8,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 52.79,
+     "label": "house:step:2",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.house"
+     ],
+     "peak_db": -12.3,
+     "vs_bed_db": 7.3,
+     "vs_bed_hz": 251,
+     "vs_all_db": 7.3,
+     "first20_db": 7.8,
+     "first20_hz": 251,
+     "read_db": 7.8,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 54.895,
+     "label": "house:step:6",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.house"
+     ],
+     "peak_db": -12.0,
+     "vs_bed_db": 1.9,
+     "vs_bed_hz": 398,
+     "vs_all_db": 1.9,
+     "first20_db": 7.8,
+     "first20_hz": 398,
+     "read_db": 7.8,
+     "verdict": "clear",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 24.64,
+     "label": "beep:2464",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.lake"
+     ],
+     "peak_db": -31.5,
+     "vs_bed_db": 2.2,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 2.2,
+     "first20_db": 7.9,
+     "first20_hz": 6310,
+     "read_db": 7.9,
+     "verdict": "clear",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 25.41,
+     "label": "beep:2541",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.lake"
+     ],
+     "peak_db": -32.2,
+     "vs_bed_db": 8.4,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 8.4,
+     "first20_db": 4.8,
+     "first20_hz": 6310,
+     "read_db": 8.4,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 33.11,
+     "label": "beep:3311",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.lake"
+     ],
+     "peak_db": -31.8,
+     "vs_bed_db": 19.1,
+     "vs_bed_hz": 2512,
+     "vs_all_db": 6.2,
+     "first20_db": 8.5,
+     "first20_hz": 2512,
+     "read_db": 8.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 62.945,
+     "label": "know:breath:2",
+     "kind": "voice",
+     "n_layers": 1,
+     "rules": [
+      "fx.breath2"
+     ],
+     "peak_db": -15.5,
+     "vs_bed_db": 8.5,
+     "vs_bed_hz": 5012,
+     "vs_all_db": 8.5,
+     "first20_db": 7.9,
+     "first20_hz": 12589,
+     "read_db": 8.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 40.54,
+     "label": "phone:buzz:4",
+     "kind": "buzz",
+     "n_layers": 1,
+     "rules": [
+      "fx.buzz"
+     ],
+     "peak_db": -18.5,
+     "vs_bed_db": 8.5,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 8.5,
+     "first20_db": 9.4,
+     "first20_hz": 5012,
+     "read_db": 9.4,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 41.6,
+     "label": "doctor:page",
+     "kind": "page",
+     "n_layers": 1,
+     "rules": [
+      "fx.page"
+     ],
+     "peak_db": -22.8,
+     "vs_bed_db": 13.1,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 8.3,
+     "first20_db": 9.5,
+     "first20_hz": 5012,
+     "read_db": 9.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 10.05,
+     "label": "hit:bubbles",
+     "kind": "bubbles",
+     "n_layers": 1,
+     "rules": [
+      "fx.bub.big"
+     ],
+     "peak_db": -16.5,
+     "vs_bed_db": 16.1,
+     "vs_bed_hz": 100,
+     "vs_all_db": 7.4,
+     "first20_db": 9.7,
+     "first20_hz": 200,
+     "read_db": 9.7,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 46.09,
+     "label": "doctor:step:2",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.doctor"
+     ],
+     "peak_db": -13.8,
+     "vs_bed_db": 3.2,
+     "vs_bed_hz": 316,
+     "vs_all_db": 3.2,
+     "first20_db": 9.7,
+     "first20_hz": 316,
+     "read_db": 9.7,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 44.541,
+     "label": "wrong:mom:cry",
+     "kind": "voice",
+     "n_layers": 1,
+     "rules": [
+      "fx.cry.mom"
+     ],
+     "peak_db": -16.5,
+     "vs_bed_db": 9.8,
+     "vs_bed_hz": 501,
+     "vs_all_db": 9.8,
+     "first20_db": 8.1,
+     "first20_hz": 398,
+     "read_db": 9.8,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 40.155,
+     "label": "phone:buzz:3",
+     "kind": "buzz",
+     "n_layers": 1,
+     "rules": [
+      "fx.buzz"
+     ],
+     "peak_db": -18.0,
+     "vs_bed_db": 9.0,
+     "vs_bed_hz": 12589,
+     "vs_all_db": 9.0,
+     "first20_db": 10.6,
+     "first20_hz": 158,
+     "read_db": 10.6,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 39.0,
+     "label": "phone:buzz:0",
+     "kind": "buzz",
+     "n_layers": 1,
+     "rules": [
+      "fx.buzz"
+     ],
+     "peak_db": -18.4,
+     "vs_bed_db": 9.9,
+     "vs_bed_hz": 12589,
+     "vs_all_db": 9.9,
+     "first20_db": 10.9,
+     "first20_hz": 6310,
+     "read_db": 10.9,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 57.0,
+     "label": "lights:on",
+     "kind": "drop",
+     "n_layers": 2,
+     "rules": [
+      "fx.bowl",
+      "fx.chime"
+     ],
+     "peak_db": -16.5,
+     "vs_bed_db": 7.7,
+     "vs_bed_hz": 3981,
+     "vs_all_db": 7.7,
+     "first20_db": 10.9,
+     "first20_hz": 3981,
+     "read_db": 10.9,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 61.611,
+     "label": "know:breath:1",
+     "kind": "voice",
+     "n_layers": 1,
+     "rules": [
+      "fx.breath1"
+     ],
+     "peak_db": -13.0,
+     "vs_bed_db": 11.3,
+     "vs_bed_hz": 10000,
+     "vs_all_db": 11.3,
+     "first20_db": 8.4,
+     "first20_hz": 10000,
+     "read_db": 11.3,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 33.88,
+     "label": "beep:3388",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.lake"
+     ],
+     "peak_db": -31.8,
+     "vs_bed_db": 16.1,
+     "vs_bed_hz": 1585,
+     "vs_all_db": 11.6,
+     "first20_db": 10.5,
+     "first20_hz": 2512,
+     "read_db": 11.6,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 27.72,
+     "label": "beep:2772",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.lake"
+     ],
+     "peak_db": -32.2,
+     "vs_bed_db": 5.6,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 5.6,
+     "first20_db": 12.1,
+     "first20_hz": 2512,
+     "read_db": 12.1,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 46.97,
+     "label": "beep:4697",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.weeks"
+     ],
+     "peak_db": -21.9,
+     "vs_bed_db": 12.9,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 12.9,
+     "first20_db": 12.6,
+     "first20_hz": 6310,
+     "read_db": 12.9,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 53.316,
+     "label": "house:step:3",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.house"
+     ],
+     "peak_db": -11.0,
+     "vs_bed_db": 3.9,
+     "vs_bed_hz": 398,
+     "vs_all_db": 3.9,
+     "first20_db": 12.9,
+     "first20_hz": 398,
+     "read_db": 12.9,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 55.947,
+     "label": "house:step:8",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.house"
+     ],
+     "peak_db": -11.9,
+     "vs_bed_db": 2.8,
+     "vs_bed_hz": 12589,
+     "vs_all_db": 2.8,
+     "first20_db": 13.5,
+     "first20_hz": 200,
+     "read_db": 13.5,
+     "verdict": "clear",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 12.0,
+     "label": "sink:bubbles",
+     "kind": "bubbles",
+     "n_layers": 1,
+     "rules": [
+      "fx.bub.sink"
+     ],
+     "peak_db": -20.5,
+     "vs_bed_db": 8.2,
+     "vs_bed_hz": 631,
+     "vs_all_db": 8.3,
+     "first20_db": 14.0,
+     "first20_hz": 501,
+     "read_db": 14.0,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    }
+   ],
+   "events": [
+    {
+     "t": 0.997,
+     "label": "place:fx.creak.a",
+     "kind": "place",
+     "n_layers": 1,
+     "rules": [
+      "place"
+     ],
+     "peak_db": -15.8,
+     "vs_bed_db": -0.1,
+     "vs_bed_hz": 2512,
+     "vs_all_db": -0.1,
+     "first20_db": -3.2,
+     "first20_hz": 2512,
+     "read_db": -0.1,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 3.059,
+     "label": "place:fx.creak.c",
+     "kind": "place",
+     "n_layers": 1,
+     "rules": [
+      "place"
+     ],
+     "peak_db": -15.7,
+     "vs_bed_db": 15.1,
+     "vs_bed_hz": 794,
+     "vs_all_db": 15.1,
+     "first20_db": 18.7,
+     "first20_hz": 794,
+     "read_db": 18.7,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 4.138,
+     "label": "dare:cheer:1",
+     "kind": "cheer",
+     "n_layers": 1,
+     "rules": [
+      "fx.cheer"
+     ],
+     "peak_db": -16.0,
+     "vs_bed_db": 10.8,
+     "vs_bed_hz": 501,
+     "vs_all_db": 10.8,
+     "first20_db": 19.4,
+     "first20_hz": 501,
+     "read_db": 19.4,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 4.718,
+     "label": "dare:cheer:2",
+     "kind": "cheer",
+     "n_layers": 1,
+     "rules": [
+      "fx.cheer"
+     ],
+     "peak_db": -15.7,
+     "vs_bed_db": 19.8,
+     "vs_bed_hz": 631,
+     "vs_all_db": 15.9,
+     "first20_db": 16.9,
+     "first20_hz": 631,
+     "read_db": 16.9,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 4.796,
+     "label": "place:fx.creak.a",
+     "kind": "place",
+     "n_layers": 1,
+     "rules": [
+      "place"
+     ],
+     "peak_db": -15.8,
+     "vs_bed_db": -1.8,
+     "vs_bed_hz": 6310,
+     "vs_all_db": -1.8,
+     "first20_db": -9.5,
+     "first20_hz": 1995,
+     "read_db": -1.8,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 5.566,
+     "label": "dare:cheer:3",
+     "kind": "cheer",
+     "n_layers": 1,
+     "rules": [
+      "fx.cheer"
+     ],
+     "peak_db": -17.5,
+     "vs_bed_db": 6.4,
+     "vs_bed_hz": 631,
+     "vs_all_db": 6.3,
+     "first20_db": 5.6,
+     "first20_hz": 501,
+     "read_db": 6.3,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 5.689,
+     "label": "place:fx.creak.b",
+     "kind": "place",
+     "n_layers": 1,
+     "rules": [
+      "place"
+     ],
+     "peak_db": -17.5,
+     "vs_bed_db": 17.3,
+     "vs_bed_hz": 158,
+     "vs_all_db": 16.0,
+     "first20_db": -1.0,
+     "first20_hz": 794,
+     "read_db": 16.0,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 7.0,
+     "label": "jump:crouch",
+     "kind": "foley",
+     "n_layers": 1,
+     "rules": [
+      "fx.crouch"
+     ],
+     "peak_db": -19.4,
+     "vs_bed_db": 18.0,
+     "vs_bed_hz": 3162,
+     "vs_all_db": 16.0,
+     "first20_db": -7.9,
+     "first20_hz": 1585,
+     "read_db": 16.0,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 7.45,
+     "label": "jump:takeoff",
+     "kind": "foley",
+     "n_layers": 2,
+     "rules": [
+      "fx.takeoff",
+      "fx.takeoff.creak"
+     ],
+     "peak_db": -17.2,
+     "vs_bed_db": 22.7,
+     "vs_bed_hz": 126,
+     "vs_all_db": 22.6,
+     "first20_db": 27.7,
+     "first20_hz": 100,
+     "read_db": 27.7,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 9.145,
+     "label": "jump:fall",
+     "kind": "whoosh",
+     "n_layers": 1,
+     "rules": [
+      "fx.fall"
+     ],
+     "peak_db": -15.2,
+     "vs_bed_db": 24.2,
+     "vs_bed_hz": 100,
+     "vs_all_db": 24.2,
+     "first20_db": 2.9,
+     "first20_hz": 100,
+     "read_db": 24.2,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 9.9,
+     "label": "jump:splash",
+     "kind": "splash",
+     "n_layers": 2,
+     "rules": [
+      "fx.plunge",
+      "fx.splash"
+     ],
+     "peak_db": -6.4,
+     "vs_bed_db": 44.7,
+     "vs_bed_hz": 12589,
+     "vs_all_db": 44.8,
+     "first20_db": 18.9,
+     "first20_hz": 5012,
+     "read_db": 44.8,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 10.0,
+     "label": "hit:rock",
+     "kind": "impact",
+     "n_layers": 2,
+     "rules": [
+      "fx.hit",
+      "fx.hit.sub"
+     ],
+     "peak_db": -3.7,
+     "vs_bed_db": 21.1,
+     "vs_bed_hz": 100,
+     "vs_all_db": 16.8,
+     "first20_db": 22.8,
+     "first20_hz": 251,
+     "read_db": 22.8,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 10.05,
+     "label": "hit:bubbles",
+     "kind": "bubbles",
+     "n_layers": 1,
+     "rules": [
+      "fx.bub.big"
+     ],
+     "peak_db": -16.5,
+     "vs_bed_db": 16.1,
+     "vs_bed_hz": 100,
+     "vs_all_db": 7.4,
+     "first20_db": 9.7,
+     "first20_hz": 200,
+     "read_db": 9.7,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 12.0,
+     "label": "sink:bubbles",
+     "kind": "bubbles",
+     "n_layers": 1,
+     "rules": [
+      "fx.bub.sink"
+     ],
+     "peak_db": -20.5,
+     "vs_bed_db": 8.2,
+     "vs_bed_hz": 631,
+     "vs_all_db": 8.3,
+     "first20_db": 14.0,
+     "first20_hz": 501,
+     "read_db": 14.0,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 13.521,
+     "label": "place:fx.bub.a",
+     "kind": "place",
+     "n_layers": 1,
+     "rules": [
+      "place"
+     ],
+     "peak_db": -24.2,
+     "vs_bed_db": 2.5,
+     "vs_bed_hz": 501,
+     "vs_all_db": 2.5,
+     "first20_db": -2.1,
+     "first20_hz": 501,
+     "read_db": 2.5,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 14.398,
+     "label": "place:fx.bub.b",
+     "kind": "place",
+     "n_layers": 1,
+     "rules": [
+      "place"
+     ],
+     "peak_db": -26.5,
+     "vs_bed_db": -2.0,
+     "vs_bed_hz": 126,
+     "vs_all_db": -1.7,
+     "first20_db": -14.5,
+     "first20_hz": 100,
+     "read_db": -1.7,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 16.17,
+     "label": "beep:1617",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.room"
+     ],
+     "peak_db": -21.5,
+     "vs_bed_db": 26.5,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 26.5,
+     "first20_db": 27.8,
+     "first20_hz": 6310,
+     "read_db": 27.8,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 16.94,
+     "label": "beep:1694",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.room"
+     ],
+     "peak_db": -21.4,
+     "vs_bed_db": 20.6,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 20.6,
+     "first20_db": 20.3,
+     "first20_hz": 6310,
+     "read_db": 20.6,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 17.71,
+     "label": "beep:1771",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.room"
+     ],
+     "peak_db": -21.6,
+     "vs_bed_db": 20.9,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 20.9,
+     "first20_db": 23.7,
+     "first20_hz": 1585,
+     "read_db": 23.7,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 18.48,
+     "label": "beep:1848",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.room"
+     ],
+     "peak_db": -21.2,
+     "vs_bed_db": 22.5,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 22.5,
+     "first20_db": 22.5,
+     "first20_hz": 6310,
+     "read_db": 22.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 19.1,
+     "label": "pupil:penlight",
+     "kind": "click",
+     "n_layers": 1,
+     "rules": [
+      "fx.penlight"
+     ],
+     "peak_db": -18.5,
+     "vs_bed_db": 15.7,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 15.7,
+     "first20_db": 20.5,
+     "first20_hz": 6310,
+     "read_db": 20.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 19.25,
+     "label": "beep:1925",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.room"
+     ],
+     "peak_db": -21.5,
+     "vs_bed_db": 22.9,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 22.8,
+     "first20_db": 23.0,
+     "first20_hz": 6310,
+     "read_db": 23.0,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 20.02,
+     "label": "beep:2002",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.room"
+     ],
+     "peak_db": -21.6,
+     "vs_bed_db": 23.2,
+     "vs_bed_hz": 1585,
+     "vs_all_db": 23.2,
+     "first20_db": 25.6,
+     "first20_hz": 1585,
+     "read_db": 25.6,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 20.79,
+     "label": "beep:2079",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.room"
+     ],
+     "peak_db": -21.6,
+     "vs_bed_db": 23.5,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 23.5,
+     "first20_db": 23.8,
+     "first20_hz": 6310,
+     "read_db": 23.8,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 21.298,
+     "label": "place:fx.sob.mom",
+     "kind": "place",
+     "n_layers": 1,
+     "rules": [
+      "place"
+     ],
+     "peak_db": -16.5,
+     "vs_bed_db": 17.1,
+     "vs_bed_hz": 631,
+     "vs_all_db": 17.1,
+     "first20_db": 21.2,
+     "first20_hz": 631,
+     "read_db": 21.2,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 21.56,
+     "label": "beep:2156",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.room"
+     ],
+     "peak_db": -21.2,
+     "vs_bed_db": 20.3,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 20.3,
+     "first20_db": 21.1,
+     "first20_hz": 6310,
+     "read_db": 21.1,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 22.33,
+     "label": "beep:2233",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.room"
+     ],
+     "peak_db": -20.8,
+     "vs_bed_db": 19.9,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 14.2,
+     "first20_db": 16.3,
+     "first20_hz": 2512,
+     "read_db": 16.3,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 23.1,
+     "label": "beep:2310",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.room"
+     ],
+     "peak_db": -21.7,
+     "vs_bed_db": 21.4,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 20.6,
+     "first20_db": 21.3,
+     "first20_hz": 6310,
+     "read_db": 21.3,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 23.87,
+     "label": "beep:2387",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.room"
+     ],
+     "peak_db": -21.1,
+     "vs_bed_db": 20.6,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 20.6,
+     "first20_db": 20.9,
+     "first20_hz": 6310,
+     "read_db": 20.9,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 24.64,
+     "label": "beep:2464",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.lake"
+     ],
+     "peak_db": -31.5,
+     "vs_bed_db": 2.2,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 2.2,
+     "first20_db": 7.9,
+     "first20_hz": 6310,
+     "read_db": 7.9,
+     "verdict": "clear",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 25.41,
+     "label": "beep:2541",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.lake"
+     ],
+     "peak_db": -32.2,
+     "vs_bed_db": 8.4,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 8.4,
+     "first20_db": 4.8,
+     "first20_hz": 6310,
+     "read_db": 8.4,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 26.18,
+     "label": "beep:2618",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.lake"
+     ],
+     "peak_db": -32.1,
+     "vs_bed_db": 17.3,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 17.3,
+     "first20_db": 17.8,
+     "first20_hz": 6310,
+     "read_db": 17.8,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 26.95,
+     "label": "beep:2695",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.lake"
+     ],
+     "peak_db": -32.2,
+     "vs_bed_db": 15.5,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 15.5,
+     "first20_db": 16.1,
+     "first20_hz": 6310,
+     "read_db": 16.1,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 27.72,
+     "label": "beep:2772",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.lake"
+     ],
+     "peak_db": -32.2,
+     "vs_bed_db": 5.6,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 5.6,
+     "first20_db": 12.1,
+     "first20_hz": 2512,
+     "read_db": 12.1,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 28.49,
+     "label": "beep:2849",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.lake"
+     ],
+     "peak_db": -32.1,
+     "vs_bed_db": -7.3,
+     "vs_bed_hz": 6310,
+     "vs_all_db": -7.2,
+     "first20_db": -5.6,
+     "first20_hz": 6310,
+     "read_db": -5.6,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 28.5,
+     "label": "storm:bolt:1",
+     "kind": "thunder",
+     "n_layers": 1,
+     "rules": [
+      "fx.thunder1"
+     ],
+     "peak_db": -2.2,
+     "vs_bed_db": 22.0,
+     "vs_bed_hz": 100,
+     "vs_all_db": 22.0,
+     "first20_db": 5.1,
+     "first20_hz": 100,
+     "read_db": 22.0,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 29.95,
+     "label": "storm:bolt:2",
+     "kind": "thunder",
+     "n_layers": 1,
+     "rules": [
+      "fx.thunder2"
+     ],
+     "peak_db": -2.2,
+     "vs_bed_db": 22.4,
+     "vs_bed_hz": 100,
+     "vs_all_db": 21.9,
+     "first20_db": 17.5,
+     "first20_hz": 100,
+     "read_db": 21.9,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 30.466,
+     "label": "storm:alarm",
+     "kind": "alarm",
+     "n_layers": 1,
+     "rules": [
+      "fx.alarm"
+     ],
+     "peak_db": -16.0,
+     "vs_bed_db": 4.8,
+     "vs_bed_hz": 2512,
+     "vs_all_db": 1.6,
+     "first20_db": 1.1,
+     "first20_hz": 7943,
+     "read_db": 1.6,
+     "verdict": "barely",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 30.5,
+     "label": "storm:flash:3",
+     "kind": "thunder",
+     "n_layers": 1,
+     "rules": [
+      "fx.thunder3"
+     ],
+     "peak_db": -10.2,
+     "vs_bed_db": -3.3,
+     "vs_bed_hz": 200,
+     "vs_all_db": -7.0,
+     "first20_db": -5.8,
+     "first20_hz": 398,
+     "read_db": -5.8,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 31.57,
+     "label": "beep:3157",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.lake"
+     ],
+     "peak_db": -31.9,
+     "vs_bed_db": 14.1,
+     "vs_bed_hz": 2512,
+     "vs_all_db": -3.4,
+     "first20_db": -1.3,
+     "first20_hz": 2512,
+     "read_db": -1.3,
+     "verdict": "masked",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 32.34,
+     "label": "beep:3234",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.lake"
+     ],
+     "peak_db": -32.2,
+     "vs_bed_db": 17.1,
+     "vs_bed_hz": 1585,
+     "vs_all_db": 1.5,
+     "first20_db": -0.1,
+     "first20_hz": 2512,
+     "read_db": 1.5,
+     "verdict": "barely",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 33.11,
+     "label": "beep:3311",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.lake"
+     ],
+     "peak_db": -31.8,
+     "vs_bed_db": 19.1,
+     "vs_bed_hz": 2512,
+     "vs_all_db": 6.2,
+     "first20_db": 8.5,
+     "first20_hz": 2512,
+     "read_db": 8.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 33.88,
+     "label": "beep:3388",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.lake"
+     ],
+     "peak_db": -31.8,
+     "vs_bed_db": 16.1,
+     "vs_bed_hz": 1585,
+     "vs_all_db": 11.6,
+     "first20_db": 10.5,
+     "first20_hz": 2512,
+     "read_db": 11.6,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 34.65,
+     "label": "beep:3465",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.lake"
+     ],
+     "peak_db": -31.7,
+     "vs_bed_db": 18.3,
+     "vs_bed_hz": 1585,
+     "vs_all_db": 18.4,
+     "first20_db": 19.9,
+     "first20_hz": 1585,
+     "read_db": 19.9,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 35.42,
+     "label": "beep:3542",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.lake"
+     ],
+     "peak_db": -32.2,
+     "vs_bed_db": 17.3,
+     "vs_bed_hz": 1585,
+     "vs_all_db": 17.3,
+     "first20_db": 18.0,
+     "first20_hz": 2512,
+     "read_db": 18.0,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 36.19,
+     "label": "beep:3619",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.weeks"
+     ],
+     "peak_db": -22.6,
+     "vs_bed_db": 23.0,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 23.0,
+     "first20_db": 23.5,
+     "first20_hz": 6310,
+     "read_db": 23.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 36.96,
+     "label": "beep:3696",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.weeks"
+     ],
+     "peak_db": -22.5,
+     "vs_bed_db": 22.0,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 22.0,
+     "first20_db": 20.8,
+     "first20_hz": 6310,
+     "read_db": 22.0,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 37.73,
+     "label": "beep:3772",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.weeks"
+     ],
+     "peak_db": -22.5,
+     "vs_bed_db": 23.5,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 23.5,
+     "first20_db": 24.5,
+     "first20_hz": 6310,
+     "read_db": 24.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 38.5,
+     "label": "beep:3850",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.weeks"
+     ],
+     "peak_db": -22.2,
+     "vs_bed_db": 22.5,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 22.5,
+     "first20_db": 22.5,
+     "first20_hz": 6310,
+     "read_db": 22.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 39.0,
+     "label": "phone:buzz:0",
+     "kind": "buzz",
+     "n_layers": 1,
+     "rules": [
+      "fx.buzz"
+     ],
+     "peak_db": -18.4,
+     "vs_bed_db": 9.9,
+     "vs_bed_hz": 12589,
+     "vs_all_db": 9.9,
+     "first20_db": 10.9,
+     "first20_hz": 6310,
+     "read_db": 10.9,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 39.27,
+     "label": "beep:3927",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.weeks"
+     ],
+     "peak_db": -22.7,
+     "vs_bed_db": 24.2,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 24.2,
+     "first20_db": 25.7,
+     "first20_hz": 6310,
+     "read_db": 25.7,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 39.385,
+     "label": "phone:buzz:1",
+     "kind": "buzz",
+     "n_layers": 1,
+     "rules": [
+      "fx.buzz"
+     ],
+     "peak_db": -18.7,
+     "vs_bed_db": 7.1,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 6.5,
+     "first20_db": 7.8,
+     "first20_hz": 5012,
+     "read_db": 7.8,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 39.77,
+     "label": "phone:buzz:2",
+     "kind": "buzz",
+     "n_layers": 1,
+     "rules": [
+      "fx.buzz"
+     ],
+     "peak_db": -17.9,
+     "vs_bed_db": 5.0,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 5.0,
+     "first20_db": 4.0,
+     "first20_hz": 3162,
+     "read_db": 5.0,
+     "verdict": "ok",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 40.04,
+     "label": "beep:4004",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.weeks"
+     ],
+     "peak_db": -21.8,
+     "vs_bed_db": 23.8,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 23.8,
+     "first20_db": 24.5,
+     "first20_hz": 6310,
+     "read_db": 24.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 40.155,
+     "label": "phone:buzz:3",
+     "kind": "buzz",
+     "n_layers": 1,
+     "rules": [
+      "fx.buzz"
+     ],
+     "peak_db": -18.0,
+     "vs_bed_db": 9.0,
+     "vs_bed_hz": 12589,
+     "vs_all_db": 9.0,
+     "first20_db": 10.6,
+     "first20_hz": 158,
+     "read_db": 10.6,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 40.54,
+     "label": "phone:buzz:4",
+     "kind": "buzz",
+     "n_layers": 1,
+     "rules": [
+      "fx.buzz"
+     ],
+     "peak_db": -18.5,
+     "vs_bed_db": 8.5,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 8.5,
+     "first20_db": 9.4,
+     "first20_hz": 5012,
+     "read_db": 9.4,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 40.81,
+     "label": "beep:4081",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.weeks"
+     ],
+     "peak_db": -22.6,
+     "vs_bed_db": 24.6,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 24.6,
+     "first20_db": 25.6,
+     "first20_hz": 6310,
+     "read_db": 25.6,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 41.58,
+     "label": "beep:4158",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.weeks"
+     ],
+     "peak_db": -22.7,
+     "vs_bed_db": 23.2,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 21.5,
+     "first20_db": 22.1,
+     "first20_hz": 6310,
+     "read_db": 22.1,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 41.6,
+     "label": "doctor:page",
+     "kind": "page",
+     "n_layers": 1,
+     "rules": [
+      "fx.page"
+     ],
+     "peak_db": -22.8,
+     "vs_bed_db": 13.1,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 8.3,
+     "first20_db": 9.5,
+     "first20_hz": 5012,
+     "read_db": 9.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 42.35,
+     "label": "beep:4235",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.weeks"
+     ],
+     "peak_db": -21.9,
+     "vs_bed_db": 22.0,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 21.9,
+     "first20_db": 23.3,
+     "first20_hz": 6310,
+     "read_db": 23.3,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 43.12,
+     "label": "beep:4312",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.weeks"
+     ],
+     "peak_db": -22.5,
+     "vs_bed_db": 24.3,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 24.3,
+     "first20_db": 24.7,
+     "first20_hz": 6310,
+     "read_db": 24.7,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 43.89,
+     "label": "beep:4389",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.weeks"
+     ],
+     "peak_db": -22.1,
+     "vs_bed_db": 21.4,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 21.4,
+     "first20_db": 20.9,
+     "first20_hz": 6310,
+     "read_db": 21.4,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 44.541,
+     "label": "wrong:mom:cry",
+     "kind": "voice",
+     "n_layers": 1,
+     "rules": [
+      "fx.cry.mom"
+     ],
+     "peak_db": -16.5,
+     "vs_bed_db": 9.8,
+     "vs_bed_hz": 501,
+     "vs_all_db": 9.8,
+     "first20_db": 8.1,
+     "first20_hz": 398,
+     "read_db": 9.8,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 44.66,
+     "label": "beep:4466",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.weeks"
+     ],
+     "peak_db": -21.9,
+     "vs_bed_db": 17.5,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 17.3,
+     "first20_db": 16.9,
+     "first20_hz": 6310,
+     "read_db": 17.3,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 45.05,
+     "label": "doctor:step:0",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.doctor"
+     ],
+     "peak_db": -13.9,
+     "vs_bed_db": 0.4,
+     "vs_bed_hz": 1259,
+     "vs_all_db": 0.4,
+     "first20_db": 3.0,
+     "first20_hz": 398,
+     "read_db": 3.0,
+     "verdict": "ok",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 45.43,
+     "label": "beep:4543",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.weeks"
+     ],
+     "peak_db": -22.8,
+     "vs_bed_db": 13.8,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 13.5,
+     "first20_db": 14.0,
+     "first20_hz": 6310,
+     "read_db": 14.0,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 45.57,
+     "label": "doctor:step:1",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.doctor"
+     ],
+     "peak_db": -14.1,
+     "vs_bed_db": 5.0,
+     "vs_bed_hz": 251,
+     "vs_all_db": 4.9,
+     "first20_db": 16.1,
+     "first20_hz": 251,
+     "read_db": 16.1,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 46.09,
+     "label": "doctor:step:2",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.doctor"
+     ],
+     "peak_db": -13.8,
+     "vs_bed_db": 3.2,
+     "vs_bed_hz": 316,
+     "vs_all_db": 3.2,
+     "first20_db": 9.7,
+     "first20_hz": 316,
+     "read_db": 9.7,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 46.2,
+     "label": "beep:4620",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.weeks"
+     ],
+     "peak_db": -22.4,
+     "vs_bed_db": 11.7,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 11.8,
+     "first20_db": 14.7,
+     "first20_hz": 6310,
+     "read_db": 14.7,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 46.61,
+     "label": "doctor:step:3",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.doctor"
+     ],
+     "peak_db": -11.9,
+     "vs_bed_db": 1.3,
+     "vs_bed_hz": 1259,
+     "vs_all_db": 1.3,
+     "first20_db": 1.2,
+     "first20_hz": 6310,
+     "read_db": 1.3,
+     "verdict": "barely",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 46.97,
+     "label": "beep:4697",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.weeks"
+     ],
+     "peak_db": -21.9,
+     "vs_bed_db": 12.9,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 12.9,
+     "first20_db": 12.6,
+     "first20_hz": 6310,
+     "read_db": 12.9,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 50.0,
+     "label": "voice:intercom",
+     "kind": "click",
+     "n_layers": 1,
+     "rules": [
+      "fx.intercom"
+     ],
+     "peak_db": -14.2,
+     "vs_bed_db": 21.7,
+     "vs_bed_hz": 12589,
+     "vs_all_db": 21.7,
+     "first20_db": 4.7,
+     "first20_hz": 12589,
+     "read_db": 21.7,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 52.263,
+     "label": "house:step:1",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.house"
+     ],
+     "peak_db": -11.5,
+     "vs_bed_db": 1.8,
+     "vs_bed_hz": 251,
+     "vs_all_db": 1.8,
+     "first20_db": 3.9,
+     "first20_hz": 251,
+     "read_db": 3.9,
+     "verdict": "ok",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 52.79,
+     "label": "house:step:2",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.house"
+     ],
+     "peak_db": -12.3,
+     "vs_bed_db": 7.3,
+     "vs_bed_hz": 251,
+     "vs_all_db": 7.3,
+     "first20_db": 7.8,
+     "first20_hz": 251,
+     "read_db": 7.8,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 53.316,
+     "label": "house:step:3",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.house"
+     ],
+     "peak_db": -11.0,
+     "vs_bed_db": 3.9,
+     "vs_bed_hz": 398,
+     "vs_all_db": 3.9,
+     "first20_db": 12.9,
+     "first20_hz": 398,
+     "read_db": 12.9,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 53.842,
+     "label": "house:step:4",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.house"
+     ],
+     "peak_db": -12.1,
+     "vs_bed_db": -3.3,
+     "vs_bed_hz": 1585,
+     "vs_all_db": -3.3,
+     "first20_db": -1.1,
+     "first20_hz": 398,
+     "read_db": -1.1,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 54.368,
+     "label": "house:step:5",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.house"
+     ],
+     "peak_db": -11.3,
+     "vs_bed_db": 3.3,
+     "vs_bed_hz": 12589,
+     "vs_all_db": 3.3,
+     "first20_db": 16.2,
+     "first20_hz": 398,
+     "read_db": 16.2,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 54.895,
+     "label": "house:step:6",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.house"
+     ],
+     "peak_db": -12.0,
+     "vs_bed_db": 1.9,
+     "vs_bed_hz": 398,
+     "vs_all_db": 1.9,
+     "first20_db": 7.8,
+     "first20_hz": 398,
+     "read_db": 7.8,
+     "verdict": "clear",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 55.421,
+     "label": "house:step:7",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.house"
+     ],
+     "peak_db": -12.6,
+     "vs_bed_db": -1.8,
+     "vs_bed_hz": 1585,
+     "vs_all_db": -1.8,
+     "first20_db": -1.0,
+     "first20_hz": 398,
+     "read_db": -1.0,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 55.947,
+     "label": "house:step:8",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.house"
+     ],
+     "peak_db": -11.9,
+     "vs_bed_db": 2.8,
+     "vs_bed_hz": 12589,
+     "vs_all_db": 2.8,
+     "first20_db": 13.5,
+     "first20_hz": 200,
+     "read_db": 13.5,
+     "verdict": "clear",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 56.474,
+     "label": "house:step:9",
+     "kind": "step",
+     "n_layers": 1,
+     "rules": [
+      "fx.step.house"
+     ],
+     "peak_db": -12.2,
+     "vs_bed_db": -1.6,
+     "vs_bed_hz": 251,
+     "vs_all_db": -1.6,
+     "first20_db": 4.3,
+     "first20_hz": 398,
+     "read_db": 4.3,
+     "verdict": "ok",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 57.0,
+     "label": "lights:on",
+     "kind": "drop",
+     "n_layers": 2,
+     "rules": [
+      "fx.bowl",
+      "fx.chime"
+     ],
+     "peak_db": -16.5,
+     "vs_bed_db": 7.7,
+     "vs_bed_hz": 3981,
+     "vs_all_db": 7.7,
+     "first20_db": 10.9,
+     "first20_hz": 3981,
+     "read_db": 10.9,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 57.4,
+     "label": "lights:detected",
+     "kind": "ui",
+     "n_layers": 1,
+     "rules": [
+      "fx.detected"
+     ],
+     "peak_db": -28.5,
+     "vs_bed_db": -2.0,
+     "vs_bed_hz": 3981,
+     "vs_all_db": -2.6,
+     "first20_db": -2.1,
+     "first20_hz": 3981,
+     "read_db": -2.1,
+     "verdict": "masked",
+     "covered_by": "music/amb"
+    },
+    {
+     "t": 60.715,
+     "label": "know:laugh",
+     "kind": "voice",
+     "n_layers": 1,
+     "rules": [
+      "fx.laugh"
+     ],
+     "peak_db": -11.2,
+     "vs_bed_db": 26.1,
+     "vs_bed_hz": 10000,
+     "vs_all_db": 26.1,
+     "first20_db": 25.6,
+     "first20_hz": 10000,
+     "read_db": 26.1,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 61.611,
+     "label": "know:breath:1",
+     "kind": "voice",
+     "n_layers": 1,
+     "rules": [
+      "fx.breath1"
+     ],
+     "peak_db": -13.0,
+     "vs_bed_db": 11.3,
+     "vs_bed_hz": 10000,
+     "vs_all_db": 11.3,
+     "first20_db": 8.4,
+     "first20_hz": 10000,
+     "read_db": 11.3,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 62.945,
+     "label": "know:breath:2",
+     "kind": "voice",
+     "n_layers": 1,
+     "rules": [
+      "fx.breath2"
+     ],
+     "peak_db": -15.5,
+     "vs_bed_db": 8.5,
+     "vs_bed_hz": 5012,
+     "vs_all_db": 8.5,
+     "first20_db": 7.9,
+     "first20_hz": 12589,
+     "read_db": 8.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 64.6,
+     "label": "slowbeep:6459",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.slow"
+     ],
+     "peak_db": -20.9,
+     "vs_bed_db": 13.0,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 13.0,
+     "first20_db": 14.9,
+     "first20_hz": 6310,
+     "read_db": 14.9,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 65.85,
+     "label": "slowbeep:6584",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.slow"
+     ],
+     "peak_db": -21.6,
+     "vs_bed_db": 27.4,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 27.4,
+     "first20_db": 27.3,
+     "first20_hz": 6310,
+     "read_db": 27.4,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 67.1,
+     "label": "slowbeep:6709",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.slow"
+     ],
+     "peak_db": -21.5,
+     "vs_bed_db": 27.5,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 27.5,
+     "first20_db": 26.9,
+     "first20_hz": 6310,
+     "read_db": 27.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 68.35,
+     "label": "slowbeep:6834",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.slow"
+     ],
+     "peak_db": -21.5,
+     "vs_bed_db": 30.0,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 30.0,
+     "first20_db": 29.0,
+     "first20_hz": 6310,
+     "read_db": 30.0,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 69.6,
+     "label": "slowbeep:6959",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.slow"
+     ],
+     "peak_db": -21.5,
+     "vs_bed_db": 29.1,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 29.1,
+     "first20_db": 30.0,
+     "first20_hz": 6310,
+     "read_db": 30.0,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 70.85,
+     "label": "slowbeep:7084",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.slow"
+     ],
+     "peak_db": -21.1,
+     "vs_bed_db": 29.5,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 29.5,
+     "first20_db": 29.3,
+     "first20_hz": 6310,
+     "read_db": 29.5,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 72.1,
+     "label": "slowbeep:7209",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.slow"
+     ],
+     "peak_db": -21.4,
+     "vs_bed_db": 29.9,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 29.9,
+     "first20_db": 29.4,
+     "first20_hz": 6310,
+     "read_db": 29.9,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    },
+    {
+     "t": 73.35,
+     "label": "slowbeep:7334",
+     "kind": "beep",
+     "n_layers": 1,
+     "rules": [
+      "fx.beep.slow"
+     ],
+     "peak_db": -21.3,
+     "vs_bed_db": 31.0,
+     "vs_bed_hz": 6310,
+     "vs_all_db": 31.0,
+     "first20_db": 30.2,
+     "first20_hz": 6310,
+     "read_db": 31.0,
+     "verdict": "clear",
+     "covered_by": "other effects"
+    }
+   ],
+   "dead_layers": [
+    {
+     "t": 10.0,
+     "rule": "fx.hit.sub",
+     "sample": "fx.hit.sub",
+     "read_db": -14.0
+    },
+    {
+     "t": 57.0,
+     "rule": "fx.bowl",
+     "sample": "fx.bowl",
+     "read_db": -9.9
+    }
+   ]
+  },
+  "harshness": {
+   "status": "ok",
+   "music_max_db": -17.7,
+   "summary": "0 event(s) more than 6 dB over the music's loudest 2-6 kHz peak (-17.7 dBFS); note: 2 bright event(s) (centroid > 6.5 kHz, above launch-film effects)",
+   "items": [
+    {
+     "t": 4.796,
+     "label": "place:fx.creak.a",
+     "rules": [
+      "place"
+     ],
+     "pres_db": -22.6,
+     "pres_minus_low_db": 14.9,
+     "centroid_hz": 1984,
+     "music_pres_db": -62.5,
+     "over_music_max_db": -4.9,
+     "issues": [],
+     "bright": false
+    },
+    {
+     "t": 57.0,
+     "label": "lights:on",
+     "rules": [
+      "fx.bowl",
+      "fx.chime"
+     ],
+     "pres_db": -23.2,
+     "pres_minus_low_db": 10.0,
+     "centroid_hz": 3408,
+     "music_pres_db": -28.3,
+     "over_music_max_db": -5.5,
+     "issues": [],
+     "bright": false
+    },
+    {
+     "t": 0.997,
+     "label": "place:fx.creak.a",
+     "rules": [
+      "place"
+     ],
+     "pres_db": -23.8,
+     "pres_minus_low_db": 14.9,
+     "centroid_hz": 1984,
+     "music_pres_db": -197.2,
+     "over_music_max_db": -6.1,
+     "issues": [],
+     "bright": false
+    },
+    {
+     "t": 60.715,
+     "label": "know:laugh",
+     "rules": [
+      "fx.laugh"
+     ],
+     "pres_db": -27.0,
+     "pres_minus_low_db": 12.7,
+     "centroid_hz": 7320,
+     "music_pres_db": -28.3,
+     "over_music_max_db": -9.3,
+     "issues": [],
+     "bright": true
+    },
+    {
+     "t": 30.466,
+     "label": "storm:alarm",
+     "rules": [
+      "fx.alarm"
+     ],
+     "pres_db": -27.3,
+     "pres_minus_low_db": 25.8,
+     "centroid_hz": 3617,
+     "music_pres_db": -60.2,
+     "over_music_max_db": -9.6,
+     "issues": [],
+     "bright": false
+    },
+    {
+     "t": 29.95,
+     "label": "storm:bolt:2",
+     "rules": [
+      "fx.thunder2"
+     ],
+     "pres_db": -28.5,
+     "pres_minus_low_db": -15.1,
+     "centroid_hz": 270,
+     "music_pres_db": -59.3,
+     "over_music_max_db": -10.7,
+     "issues": [],
+     "bright": false
+    },
+    {
+     "t": 23.87,
+     "label": "beep:2387",
+     "rules": [
+      "fx.beep.room"
+     ],
+     "pres_db": -32.0,
+     "pres_minus_low_db": 43.1,
+     "centroid_hz": 3122,
+     "music_pres_db": -56.8,
+     "over_music_max_db": -14.3,
+     "issues": [],
+     "bright": false
+    },
+    {
+     "t": 21.56,
+     "label": "beep:2156",
+     "rules": [
+      "fx.beep.room"
+     ],
+     "pres_db": -32.1,
+     "pres_minus_low_db": 43.1,
+     "centroid_hz": 3122,
+     "music_pres_db": -62.5,
+     "over_music_max_db": -14.4,
+     "issues": [],
+     "bright": false
+    },
+    {
+     "t": 57.4,
+     "label": "lights:detected",
+     "rules": [
+      "fx.detected"
+     ],
+     "pres_db": -32.2,
+     "pres_minus_low_db": 57.6,
+     "centroid_hz": 3689,
+     "music_pres_db": -24.1,
+     "over_music_max_db": -14.5,
+     "issues": [],
+     "bright": false
+    },
+    {
+     "t": 73.35,
+     "label": "slowbeep:7334",
+     "rules": [
+      "fx.beep.slow"
+     ],
+     "pres_db": -32.2,
+     "pres_minus_low_db": 43.1,
+     "centroid_hz": 3122,
+     "music_pres_db": -91.8,
+     "over_music_max_db": -14.4,
+     "issues": [],
+     "bright": false
+    }
+   ],
+   "bright": [
+    {
+     "t": 60.715,
+     "label": "know:laugh",
+     "centroid_hz": 7320
+    },
+    {
+     "t": 19.1,
+     "label": "pupil:penlight",
+     "centroid_hz": 6772
+    }
+   ]
+  },
+  "sync": {
+   "status": "warn",
+   "checked": 88,
+   "items": [
+    {
+     "t_cue": 3.2,
+     "label": "place:fx.creak.c",
+     "kind": "place",
+     "test": "apex",
+     "align": "peak",
+     "attack_ms": -141,
+     "peak_ms": 0,
+     "apex_ms": -89,
+     "long": true,
+     "issue": "apex -89 ms from the cue (want +-45)"
+    },
+    {
+     "t_cue": 4.35,
+     "label": "dare:cheer:1",
+     "kind": "cheer",
+     "test": "apex",
+     "align": "peak",
+     "attack_ms": -212,
+     "peak_ms": 0,
+     "apex_ms": -85,
+     "long": true,
+     "issue": "apex -85 ms from the cue (want +-45)"
+    },
+    {
+     "t_cue": 5.6,
+     "label": "dare:cheer:2",
+     "kind": "cheer",
+     "test": "apex",
+     "align": "peak",
+     "attack_ms": -882,
+     "peak_ms": 0,
+     "apex_ms": 308,
+     "long": true,
+     "issue": "apex +308 ms from the cue (want +-45)"
+    },
+    {
+     "t_cue": 6.5,
+     "label": "dare:cheer:3",
+     "kind": "cheer",
+     "test": "apex",
+     "align": "peak",
+     "attack_ms": -934,
+     "peak_ms": 0,
+     "apex_ms": -105,
+     "long": true,
+     "issue": "apex -105 ms from the cue (want +-45)"
+    },
+    {
+     "t_cue": 6.3,
+     "label": "place:fx.creak.b",
+     "kind": "place",
+     "test": "apex",
+     "align": "peak",
+     "attack_ms": -611,
+     "peak_ms": 0,
+     "apex_ms": -567,
+     "long": true,
+     "issue": "apex -567 ms from the cue (want +-45)"
+    },
+    {
+     "t_cue": 7.0,
+     "label": "jump:crouch",
+     "kind": "foley",
+     "test": "impact",
+     "align": "attack",
+     "attack_ms": 0,
+     "peak_ms": 303,
+     "apex_ms": 311,
+     "long": false,
+     "issue": "peak +303 ms (lands late)"
+    },
+    {
+     "t_cue": 7.45,
+     "label": "jump:takeoff",
+     "kind": "foley",
+     "test": "apex",
+     "align": "attack",
+     "attack_ms": 0,
+     "peak_ms": 612,
+     "apex_ms": 72,
+     "long": true,
+     "issue": "apex +72 ms from the cue (want +-45)",
+     "offsets_tried_s": [
+      0.12
+     ]
+    },
+    {
+     "t_cue": 9.9,
+     "label": "jump:splash",
+     "kind": "splash",
+     "test": "impact",
+     "align": "attack",
+     "attack_ms": 0,
+     "peak_ms": 219,
+     "apex_ms": 229,
+     "long": false,
+     "issue": "peak +219 ms (lands late)",
+     "offsets_tried_s": [
+      0.05
+     ]
+    },
+    {
+     "t_cue": 10.05,
+     "label": "hit:bubbles",
+     "kind": "bubbles",
+     "test": "impact",
+     "align": "attack",
+     "attack_ms": 0,
+     "peak_ms": 127,
+     "apex_ms": 230,
+     "long": false,
+     "issue": "peak +127 ms (lands late)"
+    },
+    {
+     "t_cue": 12.0,
+     "label": "sink:bubbles",
+     "kind": "bubbles",
+     "test": "impact",
+     "align": "attack",
+     "attack_ms": 0,
+     "peak_ms": 79,
+     "apex_ms": 62,
+     "long": false,
+     "issue": "peak +79 ms (lands late)"
+    },
+    {
+     "t_cue": 14.6,
+     "label": "place:fx.bub.b",
+     "kind": "place",
+     "test": "apex",
+     "align": "peak",
+     "attack_ms": -202,
+     "peak_ms": 0,
+     "apex_ms": 68,
+     "long": true,
+     "issue": "apex +68 ms from the cue (want +-45)"
+    },
+    {
+     "t_cue": 28.5,
+     "label": "storm:bolt:1",
+     "kind": "thunder",
+     "test": "impact",
+     "align": "attack",
+     "attack_ms": 0,
+     "peak_ms": 1829,
+     "apex_ms": 1834,
+     "long": false,
+     "issue": "peak +1829 ms (lands late)"
+    },
+    {
+     "t_cue": 29.95,
+     "label": "storm:bolt:2",
+     "kind": "thunder",
+     "test": "impact",
+     "align": "attack",
+     "attack_ms": 0,
+     "peak_ms": 662,
+     "apex_ms": 43,
+     "long": false,
+     "issue": "peak +662 ms (lands late)"
+    },
+    {
+     "t_cue": 30.5,
+     "label": "storm:flash:3",
+     "kind": "thunder",
+     "test": "impact",
+     "align": "attack",
+     "attack_ms": 0,
+     "peak_ms": 805,
+     "apex_ms": 815,
+     "long": false,
+     "issue": "peak +805 ms (lands late)"
+    },
+    {
+     "t_cue": 50.0,
+     "label": "voice:intercom",
+     "kind": "click",
+     "test": "impact",
+     "align": "attack",
+     "attack_ms": 0,
+     "peak_ms": 343,
+     "apex_ms": 338,
+     "long": false,
+     "issue": "peak +343 ms (lands late)"
+    }
+   ],
+   "deliberate": [],
+   "summary": "88 events checked, 15 off their cue: 3.20 place:fx.creak.c apex -89 ms from the cue (want +-45), 4.35 dare:cheer:1 apex -85 ms from the cue (want +-45), 5.60 dare:cheer:2 apex +308 ms from the cue (want +-45), 6.50 dare:cheer:3 apex -105 ms from the cue (want +-45), 6.30 place:fx.creak.b apex -567 ms from the cue (want +-45); 0 more sit off the cue by exactly a rule offset or carry a qa_ok note (check those on the frames)"
+  },
+  "density": {
+   "status": "ok",
+   "events_per_s": [
+    1,
+    0,
+    0,
+    1,
+    3,
+    2,
+    0,
+    2,
+    0,
+    2,
+    2,
+    0,
+    1,
+    1,
+    1,
+    0,
+    2,
+    1,
+    1,
+    2,
+    2,
+    2,
+    1,
+    2,
+    1,
+    1,
+    2,
+    1,
+    2,
+    1,
+    2,
+    1,
+    1,
+    2,
+    1,
+    1,
+    2,
+    1,
+    1,
+    4,
+    4,
+    2,
+    1,
+    2,
+    2,
+    3,
+    4,
+    0,
+    0,
+    0,
+    1,
+    0,
+    2,
+    2,
+    2,
+    2,
+    1,
+    2,
+    0,
+    0,
+    1,
+    1,
+    1,
+    0,
+    1,
+    1,
+    0,
+    1,
+    1,
+    1,
+    1,
+    0,
+    1,
+    1,
+    0
+   ],
+   "busiest_s": [
+    [
+     39,
+     4
+    ],
+    [
+     40,
+     4
+    ],
+    [
+     46,
+     4
+    ],
+    [
+     4,
+     3
+    ],
+    [
+     45,
+     3
+    ]
+   ],
+   "most_used_samples": [
+    [
+     "fx.beep.a",
+     16
+    ],
+    [
+     "fx.beep.b",
+     16
+    ],
+    [
+     "fx.beep.c",
+     14
+    ],
+    [
+     "fx.step.a",
+     5
+    ],
+    [
+     "fx.step.b",
+     4
+    ],
+    [
+     "fx.step.c",
+     4
+    ],
+    [
+     "fx.creak.a",
+     3
+    ],
+    [
+     "fx.creak.b",
+     2
+    ]
+   ],
+   "rules": [
+    {
+     "rule": "fx.beep.room",
+     "n": 11,
+     "distinct_samples": 3,
+     "ioi_s": 0.77,
+     "ioi_cv": 0.0,
+     "gain_sd_db": 0.25,
+     "pitch_sd_st": 0.0
+    },
+    {
+     "rule": "fx.beep.lake",
+     "n": 12,
+     "distinct_samples": 3,
+     "ioi_s": 0.98,
+     "ioi_cv": 0.68,
+     "gain_sd_db": 0.24,
+     "pitch_sd_st": 0.0
+    },
+    {
+     "rule": "fx.beep.weeks",
+     "n": 15,
+     "distinct_samples": 3,
+     "ioi_s": 0.77,
+     "ioi_cv": 0.0,
+     "gain_sd_db": 0.32,
+     "pitch_sd_st": 0.0
+    },
+    {
+     "rule": "fx.beep.slow",
+     "n": 8,
+     "distinct_samples": 3,
+     "ioi_s": 1.25,
+     "ioi_cv": 0.0,
+     "gain_sd_db": 0.23,
+     "pitch_sd_st": 0.0
+    },
+    {
+     "rule": "fx.buzz",
+     "n": 5,
+     "distinct_samples": 3,
+     "ioi_s": 0.385,
+     "ioi_cv": 0.0,
+     "gain_sd_db": 0.3,
+     "pitch_sd_st": 0.0
+    },
+    {
+     "rule": "fx.step.doctor",
+     "n": 4,
+     "distinct_samples": 3,
+     "ioi_s": 0.52,
+     "ioi_cv": 0.0,
+     "gain_sd_db": 0.67,
+     "pitch_sd_st": 0.15
+    },
+    {
+     "rule": "fx.step.house",
+     "n": 9,
+     "distinct_samples": 3,
+     "ioi_s": 0.526,
+     "ioi_cv": 0.0,
+     "gain_sd_db": 0.48,
+     "pitch_sd_st": 0.3
+    }
+   ],
+   "machine_gun": [],
+   "summary": "94 effect events in 75 s (12.5 per 10 s); busiest seconds 39s:4, 40s:4, 46s:4, 4s:3, 45s:3; 0 machine-gun rule(s)"
+  }
+ },
+ "inputs": {
+  "design": "audio/sounddesign.json",
+  "report": "out/qa/mix_report.json",
+  "trace": "out/qa/adds.json",
+  "stems": "out/audio/stems",
+  "master": "out/audio/soundtrack.wav",
+  "only": null
+ }
+}

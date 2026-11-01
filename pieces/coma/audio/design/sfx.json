@@ -1,0 +1,968 @@
+{
+ "_doc": "SFX (real recordings only). Every visible thing sounded on the cue frames of out/cues.json (make_cues.py): pier creaks and the friends cheering on the dare, the jump whoosh, splash 9.9, the rock thud 10.0 heard from inside, bubbles; the monitor beep on the picture pulse (0.77 s) from a real hospital monitor recording, quieter and distant on the lake bed, alarm 29.2, thunder on the two bolts 28.5 / 29.95; penlight 19.1; phone pulses 39.0 + 0.385 n; page turn, doctor steps, mom crying; intercom 50.0; tile steps on the house gait; chime + bowl on 57.0, laugh and relieved breaths in the know shot.",
+ "samples": {
+  "fx.creak.a": {
+   "file": "audio/assets/sfx/fs-506664_wood-creak-single-v9.ogg",
+   "start": 0.03,
+   "end": 0.4,
+   "norm_peak_db": -6,
+   "fade_in": 0.003,
+   "fade_out": 0.05,
+   "mono": true,
+   "eq": {
+    "hp": 80
+   }
+  },
+  "fx.creak.b": {
+   "file": "audio/assets/sfx/fs-191497_creaking-pier.ogg",
+   "start": 99.0,
+   "end": 100.1,
+   "norm_peak_db": -6,
+   "fade_in": 0.003,
+   "fade_out": 0.15,
+   "mono": true,
+   "eq": {
+    "hp": 80
+   }
+  },
+  "fx.creak.c": {
+   "file": "audio/assets/sfx/fs-191497_creaking-pier.ogg",
+   "start": 54.1,
+   "end": 55.15,
+   "norm_peak_db": -6,
+   "fade_in": 0.003,
+   "fade_out": 0.15,
+   "mono": true,
+   "eq": {
+    "hp": 80
+   }
+  },
+  "fx.cheer.men": {
+   "file": "audio/assets/sfx/fs-274510_3-men-cheering.ogg",
+   "start": 0.08,
+   "end": 2.05,
+   "norm_peak_db": -6,
+   "fade_in": 0.003,
+   "fade_out": 0.3,
+   "mono": false,
+   "eq": {
+    "hp": 150
+   }
+  },
+  "fx.cheer.app": {
+   "file": "audio/assets/sfx/fs-830415_cheer-applause.ogg",
+   "start": 1.9,
+   "end": 5.4,
+   "norm_peak_db": -6,
+   "fade_in": 0.003,
+   "fade_out": 0.8,
+   "mono": false,
+   "eq": {
+    "hp": 150
+   }
+  },
+  "fx.cheer.woo": {
+   "file": "audio/assets/sfx/fs-329331_crowd-woos.ogg",
+   "start": 2.75,
+   "end": 3.95,
+   "norm_peak_db": -6,
+   "fade_in": 0.003,
+   "fade_out": 0.3,
+   "mono": false,
+   "eq": {
+    "hp": 150
+   }
+  },
+  "fx.whoosh.up": {
+   "file": "audio/assets/sfx/fs-810736_fast-whoosh.ogg",
+   "start": 0.05,
+   "end": 0.6,
+   "norm_peak_db": -6,
+   "fade_in": 0.003,
+   "fade_out": 0.1,
+   "mono": true,
+   "eq": {
+    "hp": 120
+   }
+  },
+  "fx.whoosh.fall": {
+   "file": "audio/assets/sfx/fs-648540_cinematic-woosh-sfx-006.ogg",
+   "start": 0.0,
+   "end": 2.2,
+   "norm_peak_db": -6,
+   "fade_in": 0.3,
+   "fade_out": 0.05,
+   "mono": true,
+   "eq": {
+    "hp": 100
+   }
+  },
+  "fx.splash": {
+   "file": "audio/assets/sfx/fs-352101_splash-jumping-a.ogg",
+   "start": 0.08,
+   "end": 2.4,
+   "norm_peak_db": -3,
+   "fade_in": 0.003,
+   "fade_out": 0.4,
+   "mono": false
+  },
+  "fx.plunge": {
+   "file": "audio/assets/sfx/fs-637823_splash-body-dive-into-water-pool.ogg",
+   "start": 0.45,
+   "end": 3.0,
+   "norm_peak_db": -4,
+   "fade_in": 0.003,
+   "fade_out": 0.6,
+   "mono": true,
+   "eq": {
+    "lp": 3000
+   }
+  },
+  "fx.hit": {
+   "file": "audio/assets/sfx/fs-653294_big-structure-collision-heard-from-insid.ogg",
+   "start": 0.0,
+   "end": 3.0,
+   "norm_peak_db": -2,
+   "fade_in": 0.003,
+   "fade_out": 0.8,
+   "mono": true,
+   "eq": {
+    "lp": 1800
+   }
+  },
+  "fx.hit.sub": {
+   "file": "audio/assets/sfx/fs-856174_subterranean-deep-sub-bass-rumble-drop.ogg",
+   "start": 0.0,
+   "end": 3.6,
+   "norm_peak_db": -3,
+   "fade_in": 0.003,
+   "fade_out": 0.8,
+   "mono": true,
+   "eq": {
+    "hp": 28,
+    "lp": 300
+   }
+  },
+  "fx.bub.a": {
+   "file": "audio/assets/sfx/fs-232862_bubbles.ogg",
+   "start": 0.0,
+   "end": 1.47,
+   "norm_peak_db": -6,
+   "fade_in": 0.003,
+   "fade_out": 0.2,
+   "mono": true,
+   "eq": {
+    "lp": 4000
+   }
+  },
+  "fx.bub.b": {
+   "file": "audio/assets/sfx/fs-840042_bubbles.ogg",
+   "start": 0.0,
+   "end": 1.19,
+   "norm_peak_db": -6,
+   "fade_in": 0.003,
+   "fade_out": 0.2,
+   "mono": true,
+   "eq": {
+    "lp": 4000
+   }
+  },
+  "fx.bub.big": {
+   "file": "audio/assets/sfx/fs-823209_underwaterhugebubble.ogg",
+   "start": 0.03,
+   "end": 2.78,
+   "norm_peak_db": -6,
+   "fade_in": 0.003,
+   "fade_out": 0.4,
+   "mono": true,
+   "eq": {
+    "lp": 3500
+   }
+  },
+  "fx.beep.a": {
+   "file": "audio/assets/ambience/fs-790709_hospital-machine-beeping.ogg",
+   "start": 169.42,
+   "end": 169.78,
+   "norm_peak_db": -6,
+   "fade_in": 0.003,
+   "fade_out": 0.08,
+   "mono": true,
+   "eq": {
+    "hp": 400
+   }
+  },
+  "fx.beep.b": {
+   "file": "audio/assets/ambience/fs-790709_hospital-machine-beeping.ogg",
+   "start": 175.42,
+   "end": 175.78,
+   "norm_peak_db": -6,
+   "fade_in": 0.003,
+   "fade_out": 0.08,
+   "mono": true,
+   "eq": {
+    "hp": 400
+   }
+  },
+  "fx.beep.c": {
+   "file": "audio/assets/ambience/fs-790709_hospital-machine-beeping.ogg",
+   "start": 195.42,
+   "end": 195.78,
+   "norm_peak_db": -6,
+   "fade_in": 0.003,
+   "fade_out": 0.08,
+   "mono": true,
+   "eq": {
+    "hp": 400
+   }
+  },
+  "fx.penlight": {
+   "file": "audio/assets/sfx/fs-410359_torch-click-1.ogg",
+   "start": 0.02,
+   "end": 0.38,
+   "norm_peak_db": -6,
+   "fade_in": 0.003,
+   "fade_out": 0.05,
+   "mono": true
+  },
+  "fx.sob.mom": {
+   "file": "audio/assets/sfx/fs-272093_sobbing-young-lady.ogg",
+   "start": 4.4,
+   "end": 7.6,
+   "norm_peak_db": -6,
+   "fade_in": 0.2,
+   "fade_out": 0.6,
+   "mono": true,
+   "eq": {
+    "hp": 150,
+    "lp": 7000
+   }
+  },
+  "fx.cry.mom": {
+   "file": "audio/assets/sfx/fs-449439_woman-crying.ogg",
+   "start": 0.0,
+   "end": 3.2,
+   "norm_peak_db": -6,
+   "fade_in": 0.15,
+   "fade_out": 0.5,
+   "mono": true,
+   "eq": {
+    "hp": 150,
+    "lp": 7000
+   }
+  },
+  "fx.alarm": {
+   "file": "audio/assets/sfx/fs-459826_alarm-3.ogg",
+   "start": 4.35,
+   "end": 6.3,
+   "norm_peak_db": -6,
+   "fade_in": 0.003,
+   "fade_out": 0.25,
+   "mono": true,
+   "eq": {
+    "hp": 300
+   }
+  },
+  "fx.thunder.1": {
+   "file": "audio/assets/sfx/fs-567945_200817-thunder-pretty-close-crack-4pm.ogg",
+   "start": 4.68,
+   "end": 9.5,
+   "norm_peak_db": -1,
+   "fade_in": 0.003,
+   "fade_out": 1.5,
+   "mono": false
+  },
+  "fx.thunder.2": {
+   "file": "audio/assets/sfx/fs-576041_huge-thunderclap.ogg",
+   "start": 1.76,
+   "end": 6.5,
+   "norm_peak_db": -1,
+   "fade_in": 0.003,
+   "fade_out": 1.5,
+   "mono": false
+  },
+  "fx.thunder.3": {
+   "file": "audio/assets/sfx/fs-505113_thunder-close.ogg",
+   "start": 4.33,
+   "end": 9.0,
+   "norm_peak_db": -3,
+   "fade_in": 0.003,
+   "fade_out": 1.5,
+   "mono": false
+  },
+  "fx.buzz.a": {
+   "file": "audio/assets/sfx/fs-384485_cell-phone-vibrate-wood-table-loopable.ogg",
+   "start": 0.01,
+   "end": 0.24,
+   "norm_peak_db": -6,
+   "fade_in": 0.003,
+   "fade_out": 0.03,
+   "mono": true
+  },
+  "fx.buzz.b": {
+   "file": "audio/assets/sfx/fs-384485_cell-phone-vibrate-wood-table-loopable.ogg",
+   "start": 1.0,
+   "end": 1.23,
+   "norm_peak_db": -6,
+   "fade_in": 0.003,
+   "fade_out": 0.03,
+   "mono": true
+  },
+  "fx.buzz.c": {
+   "file": "audio/assets/sfx/fs-384485_cell-phone-vibrate-wood-table-loopable.ogg",
+   "start": 1.99,
+   "end": 2.22,
+   "norm_peak_db": -6,
+   "fade_in": 0.003,
+   "fade_out": 0.03,
+   "mono": true
+  },
+  "fx.page": {
+   "file": "audio/assets/sfx/fs-457916_turn-over-the-book-page-2.ogg",
+   "start": 0.9,
+   "end": 1.9,
+   "norm_peak_db": -6,
+   "fade_in": 0.003,
+   "fade_out": 0.15,
+   "mono": true,
+   "eq": {
+    "hp": 200
+   }
+  },
+  "fx.step.a": {
+   "file": "audio/assets/sfx/fs-217947_shoeswalktilesstop02.ogg",
+   "start": 0.98,
+   "end": 1.36,
+   "norm_peak_db": -6,
+   "fade_in": 0.003,
+   "fade_out": 0.05,
+   "mono": true,
+   "eq": {
+    "hp": 90
+   }
+  },
+  "fx.step.b": {
+   "file": "audio/assets/sfx/fs-770066_footsteps-knight-castle-corridor-tiles.ogg",
+   "start": 31.57,
+   "end": 31.95,
+   "norm_peak_db": -6,
+   "fade_in": 0.003,
+   "fade_out": 0.05,
+   "mono": true,
+   "eq": {
+    "hp": 90
+   }
+  },
+  "fx.step.c": {
+   "file": "audio/assets/sfx/fs-770066_footsteps-knight-castle-corridor-tiles.ogg",
+   "start": 42.21,
+   "end": 42.7,
+   "norm_peak_db": -6,
+   "fade_in": 0.003,
+   "fade_out": 0.08,
+   "mono": true,
+   "eq": {
+    "hp": 90
+   }
+  },
+  "fx.intercom": {
+   "file": "audio/assets/sfx/fs-264995_intercom-static-and-buttons.ogg",
+   "start": 34.14,
+   "end": 34.7,
+   "norm_peak_db": -6,
+   "fade_in": 0.003,
+   "fade_out": 0.08,
+   "mono": true,
+   "eq": {
+    "hp": 300
+   }
+  },
+  "fx.chime": {
+   "file": "audio/assets/sfx/fs-454610_richcraft-chime-4-20181219.ogg",
+   "start": 0.04,
+   "end": 1.93,
+   "norm_peak_db": -6,
+   "fade_in": 0.003,
+   "fade_out": 0.4,
+   "mono": true
+  },
+  "fx.bowl": {
+   "file": "audio/assets/sfx/fs-415139_singing-bowl-single-strike-2.ogg",
+   "start": 0.0,
+   "end": 7.0,
+   "norm_peak_db": -6,
+   "fade_in": 0.003,
+   "fade_out": 2.5,
+   "mono": false
+  },
+  "fx.laugh": {
+   "file": "audio/assets/sfx/fs-687349_woman-s-soft-laughter.ogg",
+   "start": 4.72,
+   "end": 6.0,
+   "norm_peak_db": -6,
+   "fade_in": 0.003,
+   "fade_out": 0.25,
+   "mono": true,
+   "eq": {
+    "hp": 150
+   }
+  },
+  "fx.breath.a": {
+   "file": "audio/assets/sfx/fs-724232_relief-sigh.ogg",
+   "start": 2.2,
+   "end": 3.65,
+   "norm_peak_db": -6,
+   "fade_in": 0.003,
+   "fade_out": 0.25,
+   "mono": true,
+   "eq": {
+    "hp": 120
+   }
+  },
+  "fx.breath.b": {
+   "file": "audio/assets/sfx/fs-242909_relieved-sigh.ogg",
+   "start": 0.06,
+   "end": 0.7,
+   "norm_peak_db": -6,
+   "fade_in": 0.003,
+   "fade_out": 0.15,
+   "mono": true,
+   "eq": {
+    "hp": 120
+   }
+  }
+ },
+ "pools": {
+  "fx.creak.a": [
+   "fx.creak.a"
+  ],
+  "fx.creak.b": [
+   "fx.creak.b"
+  ],
+  "fx.creak.c": [
+   "fx.creak.c"
+  ],
+  "fx.cheer.men": [
+   "fx.cheer.men"
+  ],
+  "fx.cheer.app": [
+   "fx.cheer.app"
+  ],
+  "fx.cheer.woo": [
+   "fx.cheer.woo"
+  ],
+  "fx.whoosh.up": [
+   "fx.whoosh.up"
+  ],
+  "fx.whoosh.fall": [
+   "fx.whoosh.fall"
+  ],
+  "fx.splash": [
+   "fx.splash"
+  ],
+  "fx.plunge": [
+   "fx.plunge"
+  ],
+  "fx.hit": [
+   "fx.hit"
+  ],
+  "fx.hit.sub": [
+   "fx.hit.sub"
+  ],
+  "fx.bub.a": [
+   "fx.bub.a"
+  ],
+  "fx.bub.b": [
+   "fx.bub.b"
+  ],
+  "fx.bub.big": [
+   "fx.bub.big"
+  ],
+  "fx.beep.a": [
+   "fx.beep.a"
+  ],
+  "fx.beep.b": [
+   "fx.beep.b"
+  ],
+  "fx.beep.c": [
+   "fx.beep.c"
+  ],
+  "fx.penlight": [
+   "fx.penlight"
+  ],
+  "fx.sob.mom": [
+   "fx.sob.mom"
+  ],
+  "fx.cry.mom": [
+   "fx.cry.mom"
+  ],
+  "fx.alarm": [
+   "fx.alarm"
+  ],
+  "fx.thunder.1": [
+   "fx.thunder.1"
+  ],
+  "fx.thunder.2": [
+   "fx.thunder.2"
+  ],
+  "fx.thunder.3": [
+   "fx.thunder.3"
+  ],
+  "fx.buzz.a": [
+   "fx.buzz.a"
+  ],
+  "fx.buzz.b": [
+   "fx.buzz.b"
+  ],
+  "fx.buzz.c": [
+   "fx.buzz.c"
+  ],
+  "fx.page": [
+   "fx.page"
+  ],
+  "fx.step.a": [
+   "fx.step.a"
+  ],
+  "fx.step.b": [
+   "fx.step.b"
+  ],
+  "fx.step.c": [
+   "fx.step.c"
+  ],
+  "fx.intercom": [
+   "fx.intercom"
+  ],
+  "fx.chime": [
+   "fx.chime"
+  ],
+  "fx.bowl": [
+   "fx.bowl"
+  ],
+  "fx.laugh": [
+   "fx.laugh"
+  ],
+  "fx.breath.a": [
+   "fx.breath.a"
+  ],
+  "fx.breath.b": [
+   "fx.breath.b"
+  ],
+  "fx.creak": [
+   "fx.creak.a",
+   "fx.creak.b",
+   "fx.creak.c"
+  ],
+  "fx.bub": [
+   "fx.bub.a",
+   "fx.bub.b"
+  ],
+  "fx.beep": [
+   "fx.beep.a",
+   "fx.beep.b",
+   "fx.beep.c"
+  ],
+  "fx.buzz": [
+   "fx.buzz.a",
+   "fx.buzz.b",
+   "fx.buzz.c"
+  ],
+  "fx.step": [
+   "fx.step.a",
+   "fx.step.b",
+   "fx.step.c"
+  ],
+  "fx.cheer": [
+   "fx.cheer.men",
+   "fx.cheer.app",
+   "fx.cheer.woo"
+  ]
+ },
+ "rules": [
+  {
+   "name": "fx.cheer",
+   "match": {
+    "kind": "cheer"
+   },
+   "pool": "fx.cheer",
+   "gain_db": -14,
+   "mode": "cycle",
+   "pan_scale": 1.0,
+   "align": "peak"
+  },
+  {
+   "name": "fx.crouch",
+   "match": {
+    "id": "jump:crouch"
+   },
+   "pool": "fx.creak",
+   "gain_db": -16,
+   "mode": "fixed",
+   "pan": 0
+  },
+  {
+   "name": "fx.takeoff.creak",
+   "match": {
+    "id": "jump:takeoff"
+   },
+   "pool": "fx.creak.b",
+   "gain_db": -14,
+   "pan": 0,
+   "no_cue": true
+  },
+  {
+   "name": "fx.takeoff",
+   "match": {
+    "id": "jump:takeoff"
+   },
+   "pool": "fx.whoosh.up",
+   "gain_db": -18,
+   "align": "peak",
+   "offset": 0.12,
+   "pan": 0
+  },
+  {
+   "name": "fx.fall",
+   "match": {
+    "kind": "whoosh"
+   },
+   "pool": "fx.whoosh.fall",
+   "gain_db": -12,
+   "align": "peak",
+   "pan": 0
+  },
+  {
+   "name": "fx.splash",
+   "match": {
+    "kind": "splash"
+   },
+   "pool": "fx.splash",
+   "gain_db": -6,
+   "pan": 0
+  },
+  {
+   "name": "fx.plunge",
+   "match": {
+    "kind": "splash"
+   },
+   "pool": "fx.plunge",
+   "gain_db": -12,
+   "offset": 0.05,
+   "pan": 0,
+   "no_cue": true
+  },
+  {
+   "name": "fx.hit",
+   "match": {
+    "kind": "impact"
+   },
+   "pool": "fx.hit",
+   "gain_db": -5,
+   "pan": 0
+  },
+  {
+   "name": "fx.hit.sub",
+   "match": {
+    "kind": "impact"
+   },
+   "pool": "fx.hit.sub",
+   "gain_db": -9,
+   "pan": 0,
+   "no_cue": true
+  },
+  {
+   "name": "fx.bub.big",
+   "match": {
+    "id": "hit:bubbles"
+   },
+   "pool": "fx.bub.big",
+   "gain_db": -14,
+   "pan": 0.1
+  },
+  {
+   "name": "fx.bub.sink",
+   "match": {
+    "id": "sink:bubbles"
+   },
+   "pool": "fx.bub",
+   "gain_db": -18,
+   "pan": -0.1
+  },
+  {
+   "name": "fx.beep.room",
+   "match": {
+    "kind": "beep",
+    "from": 16,
+    "to": 24
+   },
+   "pool": "fx.beep",
+   "gain_db": -20,
+   "mode": "cycle",
+   "jitter_db": 0.5,
+   "pan": -0.35
+  },
+  {
+   "name": "fx.beep.lake",
+   "match": {
+    "kind": "beep",
+    "from": 24,
+    "to": 36
+   },
+   "pool": "fx.beep",
+   "gain_db": -30,
+   "mode": "cycle",
+   "jitter_db": 0.5,
+   "pan": -0.2
+  },
+  {
+   "name": "fx.beep.weeks",
+   "match": {
+    "kind": "beep",
+    "from": 36,
+    "to": 47
+   },
+   "pool": "fx.beep",
+   "gain_db": -21,
+   "mode": "cycle",
+   "jitter_db": 0.5,
+   "pan": -0.35
+  },
+  {
+   "name": "fx.beep.slow",
+   "match": {
+    "kind": "beep",
+    "from": 64,
+    "to": 75
+   },
+   "pool": "fx.beep",
+   "gain_db": -20,
+   "mode": "cycle",
+   "jitter_db": 0.5,
+   "pan": -0.35
+  },
+  {
+   "name": "fx.penlight",
+   "match": {
+    "id": "pupil:penlight"
+   },
+   "pool": "fx.penlight",
+   "gain_db": -16,
+   "pan": 0.1
+  },
+  {
+   "name": "fx.alarm",
+   "match": {
+    "kind": "alarm"
+   },
+   "pool": "fx.alarm",
+   "gain_db": -14,
+   "align": "start",
+   "pan": -0.2
+  },
+  {
+   "name": "fx.thunder1",
+   "match": {
+    "id": "storm:bolt:1"
+   },
+   "pool": "fx.thunder.1",
+   "gain_db": -4,
+   "pan": 0
+  },
+  {
+   "name": "fx.thunder2",
+   "match": {
+    "id": "storm:bolt:2"
+   },
+   "pool": "fx.thunder.2",
+   "gain_db": -4,
+   "pan": 0
+  },
+  {
+   "name": "fx.thunder3",
+   "match": {
+    "id": "storm:flash:3"
+   },
+   "pool": "fx.thunder.3",
+   "gain_db": -10,
+   "pan": 0
+  },
+  {
+   "name": "fx.buzz",
+   "match": {
+    "kind": "buzz"
+   },
+   "pool": "fx.buzz",
+   "gain_db": -16,
+   "mode": "cycle",
+   "jitter_db": 0.8,
+   "pan": 0.15
+  },
+  {
+   "name": "fx.page",
+   "match": {
+    "kind": "page"
+   },
+   "pool": "fx.page",
+   "gain_db": -20,
+   "pan": 0.05
+  },
+  {
+   "name": "fx.step.doctor",
+   "match": {
+    "kind": "step",
+    "variant": "doctor"
+   },
+   "pool": "fx.step",
+   "gain_db": -12,
+   "mode": "cycle",
+   "jitter_db": 1.0,
+   "pitch": [
+    -1,
+    0
+   ],
+   "pan_scale": 1.0
+  },
+  {
+   "name": "fx.step.house",
+   "match": {
+    "kind": "step",
+    "variant": "tile"
+   },
+   "pool": "fx.step",
+   "gain_db": -9,
+   "mode": "cycle",
+   "jitter_db": 1.0,
+   "pitch": [
+    -2,
+    -1
+   ],
+   "pan_scale": 1.0
+  },
+  {
+   "name": "fx.cry.mom",
+   "match": {
+    "id": "wrong:mom:cry"
+   },
+   "pool": "fx.cry.mom",
+   "gain_db": -15,
+   "align": "start",
+   "pan": 0.3
+  },
+  {
+   "name": "fx.intercom",
+   "match": {
+    "id": "voice:intercom"
+   },
+   "pool": "fx.intercom",
+   "gain_db": -11,
+   "pan": 0.0
+  },
+  {
+   "name": "fx.chime",
+   "match": {
+    "id": "lights:on"
+   },
+   "pool": "fx.chime",
+   "gain_db": -17,
+   "pan": 0
+  },
+  {
+   "name": "fx.bowl",
+   "match": {
+    "id": "lights:on"
+   },
+   "pool": "fx.bowl",
+   "gain_db": -22,
+   "pan": 0,
+   "no_cue": true
+  },
+  {
+   "name": "fx.detected",
+   "match": {
+    "id": "lights:detected"
+   },
+   "pool": "fx.chime",
+   "gain_db": -26,
+   "pan": 0.1
+  },
+  {
+   "name": "fx.laugh",
+   "match": {
+    "id": "know:laugh"
+   },
+   "pool": "fx.laugh",
+   "gain_db": -9,
+   "align": "start",
+   "pan": -0.15
+  },
+  {
+   "name": "fx.breath1",
+   "match": {
+    "id": "know:breath:1"
+   },
+   "pool": "fx.breath.a",
+   "gain_db": -11,
+   "align": "start",
+   "pan": 0.2
+  },
+  {
+   "name": "fx.breath2",
+   "match": {
+    "id": "know:breath:2"
+   },
+   "pool": "fx.breath.b",
+   "gain_db": -13,
+   "align": "start",
+   "pan": -0.1
+  }
+ ],
+ "place": [
+  {
+   "sample": "fx.creak.a",
+   "at": 1.3,
+   "gain_db": -14,
+   "pan": 0.3,
+   "align": "peak"
+  },
+  {
+   "sample": "fx.creak.c",
+   "at": 3.2,
+   "gain_db": -14,
+   "pan": -0.25,
+   "align": "peak"
+  },
+  {
+   "sample": "fx.creak.a",
+   "at": 5.1,
+   "gain_db": -13,
+   "pan": 0.1,
+   "align": "peak"
+  },
+  {
+   "sample": "fx.creak.b",
+   "at": 6.3,
+   "gain_db": -15,
+   "pan": -0.1,
+   "align": "peak"
+  },
+  {
+   "sample": "fx.sob.mom",
+   "at": 21.15,
+   "gain_db": -15,
+   "pan": 0.3,
+   "align": "start"
+  },
+  {
+   "sample": "fx.bub.a",
+   "at": 13.6,
+   "gain_db": -22,
+   "pan": 0.15,
+   "align": "peak"
+  },
+  {
+   "sample": "fx.bub.b",
+   "at": 14.6,
+   "gain_db": -24,
+   "pan": -0.1,
+   "align": "peak"
+  }
+ ]
+}

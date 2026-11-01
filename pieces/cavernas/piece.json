@@ -1,0 +1,54 @@
+{
+  "name": "cavernas",
+  "title": "Cuatro amigos y un túnel inundado",
+  "format": {
+    "width": 1080,
+    "height": 1920,
+    "fps": 24,
+    "bpm": 120,
+    "duration": 109.309,
+    "frames": 2624
+  },
+  "storyFormat": "chronology narrated (voice is the clock), hard cuts between the air pocket and the sump",
+  "style": "pov3d",
+  "build": [
+    "src/head.html",
+    "kit/core.js",
+    "styles/pov3d/three.js",
+    "style",
+    "src/core3d.js",
+    "src/people.js",
+    "src/skinbody.js",
+    "src/hands.js",
+    "src/helpers.js",
+    "src/shots.js",
+    "src/cave.js",
+    "src/beats.js",
+    "src/overlays.js",
+    "src/main.js",
+    "src/bridges.js",
+    "kit/morph.js",
+    "kit/board.js",
+    "kit/score-head.js",
+    "src/score.js",
+    "kit/score-tail.js"
+  ],
+  "review": {
+    "safe": {
+      "top": 240,
+      "bottom": 420,
+      "right": 140
+    },
+    "refs": {}
+  },
+  "voice": {
+    "file": "voice/voice.wav",
+    "music": -10
+  },
+  "music": {
+    "file": "audio/track.wav",
+    "start": 0,
+    "gain": 0,
+    "fade": 0.5
+  }
+}

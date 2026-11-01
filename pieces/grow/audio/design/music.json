@@ -1,0 +1,19 @@
+{
+ "_doc": "Music edit. Track: 'Sounds Good' by Michael Ramir C. (Mixkit, Mixkit Stock Music Free License), instrumental funk, A major. Measured grid (arrange.py, transient-fitted): 119.985 BPM, downbeats 1.994 + 2.0003*n s (residual 3.4 ms) = the picture's own 120 BPM / 2 s doubling grid, so the track plays unstretched with src = film for the groove and every doubling (2, 4, 6 ...) lands on a bar line.",
+ "music": {
+  "file": "audio/assets/music/mk-1077_sounds-good.mp3",
+  "src_bpm": 119.985,
+  "target_bpm": 119.985,
+  "stretch": "none",
+  "gain_db": 0.0,
+  "segments": [
+   {"label": "mu.groove: src 0.00-51.57 -> film 0.00-51.57 (track bars -1..24). Full-band groove from frame 0; its breakdown (src 16-22) sits under Eiffel/Burj/clouds, its own re-entry at 24 under the airliners. Hard stop 30 ms before the 16th at 51.6, 25 ms fade: silent through the black frame 51.6-51.98.",
+    "src_from": 0.0, "src_to": 51.57, "at": 0.0, "fade_in": 0.004, "fade_out": 0.025,
+    "qa_ok": "deliberate hard stop: the picture cuts to black 51.6-51.98 and the music must stop dead"},
+   {"label": "mu.drop: src bars 25-26 (51.99-55.99) -> film 51.99-55.99. Bar 25 is the track's loudest section (+0.6/+0.9 rel dB, the densest bars); its downbeat transient lands on 52.00 (the Moon). Enters from silence.",
+    "src_from": 51.99, "src_to": 55.99, "at": 51.99, "fade_in": 0.006, "fade_out": 0.03},
+   {"label": "mu.ending: src 90.99-94.98 (beat 3 of bar 44 + the final chord at src 92.0 ringing down) -> film 55.99-59.98. Beat-to-beat splice (both strong beats at the same level, -12.8 / -14.3 dB): the 2-beat pickup into the final chord, which lands on 57.0 (the end card) and decays to silence by 60.",
+    "src_from": 90.99, "src_to": 94.98, "at": 55.99, "fade_in": 0.008, "fade_out": 0.02, "tail_fade": 1.2}
+  ]
+ }
+}

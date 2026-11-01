@@ -1,0 +1,73 @@
+"""What happens on screen, per set, timed on the voice words (voice/words.json) -> events-<set>.json (t, what)."""
+import json
+W = json.load(open('../voice/words.json'))
+
+
+def w(word, t0=0, fb=None):
+    for x in W:
+        if x['s'] >= t0 - 0.01 and ''.join(c for c in x['w'] if c.isalnum()).lower() == word.lower(): return x['s']
+    return fb
+
+
+E = {k: [] for k in ['world', 'nope', 'north', 'home', 'stuga', 'hq']}
+def ev(s, t, what): E[s].append({'t': round(t, 3), 'what': what})
+
+
+# ---- world (s01, s29-s31)
+ev('world', 0.0, 'whoosh: camera pulls back from the Swedish pin'); ev('world', 0.05, 'pin pop'); ev('world', 0.3, 'flag flutter shimmer')
+ph = w('phone'); ev('world', ph, 'ribbon unrolls whoosh'); ev('world', ph + 0.6, 'ribbon swish'); ev('world', w('planet') + 0.1, 'sparkle twinkle as the ribbon closes')
+ev('world', 48.04, 'whoosh: cut to the globe')
+for k in range(8): ev('world', w('loved', 48) - 0.25 + k * 0.1, 'heart pop')
+ev('world', w('loved', 48) + 0.1, 'small crowd cheer')
+for k in range(14): ev('world', 49.6 + k * 0.17, 'call arc whoosh' if k % 2 else 'call arc pop')
+ev('world', 49.55, 'counter pop')
+for k in range(12): ev('world', 49.8 + k * 0.17, 'counter digits tick')
+ev('world', w('thousand', 51) + 0.05, 'counter thump on 200,000'); ev('world', w('thousand', 51) + 0.1, 'sparkle twinkle')
+ev('world', 52.6, 'satellite whoosh'); ev('world', w('Earth', 53) + 0.1, 'pin pop')
+ev('world', 54.22, 'whoosh: globe turns'); ev('world', w('impression', 56) - 0.35, 'whoosh: postcard flies out'); ev('world', w('impression', 56) + 0.7, 'paper card flip lands')
+# ---- nope (s02-s03)
+for t in [2.75, 2.95, 3.3]: ev('nope', t, 'keyboard typing click')
+ev('nope', 2.7, 'call center murmur chatter'); ev('nope', w('center', 2.6) - 0.05, 'stamp thump X slam'); ev('nope', w('center', 2.6) - 0.02, 'paper stamp slap')
+ev('nope', 3.62, 'whoosh camera glide'); ev('nope', 3.9, 'brochure paper flip'); ev('nope', w('office', 3.6) - 0.05, 'stamp thump X slam')
+# ---- north (s04, s06-s09, s23, s27)
+ev('north', 4.98, 'whoosh: cut to the snowy village'); ev('north', 5.3, 'flag flutter shimmer'); ev('north', 5.6, 'cow bell clank distant')
+ev('north', 7.7, 'whoosh: fly over the hills')
+for k in range(4): ev('north', w('somewhere', 7.6) - 0.1 + k * 0.18, 'old telephone ring bell')
+ev('north', 8.7, 'old telephone ring bell'); ev('north', w('picks', 9) - 0.25, 'snow footstep crunch'); ev('north', w('picks', 9), 'click: phone answered')
+ev('north', 10.1, 'cow moo'); ev('north', 10.3, 'farmer laugh chuckle'); ev('north', 10.2, 'cow bell clank')
+ev('north', 10.74, 'bike bell ring'); ev('north', 11.0, 'snow footstep crunch')
+ev('north', 38.18, 'whoosh: rise over the village')
+for k in range(6): ev('north', w('voice', 38) - 0.35 + k * 0.12, 'speech bubble pop')
+ev('north', 38.9, 'small crowd cheer'); ev('north', 39.3, 'giggle laugh')
+ev('north', 44.08, 'whoosh: cut to the frozen lake'); ev('north', 44.3, 'snow footstep crunch'); ev('north', w('poet', 44.5) - 0.1, 'sparkle twinkle music notes')
+# ---- home (s05, s11)
+d = w('dial', 6)
+for k in range(11): ev('home', d + 0.05 + k * 0.077, 'click keypad tap')
+ev('home', d, 'phone keypad dtmf tones'); r = w('rings', 7); ev('home', r, 'phone ringing tone (mobile)'); ev('home', r - 0.15, 'whoosh: phone to ear')
+ev('home', 13.78, 'whoosh: cut to the couch'); ev('home', 13.9, 'couch cushion thump')
+for k in range(5): ev('home', w('ask', 14) - 0.1 + k * 0.16, 'question mark pop')
+ev('home', w('anything', 14), 'sparkle twinkle')
+# ---- stuga (s10, s12-s16, s28, s32)
+ev('stuga', 11.5, 'whoosh: cut to the kitchen'); ev('stuga', 11.7, 'chewing munching'); ev('stuga', 12.4, 'fork clink on plate'); ev('stuga', w('meatballs', 12.9) + 0.1, 'chewing munching')
+ev('stuga', 15.32, 'chair scrape back stand up'); ev('stuga', w('tall', 15.5) - 0.02, 'bonk: head hits the lamp'); ev('stuga', w('tall', 15.5) + 0.05, 'lamp swing whoosh'); ev('stuga', w('tall', 15.5) + 0.2, 'sparkle twinkle stars')
+for t in [16.64, 17.0, 17.35, 19.6]: ev('stuga', t, 'clock tick')
+ev('stuga', w('five', 17.5) - 0.05, 'clock chime bell ding')
+ev('stuga', 18.4, 'whoosh: camera glides to the window'); ev('stuga', 18.8, 'wind gust outside')
+ev('stuga', 20.3, 'whoosh: back to the table'); ev('stuga', w('chews', 21), 'chewing munching'); ev('stuga', w('swallows', 21.5), 'gulp swallow')
+ev('stuga', w('Wait', 22.7) - 0.05, 'speech bubble pop'); ev('stuga', w('Who', 23) - 0.05, 'speech bubble pop'); ev('stuga', 23.3, 'question mark pop')
+ev('stuga', 45.58, 'snoring man'); ev('stuga', 46.0, 'old telephone ring bell'); ev('stuga', w('woke', 47) - 0.6, 'blanket rustle'); ev('stuga', w('woke', 47) - 0.1, 'click: phone answered'); ev('stuga', 47.6, 'sigh yawn')
+ev('stuga', 57.54, 'whoosh: cut to the kitchen at night'); ev('stuga', 58.0, 'chewing munching'); ev('stuga', w('finish', 59.8), 'fork clink on plate'); ev('stuga', w('meatballs', 60), 'chewing munching'); ev('stuga', 61.0, 'gulp swallow')
+# ---- hq (s17-s22, s24-s26)
+ev('hq', 24.6, 'whoosh: cut to the poster'); ev('hq', 25.0, 'sparkle twinkle')
+st = w('set', 27.5); ev('hq', st - 0.15, 'lever switch clunk'); ev('hq', st + 0.1, 'riser: poster lights up'); ev('hq', st + 0.15, 'sparkle twinkle')
+f = w('fifty', 29.2); ev('hq', f - 0.1, 'party horn'); ev('hq', f - 0.05, 'confetti pop'); ev('hq', f + 0.1, 'small crowd cheer applause'); ev('hq', 29.0, 'clap clap')
+ev('hq', 30.32, 'whoosh: cut to the decree'); ev('hq', w('first', 31.5) - 0.05, '1766 tag pop')
+r = w('rid', 32.5)
+for k in range(3): ev('hq', r + k * 0.18, 'paper tear rip')
+ev('hq', 33.76, 'whoosh: cut to the storyboard'); ev('hq', w('script', 35.2) - 0.15, 'paper crumple ball'); ev('hq', w('script', 35.2) + 0.2, 'whoosh: paper ball thrown')
+ev('hq', 35.92, 'whoosh: cut to the phone'); ev('hq', w('downloaded', 37) - 0.3, 'riser: download progress'); ev('hq', w('downloaded', 37) + 0.5, 'click: app opens'); ev('hq', w('downloaded', 37) + 0.55, 'sparkle twinkle')
+n = w('training', 40.2); ev('hq', n - 0.05, 'book grab paper rustle'); ev('hq', n + 0.3, 'book drop thud into the bin')
+r = w('rules', 41.3); ev('hq', r - 0.12, 'book grab paper rustle'); ev('hq', r + 0.35, 'book drop thud into the bin'); ev('hq', r + 0.45, 'trash can clunk')
+ev('hq', 42.78, 'whoosh: cut to the exec'); ev('hq', 43.0, 'old telephone ring bell'); ev('hq', w('risky', 43) + 0.1, 'sweat drip drop'); ev('hq', 43.5, 'nervous gulp swallow')
+for k, v in E.items(): json.dump(sorted(v, key=lambda e: e['t']), open(f'events-{k}.json', 'w'), indent=1)
+print({k: len(v) for k, v in E.items()}, sum(len(v) for v in E.values()))

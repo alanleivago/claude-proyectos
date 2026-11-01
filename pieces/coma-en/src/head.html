@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>In a coma</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0d14; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  ¿QUÉ PASARÍA SI CAYERAS EN COMA? — 9:16, 75 s, 24 fps. First person.
+//  A night party on a lake pier (Valle de Bravo): the dare, the jump, the rock. Day 1 in the dark, the dream of a bed
+//  on the lake that turns into a storm, week 3 eyes open in the hospital, week 6 a brain scan: "imagine walking
+//  through your house" — you do, and your brain lights up.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 75.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 75, () => sceneMain()]];
+const SHOTS = [
+  ['party', 0, 4, 'fiesta en el muelle, título'],
+  ['dare', 4, 7, 'te retan a saltar'],
+  ['jump', 7, 10, 'el salto'],
+  ['hit', 10, 12, 'la roca bajo el agua'],
+  ['sink', 12, 16, 'no despiertas, a negro'],
+  ['day1', 16, 19, 'estás en coma'],
+  ['pupil', 19, 21, 'la linterna en la pupila'],
+  ['mom', 21, 24, 'tu mamá llora'],
+  ['dream', 24, 28, 'la cama en el lago'],
+  ['storm', 28, 31, 'la pesadilla'],
+  ['off', 31, 36, 'hablan de desconectarte'],
+  ['eyes', 36, 39, 'semana 3, abres los ojos'],
+  ['phone', 39, 41, 'el teléfono vibra'],
+  ['doctor', 41, 44, 'no hay nadie ahí'],
+  ['wrong', 44, 47, '4 de cada 10'],
+  ['mri', 47, 50, 'el escáner'],
+  ['voice', 50, 52, 'imagina tu casa'],
+  ['house', 52, 57, 'caminas por tu casa'],
+  ['lights', 57, 60, 'tu cerebro se enciende'],
+  ['know', 60, 64, '1 de cada 4'],
+  ['still', 64, 68, 'ahora lo saben'],
+  ['card', 68, 75, 'tarjeta final'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, t0, t1, title], i) => ({ id: i + 1, key, era: 0, t0, t1, title })),
+  cuts: SHOTS.slice(1).map((s) => s[1]), morphs: [],
+  cues: { hit: 10.0, black: 15.5, storm: 28.0, lights: 57.0 },
+  acts: [
+    { name: '1 El muelle', role: 'build', t0: 0, t1: 15.5 },
+    { name: '1b Negro', role: 'silence', t0: 15.5, t1: 16 },
+    { name: '2 Los primeros días', role: 'journey', t0: 16, t1: 36 },
+    { name: '3 Las semanas', role: 'peak', t0: 36, t1: 57 },
+    { name: '5 Tu cerebro', role: 'gift', t0: 57, t1: 64 },
+    { name: '6 Ahora lo saben', role: 'goodbye', t0: 64, t1: 75 },
+  ],
+  board: [[1.5, 'título'], [5.5, 'el reto'], [8.5, 'salto'], [11, 'roca'], [13.5, 'no despiertas'], [17.5, 'día 1'], [20, 'pupila'], [22.5, 'mamá'], [26, 'cama en el lago'], [29.5, 'tormenta'], [33.5, 'desconectarte'], [37.5, 'semana 3'], [40, 'teléfono'], [42.5, 'médico'], [45.5, 'mamá llora'], [48.5, 'escáner'], [51, 'la voz'], [54.5, 'tu casa'], [58.5, 'cerebro'], [62, '1 de cada 4'], [66, 'ahora lo saben'], [72, 'tarjeta']].map(([t, title]) => ({ t, title, sound: '', next: '' })),
+  narration: [],
+};
+window.TIMELINE = TIMELINE;
