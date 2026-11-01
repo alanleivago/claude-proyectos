@@ -436,7 +436,14 @@ function c3Person(o = {}) {
     // exact Ricks Clips hairstyles (2026-10-27, tools/slice_ricks2.py: one Flow copy per real character crop)
     rk_kyle: ['hair_rk_kyle', 1.06, 0.619], rk_bun: ['hair_rk_bun', 1.07, 0.445], rk_curly: ['hair_rk_curly', 1.2, 0.517], rk_genius: ['hair_rk_genius', 1.06, 0.446],
     rk_edison: ['hair_rk_edison', 1.06, 0.472], rk_darkbowl: ['hair_rk_darkbowl', 1.06, 0.402], rk_darkfringe: ['hair_rk_darkfringe', 1.06, 0.426],
-    rk_brownshort: ['hair_rk_brownshort', 1.06, 0.388], rk_glasses: ['hair_rk_glasses', 1.06, 0.324], rk_boss: ['hair_rk_boss', 1.06, 0.451] };   // every style glued by its measured hairline (no floating hair)
+    rk_brownshort: ['hair_rk_brownshort', 1.06, 0.388], rk_glasses: ['hair_rk_glasses', 1.06, 0.324], rk_boss: ['hair_rk_boss', 1.06, 0.451],
+    rk_greycap: ['hair_rk_greycap', 1.06, 0.32],   // (2026-10-30) Flow copy of the grey combed cap (ricks hair/f_boss2); every style glued by its measured hairline
+    // (2026-10-30) cut straight out of Ricks frames (tools/cut_ricks_hair.py; Flow had hit its usage limit): the real pixels
+    rk_combed: ['hair_rk_combed', 1.06, 0.62], rk_swoop: ['hair_rk_swoop', 1.06, 0.8], rk_part: ['hair_rk_part', 1.1, 0.47], rk_partblack: ['hair_rk_partblack', 1.1, 0.47], rk_spiky: ['hair_rk_spiky', 1.08, 0.7], rk_sweep: ['hair_rk_sweep', 1.08, 0.6],
+    rk_combedgrey: ['hair_rk_combedgrey', 1.06, 0.62], rk_sweepblond: ['hair_rk_sweepblond', 1.08, 0.6],
+    rk_greybun: ['hair_rk_greybun', 1.15, 0.62], rk_brownbig: ['hair_rk_brownbig', 1.12, 0.5], rk_blackbob: ['hair_rk_blackbob', 1.06, 0.62],
+    // (2026-11-01, flower-clock extras) the same Ricks cuts recoloured so a crowd never repeats a hair colour
+    rk_partred: ['hair_rk_partred', 1.1, 0.47], rk_brownbigblond: ['hair_rk_brownbigblond', 1.12, 0.5], rk_shortblack: ['hair_rk_shortblack', 1.06, 0.388], rk_edisonwhite: ['hair_rk_edisonwhite', 1.06, 0.472] };   // extras cut from GM9UKnZ6JFw 33.75 s and eQR3pgMiUF0 23.75 s   // recoloured Ricks cuts (same shape) so a cast never repeats a hair colour
   if (o.hair !== false && HAIR[hst] && c3Img(HAIR[hst][0])) {
     const [img, kw, hl] = HAIR[hst], im = c3Img(img), hw = D * kw * (o.hairW ?? 1), hh = hw * im.aspect;
     hp(hw, hh, im.tex, 0.032, 4).position.set(D * (o.hairX ?? 0), D * (0.24 + (o.hairUp ?? 0)) + hl * hh - hh / 2, 0.032);

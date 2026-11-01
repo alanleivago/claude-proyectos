@@ -277,7 +277,7 @@ BACK_MIN = 0.3        # componente minima hacia atras (+Y del pecho) de la colet
 HAIR_GRAV = {}
 _LIE_H, _SIT_H = tuple(map(float, os.environ.get('ZF_LIEH', '0.32,-0.9,0.02').split(','))), (0.0, 0.88, -0.42)
 def _wake_h(f): k = min(1, max(0, (f - 6) / 11)); return tuple(a + (b - a) * k for a, b in zip(_LIE_H, _SIT_H))
-HAIR_DIR = {'sleep_lie': lambda f: _LIE_H, 'slap_snooze': lambda f: _LIE_H, 'wake_sit_up': _wake_h}
+HAIR_DIR = {'sleep_lie': lambda f: _LIE_H, 'slap_snooze': lambda f: _LIE_H, 'wake_sit_up': _wake_h, 'lie_on_side': lambda f: _LIE_H}
 
 
 def hair_spring(act, N, loop, k_hz=2.2, zeta=0.32, gain=1.0, clamp=45, grav=0.7):
@@ -1321,6 +1321,77 @@ def A_blow_tube():
                          (24, P(**body(-12))), (28, P(**body(-18))), (32, P(**body(-12))), (36, P(**body(-18))), (45, P(**body(-18)))],
         lag={"Head": 1, "Forearm": 1, "Hand": 1})
     face("blow_tube", [[1, "open", "neutral"], [8, "half", "talkO"], [36, "half", "smirk"]])
+
+# ---------------------------------------------------------------- 2026-10-31: Expedition 01 (the bedroom) actions
+def A_climb_in():
+    """climbing in through a window: both hands on a sill ~1.0 m high, 0.45 m ahead; the L knee comes up high over the sill,
+    the body leans in, then the leg steps down and she straightens (one-shot 45 f)"""
+    sill = lambda o: {"gw": M(o, 0.45, 1.0), "hw": (0.0, 0.6, -1), "pw": (1, -0.2, 0.4)}
+    lean = P(pel={"loc": (0.0, 0.5, -0.6), "rot": (18, 0, 0)}, chest=(16, 0, 0), head=(6, 0, 0), armL=sill(0.2), armR=sill(0.2))
+    knee = deep(lean, {"footL": {"loc": (-0.05, 2.6, 3.4), "rot": (-30, 0, 10), "piv": None}, "pel": {"loc": (0.1, 0.9, -0.3), "rot": (22, 3, 0)}})
+    over = deep(lean, {"footL": {"loc": (-0.05, 3.4, 1.0), "rot": (-10, 0, 10), "piv": None}, "pel": {"loc": (0.0, 1.4, -0.5), "rot": (12, 0, 0)}})
+    seq("climb_in", 45, [(1, BASE), (7, lean), (15, knee), (24, over), (32, P(pel={"loc": (0.0, 0.8, -0.3), "rot": (4, 0, 0)}, footL={"loc": (-0.05, 1.6, 0), "rot": (0, 0, 10)})), (45, BASE)],
+        lag={"Head": 2, "Forearm": 1, "Hand": 1})
+    face("climb_in", [[1, "open", "neutral"], [10, "angry", "frown"], [30, "happy", "smile"]])
+
+
+def A_press_down():
+    """pressing a mattress with both palms (~0.5 m high, 0.45 m ahead), bouncing twice a cycle (loop 30 f)"""
+    palm = lambda y: {"gw": M(0.16, 0.45, y), "hw": (0.0, 0.4, -1), "pw": (1, -0.2, 0.6)}
+    def pz(k): return C(P(pel={"loc": (0.0, 0.6, -1.0 - 0.3 * k), "rot": (26 + 4 * k, 0, 0)}, chest=(24 + 4 * k, 0, 0), head=(-10, 0, 0), armL=palm(0.56 - 0.07 * k), armR=palm(0.56 - 0.07 * k),
+                     footL={"loc": (-0.15, 0.6, 0), "rot": (0, 0, 12)}, footR={"loc": (0.05, -0.8, 0), "rot": (8, 0, 8)}))
+    build("press_down", [(1, pz(0)), (8, pz(1)), (15, pz(0)), (22, pz(1)), (31, pz(0))], 30, loop=True, lag={"Head": 2, "Hand": 1})
+    face("press_down", [[1, "surprised", "talkO"], [12, "happy", "smileOpen"]])
+
+
+def A_lie_on_side():
+    """lying relaxed on her back, R hand behind the head (on the pillow), L knee raised, slow breath (loop 60 f); the root
+    goes on the floor / mattress like sleep_lie (used for the stone-pillow gag)"""
+    def rel(k): return C(LIE(k, head=(14, 0, 14), armR={"gw": M(0.16, -0.62, 0.3), "hw": (0, -1, 0.3), "pw": (1, 0, 0.6)},
+                             footL={"loc": (-0.2, 4.4, 0.95), "rot": (-30, 0, 10), "piv": None}))
+    build("lie_on_side", [(1, rel(0)), (31, rel(1)), (61, rel(0))], 60, loop=True, lag={})
+    face("lie_on_side", [[1, "relaxed", "smile"]])
+
+
+def A_charge_plug():
+    """the android recharges: R hand reaches behind her back to plug a cable in (f8-16), then both fists rest on the hips and
+    she relaxes, eyes closed, a slow bob (one-shot 50 f, holds)"""
+    back = {"gw": M(0.08, -0.22, 0.95), "hw": (0, -0.5, -1), "pw": (1, 0.3, 0.6)}
+    reach = P(pel={"loc": (0.0, 0, -0.3), "rot": (4, 0, -10)}, chest=(4, 0, -16), head=(0, 0, -30), armR=back)
+    rest = P(pel={"loc": (-0.2, 0, -0.3), "rot": (-2, 4, -4)}, chest=(-6, -4, 4), head=(-10, 6, 0), armL=dict(HIP), armR=dict(HIP))
+    seq("charge_plug", 50, [(1, BASE), (8, reach), (16, deep(reach, {"armR": dict(back, gw=M(0.08, -0.25, 0.92))})), (24, rest), (37, deep(rest, {"pel": {"loc": (-0.2, 0, -0.42)}})), (50, rest)],
+        lag={"Head": 2, "Forearm": 1, "Hand": 1})
+    face("charge_plug", [[1, "open", "neutral"], [9, "half", "neutral"], [24, "relaxed", "smile"]])
+
+
+def A_dig_hands():
+    """kneeling, clearing earth with both hands in turns, scooping toward her and throwing it aside (loop 32 f)"""
+    lo = lambda o, f: {"gw": (o, f, -8.0), "hw": (0, 1, -0.3), "pw": (1, -0.2, 0.4)}
+    hi = lambda o: {"gw": (o, 1.8, -3.2), "hw": (-0.2, 0.3, 1), "pw": (0.8, -0.2, -1)}
+    base = deep(KNEEL, {"pel": {"rot": (16, -2, 4)}, "chest": (20, 0, 0), "head": (16, 0, 0)})
+    a = C(deep(base, {"armR": lo(0.5, 3.2), "armL": hi(1.4)})); b = C(deep(base, {"armR": lo(0.5, 2.2), "armL": lo(1.2, 3.1)})); c = C(deep(base, {"armR": hi(0.6), "armL": lo(1.2, 2.2)}))
+    build("dig_hands", [(1, a), (9, b), (17, c), (25, b), (33, a)], 32, loop=True, lag={"Head": 2, "Forearm": 1, "Hand": 1})
+    face("dig_hands", [[1, "half", "frown"]])
+
+
+def A_light_candle():
+    """L hand holds a candle at chest height, the R hand strikes a match (f8-12) and brings it to the wick (f20-32)"""
+    cnd = {"gw": M(-0.02, 0.3, 1.0), "hw": (0.2, 0.3, 1), "pw": (1, -0.2, -0.8)}
+    m1 = {"gw": M(0.25, 0.25, 0.95), "hw": (0, 1, 0.2), "pw": (1, -0.2, -0.8)}; m2 = dict(m1, gw=M(0.22, 0.32, 1.02))
+    m3 = {"gw": M(0.06, 0.32, 1.12), "hw": (-0.3, 0.5, 0.8), "pw": (1, -0.2, -0.8)}
+    body = dict(pel={"loc": (0.0, 0.1, -0.25), "rot": (4, 0, 0)}, chest=(6, 0, 0), head=(14, 0, 0), armL=cnd)
+    seq("light_candle", 45, [(1, BASE), (6, P(armR=m1, **body)), (9, P(armR=m2, **body)), (12, P(armR=m1, **body)), (22, P(armR=m3, **body)), (32, P(armR=m3, **body)), (45, P(armR=m1, **body))],
+        lag={"Head": 1, "Forearm": 1, "Hand": 1})
+    face("light_candle", [[1, "open", "neutral"], [10, "half", "neutral"], [26, "happy", "smile"]])
+
+
+def A_step_back():
+    """disgusted step back: R foot back, body leans away, fists up in front of the chest, head turned away (one-shot 30 f)"""
+    guard = lambda o: {"gw": M(o, 0.2, 1.15), "hw": (-0.2, 0.4, 1), "pw": (1, -0.3, -0.7)}
+    tgt = P(pel={"loc": (0.0, -0.9, -0.3), "rot": (-10, 0, 8)}, chest=(-14, 0, 10), head=(-6, 0, 30), armL=guard(-0.12), armR=guard(0.12),
+            footR={"loc": (0.05, -2.2, 0), "rot": (0, 0, 8)}, footL={"loc": (-0.2, 0.2, 0), "rot": (0, 0, 14)})
+    oneshot("step_back", C(tgt), N=30, t_antic=3, t_hit=8, t_settle=13, over=1.1)
+    face("step_back", [[1, "open", "neutral"], [4, "disgust", "disgust"]])
 
 # ================================================================ verificacion
 def sole_pts(side):

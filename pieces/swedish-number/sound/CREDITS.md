@@ -1,0 +1,39 @@
+# Sound credits — swedish-number
+- Music: "Short Pizzicato Song" — Freesound 529008 (CC0), the approved bed (same as lego-sea / future-library / slow-checkout).
+- Voice: VoiceStudio "3D cartoon 2", take 13.
+- SFX kit: sound-layer kit (CC0, see sound-layer/kit/CREDITS.md).
+- Freesound CC0 recordings (previews HQ):
+  - 427390 "Plastic Trash Can" by zembacraftworks (CC0) — https://freesound.org/s/427390/
+  - 80407 "bonk.wav" by phoenixdk (CC0) — https://freesound.org/s/80407/
+  - 484900 "Book Drop - 4" by SpaceJoe (CC0) — https://freesound.org/s/484900/
+  - 484904 "Book Drop - 8" by SpaceJoe (CC0) — https://freesound.org/s/484904/
+  - 579568 "Office ambience - call center 3" by leonelmail (CC0) — https://freesound.org/s/579568/
+  - 333405 "Cheer 1 short.wav" by jayfrosting (CC0) — https://freesound.org/s/333405/
+  - 858309 "Small Crowd Applause" by miuziqa (CC0) — https://freesound.org/s/858309/
+  - 364923 "Eating a cracker (Mouth open)" by Rudmer_Rotteveel (CC0) — https://freesound.org/s/364923/
+  - 842099 "Eating a Wet Food" by Benthran (CC0) — https://freesound.org/s/842099/
+  - 461694 "Paper crumpling and wadding into a ball softly 2" by leonelmail (CC0) — https://freesound.org/s/461694/
+  - 857830 "DTMF Dialing 4" by ElevatorFan2020 (CC0) — https://freesound.org/s/857830/
+  - 534336 "Drink_Gulp.mp3" by Defaultv (CC0) — https://freesound.org/s/534336/
+  - 398843 "170720_SmallAppartment_Kitchen_F.wav" by blaukreuz (CC0) — https://freesound.org/s/398843/
+  - 166134 "Laugh_old_man_5.wav" by deleted_user_2104797 (CC0) — https://freesound.org/s/166134/
+  - 589850 "LAUGH.mp3" by yrdn (CC0) — https://freesound.org/s/589850/
+  - 800973 "Noises - Short laugh" by Sadiquecat (CC0) — https://freesound.org/s/800973/
+  - 513557 "Cow moo #3" by spurioustransients (CC0) — https://freesound.org/s/513557/
+  - 867051 "Medium Crowd Walla" by IENBA (CC0) — https://freesound.org/s/867051/
+  - 556390 "Quiet City Atmos.mp3" by Anya_Media (CC0) — https://freesound.org/s/556390/
+  - 642770 "Paper shuffling.mp3" by meeser9 (CC0) — https://freesound.org/s/642770/
+  - 170583 "Party horn.wav" by audiosmedia (CC0) — https://freesound.org/s/170583/
+  - 717287 "landline phone 2" by Anonio82 (CC0) — https://freesound.org/s/717287/
+  - 332073 "Telephone Ring (old German W48)" by meisterleise (CC0) — https://freesound.org/s/332073/
+  - 509742 "Omas Telefon 02.wav" by MrOptimism (CC0) — https://freesound.org/s/509742/
+  - 253778 "exasperated.wav" by Reitanna (CC0) — https://freesound.org/s/253778/
+  - 684528 "snoring.wav" by shakezerz (CC0) — https://freesound.org/s/684528/
+  - 384421 "Footstep in the snow_03 [RAW]" by cabled_mess (CC0) — https://freesound.org/s/384421/
+  - 623712 "switching_a_rattling_lever_with_room_ambience.wav" by mediatheksuche (CC0) — https://freesound.org/s/623712/
+  - 343098 "tear paper.wav" by edschaefer (CC0) — https://freesound.org/s/343098/
+  - 710162 "Paper Rip 3" by omgitsjo (CC0) — https://freesound.org/s/710162/
+  - 152956 "001_keyboard.wav" by JL_barrett (CC0) — https://freesound.org/s/152956/
+  - 574284 "Mountain forest winter amb trees creak light wind BANFF 190107.flac" by TRP (CC0) — https://freesound.org/s/574284/
+- Images (1766 decree, app screen, world map, "Greetings from Sweden" postcard): generated in Google Flow (Nano Banana Pro).
+- Hairstyles: cut from Ricks Clips frames for style reference (styles/cartoon3d/tools/cut_ricks_hair.py).

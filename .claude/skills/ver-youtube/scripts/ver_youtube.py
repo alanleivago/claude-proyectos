@@ -75,8 +75,10 @@ def slug(text, max_len=80):
 def video_info(url):
     """Título y canal vía oEmbed público de YouTube (no necesita clave)."""
     q = urllib.parse.urlencode({"url": url, "format": "json"})
+    base = "https://www.tiktok.com/oembed" if "tiktok.com" in url else "https://www.youtube.com/oembed"
     try:
-        with urllib.request.urlopen(f"https://www.youtube.com/oembed?{q}", timeout=20) as r:
+        req = urllib.request.Request(f"{base}?{q}", headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=20) as r:
             data = json.load(r)
         return data.get("title", ""), data.get("author_name", "")
     except Exception as e:

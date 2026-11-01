@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El túnel inundado</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0d14; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  CAVERNAS — 9:16, ~120 s, 24 fps. Gollum's Cave (Provo, Utah, 2005) told as a 3D cutaway: the rock is sliced open
+//  and we look into the sump from the side — an air pocket on the right, a 4.5 m flooded tunnel, the way out on the left.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = VOICE.duration;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const CX = 540;
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+
+const ERA_LIST = [[0, DURATION, () => sceneMain()]];
+const VL = (id) => VOICE.lines.find((l) => l.id === id);
+const SHOT_TITLES = [
+  ['hook', 'adelanto: una luz en la cámara'], ['river', 'el río en la selva'], ['fish', 'sigue al pez'], ['lost', 'pierde la salida'],
+  ['search', 'solo el arpón'], ['days', 'los días pasan'], ['gust', 'Gust y la línea guía'], ['chamber', '¿hay alguien aquí?'],
+  ['voice', 'una voz débil'], ['promise', 'va a volver'], ['out', 'nadie lo puede creer'], ['back', 'dos buzos, tanques'],
+  ['brief', 'el regulador'], ['file', 'en fila'], ['light', 'la luz'], ['hospital', 'tres días'], ['end', 'fueron quince'],
+];
+// the voice is the clock: each beat cuts in 0.35 s before its line, and runs until the next one
+const SHOTS = SHOT_TITLES.map(([key, title], i) => [key, i ? VL(key).t0 - 0.35 : 0, i < SHOT_TITLES.length - 1 ? VL(SHOT_TITLES[i + 1][0]).t0 - 0.35 : DURATION, title]);
+const ST0 = (k) => SHOTS.find((s) => s[0] === k)[1];
+// where in each beat its storyboard panel is taken (fraction of the beat)
+const BOARDK = { hook: 0.7, river: 0.6, fish: 0.6, lost: 0.85, search: 0.72, days: 0.25, gust: 0.8, chamber: 0.8, voice: 0.75, promise: 0.62, out: 0.75, back: 0.6, brief: 0.3, file: 0.55, light: 0.75, hospital: 0.8, end: 0.6 };
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'chronology',
+  shots: SHOTS.map(([key, t0, t1, title], i) => ({ id: i + 1, key, era: 0, t0, t1, title })),
+  cuts: SHOTS.slice(1).map((s) => s[1]), morphs: [],
+  cues: {},
+  acts: [],
+  board: SHOTS.map(([key, t0, t1, title]) => ({ t: t0 + (t1 - t0) * (BOARDK[key] ?? 0.5), title, sound: '', next: '' })),
+  narration: VOICE.lines.map((l) => ({ t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;

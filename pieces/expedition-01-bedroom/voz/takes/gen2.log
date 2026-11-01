@@ -1,0 +1,34 @@
+p33 seed 1 match 0.937 dur 17.44 | The word pajamas comes from Persian, pie, leg, and jama, clothing, leg clothes. The British picked them up in India in the 1800s and took them home as sleepwear. Before that, most Europeans slept in a long night shirt.
+p33 seed 2 match 0.937 dur 17.44 | The word pajamas comes from Persian, pie, leg, and jama, clothing, leg clothes. The British picked them up in India in the 1800s and took them home as sleepwear. Before that, most Europeans slept in a long night shirt.
+p33 seed 3 match 0.937 dur 17.40 | The word pajamas comes from Persian, pie, leg, and jama, clothing. Leg clothes. The British picked them up in India in the 1800s and took them home as sleepwear. Before that, most Europeans slept in a long night shirt.
+p33 seed 4 match 0.937 dur 17.44 | The word pajamas comes from Persian, pie, leg, and jama, clothing, leg clothes. The British picked them up in India in the 1800s and took them home as sleepwear. Before that, most Europeans slept in a long night shirt.
+p34 seed 1 match 1.000 dur 8.48 | Sixth artifact, a small table next to the bed. Today it holds a phone, a glass of water, and a book nobody finishes.
+p35 seed 1 match 1.000 dur 18.44 | But before indoor toilets, its main job was hiding the chamber pot, a little cabinet with a door so you didn't have to see it. In fancy French houses, that kind of cabinet was called a commode. And that's why today, a toilet can be called a commode.
+p36 seed 1 match 1.000 dur 4.84 | Your nightstand used to be a toilet closet. I'm not touching it.
+p37 seed 1 match 0.941 dur 8.08 | Seventh artifact, two small foam cylinders. Humans push them into their ears to block out other humans.
+p37 seed 2 match 1.000 dur 8.08 | 7th artifact. Two small foam cylinders. Humans pushed them into their ears to block out other humans.
+p38 seed 1 match 0.982 dur 22.84 | The oldest earplugs in any story are made of beeswax. In Homer's Odyssey Odysseus plugs his sailors ears so they won't hear the deadly song of the sirens. Then in 1907, a German pharmacist named Max Negwer read that story and started selling wax earplugs. This company still makes them today.
+p39 seed 1 match 1.000 dur 5.20 | My scan says this pair was used a lot. Somebody in this house snored.
+p40 seed 1 match 0.955 dur 9.44 | 8th Artifact, a phone still plugged in next to the pillow. Its last setting, an alarm at 6.30, snoozed 8 times.
+p40 seed 2 match 0.955 dur 9.44 | 8th Artifact, a phone still plugged in next to the pillow. Its last setting, an alarm at 6.30, snoozed 8 times.
+p40 seed 3 match 0.889 dur 9.44 | 8th artifact, a phone still plugged in next to the pillow. It's last setting, an alarm at 6.30, snoozed 8 times.
+p40 seed 4 match 0.955 dur 9.43 | 8th artifact. A phone still plugged in next to the pillow. Its last setting, an alarm at 6.30, snoozed 8 times.
+p41 seed 1 match 1.000 dur 13.04 | The same object was the alarm, the clock, the lamp, the radio, and the bedtime story. Humans took the whole world into bed with them and then wondered why they couldn't sleep.
+p42 seed 1 match 1.000 dur 17.24 | Operators who watched my last expedition already know this one. Before alarm clocks, workers paid a knocker upper to tap on their windows or shoot dried peas at them. And in 1956, humans invented the snooze button.
+p43 seed 1 match 1.000 dur 5.72 | Human body manual page 3 what happens if a human doesn't sleep at all?
+p44 seed 1 match 1.000 dur 26.05 | In 1964, a 17-year-old named Randy Gardner stayed awake for 11 days straight. For a school science project, by day 3, he was moody and clumsy. By day 5, he was seeing things that weren't there. He slept 14 hours afterwards and recovered. Guinness later stopped tracking the record, because it's too dangerous.
+p45 seed 1 match 1.000 dur 6.96 | Dolphins do it smarter. They sleep with half of their brain at a time and keep one eye open.
+p46 seed 1 match 1.000 dur 15.60 | Let me check my inventory. Eight artifacts. Grass beds, stone pillows, strangers sharing blankets. Two sleeps a night, pajamas from Persia, a toilet cabinet, wax from the odyssey, and peas against the window.
+p47 seed 1 match 0.973 dur 15.52 | So here's my conclusion about humans. For 200,000 years, you worked on the perfect bed, grass, straw, springs, foam, and then you put a glowing rectangle next to your pillow that keeps you awake.
+p48 seed 1 match 1.000 dur 18.84 | But there's one more artifact. It was hidden under the bed. A glass bottle full of liquid with a blob of wax inside that slowly floats up. And slowly sinks down over and over. It doesn't light the room, it doesn't tell the time, and it doesn't make a sound.
+p49 seed 1 match 1.000 dur 3.97 | Operators, what was it for? Tell me in the comments!
+p50 seed 1 match 1.000 dur 2.76 | Expedition complete. Logging off.
+Traceback (most recent call last):
+  File "F:\Claude Proyectos\pieces\expedition-01-bedroom\voz\scripts\gen_exp.py", line 37, in <module>
+    json.dump(log, open(os.path.join(out, f"{pre}_gen{sys.argv[5].replace(',', '_')[:20] if ONLY else ''}.json"), "w"), indent=1, ensure_ascii=False)
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\json\__init__.py", line 180, in dump
+    fp.write(chunk)
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u0101' in position 45: character maps to <undefined>

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El túnel inundado</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0d14; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  CAVERNAS — 9:16, ~120 s, 24 fps. Gollum's Cave (Provo, Utah, 2005) told as a 3D cutaway: the rock is sliced open
+//  and we look into the sump from the side — an air pocket on the right, a 4.5 m flooded tunnel, the way out on the left.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = VOICE.duration;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const CX = 540;
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+
+const ERA_LIST = [[0, DURATION, () => sceneMain()]];
+const VL = (id) => VOICE.lines.find((l) => l.id === id);
+const SHOT_TITLES = [
+  ['hook', 'adelanto: los cuatro en el túnel'],
+  ['mount', 'la montaña de noche'],
+  ['gallery', 'la galería con linternas'],
+  ['rope', 'la cuerda, 4,5 m'],
+  ['chamber', 'la cámara diminuta'],
+  ['dive1', 'la primera se sumerge'],
+  ['wide', 'cuatro metros infinitos'],
+  ['black1', 'se desmaya'],
+  ['wait', 'la cuerda floja'],
+  ['dive2', 'la segunda entra'],
+  ['chase', 'algo le cierra el paso'],
+  ['panic', 'patalea'],
+  ['last2', 'entran uno tras otro'],
+  ['turn', 'no puede darse la vuelta'],
+  ['pull', 'empuja y tira'],
+  ['empty', 'no queda aire'],
+  ['found', 'los encontraron así'],
+  ['seal', 'sellada con concreto'],
+];
+// the voice is the clock: each beat cuts in 0.35 s before its line, and runs until the next one
+const SHOTS = SHOT_TITLES.map(([key, title], i) => [key, i ? VL(key).t0 - 0.35 : 0, i < SHOT_TITLES.length - 1 ? VL(SHOT_TITLES[i + 1][0]).t0 - 0.35 : DURATION, title]);
+const ST0 = (k) => SHOTS.find((s) => s[0] === k)[1];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'chronology',
+  shots: SHOTS.map(([key, t0, t1, title], i) => ({ id: i + 1, key, era: 0, t0, t1, title })),
+  cuts: SHOTS.slice(1).map((s) => s[1]), morphs: [],
+  cues: {},
+  acts: [],
+  board: SHOTS.map(([key, t0, t1, title]) => ({ t: key === 'black1' ? t0 + 1.2 : key === 'seal' ? t0 + 2.6 : key === 'wide' ? t0 + 1 : (t0 + t1) / 2, title, sound: '', next: '' })),
+  narration: VOICE.lines.map((l) => ({ t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;
