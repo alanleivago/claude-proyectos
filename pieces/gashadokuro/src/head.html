@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gashadokuro</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #020306; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; image-rendering: pixelated; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  GASHADOKURO — 9:16, 71s, 24fps. A first-person tale in on-screen paragraphs: the Tenmei famine winter of 1783, a
+//  mountain pass at night; the village left its dead in the susuki; my grandmother crosses with a paper lantern; the bones
+//  roll uphill and gather; at the top her lantern dies and a giant face of many skulls lowers to her.
+//  Style: yokai (three.js at 216×384, dithered).
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 71.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 71, () => sceneTale()]];
+const SHOTS = [
+  ['hook',   0, 0.0,  4.5,  'a giant skull of many skulls rises over the cedar ridge in fog, jaw chattering; a tiny lantern on the path below'],
+  ['card',   0, 4.5,  8.5,  'the card: Gashadokuro'],
+  ['village',0, 8.5,  14.6, 'the village edge in the snow; the dead under straw mats in the susuki'],
+  ['bones',  0, 14.6, 20.6, 'moonlit field: bones in the grass, crows'],
+  ['walk',   0, 20.6, 26.6, 'the girl walks the path between stone lanterns'],
+  ['click',  0, 26.6, 32.6, 'the bones in the grass tremble'],
+  ['roll',   0, 32.6, 38.6, 'the bones roll uphill into the dark between the cedars'],
+  ['hand',   0, 38.6, 45.6, 'eyes down; a giant bony hand creeps beside the path; the lantern dies; black'],
+  ['face',   0, 45.6, 51.6, 'THE HIT: she looks up; the many-skull face lowers to her'],
+  ['teeth',  0, 51.6, 58.0, 'its teeth of skulls; her mother\'s red comb caught between them'],
+  ['day',    0, 58.0, 71.0, 'the field by day in fog, fewer bones; badge'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { open: 0.3, rise: 1.0, card: 4.5, village: 8.5, bones: 14.6, crow: 15.5, walk: 20.6, click: 27.0, roll: 32.9, hand: 38.6, out: 44.3, black: 45.0, hit: 45.6, teeth: 51.6, day: 58.0, badge: 66.2 },
+  acts: [
+    { name: '1 The rule',     role: 'build',   t0: 0.0,  t1: 8.5 },
+    { name: '2 The famine',   role: 'turn',    t0: 8.5,  t1: 20.6 },
+    { name: '3 The pass',     role: 'peak',    t0: 20.6, t1: 45.0 },
+    { name: '4 Silence',      role: 'silence', t0: 45.0, t1: 45.6 },
+    { name: '5 She looked up',role: 'gift',    t0: 45.6, t1: 58.0 },
+    { name: '6 Fewer bones',  role: 'goodbye', t0: 58.0, t1: 71.0 },
+  ],
+  board: [
+    { t: 1.9,  title: 'Hook: it rises over the ridge', sound: 'mountain wind in cedars, a dry chattering of teeth far above; a low drone', next: 'dither' },
+    { t: 6.9,  title: 'Card: Gashadokuro', sound: 'card hit, a shakuhachi breath, a temple bell far off', next: 'dither in' },
+    { t: 12.0, title: 'The dead under straw mats', sound: 'winter wind over the susuki, snow hiss, a dog far off', next: 'cut' },
+    { t: 17.6, title: 'The crows took the rest', sound: 'crows caw and peck; one takes off (15.5) in a flurry of wings', next: 'cut' },
+    { t: 23.6, title: 'Over the pass with a lantern', sound: 'her straw sandals on frozen dirt, the paper lantern creaks on its pole', next: 'cut' },
+    { t: 29.8, title: 'A dry clicking all around', sound: 'a dry bone clicking rises from every side (27.0), wind drops out', next: 'cut' },
+    { t: 35.4, title: 'The bones roll uphill', sound: 'bones clatter and tumble over frozen ground, gathering into a rattle', next: 'cut' },
+    { t: 41.8, title: 'The clicking walked beside her', sound: 'her counted steps; huge slow knocks of bone fingers on the ground beside her; drone swells', next: 'lantern gutters → black, 0.6 s silence' },
+    { t: 47.6, title: 'She looked up', sound: 'THE HIT (45.6 s): a sub drop and a roar of a thousand chattering teeth', next: 'cut' },
+    { t: 50.6, title: 'The face lowers to her', sound: 'grinding bone, chattering slows, a deep breath of cold air', next: 'cut' },
+    { t: 55.0, title: 'Her mother\'s comb', sound: 'near silence, a single click of teeth, a high thin tone', next: 'dither' },
+    { t: 62.0, title: 'Fewer bones in the field', sound: 'daytime wind over the susuki, a crow, a far temple bell', next: 'end' },
+    { t: 68.4, title: 'kodamashorts', sound: 'wind fades out', next: 'end' },
+  ],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;
