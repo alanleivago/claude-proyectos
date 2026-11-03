@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El doble</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0d14; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  ¿QUÉ PASARÍA SI DUPLICARAS TU TAMAÑO CADA 2 SEGUNDOS? — 9:16, 60 s, 24 fps.
+//  Third person: the girl in the green hoodie (from "shrink") doubles every 2 s, from a city avenue (crowd, cars,
+//  crumbling buildings) through clouds, mountains and planes, into space (ISS, Earth's curve) until the Earth is a
+//  ball at her feet, satellites circle her legs and the Moon is within reach.
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 60.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = 540;
+// her height in metres: 1.60 m doubling every 2 s
+const HGT = (t) => 1.6 * Math.pow(2, t / 2);
+
+const ERA_LIST = [[0, 60, () => sceneMain()]];
+const SHOTS = [
+  ['walk',    0,    3,    'camina por la avenida'],
+  ['stare',   3,    5,    'la gente mira'],
+  ['run',     5,    8,    'la gente corre'],
+  ['cars',    8,    11,   'coches como juguetes'],
+  ['crumble', 11,   15,   'edificios se derrumban'],
+  ['eiffel',  15,   18,   'tan alta como la Torre Eiffel'],
+  ['burj',    18,   20,   'más alta que el Burj Khalifa'],
+  ['clouds',  20,   24,   'nubes en las rodillas'],
+  ['everest', 24,   28,   'montañas y aviones'],
+  ['air',     28,   31,   'por encima del 99 % del aire'],
+  ['space',   31,   34,   'la cabeza en el espacio'],
+  ['iss',     34,   36,   'la Estación Espacial'],
+  ['iss2',    36,   38,   'la Estación pasa frente a sus ojos'],
+  ['curve',   38,   41,   'la Tierra se curva'],
+  ['step',    41,   43.5, 'un paso cruza un país'],
+  ['step2',   43.5, 46,   'el paso visto desde arriba'],
+  ['earth',   46,   49,   'más grande que la Tierra'],
+  ['sats',    49,   52,   'satélites como moscas'],
+  ['moon',    52,   57,   'la Luna a su alcance'],
+  ['card',    57,   60,   'tarjeta final'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, t0, t1, title], i) => ({ id: i + 1, key, era: 0, t0, t1, title })),
+  cuts: SHOTS.slice(1).map((s) => s[1]), morphs: [],
+  cues: { space: 31.0, drop: 52.0 },
+  acts: [
+    { name: '1 La avenida', role: 'build', t0: 0, t1: 8 },
+    { name: '2 Hacia el cielo', role: 'journey', t0: 8, t1: 31 },
+    { name: '3 El espacio', role: 'peak', t0: 31, t1: 51.6 },
+    { name: '4 Silencio', role: 'silence', t0: 51.6, t1: 51.98 },
+    { name: '5 La Luna', role: 'gift', t0: 51.98, t1: 57 },
+    { name: '6 Tarjeta', role: 'goodbye', t0: 57, t1: 60 },
+  ],
+  board: [[1.5, 'título, la avenida'], [4, 'la gente mira'], [6.5, 'corren'], [9.5, 'coches'], [13, 'edificios'], [16.5, 'Eiffel'], [19, 'Burj'], [22, 'nubes'], [26, 'Everest, aviones'], [29.5, 'el aire'], [32.5, 'espacio'], [35, 'ISS'], [37, 'ISS de cerca'], [39.5, 'la curva'], [42, 'un paso'], [44.8, 'el paso'], [47.5, 'la Tierra'], [50.5, 'satélites'], [54.5, 'la Luna'], [59, 'tarjeta']].map(([t, title]) => ({ t, title, sound: '', next: '' })),
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

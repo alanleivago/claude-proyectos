@@ -1146,6 +1146,7 @@ function c3Renderer() {
 function c3Render(scene, cam, o = {}) {
   const { r, cv } = c3Renderer();
   if (C3_VIVID) o = Object.assign({}, o, { bgBlur: (o.bgBlur ?? 0) * C3_VIVID.bgBlur, glow: (o.glow ?? 0) * C3_VIVID.glow, glowBlur: Math.min(o.glowBlur ?? 18, C3_VIVID.glowBlur) });
+  if (C3_DOF && C3_SHOT && C3_DOF[C3_SHOT.id] != null) o = Object.assign({}, o, { bgBlur: C3_DOF[C3_SHOT.id] });   // per-shot lens (absolute, after VIVID)
   if (C3_SHADOW) {   // shadow maps only see objects on the CAMERA's layers: build them once per frame with every layer on
     c3ShadowSetup(scene); r.shadowMap.autoUpdate = false; r.shadowMap.needsUpdate = true;
     const km = cam.layers.mask; cam.layers.enableAll(); r.setClearColor(0x000000, 0); r.render(scene, cam); cam.layers.mask = km;
@@ -1190,7 +1191,39 @@ function c3Render(scene, cam, o = {}) {
   }
   ctx.restore();
 }
-function c3SetCam(cam, c) { cam.fov = c.fov; cam.position.set(...c.p); cam.lookAt(...c.l); cam.updateProjectionMatrix(); }
+function c3SetCam(cam, c) { if (C3_CAMFX) c = c3CamFx(c, TT); cam.fov = c.fov; cam.position.set(...c.p); cam.lookAt(...c.l); if (c.roll) cam.rotateZ(c.roll); cam.updateProjectionMatrix(); }
+
+// camera grammar measured on the reference channel (mromidev study, fuentes/cartoon3d/tutorial-mromidev-gap.md):
+// every hold creeps in (dolly toward the look point, subject grows ~rate per frame since the shot start; ref 0.15-0.35 %/f,
+// default kept at the low end + capped at 12 % so the user's wide Ricks framing survives), punch words
+// push harder for ~35 f, emphasis shots carry a 4-5 deg roll, impacts are 7-frame kicks that flip sign every frame.
+// Opt-in: C3_CAMFX = Object.assign({}, C3_CAMFX_DEF, { punch: [t...], kicks: [[t, gain]...], roll: { s05: 4 } });
+// shots.js sets C3_SHOT = { id, t0 } before each shot function (the push restarts on every shot).
+let C3_CAMFX = null, C3_SHOT = null;
+// per-shot depth of field (ref: blur on ~1/3 of screen time; CoC 12-16 px at 1080 on CU/inserts, 10-12 MS, 0 on wides and
+// aerials; focus on the eyes). Values are the background-layer CSS blur in px (~half the CoC radius): CU 7, MS 5, FS 3.
+// Opt-in: C3_DOF = { s05: 7, s10: 5 } — shots not listed keep their own bgBlur.
+let C3_DOF = null;
+// aerial perspective (ref: fog colour = the horizon colour, linear 25 -> 420 m by day, 20 -> 360 m golden; scale to the
+// set's units). Opt-in per set: c3Fog(scene, 'day', 25, 420). Materials with fog:false (sky, clouds) are untouched.
+function c3Fog(scene, sky = 'day', near = 25, far = 420) { scene.fog = new THREE.Fog(new THREE.Color((C3_SKY[sky] || C3_SKY.day).hor), near, far); return scene.fog; }
+const C3_CAMFX_DEF = { rate: 0.0015, max: 0.12, punch: [], punchRate: 0.006, punchN: 35, kicks: [], roll: {} };
+function c3CamFx(c, t) {
+  const F = C3_CAMFX, f = Math.max(0, (t - (C3_SHOT ? C3_SHOT.t0 : t)) * FPS);
+  let s = F.rate * f;
+  for (const tp of F.punch) { const x = (t - tp) * FPS; if (x > 0) for (let i = 0; i < Math.min(x, F.punchN); i++) s += (F.punchRate - F.rate) * clamp(Math.min((i + 0.5) / 8, (F.punchN - i - 0.5) / 8)); }
+  const k = Math.max(1 - F.max, Math.exp(-s));
+  const p = c.p.map((v, j) => c.l[j] + (v - c.l[j]) * k);
+  let roll = (c.roll ?? 0) + ((C3_SHOT && F.roll[C3_SHOT.id]) || 0) * Math.PI / 180, l = c.l;
+  let a = 0;
+  for (const [t0, g] of F.kicks) { const n = Math.floor((t - t0) * FPS + 1e-6); if (n >= 0 && n < 7) a += g * (n % 2 ? -1 : 1) * (1 - n / 7) ** 1.5; }
+  if (a) {   // ~3 px per unit at 720p, sideways + a little up, plus a tiny roll
+    const d = [l[0] - p[0], l[1] - p[1], l[2] - p[2]], L = Math.hypot(...d), h = Math.hypot(d[0], d[2]) || 1;
+    const m = (3 / 640) * Math.tan((c.fov * Math.PI) / 360) * L * a;
+    l = [l[0] - (d[2] / h) * m, l[1] + 0.6 * m, l[2] + (d[0] / h) * m]; roll += a * 0.004;
+  }
+  return Object.assign({}, c, { p, l, roll });
+}
 
 // ---- colour looks measured on the 7 refs (per shot: mean luminance 0.3-0.6, whites rarely clipped, shadows tinted):
 // the whole composited frame is graded once (people included: white heads take the scene's light)

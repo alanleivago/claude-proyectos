@@ -1,6 +1,6 @@
-# Título: Si eres RESIDENTE y te llega ESTA carta, NO la ignores · Miniatura: NO LA GUARDES
+# Título: Si eres RESIDENTE y te llega ESTA carta, NO la ignores · Miniatura: ¿TE LLEGÓ ESTA CARTA?
 
-Imagina que llegas del trabajo, abres el buzón, y entre los recibos de la luz y la publicidad hay un sobre del gobierno. Lo abres, y arriba dice, en inglés, "Notice to Appear". Aviso para comparecer. Tienes tu green card desde hace quince años. Pagas tus impuestos. Tus hijos nacieron aquí. Y ahí, en ese papel, dice que el gobierno quiere sacarte del país.
+Hay una carta que en estos meses está llegando a casas donde nadie la esperaba. Les llega a residentes. Gente con green card desde hace diez, quince, veinte años, que paga sus impuestos y tiene hijos nacidos aquí. La carta viene en inglés, y el título, en español, es "aviso para comparecer". Y traducido a lo que de verdad significa, es el gobierno diciéndote que quiere sacarte del país.
 
 Mucha gente, cuando le llega esa carta, hace lo peor que se puede hacer. La guarda en un cajón. Piensa que es un error, que con la green card no le pueden hacer nada, que ya se va a arreglar solo. Y no se arregla. Se pone peor. Porque esa carta tiene una fecha, y si esa fecha pasa sin que tú hagas nada, el juez puede decidir sin ti.
 

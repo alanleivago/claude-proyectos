@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Torre Sur</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0a0d14; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  TORRE SUR — 11 de septiembre de 2001, piso 89. 9:16, 24 fps, motion on 1s. The voice is the clock.
+//  First person: the North Tower is hit; you and Diego go down Stair A to the 78th-floor sky lobby; the PA says
+//  Building Two is secure; you go back up; at 9:03:02 a second plane comes over the harbour. Cut to black: PARTE 2.
+//  Smooth 3D (matte, soft shadows, AO, DOF) under a 2D HUD (clock, place, floor counter, word-timed subtitles).
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = VOICE.duration;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = 540;
+// the voice: a line by id, its start / end, the n-th word's start; who says it (voice/script.json)
+const VL = (id) => VOICE.lines.find((l) => l.id === id);
+const LT0 = (id) => VL(id).t0, LT1 = (id) => VL(id).t1;
+const VW = (id, n) => VL(id).words[Math.min(n, VL(id).words.length - 1)].t0;
+const WHO = { l01: 'diego', l02: 'pov', l03: 'pov', l04: 'diego', l05: 'diego', l06: 'jefa', l07: 'pov', l08: 'diego', l09: 'pov', l10: 'diego', l11: 'jefa', l12: 'pov', l13: 'pa', l14: 'diego', l15: 'pov', l16: 'diego', l17: 'diego', l18: 'pov', l19: 'comp', l20: 'pov' };
+const T_CUT = 64.2;                                   // the hard cut to black (9:03:02)
+
+const ERA_LIST = [[0, DURATION, () => sceneMain()]];
+// [key, t0, t1, title] — cut points ride on the voice
+const SHOTS = [
+  ['window',  0,                  5.6,                'piso 89: el avión bajo'],
+  ['impact',  5.6,                LT1('l03') + 0.2,   'impacto, la taza cae'],
+  ['react',   LT1('l03') + 0.2,   LT0('l05') - 0.05,  'Diego, manos a la cabeza'],
+  ['boss',    LT0('l05') - 0.05,  LT1('l06') + 0.3,   '¡todos fuera!'],
+  ['call',    LT1('l06') + 0.3,   LT0('l08') - 0.25,  '¿Amor?'],
+  ['elev',    LT0('l08') - 0.25,  LT1('l09') + 0.2,   'el botón'],
+  ['full',    LT1('l09') + 0.2,   LT1('l10') + 0.35,  'lleno: SALIDA'],
+  ['stairs',  LT1('l10') + 0.35,  LT1('l11') + 1.6,   'escalera A 89→79'],
+  ['arrive',  LT1('l11') + 1.6,   33.0,               '78'],
+  ['jump',    33.0,               LT0('l13') - 0.4,   'salto de tiempo'],
+  ['lobby',   LT0('l13') - 0.4,   LT0('l14') - 0.25,  'altavoz'],
+  ['point',   LT0('l14') - 0.25,  LT0('l15') - 0.2,   'volvamos arriba'],
+  ['doubt',   LT0('l15') - 0.2,   LT0('l16') - 0.4,   'mal presentimiento'],
+  ['wave',    LT0('l16') - 0.4,   49.3,               'vamos, hombre'],
+  ['up',      49.3,               LT1('l17') + 0.9,   'ascensor ▲ 89'],
+  ['back',    LT1('l17') + 0.9,   LT1('l18') + 1.0,   'piso 89 vacío'],
+  ['window2', LT1('l18') + 1.0,   T_CUT,              '¿otro avión?'],
+  ['part2',   T_CUT,              DURATION,           'PARTE 2'],
+];
+const SH0 = (k) => SHOTS.find((s) => s[0] === k)[1], SH1 = (k) => SHOTS.find((s) => s[0] === k)[2];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, t0, t1, title], i) => ({ id: i + 1, key, era: 0, t0, t1, title })),
+  cuts: SHOTS.slice(1).map((s) => s[1]), morphs: [],
+  cues: { impact: 5.6, pa: LT0('l13'), cut: T_CUT },
+  acts: [
+    { name: '1 Mañana', role: 'build', t0: 0, t1: 5.6 },
+    { name: '2 Impacto', role: 'peak', t0: 5.6, t1: 8.1 },
+    { name: '3 Evacuar', role: 'journey', t0: 8.1, t1: 33 },
+    { name: '4 Altavoz', role: 'turn', t0: 33, t1: 49.3 },
+    { name: '5 Arriba', role: 'journey', t0: 49.3, t1: T_CUT },
+    { name: '6 Corte', role: 'silence', t0: T_CUT, t1: DURATION },
+  ],
+  board: [
+    { t: 4.3,  title: 'Piso 89: "¿Por qué ese avión vuela tan bajo…?"', sound: 'oficina, teclados; avión que crece', next: 'impacto' },
+    { t: 6.15, title: 'Impacto 8:46:40: bola de fuego en el vidrio, la taza cae', sound: 'EL golpe (tras silencio), vidrio, taza', next: 'Diego' },
+    { t: 9.3,  title: 'Diego: "¡Dios mío! ¡Un avión chocó contra la torre!"', sound: 'gritos, alarma', next: 'la jefa' },
+    { t: 13.9, title: 'Jefa: "¡Todos fuera!", papeles afuera', sound: 'gritos, pasos, alarma', next: 'la llamada' },
+    { t: 16.6, title: 'POV al teléfono: "¿Amor?…"', sound: 'tono de llamada, pasillo', next: 'ascensores' },
+    { t: 21.6, title: 'Botón de bajada: "Vamos, vamos…"', sound: 'clic del botón x4', next: 'se abre' },
+    { t: 24.0, title: 'Lleno: "¡Por la escalera!", SALIDA', sound: 'ding, puertas, murmullo', next: 'escalera' },
+    { t: 27.3, title: 'Escalera A, PISO 89→79', sound: 'pasos con eco', next: '78' },
+    { t: 31.6, title: '78: "lo logramos"', sound: 'puerta de emergencia', next: 'salto' },
+    { t: 34.0, title: 'Salto de tiempo: 8:47 → 8:54', sound: 'tic acelerado', next: 'altavoz' },
+    { t: 37.5, title: 'ALTAVOZ: "El edificio dos es seguro…"', sound: 'voz con filtro, murmullo', next: 'Diego' },
+    { t: 41.8, title: 'Diego señala arriba: "Volvamos arriba"', sound: 'murmullo', next: 'duda' },
+    { t: 45.5, title: 'POV mira al piso: "mal presentimiento…"', sound: 'silencio tenso', next: 'ascensor' },
+    { t: 48.3, title: 'Diego desde el ascensor: "Vamos, hombre"', sound: 'ding', next: 'subida' },
+    { t: 52.5, title: 'Ascensor ▲ 9:02: "en dos minutos…"', sound: 'zumbido del ascensor', next: 'piso 89' },
+    { t: 57.0, title: 'Piso 89 casi vacío: "algo no está bien"', sound: 'zumbido, humo lejano', next: 'ventana sur' },
+    { t: 60.2, title: 'Compañera: "¿Eso es… otro avión?"', sound: 'dron que crece', next: 'el avión' },
+    { t: 64.0, title: 'El avión sobre la bahía: "No… no, no"', sound: 'motor que crece → CORTE', next: 'negro' },
+    { t: 65.6, title: '9:03:02 en rojo — PARTE 2', sound: 'silencio total + un golpe', next: 'fin' },
+  ],
+  narration: VOICE.lines.map((l) => ({ t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Rake</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #020306; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; image-rendering: pixelated; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  THE RAKE — 9:16, 62s, 24fps. A first-person tale in on-screen paragraphs: a mountain minka in winter; I wake to a
+//  weight at the foot of the futon; a pale crouching thing tilts its head too far, crawls to my mother-in-law, flees my
+//  match through the paper wall toward the baby; over the cradle it speaks my name. It still comes back every winter.
+//  Style: yokai (three.js at 216×384, dithered).
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 62.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 62, () => sceneTale()]];
+const SHOTS = [
+  ['hook',    0, 0.0,  4.5,  'from my pillow: the pale thing crouched at the foot of the futon, moonlit, its head ticking'],
+  ['card',    0, 4.5,  8.5,  'the card: The Rake'],
+  ['house',   0, 8.5,  14.0, 'the minka in the snow at night, the irori glowing through the shōji'],
+  ['wake',    0, 14.0, 20.0, 'my face on the pillow; beyond the futon, the crouched shape'],
+  ['face',    0, 20.0, 26.0, 'close on its face in the ember light; its head tilts past where a neck should stop'],
+  ['crawl',   0, 26.0, 32.0, 'across the irori: it crawls to my mother-in-law and bends over her mouth'],
+  ['match',   0, 32.0, 37.0, 'over my shoulder: I strike a match; it bolts through the paper wall'],
+  ['run',     0, 37.0, 40.6, 'I run after it with the match; it dies at the torn panel; black'],
+  ['cradle',  0, 40.6, 46.0, 'THE HIT: it crouches over the cradle, looks up at me, speaks'],
+  ['day',     0, 46.0, 52.0, 'morning: the torn panel, claw marks, the priest\'s scroll'],
+  ['last',    0, 52.0, 62.0, 'years later: the ofuda; its shape through the moonlit paper; badge'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { open: 0.3, tick: 0.4, card: 4.5, house: 8.5, wake: 14.0, face: 20.0, tilt: 22.8, crawl: 26.6, bend: 30.0, match: 32.0, strike: 32.85, turn: 33.2, bolt: 34.3, tear: 34.85, run: 37.0, out: 39.4, black: 40.0, hit: 40.6, look: 41.3, speak: 43.4, day: 46.0, last: 52.0, badge: 57.2 },
+  acts: [
+    { name: '1 The rule',      role: 'build',   t0: 0.0,  t1: 8.5 },
+    { name: '2 The weight',    role: 'turn',    t0: 8.5,  t1: 26.0 },
+    { name: '3 The match',     role: 'peak',    t0: 26.0, t1: 40.0 },
+    { name: '4 Silence',       role: 'silence', t0: 40.0, t1: 40.6 },
+    { name: '5 The cradle',    role: 'gift',    t0: 40.6, t1: 52.0 },
+    { name: '6 It waits',      role: 'goodbye', t0: 52.0, t1: 62.0 },
+  ],
+  board: [
+    { t: 2.0,  title: 'Hook: at the foot of the futon', sound: 'winter wind on the shōji, a low drone; a dry click of joints on each head tick', next: 'dither' },
+    { t: 6.9,  title: 'Card: The Rake', sound: 'card hit, a shakuhachi breath, a temple bell far off', next: 'dither in' },
+    { t: 11.5, title: 'A day\'s walk from the road', sound: 'snow wind in the cedars, a dog far off, the house creaks', next: 'cut' },
+    { t: 17.5, title: 'A weight on my feet', sound: 'the irori ticks and hisses, my breath, a slow creak of tatami under weight', next: 'cut' },
+    { t: 24.2, title: 'Its head turned too far', sound: 'neck cracks on each tick of the tilt (22.8–24.6), drone rises', next: 'cut' },
+    { t: 30.8, title: 'Counting her breaths', sound: 'claws ticking on the boards in its gait, her slow old breathing, embers', next: 'cut' },
+    { t: 34.6, title: 'Through the paper wall', sound: 'the match strike (32.85), a hiss of breath, scrambling claws, paper ripping (34.85)', next: 'cut' },
+    { t: 38.6, title: 'The dying match', sound: 'my bare feet on the boards, my breath; the match gutters (39.4) → black, 0.6 s silence', next: 'black' },
+    { t: 43.8, title: 'It spoke my name', sound: 'THE HIT (40.6 s): a sub drop and a hard hit; a wet whisper of a name at 43.4', next: 'cut' },
+    { t: 49.5, title: 'The same marks', sound: 'morning birds muffled by snow, wind, a far temple bell', next: 'cut' },
+    { t: 55.0, title: 'It still comes back', sound: 'night wind on the shōji, a soft scrape of claws on the engawa, a drone', next: 'end' },
+    { t: 59.5, title: 'kodamashorts', sound: 'wind fades out', next: 'end' },
+  ],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

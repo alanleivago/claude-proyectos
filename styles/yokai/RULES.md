@@ -17,7 +17,9 @@ This file collects every correction the user has given on yokai pieces (2026-10-
   - Always write our own text and models. Never copy their frames or wording.
 - **Warm-up phase (from 2026-10-27):** the account is new, so pick topics with fewer views on the ref accounts (under about 200 k). Save the big hits (Moon Woke Up, Watchtower, Giant Puppeteer, Qu, SCP-169, World Eater…) for later, and ask the user before using them.
   - To list views: `yt-dlp --flat-playlist --print "%(view_count)s|%(id)s|%(title)s" https://www.tiktok.com/@theredarchivesyt`.
-- **Done so far:** jorogumo, behemoth, umibozu, floating-teacher, inunaki, corpo-seco, gashadokuro.
+- **Done so far:** jorogumo, behemoth, umibozu, floating-teacher, inunaki, corpo-seco, gashadokuro, the-rake.
+- **Lighting (user, 2026-11-01, from earlobehuman refs):** keep interiors near black, with one practical light per shot (lamp, embers, match) that flickers (`flick`), and a damaged stuttering light in the hook (`broken`). See pieces/the-rake.
+- **API review:** `python tools/revisar_render.py <video> --reglas styles/yokai/RULES.md styles/yokai/STYLE.md`. The video goes first, because `--reglas` takes the rest of the arguments.
 
 ## Workflow
 1. **Pick the topic.** Offer 3–4 options with views and let the user choose (they prefer clicking options).

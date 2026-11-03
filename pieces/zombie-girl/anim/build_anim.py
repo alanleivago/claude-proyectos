@@ -461,6 +461,39 @@ def A_walk():
     face("walk", blinks(N, every=200, start=18))
 
 
+
+def A_run():
+    """ep4 (zombie-04-subway): carrera tras el tren. Misma mecanica de pies que el walk con zancada mayor, ciclo de 20 f,
+    torso inclinado, rebote mas alto y brazos doblados que bombean."""
+    global WALK_S
+    old = WALK_S; WALK_S = 2.4
+    N = 20
+    PZ = [-0.35, -0.75, -0.2, 0.15] * 2
+    PX = [0.0, 0.08, 0.14, 0.06, 0.0, -0.08, -0.14, -0.06]
+    YAW = [-12, -7, 0, 6, 12, 7, 0, -6]
+    ROLL = [0, -2, -4, -2, 0, 2, 4, 2]
+    ARM = [34, 38, 10, -26, -34, -38, -10, 26]
+    raws = []
+    for f in range(N + 1):
+        u = f / N
+        g = lambda tab: periodic(tab, u)
+        pose = P(pel={"loc": (g(PX), 0.35, g(PZ)), "rot": (16, g(ROLL), g(YAW))},
+                 chest=(6, -g(ROLL) * 0.5, -g(YAW) * 0.9), neck=(-6, 0, 0),
+                 head=(-8, -periodic(ROLL, u - 1 / N) * 0.3, -periodic(YAW, u - 1 / N) * 0.2),
+                 footL=walk_foot(u), footR=walk_foot(u + 0.5))
+        for side, sg in (("L", 1), ("R", -1)):
+            sw = periodic(ARM, u - 1 / N) * sg
+            up = swing((0.32, 0, -1), sw)
+            fore = swing((0.25, 0, -1), sw - 85)      # codo doblado ~90 grados
+            hand = swing((0.4, 0.0, -1), sw - 95)
+            pose["arm" + side] = {"up": up, "fore": fore, "hand": hand, "pole": (0.3, -1, 0), "ft": -10}
+        raws.append((f + 1, C(pose)))
+    build("run", raws, N, loop=True, lag={}, interp="AUTO_CLAMPED", per_frame=True)
+    LIB["run"]["stride_per_cycle"] = round(4 * WALK_S, 3)
+    LIB["run"]["speed_units_per_s"] = round(4 * WALK_S / (N / FPS), 3)
+    face("run", [[1, "surprised", "gasp"]])
+    WALK_S = old
+
 def author(name, act_name):
     src = bpy.data.actions.get(act_name)
     if src is None:

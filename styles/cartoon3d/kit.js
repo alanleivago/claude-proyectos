@@ -429,7 +429,7 @@ function c3Person(o = {}) {
     // Ricks Clips library (2026-10-27, tools/slice_ricks.py): role hats and more hairstyles, same glue rule
     policecap: ['hair_policecap', 1.153, 0.438], beanie: ['hair_beanie', 1.075, 0.519], buckethat: ['hair_buckethat', 1.312, 0.525], redcap: ['hair_redcap', 1.114, 0.538],
     crown: ['hair_crown', 1.092, 0.497], scholar: ['hair_scholar', 1.097, 0.579], nightcap: ['hair_nightcap', 1.147, 0.52], beret: ['hair_beret', 1.171, 0.59],
-    hardhat: ['hair_hardhat', 1.136, 0.649], cowboy: ['hair_cowboy', 1.113, 0.661], tophat: ['hair_tophat', 1.087, 0.764], bun: ['hair_bun', 1.217, 0.486],
+    hardhat: ['hair_hardhat', 1.136, 0.649], firehelmet: ['hair_firehelmet', 1.136, 0.649],   // (2026-11-01) the hardhat in fire-engine red cowboy: ['hair_cowboy', 1.113, 0.661], tophat: ['hair_tophat', 1.087, 0.764], bun: ['hair_bun', 1.217, 0.486],
     ponytail: ['hair_ponytail', 1.22, 0.52], bowl: ['hair_bowl', 1.058, 0.572], buzz: ['hair_buzz', 1.105, 0.446], baldsides: ['hair_baldsides', 1.15, 0.4],
     curlygrey: ['hair_curlygrey', 1.132, 0.531], ginger: ['hair_ginger', 1.103, 0.575], sidepart: ['hair_sidepart', 1.06, 0.53], tuft: ['hair_tuft', 1.068, 0.635],
     pigtails: ['hair_pigtails', 1.069, 0.369], afro: ['hair_afro', 1.059, 0.562], slick: ['hair_slick', 1.065, 0.527],
@@ -443,7 +443,8 @@ function c3Person(o = {}) {
     rk_combedgrey: ['hair_rk_combedgrey', 1.06, 0.62], rk_sweepblond: ['hair_rk_sweepblond', 1.08, 0.6],
     rk_greybun: ['hair_rk_greybun', 1.15, 0.62], rk_brownbig: ['hair_rk_brownbig', 1.12, 0.5], rk_blackbob: ['hair_rk_blackbob', 1.06, 0.62],
     // (2026-11-01, flower-clock extras) the same Ricks cuts recoloured so a crowd never repeats a hair colour
-    rk_partred: ['hair_rk_partred', 1.1, 0.47], rk_brownbigblond: ['hair_rk_brownbigblond', 1.12, 0.5], rk_shortblack: ['hair_rk_shortblack', 1.06, 0.388], rk_edisonwhite: ['hair_rk_edisonwhite', 1.06, 0.472] };   // extras cut from GM9UKnZ6JFw 33.75 s and eQR3pgMiUF0 23.75 s   // recoloured Ricks cuts (same shape) so a cast never repeats a hair colour
+    rk_partred: ['hair_rk_partred', 1.1, 0.47], rk_brownbigblond: ['hair_rk_brownbigblond', 1.12, 0.5], rk_shortblack: ['hair_rk_shortblack', 1.06, 0.388], rk_edisonwhite: ['hair_rk_edisonwhite', 1.06, 0.472],
+    rk_bungrey: ['hair_rk_bungrey', 1.07, 0.445] };   // (2026-11-01, human-library) the Ricks bun lady's cut recoloured silver: strands, shine and outline kept   // extras cut from GM9UKnZ6JFw 33.75 s and eQR3pgMiUF0 23.75 s   // recoloured Ricks cuts (same shape) so a cast never repeats a hair colour
   if (o.hair !== false && HAIR[hst] && c3Img(HAIR[hst][0])) {
     const [img, kw, hl] = HAIR[hst], im = c3Img(img), hw = D * kw * (o.hairW ?? 1), hh = hw * im.aspect;
     hp(hw, hh, im.tex, 0.032, 4).position.set(D * (o.hairX ?? 0), D * (0.24 + (o.hairUp ?? 0)) + hl * hh - hh / 2, 0.032);
@@ -564,6 +565,7 @@ function c3Renderer() {
 function c3Render(scene, cam, o = {}) {
   const { r, cv } = c3Renderer();
   if (C3_VIVID) o = Object.assign({}, o, { bgBlur: (o.bgBlur ?? 0) * C3_VIVID.bgBlur, glow: (o.glow ?? 0) * C3_VIVID.glow, glowBlur: Math.min(o.glowBlur ?? 18, C3_VIVID.glowBlur) });
+  if (C3_DOF && C3_SHOT && C3_DOF[C3_SHOT.id] != null) o = Object.assign({}, o, { bgBlur: C3_DOF[C3_SHOT.id] });   // per-shot lens (absolute, after VIVID)
   if (C3_SHADOW) {   // shadow maps only see objects on the CAMERA's layers: build them once per frame with every layer on
     c3ShadowSetup(scene); r.shadowMap.autoUpdate = false; r.shadowMap.needsUpdate = true;
     const km = cam.layers.mask; cam.layers.enableAll(); r.setClearColor(0x000000, 0); r.render(scene, cam); cam.layers.mask = km;
@@ -608,7 +610,39 @@ function c3Render(scene, cam, o = {}) {
   }
   ctx.restore();
 }
-function c3SetCam(cam, c) { cam.fov = c.fov; cam.position.set(...c.p); cam.lookAt(...c.l); cam.updateProjectionMatrix(); }
+function c3SetCam(cam, c) { if (C3_CAMFX) c = c3CamFx(c, TT); cam.fov = c.fov; cam.position.set(...c.p); cam.lookAt(...c.l); if (c.roll) cam.rotateZ(c.roll); cam.updateProjectionMatrix(); }
+
+// camera grammar measured on the reference channel (mromidev study, fuentes/cartoon3d/tutorial-mromidev-gap.md):
+// every hold creeps in (dolly toward the look point, subject grows ~rate per frame since the shot start; ref 0.15-0.35 %/f,
+// default kept at the low end + capped at 12 % so the user's wide Ricks framing survives), punch words
+// push harder for ~35 f, emphasis shots carry a 4-5 deg roll, impacts are 7-frame kicks that flip sign every frame.
+// Opt-in: C3_CAMFX = Object.assign({}, C3_CAMFX_DEF, { punch: [t...], kicks: [[t, gain]...], roll: { s05: 4 } });
+// shots.js sets C3_SHOT = { id, t0 } before each shot function (the push restarts on every shot).
+let C3_CAMFX = null, C3_SHOT = null;
+// per-shot depth of field (ref: blur on ~1/3 of screen time; CoC 12-16 px at 1080 on CU/inserts, 10-12 MS, 0 on wides and
+// aerials; focus on the eyes). Values are the background-layer CSS blur in px (~half the CoC radius): CU 7, MS 5, FS 3.
+// Opt-in: C3_DOF = { s05: 7, s10: 5 } — shots not listed keep their own bgBlur.
+let C3_DOF = null;
+// aerial perspective (ref: fog colour = the horizon colour, linear 25 -> 420 m by day, 20 -> 360 m golden; scale to the
+// set's units). Opt-in per set: c3Fog(scene, 'day', 25, 420). Materials with fog:false (sky, clouds) are untouched.
+function c3Fog(scene, sky = 'day', near = 25, far = 420) { scene.fog = new THREE.Fog(new THREE.Color((C3_SKY[sky] || C3_SKY.day).hor), near, far); return scene.fog; }
+const C3_CAMFX_DEF = { rate: 0.0015, max: 0.12, punch: [], punchRate: 0.006, punchN: 35, kicks: [], roll: {} };
+function c3CamFx(c, t) {
+  const F = C3_CAMFX, f = Math.max(0, (t - (C3_SHOT ? C3_SHOT.t0 : t)) * FPS);
+  let s = F.rate * f;
+  for (const tp of F.punch) { const x = (t - tp) * FPS; if (x > 0) for (let i = 0; i < Math.min(x, F.punchN); i++) s += (F.punchRate - F.rate) * clamp(Math.min((i + 0.5) / 8, (F.punchN - i - 0.5) / 8)); }
+  const k = Math.max(1 - F.max, Math.exp(-s));
+  const p = c.p.map((v, j) => c.l[j] + (v - c.l[j]) * k);
+  let roll = (c.roll ?? 0) + ((C3_SHOT && F.roll[C3_SHOT.id]) || 0) * Math.PI / 180, l = c.l;
+  let a = 0;
+  for (const [t0, g] of F.kicks) { const n = Math.floor((t - t0) * FPS + 1e-6); if (n >= 0 && n < 7) a += g * (n % 2 ? -1 : 1) * (1 - n / 7) ** 1.5; }
+  if (a) {   // ~3 px per unit at 720p, sideways + a little up, plus a tiny roll
+    const d = [l[0] - p[0], l[1] - p[1], l[2] - p[2]], L = Math.hypot(...d), h = Math.hypot(d[0], d[2]) || 1;
+    const m = (3 / 640) * Math.tan((c.fov * Math.PI) / 360) * L * a;
+    l = [l[0] - (d[2] / h) * m, l[1] + 0.6 * m, l[2] + (d[0] / h) * m]; roll += a * 0.004;
+  }
+  return Object.assign({}, c, { p, l, roll });
+}
 
 // ---- colour looks measured on the 7 refs (per shot: mean luminance 0.3-0.6, whites rarely clipped, shadows tinted):
 // the whole composited frame is graded once (people included: white heads take the scene's light)
@@ -630,6 +664,11 @@ let C3_HD = false;
 // `C3_VIVID = C3_VIVID_DEF` (or its own object) in shots.js; older pieces are unchanged.
 let C3_VIVID = null;
 const C3_VIVID_DEF = { b: 0.9, c: 1.2, s: 1.2, vib: 1.6, tint: 0, bloom: 0.04, glow: 0.55, glowBlur: 10, bgBlur: 0.55 };
+// C3_VIVID_MRO (2026-11-01, user: "saturation as the tutorial says"): the mromidev grade targets measured on the reference
+// channel (refs-ext/claude-animated-shorts/references/reports/grade.md; tools/grade_stats.py): HSV S median ~0.49, luma
+// median ~0.55-0.57, non-ink p5 ~0.2 (no crushed blacks). VIVID_DEF measured S 0.87 / luma 0.35 on flower-clock.
+// Default for NEW pieces (with c3Grain off); approved pieces keep VIVID_DEF.
+const C3_VIVID_MRO = { b: 1.32, c: 1.0, s: 0.72, vib: 0.3, tint: 0, bloom: 0.04, glow: 0.55, glowBlur: 10, bgBlur: 0.55 };
 // vibrance: pale-but-tinted surfaces (cream walls, beige floors) gain colour, strong colours barely move (no clipping) and
 // neutral whites/greys (the white heads) stay neutral — gain = vib * sat * (1 - sat)^2 per pixel
 function c3Vibrance(k) {
@@ -994,9 +1033,9 @@ function c3ShadowSetup(scene) {
     const lit = mat.isMeshStandardMaterial || mat.isMeshToonMaterial || mat.isMeshLambertMaterial || mat.isMeshPhongMaterial;
     if (!m.geometry.boundingBox) m.geometry.computeBoundingBox();
     tmp.copy(m.geometry.boundingBox).applyMatrix4(m.matrixWorld); const sz = tmp.getSize(new THREE.Vector3());
-    if (lit) { m.receiveShadow = true; m.castShadow = Math.max(sz.x, sz.y, sz.z) < 120; if (m.castShadow) box.union(tmp); }
+    if (lit) { m.receiveShadow = true; m.castShadow = Math.max(sz.x, sz.y, sz.z) < 120 && !m.userData.noCast; if (m.castShadow) box.union(tmp); }   // noCast: ceilings/room walls (they'd shade the whole room)
     if (!m.userData.c3catch && !mat.transparent && Math.max(sz.x, sz.y, sz.z) > 6 && [sz.x, sz.y, sz.z].filter((d) => d > 3).length >= 2) {   // big floors/walls (often emissive-bright): a shadow catcher on top, so shadows read like Ricks
-      const sm = new THREE.ShadowMaterial({ opacity: C3_SHADOW.catch ?? 0.32, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2, depthWrite: false });
+      const sm = new THREE.ShadowMaterial({ color: C3_SHADOW.tint ?? '#000000', opacity: C3_SHADOW.catch ?? 0.32, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2, depthWrite: false });
       const cm = new THREE.Mesh(m.geometry, sm); cm.receiveShadow = true; cm.userData.c3catch = true; cm.userData.noInk2 = true; cm.layers.mask = m.layers.mask; cm.renderOrder = m.renderOrder + 1; m.add(cm);
     }
     else if (mat.transparent && mat.map && mat.alphaTest > 0) {   // billboard people cast their silhouette

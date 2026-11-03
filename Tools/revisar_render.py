@@ -133,7 +133,7 @@ def main():
     # las reglas van en system con caché: revisar varias versiones del mismo estilo sale más barato
     # stream: una respuesta larga sin streaming corta la conexión
     with client.messages.stream(
-        model=args.model, max_tokens=16000,  # el modelo piensa antes de responder: con 4000 se queda sin texto
+        model=args.model, max_tokens=32000,  # (ep5: con 16000 el informe salia cortado) el modelo piensa antes de responder: con 4000 se queda sin texto
         system=[{"type": "text", "text": f"REGLAS DEL ESTILO:\n\n{rules}", "cache_control": {"type": "ephemeral"}}],
         messages=[{"role": "user", "content": content}],
     ) as s:
