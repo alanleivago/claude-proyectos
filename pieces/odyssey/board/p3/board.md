@@ -1,0 +1,64 @@
+---
+ontology: true
+type: storyboard
+domain: youtube
+summary: Storyboard for "The ENTIRE Odyssey, Told on a Greek Vase" part 3 (chapters 6 Circe, 7 The Underworld), 48 panels, 5:00.1, amphora-bf 16:9, pending approval
+tags: [odyssey, long-form, amphora-bf, storyboard, circe, underworld, nekyia]
+relatedTo: [odyssey-p2, odyssey-p1, script]
+related: [odyssey-p2, odyssey-p1, script]
+status: pending-approval
+discovered: 2026-11-01
+---
+
+# Odyssey p3 — storyboard (48 panels, 5:00.1)
+
+Piece: pieces/odyssey-p3 · contact sheet: board.jpg · frames: pNN.jpg (each at its key word). Voice: Mad 3 (local TTS, same reference as p1/p2), 66 lines. Sound not done yet (after approval). Starts where p2 ends (the lone ship sailing right on the open sea). Chapter titles 'VI · CIRCE' and 'VII · THE UNDERWORLD' stay 1.5 s longer than in p1/p2 (1.5 s extra pause after their line). Trees, the sty, moly, the pit, the underworld wash and mist are drawn in code; ghosts are Flow layers drawn see-through with a soft cream haze and turn solid when they drink. Open panels slide as one strip; Circe's hall, the deck and the underworld slide in as cards.
+
+- **P01** (0:00.0–0:07.8) — "The next island was low and wooded, with a thread of smoke rising from the middle of the forest." — The lone ship sails right on the open sea (continuing p2's last panel); a low wooded island with a thread of smoke rises from the right; 'VI · CIRCE' is lettered and held (panel lengthened 1.5 s).
+- **P02** (0:07.8–0:14.7) — "Nobody wanted to go and look, and you can't blame them. The last two times they'd gone to look, giants had eaten them." — Deck (card slide): Odysseus looks out at the island; three men shake their heads and tremble; on 'giants' the Cyclops and a Laestrygonian rise on a little frieze above them.
+- **P03** (0:14.7–0:19.7) — "So they drew lots, and half the crew went, led by a man named Eurylochus." — Beach at the forest edge: Odysseus shakes lots out of his cup (one pebble cream); Eurylochus (new, bald, pointed beard) glints on his name and leads three men into the trees.
+- **P04** (0:19.7–0:22.9) — "Deep in the forest they found a house of polished stone." — Deep in the forest (code trees): the men walk in and the house of polished stone opens up; a light sweep on 'stone'.
+- **P05** (0:22.9–0:29.1) — "Lions and wolves prowled around it, but they didn't attack. They came up wagging their tails like dogs." — Lion and wolf prowl in; the men cringe; on 'wagging' the beasts wag and lower, on 'dogs' one man reaches out to them.
+- **P06** (0:29.1–0:32.2) — "Inside, a woman was singing at a loom." — Circe's hall (card slide; columns, tapestry, brown fire on a tripod): Circe sings at her loom, cream song curls drift; two men come in at the door.
+- **P07** (0:32.2–0:36.8) — "Her name was Circe. She invited them in and gave them cheese and honey and wine." — Circe steps forward offering the cup; cheese, honey and wine appear one by one on a low table.
+- **P08** (0:36.8–0:41.7) — "Only Eurylochus stayed outside, because something about it felt wrong to him." — Outside: Eurylochus alone by a tree watching the door; the song drifts out; dark wash on 'wrong'.
+- **P09** (0:41.7–0:51.9) — "The wine was drugged. Once they'd drunk it, Circe touched each of them with a wand and they turned into pigs, with the heads and the bristles and the grunting." — The drugged wine: the men sway; Circe touches each with the wand (cream sparks); each turns man → pig-headed man → pig, one after another.
+- **P10** (0:51.9–0:54.7) — "Their minds stayed human, which is the cruel part." — Close-up of one pig: the man it was shows faintly inside its outline on 'human'; a tear runs from its eye on 'cruel'.
+- **P11** (0:54.7–0:58.0) — "She drove them into a sty and threw them acorns." — The sty in the forest (fence behind them): the pigs trot in; Circe drives them and throws acorns.
+- **P12** (0:58.0–1:01.0) — "Eurylochus ran all the way back to the ship." — Eurylochus runs all the way back along the beach to the ship.
+- **P13** (1:01.0–1:04.2) — "Odysseus picked up his sword and went alone." — Odysseus takes up his sword and walks alone into the forest; Eurylochus stays behind.
+- **P14** (1:04.2–1:09.5) — "On the path a young man stopped him. It was Hermes, messenger of the gods, sent to help." — On the path Hermes (winged hat and sandals, caduceus) comes down from the sky and stops him.
+- **P15** (1:09.5–1:14.5) — "He gave Odysseus a little plant with a black root and a white flower, called moly." — The moly grows as a glowing emblem between them: the black root glows on 'root', the white flower opens on 'flower'; 'MOLY' is lettered.
+- **P16** (1:14.5–1:22.4) — "Eat this, he said, and her drug won't touch you. And when she raises that wand, draw your sword as if you're going to kill her." — Hermes' advice: on a ledge between them Circe raises her wand and Odysseus draws and jabs his sword on 'kill'.
+- **P17** (1:22.4–1:24.8) — "Odysseus drank the wine." — The hall: Circe offers the cup, Odysseus walks in and drinks; a faint light (the moly) in him.
+- **P18** (1:24.8–1:32.3) — "Circe touched him with the wand and said: now go and lie down with your friends in the sty. Nothing happened." — She touches him with the wand: sparks gather, fizzle and die, a ring of light fades — nothing happens.
+- **P19** (1:32.3–1:37.7) — "He drew his sword, and Circe dropped to her knees, because she understood who he was." — He draws his sword; Circe drops to her knees.
+- **P20** (1:37.7–1:42.3) — "You must be Odysseus, she said. Hermes always told me you'd come." — "You must be Odysseus": he lowers the sword; Hermes appears faintly above on 'Hermes'.
+- **P21** (1:42.3–1:48.0) — "She turned his men back, younger and taller than before, and then she asked them all to stay." — The sty: pigs turn back into men (sparks), who grow taller; Circe switches to the cup on 'stay'.
+- **P22** (1:48.0–1:50.3) — "They stayed a whole year." — A whole year: the men lounge like the lotus eaters, Odysseus with a cup beside Circe; moons cross and 12 strokes are cut.
+- **P23** (1:50.3–1:56.3) — "In the end it was his own men who had to remind him. Odysseus, they said, remember home." — The men remind him: one points at him; on 'remember home' Ithaca with hearth smoke opens in a roundel.
+- **P24** (1:56.3–2:02.1) — "When he asked Circe to let him go, she said he was free to leave, but he couldn't go home yet." — He kneels to ask leave; Circe answers; dark wash on 'yet'.
+- **P25** (2:02.1–2:07.8) — "First he had to go somewhere no living man had ever been: the house of the dead." — The house of the dead: darkness creeps in from the left, shades stir in it; Circe points her wand into it.
+- **P26** (2:07.8–2:15.3) — "They sailed to the end of the world, where the sun never shines, to the edge of the river Ocean." — To the end of the world: the ship sails right, the sun sinks into the sea, a brown current (the river Ocean) runs at the edge; 'VII · THE UNDERWORLD' is lettered and held (panel lengthened 1.5 s).
+- **P27** (2:15.3–2:23.2) — "Odysseus dug a pit in the ground with his sword and poured offerings into it: milk and honey, then wine, then water, then barley." — The underworld (card; dark wash, low ridge, drifting mist): he digs with his sword, the pit opens; kneeling, he pours milk, honey, wine, water and barley (each its own colour).
+- **P28** (2:23.2–2:28.6) — "Then he cut the throats of a ram and a black ewe and let their blood run into the pit." — The ram and the black ewe sink down at a flash of the blade; their blood runs into the pit.
+- **P29** (2:28.6–2:31.9) — "And the dead came up out of the dark in their thousands." — The dead rise from the ground in rows behind the pit, thousands of small shades at the back.
+- **P30** (2:31.9–2:41.4) — "There were brides and young men, old men who'd suffered a lot, soldiers still in their bloody armour, all of them making a terrible noise and pushing toward the blood." — A bride, a young man, an old man and a wounded soldier rise on their words and push toward the blood; the picture shakes on 'terrible'.
+- **P31** (2:41.4–2:47.0) — "The dead are empty in Homer. Only blood lets them remember who they were, and speak." — One shade bends and drinks, turns solid on 'remember' and speaks.
+- **P32** (2:47.0–2:52.9) — "Odysseus held them back with his sword, because he was waiting for one particular ghost." — He jabs the sword, the shades fall back; the camera looks into the dark for the one ghost (Tiresias faint far right).
+- **P33** (2:52.9–2:56.4) — "The first to reach him was Elpenor, the youngest of his crew." — Elpenor (beardless boy, hand on broken neck) comes forward to the pit.
+- **P34** (2:56.4–3:05.3) — "On their last night at Circe's he'd gone to sleep drunk on the roof, and in the morning he forgot where he was, stepped off the edge, and broke his neck." — Flashback at Circe's house: night, moon, Elpenor asleep on the roof; morning, he steps off the edge and falls.
+- **P35** (3:05.3–3:11.6) — "They'd sailed without even noticing he was gone. He begged Odysseus to go back and bury him." — The ship sails off; his body lies alone on the shore; his shade rises and begs to be buried.
+- **P36** (3:11.6–3:17.7) — "Then came someone Odysseus didn't expect at all. His mother. She'd been alive when he left for Troy." — A veiled old woman comes out of the dark — his mother; he straightens up stunned; a roundel shows her waving at his ship when he left for Troy.
+- **P37** (3:17.7–3:29.2) — "He kept her back with the sword too. He let her stand there and wouldn't let her drink, because the one he'd come for hadn't arrived yet. I find that one of the hardest moments in the whole poem." — He keeps her back with the sword; she leans toward the blood and is stopped; slow push in and dark wash on 'hardest'.
+- **P38** (3:29.2–3:36.7) — "At last Tiresias came, the blind prophet, carrying a golden staff. He drank the blood, and he told Odysseus the truth." — Tiresias walks in with his golden staff (glints), bends and drinks, straightens and speaks; eye glint on 'truth'.
+- **P39** (3:36.7–3:43.8) — "Poseidon will never forgive you for his son, he said. But you can still get home, you and your men, if you manage one thing." — The prophecy, a bright vision strip: Poseidon rises from the sea, the Cyclops on his rock on 'son'; the ship and a dashed way home; 'ONE THING' lettered.
+- **P40** (3:43.8–3:49.4) — "On the island of the Sun you'll find the Sun god's cattle. Leave them alone, and you'll all get home." — The island of the Sun under a big black sun; the Sun god's cattle rise on it; the ship sails past; Ithaca appears on 'home'.
+- **P41** (3:49.4–4:00.7) — "Touch them, and your ship will be destroyed and your men will die, and you'll come home late, alone, on a stranger's ship, and find men in your house eating your bread and courting your wife." — Camera pans across three scenes: a bull killed, a bolt breaks the ship, men drown; home late and alone on a stranger's ship; suitors in his hall, bread, and Penelope.
+- **P42** (4:00.7–4:03.4) — "Only then did he let his mother drink." — Underworld: he lowers his sword; his mother bends to drink and grows solid; Tiresias stands by.
+- **P43** (4:03.4–4:11.9) — "She knew him straight away. She told him she hadn't died of illness or old age. She'd died of missing him, waiting for him to come home." — Close two-shot: she knows him; tears on 'missing'; soft dark wash.
+- **P44** (4:11.9–4:18.3) — "Three times he reached out to hold her, and three times she slipped through his arms like a shadow, or a dream." — Three times he reaches to hold her; each time she thins to nothing and gathers further away; I, II, III lettered.
+- **P45** (4:18.3–4:26.9) — "After her came the heroes. Agamemnon, the king who'd led the whole war, murdered in his own house by his own wife on the day he came home." — The heroes: Agamemnon's shade (the king from p1) walks in; a dark stain spreads on 'murdered'.
+- **P46** (4:26.9–4:40.7) — "And then Achilles, the greatest of all the Greeks. Odysseus tried to comfort him. Nobody was ever as lucky as you, he said. When you were alive we honoured you like a god, and down here you're a king among the dead." — Achilles' shade rises (new layer, crested helmet); Odysseus reaches out to comfort him; a cream crown of light over him on 'king'.
+- **P47** (4:40.7–4:52.0) — "Achilles told him not to try to make death sound good. He said he'd rather be the poorest hired hand on earth, working a field for a man with nothing, than be king over all of the dead." — Achilles refuses, palm raised: the crown falls away; a roundel shows the poorest hired hand ploughing behind an ox.
+- **P48** (4:52.0–5:00.1) — "Odysseus climbed back up to the light with that answer in his ears." — Odysseus climbs the slope back up toward the light; the dark wash lifts (end of part 3).

@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Circe</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #1b0c0f; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { width: min(100vw, calc(100vh * 16 / 9)); height: auto; aspect-ratio: 16 / 9; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  THE ENTIRE ODYSSEY, TOLD ON A GREEK VASE — Part 3, chapters 6–7: Circe, The Underworld. 16:9, voice-led (~5 min), 24fps, style amphora-bf.
+//  Nano Banana layers (Flow) animated in code; the friezes are fixed, the picture slides right panel to panel.
+// =====================================================================
+const FPS = 24, W = 1920, H = 1080;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4, GRID0 = 0;
+const VL = (id) => VOICE.lines.find((l) => l.id === id);
+const VW = (id, w, n = 1) => { const L = VL(id); let k = 0; for (const x of L.words) if (x.w.toLowerCase().replace(/[^a-z0-9']/g, '') === w.toLowerCase() && ++k === n) return x.t0; console.warn('VW miss', id, w); return L.t0; };
+const DURATION = Math.round(VOICE.duration * FPS) / FPS;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 90, bottom: 158, right: 0 };
+const HAND = 'Georgia, serif';
+const CX = 960;
+const onBeat = (t) => t;
+
+// the panels and the line (or line + word) each one starts on
+const PANEL_START = [['p01', 'l01'], ['p02', 'l02'], ['p03', 'l04'], ['p04', 'l05'], ['p05', 'l06'], ['p06', 'l07'], ['p07', 'l08'], ['p08', 'l09'], ['p09', 'l10'], ['p10', 'l12'], ['p11', 'l13'], ['p12', 'l14'], ['p13', 'l14', 'odysseus'], ['p14', 'l15'], ['p15', 'l16'], ['p16', 'l17'], ['p17', 'l19'], ['p18', 'l20'], ['p19', 'l22'], ['p20', 'l23'], ['p21', 'l24'], ['p22', 'l25'], ['p23', 'l26'], ['p24', 'l27'], ['p25', 'l28'], ['p26', 'l29'], ['p27', 'l30'], ['p28', 'l31'], ['p29', 'l32'], ['p30', 'l33'], ['p31', 'l35'], ['p32', 'l36'], ['p33', 'l37'], ['p34', 'l38'], ['p35', 'l40'], ['p36', 'l41'], ['p37', 'l43'], ['p38', 'l46'], ['p39', 'l48'], ['p40', 'l50'], ['p41', 'l52'], ['p42', 'l55'], ['p43', 'l56'], ['p44', 'l58'], ['p45', 'l59'], ['p46', 'l61'], ['p47', 'l64'], ['p48', 'l66']];
+const IDS = PANEL_START.map((p) => p[0]);
+const S = (lid, w) => (lid === 'l01' ? 0 : (w ? VW(lid, w) : VL(lid).t0) - 0.25);      // a panel starts (the slide is centred) just before its first line (or word)
+const TB = PANEL_START.map(([, l, w]) => S(l, w));
+const SUB = (id) => TB[IDS.indexOf(id)], SUBEND = (id) => (IDS.indexOf(id) + 1 < IDS.length ? TB[IDS.indexOf(id) + 1] : DURATION);
+const LINE_PANEL = {};   // line id -> panel id
+VOICE.lines.forEach((L) => { let p = IDS[0]; for (let i = 0; i < IDS.length; i++) if (L.t0 >= TB[i] - 0.3) p = IDS[i]; LINE_PANEL[L.id] = p; });
+const HIT = VW('l21', 'nothing');                                   // the turn: the wand fails on him
+const CAPS = [];
+const ERA_LIST = [[0, DURATION, () => sceneStage()]];
+const SHOTS = IDS.map((id, i) => [id, 0, TB[i], i + 1 < IDS.length ? TB[i + 1] : DURATION, id]);
+const BOARD_T = {};      // storyboard frame per panel (the board's anchor line), filled in scenes.js
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, gridOffset: GRID0, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE, aspect: '16:9',
+  format: 'black-figure-strip',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: TB.slice(1),
+  morphs: [],
+  cues: { hit: HIT },
+  acts: [
+    { name: '6 Circe',          role: 'hook',  t0: 0, t1: SUB('p09') },
+    { name: '6 The pigs',       role: 'build', t0: SUB('p09'), t1: SUB('p17') },
+    { name: '6 Moly',           role: 'peak',  t0: SUB('p17'), t1: SUB('p26') },
+    { name: '7 The dead',       role: 'build', t0: SUB('p26'), t1: SUB('p39') },
+    { name: '7 The prophecy',   role: 'peak',  t0: SUB('p39'), t1: SUB('p42') },
+    { name: '7 Mother, heroes', role: 'build', t0: SUB('p42'), t1: DURATION },
+  ],
+  board: [],
+  narration: VOICE.lines.map((l) => ({ id: l.id, t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;

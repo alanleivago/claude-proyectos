@@ -29,6 +29,7 @@ ESTILOS = {
     "sinaboto": ["sinaboto-style.md"],
     "emberlite": ["emberlite-style.md"],
     "scroll3d": ["scroll3d-style.md"],
+    "lowpolyshorts": ["project-lowpolyshorts-style.md", "feedback-distinct-characters.md", "feedback-frame-by-frame-qa.md"],
 }
 
 PROMPT = """Sos el revisor de calidad de este canal. Arriba están las REGLAS del estilo (todas las correcciones que

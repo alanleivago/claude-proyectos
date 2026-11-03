@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Del paraguas al auto</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0b0d12; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  DEL PARAGUAS AL AUTO — 9:16, 60 s, 30 fps. Style pov3d (three.js), voice-over in Spanish.
+//  One umbrella in the rain on a colonial street; every fix adds a part (walls, frame, wheels, motor, seat,
+//  windshield, wiper, wheel) until it is a car. Getting out, you need an umbrella again.
+// =====================================================================
+const FPS = 30, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = typeof VOICE !== 'undefined' ? Math.ceil(VOICE.duration * 10) / 10 : 60.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = W / 2;
+const ERA_LIST = [[0, DURATION, () => sceneMain()]];
+const SHOTS = [['main', 0, 0, DURATION, 'one continuous shot']];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F2',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [], morphs: [],   // the one cut (CAM_CUT, scratch 43.0) is set from scenes.js once the voice clock is known cues: {}, anchor: null, acts: [], board: [], narration: [],
+};
+window.TIMELINE = TIMELINE;

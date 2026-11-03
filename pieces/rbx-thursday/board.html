@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>rbx-thursday board</title>
+<style>html,body{margin:0;background:#000}canvas{width:540px;height:960px;display:block}</style></head>
+<body>
+<script src="../../styles/pov3d/three.js"></script>
+<script src="../../styles/roblox/rbx.js"></script>
+<script src="../../styles/roblox/models/majora-moon/moon.data.js"></script>
+<script src="src/kit.js"></script>
+<script src="src/moon.js"></script>
+<script src="src/props.js" onerror="console.log('no props.js yet')"></script>
+<script src="src/cast.js"></script>
+<script src="src/set-street.js" onerror="console.log('no street yet')"></script>
+<script src="src/set-classroom.js" onerror="console.log('no classroom yet')"></script>
+<script src="src/set-kitchen.js" onerror="console.log('no kitchen yet')"></script>
+<script src="src/set-bedroom.js"></script>
+<script src="src/words.js"></script>
+<script src="src/shotlist.js"></script>
+<script src="src/shots.js"></script>
+<script src="src/shots-street.js"></script>
+<script src="src/shots-rooms.js"></script>
+<script src="src/engine.js"></script>
+<script>
+ENG.init().then(() => { window.SHOTS_T = ENG.shots.map((s) => ({ i: s.i, t0: s.t0, t1: s.t1, set: s.set, line: s.line })); window.READY = true; })
+  .catch((e) => { console.log('ERR', e.message, e.stack); window.READY = 'error'; });
+window.debugShot = (i) => { ENG.render(i, 0.5); const c = ENG.cam.position; const out = { cam: c.toArray().map((v) => +v.toFixed(2)), actors: {} }; CAST.used.forEach((n) => { const a = CAST.get(n); if (!a.root.visible) return; const h = a.head.getWorldPosition(new THREE.Vector3()); out.actors[n] = { head: h.toArray().map((v) => +v.toFixed(2)), dist: +h.distanceTo(c).toFixed(2) }; }); return out; };
+window.renderShot = (i, u) => { ENG.render(i, u); return ENG.renderer.domElement.toDataURL('image/jpeg', 0.88); };
+</script>
+</body></html>

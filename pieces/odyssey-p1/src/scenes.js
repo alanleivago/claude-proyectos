@@ -111,7 +111,8 @@ function mountain() {
 function clipAbove(y, f) { ctx.save(); ctx.beginPath(); ctx.rect(-400, PIC0 - 200, W + 800, y - (PIC0 - 200)); ctx.clip(); f(); ctx.restore(); }
 function shipOdy(s, fx, pose, h, o = {}) { const [dx, dy] = s.deck(fx); fig(pose, dx, dy + (o.dy ?? 0), h, { rot: s.rot + (o.rot ?? 0), a: o.a }); }
 
-// ---- code-drawn fire: black tongues with an incised orange edge, swaying; embers rising (feet of the fire at x, y; scale s)
+// ---- code-drawn fire: dark-brown tongues (the figures' colour) with an incised orange edge, swaying and licking; brown embers rising
+const FIRE_COL = '#2e1409';
 function fireAt(x, y, s = 1, k = 1, key = 0) {
   if (k <= 0) return;
   ctx.save(); ctx.translate(x, y); ctx.scale(s, s); ctx.globalAlpha *= clamp(k);
@@ -121,21 +122,23 @@ function fireAt(x, y, s = 1, k = 1, key = 0) {
     const h = h0 * (0.8 + 0.2 * Math.sin(TT * 8 + ph * 2) + 0.08 * Math.sin(TT * 19 + ph)), sw = 16 * Math.sin(TT * 5 + ph), wd = 22, curl = 10 * Math.sin(TT * 7 + ph);
     ctx.beginPath(); ctx.moveTo(dx - wd, -4); ctx.bezierCurveTo(dx - wd * 1.1, -h * 0.4, dx + sw - 14, -h * 0.7, dx + sw + curl, -h);
     ctx.bezierCurveTo(dx + sw + 10, -h * 0.68, dx + wd * 1.1, -h * 0.38, dx + wd, -4); ctx.closePath();
-    ctx.fillStyle = BF.black; ctx.fill(); ctx.strokeStyle = BF.inc; ctx.lineWidth = 2.6 / s; ctx.stroke();
+    ctx.fillStyle = FIRE_COL; ctx.fill(); ctx.strokeStyle = BF.inc; ctx.lineWidth = 2.6 / s; ctx.stroke();
     ctx.lineWidth = 2 / s; ctx.beginPath(); ctx.moveTo(dx - wd * 0.3, -10); ctx.bezierCurveTo(dx - wd * 0.35, -h * 0.3, dx + sw * 0.4 - 4, -h * 0.45, dx + sw * 0.6, -h * 0.66); ctx.stroke(); }
   for (let i = 0; i < 10; i++) { const R = RNG('emb' + key, i), ph = mod(TT * R.r(0.35, 0.7) + R.f(), 1), ex = R.r(-70, 70) + Math.sin(TT * 2 + i) * 14 * ph, ey = -110 - ph * 220;
-    ctx.save(); ctx.globalAlpha *= 1 - ph; ctx.translate(ex, ey); ctx.rotate(TT * 3 + i); ctx.fillStyle = BF.black; ctx.fillRect(-4 / Math.sqrt(s), -1.5, 8 / Math.sqrt(s), 3); ctx.restore(); }
+    ctx.save(); ctx.globalAlpha *= 1 - ph; ctx.translate(ex, ey); ctx.rotate(TT * 3 + i); ctx.fillStyle = FIRE_COL; ctx.fillRect(-4 / Math.sqrt(s), -1.5, 8 / Math.sqrt(s), 3); ctx.restore(); }
   ctx.restore();
 }
 // smoke: dark puffs that rise, swell and thin out
 function smoke(x, y, s = 1, k = 1, key = 0) {
   if (k <= 0) return;
-  ctx.save(); ctx.fillStyle = BF.black; ctx.strokeStyle = BF.inc; ctx.lineWidth = 1.6;
+  // brown like the fire; it thins out before the top frieze so it is never sliced flat by the picture's edge
+  const fade = ctx.createLinearGradient(0, PIC0 + 40, 0, PIC0 + 340); fade.addColorStop(0, 'rgba(46,20,9,0)'); fade.addColorStop(1, 'rgba(46,20,9,0.85)');
+  ctx.save(); ctx.fillStyle = fade; ctx.strokeStyle = BF.inc; ctx.lineWidth = 1.6;
   for (let j = 0; j < 3; j++) { const R = RNG('smk' + key, j), ph = R.r(0, 6), len = (360 + 120 * j) * s, n = 24, P = [];
     for (let i = 0; i <= n; i++) { const u = i / n; P.push([x + (j - 1) * 26 * s + Math.sin(u * 6 + TT * 1.3 + ph) * 34 * s * u + u * u * 110 * s, y - u * len, (16 * (1 - u) + 2.5) * s]); }
     ctx.globalAlpha = k * (0.55 - j * 0.1); ctx.beginPath();
     P.forEach(([px, py, r], i) => (i ? ctx.lineTo(px - r, py) : ctx.moveTo(px - r, py))); for (let i = P.length - 1; i >= 0; i--) ctx.lineTo(P[i][0] + P[i][2], P[i][1]); ctx.closePath(); ctx.fill();
-    const [ex, ey] = P[P.length - 1]; ctx.beginPath(); for (let a = 0; a < 10; a++) { const r = (4 + a * 2.6) * s, th = a * 0.8 + TT + ph; ctx.lineTo(ex + Math.cos(th) * r, ey + Math.sin(th) * r); } ctx.lineWidth = 3 * s; ctx.strokeStyle = BF.black; ctx.stroke(); }
+    const [ex, ey] = P[P.length - 1]; ctx.beginPath(); for (let a = 0; a < 10; a++) { const r = (4 + a * 2.6) * s, th = a * 0.8 + TT + ph; ctx.lineTo(ex + Math.cos(th) * r, ey + Math.sin(th) * r); } ctx.lineWidth = 3 * s; ctx.strokeStyle = fade; ctx.stroke(); }
   ctx.restore();
 }
 
@@ -308,10 +311,14 @@ function p04() {   // down among the dead: the shades crowd around a pit of bloo
   const tC = VW('l04', 'crowd') - 0.4, dn = at(SUB('p04'), 2.4);
   ctx.save(); ctx.translate(0, 70 * (1 - dn)); cam(960, 700, 1.04 + 0.06 * at(tC, 2.5));
   ground(FLOOR, { key: 4, bare: 1 });
-  // the pit: black, a red pool that shivers
-  ctx.save(); ctx.fillStyle = '#050203'; ctx.beginPath(); ctx.ellipse(1040, FLOOR - 8, 250, 20, 0, 0, TAU); ctx.fill(); ctx.strokeStyle = BF.inc; ctx.lineWidth = 2.4; ctx.beginPath(); ctx.ellipse(1040, FLOOR - 8, 250, 20, 0, Math.PI, TAU); ctx.stroke();
-  ctx.fillStyle = 'rgba(154,43,31,0.95)'; ctx.beginPath(); ctx.ellipse(1040, FLOOR - 9, 210 + 4 * Math.sin(TT * 2), 12, 0, 0, TAU); ctx.fill();
-  ctx.strokeStyle = 'rgba(240,120,80,0.7)'; ctx.lineWidth = 2; for (let i = 0; i < 3; i++) { const r = mod(TT * 0.4 + i / 3, 1); ctx.globalAlpha = 1 - r; ctx.beginPath(); ctx.ellipse(1040, FLOOR - 9, 40 + r * 150, 2 + r * 9, 0, 0, TAU); ctx.stroke(); } ctx.restore();
+  // the pit: a dug hole with heaps of earth either side, full of dark blood (the figures' brown) with incised ripples
+  ctx.save(); ctx.lineJoin = 'round';
+  for (const [mx, f] of [[800, -1], [1280, 1]]) { ctx.beginPath(); ctx.moveTo(mx - 90, FLOOR + 2); ctx.quadraticCurveTo(mx - 40 * f, FLOOR - 70, mx + 10 * f, FLOOR - 58); ctx.quadraticCurveTo(mx + 70 * f, FLOOR - 40, mx + 100, FLOOR + 2); ctx.closePath();
+    ctx.fillStyle = BF.black; ctx.fill(); ctx.strokeStyle = BF.inc; ctx.lineWidth = 2.2; ctx.stroke();
+    for (let k = 0; k < 5; k++) { const x = mx - 60 + k * 30; ctx.beginPath(); ctx.moveTo(x, FLOOR - 8); ctx.lineTo(x + 10, FLOOR - 22 - (k % 2) * 10); ctx.stroke(); } }
+  ctx.fillStyle = '#050203'; ctx.beginPath(); ctx.ellipse(1040, FLOOR - 16, 230, 34, 0, 0, TAU); ctx.fill(); ctx.strokeStyle = BF.inc; ctx.lineWidth = 2.6; ctx.stroke();
+  ctx.fillStyle = FIRE_COL; ctx.beginPath(); ctx.ellipse(1040, FLOOR - 12, 196 + 4 * Math.sin(TT * 2), 22, 0, 0, TAU); ctx.fill();
+  ctx.strokeStyle = BF.inc; ctx.lineWidth = 1.8; for (let i = 0; i < 3; i++) { const r = mod(TT * 0.4 + i / 3, 1); ctx.globalAlpha = 1 - r; ctx.beginPath(); ctx.ellipse(1040, FLOOR - 12, 40 + r * 140, 4 + r * 14, 0, 0, TAU); ctx.stroke(); } ctx.restore();
   [[2050, 1340, 0, true, 300], [2150, 1490, 0.2, true, 280], [2250, 1640, 0.4, true, 300], [-720, 760, 0.1, false, 290], [-880, 620, 0.4, false, 270]].forEach(([x0, x1, d, fl, h], i) => {
     const w = walk(x0, x1, SUB('p04') + 0.3 + d, Math.max(1.6, tC - SUB('p04') - 0.4 - d), 3, 3); fig('shade', w.x, FLOOR + w.dy, h, { flip: fl, rot: w.rot + 0.02 * Math.sin(TT * 1.3 + i) }); });
   fig('ody_sword', 340, FLOOR, 380, { rot: 0.01 * Math.sin(TT * 1.1) });
@@ -530,7 +537,7 @@ function p20() {   // the fleet comes back from behind the island, in the dark
 function p21() {   // by morning Troy was ash: the walls burn, the smoke climbs, ash falls
   const tA = VW('l25', 'ash') - 0.2, burn = at(SUB('p21'), 1.2);
   ctx.save(); cam(960, 520, 1.02 + 0.06 * EZ.io(pu('p21')), shake(tA, 6, 0.9), 21);
-  for (let i = 0; i < 6; i++) smoke(260 + i * 300, 260, 1.4, burn, 210 + i);
+  for (let i = 0; i < 6; i++) smoke(260 + i * 300, 330, 0.75, burn, 210 + i);
   const wl = walls(960, FLOOR, 700);
   [[300, 0.9], [560, 1.2], [860, 1.4], [1120, 1.0], [1420, 1.3], [1640, 0.9]].forEach(([x, s], i) => fireAt(x, wl.top + 10, s * 1.7, burn, i + 3));
   ground(FLOOR, { key: 21 });
@@ -543,8 +550,10 @@ function p22() {   // the temple burns; a woman at the altar begs; a soldier dra
   const tT = VW('l27', 'temples') - 0.4, tD = VW('l27', 'dragged') - 0.3, tB = VW('l27', 'beg') - 0.3;
   ctx.save(); cam2(lerp(1150, 900, at(tD, 2)), 560, 1.06 + 0.04 * EZ.io(pu('p22')));
   bfLay('temple.webp', 1360, FLOOR, 600);
-  [[1150, 1.1], [1360, 1.3], [1570, 1.0]].forEach(([x, s], i) => fireAt(x, FLOOR - 560, s, at(tT + i * 0.3, 1), 30 + i));
-  smoke(1360, FLOOR - 640, 1.2, at(tT, 1.5), 22);
+  // the flames sit on the pediment: the roof line runs from the eaves (0.117 of the layer's height) up to the apex (0.004)
+  const roofY = (x) => FLOOR - 600 + 600 * (0.004 + 0.113 * Math.min(1, Math.abs(x - 1360) / 233)) + 8;
+  [[1140, 0.6], [1215, 0.8], [1290, 1.0], [1360, 1.15], [1430, 1.0], [1505, 0.8], [1580, 0.6]].forEach(([x, s], i) => fireAt(x, roofY(x), s, at(tT + Math.abs(i - 3) * 0.25, 1), 30 + i));
+  smoke(1360, FLOOR - 660, 0.8, at(tT, 1.5), 22);
   ground(FLOOR, { key: 22 });
   // the altar: a block with a meander band
   ctx.save(); ctx.fillStyle = BF.black; ctx.fillRect(900, FLOOR - 130, 150, 130); ctx.fillRect(880, FLOOR - 150, 190, 24); ctx.strokeStyle = BF.inc; ctx.lineWidth = 2; ctx.strokeRect(900, FLOOR - 130, 150, 130); ctx.strokeRect(880, FLOOR - 150, 190, 24);
@@ -559,7 +568,8 @@ function p23() {   // the gods saw all of it: Athena, Zeus and Poseidon on the c
   const tG = VW('l28', 'gods') - 0.4, tS = VW('l28', 'saw') - 0.3;
   ctx.save(); cam(960, lerp(420, 520, at(tS, 2)), 1.06);
   bfLay('troy_city.webp', 960, FLOOR, 230);
-  [[400, 0.7], [760, 0.9], [1140, 1.0], [1500, 0.8]].forEach(([x, s], i) => { fireAt(x, FLOOR - 120, s * 0.6, 1, 50 + i); smoke(x, FLOOR - 160, 0.45, 1, 50 + i); });
+  // fires on the city's own roofs (x and the skyline height measured from troy_city.webp: top of the layer = 0)
+  [[745, 0.393, 0.7], [888, 0.1, 0.9], [1032, 0.247, 1.0], [1175, 0.379, 0.8]].forEach(([x, top, s], i) => { const y = FLOOR - 230 + 230 * top + 6; fireAt(x, y, s * 0.45, 1, 50 + i); smoke(x, y - 40, 0.4, 1, 50 + i); });
   ground(FLOOR, { key: 23 });
   [['athena', 560, 0, 400, true], ['zeus', 960, 0.25, 430, false], ['poseidon', 1360, 0.5, 400, false]].forEach(([n, x, d, h, f]) => riseFrom(560, rise(tG + d - 0.8, 1.1), (dy) => fig(n, x, 560 + dy, h, { flip: f, rot: 0.03 * at(tS, 1) * (x < 960 ? 1 : -1) })));
   clouds(540);

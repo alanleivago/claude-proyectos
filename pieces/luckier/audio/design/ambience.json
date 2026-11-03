@@ -1,0 +1,1592 @@
+{
+ "_doc": "ambience beds (amb bus): targets are pre-master LUFS of each bed at auto 0 dB; see tools/design.py",
+ "ambience": [
+  {
+   "name": "am.t_storm",
+   "file": "assets/island/fs-376810_long-thunder-rolls-and-heavy-rain-wav.ogg",
+   "at": 0.0,
+   "until": 6.2,
+   "gain_db": -8.23,
+   "auto": [
+    [
+     0,
+     -6
+    ],
+    [
+     1.0,
+     0
+    ],
+    [
+     6.0,
+     0
+    ]
+   ],
+   "src_start": 40.0,
+   "fade_in": 0.3,
+   "fade_out": 0.05
+  },
+  {
+   "name": "am.t_howl",
+   "file": "assets/wg/cm-Howling_wind.wav",
+   "at": 0.0,
+   "until": 6.2,
+   "gain_db": -20.79,
+   "auto": [
+    [
+     0,
+     -4
+    ],
+    [
+     6.0,
+     0
+    ]
+   ],
+   "src_start": 1.0,
+   "fade_in": 0.4,
+   "fade_out": 0.05,
+   "eq": {
+    "hp": 120
+   }
+  },
+  {
+   "name": "am.st1",
+   "file": "assets/street/fs-639133_220618-1982-fr-calmsuburbanstreet-wav.ogg",
+   "at": 7.0,
+   "until": 16.0,
+   "gain_db": 8.69,
+   "auto": [
+    [
+     7.0,
+     0
+    ],
+    [
+     16.0,
+     0
+    ]
+   ],
+   "src_start": 20.0,
+   "fade_in": 1.2,
+   "fade_out": 0.15,
+   "eq": {
+    "hp": 80
+   }
+  },
+  {
+   "name": "am.st1_birds",
+   "file": "assets/street/fs-511758_early-morning-birds-04-mp3.ogg",
+   "at": 7.0,
+   "until": 16.0,
+   "gain_db": -19.42,
+   "auto": [
+    [
+     7.0,
+     0
+    ],
+    [
+     16.0,
+     0
+    ]
+   ],
+   "src_start": 5.0,
+   "fade_in": 1.5,
+   "fade_out": 0.15,
+   "eq": {
+    "hp": 1500
+   },
+   "width": 0.9
+  },
+  {
+   "name": "am.st2",
+   "file": "assets/street/fs-639133_220618-1982-fr-calmsuburbanstreet-wav.ogg",
+   "at": 25.0,
+   "until": 43.0,
+   "gain_db": 8.69,
+   "auto": [
+    [
+     25.0,
+     0
+    ],
+    [
+     43.0,
+     0
+    ]
+   ],
+   "src_start": 120.0,
+   "fade_in": 0.4,
+   "fade_out": 0.15,
+   "eq": {
+    "hp": 80
+   }
+  },
+  {
+   "name": "am.st2_birds",
+   "file": "assets/street/fs-511758_early-morning-birds-04-mp3.ogg",
+   "at": 25.0,
+   "until": 43.0,
+   "gain_db": -19.42,
+   "auto": [
+    [
+     25.0,
+     0
+    ],
+    [
+     43.0,
+     0
+    ]
+   ],
+   "src_start": 40.0,
+   "fade_in": 0.4,
+   "fade_out": 0.15,
+   "eq": {
+    "hp": 1500
+   },
+   "width": 0.9
+  },
+  {
+   "name": "am.st3",
+   "file": "assets/street/fs-639133_220618-1982-fr-calmsuburbanstreet-wav.ogg",
+   "at": 52.0,
+   "until": 61.0,
+   "gain_db": 8.69,
+   "auto": [
+    [
+     52.0,
+     0
+    ],
+    [
+     61.0,
+     0
+    ]
+   ],
+   "src_start": 260.0,
+   "fade_in": 0.4,
+   "fade_out": 0.15,
+   "eq": {
+    "hp": 80
+   }
+  },
+  {
+   "name": "am.st3_birds",
+   "file": "assets/street/fs-511758_early-morning-birds-04-mp3.ogg",
+   "at": 52.0,
+   "until": 61.0,
+   "gain_db": -19.42,
+   "auto": [
+    [
+     52.0,
+     0
+    ],
+    [
+     61.0,
+     0
+    ]
+   ],
+   "src_start": 100.0,
+   "fade_in": 0.4,
+   "fade_out": 0.15,
+   "eq": {
+    "hp": 1500
+   },
+   "width": 0.9
+  },
+  {
+   "name": "am.conv",
+   "file": "assets/extra/fs-505815_car-idle-vintage-mb-convertable-wav.ogg",
+   "at": 25.0,
+   "until": 34.0,
+   "gain_db": -15.79,
+   "auto": [
+    [
+     25,
+     -2
+    ],
+    [
+     27.5,
+     0
+    ],
+    [
+     34,
+     0
+    ]
+   ],
+   "src_start": 14.0,
+   "fade_in": 0.2,
+   "fade_out": 0.2,
+   "eq": {
+    "hp": 50,
+    "lp": 6000
+   }
+  },
+  {
+   "name": "am.kitchen",
+   "file": "assets/office/fs-736848_room-tone-apartment-622-pm-240215-0662.ogg",
+   "at": 16.0,
+   "until": 25.0,
+   "gain_db": -2.81,
+   "auto": [
+    [
+     16,
+     0
+    ],
+    [
+     25,
+     0
+    ]
+   ],
+   "src_start": 10.0,
+   "fade_in": 0.1,
+   "fade_out": 0.1
+  },
+  {
+   "name": "am.kitchen_birds",
+   "file": "assets/street/fs-511758_early-morning-birds-04-mp3.ogg",
+   "at": 16.0,
+   "until": 25.0,
+   "gain_db": -27.42,
+   "auto": [
+    [
+     16,
+     0
+    ],
+    [
+     25,
+     0
+    ]
+   ],
+   "src_start": 70.0,
+   "fade_in": 0.1,
+   "fade_out": 0.1,
+   "eq": {
+    "hp": 1500,
+    "lp": 5000
+   }
+  },
+  {
+   "name": "am.cafe",
+   "file": "assets/cafe/fs-99632_small-cafe-ambience-wav.ogg",
+   "at": 43.0,
+   "until": 52.0,
+   "gain_db": -14.33,
+   "auto": [
+    [
+     43,
+     0
+    ],
+    [
+     52,
+     0
+    ]
+   ],
+   "src_start": 8.0,
+   "fade_in": 0.1,
+   "fade_out": 0.15
+  },
+  {
+   "name": "am.espresso",
+   "file": "assets/cafe/fs-333948_coffee-espresso-machine-wave-44100hz-wav.ogg",
+   "at": 46.5,
+   "until": 52.0,
+   "gain_db": -4.79,
+   "auto": [
+    [
+     46.5,
+     0
+    ],
+    [
+     52,
+     0
+    ]
+   ],
+   "src_start": 4.0,
+   "fade_in": 1.0,
+   "fade_out": 0.15,
+   "eq": {
+    "hp": 300
+   }
+  },
+  {
+   "name": "am.steam",
+   "file": "assets/extra/fs-119741_steam-hiss-wav.ogg",
+   "at": 52.0,
+   "until": 61.0,
+   "gain_db": -30.28,
+   "auto": [
+    [
+     52,
+     0
+    ],
+    [
+     61,
+     0
+    ]
+   ],
+   "src_start": 2.0,
+   "fade_in": 0.3,
+   "fade_out": 0.15,
+   "eq": {
+    "hp": 900
+   },
+   "width": 0.5
+  },
+  {
+   "name": "am.office1",
+   "file": "assets/office/fs-541117_office-ambience-wav.ogg",
+   "at": 61.0,
+   "until": 70.0,
+   "gain_db": 4.02,
+   "auto": [
+    [
+     61,
+     0
+    ],
+    [
+     70,
+     0
+    ]
+   ],
+   "src_start": 10.0,
+   "fade_in": 0.1,
+   "fade_out": 0.1
+  },
+  {
+   "name": "am.store",
+   "file": "assets/office/fs-766589_room-tone-aparment-1054-am-220813-0498.ogg",
+   "at": 70.0,
+   "until": 79.0,
+   "gain_db": -0.32,
+   "auto": [
+    [
+     70,
+     0
+    ],
+    [
+     79,
+     0
+    ]
+   ],
+   "src_start": 20.0,
+   "fade_in": 0.1,
+   "fade_out": 0.1
+  },
+  {
+   "name": "am.store_st",
+   "file": "assets/street/fs-639133_220618-1982-fr-calmsuburbanstreet-wav.ogg",
+   "at": 70.0,
+   "until": 79.0,
+   "gain_db": -1.31,
+   "auto": [
+    [
+     70,
+     0
+    ],
+    [
+     79,
+     0
+    ]
+   ],
+   "src_start": 200.0,
+   "fade_in": 0.1,
+   "fade_out": 0.1,
+   "eq": {
+    "lp": 1500
+   }
+  },
+  {
+   "name": "am.apt_night",
+   "file": "assets/office/fs-736848_room-tone-apartment-622-pm-240215-0662.ogg",
+   "at": 79.0,
+   "until": 88.0,
+   "gain_db": -2.81,
+   "auto": [
+    [
+     79,
+     0
+    ],
+    [
+     88,
+     0
+    ]
+   ],
+   "src_start": 40.0,
+   "fade_in": 0.1,
+   "fade_out": 0.1
+  },
+  {
+   "name": "am.tv_cage",
+   "file": "assets/extra/fs-808131_gamecas-blue-snowball-microphone-mcu-bin.ogg",
+   "at": 79.0,
+   "until": 86.6,
+   "gain_db": -7.29,
+   "auto": [
+    [
+     79,
+     -3
+    ],
+    [
+     80,
+     0
+    ],
+    [
+     86.0,
+     0
+    ],
+    [
+     86.6,
+     -12
+    ]
+   ],
+   "src_start": 14.0,
+   "fade_in": 0.3,
+   "fade_out": 0.4,
+   "eq": {
+    "hp": 350,
+    "lp": 4500
+   },
+   "width": 0.3
+  },
+  {
+   "name": "am.press1",
+   "file": "assets/street/fs-746444_mumbling-crowd-people-talking-background.ogg",
+   "at": 88.0,
+   "until": 97.0,
+   "gain_db": -5.51,
+   "auto": [
+    [
+     88.0,
+     0
+    ],
+    [
+     97.0,
+     0
+    ]
+   ],
+   "src_start": 2.0,
+   "fade_in": 0.1,
+   "fade_out": 0.1,
+   "eq": {
+    "lp": 3500,
+    "hp": 150
+   }
+  },
+  {
+   "name": "am.press1_charge",
+   "file": "assets/extra/fs-148267_off-camera-flash-charging.ogg",
+   "at": 88.0,
+   "until": 97.0,
+   "gain_db": -15.91,
+   "auto": [
+    [
+     88.0,
+     0
+    ],
+    [
+     97.0,
+     0
+    ]
+   ],
+   "src_start": 1.0,
+   "fade_in": 0.3,
+   "fade_out": 0.1,
+   "eq": {
+    "hp": 2000
+   }
+  },
+  {
+   "name": "am.press2",
+   "file": "assets/street/fs-746444_mumbling-crowd-people-talking-background.ogg",
+   "at": 106.0,
+   "until": 124.0,
+   "gain_db": -5.51,
+   "auto": [
+    [
+     106.0,
+     0
+    ],
+    [
+     124.0,
+     0
+    ]
+   ],
+   "src_start": 30.0,
+   "fade_in": 0.1,
+   "fade_out": 0.1,
+   "eq": {
+    "lp": 3500,
+    "hp": 150
+   }
+  },
+  {
+   "name": "am.press2_charge",
+   "file": "assets/extra/fs-148267_off-camera-flash-charging.ogg",
+   "at": 106.0,
+   "until": 124.0,
+   "gain_db": -15.91,
+   "auto": [
+    [
+     106.0,
+     0
+    ],
+    [
+     124.0,
+     0
+    ]
+   ],
+   "src_start": 1.0,
+   "fade_in": 0.3,
+   "fade_out": 0.1,
+   "eq": {
+    "hp": 2000
+   }
+  },
+  {
+   "name": "am.busstop",
+   "file": "assets/street/fs-213564_at-a-bus-stop.ogg",
+   "at": 97.0,
+   "until": 106.0,
+   "gain_db": 1.5,
+   "auto": [
+    [
+     97,
+     0
+    ],
+    [
+     106,
+     0
+    ]
+   ],
+   "src_start": 10.0,
+   "fade_in": 0.1,
+   "fade_out": 0.1
+  },
+  {
+   "name": "am.studio1",
+   "file": "assets/office/fs-766589_room-tone-aparment-1054-am-220813-0498.ogg",
+   "at": 124.0,
+   "until": 133.0,
+   "gain_db": -2.32,
+   "auto": [
+    [
+     124,
+     0
+    ],
+    [
+     133,
+     0
+    ]
+   ],
+   "src_start": 50.0,
+   "fade_in": 0.1,
+   "fade_out": 0.1
+  },
+  {
+   "name": "am.arrive_city",
+   "file": "assets/street/fs-639133_220618-1982-fr-calmsuburbanstreet-wav.ogg",
+   "at": 133.0,
+   "until": 142.0,
+   "gain_db": 2.69,
+   "auto": [
+    [
+     133,
+     0
+    ],
+    [
+     142,
+     0
+    ]
+   ],
+   "src_start": 330.0,
+   "fade_in": 0.15,
+   "fade_out": 0.1,
+   "eq": {
+    "lp": 3000
+   }
+  },
+  {
+   "name": "am.arrive_casino",
+   "file": "assets/casino/fs-118855_casino-ambiance-03-wav.ogg",
+   "at": 133.0,
+   "until": 142.0,
+   "gain_db": -24.13,
+   "auto": [
+    [
+     133,
+     -6
+    ],
+    [
+     138,
+     -2
+    ],
+    [
+     141.8,
+     0
+    ]
+   ],
+   "src_start": 60.0,
+   "fade_in": 0.15,
+   "fade_out": 0.1,
+   "eq": {
+    "lp": 900
+   }
+  },
+  {
+   "name": "am.casino",
+   "file": "assets/casino/fs-118855_casino-ambiance-03-wav.ogg",
+   "at": 142.0,
+   "until": 196.0,
+   "gain_db": -16.13,
+   "auto": [
+    [
+     142,
+     0
+    ],
+    [
+     160,
+     0
+    ],
+    [
+     160.2,
+     -5
+    ],
+    [
+     168.8,
+     -5
+    ],
+    [
+     169,
+     0
+    ],
+    [
+     186,
+     0
+    ],
+    [
+     196,
+     -3
+    ]
+   ],
+   "src_start": 5.0,
+   "fade_in": 0.05,
+   "fade_out": 0.1
+  },
+  {
+   "name": "am.casino_1913",
+   "file": "assets/casino/fs-118855_casino-ambiance-03-wav.ogg",
+   "at": 160.0,
+   "until": 169.0,
+   "gain_db": -22.13,
+   "auto": [
+    [
+     160,
+     0
+    ],
+    [
+     169,
+     0
+    ]
+   ],
+   "src_start": 90.0,
+   "fade_in": 0.05,
+   "fade_out": 0.05,
+   "eq": {
+    "lp": 2200,
+    "hp": 250
+   },
+   "width": 0.4
+  },
+  {
+   "name": "am.photos",
+   "file": "assets/office/fs-766589_room-tone-aparment-1054-am-220813-0498.ogg",
+   "at": 196.0,
+   "until": 205.0,
+   "gain_db": -0.32,
+   "auto": [
+    [
+     196,
+     0
+    ],
+    [
+     205,
+     0
+    ]
+   ],
+   "src_start": 30.0,
+   "fade_in": 0.1,
+   "fade_out": 0.15
+  },
+  {
+   "name": "am.photos_casino",
+   "file": "assets/casino/fs-118855_casino-ambiance-03-wav.ogg",
+   "at": 196.0,
+   "until": 205.0,
+   "gain_db": -28.13,
+   "auto": [
+    [
+     196,
+     0
+    ],
+    [
+     205,
+     0
+    ]
+   ],
+   "src_start": 40.0,
+   "fade_in": 0.1,
+   "fade_out": 0.15,
+   "eq": {
+    "lp": 500
+   }
+  },
+  {
+   "name": "am.storm_wind",
+   "file": "assets/storm/fs-721534_storm-wind-in-trees-1722-160221-0857.ogg",
+   "at": 205.0,
+   "until": 241.0,
+   "gain_db": -15.0,
+   "auto": [
+    [
+     205,
+     -12
+    ],
+    [
+     209,
+     -5
+    ],
+    [
+     213.5,
+     0
+    ],
+    [
+     240,
+     0
+    ]
+   ],
+   "src_start": 10.0,
+   "fade_in": 1.0,
+   "fade_out": 0.15
+  },
+  {
+   "name": "am.storm_rain",
+   "file": "assets/storm/fs-243628_heavy-rain.ogg",
+   "at": 209.0,
+   "until": 241.0,
+   "gain_db": -11.43,
+   "auto": [
+    [
+     209,
+     -24
+    ],
+    [
+     212,
+     -12
+    ],
+    [
+     214,
+     0
+    ],
+    [
+     240,
+     0
+    ]
+   ],
+   "src_start": 5.0,
+   "fade_in": 2.0,
+   "fade_out": 0.15
+  },
+  {
+   "name": "am.storm_street",
+   "file": "assets/street/fs-639133_220618-1982-fr-calmsuburbanstreet-wav.ogg",
+   "at": 205.0,
+   "until": 214.0,
+   "gain_db": 4.69,
+   "auto": [
+    [
+     205,
+     0
+    ],
+    [
+     210,
+     -6
+    ],
+    [
+     214,
+     -14
+    ]
+   ],
+   "src_start": 400.0,
+   "fade_in": 0.3,
+   "fade_out": 0.3,
+   "eq": {
+    "hp": 100
+   }
+  },
+  {
+   "name": "am.stadium",
+   "file": "assets/crowd/fs-691975_crowd-and-field-noise-before-and-during-.ogg",
+   "at": 241.0,
+   "until": 250.0,
+   "gain_db": -4.75,
+   "auto": [
+    [
+     241,
+     0
+    ],
+    [
+     250,
+     0
+    ]
+   ],
+   "src_start": 30.0,
+   "fade_in": 0.05,
+   "fade_out": 0.1
+  },
+  {
+   "name": "am.cabin",
+   "file": "assets/crowd/fs-433002_amb-airplane-cabin-passenger-chatter-sea.ogg",
+   "at": 250.0,
+   "until": 259.0,
+   "gain_db": 1.57,
+   "auto": [
+    [
+     250,
+     0
+    ],
+    [
+     259,
+     0
+    ]
+   ],
+   "src_start": 56.7,
+   "fade_in": 0.05,
+   "fade_out": 0.1,
+   "eq": {
+    "lp": 5000
+   }
+  },
+  {
+   "name": "am.cabin_rumble",
+   "file": "assets/space/fs-203281_earthquake-or-distant-space-shuttle-rumb.ogg",
+   "at": 250.0,
+   "until": 259.0,
+   "gain_db": -22.14,
+   "auto": [
+    [
+     250,
+     0
+    ],
+    [
+     259,
+     0
+    ]
+   ],
+   "src_start": 4.0,
+   "fade_in": 0.2,
+   "fade_out": 0.1,
+   "eq": {
+    "lp": 160
+   }
+  },
+  {
+   "name": "am.ship",
+   "file": "assets/crowd/fs-91072_on-a-wooden-ship-at-sea-02-wav.ogg",
+   "at": 259.0,
+   "until": 268.0,
+   "gain_db": -12.71,
+   "auto": [
+    [
+     259,
+     0
+    ],
+    [
+     268,
+     0
+    ]
+   ],
+   "src_start": 20.0,
+   "fade_in": 0.05,
+   "fade_out": 0.1
+  },
+  {
+   "name": "am.ship_gulls",
+   "file": "assets/wg/fs-59492_20080807-seagulls-wav.ogg",
+   "at": 259.0,
+   "until": 268.0,
+   "gain_db": -6.98,
+   "auto": [
+    [
+     259,
+     0
+    ],
+    [
+     268,
+     0
+    ]
+   ],
+   "src_start": 10.0,
+   "fade_in": 0.3,
+   "fade_out": 0.1,
+   "eq": {
+    "hp": 500
+   }
+  },
+  {
+   "name": "am.away",
+   "file": "assets/crowd/fs-691975_crowd-and-field-noise-before-and-during-.ogg",
+   "at": 268.0,
+   "until": 277.0,
+   "gain_db": -14.75,
+   "auto": [
+    [
+     268,
+     0
+    ],
+    [
+     277,
+     -3
+    ]
+   ],
+   "src_start": 40.0,
+   "fade_in": 0.05,
+   "fade_out": 0.1,
+   "eq": {
+    "lp": 2500
+   }
+  },
+  {
+   "name": "am.flood_street",
+   "file": "assets/street/fs-639133_220618-1982-fr-calmsuburbanstreet-wav.ogg",
+   "at": 277.0,
+   "until": 286.0,
+   "gain_db": 2.69,
+   "auto": [
+    [
+     277,
+     0
+    ],
+    [
+     286,
+     0
+    ]
+   ],
+   "src_start": 60.0,
+   "fade_in": 0.1,
+   "fade_out": 0.1,
+   "eq": {
+    "hp": 120
+   }
+  },
+  {
+   "name": "am.flood_pump",
+   "file": "assets/crowd/fs-25023_20061105sumppumpsiphon-wav.ogg",
+   "at": 277.0,
+   "until": 286.0,
+   "gain_db": -20.91,
+   "auto": [
+    [
+     277,
+     0
+    ],
+    [
+     286,
+     0
+    ]
+   ],
+   "src_start": 20.0,
+   "fade_in": 0.2,
+   "fade_out": 0.1,
+   "eq": {
+    "hp": 200
+   }
+  },
+  {
+   "name": "am.flood_slosh",
+   "file": "assets/crowd/fs-235625_water-sloshing.ogg",
+   "at": 277.0,
+   "until": 286.0,
+   "gain_db": 5.05,
+   "auto": [
+    [
+     277,
+     0
+    ],
+    [
+     286,
+     0
+    ]
+   ],
+   "src_start": 0.2,
+   "fade_in": 0.2,
+   "fade_out": 0.1
+  },
+  {
+   "name": "am.office2",
+   "file": "assets/office/fs-541117_office-ambience-wav.ogg",
+   "at": 286.0,
+   "until": 304.0,
+   "gain_db": 2.02,
+   "auto": [
+    [
+     286,
+     0
+    ],
+    [
+     304,
+     0
+    ]
+   ],
+   "src_start": 60.0,
+   "fade_in": 0.1,
+   "fade_out": 0.1
+  },
+  {
+   "name": "am.moving_street",
+   "file": "assets/street/fs-639133_220618-1982-fr-calmsuburbanstreet-wav.ogg",
+   "at": 304.0,
+   "until": 313.0,
+   "gain_db": 4.69,
+   "auto": [
+    [
+     304,
+     0
+    ],
+    [
+     313,
+     0
+    ]
+   ],
+   "src_start": 300.0,
+   "fade_in": 0.1,
+   "fade_out": 0.1
+  },
+  {
+   "name": "am.moving_truck",
+   "file": "assets/street/fs-22882_idle-truck-flac.ogg",
+   "at": 304.0,
+   "until": 313.0,
+   "gain_db": -17.0,
+   "auto": [
+    [
+     304,
+     0
+    ],
+    [
+     305.5,
+     0
+    ],
+    [
+     309,
+     -8
+    ],
+    [
+     313,
+     -14
+    ]
+   ],
+   "src_start": 2.0,
+   "fade_in": 0.1,
+   "fade_out": 0.1,
+   "eq": {
+    "hp": 50
+   }
+  },
+  {
+   "name": "am.shelter",
+   "file": "assets/street/fs-746444_mumbling-crowd-people-talking-background.ogg",
+   "at": 313.0,
+   "until": 331.0,
+   "gain_db": -3.51,
+   "auto": [
+    [
+     313,
+     0
+    ],
+    [
+     331,
+     0
+    ]
+   ],
+   "src_start": 40.0,
+   "fade_in": 0.1,
+   "fade_out": 0.1,
+   "eq": {
+    "lp": 4000
+   }
+  },
+  {
+   "name": "am.studio2",
+   "file": "assets/office/fs-766589_room-tone-aparment-1054-am-220813-0498.ogg",
+   "at": 331.0,
+   "until": 336.0,
+   "gain_db": -2.32,
+   "auto": [
+    [
+     331,
+     0
+    ],
+    [
+     336,
+     0
+    ]
+   ],
+   "src_start": 10.0,
+   "fade_in": 0.1,
+   "fade_out": 0.1
+  },
+  {
+   "name": "am.tvhome",
+   "file": "assets/office/fs-736848_room-tone-apartment-622-pm-240215-0662.ogg",
+   "at": 336.0,
+   "until": 340.0,
+   "gain_db": -3.81,
+   "auto": [
+    [
+     336,
+     0
+    ],
+    [
+     340,
+     0
+    ]
+   ],
+   "src_start": 60.0,
+   "fade_in": 0.1,
+   "fade_out": 0.1
+  },
+  {
+   "name": "am.billion_wind",
+   "file": "assets/wg/fs-146914_strong-wind-blowing-and-howling-in-the-m.ogg",
+   "at": 340.0,
+   "until": 349.0,
+   "gain_db": -20.01,
+   "auto": [
+    [
+     340,
+     0
+    ],
+    [
+     349,
+     0
+    ]
+   ],
+   "src_start": 30.0,
+   "fade_in": 0.2,
+   "fade_out": 0.1,
+   "eq": {
+    "hp": 80,
+    "lp": 4000
+   }
+  },
+  {
+   "name": "am.billion_town",
+   "file": "assets/street/fs-639133_220618-1982-fr-calmsuburbanstreet-wav.ogg",
+   "at": 340.0,
+   "until": 349.0,
+   "gain_db": -0.31,
+   "auto": [
+    [
+     340,
+     0
+    ],
+    [
+     349,
+     0
+    ]
+   ],
+   "src_start": 150.0,
+   "fade_in": 0.2,
+   "fade_out": 0.1,
+   "eq": {
+    "lp": 1200
+   }
+  },
+  {
+   "name": "am.signs",
+   "file": "assets/extra/fs-71462_protest-crowd-ambience-wav.ogg",
+   "at": 349.0,
+   "until": 358.0,
+   "gain_db": -21.3,
+   "auto": [
+    [
+     349,
+     0
+    ],
+    [
+     358,
+     0
+    ]
+   ],
+   "src_start": 10.0,
+   "fade_in": 0.1,
+   "fade_out": 0.15,
+   "eq": {
+    "lp": 2500,
+    "hp": 150
+   }
+  },
+  {
+   "name": "am.signs_eve",
+   "file": "assets/street/fs-218096_suburban-evening.ogg",
+   "at": 349.0,
+   "until": 358.0,
+   "gain_db": -19.94,
+   "auto": [
+    [
+     349,
+     0
+    ],
+    [
+     358,
+     0
+    ]
+   ],
+   "src_start": 30.0,
+   "fade_in": 0.1,
+   "fade_out": 0.1
+  },
+  {
+   "name": "am.dusk",
+   "file": "assets/street/fs-218096_suburban-evening.ogg",
+   "at": 358.0,
+   "until": 367.0,
+   "gain_db": -14.94,
+   "auto": [
+    [
+     358,
+     0
+    ],
+    [
+     366,
+     0
+    ],
+    [
+     367,
+     -6
+    ]
+   ],
+   "src_start": 120.0,
+   "fade_in": 0.1,
+   "fade_out": 0.3
+  },
+  {
+   "name": "am.eye_storm",
+   "file": "assets/island/fs-376810_long-thunder-rolls-and-heavy-rain-wav.ogg",
+   "at": 367.0,
+   "until": 376.0,
+   "gain_db": -6.23,
+   "auto": [
+    [
+     367,
+     0
+    ],
+    [
+     376,
+     0
+    ]
+   ],
+   "src_start": 120.0,
+   "fade_in": 0.4,
+   "fade_out": 0.1
+  },
+  {
+   "name": "am.eye_howl",
+   "file": "assets/wg/cm-Howling_wind.wav",
+   "at": 367.0,
+   "until": 376.0,
+   "gain_db": -16.79,
+   "auto": [
+    [
+     367,
+     0
+    ],
+    [
+     376,
+     0
+    ]
+   ],
+   "src_start": 0.0,
+   "fade_in": 0.4,
+   "fade_out": 0.1,
+   "eq": {
+    "hp": 100
+   }
+  },
+  {
+   "name": "am.ring_wall",
+   "file": "assets/island/fs-376810_long-thunder-rolls-and-heavy-rain-wav.ogg",
+   "at": 376.0,
+   "until": 385.0,
+   "gain_db": -13.23,
+   "auto": [
+    [
+     376,
+     0
+    ],
+    [
+     385,
+     0
+    ]
+   ],
+   "src_start": 200.0,
+   "fade_in": 0.1,
+   "fade_out": 0.1,
+   "eq": {
+    "lp": 1200
+   }
+  },
+  {
+   "name": "am.waves_day",
+   "file": "assets/island/fs-578524_calm-ocean-waves.ogg",
+   "at": 376.0,
+   "until": 403.0,
+   "gain_db": -12.62,
+   "auto": [
+    [
+     376,
+     0
+    ],
+    [
+     403,
+     0
+    ]
+   ],
+   "src_start": 10.0,
+   "fade_in": 0.1,
+   "fade_out": 0.15
+  },
+  {
+   "name": "am.strike_rain",
+   "file": "assets/island/fs-376810_long-thunder-rolls-and-heavy-rain-wav.ogg",
+   "at": 394.0,
+   "until": 403.0,
+   "gain_db": -15.23,
+   "auto": [
+    [
+     394,
+     0
+    ],
+    [
+     403,
+     0
+    ]
+   ],
+   "src_start": 60.0,
+   "fade_in": 0.2,
+   "fade_out": 0.15,
+   "eq": {
+    "lp": 2500
+   }
+  },
+  {
+   "name": "am.night_crickets",
+   "file": "assets/street/fs-1053_rbh-crickets-suburb-night1-wav.ogg",
+   "at": 403.0,
+   "until": 412.0,
+   "gain_db": -9.75,
+   "auto": [
+    [
+     403,
+     0
+    ],
+    [
+     412,
+     0
+    ]
+   ],
+   "src_start": 5.0,
+   "fade_in": 0.1,
+   "fade_out": 0.1,
+   "eq": {
+    "hp": 1500
+   }
+  },
+  {
+   "name": "am.night_waves",
+   "file": "assets/island/fs-578524_calm-ocean-waves.ogg",
+   "at": 403.0,
+   "until": 412.0,
+   "gain_db": -17.62,
+   "auto": [
+    [
+     403,
+     0
+    ],
+    [
+     412,
+     0
+    ]
+   ],
+   "src_start": 80.0,
+   "fade_in": 0.1,
+   "fade_out": 0.1,
+   "eq": {
+    "lp": 2500
+   }
+  },
+  {
+   "name": "am.space_rumble",
+   "file": "assets/space/fs-203281_earthquake-or-distant-space-shuttle-rumb.ogg",
+   "at": 412.0,
+   "until": 430.0,
+   "gain_db": -22.14,
+   "auto": [
+    [
+     412,
+     -2
+    ],
+    [
+     420,
+     0
+    ],
+    [
+     424,
+     3
+    ],
+    [
+     426,
+     3
+    ],
+    [
+     430,
+     -6
+    ]
+   ],
+   "src_start": 2.0,
+   "fade_in": 0.2,
+   "fade_out": 0.1,
+   "eq": {
+    "lp": 300
+   }
+  },
+  {
+   "name": "am.sunset_waves",
+   "file": "assets/wg/fs-827530_ocean-coast-04-092025-0659am.ogg",
+   "at": 430.0,
+   "until": 466.0,
+   "gain_db": -14.36,
+   "auto": [
+    [
+     430,
+     0
+    ],
+    [
+     457,
+     0
+    ],
+    [
+     462,
+     -6
+    ],
+    [
+     465.4,
+     -20
+    ],
+    [
+     466.0,
+     -40
+    ]
+   ],
+   "src_start": 40.0,
+   "fade_in": 0.1,
+   "fade_out": 0.6
+  },
+  {
+   "name": "am.sunset_gulls",
+   "file": "assets/wg/fs-59492_20080807-seagulls-wav.ogg",
+   "at": 432.0,
+   "until": 448.0,
+   "gain_db": -11.98,
+   "auto": [
+    [
+     432,
+     0
+    ],
+    [
+     448,
+     0
+    ]
+   ],
+   "src_start": 40.0,
+   "fade_in": 3.0,
+   "fade_out": 3.0,
+   "eq": {
+    "hp": 600,
+    "lp": 6000
+   },
+   "width": 0.8
+  },
+  {
+   "name": "am.calm_sea",
+   "file": "assets/island/fs-578524_calm-ocean-waves.ogg",
+   "at": 467.6,
+   "until": 500.0,
+   "gain_db": -13.62,
+   "auto": [
+    [
+     467.6,
+     -24
+    ],
+    [
+     470,
+     -10
+    ],
+    [
+     475,
+     -2
+    ],
+    [
+     486,
+     0
+    ],
+    [
+     495,
+     -1
+    ],
+    [
+     498,
+     -8
+    ],
+    [
+     500,
+     -30
+    ]
+   ],
+   "src_start": 100.0,
+   "fade_in": 1.5,
+   "fade_out": 2.0
+  },
+  {
+   "name": "am.calm_gulls",
+   "file": "assets/island/fs-149488_waves-and-seagulls-wav.ogg",
+   "at": 478.0,
+   "until": 499.0,
+   "gain_db": -4.92,
+   "auto": [
+    [
+     478,
+     -14
+    ],
+    [
+     482,
+     -3
+    ],
+    [
+     488,
+     0
+    ],
+    [
+     495,
+     -2
+    ],
+    [
+     499,
+     -20
+    ]
+   ],
+   "src_start": 60.0,
+   "fade_in": 2.5,
+   "fade_out": 2.0,
+   "eq": {
+    "hp": 300
+   }
+  }
+ ]
+}

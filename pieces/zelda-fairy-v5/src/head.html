@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The boy without a fairy</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #3a2a14; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  THE BOY WITHOUT A FAIRY — Link's story in Ocarina of Time, as a bright woven tapestry. 9:16, voice-led (~60s), 24fps.
+//  The golden frame is fixed on screen; inside it one long strip of cloth slides right, panel to panel (Odyssey method),
+//  with Flow (Nano Banana) layers animated in code (rhaenyra-flow method).
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4, GRID0 = 0;
+const VL = (id) => VOICE.lines.find((l) => l.id === id);
+const VW = (id, w, n = 1) => { const L = VL(id); let k = 0; for (const x of L.words) if (x.w.toLowerCase().replace(/[^a-z0-9']/g, '') === w.toLowerCase() && ++k === n) return x.t0; console.warn('VW miss', id, w); return L.t0; };
+const DURATION = Math.round(VOICE.duration * FPS) / FPS;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, serif';
+const CX = 540;
+const onBeat = (t) => t;
+// the panels and the line each one starts on
+const PANEL_START = [['p01', 'l01'], ['p02', 'l02', 'link'], ['p03', 'l03'], ['p04', 'l04'], ['p05', 'l05'], ['p06', 'l07'], ['p07', 'l09'], ['p08', 'l10'], ['p09', 'l11'], ['p10', 'l13'], ['p11', 'l14'], ['p12', 'l15'], ['p13', 'l16'], ['p14', 'sign']];
+const IDS = PANEL_START.map((p) => p[0]);
+const SIGN_T = VL('l16').t1 + 1.0;
+const S = (lid, w) => (lid === 'l01' ? 0 : lid === 'sign' ? SIGN_T : (w ? VW(lid, w) : VL(lid).t0) - 0.25);
+const TB = PANEL_START.map(([, l, w]) => S(l, w));
+const SUB = (id) => TB[IDS.indexOf(id)], SUBEND = (id) => (IDS.indexOf(id) + 1 < IDS.length ? TB[IDS.indexOf(id) + 1] : DURATION);
+const LINE_PANEL = {};   // line id -> panel index
+VOICE.lines.forEach((L) => { let p = 0; for (let i = 0; i < IDS.length; i++) if (L.t0 >= TB[i] - 0.3) p = i; LINE_PANEL[L.id] = p; });
+const HIT = VL('l13').t0;
+const ERA_LIST = [[0, DURATION, () => sceneStage()]];
+const SHOTS = IDS.map((id, i) => [id, 0, TB[i], i + 1 < IDS.length ? TB[i + 1] : DURATION, id]);
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, gridOffset: GRID0, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE, aspect: '9:16',
+  format: 'tapestry-strip',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: TB.slice(1), morphs: [], cues: { hit: HIT },
+  acts: [
+    { name: '1 The boy', role: 'hook', t0: 0, t1: SUB('p05') },
+    { name: '2 The curse', role: 'build', t0: SUB('p05'), t1: SUB('p09') },
+    { name: '3 Zelda', role: 'build', t0: SUB('p09'), t1: SUB('p10') },
+    { name: '4 The sword', role: 'peak', t0: SUB('p10'), t1: SUB('p13') },
+    { name: '5 Remake', role: 'goodbye', t0: SUB('p13'), t1: DURATION },
+  ],
+  board: [],
+  narration: VOICE.lines.map((l) => ({ id: l.id, t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;

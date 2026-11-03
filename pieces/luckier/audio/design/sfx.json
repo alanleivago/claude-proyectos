@@ -1,0 +1,2370 @@
+{
+ "_doc": "point effects (sfx bus), see tools/design.py",
+ "samples": {
+  "fx.ding": {
+   "file": "assets/ui/fs-127149_ding-wav.ogg",
+   "start": 0.06,
+   "end": 1.4,
+   "eq": {
+    "hp": 600
+   },
+   "fade_out": 0.5,
+   "norm_peak_db": -21
+  },
+  "fx.ding_dark": {
+   "file": "assets/ui/fs-127149_ding-wav.ogg",
+   "start": 0.06,
+   "end": 1.4,
+   "eq": {
+    "hp": 600,
+    "lp": 3500
+   },
+   "fade_out": 0.5,
+   "norm_peak_db": -25
+  },
+  "fx.thud": {
+   "file": "assets/ui/fs-151812_orch-002-boom-wav.ogg",
+   "start": 0.0,
+   "end": 1.45,
+   "eq": {
+    "lp": 420,
+    "hp": 30
+   },
+   "fade_out": 0.6,
+   "norm_peak_db": -14
+  },
+  "fx.card_sw": {
+   "file": "assets/ui/fs-623709_soft-swoosh-with-noisy-ambience-wav.ogg",
+   "start": 0.0,
+   "end": 0.95,
+   "eq": {
+    "hp": 400
+   },
+   "fade_out": 0.3,
+   "norm_peak_db": -24
+  },
+  "fx.card_gl": {
+   "file": "assets/ui/fs-562196_snd-fragment-retrieve-wav.ogg",
+   "start": 0.0,
+   "end": 1.6,
+   "eq": {
+    "hp": 2500
+   },
+   "fade_out": 0.8,
+   "norm_peak_db": -34
+  },
+  "fx.t_coins": {
+   "file": "assets/coin/fs-363089_coins-being-poured.ogg",
+   "start": 1.2,
+   "end": 7.4,
+   "fade_in": 0.3,
+   "fade_out": 0.6,
+   "norm_peak_db": -22
+  },
+  "fx.t_pay": {
+   "file": "assets/casino/fs-361346_slot-machine-payout-wav.ogg",
+   "start": 0.3,
+   "end": 3.8,
+   "fade_out": 0.5,
+   "norm_peak_db": -25
+  },
+  "fx.t_thunder": {
+   "file": "assets/storm/fs-320050_thunder-very-close-no-rain-a-wav.ogg",
+   "start": 0.2,
+   "end": 6.2,
+   "fade_out": 1.5,
+   "norm_peak_db": -18
+  },
+  "fx.dthunder": {
+   "file": "assets/storm/fs-581124_distant-thunder-3.ogg",
+   "start": 0.0,
+   "end": 8.2,
+   "eq": {
+    "lp": 1500
+   },
+   "fade_out": 2.0,
+   "norm_peak_db": -16
+  },
+  "fx.t_fish": {
+   "file": "assets/island/fs-321490_tiny-splash.ogg",
+   "start": 0.15,
+   "end": 1.6,
+   "fade_out": 0.3,
+   "norm_peak_db": -20
+  },
+  "fx.t_riser": {
+   "file": "assets/wg/fs-826672_first-sunlight-cinematic-riser-sound-abr.ogg",
+   "start": 3.0,
+   "end": 8.085,
+   "fade_in": 0.3,
+   "fade_out": 0.006,
+   "norm_peak_db": -17.5
+  },
+  "fx.flick": {
+   "file": "assets/coin/fs-485728_coin-flip-5.ogg",
+   "start": 0.1,
+   "end": 1.05,
+   "mono": true,
+   "fade_out": 0.4,
+   "norm_peak_db": -12
+  },
+  "fx.airspin": {
+   "file": "assets/extra/fs-485744_coin-spin-7.ogg",
+   "start": 1.2,
+   "end": 7.2,
+   "pitch": -7.0,
+   "eq": {
+    "hp": 400
+   },
+   "fade_in": 0.4,
+   "fade_out": 1.2,
+   "norm_peak_db": -24
+  },
+  "fx.catch": {
+   "file": "assets/coin/fs-180698_st-catchingcoinpurse-wav.ogg",
+   "start": 0.0,
+   "end": 0.6,
+   "mono": true,
+   "fade_out": 0.25,
+   "norm_peak_db": -13
+  },
+  "fx.toast_sw": {
+   "file": "assets/ui/fs-623709_soft-swoosh-with-noisy-ambience-wav.ogg",
+   "start": 0.0,
+   "end": 0.95,
+   "pitch": 4.0,
+   "eq": {
+    "hp": 900
+   },
+   "fade_out": 0.2,
+   "norm_peak_db": -24
+  },
+  "fx.toast_land": {
+   "file": "assets/ui/fs-160739_body-fall-3-wav.ogg",
+   "start": 0.0,
+   "end": 0.7,
+   "pitch": 7.0,
+   "mono": true,
+   "eq": {
+    "hp": 150
+   },
+   "fade_out": 0.2,
+   "norm_peak_db": -15
+  },
+  "fx.relay": {
+   "file": "assets/extra/fs-384698_a-relay-switch-being-activated.ogg",
+   "mono": true,
+   "eq": {
+    "hp": 400
+   },
+   "fade_out": 0.05,
+   "norm_peak_db": -24
+  },
+  "fx.bill": {
+   "file": "assets/foley/fs-581844_foley-bills-mono-14-wav.ogg",
+   "start": 0.1,
+   "end": 1.3,
+   "mono": true,
+   "fade_out": 0.2,
+   "norm_peak_db": -18
+  },
+  "fx.hbell": {
+   "file": "assets/cafe/fs-140150_ringing-a-hand-bell-wav.ogg",
+   "start": 0.95,
+   "end": 4.4,
+   "fade_in": 0.01,
+   "fade_out": 0.8,
+   "norm_peak_db": -18
+  },
+  "fx.pop1": {
+   "file": "assets/cafe/fs-26349_partypopper-flac.ogg",
+   "mono": true,
+   "fade_out": 0.2,
+   "norm_peak_db": -12
+  },
+  "fx.pop2": {
+   "file": "assets/cafe/fs-184131_irtincanpopperinmicmonocleanplus-wav.ogg",
+   "start": 0.0,
+   "end": 1.2,
+   "mono": true,
+   "fade_out": 0.4,
+   "norm_peak_db": -14
+  },
+  "fx.cafe_cheer": {
+   "file": "assets/casino/fs-264377_small-crowd-cheering.ogg",
+   "start": 0.5,
+   "end": 7.5,
+   "fade_in": 0.2,
+   "fade_out": 2.0,
+   "norm_peak_db": -19
+  },
+  "fx.nostart": {
+   "file": "assets/extra/fs-123686_chev-350-start-then-die-wav.ogg",
+   "start": 0.35,
+   "end": 3.95,
+   "eq": {
+    "hp": 60
+   },
+   "fade_out": 0.6,
+   "norm_peak_db": -15
+  },
+  "fx.crank": {
+   "file": "assets/extra/fs-579213_1970-vw-bug-engine-cranking-2-wav.ogg",
+   "start": 0.09,
+   "end": 1.9,
+   "eq": {
+    "hp": 60
+   },
+   "fade_out": 0.3,
+   "norm_peak_db": -17
+  },
+  "fx.shake": {
+   "file": "assets/foley/fs-275216_handshake-focusfox-mp3.ogg",
+   "start": 0.45,
+   "end": 1.5,
+   "mono": true,
+   "fade_out": 0.3,
+   "norm_peak_db": -17
+  },
+  "fx.office_clap": {
+   "file": "assets/office/fs-99634_small-crowd-cheering-and-clapping-wav.ogg",
+   "start": 0.0,
+   "end": 3.7,
+   "fade_in": 0.05,
+   "fade_out": 1.0,
+   "norm_peak_db": -17
+  },
+  "fx.office_clap2": {
+   "file": "assets/office/fs-100904_small-crowd-cheering-and-clapping-3-aif.ogg",
+   "start": 2.0,
+   "end": 9.0,
+   "fade_in": 0.4,
+   "fade_out": 2.5,
+   "norm_peak_db": -21
+  },
+  "fx.scratch": {
+   "file": "assets/extra/fs-445603_lottery-ticket-scratch-wav.ogg",
+   "start": 0.3,
+   "end": 3.45,
+   "mono": true,
+   "eq": {
+    "hp": 300
+   },
+   "fade_in": 0.05,
+   "fade_out": 0.3,
+   "norm_peak_db": -17
+  },
+  "fx.ball": {
+   "file": "assets/extra/fs-149729_balle-ping-pong-1-aif.ogg",
+   "start": 0.9,
+   "end": 1.3,
+   "mono": true,
+   "eq": {
+    "hp": 400,
+    "lp": 5000
+   },
+   "fade_out": 0.1,
+   "norm_peak_db": -21
+  },
+  "fx.tv_cheer": {
+   "file": "assets/casino/fs-346685_crowd-cheer-wav.ogg",
+   "start": 1.0,
+   "end": 6.0,
+   "eq": {
+    "hp": 350,
+    "lp": 4500
+   },
+   "fade_in": 0.3,
+   "fade_out": 1.5,
+   "norm_peak_db": -22
+  },
+  "fx.flash1": {
+   "file": "assets/extra/fs-624923_single-camera-click-with-flash-wav.ogg",
+   "mono": true,
+   "fade_out": 0.1,
+   "norm_peak_db": -19
+  },
+  "fx.flash2": {
+   "file": "assets/office/fs-455511_ios-camera-flash.ogg",
+   "mono": true,
+   "fade_out": 0.1,
+   "norm_peak_db": -21
+  },
+  "fx.flash3": {
+   "file": "assets/office/fs-353044_camera-shutter-and-flash-combined.ogg",
+   "start": 0.8,
+   "end": 1.6,
+   "mono": true,
+   "fade_out": 0.2,
+   "norm_peak_db": -20
+  },
+  "fx.applause": {
+   "file": "assets/office/fs-100904_small-crowd-cheering-and-clapping-3-aif.ogg",
+   "start": 0.5,
+   "end": 8.0,
+   "fade_in": 0.3,
+   "fade_out": 2.5,
+   "norm_peak_db": -20
+  },
+  "fx.tear2": {
+   "file": "assets/foley/fs-111106_tearing-paper-02-wav.ogg",
+   "start": 0.0,
+   "end": 1.1,
+   "fade_out": 0.15,
+   "norm_peak_db": -18
+  },
+  "fx.tear4": {
+   "file": "assets/foley/fs-111119_tearing-paper-15-wav.ogg",
+   "start": 0.0,
+   "end": 0.85,
+   "fade_out": 0.15,
+   "norm_peak_db": -18
+  },
+  "fx.tear3": {
+   "file": "assets/foley/fs-111114_tearing-paper-10-wav.ogg",
+   "start": 0.0,
+   "end": 1.2,
+   "fade_out": 0.15,
+   "norm_peak_db": -18
+  },
+  "fx.tear1": {
+   "file": "assets/foley/fs-111105_tearing-paper-01-wav.ogg",
+   "start": 0.25,
+   "end": 2.4,
+   "fade_out": 0.15,
+   "norm_peak_db": -18
+  },
+  "fx.news": {
+   "file": "assets/extra/fs-558059_in-other-news.ogg",
+   "start": 0.3,
+   "end": 8.3,
+   "fade_in": 0.01,
+   "fade_out": 2.0,
+   "norm_peak_db": -14
+  },
+  "fx.wetcar": {
+   "file": "assets/street/fs-462862_passing-car-wet-road.ogg",
+   "eq": {
+    "hp": 80
+   },
+   "fade_in": 0.3,
+   "fade_out": 0.8,
+   "norm_peak_db": -21
+  },
+  "fx.payout": {
+   "file": "assets/casino/fs-361346_slot-machine-payout-wav.ogg",
+   "start": 0.3,
+   "end": 3.8,
+   "fade_out": 0.6,
+   "norm_peak_db": -15
+  },
+  "fx.pour": {
+   "file": "assets/coin/fs-363089_coins-being-poured.ogg",
+   "start": 1.3,
+   "end": 7.0,
+   "fade_in": 0.05,
+   "fade_out": 1.5,
+   "norm_peak_db": -19
+  },
+  "fx.slotjin": {
+   "file": "assets/casino/fs-587380_arp-slot-machine-minor-wav.ogg",
+   "start": 0.3,
+   "end": 4.4,
+   "eq": {
+    "hp": 300
+   },
+   "fade_out": 1.2,
+   "norm_peak_db": -23
+  },
+  "fx.cheer_s": {
+   "file": "assets/casino/fs-264377_small-crowd-cheering.ogg",
+   "start": 0.5,
+   "end": 6.0,
+   "fade_in": 0.2,
+   "fade_out": 2.0,
+   "norm_peak_db": -21
+  },
+  "fx.ball_run": {
+   "file": "assets/extra2/fs-448165_marbles-rolling-around-33cm-ceramic-bowl.ogg",
+   "start": 0.3,
+   "end": 4.0,
+   "eq": {
+    "hp": 250
+   },
+   "fade_in": 0.4,
+   "fade_out": 0.05,
+   "norm_peak_db": -19
+  },
+  "fx.pocket": {
+   "file": "assets/casino/fs-201807_poker-chips1-wav.ogg",
+   "start": 0.0,
+   "end": 0.55,
+   "mono": true,
+   "fade_out": 0.15,
+   "norm_peak_db": -15
+  },
+  "fx.roar": {
+   "file": "assets/casino/fs-346689_crowd-cheer-2-wav.ogg",
+   "start": 0.6,
+   "end": 8.0,
+   "fade_in": 0.08,
+   "fade_out": 2.5,
+   "norm_peak_db": -14
+  },
+  "fx.ball_old": {
+   "file": "assets/extra2/fs-448165_marbles-rolling-around-33cm-ceramic-bowl.ogg",
+   "start": 4.6,
+   "end": 11.0,
+   "eq": {
+    "hp": 400,
+    "lp": 3500
+   },
+   "fade_in": 0.5,
+   "fade_out": 1.5,
+   "norm_peak_db": -24
+  },
+  "fx.roar40": {
+   "file": "assets/casino/fs-346685_crowd-cheer-wav.ogg",
+   "start": 0.3,
+   "end": 9.0,
+   "fade_in": 0.05,
+   "fade_out": 2.0,
+   "norm_peak_db": -14
+  },
+  "fx.chips": {
+   "file": "assets/casino/fs-707910_throwing-poker-chips-on-a-wooden-table-s.ogg",
+   "start": 0.4,
+   "end": 3.0,
+   "fade_out": 0.4,
+   "norm_peak_db": -18
+  },
+  "fx.walkie": {
+   "file": "assets/extra2/fs-620516_walkiebeep-wav.ogg",
+   "mono": true,
+   "eq": {
+    "hp": 500,
+    "lp": 5000
+   },
+   "fade_out": 0.1,
+   "norm_peak_db": -24
+  },
+  "fx.squelch": {
+   "file": "assets/extra2/fs-524205_radio-sign-off-squelch.ogg",
+   "mono": true,
+   "eq": {
+    "hp": 500,
+    "lp": 5000
+   },
+   "fade_out": 0.2,
+   "norm_peak_db": -24
+  },
+  "fx.dthunder4": {
+   "file": "assets/storm/fs-581125_distant-thunder-4.ogg",
+   "start": 0.0,
+   "end": 12.0,
+   "eq": {
+    "lp": 1200
+   },
+   "fade_out": 3.0,
+   "norm_peak_db": -15
+  },
+  "fx.strikeA": {
+   "file": "assets/storm/fs-320050_thunder-very-close-no-rain-a-wav.ogg",
+   "start": 0.2,
+   "end": 8.0,
+   "fade_out": 2.0,
+   "norm_peak_db": -12
+  },
+  "fx.strikeB": {
+   "file": "assets/storm/fs-320049_thunder-very-close-no-rain-b-wav.ogg",
+   "start": 0.4,
+   "end": 9.0,
+   "fade_out": 2.5,
+   "norm_peak_db": -13
+  },
+  "fx.strikeC": {
+   "file": "assets/storm/fs-840628_closeup-thunder-strike-01.ogg",
+   "start": 0.62,
+   "end": 8.0,
+   "fade_out": 2.0,
+   "norm_peak_db": -13
+  },
+  "fx.branch": {
+   "file": "assets/storm/fs-164472_crack-of-branch-3-wav.ogg",
+   "mono": true,
+   "fade_out": 0.1,
+   "norm_peak_db": -12
+  },
+  "fx.sparks": {
+   "file": "assets/extra/fs-849772_electric-sparks.ogg",
+   "start": 0.5,
+   "end": 3.4,
+   "eq": {
+    "hp": 1500
+   },
+   "fade_out": 0.8,
+   "norm_peak_db": -22
+  },
+  "fx.alarm": {
+   "file": "assets/storm/fs-185474_car-alarm-flac.ogg",
+   "start": 1.5,
+   "end": 8.5,
+   "eq": {
+    "hp": 400,
+    "lp": 6000
+   },
+   "fade_in": 0.02,
+   "fade_out": 1.5,
+   "norm_peak_db": -21
+  },
+  "fx.goal": {
+   "file": "assets/extra2/fs-237679_football-crowd-goal-cheer-southampton-vs.ogg",
+   "start": 0.55,
+   "end": 9.5,
+   "fade_in": 0.05,
+   "fade_out": 2.5,
+   "norm_peak_db": -14
+  },
+  "fx.chime": {
+   "file": "assets/crowd/fs-331680_airplane-seat-belt-chime.ogg",
+   "start": 0.45,
+   "end": 3.0,
+   "fade_out": 1.0,
+   "norm_peak_db": -22
+  },
+  "fx.hull_thunder": {
+   "file": "assets/storm/fs-581124_distant-thunder-3.ogg",
+   "start": 0.0,
+   "end": 6.0,
+   "eq": {
+    "lp": 380
+   },
+   "fade_out": 1.5,
+   "norm_peak_db": -14
+  },
+  "fx.horn": {
+   "file": "assets/crowd/fs-420716_ship-horn-very-close.ogg",
+   "start": 0.0,
+   "end": 5.5,
+   "eq": {
+    "lp": 1800
+   },
+   "fade_out": 1.5,
+   "norm_peak_db": -22
+  },
+  "fx.groan": {
+   "file": "assets/crowd/fs-764212_crwdreac-crowd-groan-in-disagreement-sha.ogg",
+   "start": 0.0,
+   "end": 6.5,
+   "fade_in": 0.05,
+   "fade_out": 2.0,
+   "norm_peak_db": -17
+  },
+  "fx.bucket": {
+   "file": "assets/crowd/fs-165197_water-schwapp-bucket-metal-wav.ogg",
+   "start": 2.0,
+   "end": 6.5,
+   "fade_in": 0.05,
+   "fade_out": 0.8,
+   "norm_peak_db": -22
+  },
+  "fx.box": {
+   "file": "assets/foley/fs-364740_open-cardboard-box-compartment-wav.ogg",
+   "mono": true,
+   "fade_out": 0.2,
+   "norm_peak_db": -21
+  },
+  "fx.letter": {
+   "file": "assets/foley/fs-581844_foley-bills-mono-14-wav.ogg",
+   "start": 0.6,
+   "end": 1.35,
+   "mono": true,
+   "fade_out": 0.15,
+   "norm_peak_db": -21
+  },
+  "fx.truckgo": {
+   "file": "assets/street/fs-26814_t-start1-mp3.ogg",
+   "start": 2.9,
+   "end": 12.0,
+   "eq": {
+    "hp": 50
+   },
+   "fade_in": 0.3,
+   "fade_out": 3.0,
+   "norm_peak_db": -19
+  },
+  "fx.envelope": {
+   "file": "assets/extra/fs-444431_sliding-envelope-wav.ogg",
+   "mono": true,
+   "eq": {
+    "hp": 200
+   },
+   "fade_out": 0.2,
+   "norm_peak_db": -31
+  },
+  "fx.gasp": {
+   "file": "assets/extra/fs-264376_small-crowd-gasp-shock-surprise.ogg",
+   "start": 0.0,
+   "end": 3.5,
+   "fade_out": 1.0,
+   "norm_peak_db": -21
+  },
+  "fx.register": {
+   "file": "assets/extra/fs-209578_cash-register-purchase.ogg",
+   "start": 0.0,
+   "end": 2.0,
+   "mono": true,
+   "fade_out": 0.5,
+   "norm_peak_db": -21
+  },
+  "fx.cash": {
+   "file": "assets/foley/fs-459546_moolah-counting-out-bills-wav.ogg",
+   "start": 0.0,
+   "end": 4.2,
+   "fade_out": 0.8,
+   "norm_peak_db": -23
+  },
+  "fx.news_dark": {
+   "file": "assets/extra/fs-558059_in-other-news.ogg",
+   "start": 0.3,
+   "end": 6.0,
+   "eq": {
+    "lp": 2200,
+    "hp": 200
+   },
+   "fade_in": 0.01,
+   "fade_out": 2.0,
+   "norm_peak_db": -20
+  },
+  "fx.far_thunder": {
+   "file": "assets/storm/fs-581125_distant-thunder-4.ogg",
+   "start": 0.0,
+   "end": 9.0,
+   "eq": {
+    "lp": 700
+   },
+   "fade_out": 2.5,
+   "norm_peak_db": -17
+  },
+  "fx.fish1": {
+   "file": "assets/island/fs-59104_splash-wav.ogg",
+   "start": 0.35,
+   "end": 1.4,
+   "mono": true,
+   "fade_out": 0.3,
+   "norm_peak_db": -19
+  },
+  "fx.fish2": {
+   "file": "assets/island/fs-321490_tiny-splash.ogg",
+   "start": 0.15,
+   "end": 1.0,
+   "mono": true,
+   "fade_out": 0.2,
+   "norm_peak_db": -21
+  },
+  "fx.fish3": {
+   "file": "assets/island/fs-7055_eel-fishing-3-wav.ogg",
+   "start": 0.0,
+   "end": 0.75,
+   "mono": true,
+   "fade_out": 0.2,
+   "norm_peak_db": -21
+  },
+  "fx.wstrike": {
+   "file": "assets/storm/fs-320049_thunder-very-close-no-rain-b-wav.ogg",
+   "start": 0.4,
+   "end": 6.5,
+   "fade_out": 2.0,
+   "norm_peak_db": -14
+  },
+  "fx.wstrike2": {
+   "file": "assets/storm/fs-320050_thunder-very-close-no-rain-a-wav.ogg",
+   "start": 0.2,
+   "end": 6.0,
+   "fade_out": 2.0,
+   "norm_peak_db": -15
+  },
+  "fx.hiss": {
+   "file": "assets/island/fs-59104_splash-wav.ogg",
+   "start": 0.35,
+   "end": 2.6,
+   "eq": {
+    "hp": 1200
+   },
+   "fade_out": 1.0,
+   "norm_peak_db": -20
+  },
+  "fx.star": {
+   "file": "assets/wg/fs-351256_deep-whoosh-1.ogg",
+   "pitch": 5.0,
+   "eq": {
+    "hp": 700
+   },
+   "fade_out": 0.3,
+   "norm_peak_db": -26
+  },
+  "fx.swerve": {
+   "file": "assets/wg/fs-351259_deep-whoosh-2.ogg",
+   "pitch": -6.0,
+   "eq": {
+    "lp": 2500
+   },
+   "fade_out": 0.6,
+   "norm_peak_db": -14
+  },
+  "fx.pocket_coin": {
+   "file": "assets/coin/fs-800068_coin-foley-6-wav.ogg",
+   "start": 0.05,
+   "end": 0.75,
+   "mono": true,
+   "eq": {
+    "hp": 300
+   },
+   "fade_out": 0.25,
+   "norm_peak_db": -22
+  },
+  "fx.slowspin": {
+   "file": "assets/extra/fs-485741_coin-spin-4.ogg",
+   "start": 0.3,
+   "end": 7.45,
+   "pitch": -12.0,
+   "eq": {
+    "hp": 180
+   },
+   "fade_in": 0.8,
+   "fade_out": 0.3,
+   "norm_peak_db": -22,
+   "env": [
+    [
+     0,
+     -6
+    ],
+    [
+     5,
+     0
+    ],
+    [
+     10.5,
+     0
+    ],
+    [
+     14.2,
+     -30
+    ]
+   ]
+  },
+  "fx.edge_tick": {
+   "file": "assets/coin/fs-19778_coindrop1-wav.ogg",
+   "start": 0.035,
+   "end": 0.115,
+   "mono": true,
+   "eq": {
+    "hp": 900
+   },
+   "fade_in": 0.001,
+   "fade_out": 0.05,
+   "norm_peak_db": -25
+  },
+  "fx.edge_sand": {
+   "file": "assets/island/fs-384082_foot-step-grit-sand-wav.ogg",
+   "start": 0.0,
+   "end": 0.5,
+   "mono": true,
+   "eq": {
+    "hp": 1500
+   },
+   "fade_out": 0.3,
+   "norm_peak_db": -36
+  },
+  "fx.endbowl": {
+   "file": "assets/wg/fs-116315_big-singing-bowl.ogg",
+   "start": 0.85,
+   "end": 14.4,
+   "pitch": 0.38,
+   "eq": {
+    "hp": 150
+   },
+   "fade_in": 0.01,
+   "fade_out": 3.5,
+   "norm_peak_db": -22,
+   "env": [
+    [
+     0,
+     0
+    ],
+    [
+     6,
+     0
+    ],
+    [
+     10,
+     3
+    ]
+   ]
+  }
+ },
+ "place": [
+  {
+   "sample": "fx.ding",
+   "at": 16.03,
+   "gain_db": 0.0,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding",
+   "at": 25.03,
+   "gain_db": 1.5,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding",
+   "at": 34.03,
+   "gain_db": 0.0,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding",
+   "at": 43.03,
+   "gain_db": 0.0,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding",
+   "at": 52.03,
+   "gain_db": 0.0,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding",
+   "at": 61.03,
+   "gain_db": 0.0,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding",
+   "at": 70.03,
+   "gain_db": 0.0,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding",
+   "at": 79.03,
+   "gain_db": 0.0,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding",
+   "at": 106.03,
+   "gain_db": 1.5,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding",
+   "at": 115.03,
+   "gain_db": 0.0,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding",
+   "at": 124.03,
+   "gain_db": 0.0,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding",
+   "at": 142.03,
+   "gain_db": 0.0,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding",
+   "at": 151.03,
+   "gain_db": 0.0,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding",
+   "at": 160.03,
+   "gain_db": 1.5,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding",
+   "at": 169.03,
+   "gain_db": 1.5,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding",
+   "at": 205.03,
+   "gain_db": 0.0,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding",
+   "at": 214.03,
+   "gain_db": 0.0,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding",
+   "at": 223.03,
+   "gain_db": 0.0,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding",
+   "at": 241.03,
+   "gain_db": 1.5,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding",
+   "at": 250.03,
+   "gain_db": 1.5,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding",
+   "at": 268.03,
+   "gain_db": 1.5,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding_dark",
+   "at": 277.03,
+   "gain_db": 0.0,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding_dark",
+   "at": 286.03,
+   "gain_db": 0.0,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding_dark",
+   "at": 295.03,
+   "gain_db": 0.0,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding_dark",
+   "at": 304.03,
+   "gain_db": 0.0,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding_dark",
+   "at": 313.03,
+   "gain_db": 0.0,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding_dark",
+   "at": 322.03,
+   "gain_db": 0.0,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding_dark",
+   "at": 331.03,
+   "gain_db": 0.0,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding_dark",
+   "at": 340.03,
+   "gain_db": 0.0,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding_dark",
+   "at": 367.03,
+   "gain_db": -3.0,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding_dark",
+   "at": 376.03,
+   "gain_db": -3.0,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding_dark",
+   "at": 385.03,
+   "gain_db": -3.0,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding_dark",
+   "at": 394.03,
+   "gain_db": -3.0,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding_dark",
+   "at": 403.03,
+   "gain_db": -3.0,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding_dark",
+   "at": 412.03,
+   "gain_db": -3.0,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding_dark",
+   "at": 421.03,
+   "gain_db": -3.0,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ding_dark",
+   "at": 430.03,
+   "gain_db": -3.0,
+   "pan": -0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.thud",
+   "at": 97.8,
+   "gain_db": 0.0,
+   "pan": -0.45,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.thud",
+   "at": 106.8,
+   "gain_db": 0.0,
+   "pan": -0.45,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.thud",
+   "at": 268.8,
+   "gain_db": 0.0,
+   "pan": -0.45,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.thud",
+   "at": 322.8,
+   "gain_db": 0.0,
+   "pan": -0.45,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.thud",
+   "at": 331.8,
+   "gain_db": 0.0,
+   "pan": -0.45,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.thud",
+   "at": 340.8,
+   "gain_db": 0.0,
+   "pan": -0.45,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.thud",
+   "at": 52.8,
+   "gain_db": -8.0,
+   "pan": -0.45,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.thud",
+   "at": 115.8,
+   "gain_db": -8.0,
+   "pan": -0.45,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.thud",
+   "at": 124.8,
+   "gain_db": -8.0,
+   "pan": -0.45,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.thud",
+   "at": 142.8,
+   "gain_db": -8.0,
+   "pan": -0.45,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.thud",
+   "at": 151.8,
+   "gain_db": -8.0,
+   "pan": -0.45,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.thud",
+   "at": 160.8,
+   "gain_db": -8.0,
+   "pan": -0.45,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.thud",
+   "at": 169.8,
+   "gain_db": -8.0,
+   "pan": -0.45,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.thud",
+   "at": 214.8,
+   "gain_db": -8.0,
+   "pan": -0.45,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.thud",
+   "at": 223.8,
+   "gain_db": -8.0,
+   "pan": -0.45,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.thud",
+   "at": 241.8,
+   "gain_db": -8.0,
+   "pan": -0.45,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.thud",
+   "at": 277.8,
+   "gain_db": -8.0,
+   "pan": -0.45,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.thud",
+   "at": 286.8,
+   "gain_db": -8.0,
+   "pan": -0.45,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.thud",
+   "at": 295.8,
+   "gain_db": -8.0,
+   "pan": -0.45,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.thud",
+   "at": 304.8,
+   "gain_db": -8.0,
+   "pan": -0.45,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.card_sw",
+   "at": 81.28,
+   "gain_db": 0.0,
+   "pan": 0.5,
+   "align": "peak"
+  },
+  {
+   "sample": "fx.card_gl",
+   "at": 81.32,
+   "gain_db": 0.0,
+   "pan": 0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.card_sw",
+   "at": 90.28,
+   "gain_db": 0.0,
+   "pan": 0.5,
+   "align": "peak"
+  },
+  {
+   "sample": "fx.card_gl",
+   "at": 90.32,
+   "gain_db": 0.0,
+   "pan": 0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.card_sw",
+   "at": 116.28,
+   "gain_db": 0.0,
+   "pan": 0.5,
+   "align": "peak"
+  },
+  {
+   "sample": "fx.card_gl",
+   "at": 116.32,
+   "gain_db": 0.0,
+   "pan": 0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.card_sw",
+   "at": 161.28,
+   "gain_db": 0.0,
+   "pan": 0.5,
+   "align": "peak"
+  },
+  {
+   "sample": "fx.card_gl",
+   "at": 161.32,
+   "gain_db": 0.0,
+   "pan": 0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.card_sw",
+   "at": 188.28,
+   "gain_db": 0.0,
+   "pan": 0.5,
+   "align": "peak"
+  },
+  {
+   "sample": "fx.card_gl",
+   "at": 188.32,
+   "gain_db": 0.0,
+   "pan": 0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.card_sw",
+   "at": 233.28,
+   "gain_db": 5.0,
+   "pan": 0.5,
+   "align": "peak"
+  },
+  {
+   "sample": "fx.card_gl",
+   "at": 233.32,
+   "gain_db": 4.0,
+   "pan": 0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.card_sw",
+   "at": 260.28,
+   "gain_db": 0.0,
+   "pan": 0.5,
+   "align": "peak"
+  },
+  {
+   "sample": "fx.card_gl",
+   "at": 260.32,
+   "gain_db": 0.0,
+   "pan": 0.55,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.card_sw",
+   "at": 467.4,
+   "gain_db": -16.0,
+   "pan": 0.5,
+   "align": "peak"
+  },
+  {
+   "sample": "fx.t_coins",
+   "at": 0.15,
+   "gain_db": 0.0,
+   "pan": -0.25,
+   "align": "start"
+  },
+  {
+   "sample": "fx.t_pay",
+   "at": 2.4,
+   "gain_db": 0.0,
+   "pan": 0.35,
+   "align": "start"
+  },
+  {
+   "sample": "fx.t_thunder",
+   "at": 2.9,
+   "gain_db": 0.0,
+   "pan": 0.15,
+   "align": "start"
+  },
+  {
+   "sample": "fx.dthunder",
+   "at": 0.95,
+   "gain_db": -4.0,
+   "pan": -0.5,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.dthunder",
+   "at": 4.05,
+   "gain_db": -2.0,
+   "pan": 0.5,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.t_fish",
+   "at": 1.6,
+   "gain_db": 0.0,
+   "pan": -0.3,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.t_fish",
+   "at": 3.7,
+   "gain_db": 0.0,
+   "pan": 0.4,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.t_fish",
+   "at": 5.1,
+   "gain_db": 0.0,
+   "pan": -0.1,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.t_riser",
+   "at": 1.0649999999999995,
+   "gain_db": 0.0,
+   "align": "start"
+  },
+  {
+   "sample": "fx.flick",
+   "at": 8.45,
+   "gain_db": 0.0,
+   "pan": 0.1,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.airspin",
+   "at": 8.6,
+   "gain_db": 0.0,
+   "pan": 0.0,
+   "align": "start"
+  },
+  {
+   "sample": "fx.catch",
+   "at": 13.5,
+   "gain_db": 0.0,
+   "pan": 0.0,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.toast_sw",
+   "at": 17.95,
+   "gain_db": 0.0,
+   "pan": 0.2,
+   "align": "peak"
+  },
+  {
+   "sample": "fx.toast_land",
+   "at": 18.16,
+   "gain_db": 0.0,
+   "pan": 0.2,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.relay",
+   "at": 27.8,
+   "gain_db": -0.0,
+   "pan": 0.3,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.relay",
+   "at": 28.7,
+   "gain_db": -2.0,
+   "pan": 0.44999999999999996,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.relay",
+   "at": 29.6,
+   "gain_db": -4.0,
+   "pan": 0.6,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.bill",
+   "at": 39.0,
+   "gain_db": 0.0,
+   "pan": 0.25,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.hbell",
+   "at": 43.9,
+   "gain_db": 0.0,
+   "pan": -0.2,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.pop1",
+   "at": 43.95,
+   "gain_db": 0.0,
+   "pan": 0.35,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.pop2",
+   "at": 44.2,
+   "gain_db": 0.0,
+   "pan": -0.4,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.cafe_cheer",
+   "at": 44.1,
+   "gain_db": 0.0,
+   "pan": 0.0,
+   "align": "start"
+  },
+  {
+   "sample": "fx.nostart",
+   "at": 53.2,
+   "gain_db": 0.0,
+   "pan": -0.3,
+   "align": "start"
+  },
+  {
+   "sample": "fx.crank",
+   "at": 57.6,
+   "gain_db": 0.0,
+   "pan": -0.3,
+   "align": "start"
+  },
+  {
+   "sample": "fx.shake",
+   "at": 62.1,
+   "gain_db": 0.0,
+   "pan": 0.0,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.office_clap",
+   "at": 62.3,
+   "gain_db": 0.0,
+   "align": "start"
+  },
+  {
+   "sample": "fx.office_clap2",
+   "at": 64.5,
+   "gain_db": 0.0,
+   "align": "start"
+  },
+  {
+   "sample": "fx.scratch",
+   "at": 70.45,
+   "gain_db": 0.0,
+   "pan": 0.1,
+   "align": "start"
+  },
+  {
+   "sample": "fx.scratch",
+   "at": 72.55,
+   "gain_db": -1.0,
+   "pan": 0.1,
+   "align": "start"
+  },
+  {
+   "sample": "fx.pop1",
+   "at": 75.35,
+   "gain_db": -2.0,
+   "pan": -0.3,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.pop2",
+   "at": 75.55,
+   "gain_db": -3.0,
+   "pan": 0.3,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ball",
+   "at": 80.0,
+   "gain_db": 0.0,
+   "pan": 0.35,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ball",
+   "at": 81.15,
+   "gain_db": 0.0,
+   "pan": 0.35,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ball",
+   "at": 82.3,
+   "gain_db": 0.0,
+   "pan": 0.35,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ball",
+   "at": 83.45,
+   "gain_db": 0.0,
+   "pan": 0.35,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ball",
+   "at": 84.6,
+   "gain_db": 0.0,
+   "pan": 0.35,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.ball",
+   "at": 85.75,
+   "gain_db": 0.0,
+   "pan": 0.35,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.tv_cheer",
+   "at": 86.0,
+   "gain_db": 0.0,
+   "pan": 0.35,
+   "align": "start"
+  },
+  {
+   "sample": "fx.flash1",
+   "at": 88.6,
+   "gain_db": 0.0,
+   "pan": -0.4,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.flash2",
+   "at": 89.5,
+   "gain_db": 0.0,
+   "pan": 0.4,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.flash3",
+   "at": 91.2,
+   "gain_db": 0.0,
+   "pan": -0.2,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.flash1",
+   "at": 92.4,
+   "gain_db": 0.0,
+   "pan": 0.5,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.flash2",
+   "at": 94.0,
+   "gain_db": 0.0,
+   "pan": -0.5,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.flash1",
+   "at": 95.3,
+   "gain_db": 0.0,
+   "pan": 0.3,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.flash3",
+   "at": 106.2,
+   "gain_db": -1.0,
+   "pan": 0.4,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.flash1",
+   "at": 107.0,
+   "gain_db": -1.0,
+   "pan": -0.4,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.flash2",
+   "at": 108.1,
+   "gain_db": -1.0,
+   "pan": 0.2,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.flash1",
+   "at": 109.1,
+   "gain_db": -1.0,
+   "pan": -0.3,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.flash3",
+   "at": 109.6,
+   "gain_db": -1.0,
+   "pan": 0.5,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.flash2",
+   "at": 111.0,
+   "gain_db": -1.0,
+   "pan": -0.2,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.flash1",
+   "at": 112.1,
+   "gain_db": -1.0,
+   "pan": 0.4,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.flash2",
+   "at": 112.7,
+   "gain_db": -1.0,
+   "pan": -0.5,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.flash1",
+   "at": 114.0,
+   "gain_db": -1.0,
+   "pan": 0.2,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.flash3",
+   "at": 115.4,
+   "gain_db": -1.0,
+   "pan": -0.3,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.flash1",
+   "at": 117.2,
+   "gain_db": -1.0,
+   "pan": 0.4,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.flash2",
+   "at": 119.5,
+   "gain_db": -1.0,
+   "pan": -0.4,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.applause",
+   "at": 88.3,
+   "gain_db": 0.0,
+   "align": "start"
+  },
+  {
+   "sample": "fx.applause",
+   "at": 115.4,
+   "gain_db": -2.0,
+   "align": "start"
+  },
+  {
+   "sample": "fx.pop1",
+   "at": 115.3,
+   "gain_db": -4.0,
+   "pan": 0.4,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.tear2",
+   "at": 97.6,
+   "gain_db": -0.0,
+   "pan": -0.3,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.tear4",
+   "at": 98.9,
+   "gain_db": -1.5,
+   "pan": 0.4,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.tear3",
+   "at": 99.8,
+   "gain_db": -0.0,
+   "pan": -0.5,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.tear1",
+   "at": 101.0,
+   "gain_db": -1.5,
+   "pan": 0.2,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.tear4",
+   "at": 102.3,
+   "gain_db": -0.0,
+   "pan": -0.2,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.tear2",
+   "at": 103.1,
+   "gain_db": -1.5,
+   "pan": 0.5,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.tear3",
+   "at": 104.2,
+   "gain_db": -0.0,
+   "pan": -0.4,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.tear4",
+   "at": 105.0,
+   "gain_db": -1.5,
+   "pan": 0.3,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.news",
+   "at": 124.05,
+   "gain_db": 0.0,
+   "align": "start"
+  },
+  {
+   "sample": "fx.wetcar",
+   "at": 134.0,
+   "gain_db": 0.0,
+   "pan": 0.5,
+   "align": "start"
+  },
+  {
+   "sample": "fx.slotjin",
+   "at": 142.85,
+   "gain_db": 0.0,
+   "pan": 0.4,
+   "align": "start"
+  },
+  {
+   "sample": "fx.payout",
+   "at": 142.9,
+   "gain_db": -0.0,
+   "pan": 0.35,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.payout",
+   "at": 144.0,
+   "gain_db": -1.0,
+   "pan": 0.0,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.payout",
+   "at": 145.1,
+   "gain_db": -2.0,
+   "pan": -0.35,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.pour",
+   "at": 144.4,
+   "gain_db": 0.0,
+   "pan": 0.1,
+   "align": "start"
+  },
+  {
+   "sample": "fx.cheer_s",
+   "at": 144.8,
+   "gain_db": 0.0,
+   "align": "start"
+  },
+  {
+   "sample": "fx.ball_run",
+   "at": 150.9,
+   "gain_db": 0.0,
+   "pan": -0.15,
+   "align": "start"
+  },
+  {
+   "sample": "fx.pocket",
+   "at": 154.6,
+   "gain_db": 0.0,
+   "pan": -0.15,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.roar",
+   "at": 154.75,
+   "gain_db": 0.0,
+   "align": "start"
+  },
+  {
+   "sample": "fx.ball_old",
+   "at": 161.5,
+   "gain_db": 0.0,
+   "pan": -0.2,
+   "align": "start"
+  },
+  {
+   "sample": "fx.roar40",
+   "at": 169.05,
+   "gain_db": 0.0,
+   "align": "start"
+  },
+  {
+   "sample": "fx.chips",
+   "at": 169.4,
+   "gain_db": 0.0,
+   "pan": 0.3,
+   "align": "start"
+  },
+  {
+   "sample": "fx.chips",
+   "at": 171.9,
+   "gain_db": -3.0,
+   "pan": -0.3,
+   "align": "start"
+  },
+  {
+   "sample": "fx.pop2",
+   "at": 169.2,
+   "gain_db": -2.0,
+   "pan": -0.4,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.pop1",
+   "at": 169.6,
+   "gain_db": -2.0,
+   "pan": 0.45,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.walkie",
+   "at": 179.2,
+   "gain_db": 0.0,
+   "pan": 0.4,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.squelch",
+   "at": 183.8,
+   "gain_db": 0.0,
+   "pan": 0.4,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.squelch",
+   "at": 188.6,
+   "gain_db": 0.0,
+   "pan": -0.3,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.walkie",
+   "at": 192.5,
+   "gain_db": 0.0,
+   "pan": 0.3,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.squelch",
+   "at": 199.5,
+   "gain_db": 0.0,
+   "pan": -0.2,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.walkie",
+   "at": 202.8,
+   "gain_db": 0.0,
+   "pan": 0.2,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.dthunder",
+   "at": 207.2,
+   "gain_db": -4.0,
+   "pan": 0.5,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.dthunder",
+   "at": 211.4,
+   "gain_db": -2.0,
+   "pan": -0.3,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.dthunder4",
+   "at": 216.5,
+   "gain_db": 0.0,
+   "pan": 0.4,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.dthunder4",
+   "at": 237.5,
+   "gain_db": -3.0,
+   "pan": -0.4,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.strikeA",
+   "at": 226.65,
+   "gain_db": 0.0,
+   "pan": 0.45,
+   "align": "start"
+  },
+  {
+   "sample": "fx.branch",
+   "at": 226.75,
+   "gain_db": 0.0,
+   "pan": 0.5,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.sparks",
+   "at": 226.8,
+   "gain_db": 0.0,
+   "pan": 0.5,
+   "align": "start"
+  },
+  {
+   "sample": "fx.strikeB",
+   "at": 229.6,
+   "gain_db": -1.0,
+   "pan": 0.25,
+   "align": "start"
+  },
+  {
+   "sample": "fx.alarm",
+   "at": 230.1,
+   "gain_db": 0.0,
+   "pan": 0.35,
+   "align": "start"
+  },
+  {
+   "sample": "fx.strikeC",
+   "at": 235.6,
+   "gain_db": 0.0,
+   "pan": -0.1,
+   "align": "start"
+  },
+  {
+   "sample": "fx.sparks",
+   "at": 235.75,
+   "gain_db": -2.0,
+   "pan": 0.0,
+   "align": "start"
+  },
+  {
+   "sample": "fx.goal",
+   "at": 242.1,
+   "gain_db": 0.0,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.chime",
+   "at": 250.6,
+   "gain_db": 0.0,
+   "pan": -0.2,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.hull_thunder",
+   "at": 253.2,
+   "gain_db": 0.0,
+   "pan": 0.4,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.hull_thunder",
+   "at": 256.5,
+   "gain_db": -3.0,
+   "pan": 0.4,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.horn",
+   "at": 259.6,
+   "gain_db": 0.0,
+   "pan": -0.4,
+   "align": "start"
+  },
+  {
+   "sample": "fx.groan",
+   "at": 268.3,
+   "gain_db": 0.0,
+   "align": "start"
+  },
+  {
+   "sample": "fx.bucket",
+   "at": 278.6,
+   "gain_db": 0.0,
+   "pan": 0.45,
+   "align": "start"
+  },
+  {
+   "sample": "fx.bucket",
+   "at": 282.4,
+   "gain_db": -2.0,
+   "pan": 0.45,
+   "align": "start"
+  },
+  {
+   "sample": "fx.box",
+   "at": 287.3,
+   "gain_db": 0.0,
+   "pan": -0.4,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.box",
+   "at": 289.6,
+   "gain_db": -2.0,
+   "pan": -0.4,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.letter",
+   "at": 290.6,
+   "gain_db": 0.0,
+   "pan": 0.2,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.truckgo",
+   "at": 305.3,
+   "gain_db": 0.0,
+   "pan": 0.5,
+   "align": "start"
+  },
+  {
+   "sample": "fx.envelope",
+   "at": 315.0,
+   "gain_db": 0.0,
+   "pan": 0.1,
+   "align": "start"
+  },
+  {
+   "sample": "fx.gasp",
+   "at": 322.7,
+   "gain_db": 0.0,
+   "align": "start"
+  },
+  {
+   "sample": "fx.register",
+   "at": 325.8,
+   "gain_db": 0.0,
+   "pan": 0.25,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.cash",
+   "at": 326.3,
+   "gain_db": 0.0,
+   "pan": 0.2,
+   "align": "start"
+  },
+  {
+   "sample": "fx.news_dark",
+   "at": 331.05,
+   "gain_db": 0.0,
+   "align": "start"
+  },
+  {
+   "sample": "fx.far_thunder",
+   "at": 367.9,
+   "gain_db": -0.0,
+   "pan": -0.5,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.far_thunder",
+   "at": 369.4,
+   "gain_db": -2.0,
+   "pan": 0.4,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.far_thunder",
+   "at": 371.1,
+   "gain_db": -0.0,
+   "pan": -0.2,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.far_thunder",
+   "at": 372.5,
+   "gain_db": -2.0,
+   "pan": 0.5,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.far_thunder",
+   "at": 374.2,
+   "gain_db": -0.0,
+   "pan": -0.4,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.far_thunder",
+   "at": 377.5,
+   "gain_db": -3.0,
+   "pan": 0.5,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.far_thunder",
+   "at": 380.12,
+   "gain_db": -5.0,
+   "pan": -0.5,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.far_thunder",
+   "at": 383.4,
+   "gain_db": -3.0,
+   "pan": 0.3,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.fish1",
+   "at": 385.8,
+   "gain_db": -0.0,
+   "pan": -0.3,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.fish2",
+   "at": 387.0,
+   "gain_db": -1.0,
+   "pan": 0.2,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.fish3",
+   "at": 388.1,
+   "gain_db": -0.0,
+   "pan": 0.4,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.fish1",
+   "at": 389.5,
+   "gain_db": -1.0,
+   "pan": -0.1,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.fish2",
+   "at": 390.6,
+   "gain_db": -0.0,
+   "pan": 0.3,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.fish3",
+   "at": 391.9,
+   "gain_db": -1.0,
+   "pan": -0.4,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.fish1",
+   "at": 393.0,
+   "gain_db": -0.0,
+   "pan": 0.1,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.fish2",
+   "at": 396.6,
+   "gain_db": -3.0,
+   "pan": 0.4,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.fish3",
+   "at": 399.8,
+   "gain_db": -3.0,
+   "pan": -0.3,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.fish2",
+   "at": 402.2,
+   "gain_db": -3.0,
+   "pan": 0.2,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.wstrike",
+   "at": 395.3,
+   "gain_db": -0.0,
+   "pan": 0.35,
+   "align": "start"
+  },
+  {
+   "sample": "fx.hiss",
+   "at": 395.35,
+   "gain_db": 0.0,
+   "pan": 0.35,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.wstrike2",
+   "at": 398.1,
+   "gain_db": -1.0,
+   "pan": -0.3,
+   "align": "start"
+  },
+  {
+   "sample": "fx.hiss",
+   "at": 398.15000000000003,
+   "gain_db": 0.0,
+   "pan": -0.3,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.wstrike",
+   "at": 401.3,
+   "gain_db": -2.0,
+   "pan": 0.45,
+   "align": "start"
+  },
+  {
+   "sample": "fx.hiss",
+   "at": 401.35,
+   "gain_db": 0.0,
+   "pan": 0.45,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.star",
+   "at": 405.0,
+   "gain_db": 0.0,
+   "pan": -0.4,
+   "align": "peak"
+  },
+  {
+   "sample": "fx.star",
+   "at": 408.2,
+   "gain_db": 0.0,
+   "pan": 0.5,
+   "align": "peak"
+  },
+  {
+   "sample": "fx.star",
+   "at": 410.4,
+   "gain_db": 0.0,
+   "pan": -0.1,
+   "align": "peak"
+  },
+  {
+   "sample": "fx.swerve",
+   "at": 425.5,
+   "gain_db": 0.0,
+   "pan": 0.0,
+   "align": "peak"
+  },
+  {
+   "sample": "fx.pocket_coin",
+   "at": 441.6,
+   "gain_db": 6.0,
+   "pan": 0.1,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.flick",
+   "at": 451.0,
+   "gain_db": -3.0,
+   "pan": 0.0,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.slowspin",
+   "at": 451.6,
+   "gain_db": 0.0,
+   "pan": 0.0,
+   "align": "start"
+  },
+  {
+   "sample": "fx.edge_tick",
+   "at": 466.7,
+   "gain_db": 0.0,
+   "pan": 0.0,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.edge_sand",
+   "at": 466.72,
+   "gain_db": 0.0,
+   "pan": 0.0,
+   "align": "start"
+  },
+  {
+   "sample": "fx.endbowl",
+   "at": 496.3,
+   "gain_db": 0.0,
+   "pan": 0.0,
+   "align": "attack"
+  },
+  {
+   "sample": "fx.edge_tick",
+   "at": 501.0,
+   "gain_db": -9.0,
+   "pan": 0.0,
+   "align": "attack"
+  }
+ ]
+}
