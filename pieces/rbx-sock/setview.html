@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>rbx set view</title>
+<style>html,body{margin:0;background:#000}canvas{width:540px;height:960px;display:block}</style></head>
+<body>
+<script src="../../styles/pov3d/three.js"></script>
+<script src="../../styles/roblox/rbx.js"></script>
+<script src="src/kit.js"></script>
+<script>
+// setview.html?set=street&file=src/set-street.js : loads one set file and exposes renderView(name)
+(async function () {
+  const q = new URLSearchParams(location.search), name = q.get('set'), file = q.get('file') || `src/set-${name}.js`;
+  const extra = (q.get('extra') || '').split(',').filter(Boolean);
+  for (const f of [...extra, file]) await new Promise((res, rej) => { const s = document.createElement('script'); s.src = f; s.onload = res; s.onerror = () => rej(new Error('load ' + f)); document.body.appendChild(s); });
+  const W = 1080, H = 1920, renderer = new THREE.WebGLRenderer({ antialias: false, preserveDrawingBuffer: true });
+  renderer.setPixelRatio(1); renderer.setSize(W, H, false); document.body.appendChild(renderer.domElement);
+  renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap; renderer.physicallyCorrectLights = true;
+  const post = new RBX.Post(renderer, W, H, 2), cam = new THREE.PerspectiveCamera(50, W / H, 0.1, 2000);
+  const S = await SETS[name]({ renderer });
+  // stand-in people at every mark whose name starts with "p_" (scale check)
+  if (q.get('people') !== '0') Object.entries(S.marks || {}).forEach(([k, m]) => { if (!k.startsWith('p_')) return; const a = RBX.avatar({ shirt: '#3d6fd1', face: 'neutral' }); a.root.position.set(...m.p); a.root.rotation.y = m.ry || 0; if (m.sit) a.pose({ legL: [-Math.PI / 2, 0, 0], legR: [-Math.PI / 2, 0, 0] }); S.scene.add(a.root); });
+  window.VIEWS = Object.keys(S.views || {});
+  window.renderView = (v) => { const c = S.views[v]; if (c.mood && S.mood) S.mood(c.mood); cam.fov = c.fov || 50; cam.far = 2000; cam.position.set(...c.p); cam.lookAt(new THREE.Vector3(...c.l)); if (c.roll) cam.rotateZ(c.roll); cam.updateProjectionMatrix();
+    post.render(S.scene, cam, Object.assign({ focus: cam.position.distanceTo(new THREE.Vector3(...c.l)) }, KIT.GRADE[c.grade || S.grade || 'night'], { aperture: 0 })); return renderer.domElement.toDataURL('image/jpeg', 0.9); };
+  window.READY = true;
+})().catch((e) => { console.log('ERR', e.message, e.stack); window.READY = 'error'; });
+</script>
+</body></html>

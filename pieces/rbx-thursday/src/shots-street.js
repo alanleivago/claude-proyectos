@@ -37,7 +37,7 @@
     return { p: [0.5, 30 - 4 * u, 1.5], l: [0.5, 0, 0], fov: 46, roll: 90 }; });
   // ---- the town's habits (day) ----
   STAGE('Every window gets boarded', (s, u) => { mood(s, 'sunset'); call(s, 'setBoards', true); const p = M(s, 'p_dad_window', [-5, 0, -14.5]);
-    put(s, 'dad', { p, ry: Math.PI, face: 'determined', pose: CAST.POSE.hammer(u < 0.5 ? 1 : 0.4) }); prop(s, 'hammer', [], [p[0] - 1.2, p[1] + 5.8, p[2] - 0.6], 0);
+    put(s, 'dad', { p, ry: Math.PI, face: 'determined', pose: CAST.POSE.hammer(0.7 + 0.3 * Math.cos(u * Math.PI * 6)) }); prop(s, 'hammer', [], [p[0] - 1.2, p[1] + 5.8, p[2] - 0.6], 0);
     return ENG.face('dad', 6.5, 100, -22, 48); });
   STAGE('The mailman walks', (s, u) => { mood(s, 'day'); call(s, 'setBoards', false); const p = M(s, 'p_mailman', [-12, 0, 7.5]); const q = [p[0] + 2 * u, p[1], p[2]];
     put(s, 'mailman', { p: q, ry: Math.PI / 2, face: 'neutral', pose: CAST.POSE.headDown(u * 4) });

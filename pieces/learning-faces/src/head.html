@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Learning Faces</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { width: min(100vw, calc(100vh * 16 / 9)); height: auto; aspect-ratio: 16 / 9; display: block; cursor: pointer; image-rendering: pixelated; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  LEARNING FACES — 16:9, 24fps, style "onebit" + Flow layers. Cosmic horror after Urbn.Theory's format, no voice:
+//  the captions carry it (clocked by a scratch voice), the talking loop types them. Madfable outro. Copied from bells.
+// =====================================================================
+const FPS = 24, W = 1920, H = 1080;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const SAFE = { top: 60, bottom: 60, right: 80 };
+const HAND = 'sans-serif';
+const CX = 960;
+// ---- the voice is the clock: VL(id) = a line { t0, t1, words }, VW(id, word, n) = when its n-th `word` starts
+const VL = (id) => VOICE.lines.find((l) => l.id === id);
+const VW = (id, w, n = 1) => { let k = 0; for (const x of VL(id).words) if (x.w.toLowerCase().replace(/[^a-z']/g, '') === w && ++k === n) return x.t0; return VL(id).t0; };
+const AT = (id) => VL(id).t0 - 0.15;                                  // a shot starts just before its line
+const REVEAL = AT('wasnt');                                            // the payoff: it wasn't his face
+const CARD = VL('next').t1 + 2.2;
+const LOGO = CARD + 6.4;                                              // the Madfable outro
+const DURATION = Math.round((LOGO + 21) * FPS) / FPS;   // a ~20 s end screen for the YouTube end cards
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+
+// [t0, scene] — one shot per line (29 beats), then the card and the Madfable outro
+const IDS = VOICE.lines.map((l) => l.id);
+const SHOT_LIST = [...IDS.map((id, i) => [i ? AT(id) : 0, id]), [CARD, 'card'], [LOGO, 'logo']];
+const SCENE = { card: () => sceneCard(), logo: () => sceneLogo() };
+for (const id of IDS) SCENE[id] = () => (DIVES[id] ? sceneDeep(id) : id === 'moved' ? scenePilot() : id === 'wasnt' ? sceneReveal() : id === 'dark' ? sceneDark() : BOARD_SHOTS[id] ? sceneBoard(id) : sceneTodo());   // look check round 2: the progression
+const ERA_LIST = SHOT_LIST.map(([t0, sc], i) => [t0, i + 1 < SHOT_LIST.length ? SHOT_LIST[i + 1][0] : DURATION, SCENE[sc]]);
+const CUE = { sting: REVEAL, silence: VL('smiling').t1 + 0.1 };
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'held shots, caption-clocked',
+  shots: SHOT_LIST.map(([t0, sc], i) => ({ id: i + 1, key: sc, era: i, t0, t1: ERA_LIST[i][1], title: sc })),
+  cuts: SHOT_LIST.slice(1).map(([t0]) => t0),
+  morphs: [],
+  cues: CUE,
+  acts: [
+    { name: '1 1960 and the return', role: 'build', t0: 0, t1: AT('second') },
+    { name: '2 It learns', role: 'journey', t0: AT('second'), t1: AT('refused') },
+    { name: '3 The last tape', role: 'journey', t0: AT('refused'), t1: REVEAL },
+    { name: '4 Payoff', role: 'gift', t0: REVEAL, t1: DURATION },
+  ],
+  // the storyboard: one panel per beat, at the end of its line (its caption fully typed), + the card and the outro
+  board: [
+    ...VOICE.lines.map((l, i) => ({ t: l.id === 'wasnt' ? VW('wasnt', 'face') + 4.6 : l.id === 'smiling' ? l.t1 + 0.3 : l.t1 - 0.05, title: (i + 1) + ' ' + l.text, sound: '', next: 'cut' })),
+    { t: CARD + 3.6, title: 'card: whose face does it want next?', sound: 'silence, low hit', next: 'cut' },
+    { t: LOGO + 2.4, title: 'Madfable outro (~20 s red)', sound: 'low hit, silence', next: 'end' },
+  ],
+  narration: VOICE.lines.map((l) => ({ id: l.id, t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;

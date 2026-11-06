@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ocarina of Time Tapestry</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #3a2a14; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 9 / 16)); width: auto; aspect-ratio: 16 / 9; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<canvas id="c" width="1920" height="1080"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  THE ENTIRE OCARINA OF TIME STORY, TOLD ON AN ANCIENT TAPESTRY — 16:9 long-form (~27 min), voice-led (Mad 3), 24fps.
+//  A hanging woven cloth: thematic figured bands per chapter, one long strip sliding right panel to panel, every set cut
+//  into Flow layers (parallax + sway), woven figures from the approved zelda-fairy v4 language.
+// =====================================================================
+const FPS = 24, W = 1920, H = 1080;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4, GRID0 = 0;
+const VL = (id) => VOICE.lines.find((l) => l.id === id);
+const VW = (id, w, n = 1) => { const L = VL(id); let k = 0; for (const x of L.words) if (x.w.toLowerCase().replace(/[^a-z0-9']/g, '') === w.toLowerCase() && ++k === n) return x.t0; console.warn('VW miss', id, w); return L.t0; };
+const DURATION = Math.round(VOICE.duration * FPS) / FPS;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 112, bottom: 112, right: 0 };
+const HAND = 'Georgia, serif';
+const CX = 960;
+const onBeat = (t) => t;
+// ---- THE PLAN: one row per panel: [id, first line, set, cast, fx, card title]
+//  cast: [name, x, opts]  (opts: h, flip, enter 'L'|'R', walk [x0, x1], from / to (line ids: fade in / out), pose [name2, line], navi, y, sage)
+const L_ = (n) => 'l' + String(n).padStart(3, '0');
+const PLAN0 = [
+  // 0 · cold open
+  ['p001', 1, 'desert', [['desert-guard', 380, {}], ['ganon', 1060, { enter: 'R', flip: true }]], ['sand'], null],
+  ['p002', 3, 'hyrule', [['link_adult', 700, { walk: [520, 900], navi: 1 }]], ['leaves'], null],
+  ['p003', 4, 'sky', [['link_sleep', 960, { y: 640, float: 1 }]], ['tally'], null],
+  ['p004', 5, 'roots', [], ['triforce', 'rays'], null],
+  // prologue
+  ['p005', 7, 'roots', [['goddess', 760, {}]], ['earth'], 'PROLOGUE · THE THREE GODDESSES'],
+  ['p006', 9, 'roots', [['nayru', 860, {}]], ['water'], null],
+  ['p007', 10, 'roots', [['farore', 1060, { flip: false }]], ['leaves', 'birds'], null],
+  ['p008', 11, 'sky', [], ['triforce', 'rays'], null],
+  ['p009', 14, 'sky', [], ['triforce'], null],
+  ['p010', 16, 'sky', [], ['split'], null],
+  ['p011', 20, 'hyrule', [], ['realm'], null],
+  // I · the boy without a fairy
+  ['p012', 22, 'kokiri', [['kokiri_girl', 1240, { flip: true, fairy: 1 }], ['mido', 1520, { flip: true, fairy: 2 }]], ['motes'], 'I · THE BOY WITHOUT A FAIRY'],
+  ['p013', 25, 'kokiri', [['link', 640, { enter: 'L' }], ['mido', 1300, { flip: true, fairy: 2 }]], ['motes'], null],
+  ['p014', 30, 'glade', [['link', 720, {}], ['kokiri_girl', 1180, { flip: true, fairy: 1 }]], ['notes', 'leaves'], null],
+  ['p015', 32, 'kokiri', [['link_sleep', 960, { y: 860, h: 230 }]], ['night', 'dream'], null],
+  ['p016', 35, 'glade', [['deku', 1080, { h: 740 }]], ['leaves'], null],
+  ['p017', 38, 'glade', [['deku', 1080, { h: 740, sick: 1 }], ['gohma', 1200, { h: 240, y: 560 }]], ['curse'], null],
+  ['p018', 40, 'kokiri', [['link_up', 820, { navi: 'arrive' }]], ['motes'], null],
+  ['p019', 42, 'kokiri', [['link', 700, { walk: [520, 760], navi: 1 }], ['mido', 1300, { flip: true }]], [], null],
+  ['p020', 44, 'insidetree', [['link_up', 640, { navi: 1 }], ['gohma', 1260, { h: 430, flip: false }]], ['webs'], null],
+  ['p021', 47, 'glade', [['deku', 1120, { h: 740, dying: 1 }], ['link', 620, { navi: 1 }]], ['leaves', 'emerald'], null],
+  ['p022', 52, 'kokiri', [['mido', 1260, { flip: true }], ['link', 640, { walk: [640, 320], navi: 1, flipWalk: 1 }]], ['motes'], null],
+  ['p023', 54, 'bridge', [['kokiri_girl', 760, {}], ['link', 1160, { flip: true, navi: 1, pose: ['link_ocarina', 56], walkOut: 57 }]], ['leaves'], null],
+  // II · the man from the desert
+  ['p024', 58, 'desert', [['desert-guard', 1300, { flip: true }]], ['sand'], 'II · THE MAN FROM THE DESERT'],
+  ['p025', 61, 'desert', [['ganon', 900, { enter: 'R', flip: true }]], ['sand'], null],
+  ['p026', 64, 'colossus', [['ganon', 960, { flip: true }], ['fire-witch', 520, { fly: 1 }], ['ice-witch', 1420, { fly: 1 }]], ['sand'], null],
+  ['p027', 68, 'desert', [['ganon', 980, { flip: true }]], ['sand', 'storm'], null],
+  ['p028', 71, 'hyrule', [['ganon', 560, { flip: false }]], ['wind'], null],
+  ['p029', 75, 'throne', [['kneeling-man', 760, {}], ['old-king', 1300, {}]], [], null],
+  // III · the princess in the garden
+  ['p030', 78, 'garden', [['link', 600, { enter: 'L', navi: 1 }], ['zelda', 1260, {}]], [], 'III · THE PRINCESS IN THE GARDEN'],
+  ['p031', 85, 'throne', [['kneeling-man', 760, {}], ['old-king', 1300, {}]], ['window'], null],
+  ['p032', 88, 'garden', [['zelda', 1180, {}], ['link', 700, { navi: 1 }]], ['stones'], null],
+  ['p033', 96, 'garden', [['impa', 1220, {}], ['link_ocarina', 700, { navi: 1 }]], ['notes'], null],
+  // IV · the spiritual stones
+  ['p034', 98, 'mountain', [['link', 480, { walk: [380, 820], navi: 1 }]], [], 'IV · THE SPIRITUAL STONES'],
+  ['p035', 101, 'mountain', [['ganon', 1260, { flip: true }], ['darunia', 720, { flip: true }]], ['smoke'], null],
+  ['p036', 103, 'rockcity', [['link_ocarina', 620, { navi: 1 }], ['darunia', 1240, { dance: 1 }]], ['notes', 'torches'], null],
+  ['p037', 106, 'lavacave', [['link_up', 600, { navi: 1 }], ['giant-lizard', 1260, {}]], ['embers', 'bomb'], null],
+  ['p038', 108, 'rockcity', [['darunia', 1240, {}], ['link', 640, { navi: 1 }]], ['ruby', 'torches'], null],
+  ['p039', 110, 'grotto', [['fish-king', 1280, {}], ['link', 640, { navi: 1 }]], ['bubbles'], null],
+  ['p040', 114, 'belly', [['link', 640, { navi: 1 }], ['water-princess', 1220, {}]], [], null],
+  ['p041', 118, 'belly', [['link_up', 600, { navi: 1 }], ['jellyfish-parasite', 1260, { hang: 1 }]], ['sparks'], null],
+  ['p042', 120, 'grotto', [['water-princess', 1240, {}], ['link', 680, { navi: 1 }]], ['sapphire', 'bubbles'], null],
+  ['p043', 124, 'hyrule', [['link', 620, { walk: [460, 860], navi: 1 }]], ['stones3'], null],
+  // V · the betrayal
+  ['p044', 125, 'gate', [['link', 520, { navi: 1 }], ['white-horse', 1300, { gallop: [1700, -400], at: 127 }]], ['rain'], 'V · THE BETRAYAL'],
+  ['p045', 130, 'gate', [['link', 520, { navi: 1 }], ['dark-rider', 1260, { gallop: [2200, 1100], at: 130, leave: 136 }]], ['rain', 'blast'], null],
+  ['p046', 137, 'gate', [['link_ocarina', 820, { navi: 1 }]], ['rain', 'voiceglow'], null],
+  ['p047', 141, 'hall', [['link_ocarina', 700, { navi: 1 }]], ['notes', 'altar'], null],
+  ['p048', 144, 'swordroom', [['link_up', 960, { navi: 1, pose: ['link_sword', 147] }]], ['swordrays'], null],
+  ['p049', 150, 'swordroom', [['link_sword', 880, { navi: 1 }], ['ganon', 1460, { enter: 'R', flip: true }]], ['triforce_hand'], null],
+  // VI · seven years
+  ['p050', 155, 'sky', [['ganon', 560, {}]], ['split'], 'VI · SEVEN YEARS'],
+  ['p051', 162, 'swordroom', [['link_sleep', 960, { y: 600, float: 1 }]], ['tally', 'swordrays'], null],
+  ['p052', 165, 'sages', [['link_adult', 760, { navi: 1 }], ['old-sage', 1180, { flip: false }]], ['medallions'], null],
+  ['p053', 176, 'swordroom', [['link_adult', 960, { navi: 1 }]], ['swordrays'], null],
+  ['p054', 180, 'town', [['link_adult', 560, { walk: [420, 700], navi: 1 }], ['redead', 1340, { shamble: 1 }]], ['embers'], null],
+  ['p055', 182, 'hall', [['link_adult', 720, { navi: 1 }], ['wrapped-stranger', 1240, {}]], [], null],
+  // VII · the temples
+  ['p056', 187, 'kokiri', [['link_adult', 720, { enter: 'L', navi: 1 }], ['mido', 1300, { flip: true, hide: 1 }]], ['night'], 'VII · THE TEMPLES'],
+  ['p057', 190, 'glade', [['sprout', 1080, { h: 260 }], ['link_adult', 640, { navi: 1 }]], ['mother', 'leaves'], null],
+  ['p058', 195, 'ftemple', [['link_adult', 640, { navi: 1 }], ['lantern-ghost', 1260, { float: 1, to: 198 }], ['kokiri_girl', 1240, { flip: true, from: 198, sage: '120,180,90' }]], [], null],
+  ['p059', 201, 'firetemple', [['link_adult', 600, { navi: 1 }], ['fire-dragon', 1240, { fly: 1, to: 205 }], ['darunia', 1260, { from: 206, sage: '230,90,50' }]], ['embers'], null],
+  ['p060', 208, 'frozen', [['fish-king', 1440, { frozen: 1 }], ['link_adult', 700, { navi: 1 }]], ['snow'], null],
+  ['p061', 210, 'wtemple', [['water-princess', 1240, {}], ['link_adult', 640, { navi: 1 }], ['water-creature', 1000, { from: 214, to: 215 }]], ['bubbles'], null],
+  // VIII · Sheik
+  ['p062', 217, 'village', [['wrapped-stranger', 1200, { thrown: 219 }], ['link_adult', 600, { navi: 1 }]], ['night', 'shadow'], 'VIII · SHEIK'],
+  ['p063', 223, 'crypt', [['link_adult', 600, { navi: 1 }], ['drumming-hands', 1240, { drum: 1, to: 227 }], ['impa', 1260, { from: 227, sage: '170,90,200' }]], [], null],
+  ['p064', 229, 'colossus', [['link_adult', 640, { walk: [420, 760], navi: 1, pose: ['link', 233] }]], ['sand'], null],
+  ['p065', 234, 'colossus', [['desert-chief', 1220, { flip: false }], ['link', 640, { navi: 1 }], ['fire-witch', 1500, { fly: 1, from: 238, flip: true }], ['ice-witch', 300, { fly: 1, from: 238, flip: true }]], ['sand'], null],
+  ['p066', 239, 'colossus', [['link_adult', 620, { navi: 1 }], ['iron-knight', 1260, { to: 241 }], ['desert-chief', 1260, { from: 241, to: 242 }]], [], null],
+  ['p067', 243, 'colossus', [['link_adult', 960, { navi: 1 }], ['fire-witch', 480, { fly: 1 }], ['ice-witch', 1460, { fly: 1 }], ['desert-chief', 1280, { from: 246, sage: '240,170,60' }]], [], null],
+  ['p068', 247, 'hall', [['link_adult', 640, { navi: 1 }], ['wrapped-stranger', 1240, { pose: ['zelda-adult', 251] }]], ['triforce_glow'], null],
+  ['p069', 252, 'hall', [['zelda-adult', 1220, {}], ['link_adult', 680, { navi: 1 }]], ['arrows'], null],
+  ['p070', 257, 'hall', [['link_adult', 680, { navi: 1 }], ['zelda-adult', 1220, { crystal: 1, to: 259 }]], ['redglow'], null],
+  // IX · the tower
+  ['p071', 261, 'town', [['link_adult', 420, { walk: [300, 640], navi: 1 }]], ['rainbow'], 'IX · THE TOWER'],
+  ['p072', 264, 'organ', [['ganon', 1080, { flip: true }], ['zelda-adult', 1500, { crystal: 1, y: 620, h: 360 }], ['link_adult', 520, { navi: 1, from: 266 }]], ['triforce3'], null],
+  ['p073', 272, 'organ', [['link_adult', 560, { navi: 1 }], ['ganon', 1260, { flip: true, levitate: 1 }]], ['darkballs', 'arrows'], null],
+  ['p074', 277, 'ruins', [['link_adult', 760, { navi: 1 }], ['zelda-adult', 1120, {}]], ['rubble'], null],
+  ['p075', 281, 'ruins', [['ganon-beast', 1240, { rise: 1 }], ['link_adult', 560, { navi: 1 }], ['zelda-adult', 300, { from: 287, flip: true }]], ['firering'], null],
+  ['p076', 289, 'ruins', [['ganon-beast', 1180, { sealed: 289 }], ['zelda-adult', 520, { flip: true }]], ['medallions', 'sealrays'], null],
+  ['p077', 295, 'desert', [['ganon', 960, { flip: true, alone: 1 }]], ['sand', 'dusk'], null],
+  // X · beyond time
+  ['p078', 299, 'sky', [['link_adult', 760, { navi: 1 }], ['zelda-adult', 1180, {}]], [], 'X · BEYOND TIME'],
+  ['p079', 305, 'sky', [['zelda-adult', 1180, { ocarina: 1 }], ['link_adult', 760, { navi: 1, vanish: 307 }]], ['notes'], null],
+  ['p080', 308, 'swordroom', [['link', 700, { navi: 'leave' }]], ['swordrays'], null],
+  ['p081', 312, 'garden', [['link', 560, { enter: 'L' }], ['zelda', 1260, { flip: true, turn: 313 }]], [], null],
+  ['p082', 318, 'hyrule', [['link', 760, {}]], ['timesplit'], null],
+  ['p083', 325, 'kokiri', [['link', 760, { walk: [560, 820] }]], ['night', 'motes'], null],
+  ['p084', 'sign', 'roots', [], ['sign'], null],
+];
+const WHO = (n) => ({ link_up: 'link', link_ocarina: 'link', link_sword: 'link', link_sleep: 'link', 'kid-point': 'link', 'kid-surprised': 'link', 'kneeling-man': 'ganon', 'dark-rider': 'ganon', 'king-laugh': 'ganon', 'king-brood': 'ganon',
+  'wrapped-stranger': 'zelda-adult', 'wrapped-harp': 'zelda-adult', 'hero-sword': 'link_adult', 'hero-walk': 'link_adult', 'hero-listen': 'link_adult', 'queen-magic': 'zelda-adult', 'queen-sorrow': 'zelda-adult',
+  'girl-point': 'zelda', 'rock-chief-proud': 'darunia', 'water-princess-bossy': 'water-princess', 'guardian-point': 'impa', 'desert-chief-cross': 'desert-chief' }[n] || n);
+// alternate poses (Flow edits of the same figure): sub-panels give the person in focus a new pose, so no two panels in a row look alike
+const POSES = { link: ['kid-point', 'kid-surprised'], link_up: ['kid-point', 'kid-surprised'], link_adult: ['hero-listen', 'hero-sword', 'hero-walk'], ganon: ['king-brood', 'king-laugh'],
+  zelda: ['girl-point'], 'zelda-adult': ['queen-sorrow', 'queen-magic'], 'wrapped-stranger': ['wrapped-harp'], darunia: ['rock-chief-proud'], 'water-princess': ['water-princess-bossy'],
+  impa: ['guardian-point'], 'desert-chief': ['desert-chief-cross'] };
+const POSE_FLIP = { 'wrapped-harp': true };   // drawn facing the other way from its base figure
+// ---- expand the plan to ~10 s panels (Odyssey pace): a row whose lines run long is split at line starts into sub-panels;
+// ALT switches a sub-panel to another set from a given line (and forces a split there). Sub-panels keep the row's cast and
+// time their animations on the row (BASE), so actors carry on across the seam.
+const ALT = { p011: [[20, 'realm'], [21, 'hyrule']], p034: [[98, 'kakariko'], [99, 'mountain']], p047: [[141, 'market'], [142, 'hall']], p050: [[155, 'realm']],
+  p061: [[210, 'lake'], [212, 'wtemple']], p062: [[221, 'graveyard']], p064: [[231, 'waste'], [232, 'colossus']], p071: [[262, 'barrier']], p074: [[278, 'stairs'], [279, 'ruins']] };
+const PANEL_SEC = 10.5, LIDX = {}; VOICE.lines.forEach((l, k) => (LIDX[l.id] = k));
+const PLAN = [], BASE = {}, PC = {};   // PC: how many alternate poses a person already used in this row (cycle through them)
+PLAN0.forEach((r, ri) => {
+  if (r[1] === 'sign') { PLAN.push([...r, { base: r[0], k: 0 }]); BASE[r[0]] = r[0]; return; }
+  const a = LIDX[L_(r[1])], nx = PLAN0[ri + 1], b = nx && nx[1] !== 'sign' ? LIDX[L_(nx[1])] : VOICE.lines.length;   // lines a..b-1
+  const t0 = VOICE.lines[a].t0, t1 = b < VOICE.lines.length ? VOICE.lines[b].t0 : VOICE.lines[b - 1].t1 + 0.8, alt = ALT[r[0]] || [];
+  const forced = alt.map(([ln]) => LIDX[L_(ln)]).filter((k) => k > a && k < b);
+  // segments between forced splits, each cut into ~PANEL_SEC pieces at line starts
+  const cuts = [a, ...forced, b], starts = [];
+  for (let q = 0; q < cuts.length - 1; q++) { const s0 = cuts[q], s1 = cuts[q + 1], u0 = VOICE.lines[s0].t0, u1 = s1 < VOICE.lines.length ? VOICE.lines[s1].t0 : t1, n = Math.max(1, Math.round((u1 - u0) / PANEL_SEC));
+    starts.push(s0); for (let j = 1; j < n; j++) { const tt = u0 + (u1 - u0) * j / n; let best = -1, bd = 1e9; for (let k = s0 + 1; k < s1; k++) { const d = Math.abs(VOICE.lines[k].t0 - tt); if (d < bd && !starts.includes(k)) { bd = d; best = k; } } if (best > 0) starts.push(best); } }
+  [...new Set(starts)].sort((x, y) => x - y).forEach((ls, k) => {
+    const ln = Number(VOICE.lines[ls].id.slice(1)); let set = r[2]; for (const [al, as] of alt) if (ln >= al) set = as;
+    const id = k ? r[0] + String.fromCharCode(96 + k) : r[0];
+    const cast = k ? r[3].map((c) => [c[0], c[1], { ...c[2], enter: undefined }]) : r[3];
+    PLAN.push([id, ln, set, cast, r[4], k ? null : r[5], { base: r[0], k }]); BASE[id] = r[0];
+  });
+});
+// ---- poses across the whole film: every figure with a pose library (v4 figure + Flow alternates) takes the pose that fits the
+// moment (walking -> walk, fights -> sword, sorrow / magic / laughter by scene), and never the same pose twice in a row
+const FIGHT = new Set(['p020', 'p037', 'p041', 'p059', 'p061', 'p063', 'p066', 'p067', 'p073', 'p075']);
+const PREF = { p049: { ganon: 'king-laugh' }, p072: { ganon: 'king-laugh' }, p073: { ganon: 'king-laugh' }, p027: { ganon: 'king-brood' }, p077: { ganon: 'king-brood' }, p029: {}, p031: {},
+  p069: { 'zelda-adult': 'queen-magic' }, p076: { 'zelda-adult': 'queen-magic' }, p078: { 'zelda-adult': 'queen-sorrow' }, p079: { 'zelda-adult': 'queen-magic' }, p074: { 'zelda-adult': 'queen-sorrow' },
+  p055: { 'wrapped-stranger': 'wrapped-harp' }, p042: { 'water-princess': 'water-princess-bossy' }, p040: { 'water-princess': 'water-princess-bossy' }, p032: { zelda: 'girl-point' },
+  p036: { darunia: 'darunia' }, p038: { darunia: 'rock-chief-proud' }, p063: { impa: 'guardian-point' }, p033: { impa: 'guardian-point' }, p065: { 'desert-chief': 'desert-chief-cross' } };
+const FREE = (o) => !o.pose && !o.crystal && !o.fly && !o.float && !o.sage && !o.hang && !o.frozen && !o.gallop && !o.thrown && !o.ocarina && !o.turn && !o.dance && !o.from && !o.to && !o.vanish && !o.navi?.length;
+const LASTP = {};
+PLAN.forEach((r) => { const base = BASE[r[0]];
+  r[3] = r[3].map((c) => { const [n0, x, o] = c; const lib = POSES[n0]; if (!lib || !FREE(o)) { LASTP[WHO(n0)] = n0; return c; }
+    const opts = [n0, ...lib], who = WHO(n0); let want = (PREF[base] || {})[n0];
+    if (!want && (o.walk || o.enter || o.walkOut)) want = n0 === 'link_adult' ? 'hero-walk' : (n0 === 'link' ? 'kid-point' : null);
+    if (!want && FIGHT.has(base) && n0 === 'link_adult') want = 'hero-sword';
+    let pick = want && opts.includes(want) ? want : opts[0];
+    if (pick === LASTP[who]) { const k = opts.indexOf(pick); pick = opts.find((q, j) => j > k && q !== LASTP[who] && !(o.walk && q.includes('sword'))) || opts.find((q) => q !== LASTP[who]) || pick; }
+    LASTP[who] = pick; const oo = { ...o }; if (POSE_FLIP[pick]) oo.flip = !o.flip; return [pick, x, oo]; }); });
+// an actor shared with the previous panel does not walk in again: it is already there, carried across the seam
+PLAN.forEach((r, i) => { if (!i) return; const prev = new Set(PLAN[i - 1][3].map((c) => WHO(c[0]))); r[3] = r[3].map((c) => (prev.has(WHO(c[0])) && c[2].enter ? [c[0], c[1], { ...c[2], enter: undefined }] : c)); });
+const PANEL_START = PLAN.map((r) => [r[0], r[1] === 'sign' ? 'sign' : L_(r[1])]);
+const IDS = PANEL_START.map((p) => p[0]);
+const CARD = {}; PLAN.forEach((r) => { if (r[5]) CARD[r[0]] = r[5]; });
+const SIGN_T = VOICE.lines[VOICE.lines.length - 1].t1 + 1.2;
+const TITLE_LEAD = 2.2;   // a chapter card lands this long before its first line (held 1.5 s longer than Odyssey p1/p2)
+const S = (id, lid) => (lid === 'l001' ? 0 : lid === 'sign' ? SIGN_T : VL(lid).t0 - 0.25 - (CARD[id] ? TITLE_LEAD : 0));
+const TB = PANEL_START.map(([id, l]) => S(id, l));
+const SUB = (id) => TB[IDS.indexOf(id)], SUBEND = (id) => (IDS.indexOf(id) + 1 < IDS.length ? TB[IDS.indexOf(id) + 1] : DURATION);
+const BT0 = (id) => SUB(BASE[id]), BT1 = (id) => { let j = IDS.indexOf(id); while (j + 1 < IDS.length && BASE[IDS[j + 1]] === BASE[id]) j++; return j + 1 < IDS.length ? TB[j + 1] : DURATION; };
+const HIT = VL('l251').t0;
+const ERA_LIST = [[0, DURATION, () => sceneStage()]];
+const SHOTS = IDS.map((id, i) => [id, 0, TB[i], i + 1 < IDS.length ? TB[i + 1] : DURATION, id]);
+const CHAPTERS = PLAN.filter((r) => r[5]).map((r) => ({ name: r[5], t0: SUB(r[0]) }));
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, gridOffset: GRID0, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE, aspect: '16:9',
+  format: 'tapestry-strip',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: TB.slice(1), morphs: [], cues: { hit: HIT },
+  acts: [{ name: '0 Cold open', role: 'hook', t0: 0, t1: CHAPTERS[0].t0 }, ...CHAPTERS.map((c, i) => ({ name: c.name, role: i === CHAPTERS.length - 1 ? 'goodbye' : 'build', t0: c.t0, t1: i + 1 < CHAPTERS.length ? CHAPTERS[i + 1].t0 : DURATION }))],
+  board: [],
+  narration: VOICE.lines.map((l) => ({ id: l.id, t0: l.t0, t1: l.t1, text: l.text })),
+};
+window.TIMELINE = TIMELINE;

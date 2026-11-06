@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>rbx brand</title>
+<style>html,body{margin:0;background:#000}canvas{width:540px;height:960px;display:block}</style></head>
+<body>
+<script src="../../styles/pov3d/three.js"></script>
+<script src="../../styles/roblox/rbx.js"></script>
+<script src="../../styles/roblox/models/majora-moon/moon.data.js"></script>
+<script src="src/kit.js"></script>
+<script src="src/moon.js"></script>
+<script src="src/props.js" onerror="console.log('no props.js yet')"></script>
+<script src="src/cast.js"></script>
+<script src="src/set-street.js" onerror="console.log('no street yet')"></script>
+<script src="src/set-classroom.js" onerror="console.log('no classroom yet')"></script>
+<script src="src/set-kitchen.js" onerror="console.log('no kitchen yet')"></script>
+<script src="src/set-bedroom.js"></script>
+<script src="src/words.js"></script>
+<script src="src/shotlist.js"></script>
+<script src="src/shots.js"></script>
+<script src="src/shots-street.js"></script>
+<script src="src/shots-rooms.js"></script>
+<script src="src/engine.js"></script>
+<script>
+ENG.init().then(() => { window.SHOTS_T = ENG.shots.map((s) => ({ i: s.i, t0: s.t0, t1: s.t1, set: s.set, line: s.line })); window.READY = true; })
+  .catch((e) => { console.log('ERR', e.message, e.stack); window.READY = 'error'; });
+window.shoot = (c) => { const R = ENG.renderer, key = c.W + 'x' + c.H; ENG.posts = ENG.posts || {};
+  R.setSize(c.W, c.H, false); const post = ENG.posts[key] || (ENG.posts[key] = new RBX.Post(R, c.W, c.H, 2));
+  CAST.hideAll(); ENG.hideMoons(); ENG.clear(); const set = ENG.S[c.set || 'street']; if (set.reset) set.reset(); if (set.mood && c.mood) set.mood(c.mood);
+  if (c.boards !== undefined && set.props.setBoards) set.props.setBoards(c.boards);
+  const P = (k) => (set.marks[k] ? set.marks[k].p : null), base = c.at ? P(c.at) : [0, 0, 0], off = (v) => [base[0] + v[0], base[1] + v[1], base[2] + v[2]];
+  (c.actors || []).forEach((a) => CAST.put(set.scene, a.name, Object.assign({}, a, { p: off(a.p) })));
+  if (c.moon) ENG.moon(set.scene, Object.assign({}, c.moon, { p: off(c.moon.p), look: c.moon.look ? off(c.moon.look) : undefined }));
+  const cam = new THREE.PerspectiveCamera(c.fov || 40, c.W / c.H, 0.1, 3000); cam.position.set(...off(c.p)); cam.lookAt(new THREE.Vector3(...off(c.l))); if (c.roll) cam.rotateZ(THREE.MathUtils.degToRad(c.roll)); cam.updateProjectionMatrix();
+  const g = Object.assign({}, KIT.GRADE[c.grade || 'night'], { focus: c.focus || cam.position.distanceTo(new THREE.Vector3(...off(c.f || c.l))) }, c.post || {});
+  post.render(set.scene, cam, g); return R.domElement.toDataURL('image/png'); };
+window.studio = (c) => { const R = ENG.renderer, key = c.W + 'x' + c.H; ENG.posts = ENG.posts || {};
+  R.setSize(c.W, c.H, false); const post = ENG.posts[key] || (ENG.posts[key] = new RBX.Post(R, c.W, c.H, 2));
+  if (!window.ST) { const sc = new THREE.Scene(), cv = document.createElement('canvas'); cv.width = 2560; cv.height = 1440; const g = cv.getContext('2d');
+    const gr = g.createRadialGradient(1280, 720, 80, 1280, 720, 1500); gr.addColorStop(0, c.bg1); gr.addColorStop(1, c.bg2); g.fillStyle = gr; g.fillRect(0, 0, 2560, 1440);
+    g.globalAlpha = 0.13; g.fillStyle = '#ffffff'; for (let i = 0; i < 24; i++) { const a0 = i / 24 * Math.PI * 2, a1 = a0 + Math.PI / 24; g.beginPath(); g.moveTo(1280, 720); g.lineTo(1280 + 4000 * Math.cos(a0), 720 + 4000 * Math.sin(a0)); g.lineTo(1280 + 4000 * Math.cos(a1), 720 + 4000 * Math.sin(a1)); g.fill(); }
+    g.globalAlpha = 0.10; for (let i = 0; i < 260; i++) { const x = Math.random() * 2560, y = Math.random() * 1440; g.fillRect(x, y, 14, 14); }
+    const tx = new THREE.CanvasTexture(cv); tx.encoding = THREE.sRGBEncoding; sc.background = tx;
+    sc.add(new THREE.HemisphereLight(0xfff1e0, 0x8a4a20, 1.4)); const k = new THREE.DirectionalLight(0xffffff, 3.2); k.position.set(-20, 30, 40); sc.add(k);
+    const r = new THREE.DirectionalLight(0xffffff, 4.5); r.position.set(10, 20, -30); sc.add(r); const r2 = new THREE.DirectionalLight(0xfff0d0, 3); r2.position.set(-25, 5, -20); sc.add(r2);
+    window.ST = { sc, avs: [] }; }
+  const sc = ST.sc; ST.avs.forEach((a) => { a.root.visible = false; });
+  c.heroes.forEach((h, i) => { let a = ST.avs[i]; if (!a) { a = ST.avs[i] = RBX.avatar({ hood: 'dino', face: 'neutral', headScale: 1.25 }); sc.add(a.root); }
+    a.root.visible = true; a.root.position.set(...h.p); a.root.rotation.set(h.rx || 0, h.ry || 0, h.rz || 0); a.pose(h.pose || {}); a.setFace(h.face || 'happy'); });
+  const cam = new THREE.PerspectiveCamera(c.fov, c.W / c.H, 0.1, 3000); cam.position.set(...c.p); cam.lookAt(new THREE.Vector3(...c.l)); cam.updateProjectionMatrix();
+  const g = Object.assign({}, KIT.GRADE.day || KIT.GRADE.night, { aperture: 0, maxCoc: 0, vignette: 0.15, grain: 0.01, bloom: 0.15, focus: 60 }, c.post || {});
+  if (c.matte) { const b = sc.background; sc.background = new THREE.Color(0); sc.overrideMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff }); R.setRenderTarget(null); R.render(sc, cam); sc.overrideMaterial = null; sc.background = b; return R.domElement.toDataURL('image/png'); }
+  post.render(sc, cam, g); return R.domElement.toDataURL('image/png'); };
+</script>
+</body></html>

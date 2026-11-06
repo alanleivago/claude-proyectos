@@ -6,6 +6,7 @@ const dir = path.dirname(fileURLToPath(import.meta.url)); fs.mkdirSync(path.join
 const FPS = 30, out = path.join(dir, 'renders', process.argv[4] || 'video_only.mp4');
 const browser = await chromium.launch({ args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist', '--allow-file-access-from-files'] });
 const page = await browser.newPage(); page.on('pageerror', (e) => console.log('[err]', e.message));
+const MODE = process.env.MODE || 'v1'; await page.addInitScript((m) => { window.MODE = m; }, MODE); console.log('MODE', MODE);   // MODE=gb -> GreenBro acting variant
 await page.goto(pathToFileURL(path.join(dir, 'render.html')).href); await page.waitForFunction(() => window.READY, null, { timeout: 600000 });
 const total = await page.evaluate(() => ENG.shots[ENG.shots.length - 1].t1);
 const t0 = Number(process.argv[2] ?? 0), t1 = Math.min(total, Number(process.argv[3] ?? total)), n = Math.round((t1 - t0) * FPS);

@@ -56,3 +56,28 @@ Top 6 shorts de Gneef (20-34 M vistas), GreenBroRants (16-29 M) y redfish1 (1-9 
 - Look: Roblox Studio "Future lighting": suburbio Bloxburg (ladrillo, pinos, césped), PBR, bloom en emisivos, DOF, día saturado / noche azul con cálidos.
 - Branding = protagonista recurrente (GreenBro: gorro-alien verde lima + camiseta verde; Gneef: chico pelirrojo; redfish: avatar rojo) + elenco fijo reutilizado.
 - Títulos: la regla en 3-7 palabras + 1 emoji ("Everyone Has A String On Their Back 🧶").
+
+## Reglas aprobadas (rbx-thursday, 2026-11-03) — aplicar en TODO video de este estilo
+- Flujo: guion → voz (VoiceStudio "3d cartoon" +4 semitonos) → look → storyboard completo (1 toma por cláusula, ~1.3 s) aprobado ANTES de renderizar → render → QA cuadro a cuadro → sonido pro → título + miniatura.
+- Pipeline de código: copiar pieces/rbx-thursday (src/engine.js, cast.js, props.js, moon.js, set-*.js, shots*.js por primeras palabras de la toma; board.mjs + board_sheet.py; render.mjs; sound/).
+- Encuadre: el 9:16 es angosto → ENG.WIDEN 1.5; caras con ENG.face(); nada de cámaras dentro de paredes/objetos; la luna/objeto del cielo por encima de la línea de techos.
+- Cámara (APROBADA): zoom rápido y fluido al inicio de cada toma (punch-in; cada 3ª toma pull-out), luego creep continuo + handheld leve.
+- Personajes (APROBADO): nunca estáticos, pero SIN rebote/bailar todo el tiempo. Como GreenBro: cada uno con su propio movimiento independiente (mirar alrededor lento, cambiar el peso, un gesto propio cada 1.8–3 s desfasado entre personajes), ciclos de caminar reales cuando se desplazan. Los props sostenidos deben seguir la mano.
+- Subtítulos: una palabra, Arial Black ~104 px, blanco con contorno negro, centro al 70.7 %, pop 0.85→1.06→1 en 90 ms.
+- Sonido: música (caja de música + drone, cálida al final) 20 LU bajo la voz, ambientes 22 LU, SFX reales CC0 ≥4.5 dB bajo la voz, -14 LUFS; voz sin tocar.
+- Referencias: para estudiar canales usar yt-dlp --flat-playlist sobre la página /shorts del canal y ver-youtube por video.
+- Decisión (2026-11-03): aplicar el estudio GreenBro (fuentes/roblox-cartoon/greenbro-movimiento.md) en el próximo video — solo actúa el protagonista con poses sostenidas, boca por palabra, caminatas reales, dutch fijo en algunas tomas, shake solo en impactos — PERO los fast zooms se quedan exactamente como en la última versión de rbx-thursday.
+- (2026-11-03) APROBADO: el modo 'gb' (GreenBro, ENG.MODE por defecto) es el estándar del estilo — un solo actor por toma con poses sostenidas, boca por palabra, caminatas reales, dutch fijo en ~mitad de tomas, reacciones de grupo sincronizadas, fast zooms de v1. Base: pieces/rbx-thursday (renders/final.mp4 = v2-greenbro).
+- Héroe (verificado 2026-11-03 en 18 transcripciones de Gneef/GreenBro/redfish): NUNCA se dice la edad ni 'Me? I'm ten.' (0 de 18). Presentar al héroe por su defecto/rareza: 'I've never X. Not once.'
+- Estructura fija, historia distinta (usuario, 2026-11-03): de las refs se copia la ESTRUCTURA (regla → gags → héroe con rareza → incidente → giro literal → final), no los personajes ni las frases. Cada historia elige su propio elenco y su propio ser querido según la trama (en 18 refs: hermana 2, hermano 2, mamá/papá 8, mejor amigo 6, abuela 5). Nada de fórmulas repetidas entre videos: ni "Me? I'm ten", ni "My little sister Pip is four", ni el mismo arranque del héroe.
+
+## Variedad entre historias (2026-11-04) — detalle en `fuentes/roblox-cartoon/variedad-historias.md`
+Medido en 132 historias (GreenBro 95, Gneef 21, redfish 16). Fijo: regla en la frase 1, siembra → cobro, incidente ~30 %, giro ~68 %, última línea seca. Todo lo demás cambia en cada video. Antes de escribir, rellenar la **ficha de premisa** (está en la nota) y compararla con las de los videos anteriores.
+- **Mundo y lugares salen de la premisa** (torre, mar, luna, escuela, reino, servidor…), no del suburbio por defecto. Nunca repetir el recorrido calle → cartero → vecino → abuela → escuela → casa → ventana/techo. El clímax va en un lugar que solo existe en ese mundo.
+- **Elenco nuevo en cada video.** No reciclar a Mr. Ortega, al cartero, a la abuela del gag ni a Pip. Los gags (0-5, normalmente 2-3) usan gente que la regla vuelve graciosa. En las refs, cartero + abuela + escuela juntos aparecen en 1 de 132 videos.
+- **Ser querido según la trama**, rotando: papá, mejor amigo, mamá, abuelo, mascota, rival, crush o nadie. La hermana menor es solo el 6 %. Nunca el mismo personaje con nombre.
+- **Rotar la apertura**: "In this world" (34 %), "In this town" (19 %), "Everyone/Every X…" (14 %), primera persona (8 %), "Once a year…", "Nobody is allowed…", "In my town", o una afirmación seca del mundo.
+- **Héroe**: rareza (38 %) o sin presentación (31 %). Prohibido "Me? I'm ten" y "I wear this hood every day". La rareza que sirve de llave es nueva en cada video.
+- **Giro**: el más común es la reinterpretación (la regla o el villano eran otra cosa, 52 %). La lectura literal es solo el 13 %. Otras opciones: objeto o juego plantado, el defecto del héroe. No repetir "And that's when I realized something" ni "After that, everything changed" en videos seguidos.
+- **Rotar el incidente** (falla el sistema, alguien en peligro, se llevan a alguien, llega un visitante, el héroe rompe la regla), **quién resuelve** y **el final** (callback tierno 41 %, chiste oscuro 33 %, ritual 14 %).
+- Prueba: entre dos videos nuestros, como mucho 2-3 de las 8 columnas de la ficha pueden coincidir (las refs promedian 2). Thursday y Sock coincidieron en 5 y compartieron 4 personajes de pueblo.

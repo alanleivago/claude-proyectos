@@ -19,8 +19,8 @@
   STAGE('So on Thursdays', cal(1, 0));
   STAGE('On the last Thursday', cal(3, -8));
   STAGE('Dad nailed more boards', (s, u) => { if (s.mood) s.mood('more'); call(s, 'setBoards', 2); const p = M(s, 'p_dad', [-4, 1, -6.65]);
-    put(s, 'dad', { p, ry: Math.PI, face: 'angry', pose: CAST.POSE.hammer(u < 0.5 ? 1 : 0.35) });
-    return ENG.face('dad', 6, 105, -22, 46); });
+    put(s, 'dad', { p, ry: Math.PI, face: 'angry', pose: CAST.POSE.hammer(0.68 + 0.32 * Math.cos(u * Math.PI * 6)) });
+    return ENG.face('dad', 6.6 - 1.0 * E(u), 105, -22, 46); });
   STAGE('Then more', (s, u) => { if (s.mood) s.mood('late'); call(s, 'setBoards', 3); const p = M(s, 'p_dad', [-4, 1, -6.65]);
     put(s, 'dad', { p: [p[0] + 2.4, 0, p[2] + 2.2], ry: Math.PI + 0.5, face: 'tired', pose: { armR: [-0.3, 0, 0], head: [-0.2, 0, 0] } });
     return { p: L([p[0] + 1, 6, p[2] + 13], [p[0] + 1, 6, p[2] + 11], E(u)), l: [p[0], 5.2, p[2] - 1], fov: 50 }; });
@@ -35,7 +35,7 @@
   const heroDesk = (s) => M(s, 'p_hero', desk(s, 2, 1));
   STAGE("And there's a rule at school", (s, u) => { call(s, 'setBoard', ['THURSDAY RULES', '1. HEAR THE BELL → HEAD ON DESK', '2. COUNT TO 1000', "3. DON'T LOOK UP"]);
     kids(s, {}, 'neutral'); put(s, 'hero', { p: heroDesk(s), ry: Math.PI, sit: true, pose: SIT }); put(s, 'teacher', { p: M(s, 'p_teacher', [0, 0, -7]), ry: 0, face: 'neutral' });
-    return { p: L([9, 9, 11], [6, 8, 6], E(u)), l: [0, 6, -10], fov: 50 }; });
+    return { p: L([8, 8.5, 8.5], [6, 8, 5.5], E(u)), l: [0, 6, -10], fov: 50 }; });
   STAGE('If you hear the bell', (s, u) => { const b = s.props && s.props.bell; const bp = b ? b.getWorldPosition(new THREE.Vector3()).toArray() : [12, 8, 0];
     if (b) b.rotation.x = 0.08 * Math.sin(u * 60);
     return { p: [bp[0] - 3.4, bp[1] - 0.6, bp[2] + 0.6], l: bp, fov: 44, roll: 3 * Math.sin(u * 50) }; });

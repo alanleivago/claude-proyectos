@@ -189,6 +189,19 @@ const RBX = {};
       [[256, 222], [384, 222]].forEach(([x, y]) => { for (let i = 0; i < 9; i++) { const a = r() * Math.PI * 2; g.beginPath(); g.moveTo(x + Math.cos(a) * 49, y + Math.sin(a) * 50); g.quadraticCurveTo(x + Math.cos(a + 0.3) * 32, y + Math.sin(a + 0.3) * 32, x + Math.cos(a) * 18, y + Math.sin(a) * 18); g.stroke(); } });
       g.fillStyle = 'rgba(70,160,255,0.9)'; g.beginPath(); g.ellipse(212, 270, 8, 13, 0, 0, Math.PI * 2); g.fill(); },
   };
+  // '-talk' variants (mouth-open frame for the per-word mouth flap): the base face with its mouth cleared and redrawn
+  (function () {
+    const oRound = (g, w = 26, h = 20) => { g.fillStyle = '#7a1018'; g.strokeStyle = '#141414'; g.lineWidth = 8; g.beginPath(); g.ellipse(320, 338, w, h, 0, 0, Math.PI * 2); g.fill(); g.stroke();
+      g.fillStyle = '#e8394a'; g.beginPath(); g.ellipse(320, 338 + h * 0.5, w * 0.6, h * 0.35, 0, 0, Math.PI * 2); g.fill(); };
+    const oSmile = (g) => { g.fillStyle = '#7a1018'; g.strokeStyle = '#141414'; g.lineWidth = 8; g.beginPath(); g.moveTo(276, 312); g.quadraticCurveTo(322, 396, 368, 312); g.closePath(); g.fill(); g.stroke();
+      g.fillStyle = '#e8394a'; g.beginPath(); g.ellipse(322, 344, 18, 8, 0, 0, Math.PI * 2); g.fill(); };
+    const MOUTH = { neutral: oSmile, smile: oSmile, closed: oSmile, happy: (g) => curve(g, 262, 318, 330, 366, 390, 312, 10),
+      surprised: (g) => { g.fillStyle = '#141414'; g.beginPath(); g.ellipse(320, 340, 12, 10, 0, 0, Math.PI * 2); g.fill(); },
+      scared: (g) => line(g, [286, 342, 302, 334, 320, 344, 338, 334, 354, 342], 8), crying: (g) => oRound(g, 30, 22) };
+    const TOP = { 'staring-hard': 302, burning: 302, sniff: 304 };
+    Object.keys(FACES).forEach((n) => { const base = FACES[n];
+      FACES[n + '-talk'] = (g) => { base(g); g.clearRect(236, TOP[n] || 292, 168, 110); (MOUTH[n] || oRound)(g); }; });
+  })();
   RBX.FACES = FACES;
   const FACE_TEX = {};
   function faceTex(name) {
@@ -308,7 +321,7 @@ const RBX = {};
     const keep = o.selfLit ?? 0.12, kept = new Set([tF, tB, tS, sideT, sl, slTop]);
     if (av.hood) av.hood.traverse((m) => { if (m.isMesh && m.material.map && m.material.sheen) kept.add(m.material); });
     kept.forEach((m) => { m.emissive = new THREE.Color(1, 1, 1); m.emissiveMap = m.map; m.emissiveIntensity = keep; });
-    av.setFace = (name) => { faceMat.map = faceTex(name); faceMat.needsUpdate = true; };
+    av.setFace = (name) => { av.faceName = name; faceMat.map = faceTex(name); faceMat.needsUpdate = true; };
     // pose: angles in radians {armL:[x,y,z], armR, legL, legR, head:[x,y,z], body:[x,y,z]}
     av.pose = (p = {}) => {
       const set = (g, v = [0, 0, 0]) => g.rotation.set(v[0] || 0, v[1] || 0, v[2] || 0);   // unspecified parts return to rest

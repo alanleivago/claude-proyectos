@@ -1,0 +1,145 @@
+# Sound credits — rbx-thursday
+
+- Voice: voice/voice_final.wav (approved, unedited).
+- Whoosh / swish / boom / thump / tap / click accents: sound-layer kit (CC0, see sound-layer/kit/CREDITS.md).
+- Music: music-box lullaby 381973 (slowed 3 st) + drone 871189 for the horror part; Brahms lullaby music box 416384 for the warm ending (Brahms is public domain; the recording is CC0).
+
+## Freesound recordings used (all Creative Commons 0, HQ previews)
+
+- 136535 "CarBootClose.wav" by jmdh — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/136535/ — `fs/trunk_slam_136535.mp3`
+- 137084 "Wood Pat 07" by chaosportal — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/137084/ — `fs/desk_slam_137084.mp3`
+- 137086 "Wood Pat 05" by chaosportal — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/137086/ — `fs/desk_slam_137086.mp3`
+- 148974 "Squelch_2.wav" by deleted_user_2104797 — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/148974/ — `fs/squish_148974.mp3`
+- 164050 "pouring_water.mp3" by Mullnet — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/164050/ — `fs/water_pour_164050.mp3`
+- 164638 "Lock rattle 3.wav" by deleted_user_2104797 — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/164638/ — `fs/shingles_164638.mp3`
+- 176215 "TRANSPORTATION CAR PASS BY 01.wav" by sengjinn — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/176215/ — `fs/car_engine_176215.mp3`
+- 231453 "Writing on black board" by ta8keiteasy — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/231453/ — `fs/chalk_231453.mp3`
+- 233049 "Chalk.wav" by LukeUPF — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/233049/ — `fs/chalk_233049.mp3`
+- 237980 "Very Big Whoosh" by Paul368 — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/237980/ — `fs/whoosh_big_237980.mp3`
+- 271039 "concrete footsteps" by seth-m — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/271039/ — `fs/footsteps_271039.mp3`
+- 272015 "Crumpling Paper" by aldenroth2 — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/272015/ — `fs/paper_272015.mp3`
+- 332674 "plastic squeak6.wav" by Reitanna — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/332674/ — `fs/balloon_332674.mp3`
+- 333405 "Cheer 1 short.wav" by jayfrosting — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/333405/ — `fs/cheer_soft_333405.mp3`
+- 346671 "Sniffles_10.wav" by deleted_user_2104797 — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/346671/ — `fs/sniff_346671.mp3`
+- 346680 "Sniffles_08.wav" by deleted_user_2104797 — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/346680/ — `fs/sniff_346680.mp3`
+- 346681 "Sniffles_07.wav" by deleted_user_2104797 — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/346681/ — `fs/sniff_346681.mp3`
+- 368614 "cup_01.wav" by Nightflame — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/368614/ — `fs/mug_clink_368614.mp3`
+- 371296 "B5_window-opening.mp3" by Iamgiorgio — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/371296/ — `fs/door_open_371296.mp3`
+- 381973 "Music box lullaby" by csnmedia — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/381973/ — `fs/musicbox_381973.mp3`
+- 388196 "Birds Chirping In Suburbs Midwest" by moxcr — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/388196/ — `fs/morning_388196.mp3`
+- 390425 "249716__daandraait__slow-heartbeat(mezcelized).mp3" by mezcel — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/390425/ — `fs/heartbeat_390425.mp3`
+- 406283 "hit - wooden spoon - dropped onto counter 06.wav" by Anthousai — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/406283/ — `fs/shingles_406283.mp3`
+- 416384 "Field recording Brahms lullaby music box" by Garuda1982 — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/416384/ — `fs/musicbox_416384.mp3`
+- 423003 "Break time.wav" by InsEMT — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/423003/ — `fs/school_bell_423003.mp3`
+- 425425 "AMB_Rural_Summer_Night.wav" by AnthonyRamirez — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/425425/ — `fs/crickets_425425.mp3`
+- 437039 "Car door close" by Frederik_Sunne — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/437039/ — `fs/car_door_437039.mp3`
+- 459429 "10 Cardboard Handling.mp3" by Coral_Island_Studios — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/459429/ — `fs/cardboard_459429.mp3`
+- 459440 "13 Cardboard Box Stacking.mp3" by Coral_Island_Studios — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/459440/ — `fs/cardboard_459440.mp3`
+- 493457 "Clothes Rustling Movement 8_2" by Joao_Janz — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/493457/ — `fs/blanket_493457.mp3`
+- 493462 "Clothes Rustling Movement 8_5" by Joao_Janz — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/493462/ — `fs/blanket_493462.mp3`
+- 494042 "Zip or Zipper noises" by adgawrhbshbffsfgvsrf — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/494042/ — `fs/suitcase_494042.mp3`
+- 506659 "Wood Creak Single V4" by Rudmer_Rotteveel — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/506659/ — `fs/creak_506659.mp3`
+- 506664 "Wood Creak Single V9" by Rudmer_Rotteveel — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/506664/ — `fs/creak_506664.mp3`
+- 511874 "Riser Hit sfx 031.wav" by AudioPapkin — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/511874/ — `fs/riser_511874.mp3`
+- 536776 "Wind.ogg" by egomassive — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/536776/ — `fs/wind_gust_536776.mp3`
+- 540139 "Hitting nails with Hammer.wav" by aidansamuel — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/540139/ — `fs/hammer_540139.mp3`
+- 574311 "WoodCutting.mp3" by Voxelle — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/574311/ — `fs/scratch_574311.mp3`
+- 577454 "Wood Fall.wav" by Manim8 — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/577454/ — `fs/board_drop_577454.mp3`
+- 577455 "Wood Fall 2.wav" by Manim8 — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/577455/ — `fs/board_drop_577455.mp3`
+- 612796 "Sub drone and crackling" by xkeril — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/612796/ — `fs/drone_612796.mp3`
+- 615308 "Ceramic Cup Hit.wav" by johnnydekk — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/615308/ — `fs/mug_clink_615308.mp3`
+- 621015 "Clock 10.42 pm.m4a" by Karolfc — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/621015/ — `fs/clock_tick_621015.mp3`
+- 646691 "Creaking Wooden Floor [7]" by SoundDesignForYou — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/646691/ — `fs/creak_646691.mp3`
+- 646692 "Creaking Wooden Floor [6]" by SoundDesignForYou — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/646692/ — `fs/creak_646692.mp3`
+- 655947 "Bed Creaking FX.wav" by Santi171 — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/655947/ — `fs/bed_creak_655947.mp3`
+- 708407 "Highschoolers Writing Test in Classroom ambience" by Group39 — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/708407/ — `fs/classroom_708407.mp3`
+- 708611 "Forest Night Ambience - Stereo 48kHz 24bit - 2:20 - OWI" by neverak — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/708611/ — `fs/wind_bed_708611.mp3`
+- 730098 "Cat meowing for food 1" by Sadiquecat — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/730098/ — `fs/cat_meow_730098.mp3`
+- 753412 "Church bells Pont Barer, la Drôme France" by MJPtack — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/753412/ — `fs/church_bell_753412.mp3`
+- 759501 "Tick Tock Dry" by GammaGool — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/759501/ — `fs/clock_tick_759501.mp3`
+- 795590 "String, Hit, Nail Hit, Inside Piano, G# 2" by VizAion — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/795590/ — `fs/nail_squeak_795590.mp3`
+- 826716 "WomansFinalGasps" by Soundjougi — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/826716/ — `fs/breath_826716.mp3`
+- 837886 "JM_AMB_Room Tone 01_MONO" by Julien_Matthey — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/837886/ — `fs/roomtone_837886.mp3`
+- 842172 "Coin Clink Free" by AardsReal — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/842172/ — `fs/trophy_842172.mp3`
+- 871189 "Textured Low Drone - Loop" by kkenny101 — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/871189/ — `fs/drone_871189.mp3`
+
+## Downloaded but not used (78, also CC0)
+
+- 96138 "Thud3.wav" by BMacZero — CC0 — https://freesound.org/s/96138/
+- 104013 "Wood Plank Scraping Close-Mic Long.aif" by RutgerMuller — CC0 — https://freesound.org/s/104013/
+- 130939 "8-bit_heartbeat.wav" by Vagabondage — CC0 — https://freesound.org/s/130939/
+- 158206 "Music Box.wav" by Rickbrewin — CC0 — https://freesound.org/s/158206/
+- 164586 "Wood impact 2.wav" by deleted_user_2104797 — CC0 — https://freesound.org/s/164586/
+- 172325 "drone0003.flac" by Trebblofang — CC0 — https://freesound.org/s/172325/
+- 200173 "Drumloop - Classic Breakbeat 5 (Jungle Tambourine)" by Bronxio — CC0 — https://freesound.org/s/200173/
+- 200318 "Hand Bell.wav" by WebbFilmsUK — CC0 — https://freesound.org/s/200318/
+- 205173 "QUIET_CLASSROOM_ROOMTONE_02.wav" by justingregoire — CC0 — https://freesound.org/s/205173/
+- 213884 "musicbox3.wav" by vumseplutten1709 — CC0 — https://freesound.org/s/213884/
+- 213886 "musicbox1.wav" by vumseplutten1709 — CC0 — https://freesound.org/s/213886/
+- 223801 "Big Zipper" by secretmojo — CC0 — https://freesound.org/s/223801/
+- 223802 "Big Zipper 2" by secretmojo — CC0 — https://freesound.org/s/223802/
+- 232418 "blackboard3.wav" by lezaarth — CC0 — https://freesound.org/s/232418/
+- 240372 "baby cry.mp3" by mariiao2 — CC0 — https://freesound.org/s/240372/
+- 241882 "Serving Ice Cubes.wav" by rafael45 — CC0 — https://freesound.org/s/241882/
+- 258094 "classroom_ambiance.wav" by joedeshon — CC0 — https://freesound.org/s/258094/
+- 332684 "plastic squeak3.wav" by Reitanna — CC0 — https://freesound.org/s/332684/
+- 332795 "4X low brushby.wav" by RockitBoi — CC0 — https://freesound.org/s/332795/
+- 338986 "Music Box Melody 1" by DRFX — CC0 — https://freesound.org/s/338986/
+- 362760 "coin spinning on ceramic plate_2.wav" by tec_studio — CC0 — https://freesound.org/s/362760/
+- 365095 "Fluorescent Bulb Drop_Empty Room_03.wav" by filmsndfx — CC0 — https://freesound.org/s/365095/
+- 365096 "Fluorescent Bulb Drop_Empty Room_02.wav" by filmsndfx — CC0 — https://freesound.org/s/365096/
+- 368613 "cup_02.wav" by Nightflame — CC0 — https://freesound.org/s/368613/
+- 383479 "Crickets, very distant barks summer night.wav" by Daphne_in_Wonderland — CC0 — https://freesound.org/s/383479/
+- 390399 "Birds In Rain" by hargissssound — CC0 — https://freesound.org/s/390399/
+- 410379 "Heartbeat with beep.wav" by b-train — CC0 — https://freesound.org/s/410379/
+- 412457 "Walking on concrete.m4a" by SoaringAaronJohnson51397 — CC0 — https://freesound.org/s/412457/
+- 417446 "Eerie Music Box" by EJ_Fears — CC0 — https://freesound.org/s/417446/
+- 443796 "25. cama rechinando Bed creaking.wav" by cabusta9 — CC0 — https://freesound.org/s/443796/
+- 447460 "yawning sound by a man" by florianreichelt — CC0 — https://freesound.org/s/447460/
+- 465397 "One car passing by" by JPBILLINGSLEYJR — CC0 — https://freesound.org/s/465397/
+- 482960 "Strange Lullaby.wav" by DylanTheFish — CC0 — https://freesound.org/s/482960/
+- 485160 "Knock On Door 1_1" by Joao_Janz — CC0 — https://freesound.org/s/485160/
+- 493504 "Clothes Rustling Movement 13_23" by Joao_Janz — CC0 — https://freesound.org/s/493504/
+- 494300 "campanas iglesia_SIBGA.wav" by proyectosonidosias — CC0 — https://freesound.org/s/494300/
+- 495010 "Low spacey sound" by User391915396 — CC0 — https://freesound.org/s/495010/
+- 500030 "Wallet Zipper" by danlucaz — CC0 — https://freesound.org/s/500030/
+- 511858 "Riser Hit sfx 012.wav" by AudioPapkin — CC0 — https://freesound.org/s/511858/
+- 511876 "Riser Hit sfx 024.wav" by AudioPapkin — CC0 — https://freesound.org/s/511876/
+- 522332 "cardoor-slam.wav" by cyoung510 — CC0 — https://freesound.org/s/522332/
+- 536739 "WalkC.ogg" by egomassive — CC0 — https://freesound.org/s/536739/
+- 536806 "Infant.ogg" by egomassive — CC0 — https://freesound.org/s/536806/
+- 558992 "coins-falling-013.wav" by Gerent — CC0 — https://freesound.org/s/558992/
+- 565783 "Urban afternoon ambient with construction work" by khenshom — CC0 — https://freesound.org/s/565783/
+- 566446 "break03.wav" by Johnny97 — CC0 — https://freesound.org/s/566446/
+- 566448 "break01.wav" by Johnny97 — CC0 — https://freesound.org/s/566448/
+- 578543 "Church Bell 1" by nomiqbomi — CC0 — https://freesound.org/s/578543/
+- 578792 "squish 1.mp3" by nomiqbomi — CC0 — https://freesound.org/s/578792/
+- 581096 "Fizzy Fill" by magnuswaker — CC0 — https://freesound.org/s/581096/
+- 581332 "amanecer" by Bigvegie — CC0 — https://freesound.org/s/581332/
+- 596484 "Planks Dropped.wav" by EugeneEverett — CC0 — https://freesound.org/s/596484/
+- 613087 "Dancing Ducks Music Box" by f-r-a-g-i-l-e — CC0 — https://freesound.org/s/613087/
+- 615441 "Burning Bush" by InChristAlone — CC0 — https://freesound.org/s/615441/
+- 623709 "soft_swoosh_with_noisy_ambience.wav" by mediatheksuche — CC0 — https://freesound.org/s/623709/
+- 637719 "motorcycle drag racer muscle car dune buggy pass by medium speed bumpy ground nice.flac" by kyles — CC0 — https://freesound.org/s/637719/
+- 642770 "Paper shuffling.mp3" by meeser9 — CC0 — https://freesound.org/s/642770/
+- 645706 "AMBRurl_BR Serrinha do alambari night frogs chorus with close crickets_Melia Roger_ORTF Schoeps.WAV" by MeliaRoger — CC0 — https://freesound.org/s/645706/
+- 676626 "Rip 9 - Long" by NearTheAtmoshphere — CC0 — https://freesound.org/s/676626/
+- 691898 "snoring" by drdock — CC0 — https://freesound.org/s/691898/
+- 697579 "1800's Church Room Tone" by composingatnight — CC0 — https://freesound.org/s/697579/
+- 707525 "Hammer hitting nail.wav" by LiezelDippenaar — CC0 — https://freesound.org/s/707525/
+- 707983 "SFXhammer-Ext_Hitting a nail with a hammer_Kaylin_OwSfx" by KaylinSchafer — CC0 — https://freesound.org/s/707983/
+- 730100 "Cat meowing for food 3" by Sadiquecat — CC0 — https://freesound.org/s/730100/
+- 730102 "Cat MmRrm noise" by Sadiquecat — CC0 — https://freesound.org/s/730102/
+- 734642 "Night crickets" by Vrymaa — CC0 — https://freesound.org/s/734642/
+- 737233 "Small Water Splash" by qubodup — CC0 — https://freesound.org/s/737233/
+- 749962 "rattle" by SelectDetail57 — CC0 — https://freesound.org/s/749962/
+- 752709 "Voice_Crowd_Small_Expression_Applause_Cheer_Stereo" by Nox_Sound — CC0 — https://freesound.org/s/752709/
+- 784747 "Car Door Open & Close" by djfigs1 — CC0 — https://freesound.org/s/784747/
+- 787668 "Techno Kick (Heavy Low End Boom)" by SecureSubset — CC0 — https://freesound.org/s/787668/
+- 795591 "String, Hit, Inside Piano, G#" by VizAion — CC0 — https://freesound.org/s/795591/
+- 807829 "tick tock style hats (115bpm)" by 1volcano — CC0 — https://freesound.org/s/807829/
+- 830502 "Drawer Opening And Closing" by shaunhillyard — CC0 — https://freesound.org/s/830502/
+- 846406 "Tree Bark – Close Rustling Sound" by NikoletB — CC0 — https://freesound.org/s/846406/
+- 858309 "Small Crowd Applause" by miuziqa — CC0 — https://freesound.org/s/858309/
+- 859607 "Sleepy Upright Piano Seamless Loop" by blankie.rest — CC0 — https://freesound.org/s/859607/
+- 868929 "Ethereal Wind Chimes over a Frozen Cracking Ambient Drone" by bassimat — CC0 — https://freesound.org/s/868929/

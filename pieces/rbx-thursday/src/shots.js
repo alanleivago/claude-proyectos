@@ -18,7 +18,7 @@ const STAGES = {};
   };
   STAGES['I wear this hood'] = (s, u) => {
     const p = [0.5, 0.06, -2.4]; put(s, 'hero', { p, ry: 0.2, face: 'smile', pose: { head: [-0.08, 0, 0] } });
-    return O([p[0], p[1] + 3.8, p[2]], 8.5, 200 - 170 * u, 4, 44);
+    return O([p[0], p[1] + 3.8, p[2]], 6.0, 140 - 120 * u, 4, 44);
   };
   STAGES['in the whole school'] = (s, u) => {
     const m = M(s, 'm_shelf'); [0, 1, 2, 3].forEach((i) => prop(s, 'trophy', [i], [m[0] + 0.05, m[1] + 0.1, m[2] - 1.2 + i * 0.8], Math.PI / 2, 0.9 + (i % 2) * 0.2));

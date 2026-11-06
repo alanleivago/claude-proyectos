@@ -1,0 +1,81 @@
+# Sound credits — rbx-sock "Never Lose A Sock"
+
+- Voice: voice/voice_final.wav (approved, unedited).
+- Whoosh / swish / boom / pop / tap / thump / shimmer accents: sound-layer kit (CC0, see sound-layer/kit/CREDITS.md).
+- Music: 'Eerie Music Box' 417446 (slowed 2 st, looped) + drone 172325 for the creepy part; 'Dancing Ducks Music Box' 613087 from 'After that, everything changed' (110.0 s).
+- Knitting needle clicks are built in cuts.py from real wood pats (137086, 137084) pitched up over the real knitting recording 468198.
+
+## Freesound recordings used (all Creative Commons 0, HQ previews)
+
+- 95595 "jaw_harp15.mp3" by 3bagbrew — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/95595/ — `fs/comic_95595.mp3`
+- 137084 "Wood Pat 07" by chaosportal — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/137084/ — `fs/desk_slam_137084.mp3`
+- 137086 "Wood Pat 05" by chaosportal — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/137086/ — `fs/desk_slam_137086.mp3`
+- 148974 "Squelch_2.wav" by deleted_user_2104797 — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/148974/ — `fs/squish_148974.mp3`
+- 164638 "Lock rattle 3.wav" by deleted_user_2104797 — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/164638/ — `fs/chute_rattle_164638.mp3`
+- 172325 "drone0003.flac" by Trebblofang — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/172325/ — `fs/drone_172325.mp3`
+- 181913 "Jelly Fall From Egg Cup 1.wav" by lolamadeus — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/181913/ — `fs/mashed_181913.mp3`
+- 209012 "Fruit Impact 1" by OwlStorm — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/209012/ — `fs/thud_soft_209012.mp3`
+- 234044 "Creepy Whispering" by RaspberryTickle — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/234044/ — `fs/whisper_234044.mp3`
+- 237980 "Very Big Whoosh" by Paul368 — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/237980/ — `fs/whoosh_big_237980.mp3`
+- 271039 "concrete footsteps" by seth-m — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/271039/ — `fs/footsteps_271039.mp3`
+- 273901 "Sort of rattle Bt-Hs Lg.wav" by beskhu — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/273901/ — `fs/chute_rattle_273901.mp3`
+- 329962 "Topf 2.wav" by soundjoao — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/329962/ — `fs/grate_329962.mp3`
+- 332684 "plastic squeak3.wav" by Reitanna — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/332684/ — `fs/balloon_332684.mp3`
+- 346680 "Sniffles_08.wav" by deleted_user_2104797 — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/346680/ — `fs/sniff_346680.mp3`
+- 346681 "Sniffles_07.wav" by deleted_user_2104797 — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/346681/ — `fs/sniff_346681.mp3`
+- 348110 "Suburban hospital ambience - Moscow region, mostly old ladies & gents calmly talking and walking around, door closes, general noises OMNI mics.wav" by gladkiy — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/348110/ — `fs/hospital_348110.mp3`
+- 369579 "Squelching Footsteps" by Adielees9 — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/369579/ — `fs/wet_steps_369579.mp3`
+- 388196 "Birds Chirping In Suburbs Midwest" by moxcr — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/388196/ — `fs/morning_388196.mp3`
+- 390425 "249716__daandraait__slow-heartbeat(mezcelized).mp3" by mezcel — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/390425/ — `fs/heartbeat_390425.mp3`
+- 395245 "drainwater1.wav" by AGC66 — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/395245/ — `fs/drain_395245.mp3`
+- 410359 "Torch Click 1" by BenjaminNelan — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/410359/ — `fs/flashlight_410359.mp3`
+- 411914 "Laundry Room Ambience" by moviebuffgavin — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/411914/ — `fs/dryer_drum_411914.mp3`
+- 417446 "Eerie Music Box" by EJ_Fears — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/417446/ — `fs/musicbox_417446.mp3`
+- 425425 "AMB_Rural_Summer_Night.wav" by AnthonyRamirez — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/425425/ — `fs/crickets_425425.mp3`
+- 442845 "running shower by Krucifix Productions" by krucifix — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/442845/ — `fs/shower_442845.mp3`
+- 443796 "25. cama rechinando Bed creaking.wav" by cabusta9 — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/443796/ — `fs/bed_creak_443796.mp3`
+- 449869 "infantLaugh.mp3" by gary_in_wv — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/449869/ — `fs/baby_coo_449869.mp3`
+- 454355 "wind drone howl tunnel stairwell4 eerie.flac" by kyles — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/454355/ — `fs/chute_wind_454355.mp3`
+- 468198 "17Tejiendo.wav.wav" by juliadang — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/468198/ — `fs/knitting_468198.mp3`
+- 489897 "Phantoms' Whispers" by NicknameLarry — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/489897/ — `fs/whisper_489897.mp3`
+- 493156 "Leather Belt Stretching 1_5" by Joao_Janz — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/493156/ — `fs/cloth_stretch_493156.mp3`
+- 493158 "Leather Belt Stretching 1_2" by Joao_Janz — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/493158/ — `fs/cloth_stretch_493158.mp3`
+- 493190 "Leather Belt Stretching 1_9" by Joao_Janz — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/493190/ — `fs/cloth_stretch_493190.mp3`
+- 493210 "Leather Belt Stretching 1_6" by Joao_Janz — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/493210/ — `fs/cloth_stretch_493210.mp3`
+- 493457 "Clothes Rustling Movement 8_2" by Joao_Janz — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/493457/ — `fs/blanket_493457.mp3`
+- 493462 "Clothes Rustling Movement 8_5" by Joao_Janz — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/493462/ — `fs/blanket_493462.mp3`
+- 493504 "Clothes Rustling Movement 13_23" by Joao_Janz — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/493504/ — `fs/blanket_493504.mp3`
+- 494789 "Jacket/Cloth Rustle 3" by brandondelehoy — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/494789/ — `fs/sock_pull_494789.mp3`
+- 494795 "Jacket/Cloth Rustle 5" by brandondelehoy — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/494795/ — `fs/sock_pull_494795.mp3`
+- 494796 "Jacket/Cloth Rustle 10" by brandondelehoy — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/494796/ — `fs/sock_pull_494796.mp3`
+- 497093 "FX swanee whistle down.wav" by v0idation — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/497093/ — `fs/slide_whistle_497093.mp3`
+- 506664 "Wood Creak Single V9" by Rudmer_Rotteveel — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/506664/ — `fs/creak_506664.mp3`
+- 516566 "Dark Dungeon Ambience" by Kinoton — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/516566/ — `fs/cave_516566.mp3`
+- 529300 "drain finishing/glug" by brittmosel — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/529300/ — `fs/drain_529300.mp3`
+- 536776 "Wind.ogg" by egomassive — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/536776/ — `fs/wind_gust_536776.mp3`
+- 538422 "Referee whistle sound.wav" by Rosa-Orenes256 — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/538422/ — `fs/whistle_538422.mp3`
+- 578792 "squish 1.mp3" by nomiqbomi — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/578792/ — `fs/squish_578792.mp3`
+- 607911 "Wooden Door Open and Close" by IENBA — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/607911/ — `fs/school_door_607911.mp3`
+- 608216 "Inhale.wav" by guitargeorge-2 — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/608216/ — `fs/gasp_608216.mp3`
+- 613087 "Dancing Ducks Music Box" by f-r-a-g-i-l-e — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/613087/ — `fs/warm_613087.mp3`
+- 613182 "Evil clothes dryer (close)" by xkeril — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/613182/ — `fs/dryer_start_613182.mp3`
+- 614064 "Bodyfall" by magnuswaker — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/614064/ — `fs/soft_land_614064.mp3`
+- 616088 "Child's laugh 1 - medyk3D.wav" by medyk3D — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/616088/ — `fs/giggle_616088.mp3`
+- 623709 "soft_swoosh_with_noisy_ambience.wav" by mediatheksuche — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/623709/ — `fs/whoosh_soft_623709.mp3`
+- 641048 "Metallic Scrape 2 (sharp, slight clipping)" by magnuswaker — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/641048/ — `fs/vent_641048.mp3`
+- 642770 "Paper shuffling.mp3" by meeser9 — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/642770/ — `fs/paper_642770.mp3`
+- 646692 "Creaking Wooden Floor [6]" by SoundDesignForYou — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/646692/ — `fs/creak_646692.mp3`
+- 667382 "wire snap / clothespin" by MasterSuite — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/667382/ — `fs/clothespin_667382.mp3`
+- 708407 "Highschoolers Writing Test in Classroom ambience" by Group39 — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/708407/ — `fs/classroom_708407.mp3`
+- 712585 "tying_cloth_blindfold" by dalexgray — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/712585/ — `fs/knot_712585.mp3`
+- 728541 "Pillow Flump" by trinitrotoluenedev — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/728541/ — `fs/cushion_728541.mp3`
+- 737233 "Small Water Splash" by qubodup — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/737233/ — `fs/squish_737233.mp3`
+- 759501 "Tick Tock Dry" by GammaGool — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/759501/ — `fs/clock_tick_759501.mp3`
+- 789038 "Fabric_Foley_1" by Mediasaur — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/789038/ — `fs/sock_pull_789038.mp3`
+- 792927 "Fine Water Drop" by qubodup — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/792927/ — `fs/drip_792927.mp3`
+- 805902 "Junkyard Foley and FX Percs (Metal, Clanks, Scrapes, Bangs, Scrap, and Machines) 93.wav" by CVLTIV8R — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/805902/ — `fs/chute_rattle_805902.mp3`
+- 826716 "WomansFinalGasps" by Soundjougi — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/826716/ — `fs/breath_826716.mp3`
+- 837886 "JM_AMB_Room Tone 01_MONO" by Julien_Matthey — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/837886/ — `fs/roomtone_837886.mp3`
+- 841349 "Dog Panting Loop 2" by qubodup — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/841349/ — `fs/dog_841349.mp3`
+- 850424 "Dark Whoosh Transition Horror 01" by TommasoMotteran — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/850424/ — `fs/creepy_whoosh_850424.mp3`
+- 850767 "Ghostly Whoosh - Horror Game UI" by TommasoMotteran — CC0 (http://creativecommons.org/publicdomain/zero/1.0/) — https://freesound.org/s/850767/ — `fs/creepy_whoosh_850767.mp3`
