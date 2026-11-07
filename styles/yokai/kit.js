@@ -167,9 +167,9 @@ function ykStars(a = 1, key = 'stars') {
 // creature's kanji — ONE character, drawn from a real font (heavy Hiragino gothic) at 7×7 and laid down the same way as the old
 // mark; without it, the old stylised spider sign (backward compatible).
 const _ykGlyphs = {}, YK_SEALF = "'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Yu Gothic', sans-serif";
-try { document.fonts.load('900 56px ' + YK_SEALF, '犬鬼蜘蛛海坊主屍骨'); } catch (e) { /* no FontFace API: drawn on first use */ }   // system fonts load lazily: ask early
+try { document.fonts.load('900 56px ' + YK_SEALF, '犬鬼蜘蛛海坊主屍骨洞'); } catch (e) { /* no FontFace API: drawn on first use */ }   // system fonts load lazily: ask early
 // hand-drawn 7×7 grids for kanji too dense to survive the 7×7 raster (the raster turns them into a blob)
-const YK_SEALG = { '屍': ['######.', '#....#.', '######.', '#.#####', '#..#.#.', '#.##.#.', '##.#.##'], '骨': ['.#####.', '.#..##.', '#######', '#.###.#', '.#...#.', '.#####.', '.#...#.'], '爪': ['...###.', '####...', '.#...#.', '.#.#.#.', '.#.#.#.', '#..#..#', '#..#..#'] };
+const YK_SEALG = { '洞': ['#.#####', '..#...#', '#.#####', '..#...#', '#.#.#.#', '..#...#', '#.#..##'], '屍': ['######.', '#....#.', '######.', '#.#####', '#..#.#.', '#.##.#.', '##.#.##'], '骨': ['.#####.', '.#..##.', '#######', '#.###.#', '.#...#.', '.#####.', '.#...#.'], '爪': ['...###.', '####...', '.#...#.', '.#.#.#.', '.#.#.#.', '#..#..#', '#..#..#'] };
 function ykGlyphGrid(ch, G = 7) {
   if (G === 7 && YK_SEALG[ch]) return YK_SEALG[ch];
   const k = ch + G; if (_ykGlyphs[k]) return _ykGlyphs[k];

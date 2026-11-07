@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Black Cave</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #020306; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; image-rendering: pixelated; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  BLACK CAVE — 9:16, 71s, 24fps. A first-person tale in on-screen paragraphs: a sealed limestone cave in the hills
+//  behind our town; my brother cuts the grate and crawls headfirst down a crack; something below whispers his name in my
+//  voice, holds his hands and pulls; his last light shows a long eyeless face under his. Style: yokai (three.js, dithered).
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 71.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 71, () => sceneTale()]];
+const SHOTS = [
+  ['hook',   0, 0.0,  4.5,  'a pale hand with very long fingers slides out of a black crack and taps the stone under a flashlight'],
+  ['card',   0, 4.5,  8.5,  'the card: Black Cave'],
+  ['hills',  0, 8.5,  14.6, 'the scrub hills at night: a limestone cliff, the cave mouth with a welded grate, a danger sign'],
+  ['grate',  0, 14.6, 20.6, 'the cut grate; my brother ducks in with his headlamp; me waiting at the mouth'],
+  ['cham',   0, 20.6, 26.6, 'the chamber: he squeezes headfirst into a low crack ringed with ofuda'],
+  ['sec',    0, 26.6, 32.6, 'side cutaway: the crack gets tighter and goes down, him inside'],
+  ['flick',  0, 32.6, 38.6, 'his headlamp flickers; pale fingertips in the dark below him'],
+  ['grip',   0, 38.6, 45.6, 'long pale fingers wrap his gloved wrists and pull; the light dies; black'],
+  ['hit',    0, 45.6, 51.6, 'THE HIT: the last flash shows its long eyeless face, upside down, right under his'],
+  ['rescue', 0, 51.6, 58.0, 'rescuers with floodlights, helmets and ropes at the mouth'],
+  ['sealed', 0, 58.0, 71.0, 'concrete over the mouth at dusk; badge'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { open: 0.15, slide: 0.3, tap: 2.0, card: 4.5, hills: 8.5, grate: 14.6, cham: 20.6, sec: 26.6, flick: 33.4, fingers: 34.2, grip: 38.6, out: 44.3, black: 45.0, hit: 45.6, jaw: 46.4, rescue: 51.6, sealed: 58.0, badge: 66.2 },
+  acts: [
+    { name: '1 The rule',     role: 'build',   t0: 0.0,  t1: 8.5 },
+    { name: '2 The cave',     role: 'turn',    t0: 8.5,  t1: 26.6 },
+    { name: '3 The crack',    role: 'peak',    t0: 26.6, t1: 45.0 },
+    { name: '4 Silence',      role: 'silence', t0: 45.0, t1: 45.6 },
+    { name: '5 The face',     role: 'gift',    t0: 45.6, t1: 58.0 },
+    { name: '6 Sealed',       role: 'goodbye', t0: 58.0, t1: 71.0 },
+  ],
+  board: [
+    { t: 2.2,  title: 'Hook: a hand out of the crack', sound: 'cave drip and hollow room tone; a wet slide of skin on stone, long nails tapping (2.0); the flashlight buzzes and stutters', next: 'dither' },
+    { t: 6.9,  title: 'Card: Black Cave', sound: 'card hit, a low shakuhachi breath, distant water drip', next: 'dither in' },
+    { t: 12.0, title: 'The cave behind our town', sound: 'night wind in dry scrub, crickets, a far dog and town hum below', next: 'cut' },
+    { t: 18.0, title: 'He cut the grate', sound: 'grinder whine tail and cooling metal ticks, his boots on gravel, the cave breathing out cold air', next: 'cut' },
+    { t: 24.0, title: 'Headfirst into the crack', sound: 'close cave ambience, drips, jacket rustle and gloves scraping rock, his breath tight', next: 'cut' },
+    { t: 30.0, title: 'Tighter, and down', sound: 'a low drone; scrape-pause-scrape of him dragging down; rock grit trickling', next: 'cut' },
+    { t: 36.6, title: 'A whisper below', sound: 'headlamp buzz and clicks on each flicker (33.4); a faint whisper of his name, nails ticking on rock', next: 'cut' },
+    { t: 41.6, title: 'Holding his hands', sound: 'his breath panics; slow wet skin on glove leather; a long drag; drone swells; light clicks out 44.3-44.9', next: 'black, 0.6 s silence' },
+    { t: 47.2, title: 'A face under his', sound: 'THE HIT (45.6 s): a sub drop, a click of the lamp, a wet many-toothed exhale', next: 'cut' },
+    { t: 50.0, title: 'The jaw opens', sound: 'teeth grinding, a deep breath in the rock, the lamp stutters out', next: 'cut' },
+    { t: 55.0, title: 'Four days of digging', sound: 'generator hum, floodlight buzz, shovels, radio chatter, a voice faintly talking in the rock', next: 'dither' },
+    { t: 62.0, title: 'Sealed with concrete', sound: 'dusk wind in scrub, a distant call of my name from inside, very faint', next: 'end' },
+    { t: 68.4, title: 'kodamashorts', sound: 'wind fades out', next: 'end' },
+  ],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;
