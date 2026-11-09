@@ -64,7 +64,7 @@ Top 6 shorts de Gneef (20-34 M vistas), GreenBroRants (16-29 M) y redfish1 (1-9 
 - Cámara (APROBADA): zoom rápido y fluido al inicio de cada toma (punch-in; cada 3ª toma pull-out), luego creep continuo + handheld leve.
 - Personajes (APROBADO): nunca estáticos, pero SIN rebote/bailar todo el tiempo. Como GreenBro: cada uno con su propio movimiento independiente (mirar alrededor lento, cambiar el peso, un gesto propio cada 1.8–3 s desfasado entre personajes), ciclos de caminar reales cuando se desplazan. Los props sostenidos deben seguir la mano.
 - Subtítulos: una palabra, Arial Black ~104 px, blanco con contorno negro, centro al 70.7 %, pop 0.85→1.06→1 en 90 ms.
-- Sonido: música (caja de música + drone, cálida al final) 20 LU bajo la voz, ambientes 22 LU, SFX reales CC0 ≥4.5 dB bajo la voz, -14 LUFS; voz sin tocar.
+- Sonido: música = TEMPOREX Numbers (styles/roblox/bgm/bgm.wav, ver abajo) 9 LU bajo la voz, ambientes 22 LU, SFX reales CC0 ≥4.5 dB bajo la voz, -14 LUFS; voz sin tocar.
 - Referencias: para estudiar canales usar yt-dlp --flat-playlist sobre la página /shorts del canal y ver-youtube por video.
 - Decisión (2026-11-03): aplicar el estudio GreenBro (fuentes/roblox-cartoon/greenbro-movimiento.md) en el próximo video — solo actúa el protagonista con poses sostenidas, boca por palabra, caminatas reales, dutch fijo en algunas tomas, shake solo en impactos — PERO los fast zooms se quedan exactamente como en la última versión de rbx-thursday.
 - (2026-11-03) APROBADO: el modo 'gb' (GreenBro, ENG.MODE por defecto) es el estándar del estilo — un solo actor por toma con poses sostenidas, boca por palabra, caminatas reales, dutch fijo en ~mitad de tomas, reacciones de grupo sincronizadas, fast zooms de v1. Base: pieces/rbx-thursday (renders/final.mp4 = v2-greenbro).
@@ -87,3 +87,25 @@ Medido en 132 historias (GreenBro 95, Gneef 21, redfish 16). Fijo: regla en la f
 Para cada video nuevo, peinados, atuendos y expresiones se replican de Gneef (ref principal: "In This Town, You Are Not Allowed To Speak 🤫", crvPRFMpKLA).
 Spec completa: fuentes/roblox-cartoon/gneef-looks.md (H1–H15 peinados, arquetipos de atuendo, F1–F16 caras, reglas "wild", checklist). Detalle por video: gneef-looks-per-video.md (15 shorts).
 Claves: pelo 1.3–1.6× la cabeza y el objeto más fuerte del personaje; un color dominante por personaje; caras en extremos (punto deadpan ↔ mega grito), sin estados medios; mezclar noobs amarillos planos con avatares texturizados; un prop/rig raro por historia; grade de luz por escena (noche azul-violeta, rojo para el monstruo).
+
+## Voz y duración (receta exacta, usada en rbx-chess y rbx-rope)
+
+**Duración:** guion de ~490-500 palabras → video de **1:45-1:55** (rbx-chess 105.5 s, rbx-rope 113.4 s). Video = voz + 0.5 s.
+
+**Voz (VoiceStudio, perfil "3d cartoon"):**
+1. Partir el guion en ~10 trozos (`voice/c1..cN.txt`, cortar en punto; si un trozo pierde palabras en todas las tomas, partirlo en dos).
+2. Generar cada trozo:
+   `curl -s -X POST http://127.0.0.1:3900/generate --form-string text="$(cat cN.txt)" -F profile_id=227af074 -F num_step=32 -F speed=1.25 -F language=Auto -o cN_tK.wav`
+3. Hasta 4 tomas por trozo; transcribir cada una con faster-whisper large-v3 (`voice/fix.py`, decodificar con ffmpeg a f32le; `av.open` falla) y quedarse con la que dice el texto exacto. Regenerar hasta que no falte ni sobre ninguna palabra.
+4. Unir los trozos con 0.25 s de silencio entre ellos y pasar `styles/cartoon3d/tools/trim_voice.py` → `voice_final.wav` + `words.json`.
+5. **Pitch +4 semitonos sin cambiar la velocidad:**
+   `ffmpeg -i voice.wav -af "asetrate=48000*2^(4/12),aresample=48000,atempo=1/2^(4/12)" voice_final.wav`
+6. `words.json` en formato `{word,start,end}`; corregir a mano palabras mal oídas (nombres, números en letras). Guardar el original como `words_raw.json`.
+7. Verificar: transcripción completa del final contra el guion. La voz no se toca más (solo la ganancia del master).
+
+Scripts de referencia: `pieces/rbx-rope/voice/` (gen.sh, fix.py, c*.txt) y `pieces/rbx-rope/sound/remix.py`.
+
+## Música fija (desde 2026-11-07)
+
+Siempre **"TEMPOREX - Numbers (Instrumental | Perfect intro loop)"** (https://www.youtube.com/watch?v=ecvbCDTcAco) desde el segundo 0, fade-out de 2 s al final, **9 LU bajo la voz** (20 y 12 LU quedaron bajos). El wav no está en git: en otra máquina bajarlo con
+`yt-dlp --no-playlist -x --audio-format wav -o "styles/roblox/bgm/bgm.%(ext)s" "https://www.youtube.com/watch?v=ecvbCDTcAco"`.
