@@ -81,3 +81,9 @@ Medido en 132 historias (GreenBro 95, Gneef 21, redfish 16). Fijo: regla en la f
 - **Giro**: el más común es la reinterpretación (la regla o el villano eran otra cosa, 52 %). La lectura literal es solo el 13 %. Otras opciones: objeto o juego plantado, el defecto del héroe. No repetir "And that's when I realized something" ni "After that, everything changed" en videos seguidos.
 - **Rotar el incidente** (falla el sistema, alguien en peligro, se llevan a alguien, llega un visitante, el héroe rompe la regla), **quién resuelve** y **el final** (callback tierno 41 %, chiste oscuro 33 %, ritual 14 %).
 - Prueba: entre dos videos nuestros, como mucho 2-3 de las 8 columnas de la ficha pueden coincidir (las refs promedian 2). Thursday y Sock coincidieron en 5 y compartieron 4 personajes de pueblo.
+
+## Personajes "wild" de Gneef (desde 2026-11-08, obligatorio)
+
+Para cada video nuevo, peinados, atuendos y expresiones se replican de Gneef (ref principal: "In This Town, You Are Not Allowed To Speak 🤫", crvPRFMpKLA).
+Spec completa: fuentes/roblox-cartoon/gneef-looks.md (H1–H15 peinados, arquetipos de atuendo, F1–F16 caras, reglas "wild", checklist). Detalle por video: gneef-looks-per-video.md (15 shorts).
+Claves: pelo 1.3–1.6× la cabeza y el objeto más fuerte del personaje; un color dominante por personaje; caras en extremos (punto deadpan ↔ mega grito), sin estados medios; mezclar noobs amarillos planos con avatares texturizados; un prop/rig raro por historia; grade de luz por escena (noche azul-violeta, rojo para el monstruo).

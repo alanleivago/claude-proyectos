@@ -1,0 +1,223 @@
+// rbx-rope staging: one function per SHOTLIST row (keyed by its first words). fn(set, u, shot) places the cast + props and
+// returns the camera { p, l, fov (pre-WIDEN), roll, f, grade, post, lead, faces:{lead:[[u, mood]]}, mood, talk }.
+// Everyone on the rope grips it with both hands (GN.grip via LINE.stage); faces change all the time (CAST.react + tracks).
+'use strict';
+const STAGES = {};
+(function () {
+  const T = THREE, PI = Math.PI, V = (x, y, z) => new T.Vector3(x, y, z), L = (a, b, u) => (Array.isArray(a) ? ENG.lerp(a, b, u) : a + (b - a) * u), E = (u) => ENG.ease(u);
+  const ST = (k, f) => { STAGES[k] = f; };
+  const put = (s, n, o) => CAST.put(s.scene, n, o);
+  const add = (s) => (o) => ENG.add(s.scene, o);
+  const C = {}; const once = (k, f) => C[k] || (C[k] = f());
+  const prop = (s, fn, args, pos, ry = 0, sc = 1) => ENG.prop(s, fn, args, pos, ry, sc);
+  const line = (s, E2, o = {}) => LINE.stage(s.scene, o.rope || s.rope, E2, add(s), o);
+  const rep = (s, key, objs, off, n) => { const cl = once('rep|' + key, () => { const out = []; for (let k = 1; k <= n; k++) objs.forEach((a) => { const c = (a.root || a).clone(); c.position.add(off.clone().multiplyScalar(k)); out.push(c); }); return out; }); cl.forEach((c) => ENG.add(s.scene, c)); };
+  const head = (n) => { const a = CAST.get(n); a.root.updateMatrixWorld(true); return a.head.getWorldPosition(V(0, 0, 0)); };
+  const hands = (n) => { const a = CAST.get(n); a.root.updateMatrixWorld(true); return [a.armL, a.armR].map((q) => q.inner.localToWorld(V(0, -1.8, 0))); };
+  const mid = (n) => { const h = hands(n); return h[0].clone().add(h[1]).multiplyScalar(0.5); };
+  const cam = (p, l, fov, o = {}) => Object.assign({ p: p.toArray ? p.toArray() : p, l: l.toArray ? l.toArray() : l, fov }, o);
+  const off = (v, x, y, z) => V(v.x + x, v.y + y, v.z + z);
+  const faceCam = (n, cp, k = 1) => { const a = CAST.get(n), h = head(n), t = Math.atan2(cp[0] - h.x, cp[2] - h.z); let d = t - a.root.rotation.y; d = Math.atan2(Math.sin(d), Math.cos(d)); a.neck.rotation.y = THREE.MathUtils.clamp(d * k, -1.4, 1.4); };
+  const F = (list) => list;   // readability: face lists
+  const STRAIN = ['F14', 'F11', 'F14', 'F12', 'F14', 'F13'];
+
+  // ---------- CITY (rope along z at y 2.8, Fog toward -z; sAt(z)) ----------
+  const cityRun = (s, z0, z1, start, o = {}) => { const E2 = []; let i = 0; for (let z = z0; z <= z1; z += o.step || 2.7, i++) E2.push({ name: 'crowd' + (start + i), s: s.sAt(z), face: o.faces ? o.faces[i % o.faces.length] : undefined, keep: !!o.faces, tag: (o.tags || {})[i], lean: o.lean }); return E2; };
+  const city = (s, z0 = -8, z1 = 52, start = 0, o = {}) => { const A = line(s, cityRun(s, z0, z1, start, o), { lean: o.lean }); if (o.rep) rep(s, 'city' + z0 + z1 + start + (o.lean || '') + (o.faces || []).join(''), [...A, ...A.knots], V(0, 0, z1 - z0 + 2.7), o.rep); return A; };
+  const cp = (s, z) => s.rope.userData.curve.getPointAt(s.sAt(z) / s.rope.userData.len);
+  ST('In this world', (s, u) => { city(s, -8, 60, 0, { rep: 4 }); return cam(L([10, 30, -40], [8, 26, -32], E(u)), [-1, 2, 40], 40, { grade: 'day', talk: false, post: { aperture: 0 } }); });
+  ST('everyone is holding', (s, u) => { city(s, -8, 40, 0, { faces: ['F1', 'F5', 'F3', 'F6', 'F14', 'F2'], rep: 2 }); const h = head('crowd1');
+    return cam(off(h, 2.2, 0.4, -5.2), off(h, -0.6, -0.8, 6), 34, { lead: 'crowd1', talk: false, f: h.toArray() }); });
+  ST('It runs through every', (s, u) => { city(s, 4, 64, 4, { rep: 4 }); return cam([L(-4.5, -4, u), 1.2, L(-14, -10, u)], [0.4, 3.0, 30], 40, { talk: false, f: [0, 3, 6] }); });
+  ST('so nobody lets go', (s, u) => { city(s, -8, 30, 10, { faces: STRAIN, lean: 0.35, rep: 1 }); const h = head('crowd11');
+    return cam(off(h, -2.4, -0.2, -4.6), off(h, 0.6, -1.0, 4), 36, { lead: 'crowd11', talk: false }); });
+  const babyLine = (s) => { const E2 = [{ name: 'baby', s: s.sAt(-5.2), face: 'F7', side: 1, grounds: [1.6, 1.8, 1.4, 2.0, 1.2, 2.2, 1.0, 2.4], reach: 1.3, tag: 'DAY 1' },
+      { name: 'bride', s: s.sAt(-1.6), face: 'F5', side: -1, hands: 'R', pose: CAST.POSE.ringUp, tag: 'MR & MRS' }, { name: 'groom', s: s.sAt(0.2), face: 'F6', side: 1, hands: 'L', pose: CAST.POSE.waveUpR, noKnot: true }];
+    const A = line(s, E2); const b = CAST.get('baby'); prop(s, 'stool', [b.ground], [b.root.position.x, 0, b.root.position.z]); city(s, 3.5, 40, 30, { rep: 1 }); return A; };
+  ST('You get your own', (s, u) => { babyLine(s); const h = head('baby'); return cam(off(h, 1.6, 0.5, -3.6), off(h, -0.2, -0.5, 0.5), 34, { lead: 'baby', talk: false, faces: { baby: [[0, 'shock'], [0.5, 'laugh']] } }); });
+  ST('Babies get tiny gloves', (s, u) => { babyLine(s); const m = mid('baby'); return cam(off(m, 2.6, 0.9, -2.6), off(m, 0, 0.3, 0), 30, { lead: 'baby', talk: false, f: m.toArray(), post: { aperture: 1.4 } }); });
+  ST('Weddings are one handed', (s, u) => { babyLine(s); const h = head('bride'); return cam(off(h, -1.6, 0.0, -7.5), off(h, 0.9, -1.3, 1), 36, { lead: 'bride', talk: false, faces: { bride: [[0, 'laugh'], [0.6, 'grin']] } }); });
+  ST('The ring goes on', (s, u) => { babyLine(s); const a = CAST.get('bride'); a.root.updateMatrixWorld(true); const r = a.armL.inner.localToWorld(V(0, -1.86, 0)); faceCam('bride', off(r, 0.4, 0.3, -3).toArray(), 0.6);
+    return cam(off(r, 1.6, 0.0, -3.6), off(r, -0.2, -0.1, 0), 30, { lead: 'bride', talk: false, f: r.toArray(), post: { aperture: 1.2 } }); });
+  ST('Mail slides along', (s, u) => { city(s, -8, 30, 0, { rep: 1 }); const z = L(-14.5, -11, u), p = cp(s, z); const m = prop(s, 'mailHook', ['TO: AUNT MAE'], [p.x, p.y, p.z]); m.scale.setScalar(1.3);
+    return cam(off(p, 2.2, 0.5, -3.4), off(p, -0.2, -0.6, 2), 34, { talk: false, f: [p.x, p.y - 0.8, p.z] }); });
+  ST('to reach the other', (s, u) => { const A = city(s, -8, 30, 0, { rep: 1, faces: ['F7', 'F1', 'F5', 'F2'] }); const h = head('crowd0'), hm = mid('crowd0');
+    const m = prop(s, 'mailHook', ['HAPPY 1ST B-DAY!'], [hm.x + 0.1, hm.y + 1.0, hm.z - 0.6]); m.scale.setScalar(1.25); CAST.face('crowd0', 'F7');
+    return cam(off(h, 1.4, -0.2, -4.4), off(h, -0.2, -1.0, 0.5), 36, { lead: 'crowd0', talk: false }); });
+  ST('And sneezing is illegal', (s, u) => { city(s, -8, 40, 0, { rep: 2 }); prop(s, 'sign', ['NO SNEEZING', 'BY ORDER OF THE ROPE'], [6.2, 0, -10.5], PI - 0.4);
+    return cam([3.6, 4.6, -20], [3.2, 4.8, -8], 38, { talk: false, f: [6.2, 5, -10.5] }); });
+  const sneezeLine = (s, then) => line(s, [{ name: 'crowd5', s: s.sAt(1), face: then ? 'F11' : 'F7', keep: true, side: 1 }, { name: 'sneezer', s: s.sAt(-8), face: then ? 'F12' : 'F9', keep: true, side: -1, tag: '1971' },
+    { name: 'crowd8', s: s.sAt(-5), face: then ? 'F7' : 'F11', keep: true, side: 1 }, { name: 'crowd2', s: s.sAt(-2), face: then ? 'F13' : 'F11', keep: true, side: -1 }]);
+  ST('One guy sneezed in', (s, u) => { sneezeLine(s, true); const h = head('sneezer');
+    return cam(off(h, 1.5, 0.2, -4.4), off(h, -0.2, -0.2, 0.5), 34, { grade: 'sepia', lead: 'sneezer', talk: false, roll: 8 }); });
+  ST('The world lost an', (s, u) => { sneezeLine(s, true); const k = cp(s, -8.6); prop(s, 'stake', ['-1 INCH'], [k.x + 1.1, 0, k.z], PI);
+    return cam([k.x + 5.5, 3.5, k.z - 6], [k.x + 0.6, 1.8, k.z], 34, { grade: 'sepia', talk: false, f: k.toArray() }); });
+  ST("Nobody's forgiven him", (s, u) => { sneezeLine(s, false); const h = head('sneezer');
+    return cam(off(h, 3.0, 0.5, -6.5), off(h, -0.6, -0.9, 1.2), 38, { lead: 'sneezer', talk: false }); });
+  ST('Once a year on', (s, u) => { city(s, -6, 60, 0, { rep: 3, faces: ['F5', 'F14', 'F6'] }); prop(s, 'banner', ['HEAVE DAY'], [0, 0, 4], PI);
+    return cam([1.5, 5.5, -20], [0, 8, 6], 40, { talk: false, f: [0, 8, 4] }); });
+  ST('the whole world pulls', (s, u) => { city(s, -8, 40, 0, { rep: 2, faces: STRAIN, lean: 0.4 }); prop(s, 'banner', ['HEAVE DAY'], [0, 0, 22], PI); const h = head('crowd5');
+    return cam(off(h, 4.4, 1.6, -8.5), off(h, -1.2, -1.2, 5), 40, { talk: false, roll: -8 }); });
+  ST('and we win one', (s, u) => { city(s, -8, 40, 0, { rep: 1, faces: ['F5', 'F6'], lean: 0.3 }); const a = CAST.get('crowd1'); const f = a.root.position; prop(s, 'stake', ['+1 STEP'], [f.x + 0.9, 0, f.z - 1.6], PI);
+    return cam([f.x + 3.2, 0.9, f.z - 6.5], [f.x, 0.6, f.z], 34, { talk: false, f: [f.x, 0.5, f.z] }); });
+  ST('So the world pulled', (s, u) => { city(s, -8, 40, 10, { rep: 2, faces: STRAIN, lean: 0.4 }); const h = head('crowd12');
+    return cam(off(h, -2.6, 0.6, -6), off(h, 0.6, -1.0, 5), 40, { talk: false, roll: 9 }); });
+  const hitch = (s, kind, x, z) => { const p = cp(s, z); const o = prop(s, kind, [], [x, 0, z + (kind === 'elephant' ? 6 : 5)]); const a = V(x, kind === 'elephant' ? 5.0 : 1.4, z + (kind === 'elephant' ? 2.4 : 2.1));
+    const r = once('tow|' + kind + x + z, () => ROPE.make([a, a.clone().lerp(p, 0.5).add(V(0, -0.4, 0)), p], 0.2)); ENG.add(s.scene, r); return o; };
+  ST('Tractors', (s, u) => { city(s, 14, 50, 20, { rep: 1, faces: STRAIN, lean: 0.35 }); hitch(s, 'tractor', -3.6, -2); hitch(s, 'tractor', 3.8, -9); prop(s, 'puff', [6, '#9a9a9a'], [-3, 5.6, 4]);
+    return cam([-6, 3.2, -18], [1, 3, 4], 40, { talk: false, roll: -6 }); });
+  ST('Elephants', (s, u) => { city(s, 16, 50, 24, { rep: 1, faces: STRAIN, lean: 0.35 }); hitch(s, 'elephant', -3.8, -4); hitch(s, 'elephant', 4.0, -13);
+    return cam([7, 4.0, -26], [-0.5, 5, 2], 42, { talk: false }); });
+  ST('Eight billion people', (s, u) => { city(s, -8, 60, 40, { rep: 5, faces: STRAIN, lean: 0.35 }); return cam(L([-14, 46, -50], [-12, 52, -40], E(u)), [0, 0, 70], 40, { talk: false, post: { aperture: 0 } }); });
+  ST('all at once', (s, u) => { city(s, -8, 30, 40, { rep: 1, faces: ['F12', 'F14', 'F12', 'F11'], lean: 0.45 }); const h = head('crowd41');
+    return cam(off(h, 1.8, 0.1, -4.4), off(h, -0.4, -0.5, 4), 38, { talk: false, roll: -10 }); });
+
+  // ---------- COAST ----------
+  ST('across every ocean', (s, u) => { const E2 = []; for (let z = -42, i = 0; z <= 20; z += 2.9, i++) E2.push({ name: 'crowd' + (40 + i), s: s.sAt(z), ground: s.ground(z) }); line(s, E2);
+    return cam([L(5.4, 5.0, u), 6.4, -23], [-2.8, 6.4, -220], 42, { grade: 'sunset', talk: false, f: [0, 5, -60] }); });
+  ST('A birthday card takes', (s, u) => { const p = s.rope.userData.curve.getPointAt(s.sAt(L(-112, -116, u)) / s.rope.userData.len); const m = prop(s, 'mailHook', ['HAPPY 9TH B-DAY'], [p.x, p.y, p.z]); m.scale.setScalar(2.2);
+    return cam(off(p, 3.2, 0.4, 5.5), off(p, -0.2, -1.0, -3), 36, { grade: 'sunset', talk: false, f: p.toArray() }); });
+
+  // ---------- FRONT (night; rope along z, Fog wall at z=-20, Oona at the first knot) ----------
+  const night = (s, fogZ = 0) => { s.mood('night'); s.bank.visible = s.fogW.visible = s.wisps.visible = true; s.bank.position.z = 0; s.fogW.position.z = -21 + fogZ * 0.5; s.wisps.position.z = fogZ * 0.5; };
+  const inside = (s) => { s.mood('inside'); s.bank.visible = s.fogW.visible = false; };
+  const family = (s, o = {}) => { const E2 = [{ name: 'oona', s: s.sAt(o.oz ?? -11.2), face: o.of || 'F2', keep: !!o.of, side: 1, tag: 'OONA', lean: o.olean }, { name: 'hero', s: s.sAt(o.hz ?? -7.9), face: o.hf || 'F1', keep: !!o.hf, side: -1, lean: o.hlean }]; let i = 0;
+    for (let z = o.cz ?? 0; z <= 40; z += 2.9, i++) E2.push({ name: 'crowd' + (70 + i), s: s.sAt(z), face: o.cf ? o.cf[i % o.cf.length] : undefined, keep: !!o.cf, lean: o.clean });
+    return line(s, E2); };
+  ST('and into the fog', (s, u) => { night(s); family(s); return cam([8, 6, L(8, 6, u)], [-1, 4, -24], 40, { grade: 'night', talk: false, post: { aperture: 0.15, exposure: 1.15 } }); });
+  ST('Something on the other', (s, u) => { night(s); family(s, { of: 'F7', hf: 'F7' }); const p = s.rope.userData.curve.getPointAt(s.sAt(-19) / s.rope.userData.len); prop(s, 'puff', [5, '#c8c0ff'], [p.x, p.y, p.z - 1.5]);
+    const o = head('oona'); return cam(off(o, 3.4, 1.2, -9.5), off(o, -0.9, -0.6, 4), 38, { grade: 'night', talk: false, roll: -10, f: o.toArray(), post: { exposure: 0.95 } }); });
+  ST('My family holds the', (s, u) => { night(s); family(s, { of: 'F2', hf: 'F1' }); const o = head('oona'); faceCam('hero', [o.x + 3.4, o.y + 1.2, o.z - 9.5], 0.7);
+    return cam(off(o, 3.6, 1.6, L(-10.5, -9.5, u)), off(o, -1, -0.8, 4), 38, { grade: 'night', lead: 'hero', post: { exposure: 0.85 } }); });
+  ST('right where the fog', (s, u) => { night(s); family(s); const k = s.rope.userData.curve.getPointAt(s.sAt(-10.6) / s.rope.userData.len); return cam(off(k, 2.6, 1.4, 3.4), off(k, -0.4, -0.2, -3), 32, { grade: 'night', talk: false, f: [2.4, 2.2, -9.2], post: { exposure: 1.05 } }); });
+  ST('Grandma Oona has held', (s, u) => { night(s); family(s); const o = head('oona'); faceCam('oona', [o.x + 1.5, o.y + 0.4, o.z - 4.6], 0.7);
+    return cam(off(o, 1.5, 0.4, -4.6), off(o, 0, -0.5, 0), 30, { grade: 'night', lead: 'oona', talk: false, faces: { oona: [[0, 'calm'], [0.55, 'laugh']] }, post: { exposure: 0.9 } }); });
+  const notes = (s, at, c, toward) => { const n = prop(s, 'notes', [c], at.toArray()); if (toward) n.rotation.y = toward; return n; };
+  ST('Every night she hums', (s, u) => { night(s); family(s); const o = head('oona'); notes(s, off(o, 0.2, 0.8 + u, -1.6 - 1.5 * u), '#ffe8a0');
+    faceCam('oona', [o.x + 2.4, o.y + 0.4, o.z - 4.5], 0.5); return cam(off(o, 2.4, 0.4, -4.5), off(o, -0.6, 0.5, -1), 34, { grade: 'night', lead: 'oona', faces: { oona: [[0, 'calm']] }, post: { exposure: 1.0 } }); });
+  ST('Sometimes the fog hums', (s, u) => { night(s); family(s, { hf: 'F7', of: 'F7' }); const h = head('hero'); notes(s, V(0.4, 5 + u, -16 + 2 * u), '#c8b8ff'); notes(s, V(-1.6, 4.4 + u, -18 + 2 * u), '#c8b8ff');
+    return cam(off(h, 2.2, 0.8, 4.2), V(0, 4.6, -16), 38, { grade: 'night', lead: 'hero', talk: false, post: { exposure: 0.9 } }); });
+  ST('She always says', (s, u) => { night(s); family(s); const o = head('oona'), h = head('hero'); faceCam('oona', h.toArray(), 1); faceCam('hero', o.toArray(), 1);
+    return cam(off(o, 3.6, 0.9, -4.0), o.clone().lerp(h, 0.5), 36, { grade: 'night', lead: 'oona', faces: { oona: [[0, 'laugh']] }, post: { exposure: 0.9 } }); });
+  ST('every rope has two', (s, u) => { night(s); family(s); const o = head('oona'), h = head('hero'); faceCam('oona', [o.x + 3.2, o.y + 0.5, o.z + 3.2], 1);
+    return cam(off(o, 3.2, 0.5, 3.2), off(o, 0, -0.3, 0), 30, { grade: 'night', lead: 'oona', faces: { oona: [[0, 'calm'], [0.5, 'sad']] }, post: { exposure: 0.9 } }); });
+  ST('and both of them', (s, u) => { night(s); family(s); const h = head('hero'); faceCam('hero', [h.x - 3.4, h.y + 1.0, h.z - 2.2], 0.8);
+    return cam(off(h, -3.4, 1.0, -2.2), off(h, 0.4, -0.3, 1.0), 32, { grade: 'night', lead: 'hero', talk: false, faces: { hero: [[0, 'calm'], [0.6, 'sad']] }, post: { exposure: 0.9 } }); });
+  ST('Every time we pulled', (s, u) => { night(s, 4); family(s, { of: 'F14', olean: 0.45, hf: 'F14', hlean: 0.45, cf: STRAIN, clean: 0.45 }); const o = head('oona'); return cam(off(o, 3.4, 1.2, -9.5), off(o, -0.9, -0.6, 4), 38, { grade: 'night', talk: false, roll: 6, post: { exposure: 0.95 } }); });
+  ST('the rope dragged us', (s, u) => { night(s, 2); family(s, { oz: -16, of: 'F12', olean: 0.5, hf: 'F13' }); const o = head('oona'); return cam(off(o, 3.4, 1.2, -8), off(o, -0.9, -0.6, 4), 38, { grade: 'night', talk: false, roll: -10, post: { exposure: 1.1 } }); });
+  ST('until the fog thinned', (s, u) => { s.mood('dawn'); s.bank.visible = false; s.fogW.visible = true; s.wisps.position.z = 0; family(s, { of: 'F7', hf: 'F7', cf: ['F5', 'F7'] }); return cam([5.8, 9, L(24, 20, u)], [-0.8, 5, -22], 40, { grade: 'morning', talk: false }); });
+  ST('Then one night', (s, u) => { night(s); family(s); return cam([-4.5, 5.5, L(5, 3.5, u)], [0.5, 3, -12], 38, { grade: 'night', talk: false, post: { exposure: 1.15 } }); });
+  ST('the rope started to', (s, u) => { night(s); family(s, { of: 'F14', olean: 0.4, hf: 'F8' }); const m = mid('oona'); prop(s, 'puff', [6, '#e0d8ff'], [m.x, m.y - 0.6, m.z - 1.6]).scale.setScalar(0.6);
+    return cam(off(m, 2.6, 1.0, -3.2), off(m, 0, 0.2, 0.5), 32, { grade: 'night', lead: 'oona', talk: false, roll: 10, f: m.toArray(), post: { exposure: 0.95, aperture: 1.2 } }); });
+  ST('One meter', (s, u) => { night(s); family(s, { of: 'F14', olean: 0.4, oz: -12.2 }); const k = s.rope.userData.curve.getPointAt(s.sAt(-13.2) / s.rope.userData.len); prop(s, 'stake', ['1 m'], [k.x + 1.2, 0, k.z], PI);
+    return cam([k.x + 4.6, 2.4, k.z - 1.6], [k.x + 1.2, 1.9, k.z], 32, { grade: 'night', talk: false, f: [k.x + 1, 2, k.z], post: { exposure: 0.95 } }); });
+  ST('then ten', (s, u) => { night(s); family(s, { of: 'F12', olean: 0.45, oz: -14.5 }); prop(s, 'stake', ['10 m'], [1.4, 0, -16.2], 0.6); prop(s, 'stake', ['1 m'], [1.4, 0, -6.2], 0.6);
+    return cam([5.6, 3.6, -1.5], [1.2, 1.8, -13], 36, { grade: 'night', talk: false, post: { exposure: 1.05 } }); });
+  ST('Every night the fog', (s, u) => { night(s, L(6, 10, u)); family(s, { oz: -10.2, of: 'F10', hf: 'F10' }); return cam([10, 12, 30], [-2, 5, -14], 40, { grade: 'night', talk: false, post: { exposure: 0.85 } }); });
+  ST('And every night it', (s, u) => { night(s, 2); family(s, { oz: -14.5, of: 'F14', olean: 0.5, hf: 'F12' }); const o = head('oona'), a = CAST.get('oona').root.position; prop(s, 'puff', [6, '#d8d0ff'], [a.x, 0.4, a.z + 0.5]);
+    faceCam('oona', [o.x + 4.0, o.y + 0.4, o.z - 2.2], 0.95); return cam(off(o, 4.0, 0.4, -2.2), off(o, -0.5, -0.8, -1), 36, { grade: 'night', lead: 'oona', talk: false, roll: -12, post: { exposure: 1.05 } }); });
+  ST('The harder we pulled', (s, u) => { night(s, 4); family(s, { of: 'F14', olean: 0.45, hf: 'F14', hlean: 0.45, cf: STRAIN, clean: 0.45 }); const h = head('hero');
+    return cam(off(h, 6.5, 0.8, -1.5), off(h, -1, -1, -4), 38, { grade: 'night', talk: false, roll: 8, post: { exposure: 1.05 } }); });
+  ST('the harder they pulled', (s, u) => { night(s, 4); family(s, { of: 'F13', olean: 0.45 }); const p = s.rope.userData.curve.getPointAt(s.sAt(-18.5) / s.rope.userData.len); prop(s, 'puff', [7, '#c8c0ff'], [p.x, p.y, p.z - 1]);
+    const o = head('oona'); return cam(off(o, 3.4, 1.2, -9.5), off(o, -0.9, -0.6, 4), 38, { grade: 'night', talk: false, roll: -14, f: o.toArray(), post: { exposure: 0.95 } }); });
+  ST('On the seventh night', (s, u) => { night(s, 2); family(s, { oz: -16.5, of: 'F10' }); const o = head('oona'); return cam(off(o, 3.6, 1.6, -9), off(o, -0.9, -0.8, 4), 40, { grade: 'night', talk: false, post: { exposure: 0.95 } }); });
+  ST("Grandma's feet were in", (s, u) => { night(s, 2); family(s, { oz: -17.5, of: 'F9' }); s.wisps.visible = false; const a = CAST.get('oona').root.position; prop(s, 'puff', [9, '#b8b0e8'], [a.x - 0.2, 0.25, a.z - 0.4]).scale.set(1.4, 0.5, 1.4);
+    return cam([a.x + 2.6, 2.5, a.z + 2.6], [a.x, 0.3, a.z - 0.8], 34, { grade: 'night', talk: false, f: [a.x, 0.4, a.z], post: { exposure: 1.05 } }); });
+  ST('and she stopped humming', (s, u) => { night(s, 2); family(s, { oz: -17.5, of: 'F9', hz: -14.4, hf: 'F8' }); const o = head('oona'); faceCam('oona', [o.x + 2.4, o.y + 0.4, o.z - 3.8], 0.6);
+    return cam(off(o, 2.4, 0.4, -3.8), off(o, 0, -0.3, 0), 32, { grade: 'night', lead: 'oona', talk: false, post: { exposure: 1.15 } }); });
+  ST('So I went in', (s, u) => { night(s, 0); family(s, { oz: -17.5, of: 'F9', hz: -19.6, hf: 'F10' }); CAST.get('hero').legL.rotation.x = -0.45; CAST.get('hero').legR.rotation.x = 0.4; const h = head('hero');
+    return cam(off(h, 3.0, 1.0, -7), off(h, -0.6, -0.6, 3), 38, { grade: 'night', lead: 'hero', talk: false, post: { exposure: 0.95 } }); });
+  // inside the Fog: the hero on the rope deep inside (z -46); hand over hand = the front hand reaches on along the rope
+  const fogHero = (s, face, reach = 0) => { inside(s); const P = s.rope.userData.curve.getPointAt(s.sAt(-46) / s.rope.userData.len), D = s.rope.userData.curve.getTangentAt(s.sAt(-46) / s.rope.userData.len);
+    const a = put(s, 'hero', { face, keep: true, rope: { P, D, side: 1, lean: 0.05, ground: 0 } });
+    if (reach) { const hp = a.grip.hands, k = Object.keys(hp).reduce((b, q) => (hp[q].dot(D) > hp[b].dot(D) ? q : b)), o2 = k === 'L' ? 'R' : 'L', w = typeof reach === 'number' && Math.abs(reach) <= 1 ? reach : Math.sign(reach);
+      const f = Math.max(0, w), b = Math.max(0, -w), lift = (x) => V(0, 0.35 * Math.sin(Math.PI * x), 0);   // smooth: the front hand slides on, or the back hand passes over to the front
+      GN.aim(a, k, hp[k].clone().addScaledVector(D, 0.9 * f).add(lift(f))); GN.aim(a, o2, hp[o2].clone().lerp(hp[k].clone().addScaledVector(D, 0.9), b).add(lift(b))); }
+    return a; };
+  const across = (a, m, D, d = 3.4, up = 0.9, back = -1.2) => { const tp = a.torso.getWorldPosition(V(0, 0, 0)), dir = m.clone().sub(tp).setY(0).normalize(); return m.clone().addScaledVector(dir, d).add(V(0, up, 0)).addScaledVector(D, back); };
+  ST('hand over hand', (s, u) => { const D = s.rope.userData.curve.getTangentAt(s.sAt(-46) / s.rope.userData.len), a = fogHero(s, 'F14', Math.sin(2 * Math.PI * u) || 1e-3), m = Object.values(a.grip.hands).reduce((q, h) => q.add(h), V(0, 0, 0)).multiplyScalar(0.5), c = across(a, m, D, 3.2, 0.7);
+    faceCam('hero', c.toArray(), 0.6); return cam(c, off(m, 0, 0.6, 0), 40, { grade: 'fog', talk: false, f: m.toArray(), post: { aperture: 0.8 } }); });
+  ST('along the rope', (s, u) => { const a = fogHero(s, 'F10', 1), h = head('hero'); return cam(off(h, 5, 1.5, -9), off(h, 0, -1.4, 0), 40, { grade: 'fog', lead: 'hero', talk: false }); });
+  ST("I couldn't see my", (s, u) => { s.mood('inside'); const a = fogHero(s, 'F10', 1); s.scene.fog.density = 0.12; const m = mid('hero'), D = s.rope.userData.curve.getTangentAt(s.sAt(-46) / s.rope.userData.len), c = across(a, m, D, 2.2, 0.4, -0.6);
+    return cam(c, m, 34, { grade: 'fog', talk: false, f: m.toArray(), post: { aperture: 1.2 } }); });
+  ST('Then I heard it', (s, u) => { const a = fogHero(s, 'F7'); const h = head('hero'); const D = s.rope.userData.curve.getTangentAt(s.sAt(-46) / s.rope.userData.len); a.neck.rotation.z = 0.2; const c = off(h, 0, 0.2, 0).addScaledVector(D, 3.2).add(V(1.2, 0, 0)); faceCam('hero', c.toArray(), 1);
+    return cam(c, h, 32, { grade: 'fog', lead: 'hero', talk: false }); });
+  ST("Grandma's song coming from", (s, u) => { const a = fogHero(s, 'F8'); const h = head('hero'), D = s.rope.userData.curve.getTangentAt(s.sAt(-46) / s.rope.userData.len); notes(s, h.clone().addScaledVector(D, 5 - 2 * u).add(V(0.4, 0.4, 0)), '#ffe0a0');
+    return cam(off(h, 1.6, 0.5, 0).addScaledVector(D, -3.4), h.clone().addScaledVector(D, 6), 36, { grade: 'fog', lead: 'hero', talk: false }); });
+
+  // ---------- RIDGE (crest z=0 at y=crest(0); our side +z; their side -z, ledge z -4..-16, cliff, their city z -44..-125) ----------
+  const ours = (s, list, o = {}) => line(s, list, { ground: (P) => s.H(P.x, P.z) });
+  const theirs = (s, list) => line(s, list, { ground: (P) => s.H(P.x, P.z), flip: true });
+  const theirCrowd = (s, z0, z1, step, start, faces) => { const E2 = []; let i = 0; for (let z = z0; z >= z1; z -= step, i++) E2.push({ name: 'other' + (start + i), s: s.sAt(z), face: faces ? faces[i % faces.length] : undefined, keep: !!faces }); return E2; };
+  const ourCrowd = (s, z0, z1, step, start, faces) => { const E2 = []; let i = 0; for (let z = z0; z <= z1; z += step, i++) E2.push({ name: 'crowd' + (start + i), s: s.sAt(z), face: faces ? faces[i % faces.length] : undefined, keep: !!faces }); return E2; };
+  const dawn = (s) => s.mood('dawn'), day = (s) => s.mood('day');
+  const herTeam = (s, gf = 'F2', g2 = 'F10', cf) => theirs(s, [{ name: 'girl', s: s.sAt(-7.5), face: gf, keep: true, side: -1, tag: 'KNOT No.1' }, { name: 'gran2', s: s.sAt(-11), face: g2, keep: true, side: 1 }, { name: 'other30', s: s.sAt(-14.2) }, ...theirCrowd(s, -44, -120, 3.0, 0, cf)]);
+  const crestHero = (s, f = 'F1', o = {}) => ours(s, [{ name: 'hero', s: s.sAt(o.z ?? 3.2), face: f, keep: true, side: 1, lean: o.lean ?? 0.05, pose: o.pose, hands: o.hands }]);
+  const c0 = (s) => s.crest(0);
+  ST('The rope went up', (s, u) => { dawn(s); const c = c0(s); return cam([16, c - 22, 64], [0, c - 6, 6], 40, { grade: 'sunset', talk: false, post: { aperture: 0 } }); });
+  ST('and over a ridge', (s, u) => { dawn(s); const c = c0(s); return cam([7, c + 3, L(10, 8, u)], [0, c + 0.5, -1], 34, { grade: 'sunset', talk: false, f: [0, c, 0] }); });
+  ST('I climbed to the', (s, u) => { dawn(s); crestHero(s, 'F14', { z: 9, lean: 0.0 }); const h = head('hero'); return cam(off(h, 3.2, -1.2, 4.4), off(h, -0.4, 0.6, -2), 36, { grade: 'sunset', lead: 'hero', talk: false, roll: 8 }); });
+  ST('and looked down', (s, u) => { dawn(s); crestHero(s, 'F7'); herTeam(s); const h = head('hero'); faceCam('hero', [h.x + 3.2, h.y + 0.6, h.z - 2.4], 0.7); CAST.get('hero').neck.rotation.x = 0.3;
+    return cam(off(h, 3.2, 0.6, -2.4), h, 32, { grade: 'sunset', lead: 'hero', talk: false }); });
+  ST('There was another world', (s, u) => { dawn(s); crestHero(s, 'F7'); herTeam(s); const c = c0(s); return cam([2.4, c + 13, L(8, 6, u)], [-0.8, c - 30, -50], 44, { grade: 'sunset', talk: false, post: { aperture: 0.2 } }); });
+  ST('Another city', (s, u) => { dawn(s); herTeam(s); return cam([L(30, 26, u), 48, -30], [-6, 22, -80], 38, { grade: 'sunset', talk: false, roll: 0.001, post: { aperture: 0 } }); });
+  ST('Another eight billion people', (s, u) => { dawn(s); herTeam(s, 'F2', 'F10', ['F14', 'F13', 'F12', 'F10']); const h = head('other4'); return cam(off(h, 5, 2.5, 8), off(h, -1, -2, -10), 40, { grade: 'sunset', talk: false, roll: 0.001 }); });
+  ST('holding the same rope', (s, u) => { dawn(s); herTeam(s, 'F2', 'F10', ['F14', 'F13']); const m = mid('other16'); return cam(off(m, 5, 2.5, 6), m, 34, { grade: 'sunset', talk: false, roll: 0.001, f: m.toArray(), post: { aperture: 1.0 } }); });
+  const girlCam = (s, d = 6.5, up = 3.2, side = 2.2) => { const gh = head('girl'), p = [gh.x + side, gh.y + up, gh.z + d]; faceCam('girl', p, 1); CAST.get('girl').neck.rotation.x = -0.3; return { gh, p }; };
+  ST('And on their first', (s, u) => { dawn(s); herTeam(s); const { gh, p } = girlCam(s, 9, 4.5, 3); return cam(p, off(gh, -0.6, -3.6, -9), 40, { grade: 'sunset', lead: 'girl', talk: false, f: gh.toArray(), post: { aperture: 0.4 } }); });
+  ST('a girl my age', (s, u) => { dawn(s); herTeam(s, 'F2'); const { gh, p } = girlCam(s, 3.6, 1.4, 1.0); return cam(p, gh, 30, { grade: 'sunset', lead: 'girl', talk: false, f: gh.toArray(), faces: { girl: [[0, 'calm']] } }); });
+  ST("Humming Grandma's song", (s, u) => { dawn(s); herTeam(s, 'F2'); const { gh, p } = girlCam(s, 4.4, 1.6, 1.6); notes(s, off(gh, -0.4, 0.8 + u, 1 + u), '#ffe8a0'); return cam(p, gh, 32, { grade: 'sunset', lead: 'girl', faces: { girl: [[0, 'calm']] } }); });
+  ST('Behind her the whole', (s, u) => { dawn(s); herTeam(s, 'F7', 'F13'); const gh = head('girl'); return cam(off(gh, 7, 6, 10), off(gh, -4, -24, -46), 42, { grade: 'sunset', talk: false, roll: L(0, 6, u) }); });
+  ST('Houses', (s, u) => { dawn(s); const h = s.houses.children[6].position; return cam(off(h, 3, 16, 30), off(h, 0, 3, 0), 34, { grade: 'sunset', talk: false, roll: 10 }); });
+  ST('Roads', (s, u) => { dawn(s); herTeam(s); return cam([8, s.H(8, -60) + 4, -52], [0, s.H(0, -75), -78], 36, { grade: 'sunset', talk: false, roll: -8 }); });
+  ST('Everything', (s, u) => { dawn(s); herTeam(s); const c = c0(s); return cam([40, c + 4, -20], [-10, 10, -100], 44, { grade: 'sunset', talk: false, post: { aperture: 0 } }); });
+  ST("They weren't pulling against", (s, u) => { dawn(s); herTeam(s, 'F10', 'F13', ['F13', 'F14', 'F13', 'F12']); const h = head('other2'); return cam(off(h, 3.4, 1.6, 6), off(h, -0.6, -1.4, -6), 36, { grade: 'sunset', talk: false }); });
+  ST('They were hanging on', (s, u) => { dawn(s); herTeam(s, 'F14', 'F14'); const h = head('gran2'); faceCam('gran2', [h.x + 2, h.y + 1, h.z + 4], 0.8); return cam(off(h, 2, 1, 4), off(h, 0, -0.6, 0), 32, { grade: 'sunset', lead: 'gran2', talk: false }); });
+  ST('they slipped', (s, u) => { dawn(s); herTeam(s, 'F12', 'F13', ['F12', 'F13']); const gh = head('girl'); prop(s, 'puff', [8, '#c8b8a8'], [gh.x, gh.y - 4, gh.z - 0.5]); return cam(off(gh, 5, 3, 7), off(gh, -1, -2.5, -4), 38, { grade: 'sunset', talk: false, roll: -12 }); });
+  ST('Every time they slipped', (s, u) => { dawn(s); herTeam(s, 'F13', 'F12', ['F12', 'F13', 'F14']); return cam([22, 34, -20], [-4, 22, -70], 40, { grade: 'sunset', talk: false, roll: 0.001 }); });
+  ST("We weren't playing tug", (s, u) => { dawn(s); crestHero(s, 'F8'); herTeam(s); const h = head('hero'); faceCam('hero', [h.x + 3.0, h.y + 0.5, h.z - 2.6], 0.8); return cam(off(h, 3.0, 0.5, -2.6), h, 30, { grade: 'sunset', lead: 'hero', talk: false }); });
+  ST('We were holding each', (s, u) => { dawn(s); crestHero(s, 'F9'); herTeam(s, 'F9'); const h = head('hero'), g = head('girl'); return cam(off(h, 1.2, 1.5, 3.5), g, 42, { grade: 'sunset', talk: false }); });
+  ST('This time the other', (s, u) => { dawn(s); herTeam(s, 'F10'); const { gh, p } = girlCam(s, 4, 1.6, 1.2); return cam(p, gh, 30, { grade: 'sunset', lead: 'girl', talk: false }); });
+  ST('so I yelled down', (s, u) => { dawn(s); crestHero(s, 'F12', { hands: 'L', pose: CAST.POSE.shout }); herTeam(s); const h = head('hero'); faceCam('hero', [h.x + 1.8, h.y - 0.2, h.z - 4.2], 0.6); CAST.get('hero').neck.rotation.x = 0.25;
+    return cam(off(h, 1.8, -0.2, -4.2), h, 32, { grade: 'sunset', lead: 'hero', talk: false }); });
+  ST('On three we both', (s, u) => { dawn(s); crestHero(s, 'F12', { hands: 'L', pose: CAST.POSE.shout }); herTeam(s, 'F7'); const h = head('hero'); CAST.get('hero').neck.rotation.x = 0.3;
+    return cam(off(h, 3.2, 1.6, 4.5), off(h, -1, -4, -8), 38, { grade: 'sunset', lead: 'hero', faces: { hero: [[0, 'scream']] } }); });
+  ST('One', (s, u) => { dawn(s); crestHero(s, 'F14', { lean: 0.3 }); herTeam(s); const h = head('hero'); faceCam('hero', [h.x + 1.2, h.y, h.z - 3.2], 0.6); return cam(off(h, 1.2, 0, -3.2), h, 28, { grade: 'sunset', lead: 'hero', faces: { hero: [[0, 'strain']] } }); });
+  ST('Two', (s, u) => { dawn(s); herTeam(s, 'F14'); const { gh, p } = girlCam(s, 3.4, 1.2, 0.8); return cam(p, gh, 28, { grade: 'sunset', lead: 'girl', talk: false, faces: { girl: [[0, 'strain']] } }); });
+  ST('Three', (s, u) => { dawn(s); crestHero(s, 'F12', { lean: 0.35 }); herTeam(s, 'F12', 'F12', ['F12', 'F14']); const c = c0(s); return cam([12, c + 5, 6], [0, c + 1, -4], 40, { grade: 'sunset', talk: false, roll: -8 }); });
+  ST('We stepped', (s, u) => { dawn(s); crestHero(s, 'F14', { z: 3.0, pose: { legL: [-0.8, 0, 0.05] } }); herTeam(s); const f = CAST.get('hero').root.position; return cam([f.x + 6, f.y + 2.8, f.z + 6], [f.x, f.y + 1.0, f.z - 0.4], 32, { grade: 'sunset', talk: false, f: [f.x, f.y + 0.5, f.z] }); });
+  ST("The rope didn't slip", (s, u) => { dawn(s); crestHero(s, 'F7'); herTeam(s); const c = c0(s); return cam([6.5, c + 4.2, 3.2], [0, c + 2.6, 0], 30, { grade: 'sunset', talk: false, f: [0, c + 0.8, 0] }); });
+  ST('It moved', (s, u) => { dawn(s); crestHero(s, 'F5', { z: 2.4 }); herTeam(s, 'F5', 'F6', ['F5', 'F6']); const c = c0(s); return cam([-12, c + 7, 9], [0, c - 6, -10], 40, { grade: 'sunset', talk: false }); });
+  ST('Step by step', (s, u) => { dawn(s); crestHero(s, 'F14', { z: 2.4 }); ours(s, ourCrowd(s, 6, 40, 3, 100, ['F14', 'F5'])); herTeam(s, 'F14', 'F14', ['F14', 'F5']); const c = c0(s); return cam([-18, c + 9, 20], [0, c - 6, -6], 40, { grade: 'sunset', talk: false }); });
+  ST('sixteen billion people climbed', (s, u) => { dawn(s); ours(s, ourCrowd(s, 6, 70, 3, 100)); herTeam(s); const c = c0(s); return cam(L([60, c + 50, 30], [55, c + 55, 20], E(u)), [0, c - 20, -30], 44, { grade: 'sunset', talk: false, post: { aperture: 0 } }); });
+  // Wave Day / ending (day mood: bunting + banner)
+  const waveTeams = (s, o = {}) => { day(s); ours(s, [{ name: 'oona', s: s.sAt(2.6), face: 'F5', keep: true, side: 1, hands: 'L', pose: CAST.POSE.waveUpR, tag: 'OONA' }, { name: 'hero', s: s.sAt(o.hz ?? 5.8), face: 'F5', keep: true, side: -1, hands: o.wave ? 'L' : 'LR', pose: o.wave ? CAST.POSE.waveUpR : undefined }, ...ourCrowd(s, 9, 40, 3, 100, ['F5', 'F6', 'F2']).map((e) => Object.assign(e, o.wave ? { hands: 'L', pose: CAST.POSE.waveUpR } : {}))]);
+    theirs(s, [{ name: 'gran2', s: s.sAt(-3.4), face: 'F5', keep: true, side: -1, hands: 'R', pose: CAST.POSE.waveL }, { name: 'girl', s: s.sAt(o.gz ?? -6.6), face: 'F6', keep: true, side: 1, hands: o.wave ? 'R' : 'LR', pose: o.wave ? CAST.POSE.waveL : undefined }, ...theirCrowd(s, -10, -15, 3.2, 40, ['F5', 'F6']), ...theirCrowd(s, -44, -90, 3.2, 50, ['F5', 'F6', 'F2']).map((e) => Object.assign(e, o.wave ? { hands: 'R', pose: CAST.POSE.waveL } : {}))]); };
+  ST('we could see each', (s, u) => { day(s); ours(s, [{ name: 'hero', s: s.sAt(1.8), face: 'F7', keep: true, side: 1 }]); theirs(s, [{ name: 'girl', s: s.sAt(-2.4), face: 'F7', keep: true, side: 1 }, { name: 'gran2', s: s.sAt(-6), face: 'F5', keep: true }]);
+    const h = head('hero'), g = head('girl'); faceCam('hero', g.toArray(), 1); faceCam('girl', h.toArray(), 1); const m = h.clone().lerp(g, 0.5); return cam(off(m, 11.5, 0.8, 0), m, 40, { grade: 'day', talk: false, faces: {} }); });
+  ST("Grandma and the girl's", (s, u) => { waveTeams(s); const c = c0(s), cp2 = [13, c + 5.2, 12]; faceCam('oona', cp2); faceCam('gran2', cp2); return cam(cp2, [-1.6, c + 3.6, -3.5], 38, { grade: 'day', talk: false }); });
+  ST('First time in sixty', (s, u) => { waveTeams(s); const o = head('oona'), p = [o.x + 1.6, o.y + 0.3, o.z - 4]; faceCam('oona', p, 1); CAST.face('oona', 'F5+tears'); return cam(p, o, 30, { grade: 'day', lead: 'oona', talk: false }); });
+  ST('Now heave day is', (s, u) => { waveTeams(s); const c = c0(s); return cam([3, c + 5, L(16, 13, u)], [0, c + 8, -0.6], 40, { grade: 'day', talk: false }); });
+  ST('Once a year both', (s, u) => { waveTeams(s); const c = c0(s); return cam([-10, c + 9, 15], [0, c - 2, -3], 42, { grade: 'day', talk: false }); });
+  ST('step up and wave', (s, u) => { waveTeams(s, { wave: true }); const c = c0(s); return cam([12, c + 7, 16], [-1, c, -4], 42, { grade: 'day', talk: false }); });
+  ST('Nobody lets go', (s, u) => { day(s); ours(s, [{ name: 'hero', s: s.sAt(1.8), face: 'F5', keep: true, side: 1 }]); theirs(s, [{ name: 'girl', s: s.sAt(-2.0), face: 'F5', keep: true, side: 1 }]);
+    const a = hands('hero')[0], b = hands('girl')[0], m = a.clone().lerp(b, 0.5); return cam(off(m, -5.2, 1.4, 1.5), m, 34, { grade: 'day', talk: false, f: m.toArray(), post: { aperture: 1.0 } }); });
+  ST('Now we know who', (s, u) => { waveTeams(s, { hz: 1.8, gz: -2.4 }); const h = head('hero'), g = head('girl'); faceCam('hero', g.toArray(), 1); faceCam('girl', h.toArray(), 1); const c = c0(s);
+    return cam(L([24, c + 12, 26], [30, c + 18, 30], E(u)), [0, c + 2, -2], 40, { grade: 'day', talk: false }); });
+
+  // ---------- LAWN (schoolyard): recess tug of war (short rope along x at z=9), kindergarten chalkboard ----------
+  const recessRope = () => once('recessRope', () => ROPE.make([V(13, 2.75, 9), V(0, 2.6, 9), V(-13, 2.75, 9)], 0.28));
+  const recess = (s, o = {}) => { const r = recessRope(); ENG.add(s.scene, r); const sAt = (x) => 13 - x; prop(s, 'flag', ['#e84040'], [0, 0.0, 9.3]).position.y = 0.05;
+    const us = [{ name: 'hero', s: sAt(2.4), face: o.hf || 'F3', keep: true, side: 1, lean: o.hlean ?? -0.2, noKnot: true }, ...[5.4, 8.4, 11.2].map((x, i) => ({ name: 'crowd' + (20 + i), s: sAt(x), face: o.uf || 'F14', keep: true, noKnot: true }))];
+    const them = [-2.6, -5.6, -8.6, -11.4].map((x, i) => ({ name: 'crowd' + (24 + i), s: sAt(x), face: o.tf || 'F5', keep: true, noKnot: true, lean: 0.35 }));
+    LINE.stage(s.scene, r, us, add(s)); LINE.stage(s.scene, r, them, add(s), { flip: true }); };
+  ST('At recess we play', (s, u) => { recess(s, { hf: 'F5', hlean: 0.3, uf: 'F14', tf: 'F14' }); return cam([L(-2, 0, u), 6.5, 26], [0, 3, 8], 42, { grade: 'day', talk: false }); });
+  ST('I lose on purpose', (s, u) => { recess(s, { hf: 'F3', uf: 'F12', tf: 'F5' }); const h = head('hero'); faceCam('hero', [h.x - 4, h.y + 0.4, h.z + 1.5], 0.8); return cam(off(h, -4, 0.4, 1.5), h, 32, { grade: 'day', lead: 'hero', talk: false }); });
+  ST('I always feel bad', (s, u) => { recess(s, { hf: 'F9', uf: 'F5', tf: 'F9', hlean: 0.25 }); const h = head('hero'); faceCam('hero', [h.x - 4.2, h.y + 0.4, h.z + 2.2], 0.8);
+    return cam(off(h, -4.2, 0.4, 2.2), off(h, 0.5, -0.4, 0), 34, { grade: 'day', lead: 'hero', talk: false }); });
+  const kinder = (s, o = {}) => { prop(s, 'chalkboard', [], [-3.2, 0, 6.2], 0.5); put(s, 'crowd9', { p: [-6.6, 0, 6.6], ry: 0.9, face: o.tf || 'F5', keep: true, pose: CAST.POSE.point });
+    [['hero', -1.6, 12.4], ['crowd16', 0.4, 12.8], ['crowd28', -3.8, 13.2], ['crowd30', 2.4, 13.6], ['crowd13', -5.8, 13.8]].forEach(([n, x, z], i) => put(s, n, { p: [x, -1.45 * CAST.get(n).root.scale.x, z], ry: PI + 0.2 - i * 0.08, face: (o.kf || ['F7', 'F10', 'F7', 'F10', 'F7'])[i], keep: true, pose: o.shrug ? Object.assign({}, CAST.POSE.sit, CAST.POSE.shrug) : CAST.POSE.sit })); };
+  ST("There's one rule they", (s, u) => { kinder(s); return cam([3, 5.5, 22], [-3, 3.6, 7], 40, { grade: 'day', lead: 'crowd9', talk: false }); });
+  ST('The rope only moves', (s, u) => { kinder(s); return cam([L(4.6, 4.2, u), 7.6, L(21, 20, u)], [-3.4, 4.2, 6.2], 32, { grade: 'day', talk: false, f: [-3.2, 4.2, 6.2] }); });
+  ST('Nobody knows what it', (s, u) => { kinder(s, { shrug: true }); return cam([2.2, 3.6, 6.4], [-1.6, 1.5, 13], 38, { grade: 'day', talk: false }); });
+})();

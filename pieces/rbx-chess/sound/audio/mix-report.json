@@ -1,0 +1,2520 @@
+{
+ "cues_file": "/Users/alanleiva/claude-proyectos/pieces/rbx-chess/sound/cues.json",
+ "fps": 30,
+ "duration_s": 106.0,
+ "target_lufs": -14,
+ "master_lufs": -14.01,
+ "master_true_peak_db": -2.0,
+ "master_gain_db": 0.37,
+ "events": [
+  {
+   "id": "ev-000-swish",
+   "sound": "swish",
+   "files": [
+    "../../../sound-layer/kit/swish/fs-14175-27-wav-1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 0.012,
+   "peak_s": 0.012,
+   "pan": 0.6,
+   "gain_db": -16.0,
+   "limited_by": "2-8 kHz cap",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    0.002,
+    0.162
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-001-piece",
+   "sound": "fs/chess_piece_546119.mp3",
+   "files": [
+    "fs/chess_piece_546119.mp3"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 1.013,
+   "peak_s": 1.013,
+   "pan": -0.6,
+   "gain_db": -4.44,
+   "limited_by": "best-band target",
+   "band_hz": [
+    2000,
+    4000
+   ],
+   "win_s": [
+    1.003,
+    1.0782
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-002-piece",
+   "sound": "fs/chess_piece_546119.mp3",
+   "files": [
+    "fs/chess_piece_546119.mp3"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 1.791,
+   "peak_s": 1.791,
+   "pan": 0.6,
+   "gain_db": -0.81,
+   "limited_by": "best-band target",
+   "band_hz": [
+    1000,
+    2000
+   ],
+   "win_s": [
+    1.781,
+    1.8564
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-003-wheels",
+   "sound": "cuts/wheels1.wav",
+   "files": [
+    "cuts/wheels1.wav"
+   ],
+   "weight": "support",
+   "align": "start",
+   "cue_s": 2.31,
+   "peak_s": 2.5794,
+   "pan": -0.6,
+   "gain_db": -13.2,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    2.5694,
+    2.6236
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-004-wheels",
+   "sound": "cuts/wheels2.wav",
+   "files": [
+    "cuts/wheels2.wav"
+   ],
+   "weight": "support",
+   "align": "start",
+   "cue_s": 3.46,
+   "peak_s": 4.4886,
+   "pan": 0.6,
+   "gain_db": -18.63,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    4.4786,
+    4.6386
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-005-whoosh",
+   "sound": "whoosh",
+   "files": [
+    "../../../sound-layer/kit/whoosh/fs-30240-swoop1-flac-1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 3.91,
+   "peak_s": 3.91,
+   "pan": -0.6,
+   "gain_db": -7.15,
+   "limited_by": "best-band target",
+   "band_hz": [
+    250,
+    500
+   ],
+   "win_s": [
+    3.9,
+    3.95
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-006-whoosh",
+   "sound": "whoosh",
+   "files": [
+    "../../../sound-layer/kit/whoosh/fs-30241-swoop2g-flac-1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 4.665,
+   "peak_s": 4.665,
+   "pan": 0.6,
+   "gain_db": -7.15,
+   "limited_by": "best-band target",
+   "band_hz": [
+    250,
+    500
+   ],
+   "win_s": [
+    4.655,
+    4.7161
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-007-wheels",
+   "sound": "cuts/wheels1.wav",
+   "files": [
+    "cuts/wheels1.wav"
+   ],
+   "weight": "support",
+   "align": "start",
+   "cue_s": 4.716,
+   "peak_s": 4.9824,
+   "pan": -0.6,
+   "gain_db": -9.2,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    4.9724,
+    5.0261
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-008-stop",
+   "sound": "thump",
+   "files": [
+    "../../../sound-layer/kit/thump/fs-389665-thump-close-wav-2.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 5.552,
+   "peak_s": 5.552,
+   "pan": 0.6,
+   "gain_db": -8.44,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    5.542,
+    5.6552
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-009-pop",
+   "sound": "pop",
+   "files": [
+    "../../../sound-layer/kit/pop/fs-188381-3-popping-pops-1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 6.19,
+   "peak_s": 6.19,
+   "pan": -0.6,
+   "gain_db": -11.3,
+   "limited_by": "best-band target",
+   "band_hz": [
+    500,
+    1000
+   ],
+   "win_s": [
+    6.18,
+    6.23
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-010-swish",
+   "sound": "swish",
+   "files": [
+    "../../../sound-layer/kit/swish/fs-388003-double-swish-1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 7.021,
+   "peak_s": 7.021,
+   "pan": 0.6,
+   "gain_db": -17.82,
+   "limited_by": "best-band target",
+   "band_hz": [
+    1000,
+    2000
+   ],
+   "win_s": [
+    7.011,
+    7.171
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-011-tap",
+   "sound": "tap",
+   "files": [
+    "../../../sound-layer/kit/tap/kenney-impact-impact-metal-heavy-003.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 8.52,
+   "peak_s": 8.52,
+   "pan": -0.6,
+   "gain_db": -24.17,
+   "limited_by": "best-band target",
+   "band_hz": [
+    1000,
+    2000
+   ],
+   "win_s": [
+    8.51,
+    8.5704
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-012-piece",
+   "sound": "fs/chess_piece_546119.mp3",
+   "files": [
+    "fs/chess_piece_546119.mp3"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 10.188,
+   "peak_s": 10.188,
+   "pan": 0.6,
+   "gain_db": -0.44,
+   "limited_by": "best-band target",
+   "band_hz": [
+    1000,
+    2000
+   ],
+   "win_s": [
+    10.178,
+    10.256
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-013-pop",
+   "sound": "pop",
+   "files": [
+    "../../../sound-layer/kit/pop/fs-206152-bottlepop44-wav-1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 11.0,
+   "peak_s": 11.0,
+   "pan": -0.6,
+   "gain_db": -14.45,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    10.99,
+    11.0408
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-014-bell",
+   "sound": "cuts/bell.wav",
+   "files": [
+    "cuts/bell.wav"
+   ],
+   "weight": "support",
+   "align": "start",
+   "cue_s": 11.71,
+   "peak_s": 14.6168,
+   "pan": 0.6,
+   "gain_db": -18.2,
+   "limited_by": "best-band target",
+   "band_hz": [
+    1000,
+    2000
+   ],
+   "win_s": [
+    14.6068,
+    14.7668
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-015-murmur",
+   "sound": "cuts/murmur1.wav",
+   "files": [
+    "cuts/murmur1.wav"
+   ],
+   "weight": "support",
+   "align": "start",
+   "cue_s": 12.43,
+   "peak_s": 13.7069,
+   "pan": -0.6,
+   "gain_db": -12.29,
+   "limited_by": "best-band target",
+   "band_hz": [
+    250,
+    500
+   ],
+   "win_s": [
+    13.6969,
+    13.8569
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-016-lid",
+   "sound": "cuts/rumble.wav+fs/whoosh_big_237980.mp3",
+   "files": [
+    "cuts/rumble.wav",
+    "fs/whoosh_big_237980.mp3"
+   ],
+   "weight": "hero",
+   "align": "start",
+   "cue_s": 13.23,
+   "peak_s": 14.073,
+   "pan": 0.0,
+   "gain_db": -8.96,
+   "limited_by": "main-band target (hero)",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    14.063,
+    14.223
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-017-rumble",
+   "sound": "cuts/rumble.wav",
+   "files": [
+    "cuts/rumble.wav"
+   ],
+   "weight": "support",
+   "align": "start",
+   "cue_s": 13.474,
+   "peak_s": 14.3278,
+   "pan": -0.6,
+   "gain_db": -3.3,
+   "limited_by": "peak cap",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    14.3178,
+    14.4168
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-018-handwhoosh",
+   "sound": "cuts/handwhoosh.wav",
+   "files": [
+    "cuts/handwhoosh.wav"
+   ],
+   "weight": "hero",
+   "align": "start",
+   "cue_s": 14.481,
+   "peak_s": 15.3997,
+   "pan": 0.0,
+   "gain_db": -0.79,
+   "limited_by": "main-band target (hero)",
+   "band_hz": [
+    500,
+    1000
+   ],
+   "win_s": [
+    15.3897,
+    15.4425
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-019-creepy",
+   "sound": "fs/creepy_whoosh_850767.mp3",
+   "files": [
+    "fs/creepy_whoosh_850767.mp3"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 15.28,
+   "peak_s": 15.28,
+   "pan": -0.6,
+   "gain_db": -4.06,
+   "limited_by": "best-band target",
+   "band_hz": [
+    2000,
+    4000
+   ],
+   "win_s": [
+    15.27,
+    15.43
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-020-pop",
+   "sound": "pop",
+   "files": [
+    "../../../sound-layer/kit/pop/fs-503162-mouth-pops-magic-bottle-cork-3.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 15.91,
+   "peak_s": 15.91,
+   "pan": 0.6,
+   "gain_db": -10.45,
+   "limited_by": "best-band target",
+   "band_hz": [
+    500,
+    1000
+   ],
+   "win_s": [
+    15.9,
+    15.95
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-021-boxthud",
+   "sound": "cuts/boxthud.wav",
+   "files": [
+    "cuts/boxthud.wav"
+   ],
+   "weight": "hero",
+   "align": "peak",
+   "cue_s": 16.358,
+   "peak_s": 16.358,
+   "pan": 0.0,
+   "gain_db": -16.13,
+   "limited_by": "main-band target (hero)",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    16.348,
+    16.4778
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-022-boom",
+   "sound": "boom",
+   "files": [
+    "../../../sound-layer/kit/boom/fs-337695-transition-bass-1.wav"
+   ],
+   "weight": "hero",
+   "align": "peak",
+   "cue_s": 16.54,
+   "peak_s": 16.54,
+   "pan": 0.0,
+   "gain_db": -17.26,
+   "limited_by": "main-band target (hero)",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    16.53,
+    16.69
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-023-swish",
+   "sound": "swish",
+   "files": [
+    "../../../sound-layer/kit/swish/kenney-rpg-cloth1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 17.907,
+   "peak_s": 17.907,
+   "pan": -0.6,
+   "gain_db": -20.0,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    17.897,
+    17.947
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-024-hop",
+   "sound": "fs/whoosh_soft_623709.mp3",
+   "files": [
+    "fs/whoosh_soft_623709.mp3"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 18.679,
+   "peak_s": 18.679,
+   "pan": 0.6,
+   "gain_db": -13.74,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    18.669,
+    18.7597
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-025-land",
+   "sound": "fs/soft_land_614064.mp3",
+   "files": [
+    "fs/soft_land_614064.mp3"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 19.229,
+   "peak_s": 19.229,
+   "pan": -0.6,
+   "gain_db": -6.61,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    19.219,
+    19.2957
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-026-whoosh",
+   "sound": "whoosh",
+   "files": [
+    "../../../sound-layer/kit/whoosh/fs-449992-whoosh-short-low-wav-1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 19.592,
+   "peak_s": 19.592,
+   "pan": 0.6,
+   "gain_db": -7.61,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    19.582,
+    19.7297
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-027-hop",
+   "sound": "fs/whoosh_soft_623709.mp3",
+   "files": [
+    "fs/whoosh_soft_623709.mp3"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 20.897,
+   "peak_s": 20.897,
+   "pan": -0.6,
+   "gain_db": -9.74,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    20.887,
+    20.9534
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-028-land",
+   "sound": "fs/soft_land_519262.mp3",
+   "files": [
+    "fs/soft_land_519262.mp3"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 22.387,
+   "peak_s": 22.387,
+   "pan": 0.6,
+   "gain_db": -23.34,
+   "limited_by": "best-band target",
+   "band_hz": [
+    1000,
+    2000
+   ],
+   "win_s": [
+    22.377,
+    22.427
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-029-pop",
+   "sound": "pop",
+   "files": [
+    "../../../sound-layer/kit/pop/fs-188381-3-popping-pops-1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 22.801,
+   "peak_s": 22.801,
+   "pan": -0.6,
+   "gain_db": -12.45,
+   "limited_by": "best-band target",
+   "band_hz": [
+    500,
+    1000
+   ],
+   "win_s": [
+    22.791,
+    22.841
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-030-piece",
+   "sound": "fs/chess_piece_546119.mp3",
+   "files": [
+    "fs/chess_piece_546119.mp3"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 23.972,
+   "peak_s": 23.972,
+   "pan": 0.6,
+   "gain_db": -4.44,
+   "limited_by": "best-band target",
+   "band_hz": [
+    2000,
+    4000
+   ],
+   "win_s": [
+    23.962,
+    24.0379
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-031-tap",
+   "sound": "tap",
+   "files": [
+    "../../../sound-layer/kit/tap/kenney-impact-impact-metal-light-000.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 24.784,
+   "peak_s": 24.784,
+   "pan": -0.6,
+   "gain_db": -20.17,
+   "limited_by": "best-band target",
+   "band_hz": [
+    2000,
+    4000
+   ],
+   "win_s": [
+    24.774,
+    24.8752
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-032-steps",
+   "sound": "cuts/step1.wav",
+   "files": [
+    "cuts/step1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 25.756,
+   "peak_s": 25.756,
+   "pan": 0.6,
+   "gain_db": -5.01,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    25.746,
+    25.796
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-033-hop",
+   "sound": "fs/whoosh_soft_623709.mp3",
+   "files": [
+    "fs/whoosh_soft_623709.mp3"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 26.652,
+   "peak_s": 26.652,
+   "pan": -0.6,
+   "gain_db": -9.74,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    26.642,
+    26.7332
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-034-land",
+   "sound": "fs/soft_land_614064.mp3",
+   "files": [
+    "fs/soft_land_614064.mp3"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 27.119,
+   "peak_s": 27.119,
+   "pan": 0.6,
+   "gain_db": -2.61,
+   "limited_by": "peak cap",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    27.109,
+    27.1867
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-035-steps",
+   "sound": "cuts/step2.wav",
+   "files": [
+    "cuts/step2.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 27.443,
+   "peak_s": 27.443,
+   "pan": -0.6,
+   "gain_db": -5.3,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    27.433,
+    27.483
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-036-steps",
+   "sound": "cuts/step3.wav",
+   "files": [
+    "cuts/step3.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 27.931,
+   "peak_s": 27.931,
+   "pan": 0.6,
+   "gain_db": -2.08,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    27.921,
+    27.9833
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-037-tap",
+   "sound": "tap",
+   "files": [
+    "../../../sound-layer/kit/tap/kenney-impact-impact-plate-heavy-003.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 28.175,
+   "peak_s": 28.175,
+   "pan": -0.6,
+   "gain_db": -20.17,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    28.165,
+    28.2956
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-038-page",
+   "sound": "fs/page_turn_484933.mp3",
+   "files": [
+    "fs/page_turn_484933.mp3"
+   ],
+   "weight": "support",
+   "align": "start",
+   "cue_s": 28.642,
+   "peak_s": 29.2576,
+   "pan": 0.6,
+   "gain_db": -9.01,
+   "limited_by": "best-band target",
+   "band_hz": [
+    2000,
+    4000
+   ],
+   "win_s": [
+    29.2476,
+    29.3314
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-039-shimmer",
+   "sound": "shimmer",
+   "files": [
+    "../../../sound-layer/kit/shimmer/fs-376745-fantasy-ui-button-3-wav-2.wav"
+   ],
+   "weight": "support",
+   "align": "start",
+   "cue_s": 30.313,
+   "peak_s": 30.5073,
+   "pan": -0.6,
+   "gain_db": -28.48,
+   "limited_by": "best-band target",
+   "band_hz": [
+    8000,
+    16000
+   ],
+   "win_s": [
+    30.4973,
+    30.6573
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-040-gasp",
+   "sound": "cuts/gasp.wav",
+   "files": [
+    "cuts/gasp.wav"
+   ],
+   "weight": "support",
+   "align": "start",
+   "cue_s": 31.676,
+   "peak_s": 31.9546,
+   "pan": 0.6,
+   "gain_db": -2.25,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    31.9446,
+    31.9946
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-041-fogwind",
+   "sound": "cuts/fogwind.wav",
+   "files": [
+    "cuts/fogwind.wav"
+   ],
+   "weight": "support",
+   "align": "start",
+   "cue_s": 32.56,
+   "peak_s": 34.2617,
+   "pan": -0.6,
+   "gain_db": -16.21,
+   "limited_by": "best-band target",
+   "band_hz": [
+    1000,
+    2000
+   ],
+   "win_s": [
+    34.2517,
+    34.4117
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-042-handwhoosh",
+   "sound": "cuts/handwhoosh.wav",
+   "files": [
+    "cuts/handwhoosh.wav"
+   ],
+   "weight": "hero",
+   "align": "start",
+   "cue_s": 33.811,
+   "peak_s": 34.6953,
+   "pan": 0.0,
+   "gain_db": -4.66,
+   "limited_by": "main-band target (hero)",
+   "band_hz": [
+    500,
+    1000
+   ],
+   "win_s": [
+    34.6853,
+    34.7367
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-043-gasp",
+   "sound": "cuts/gasp.wav",
+   "files": [
+    "cuts/gasp.wav"
+   ],
+   "weight": "support",
+   "align": "start",
+   "cue_s": 34.27,
+   "peak_s": 34.5506,
+   "pan": -0.6,
+   "gain_db": -4.25,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    34.5406,
+    34.5906
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-044-handwhoosh",
+   "sound": "cuts/handwhoosh.wav",
+   "files": [
+    "cuts/handwhoosh.wav"
+   ],
+   "weight": "hero",
+   "align": "start",
+   "cue_s": 34.87,
+   "peak_s": 35.7591,
+   "pan": 0.0,
+   "gain_db": -4.18,
+   "limited_by": "main-band target (hero)",
+   "band_hz": [
+    500,
+    1000
+   ],
+   "win_s": [
+    35.7491,
+    35.8007
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-045-murmur",
+   "sound": "cuts/murmur2.wav",
+   "files": [
+    "cuts/murmur2.wav"
+   ],
+   "weight": "support",
+   "align": "start",
+   "cue_s": 35.68,
+   "peak_s": 37.4637,
+   "pan": -0.6,
+   "gain_db": -16.65,
+   "limited_by": "best-band target",
+   "band_hz": [
+    1000,
+    2000
+   ],
+   "win_s": [
+    37.4537,
+    37.6137
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-046-whoosh",
+   "sound": "whoosh",
+   "files": [
+    "../../../sound-layer/kit/whoosh/fs-30240-swoop1-flac-1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 36.691,
+   "peak_s": 36.691,
+   "pan": 0.6,
+   "gain_db": -11.15,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    36.681,
+    36.7311
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-047-whoosh",
+   "sound": "whoosh",
+   "files": [
+    "../../../sound-layer/kit/whoosh/fs-30241-swoop2g-flac-1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 37.518,
+   "peak_s": 37.518,
+   "pan": -0.6,
+   "gain_db": -11.58,
+   "limited_by": "best-band target + cluster x0.6",
+   "band_hz": [
+    250,
+    500
+   ],
+   "win_s": [
+    37.508,
+    37.5688
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-048-boom",
+   "sound": "boom",
+   "files": [
+    "../../../sound-layer/kit/boom/fs-535615-low-bit-boom-1.wav"
+   ],
+   "weight": "hero",
+   "align": "peak",
+   "cue_s": 38.732,
+   "peak_s": 38.732,
+   "pan": 0.0,
+   "gain_db": -13.26,
+   "limited_by": "main-band target (hero)",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    38.722,
+    38.7941
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-049-heart",
+   "sound": "cuts/heart.wav",
+   "files": [
+    "cuts/heart.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 39.008,
+   "peak_s": 39.008,
+   "pan": -0.6,
+   "gain_db": -19.97,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    38.998,
+    39.158
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-050-hop",
+   "sound": "fs/whoosh_soft_623709.mp3",
+   "files": [
+    "fs/whoosh_soft_623709.mp3"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 39.607,
+   "peak_s": 39.607,
+   "pan": 0.6,
+   "gain_db": -13.74,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    39.597,
+    39.6634
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-051-land",
+   "sound": "fs/soft_land_519262.mp3",
+   "files": [
+    "fs/soft_land_519262.mp3"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 40.95,
+   "peak_s": 40.95,
+   "pan": -0.6,
+   "gain_db": -20.97,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    40.94,
+    40.99
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-052-thump",
+   "sound": "thump",
+   "files": [
+    "../../../sound-layer/kit/thump/fs-389999-thump-cloth-1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 41.177,
+   "peak_s": 41.177,
+   "pan": 0.6,
+   "gain_db": -10.44,
+   "limited_by": "best-band target",
+   "band_hz": [
+    1000,
+    2000
+   ],
+   "win_s": [
+    41.167,
+    41.2888
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-053-creepy",
+   "sound": "fs/creepy_whoosh_850424.mp3",
+   "files": [
+    "fs/creepy_whoosh_850424.mp3"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 41.991,
+   "peak_s": 41.991,
+   "pan": -0.6,
+   "gain_db": -0.25,
+   "limited_by": "best-band target",
+   "band_hz": [
+    250,
+    500
+   ],
+   "win_s": [
+    41.981,
+    42.141
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-054-gasp",
+   "sound": "cuts/gasp.wav",
+   "files": [
+    "cuts/gasp.wav"
+   ],
+   "weight": "support",
+   "align": "start",
+   "cue_s": 42.268,
+   "peak_s": 42.5528,
+   "pan": 0.6,
+   "gain_db": -6.25,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    42.5428,
+    42.5928
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-055-wind",
+   "sound": "cuts/wind.wav",
+   "files": [
+    "cuts/wind.wav"
+   ],
+   "weight": "support",
+   "align": "start",
+   "cue_s": 43.222,
+   "peak_s": 45.8345,
+   "pan": -0.6,
+   "gain_db": -8.97,
+   "limited_by": "best-band target",
+   "band_hz": [
+    250,
+    500
+   ],
+   "win_s": [
+    45.8245,
+    45.9845
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-056-steps",
+   "sound": "cuts/step1.wav",
+   "files": [
+    "cuts/step1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 44.224,
+   "peak_s": 44.224,
+   "pan": 0.6,
+   "gain_db": -5.17,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    44.214,
+    44.264
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-057-swish",
+   "sound": "swish",
+   "files": [
+    "../../../sound-layer/kit/swish/fs-14175-27-wav-1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 45.959,
+   "peak_s": 45.959,
+   "pan": -0.6,
+   "gain_db": -20.44,
+   "limited_by": "best-band target + cluster x0.6",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    45.949,
+    46.109
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-058-steps",
+   "sound": "cuts/step2.wav",
+   "files": [
+    "cuts/step2.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 46.962,
+   "peak_s": 46.962,
+   "pan": 0.6,
+   "gain_db": -7.3,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    46.952,
+    47.002
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-059-steps",
+   "sound": "cuts/step3.wav",
+   "files": [
+    "cuts/step3.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 47.694,
+   "peak_s": 47.694,
+   "pan": -0.6,
+   "gain_db": -2.99,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    47.684,
+    47.7462
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-060-strain",
+   "sound": "fs/cloth_stretch_493190.mp3",
+   "files": [
+    "fs/cloth_stretch_493190.mp3"
+   ],
+   "weight": "support",
+   "align": "start",
+   "cue_s": 48.75,
+   "peak_s": 49.9083,
+   "pan": 0.6,
+   "gain_db": -4.63,
+   "limited_by": "best-band target",
+   "band_hz": [
+    4000,
+    8000
+   ],
+   "win_s": [
+    49.8983,
+    50.0583
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-061-steps",
+   "sound": "cuts/step1.wav",
+   "files": [
+    "cuts/step1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 49.54,
+   "peak_s": 49.54,
+   "pan": -0.6,
+   "gain_db": -1.17,
+   "limited_by": "peak cap",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    49.53,
+    49.58
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-062-shimmer",
+   "sound": "shimmer",
+   "files": [
+    "../../../sound-layer/kit/shimmer/fs-389789-chimes-3.wav"
+   ],
+   "weight": "support",
+   "align": "start",
+   "cue_s": 50.432,
+   "peak_s": 50.4869,
+   "pan": 0.6,
+   "gain_db": -29.4,
+   "limited_by": "best-band target",
+   "band_hz": [
+    1000,
+    2000
+   ],
+   "win_s": [
+    50.4769,
+    50.6369
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-063-swish",
+   "sound": "swish",
+   "files": [
+    "../../../sound-layer/kit/swish/fs-388003-double-swish-1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 51.227,
+   "peak_s": 51.227,
+   "pan": -0.6,
+   "gain_db": -20.0,
+   "limited_by": "best-band target",
+   "band_hz": [
+    1000,
+    2000
+   ],
+   "win_s": [
+    51.217,
+    51.377
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-064-sizzle",
+   "sound": "cuts/sizzle.wav",
+   "files": [
+    "cuts/sizzle.wav"
+   ],
+   "weight": "support",
+   "align": "start",
+   "cue_s": 53.67,
+   "peak_s": 54.699,
+   "pan": 0.6,
+   "gain_db": -14.47,
+   "limited_by": "best-band target",
+   "band_hz": [
+    8000,
+    16000
+   ],
+   "win_s": [
+    54.689,
+    54.849
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-065-pans",
+   "sound": "cuts/pans.wav",
+   "files": [
+    "cuts/pans.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 54.17,
+   "peak_s": 54.17,
+   "pan": -0.6,
+   "gain_db": -22.3,
+   "limited_by": "best-band target",
+   "band_hz": [
+    1000,
+    2000
+   ],
+   "win_s": [
+    54.16,
+    54.32
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-066-pans",
+   "sound": "cuts/pans.wav",
+   "files": [
+    "cuts/pans.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 55.03,
+   "peak_s": 55.03,
+   "pan": 0.6,
+   "gain_db": -24.06,
+   "limited_by": "best-band target",
+   "band_hz": [
+    1000,
+    2000
+   ],
+   "win_s": [
+    55.02,
+    55.18
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-067-steps",
+   "sound": "cuts/step2.wav",
+   "files": [
+    "cuts/step2.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 55.79,
+   "peak_s": 55.79,
+   "pan": -0.6,
+   "gain_db": -3.3,
+   "limited_by": "peak cap",
+   "band_hz": [
+    250,
+    500
+   ],
+   "win_s": [
+    55.78,
+    55.83
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-068-doorrattle",
+   "sound": "fs/door_rattle_216869.mp3",
+   "files": [
+    "fs/door_rattle_216869.mp3"
+   ],
+   "weight": "support",
+   "align": "start",
+   "cue_s": 56.34,
+   "peak_s": 57.1523,
+   "pan": 0.6,
+   "gain_db": -2.7,
+   "limited_by": "best-band target",
+   "band_hz": [
+    1000,
+    2000
+   ],
+   "win_s": [
+    57.1423,
+    57.2591
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-069-tap",
+   "sound": "tap",
+   "files": [
+    "../../../sound-layer/kit/tap/kenney-impact-impact-metal-heavy-003.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 56.73,
+   "peak_s": 56.73,
+   "pan": -0.6,
+   "gain_db": -24.17,
+   "limited_by": "best-band target",
+   "band_hz": [
+    1000,
+    2000
+   ],
+   "win_s": [
+    56.72,
+    56.7806
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-070-piece",
+   "sound": "fs/chess_piece_546119.mp3",
+   "files": [
+    "fs/chess_piece_546119.mp3"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 58.32,
+   "peak_s": 58.32,
+   "pan": 0.6,
+   "gain_db": -4.44,
+   "limited_by": "best-band target",
+   "band_hz": [
+    2000,
+    4000
+   ],
+   "win_s": [
+    58.31,
+    58.3864
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-071-fogwind",
+   "sound": "cuts/fogwind.wav",
+   "files": [
+    "cuts/fogwind.wav"
+   ],
+   "weight": "support",
+   "align": "start",
+   "cue_s": 59.37,
+   "peak_s": 61.0519,
+   "pan": -0.6,
+   "gain_db": -18.21,
+   "limited_by": "best-band target",
+   "band_hz": [
+    1000,
+    2000
+   ],
+   "win_s": [
+    61.0419,
+    61.2019
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-072-fogwind",
+   "sound": "cuts/fogwind.wav",
+   "files": [
+    "cuts/fogwind.wav"
+   ],
+   "weight": "support",
+   "align": "start",
+   "cue_s": 60.53,
+   "peak_s": 62.19,
+   "pan": 0.6,
+   "gain_db": -20.21,
+   "limited_by": "best-band target",
+   "band_hz": [
+    1000,
+    2000
+   ],
+   "win_s": [
+    62.18,
+    62.34
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-073-steps",
+   "sound": "cuts/step3.wav",
+   "files": [
+    "cuts/step3.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 63.133,
+   "peak_s": 63.133,
+   "pan": -0.6,
+   "gain_db": 1.01,
+   "limited_by": "peak cap",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    63.123,
+    63.1862
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-074-whoosh",
+   "sound": "whoosh",
+   "files": [
+    "../../../sound-layer/kit/whoosh/fs-449992-whoosh-short-low-wav-1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 63.701,
+   "peak_s": 63.701,
+   "pan": 0.6,
+   "gain_db": -11.15,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    63.691,
+    63.8416
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-075-crowdgasp",
+   "sound": "cuts/crowdgasp.wav",
+   "files": [
+    "cuts/crowdgasp.wav"
+   ],
+   "weight": "support",
+   "align": "start",
+   "cue_s": 64.907,
+   "peak_s": 66.0049,
+   "pan": -0.6,
+   "gain_db": -11.09,
+   "limited_by": "best-band target",
+   "band_hz": [
+    250,
+    500
+   ],
+   "win_s": [
+    65.9949,
+    66.1549
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-076-steps",
+   "sound": "cuts/step1.wav",
+   "files": [
+    "cuts/step1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 66.386,
+   "peak_s": 66.386,
+   "pan": 0.6,
+   "gain_db": -5.17,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    66.376,
+    66.426
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-077-wheels",
+   "sound": "cuts/wheels2.wav",
+   "files": [
+    "cuts/wheels2.wav"
+   ],
+   "weight": "support",
+   "align": "start",
+   "cue_s": 67.664,
+   "peak_s": 68.708,
+   "pan": -0.6,
+   "gain_db": -15.64,
+   "limited_by": "best-band target",
+   "band_hz": [
+    1000,
+    2000
+   ],
+   "win_s": [
+    68.698,
+    68.858
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-078-rumble",
+   "sound": "cuts/rumble.wav",
+   "files": [
+    "cuts/rumble.wav"
+   ],
+   "weight": "support",
+   "align": "start",
+   "cue_s": 68.69,
+   "peak_s": 69.5447,
+   "pan": 0.6,
+   "gain_db": -7.3,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    69.5347,
+    69.6337
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-079-shimmer",
+   "sound": "shimmer",
+   "files": [
+    "../../../sound-layer/kit/shimmer/fs-452371-small-bell-2.wav"
+   ],
+   "weight": "support",
+   "align": "start",
+   "cue_s": 69.034,
+   "peak_s": 69.0927,
+   "pan": -0.6,
+   "gain_db": -25.83,
+   "limited_by": "best-band target",
+   "band_hz": [
+    2000,
+    4000
+   ],
+   "win_s": [
+    69.0827,
+    69.2176
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-080-murmur",
+   "sound": "cuts/murmur1.wav",
+   "files": [
+    "cuts/murmur1.wav"
+   ],
+   "weight": "support",
+   "align": "start",
+   "cue_s": 70.6,
+   "peak_s": 71.8887,
+   "pan": 0.6,
+   "gain_db": -8.29,
+   "limited_by": "best-band target",
+   "band_hz": [
+    250,
+    500
+   ],
+   "win_s": [
+    71.8787,
+    72.0387
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-081-magic",
+   "sound": "fs/magic_shimmer_844398.mp3",
+   "files": [
+    "fs/magic_shimmer_844398.mp3"
+   ],
+   "weight": "hero",
+   "align": "start",
+   "cue_s": 72.31,
+   "peak_s": 72.5849,
+   "pan": 0.0,
+   "gain_db": 7.51,
+   "limited_by": "main-band target (hero)",
+   "band_hz": [
+    500,
+    1000
+   ],
+   "win_s": [
+    72.5749,
+    72.7349
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-082-boom",
+   "sound": "boom",
+   "files": [
+    "../../../sound-layer/kit/boom/fs-636624-deep-hit-2.wav"
+   ],
+   "weight": "hero",
+   "align": "peak",
+   "cue_s": 72.319,
+   "peak_s": 72.319,
+   "pan": 0.0,
+   "gain_db": -15.26,
+   "limited_by": "main-band target (hero)",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    72.309,
+    72.469
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-083-piece",
+   "sound": "fs/chess_piece_546119.mp3",
+   "files": [
+    "fs/chess_piece_546119.mp3"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 73.035,
+   "peak_s": 73.035,
+   "pan": -0.6,
+   "gain_db": -0.64,
+   "limited_by": "best-band target",
+   "band_hz": [
+    2000,
+    4000
+   ],
+   "win_s": [
+    73.025,
+    73.1019
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-084-piece",
+   "sound": "fs/chess_piece_546119.mp3",
+   "files": [
+    "fs/chess_piece_546119.mp3"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 73.548,
+   "peak_s": 73.548,
+   "pan": 0.6,
+   "gain_db": -0.44,
+   "limited_by": "best-band target",
+   "band_hz": [
+    2000,
+    4000
+   ],
+   "win_s": [
+    73.538,
+    73.6158
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-085-steps",
+   "sound": "cuts/step2.wav",
+   "files": [
+    "cuts/step2.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 73.98,
+   "peak_s": 73.98,
+   "pan": -0.6,
+   "gain_db": -7.3,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    73.97,
+    74.02
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-086-crowdgasp",
+   "sound": "cuts/crowdgasp.wav",
+   "files": [
+    "cuts/crowdgasp.wav"
+   ],
+   "weight": "support",
+   "align": "start",
+   "cue_s": 74.25,
+   "peak_s": 75.31,
+   "pan": 0.6,
+   "gain_db": -15.09,
+   "limited_by": "best-band target",
+   "band_hz": [
+    250,
+    500
+   ],
+   "win_s": [
+    75.3,
+    75.46
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-087-piece",
+   "sound": "fs/chess_piece_546119.mp3",
+   "files": [
+    "fs/chess_piece_546119.mp3"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 75.066,
+   "peak_s": 75.066,
+   "pan": -0.6,
+   "gain_db": -4.07,
+   "limited_by": "best-band target",
+   "band_hz": [
+    1000,
+    2000
+   ],
+   "win_s": [
+    75.056,
+    75.1329
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-088-swish",
+   "sound": "swish",
+   "files": [
+    "../../../sound-layer/kit/swish/kenney-rpg-cloth1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 75.767,
+   "peak_s": 75.767,
+   "pan": 0.6,
+   "gain_db": -18.18,
+   "limited_by": "best-band target",
+   "band_hz": [
+    1000,
+    2000
+   ],
+   "win_s": [
+    75.757,
+    75.8072
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-089-steps",
+   "sound": "cuts/step3.wav",
+   "files": [
+    "cuts/step3.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 77.056,
+   "peak_s": 77.056,
+   "pan": -0.6,
+   "gain_db": 0.17,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    77.046,
+    77.1088
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-090-boxthud",
+   "sound": "cuts/boxthud.wav",
+   "files": [
+    "cuts/boxthud.wav"
+   ],
+   "weight": "hero",
+   "align": "peak",
+   "cue_s": 77.943,
+   "peak_s": 77.943,
+   "pan": 0.0,
+   "gain_db": -20.13,
+   "limited_by": "main-band target (hero)",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    77.933,
+    78.0646
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-091-pop",
+   "sound": "pop",
+   "files": [
+    "../../../sound-layer/kit/pop/fs-206152-bottlepop44-wav-1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 83.771,
+   "peak_s": 83.771,
+   "pan": -0.6,
+   "gain_db": -14.45,
+   "limited_by": "best-band target",
+   "band_hz": [
+    1000,
+    2000
+   ],
+   "win_s": [
+    83.761,
+    83.8112
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-092-shimmer",
+   "sound": "shimmer",
+   "files": [
+    "../../../sound-layer/kit/shimmer/fs-462095-sparkling-star-01-wav-2.wav"
+   ],
+   "weight": "support",
+   "align": "start",
+   "cue_s": 86.242,
+   "peak_s": 86.2968,
+   "pan": 0.6,
+   "gain_db": -25.83,
+   "limited_by": "best-band target",
+   "band_hz": [
+    8000,
+    16000
+   ],
+   "win_s": [
+    86.2868,
+    86.4468
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-093-thump",
+   "sound": "thump",
+   "files": [
+    "../../../sound-layer/kit/thump/fs-405537-thud-2-wav-1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 87.939,
+   "peak_s": 87.939,
+   "pan": -0.6,
+   "gain_db": -6.44,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    87.929,
+    88.0129
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-094-hop",
+   "sound": "fs/whoosh_soft_623709.mp3",
+   "files": [
+    "fs/whoosh_soft_623709.mp3"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 90.685,
+   "peak_s": 90.685,
+   "pan": 0.6,
+   "gain_db": -9.74,
+   "limited_by": "2-8 kHz cap",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    90.675,
+    90.7425
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-095-whoosh",
+   "sound": "whoosh",
+   "files": [
+    "../../../sound-layer/kit/whoosh/fs-30240-swoop1-flac-1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 91.023,
+   "peak_s": 91.023,
+   "pan": -0.6,
+   "gain_db": -11.15,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    91.013,
+    91.0632
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-096-land",
+   "sound": "fs/soft_land_614064.mp3",
+   "files": [
+    "fs/soft_land_614064.mp3"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 92.435,
+   "peak_s": 92.435,
+   "pan": 0.6,
+   "gain_db": -4.61,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    92.425,
+    92.5023
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-097-handwhoosh",
+   "sound": "cuts/handwhoosh.wav",
+   "files": [
+    "cuts/handwhoosh.wav"
+   ],
+   "weight": "hero",
+   "align": "start",
+   "cue_s": 94.248,
+   "peak_s": 95.1616,
+   "pan": 0.0,
+   "gain_db": -1.14,
+   "limited_by": "main-band target (hero)",
+   "band_hz": [
+    500,
+    1000
+   ],
+   "win_s": [
+    95.1516,
+    95.2042
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-098-whoosh",
+   "sound": "whoosh",
+   "files": [
+    "../../../sound-layer/kit/whoosh/fs-30241-swoop2g-flac-1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 95.958,
+   "peak_s": 95.958,
+   "pan": 0.6,
+   "gain_db": -10.68,
+   "limited_by": "best-band target",
+   "band_hz": [
+    250,
+    500
+   ],
+   "win_s": [
+    95.948,
+    96.0088
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-099-lid",
+   "sound": "cuts/rumble.wav+fs/whoosh_big_237980.mp3",
+   "files": [
+    "cuts/rumble.wav",
+    "fs/whoosh_big_237980.mp3"
+   ],
+   "weight": "hero",
+   "align": "start",
+   "cue_s": 96.642,
+   "peak_s": 97.5173,
+   "pan": 0.0,
+   "gain_db": -12.96,
+   "limited_by": "main-band target (hero)",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    97.5073,
+    97.6673
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-100-shimmer",
+   "sound": "shimmer",
+   "files": [
+    "../../../sound-layer/kit/shimmer/fs-376745-fantasy-ui-button-3-wav-2.wav"
+   ],
+   "weight": "support",
+   "align": "start",
+   "cue_s": 97.434,
+   "peak_s": 97.6224,
+   "pan": 0.6,
+   "gain_db": -31.63,
+   "limited_by": "best-band target + cluster x0.6",
+   "band_hz": [
+    8000,
+    16000
+   ],
+   "win_s": [
+    97.6124,
+    97.7724
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-101-steps",
+   "sound": "cuts/step1.wav",
+   "files": [
+    "cuts/step1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 99.188,
+   "peak_s": 99.188,
+   "pan": -0.6,
+   "gain_db": -1.33,
+   "limited_by": "best-band target",
+   "band_hz": [
+    500,
+    1000
+   ],
+   "win_s": [
+    99.178,
+    99.228
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-102-schoolbell",
+   "sound": "cuts/bell.wav",
+   "files": [
+    "cuts/bell.wav"
+   ],
+   "weight": "support",
+   "align": "start",
+   "cue_s": 100.211,
+   "peak_s": 103.1079,
+   "pan": 0.6,
+   "gain_db": -15.94,
+   "limited_by": "best-band target",
+   "band_hz": [
+    1000,
+    2000
+   ],
+   "win_s": [
+    103.0979,
+    103.2579
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-103-steps",
+   "sound": "cuts/step2.wav",
+   "files": [
+    "cuts/step2.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 100.446,
+   "peak_s": 100.446,
+   "pan": -0.6,
+   "gain_db": -3.3,
+   "limited_by": "peak cap",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    100.436,
+    100.486
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-104-steps",
+   "sound": "cuts/step3.wav",
+   "files": [
+    "cuts/step3.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 101.418,
+   "peak_s": 101.418,
+   "pan": 0.6,
+   "gain_db": -0.99,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    101.408,
+    101.4704
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-105-hop",
+   "sound": "fs/whoosh_soft_623709.mp3",
+   "files": [
+    "fs/whoosh_soft_623709.mp3"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 102.425,
+   "peak_s": 102.425,
+   "pan": -0.6,
+   "gain_db": -13.74,
+   "limited_by": "best-band target",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    102.415,
+    102.4828
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-106-land",
+   "sound": "fs/soft_land_519262.mp3",
+   "files": [
+    "fs/soft_land_519262.mp3"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 103.14,
+   "peak_s": 103.14,
+   "pan": 0.6,
+   "gain_db": -27.4,
+   "limited_by": "best-band target + cluster x0.6",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    103.13,
+    103.18
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-107-steps",
+   "sound": "cuts/step1.wav",
+   "files": [
+    "cuts/step1.wav"
+   ],
+   "weight": "support",
+   "align": "peak",
+   "cue_s": 103.71,
+   "peak_s": 103.71,
+   "pan": -0.6,
+   "gain_db": -1.17,
+   "limited_by": "peak cap",
+   "band_hz": [
+    125,
+    250
+   ],
+   "win_s": [
+    103.7,
+    103.75
+   ],
+   "visual": null
+  },
+  {
+   "id": "ev-108-shimmer",
+   "sound": "shimmer",
+   "files": [
+    "../../../sound-layer/kit/shimmer/fs-389789-chimes-3.wav"
+   ],
+   "weight": "support",
+   "align": "start",
+   "cue_s": 104.952,
+   "peak_s": 105.0071,
+   "pan": 0.6,
+   "gain_db": -29.2,
+   "limited_by": "best-band target",
+   "band_hz": [
+    1000,
+    2000
+   ],
+   "win_s": [
+    104.9971,
+    105.1571
+   ],
+   "visual": null
+  }
+ ]
+}

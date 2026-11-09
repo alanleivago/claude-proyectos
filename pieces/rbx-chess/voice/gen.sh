@@ -1,0 +1,1 @@
+for f in c*.txt; do b=${f%.txt}; [ -s $b.wav ] && continue; curl -s -m 900 -X POST http://127.0.0.1:3900/generate --form-string "text=$(cat $f)" -F profile_id=227af074 -F num_step=32 -F speed=1.25 -F language=Auto -o $b.wav; echo $b $(file -b $b.wav | cut -c1-40); done
