@@ -24,8 +24,11 @@ from mathutils import Vector
 H = os.path.dirname(os.path.abspath(__file__))
 A = sys.argv[sys.argv.index("--") + 1:]
 NAME = A[0]
-OPT = dict(height=1.78, gender=1.0, muscle=0.55, weight=0.5, ratio=0.16)
-OPT.update({k: float(v) for k, v in (a.split("=") for a in A[1:])})
+OPT = dict(height=1.78, gender=1.0, muscle=0.55, weight=0.5, ratio=0.16, age=0.5, proportions=0.5, cupsize=0.5,
+           race="", shoe="sneaker", upper="238,237,233", sole="186,176,160", accent="190,190,192")
+STR = ("race", "shoe", "upper", "sole", "accent", "cap")   # cap = "r,g,b": add a modelled visor      # race = "asian,caucasian,african" weights; shoe = sneaker | boot | shoe
+OPT.update({k: (v if k in STR else float(v)) for k, v in (a.split("=", 1) for a in A[1:])})
+K = OPT["height"] / 1.78                                # the owner's absolute heights (shoulder line, chest, ...) scale with the person
 D = os.path.join(H, NAME)
 SJ = json.load(open(os.path.join(D, "sheet.json")))
 FJ = json.load(open(os.path.join(D, "face.json")))
@@ -42,7 +45,10 @@ TargetService = importlib.import_module(_MPFB + ".services.targetservice").Targe
 for o in list(bpy.data.objects):
     bpy.data.objects.remove(o)
 md = TargetService.get_default_macro_info_dict()
-md.update(gender=OPT["gender"], muscle=OPT["muscle"], weight=OPT["weight"])
+md.update(gender=OPT["gender"], muscle=OPT["muscle"], weight=OPT["weight"], age=OPT["age"], proportions=OPT["proportions"],
+          cupsize=OPT["cupsize"])
+if OPT["race"]:
+    md["race"] = dict(zip(("asian", "caucasian", "african"), (float(x) for x in OPT["race"].split(","))))
 body = HumanService.create_human(macro_detail_dict=md, scale=0.1)
 
 # ---- bake the macro shape keys, scale to the photo height, drop helper geometry (keep the eyeballs)
@@ -67,6 +73,8 @@ for g in [g for g in body.vertex_groups if g.name not in BONES]:     # MPFB's he
 bpy.context.view_layer.update()
 me = body.data
 B = {b.name: b for b in rig.data.bones}
+KS = B["upperarm01.L"].head_local.z / 1.417                  # torso heights follow the shoulder joint (owner: 1.417 m)
+KN = (B["head"].head_local.z - B["neck01"].head_local.z) / 0.098   # neck / jaw lengths follow the neck (owner: 0.098 m; a kid's is short)
 names = [g.name for g in body.vertex_groups]
 
 
@@ -107,7 +115,7 @@ for i, v in enumerate(me.vertices):
         v.co.x = c_[0] + (v.co.x - c_[0]) * 0.55; v.co.z = 0.02 + (v.co.z - 0.0) * 0.55
         v.co.y = c_[1] + (v.co.y - c_[1]) * 0.85
 CO = np.array([v.co[:] for v in me.vertices])
-Z_CROTCH = min(CO[REG == "torso"][:, 2].min() + 0.03, 0.9)
+Z_CROTCH = min(CO[REG == "torso"][:, 2].min() + 0.03, 0.9 * KS)
 Z_TOP = CO[:, 2].max()
 
 
@@ -127,11 +135,29 @@ def central(view, y, cx):
 
 
 def vcentre(view):
-    v = V[view]; y = int(v["y0"] + 0.45 * (v["y1"] - v["y0"]))
-    r = central(view, y, (v["x0"] + v["x1"]) / 2); return (r[0] + r[1]) / 2
+    """the body's centre column = the head's (a bag or a held arm on one side shifts the hip-height silhouette)."""
+    v = V[view]; xs = []
+    for y in range(v["y0"] + int(0.03 * (v["y1"] - v["y0"])), v["y0"] + int(0.09 * (v["y1"] - v["y0"]))):
+        rs = v["runs"][y]
+        if rs:
+            r = max(rs, key=lambda r: r[1] - r[0]); xs.append((r[0] + r[1]) / 2)
+    return float(np.median(xs))
 
 
 CX = {k: vcentre(k) for k in V}
+
+
+def shoulder_row(view):
+    """first row under the head where the body run is shoulder-wide: the photo's collar / shoulder line."""
+    v = V[view]; hp = v["y1"] - v["y0"]
+    for y in range(v["y0"] + int(0.1 * hp), v["y0"] + int(0.3 * hp)):
+        r = central(view, y, CX[view])
+        if r and r[1] - r[0] > (0.16 if view != "side" else 0.10) * hp:
+            return y
+    return v["y0"] + int(0.17 * hp)
+
+
+COLLAR_ROW = {k: shoulder_row(k) + int(0.02 * (V[k]["y1"] - V[k]["y0"])) for k in ("front", "side")} if OPT.get("collar_up") else {}
 
 
 def mesh_band(mask, z, axis, dz=0.012):
@@ -147,6 +173,8 @@ def mesh_band(mask, z, axis, dz=0.012):
 def uv_body(view, z, mask, coord, run_pick=None):
     """sheet pixel for a vertex: row from its height, column from its across-coordinate normalised to the silhouette."""
     y, s = row_of(view, z)
+    if view in COLLAR_ROW and mask is TORSO:                          # collar_up=1: a bearded / short-necked photo - the
+        y = max(y, COLLAR_ROW[view])                                    # mesh neck takes the collar, not a smeared beard
     axis = 1 if view == "side" else 0
     mb = mesh_band(mask, z, axis)
     cx = CX[view]
@@ -195,6 +223,7 @@ def sheet_arm(view, s):
         if not rs or c is None:
             continue
         o = [r for r in rs if (r[0] > c[1] if image_right else r[1] < c[0])]
+        o = [r for r in o if abs((r[0] + r[1]) / 2 - cx) > 0.11 * (v["y1"] - v["y0"])]   # a leg is not the arm
         if not o:
             if len(rows) > 10:
                 break
@@ -205,6 +234,9 @@ def sheet_arm(view, s):
     d = (p1 - p0) / np.linalg.norm(p1 - p0)
     w0 = rows[ys[2]][1] - rows[ys[2]][0]
     sh = p0 - d * (np.dot(p0 - pts[0], d) + 0.9 * w0 * abs(d[1]))
+    hp = v["y1"] - v["y0"]; gap = 0.10 * hp - abs(sh[0] - cx)          # never past the shoulder joint into the neck / chin
+    if gap > 0 and abs(d[0]) > 1e-3:                                     # (short-necked kids, steep arms)
+        sh = sh + d * gap / abs(d[0])
     end = pts[-1] + d * 0.5 * (rows[ys[-1]][1] - rows[ys[-1]][0]) * abs(d[1])
     nrm = np.array([-d[1], d[0]])
     hws = []
@@ -238,7 +270,7 @@ for s in "LR":
 
 def uv_arm(s, co, view):
     A_ = ARMS[s]; P = co - A_["sh"]; t = float(np.clip(P @ A_["d"] / A_["L"], 0, 1)); a = P @ A_["nrm"]
-    k = int(round(t * 20)); a_n = max(-0.97, min(0.97, a / A_["hw"][k]))
+    k = int(round(t * 20)); a_n = max(-0.86, min(0.86, a / A_["hw"][k]))   # (stay inside the sleeve: its rim is magenta-tinted)
     t = max(t, 0.08)                                                  # the shoulder cap samples the sleeve, not past the photo's shoulder
     sh, end, nrm, hws = A_[view]
     mirror = 1.0 if view == "front" else -1.0                         # the back photo is seen from behind
@@ -251,11 +283,13 @@ z_eye = (rig.matrix_world @ B["eye.L"].head_local).z
 headv = CO[HEAD]
 front_head = HEAD & (CO[:, 1] < np.percentile(headv[:, 1], 35))
 z_chin = CO[front_head][:, 2].min()
-band = HEAD & (np.abs(CO[:, 2] - (z_eye - 0.035)) < 0.02)
+z_mouth = B["oris06"].head_local.z + 0.004 * KN                     # lip line = the upper-lip bone (the mesh lips bulge below it)
+band = HEAD & (np.abs(CO[:, 2] - (z_eye - 0.035 * KN)) < 0.02 * KN)
 ear_hw = np.abs(CO[band][:, 0]).max()
 
 
-Z_COLLAR = z_chin - 0.10                                               # mesh neck base, where the shirt starts
+NECK_X = min(0.085 * K, 1.05 * FJ["neck_hw"] / FJ["ear_hw"] * ear_hw) if "neck_hw" in FJ else 0.085 * K   # the photo neck only (no filled bg)
+Z_COLLAR = z_chin - 0.10 * KN                                               # mesh neck base, where the shirt starts
 
 
 def uv_face(co):
@@ -263,6 +297,12 @@ def uv_face(co):
     u = FJ["cx"] + x / ear_hw * FJ["ear_hw"]
     if z >= z_eye:
         v = FJ["eye"] + (FJ["top"] - FJ["eye"]) * (z - z_eye) / (Z_TOP - z_eye)
+    elif "mouth" in FJ and z >= z_mouth:                               # eye -> lip line -> chin: the photo's mouth lands on
+        v = FJ["eye"] + (FJ["mouth"] - FJ["eye"]) * (z_eye - z) / (z_eye - z_mouth)      # the mesh's lips (MakeHuman
+    elif "mouth" in FJ and z >= z_chin:                                                  # kids / women have short jaws)
+        v = FJ["mouth"] + (FJ["chin"] - FJ["mouth"]) * (z_mouth - z) / (z_mouth - z_chin)
+    elif z < z_chin and "throat" in FJ:                                # bearded: a quick fade from the chin to a bare-skin
+        v = FJ["chin"] + (FJ["throat"] - FJ["chin"]) * min(1.0, (z_chin - z) / (0.03 * KN))   # row (no long goatee on the neck)
     elif z >= z_chin:
         v = FJ["eye"] + (FJ["chin"] - FJ["eye"]) * (z_eye - z) / (z_eye - z_chin)
     else:                                                              # the throat: MakeHuman's neck is longer than the photo's,
@@ -280,13 +320,13 @@ for p in me.polygons:
     n = p.normal; vs = list(p.vertices)
     regs = [REG[i] for i in vs]; r = max(set(regs), key=regs.count)
     view = "front" if n.y < -0.45 else ("back" if n.y > 0.45 else "side")
-    if view == "side" and not r.startswith(("arm", "head", "eye", "neck")) and 0.5 < p.center.z < 1.5:
+    if view == "side" and not r.startswith(("arm", "head", "eye", "neck")) and 0.5 * KS < p.center.z < 1.5 * KS:
         # in the profile photo the hanging arm and hand cover the hips/thighs: take the silhouette edge of the
         # front (or back) photo instead, so no skin from the hand lands on the jeans or the shirt
         view = "front" if p.center.y < 0.0 else "back"
     front_lim = 0.05 if p.center.z < z_eye - 0.02 else -0.25             # cheeks / jaw sides take the portrait too (no dark
     portrait = r == "eye" or (r in ("head", "neck") and (n.y < front_lim or (r == "head" and n.z > 0.55 and p.center.y < CO[HEAD][:, 1].mean())))   # sideburn stroke)
-    if r in ("neck", "torso") and p.center.z > Z_COLLAR - 0.045 and abs(p.center.x) < 0.085 and n.y < 0.3:
+    if r in ("neck", "torso") and p.center.z > Z_COLLAR - 0.045 * KN and abs(p.center.x) < NECK_X and n.y < 0.3:
         portrait = True                                                # neck + the collar band: the PHOTO's collar line (smooth,
     elif r == "neck":                                                  # no polygon notches); below it the sheet's shirt
         portrait = False
@@ -296,7 +336,7 @@ for p in me.polygons:
     for li, vi in zip(p.loop_indices, vs):
         co = CO[vi]
         if portrait:                                                   # under the jaw: sample the throat, not the
-            uv = uv_face(co - np.array((0, 0, 0.03))) if (n.z < -0.3 and p.center.z < z_chin + 0.02) else uv_face(co)   # jaw shadow
+            uv = uv_face(np.array((co[0], co[1], min(co[2] - 0.03 * KN, z_chin - 0.05 * KN)))) if (n.z < -0.3 and p.center.z < z_chin + 0.02 * KN) else uv_face(co)   # jaw shadow
         elif r.startswith("arm"):
             s_ = r[-1]; A_ = ARMS[s_]; t_ = (co - A_["sh"]) @ A_["d"] / A_["L"]
             if s_ == "R":                                                      # right arm: the photo has a grey sleeve fold there,
@@ -311,14 +351,14 @@ for p in me.polygons:
                 uv = (2 * (sum(leg_run(view, s)(row_of(view, co[2])[0]) or (0, 0)) / 2) / W_ - uv[0], uv[1])
         else:
             mask = HEAD if r == "head" else TORSO
-            if r != "head" and co[2] > 1.36 and (abs(co[0]) > 0.12 or (abs(co[0]) > 0.05 and n.z > 0.35)):   # shoulder tops: the shirt below the
-                co = np.array((co[0] * 0.6, co[1] * 0.6, 1.36))       # photo's shoulder line, toward the chest (no skin, magenta
+            if r != "head" and co[2] > 1.36 * KS and (abs(co[0]) > 0.12 * K or (abs(co[0]) > 0.05 * K and n.z > 0.35)):   # shoulder tops: the shirt below the
+                co = np.array((np.sign(co[0]) * max(abs(co[0]) * 0.6, 0.10 * K), co[1] * 0.6, 1.36 * KS))   # (never the V-neck skin)       # photo's shoulder line, toward the chest (no skin, magenta
                 #                                                       edge or the grey armpit shadow on the shoulder tops)
                 view = "front" if view == "side" and p.center.y < 0 else ("back" if view == "side" else view)
             if view == "side":
                 uv = uv_body("side", co[2], mask, -co[1])
             else:
-                if r != "head" and view == "front" and co[2] > 1.22:          # upper chest: mirror the evenly lit half of the
+                if r != "head" and view == "front" and co[2] > 1.22 * KS:          # upper chest: mirror the evenly lit half of the
                     co = np.array((abs(co[0]), co[1], co[2]))                 # photo (its other half has a grey fold shadow)
                 uv = uv_body(view, co[2], mask, co[0])
                 if view == "back":                                    # seen from behind: mirror around the view centre
@@ -352,8 +392,8 @@ for i, v in enumerate(me.vertices):
         for g in list(v.groups):
             body.vertex_groups[g.group].remove([i])
         body.vertex_groups[f"foot.{s_}"].add([i], 1.0, "REPLACE")
-zone = [i for i in range(len(me.vertices)) if CO[i][2] > 1.12 and 0.05 < abs(CO[i][0]) < 0.34 and REG[i] in ("torso", "neck", "armL", "armR")
-        and CO[i][2] > 1.0]
+zone = [i for i in range(len(me.vertices)) if CO[i][2] > 1.12 * KS and 0.05 * K < abs(CO[i][0]) < 0.34 * K and REG[i] in ("torso", "neck", "armL", "armR")
+        and CO[i][2] > 1.0 * KS]
 zs = set(zone)
 nbr = {i: [] for i in zone}
 for e in me.edges:
@@ -381,7 +421,7 @@ for _ in range(6):
 # ---- PS1 low poly: decimate (hands, face and shoulders lose less), applied under the armature
 keep = body.vertex_groups.new(name="_keep")
 keep.add(zone, 0.7, "REPLACE")
-keep.add([i for i in range(len(me.vertices)) if REG[i].startswith("arm") and CO[i][2] < 1.0], 1.0, "REPLACE")
+keep.add([i for i in range(len(me.vertices)) if REG[i].startswith("arm") and CO[i][2] < 1.0 * KS], 1.0, "REPLACE")
 keep.add([i for i in range(len(me.vertices)) if REG[i] in ("head", "eye")], 0.6, "REPLACE")
 dec = body.modifiers.new("dec", "DECIMATE"); dec.ratio = OPT["ratio"]; dec.vertex_group = "_keep"; dec.invert_vertex_group = True
 dec.vertex_group_factor = 4.0; dec.use_collapse_triangulate = False
@@ -394,9 +434,29 @@ body.vertex_groups.remove(body.vertex_groups["_keep"])
 # ---- modelled low-poly sneakers: rubber sole with thickness, white upper, grey toe cap / heel tab / side stripe, laces on
 #      top (one 128 px PS1 texture), every vertex 100 % on its foot bone (rigid: never bends or crumples)
 def shoe_texture(path):
+    """sneaker (default: the owner's), boot (leather, lugged sole, laces) or shoe (leather, thin sole, no stripe, no laces)."""
+    KIND = OPT["shoe"]; UP, SO, AC = (np.array([float(x) for x in OPT[k].split(",")]) for k in ("upper", "sole", "accent"))
     T = np.zeros((128, 128, 3), np.float32); v = (np.arange(128)[::-1] + 0.5)[:, None] / 128; u = (np.arange(128) + 0.5)[None, :] / 128
-    T[:] = (238, 237, 233)
-    T[(v < 0.12).repeat(128, 1)] = (186, 176, 160)                        # gum outsole
+    if KIND != "sneaker":
+        T[:] = UP
+        T[(v < (0.14 if KIND == "boot" else 0.08)).repeat(128, 1)] = SO          # outsole
+        T[((v >= 0.035) & (v < 0.05)).repeat(128, 1)] = SO * 0.6                 # tread / welt line
+        sh = 1 + 0.10 * np.cos((u - 0.5) * 2 * np.pi)                            # leather sheen: lighter on the toe
+        up = (v >= 0.14) & (v < 0.75)
+        T *= np.where(up, sh, 1.0)[..., None]
+        T[np.broadcast_to(up & ((u < 0.05) | (u > 0.95)), (128, 128))] = UP * 0.75   # heel counter
+        stitch = up & (np.abs(v - (0.2 if KIND == "boot" else 0.16)) < 0.006); T[np.broadcast_to(stitch, (128, 128))] = AC
+        top = v >= 0.78
+        T[np.broadcast_to(top, (128, 128))] = UP * 0.9
+        if KIND == "boot":
+            lace = top & (np.abs(u - 0.5) < 0.085) & (((v - 0.78) * 128).astype(int) % 5 < 2) & (v > 0.84) & (v < 0.97)
+            T[np.broadcast_to(lace, (128, 128))] = AC
+        im = bpy.data.images.new("shoe_tex", 128, 128)
+        im.pixels = np.dstack([T[::-1].clip(0, 255) / 255.0, np.ones((128, 128))]).ravel()
+        im.filepath_raw = path; im.file_format = "PNG"; im.save()
+        return path
+    T[:] = UP
+    T[(v < 0.12).repeat(128, 1)] = SO                                     # gum outsole
     T[((v >= 0.12) & (v < 0.18)).repeat(128, 1)] = (246, 246, 244)        # midsole
     T[((v >= 0.035) & (v < 0.05)).repeat(128, 1)] = (120, 112, 100)       # tread line
     up = (v >= 0.2) & (v < 0.75)
@@ -404,7 +464,7 @@ def shoe_texture(path):
     heel = up & ((u < 0.06) | (u > 0.94)); T[np.broadcast_to(heel, (128, 128))] = (150, 150, 150)
     for c in (0.27, 0.73):                                                # side stripe
         st = up & (np.abs((u - c) - 0.35 * (v - 0.45)) < 0.035) & (v > 0.3) & (v < 0.62)
-        T[np.broadcast_to(st, (128, 128))] = (190, 190, 192)
+        T[np.broadcast_to(st, (128, 128))] = AC
     stitch = up & (np.abs(v - 0.22) < 0.006); T[np.broadcast_to(stitch, (128, 128))] = (200, 200, 198)
     top = v >= 0.78
     tongue = top & (np.abs(u - 0.5) < 0.1); T[np.broadcast_to(tongue, (128, 128))] = (225, 225, 222)
@@ -420,11 +480,13 @@ def sneaker(s_):
     F = FOOT[s_]; heel, toe = F["heel"], F["toe"]
     d = np.array((toe[0] - heel[0], toe[1] - heel[1])); Lf = np.linalg.norm(d); d /= Lf
     nrm = np.array((-d[1], d[0]))
-    L = Lf + 0.075; W = max(F["w"], 0.085) + 0.02
+    L = Lf + 0.075 * K; W = max(F["w"], 0.085 * K) + 0.02 * K
     org = np.array((heel[0], heel[1])) - d * 0.03
     TS = [0.0, 0.08, 0.25, 0.45, 0.65, 0.82, 0.93, 1.0]
     WF = [0.62, 0.86, 0.94, 1.0, 1.0, 0.9, 0.7, 0.32]
     HT = [0.105, 0.105, 0.098, 0.085, 0.066, 0.052, 0.044, 0.038]
+    hk = {"boot": 1.45, "shoe": 0.82}.get(OPT["shoe"], 1.0) * max(K, 0.8)     # boots rise over the ankle, dress shoes sit low
+    HT = [h * hk for h in HT]
     outline = [(t, +1, wf, h) for t, wf, h in zip(TS, WF, HT)] + [(t, -1, wf, h) for t, wf, h in zip(TS[::-1], WF[::-1], HT[::-1])]
     n = len(outline)
     rings = [(0.0, 1.03, 0.0), (0.03, 1.03, 0.12), (0.03, 1.0, 0.2), (None, 0.97, 0.55), (None, 0.6, 0.75)]   # (z, width scale, v)
@@ -461,9 +523,37 @@ def sneaker(s_):
     return o
 
 
+def brim(col):
+    """a modelled cap brim (baseball cap / flat cap): a thin low-poly half disc at the forehead, rigid on the head bone,
+    so the cap's visor reads in profile instead of being squeezed onto the forehead by the projection."""
+    r_, g_, b_ = (float(x) / 255 for x in col.split(","))
+    hv = CO[HEAD]; yf = hv[:, 1].min(); zb = z_eye + OPT.get("brim_z", 0.065) * KN
+    hw = ear_hw * 0.95; L = OPT.get("brim_len", 0.075) * K; tilt = 0.18
+    ring = [(math.cos(t) * hw, -math.sin(t) * L) for t in np.linspace(0, math.pi, 9)]
+    vs, fs = [], []
+    for k, (x, y) in enumerate(ring):
+        yy = yf + 0.035 * K + y
+        dz = tilt * (yy - (yf + 0.035 * K))                               # visor dips forward
+        vs += [(x, yy, zb + dz), (x, yy, zb + dz - 0.008)]
+    n = len(ring)
+    for k in range(n - 1):
+        a, b = 2 * k, 2 * k + 2
+        fs += [(a, b, b + 1, a + 1)]
+    fs += [tuple(range(0, 2 * n, 2)), tuple(range(2 * n - 1, 0, -2))]
+    m = bpy.data.meshes.new("brim"); m.from_pydata(vs, [], fs); m.update()
+    bm_ = bmesh.new(); bm_.from_mesh(m); bmesh.ops.recalc_face_normals(bm_, faces=bm_.faces); bm_.to_mesh(m); bm_.free()
+    m.uv_layers.new(name="proj")
+    mt = bpy.data.materials.new(NAME + "_brim"); mt.use_nodes = True
+    pr = mt.node_tree.nodes["Principled BSDF"]; pr.inputs[0].default_value = (r_ ** 2.2, g_ ** 2.2, b_ ** 2.2, 1); pr.inputs["Roughness"].default_value = 0.9
+    m.materials.append(mt)
+    o = bpy.data.objects.new("brim", m); bpy.context.scene.collection.objects.link(o)
+    o.vertex_groups.new(name="head").add(list(range(len(vs))), 1.0, "REPLACE")
+    return o
+
+
 shoe_png = shoe_texture(os.path.join(D, "shoe.png"))
 smat = mat(NAME + "_shoe", shoe_png)
-shoes = [sneaker(s_) for s_ in "LR"]
+shoes = [sneaker(s_) for s_ in "LR"] + ([brim(OPT["cap"])] if OPT.get("cap") else [])
 for o in shoes:
     o.data.materials.append(smat)
 bpy.ops.object.select_all(action="DESELECT")

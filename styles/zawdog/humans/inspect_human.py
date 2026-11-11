@@ -40,15 +40,15 @@ def shot(tag, pos, aim, lens=50):
 
 
 bpy.context.view_layer.update()
-hand = P.bone_world("wrist.L"); foot = P.bone_world("foot.L")
+hand = P.bone_world("wrist.L"); foot = P.bone_world("foot.L"); hz = P.bone_world("eye.L").z - 0.04; k = hz / 1.62   # head shots follow the height
 shot("front", (0, -4.2, 1.0), (0, 0, 0.9), 40)
 shot("34", (2.6, -3.2, 1.2), (0, 0, 0.9), 40)
 shot("side", (4.2, 0, 1.0), (0, 0, 0.9), 40)
 shot("back", (0, 4.2, 1.0), (0, 0, 0.9), 40)
-shot("head", (0, -1.0, 1.66), (0, 0, 1.62), 50)
-shot("head34", (0.7, -0.75, 1.68), (0, 0, 1.62), 50)
+shot("head", (0, -1.0, hz + 0.04), (0, 0, hz), 50)
+shot("head34", (0.7, -0.75, hz + 0.06), (0, 0, hz), 50)
 shot("hands", (hand.x + 0.15, hand.y - 0.75, hand.z), tuple(hand), 50)
 shot("feet", (0.6, -1.1, 0.3), (0, 0, 0.06), 45)
-shot("hipsF", (0, -1.6, 0.85), (0, 0, 0.85), 50)
-shot("hipsB", (0, 1.6, 0.85), (0, 0, 0.85), 50)
-shot("neckS", (0.75, -0.25, 1.5), (0, 0, 1.5), 50)
+shot("hipsF", (0, -1.6, 0.85 * k), (0, 0, 0.85 * k), 50)
+shot("hipsB", (0, 1.6, 0.85 * k), (0, 0, 0.85 * k), 50)
+shot("neckS", (0.75, -0.25, hz - 0.12), (0, 0, hz - 0.12), 50)
