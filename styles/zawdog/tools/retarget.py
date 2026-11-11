@@ -1,6 +1,6 @@
 """Kit v3: mocap (BVH / Kimodo GLB) -> MakeHuman "default" rig action, headless, with foot planting.
     Blender -b -P styles/zawdog/tools/retarget.py -- <motion.bvh|.glb> <action_name> [start=a end=b] [fps=30]
-            [human=owner] [plant=1] [yaw=auto|path|none|<deg>] [origin=1] [scale=auto|<k>] [ground=frame|clip] [still=1: standing gesture, both feet locked] [stance=<m>: with still, half foot spacing]
+            [human=owner] [plant=1] [yaw=auto|path|none|<deg>] [origin=1] [scale=auto|<k>] [ground=frame|clip] [arms=relax|off] [still=1: standing gesture, both feet locked] [stance=<m>: with still, half foot spacing]
 -> styles/zawdog/motions/baked/<action_name>.blend : one Action (fake user) for any humans/<name> rig (same bone names).
    + styles/zawdog/motions/baked/<action_name>.json : frames, contacts, root path, foot QA numbers.
 Use in a scene:  act = HU.load_action("walk_in"); P.rig.animation_data_create(); P.rig.animation_data.action = act
@@ -49,7 +49,7 @@ MAPS = {
 }
 # clavicles take the source collar's rotation delta WITHOUT the rest swing (swinging MakeHuman's clavicle onto the
 # source collar bone hunched the shoulders into "wings"; not mapping them stretched the shoulder tops when arms rise)
-LIMB = ("upperarm01", "lowerarm01", "wrist", "upperleg01", "lowerleg01")   # feet: no swing (flat in both rests;
+LIMB = ("upperarm01", "lowerarm01", "upperleg01", "lowerleg01")   # feet: no swing (flat in both rests;
 #  swinging MakeHuman's foot onto CMU's steep heel->toe bone pointed the toes down)
 
 for o in list(bpy.data.objects):
@@ -112,6 +112,11 @@ for s_, d_ in MAP.items():
         C[d_] = dd.rotation_difference(sd)
     else:
         C[d_] = Quaternion()
+# the hand continues the forearm: same rest correction (CMU's hand joint has zero length, so its own axis is noise and the
+# hands came out bent 90 deg outward at the wrist)
+for s_ in "LR":
+    if f"wrist.{s_}" in C and f"lowerarm01.{s_}" in C:
+        C[f"wrist.{s_}"] = C[f"lowerarm01.{s_}"]
 
 # translation scale = leg-length ratio (hip joint -> knee -> ankle), so the scaled stride matches the target's legs and a
 # planted foot can actually stay planted
@@ -147,7 +152,7 @@ p0 = RZ @ W0["Hips"].translation
 
 # ---- per frame: desired world rotations + root position
 REST_LOCAL = {b.name: ((b.parent.matrix_local.inverted() @ b.matrix_local) if b.parent else b.matrix_local.copy()) for b in DB}
-CURL = {f"finger{i}-{j}.{s}": (12 if i == 1 else 22) for i in range(1, 6) for j in (1, 2, 3) for s in "LR"}
+CURL = {f"finger{i}-{j}.{s}": (14 if i == 1 else (24 + 4 * j)) for i in range(1, 6) for j in (1, 2, 3) for s in "LR"}   # relaxed curl
 
 
 def frame_pose(W):
@@ -179,6 +184,63 @@ def frame_pose(W):
 
 POSES = [frame_pose(src_world(f)) for f in frames]
 NF = len(POSES)
+CHILDREN = {n: [c.name for c in DB[n].children] for n in order}
+
+
+def propagate(M, bone, old):
+    """after M[bone] changed: rebuild all its descendants keeping their local (basis) rotations."""
+    stack = list(CHILDREN[bone])
+    while stack:
+        n = stack.pop(0); par = DB[n].parent.name
+        basis = (old[par] @ REST_LOCAL[n]).inverted() @ old[n]
+        old_n = old[n].copy(); M[n] = M[par] @ REST_LOCAL[n] @ basis; old[n] = old_n
+        stack += CHILDREN[n]
+
+
+def swing(M, bone, a, b, new_b):
+    """rotate `bone` about point a so that the segment a->b points along a->new_b; descendants follow."""
+    q = (b - a).rotation_difference(new_b - a)
+    old = {k: v.copy() for k, v in M.items()}
+    M[bone] = Matrix.Translation(a) @ q.to_matrix().to_4x4() @ Matrix.Translation(-a) @ M[bone]
+    propagate(M, bone, old)
+
+
+# ---- relaxed arms: CMU / Kimodo actors (and MakeHuman's broad A-pose shoulders) leave hanging arms out to the sides
+#      ("numb" arms). When an arm hangs (wrist well below the shoulder) the elbow and wrist are pulled in next to the body
+#      (elbow ~3 cm, wrist ~5 cm outside the shoulder line, never inside the thigh), fading out as the arm is raised, so
+#      gestures (shrug, startle) keep their shape.
+if OPT.get("arms", "relax") == "relax":
+    for M in POSES:
+        lat = (M["upperleg01.L"].translation - M["upperleg01.R"].translation); lat.z = 0; lat.normalize()
+        C0 = M["spine01"].translation
+        for s, sx in (("L", 1), ("R", -1)):
+            S = M[f"upperarm01.{s}"].translation; E = M[f"lowerarm01.{s}"].translation; Wr = M[f"wrist.{s}"].translation
+            L_ = (E - S).length + (Wr - E).length
+            d0 = (Wr - C0).dot(lat) * sx
+            # 1) idle forearms held up/forward -> a relaxed ~15 deg elbow (not while the hands are raised or spread out)
+            g = max(0.0, min(1.0, ((S.z - Wr.z) / L_ - 0.30) / 0.25)) * (1 - max(0.0, min(1.0, (d0 - 0.33) / 0.1)))
+            g = g * g * (3 - 2 * g)
+            ua = (E - S).normalized(); fa = (Wr - E)
+            bend = math.degrees(ua.angle(fa.normalized()))
+            if g > 0 and bend > 15:
+                tb = math.radians(bend + (15 - bend) * g)
+                ax = ua.cross(fa.normalized())
+                if ax.length > 1e-6:
+                    nf = Quaternion(ax.normalized(), tb) @ ua
+                    swing(M, f"lowerarm01.{s}", E, Wr, E + nf * fa.length)
+            S = M[f"upperarm01.{s}"].translation; E = M[f"lowerarm01.{s}"].translation; Wr = M[f"wrist.{s}"].translation
+            hang = (S.z - Wr.z) / L_
+            h = max(0.0, min(1.0, (hang - 0.55) / 0.3)); h = h * h * (3 - 2 * h)
+            if h <= 0:
+                continue
+            d = lambda P: (P - C0).dot(lat) * sx                       # noqa: E731  lateral distance from the body midline
+            for seg, a_n, b_n, extra in ((f"upperarm01.{s}", f"upperarm01.{s}", f"lowerarm01.{s}", 0.03), (f"lowerarm01.{s}", f"lowerarm01.{s}", f"wrist.{s}", 0.05)):
+                a = M[a_n].translation; b = M[b_n].translation
+                over = d(b) - (d(S) + extra)
+                if over > 0:
+                    nb = b - lat * sx * over * h
+                    nb = a + (nb - a).normalized() * (b - a).length
+                    swing(M, seg, a, b, nb)
 
 
 # ---- floor, per frame: the lower sole (ankle or ball of the foot vs their standing heights) is put on z = 0 whenever it

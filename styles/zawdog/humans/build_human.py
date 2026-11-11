@@ -246,13 +246,19 @@ band = HEAD & (np.abs(CO[:, 2] - (z_eye - 0.035)) < 0.02)
 ear_hw = np.abs(CO[band][:, 0]).max()
 
 
+Z_COLLAR = z_chin - 0.10                                               # mesh neck base, where the shirt starts
+
+
 def uv_face(co):
     x, z = co[0], co[2]
     u = FJ["cx"] + x / ear_hw * FJ["ear_hw"]
     if z >= z_eye:
         v = FJ["eye"] + (FJ["top"] - FJ["eye"]) * (z - z_eye) / (Z_TOP - z_eye)
-    else:
+    elif z >= z_chin:
         v = FJ["eye"] + (FJ["chin"] - FJ["eye"]) * (z_eye - z) / (z_eye - z_chin)
+    else:                                                              # the throat: MakeHuman's neck is longer than the photo's,
+        v = FJ["chin"] + (FJ.get("collar", FJ["chin"] + 0.07) - 0.012 - FJ["chin"]) * (z_chin - z) / (z_chin - Z_COLLAR)   # so chin..collar
+        #                                                                is stretched over chin..neck base (skin down to the shirt)
     return (u, 1 - min(v, 0.995))
 
 
@@ -270,9 +276,9 @@ for p in me.polygons:
         # front (or back) photo instead, so no skin from the hand lands on the jeans or the shirt
         view = "front" if p.center.y < 0.0 else "back"
     portrait = r == "eye" or (r in ("head", "neck") and (n.y < -0.25 or (r == "head" and n.z > 0.55 and p.center.y < CO[HEAD][:, 1].mean())))
-    if r == "neck" and (p.center.z < z_chin - 0.09 or abs(p.center.x) > 0.065):
-        portrait = False                                               # trapezius / collar: the sheet's shirt, not the
-        #                                                                portrait's brighter tee (no white "cape" by the neck)
+    if r == "neck":                                                    # the whole neck (front + sides) down to the collar takes the
+        portrait = n.y < 0.3 and p.center.z > Z_COLLAR and abs(p.center.x) < 0.085   # portrait: one skin, no seam
+        #                                                                under the jaw; the trapezius keeps the sheet's shirt
     if portrait:
         FACE_SET.add(p.index)
     for li, vi in zip(p.loop_indices, vs):
@@ -289,6 +295,10 @@ for p in me.polygons:
                 uv = (2 * (sum(leg_run(view, s)(row_of(view, co[2])[0]) or (0, 0)) / 2) / W_ - uv[0], uv[1])
         else:
             mask = HEAD if r == "head" else TORSO
+            if r != "head" and co[2] > 1.36 and abs(co[0]) > 0.05:    # shoulder tops: sample the shirt just below the
+                co = np.array((co[0] * 0.6, co[1] * 0.6, 1.36))       # photo's shoulder line, toward the chest (no skin, magenta
+                #                                                       edge or the grey armpit shadow on the shoulder tops)
+                view = "front" if view == "side" and p.center.y < 0 else ("back" if view == "side" else view)
             if view == "side":
                 uv = uv_body("side", co[2], mask, -co[1])
             else:
@@ -315,8 +325,44 @@ for p in me.polygons:
     p.material_index = 1 if p.index in FACE_SET else 0
     p.use_smooth = False
 
-# ---- PS1 low poly: decimate (hands and face lose less), applied under the armature
+# ---- skin weights: rigid sneakers (every shoe vertex 100 % on its foot bone: no crumpling at toe-off) and smoothed
+#      shoulders (MakeHuman's clavicle/shoulder/upper-arm weights fold the shirt into flaps when the arms rise)
+gidx = {g.name: g.index for g in body.vertex_groups}
+for i, v in enumerate(me.vertices):
+    if REG[i].startswith("foot"):
+        s_ = REG[i][-1]
+        for g in list(v.groups):
+            body.vertex_groups[g.group].remove([i])
+        body.vertex_groups[f"foot.{s_}"].add([i], 1.0, "REPLACE")
+zone = [i for i in range(len(me.vertices)) if CO[i][2] > 1.12 and 0.05 < abs(CO[i][0]) < 0.34 and REG[i] in ("torso", "neck", "armL", "armR")
+        and CO[i][2] > 1.0]
+zs = set(zone)
+nbr = {i: [] for i in zone}
+for e in me.edges:
+    a, b = e.vertices
+    if a in zs:
+        nbr[a].append(b)
+    if b in zs:
+        nbr[b].append(a)
+GN = [g.name for g in body.vertex_groups]
+for _ in range(6):
+    W = {i: {GN[g.group]: g.weight for g in me.vertices[i].groups} for i in set(zone) | {j for i in zone for j in nbr[i]}}
+    for i in zone:
+        acc = {}
+        for j in nbr[i]:
+            for k, w in W[j].items():
+                acc[k] = acc.get(k, 0.0) + w / max(len(nbr[i]), 1)
+        new = {k: 0.5 * W[i].get(k, 0.0) + 0.5 * acc.get(k, 0.0) for k in set(W[i]) | set(acc)}
+        tot = sum(new.values()) or 1.0
+        for k, w in new.items():
+            if w / tot > 0.004:
+                body.vertex_groups[k].add([i], w / tot, "REPLACE")
+            elif k in W[i]:
+                body.vertex_groups[k].remove([i])
+
+# ---- PS1 low poly: decimate (hands, face and shoulders lose less), applied under the armature
 keep = body.vertex_groups.new(name="_keep")
+keep.add(zone, 0.7, "REPLACE")
 keep.add([i for i in range(len(me.vertices)) if REG[i].startswith("arm") and CO[i][2] < 1.0], 1.0, "REPLACE")
 keep.add([i for i in range(len(me.vertices)) if REG[i] in ("head", "eye")], 0.6, "REPLACE")
 dec = body.modifiers.new("dec", "DECIMATE"); dec.ratio = OPT["ratio"]; dec.vertex_group = "_keep"; dec.invert_vertex_group = True

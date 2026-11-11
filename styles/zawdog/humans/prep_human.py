@@ -81,7 +81,9 @@ top = rows.min()
 band = m[int(eye + 0.06 * N):int(eye + 0.12 * N)]
 cols = np.flatnonzero(band.any(0))
 cx = (cols.min() + cols.max()) / 2
-json.dump(dict(top=top / N, eye=eye / N, chin=chin / N, cx=cx / N, ear_hw=(cols.max() - cols.min()) / 2 / N), open(os.path.join(H, name, "face.json"), "w"), indent=1)
+col = next((y for y in range(int(chin), N) if ref[y, int(cx)].min() > 200), int(chin + 0.07 * N))   # the tee's collar under the throat
+json.dump(dict(top=top / N, eye=eye / N, chin=chin / N, collar=col / N, cx=cx / N, ear_hw=(cols.max() - cols.min()) / 2 / N),
+          open(os.path.join(H, name, "face.json"), "w"), indent=1)
 print(open(os.path.join(H, name, "face.json")).read())
 
 

@@ -1,10 +1,44 @@
 # Kimodo on the Windows PC (NVIDIA GPU) -> BVH motions for zawdog
 
-Text-to-motion with NVIDIA's official Kimodo (https://github.com/nv-tlabs/kimodo), run on the PC, results pushed to git, then retargeted on the Mac in Blender.
+Text-to-motion with NVIDIA Kimodo on the PC, results pushed to git, then retargeted on the Mac in Blender. Option A (kimodo.cpp, public weights, no login) first; Option B is the official Python repo.
+Spanish step-by-step for the whole PC setup (folder `para_pc/`, copied by USB): `para_pc/LEEME.md` (not in git; same content summarised here).
 
 Model: **Kimodo-SOMA-SEED-v1.1** (NVIDIA Open Model License, commercial use OK).
 **Never use `Kimodo-SMPLX-RP-v1`**: NVIDIA Internal R&D licence, no commercial or production use. The batch script refuses SMPL-X names.
 (Kimodo-SOMA-RP-v1.1/v1.2 are also Open Model License and better quality, since they were trained on 700 h vs 288 h. Use `--model Kimodo-SOMA-RP-v1.2` if you want them.)
+
+## Option A (recommended): kimodo.cpp, NO Hugging Face login
+
+The same route that already works on the Mac: kimodo.cpp (Apache-2.0) with the **public** GGUF weights on Hugging Face
+(`LocalAI-io/Llama-3-Kimodo-GGML` text encoder + `LocalAI-io/Kimodo-SOMA-SEED-v1.1-GGML` motion model). No account, no
+token, no gated Llama request. kimodo.cpp has a CPU and a **Vulkan** backend (no CUDA backend): on an NVIDIA card Vulkan
+runs on the GPU through the normal NVIDIA driver; if Vulkan fails, build CPU-only (still ~2 min per 3.5 s clip).
+The Windows build is not tested here (the Mac build is): if a step fails, use Option B.
+
+1. Install: Git, Python 3.11 (tick "Add to PATH"), CMake ≥ 3.25, Ninja, **Visual Studio 2022 Build Tools** with
+   "Desktop development with C++" (latest MSVC, C++23), the **Vulkan SDK** (LunarG, vulkan.lunarg.com) and Blender 5.2.
+2. In the **x64 Native Tools Command Prompt for VS 2022**:
+   ```bat
+   cd C:\
+   git clone --recursive https://github.com/localai-org/kimodo.cpp kimodo-cpp
+   cd kimodo-cpp
+   py -m venv venv && venv\Scripts\pip install huggingface_hub
+   venv\Scripts\python scripts\download_gguf_weights.py --output . --model soma-seed-v1.1 --text-quantization q8_0
+   cmake -S . -B build\release -G Ninja -DCMAKE_BUILD_TYPE=Release -DKIMODO_BUILD_TESTS=OFF -DKIMODO_ENABLE_VULKAN=ON
+   cmake --build build\release
+   ```
+   (CPU only: `-DKIMODO_ENABLE_VULKAN=OFF`. Low on RAM/VRAM: `--text-quantization q4_k`, what the Mac uses. Use
+   `download_gguf_weights.py`, not the `.sh`.)
+3. Batch, from the repo folder:
+   ```bat
+   cd C:\ruta\claude-proyectos
+   py styles\zawdog\tools\kimodo_cpp_batch.py --kimodo C:\kimodo-cpp --blender "C:\Program Files\Blender Foundation\Blender 5.2\blender.exe"
+   ```
+   It reads `styles/zawdog/motions/kimodo/prompts.txt` (`name | prompt | seconds`), runs `kmd-generate` per prompt
+   (SOMA-SEED only, it refuses RP/SMPL-X) and converts each result with `tools/kimodo_cpp_to_bvh.py` into
+   `styles/zawdog/motions/kimodo/<name>.bvh` (30 fps, the 30-joint skeleton `retarget.py` already knows). Then section 5.
+
+## Option B: the official nv-tlabs/kimodo (Python + CUDA, needs Hugging Face gated access)
 
 ## 0. What you need
 
@@ -107,6 +141,8 @@ Python Kimodo exports the 77-joint SOMA skeleton: if its BVH uses other joint na
 `retarget.py` (one line per joint) the first time.
 
 ## 6. Media that does NOT travel through git
+
+All of it is physically copied into `para_pc/` at the repo root on the Mac (git-ignored, ~215 MB): copy that folder to the PC by USB / cloud and follow `para_pc/LEEME.md` (it puts every file back at its repo path).
 
 The repo's `.gitignore` excludes all audio/video and some assets. The relevant patterns are:
 
