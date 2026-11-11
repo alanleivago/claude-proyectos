@@ -32,9 +32,12 @@ FJ = json.load(open(os.path.join(D, "face.json")))
 W_, H_ = SJ["w"], SJ["h"]
 V = SJ["views"]
 
-bpy.ops.preferences.addon_enable(module="bl_ext.user_default.mpfb")
-from bl_ext.user_default.mpfb.services.humanservice import HumanService  # noqa: E402
-from bl_ext.user_default.mpfb.services.targetservice import TargetService  # noqa: E402
+import importlib  # noqa: E402
+import addon_utils  # noqa: E402
+_MPFB = next(m.__name__ for m in addon_utils.modules() if m.__name__.endswith(".mpfb"))   # Mac: user_default, PC: blender_org
+bpy.ops.preferences.addon_enable(module=_MPFB)
+HumanService = importlib.import_module(_MPFB + ".services.humanservice").HumanService
+TargetService = importlib.import_module(_MPFB + ".services.targetservice").TargetService
 
 for o in list(bpy.data.objects):
     bpy.data.objects.remove(o)
