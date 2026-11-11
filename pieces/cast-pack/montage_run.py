@@ -1,5 +1,5 @@
 """Cast pack montage: bake one mocap clip per cast member on its own rig (retarget.py human=<slug>), render each shot
-(montage.py, fresh Blender), then montage_post.py.   .venv/bin/python pieces/cast-pack/montage_run.py [bake] [render]"""
+(montage_kit.py in the kit living room with the dog, fresh Blender), then montage_post.py.   .venv/bin/python pieces/cast-pack/montage_run.py [bake] [render]"""
 import json, os, subprocess, sys
 R = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
 BL = "/Applications/Blender.app/Contents/MacOS/Blender"; M = "styles/zawdog/motions/"
@@ -17,7 +17,7 @@ SHOTS = [
     ("delivery", "kimodo_cower_crouch", "kimodo/cower_crouch.bvh", [], "scared"),
     ("teen", "wave_both_arms_143_25", "cmu/wave_both_arms_143_25.bvh", ["start=300", "end=560", "still=1", "stance=0.1"], "smile"),
     ("chef", "kimodo_stomach_pain", "kimodo/stomach_pain.bvh", [], "crying"),
-    ("jogger", "elated_walk_FW", "100style/Elated_FW.bvh", ["yaw=path"], "laughing"),
+    ("jogger", "happy_80_43", "cmu/happy_80_43.bvh", ["still=1", "stance=0.12"], "laughing"),
     ("oldman", "kimodo_sad_slump", "kimodo/sad_slump.bvh", [], "crying"),
     ("businesswoman", "kimodo_shrug_palms_up", "kimodo/shrug_palms_up.bvh", [], "surprised"),
 ]
@@ -34,7 +34,7 @@ for i, (slug, clip, bvh, extra, face) in enumerate(SHOTS):
         fe = json.loads(line[9:])["feet"] if line.startswith("RETARGET") else line
         print(slug, clip, "feet", fe if isinstance(fe, str) else {k: (v["max_slide_m"], v["min_ankle_z"]) for k, v in fe.items()})
     if "render" in steps:
-        p = subprocess.run([BL, "-b", "-P", "pieces/cast-pack/montage.py", "--", slug, act, face, "pieces/cast-pack/renders/frames",
-                            f"tag={i + 1:02d}_{slug}"], cwd=R, capture_output=True, text=True)
+        p = subprocess.run([BL, "-b", "-P", "pieces/zaw-dog-05/build.py", "--", "exec", "pieces/cast-pack/montage_kit.py", slug, act, face,
+                            "pieces/cast-pack/renders/frames", f"{i + 1:02d}_{slug}"], cwd=R, capture_output=True, text=True)
         print(slug, "render rc", p.returncode, [l for l in (p.stdout + p.stderr).splitlines() if "Error" in l][:3])
 json.dump([dict(slug=s, clip=c, face=f) for s, c, _, _, f in SHOTS], open(os.path.join(R, "pieces/cast-pack/renders/montage_shots.json"), "w"), indent=1)

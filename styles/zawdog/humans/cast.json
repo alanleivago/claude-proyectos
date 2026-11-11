@@ -18,8 +18,8 @@
     "weight": 0.5,
     "race": "0.15,0.6,0.25",
     "shoe": "sneaker",
-    "top": "female_casualsuit01",
-    "hair": "ponytail01"
+    "hair": "ponytail01",
+    "prop": "clipboard"
    },
    "eye": 350,
    "chin": 592,
@@ -28,10 +28,18 @@
     "baked": "c_vet_m",
     "face": "smile"
    },
-   "notes": "Kit v4: tee + trousers tinted teal (scrubs read as a tee); faint ghost of the MakeHuman tee print; shoulder seam opens on big arm raises.",
+   "notes": "Kit v5: painted V-neck scrubs + chest pocket, clipboard in hand.",
    "mouth": 495,
    "idle": "c_vet_idle",
-   "skin": "middleage_caucasian_female"
+   "skin": "middleage_caucasian_female",
+   "garment": {
+    "top": {
+     "type": "scrubs"
+    },
+    "bottom": {
+     "type": "scrubs"
+    }
+   }
   },
   {
    "slug": "neighbour",
@@ -53,7 +61,6 @@
     "upper": "92,60,38",
     "sole": "40,30,25",
     "accent": "120,85,55",
-    "top": "male_casualsuit03",
     "hair": "short02"
    },
    "eye": 432,
@@ -63,10 +70,28 @@
     "baked": "c_neighbour_m",
     "face": "surprised"
    },
-   "notes": "Kit v4: shirt tinted navy (no knit cardigan texture); good.",
+   "notes": "Kit v5: knit cardigan over a light-blue shirt V, chinos + belt.",
    "mouth": 655,
    "idle": "c_neighbour_idle",
-   "skin": "middleage_caucasian_male"
+   "skin": "middleage_caucasian_male",
+   "garment": {
+    "top": {
+     "type": "cardigan",
+     "inner": [
+      178,
+      196,
+      222
+     ]
+    },
+    "bottom": {
+     "type": "chinos",
+     "belt": [
+      90,
+      60,
+      40
+     ]
+    }
+   }
   },
   {
    "slug": "kid",
@@ -88,7 +113,6 @@
     "upper": "200,40,40",
     "sole": "245,245,245",
     "accent": "250,250,250",
-    "top": "male_casualsuit02",
     "hair": "afro01"
    },
    "eye": 502,
@@ -98,10 +122,18 @@
     "baked": "c_kid_m",
     "face": "laughing"
    },
-   "notes": "Kit v4: child body ok; lips look pursed and open-mouth faces stretch.",
+   "notes": "Kit v5: hoodie (pocket, cords, hood fold), jeans; lips still look a little pursed in 3D.",
    "mouth": 680,
    "idle": "c_kid_idle",
-   "skin": "young_african_male"
+   "skin": "young_african_male",
+   "garment": {
+    "top": {
+     "type": "hoodie"
+    },
+    "bottom": {
+     "type": "jeans"
+    }
+   }
   },
   {
    "slug": "grandma",
@@ -123,7 +155,6 @@
     "upper": "150,120,95",
     "sole": "60,50,45",
     "accent": "170,140,110",
-    "top": "female_elegantsuit01",
     "hair": "short03",
     "glasses": "150,120,60"
    },
@@ -134,12 +165,25 @@
     "baked": "c_grandma_m",
     "face": "crying"
    },
-   "notes": "Kit v4: blouse + skirt (photo had slacks); bare legs; modelled glasses double the photo's glasses slightly.",
+   "notes": "Kit v5: knit cardigan over a cream blouse, grey slacks; glasses = temples only (photo frames).",
    "mouth": 634,
    "idle": "c_grandma_idle",
    "skin": "old_caucasian_female",
    "colour_override": {
     "inner": "235,226,204"
+   },
+   "garment": {
+    "top": {
+     "type": "cardigan",
+     "inner": [
+      236,
+      228,
+      206
+     ]
+    },
+    "bottom": {
+     "type": "trousers"
+    }
    }
   },
   {
@@ -162,9 +206,9 @@
     "upper": "35,33,32",
     "sole": "20,20,20",
     "accent": "60,60,60",
-    "top": "male_casualsuit04",
     "hair": "short01",
-    "bag": "38,48,78"
+    "bag": "38,48,78",
+    "prop": "letters"
    },
    "eye": 384,
    "chin": 679,
@@ -173,11 +217,24 @@
     "baked": "c_mailman_m",
     "face": "scared"
    },
-   "notes": "Kit v4: modelled bag + strap (strap can float off the chest in big moves); tee shoulder shows dark gaps in motion.",
+   "notes": "Kit v5: short-sleeve uniform shirt (pockets, epaulettes, sleeve patch), bag + strap on the chest, letters in hand.",
    "mouth": 571,
    "throat": 775,
    "idle": "c_mailman_idle",
-   "skin": "middleage_african_male"
+   "skin": "middleage_african_male",
+   "garment": {
+    "top": {
+     "type": "uniform_short"
+    },
+    "bottom": {
+     "type": "trousers",
+     "belt": [
+      30,
+      30,
+      32
+     ]
+    }
+   }
   },
   {
    "slug": "scientist",
@@ -199,10 +256,9 @@
     "upper": "30,30,32",
     "sole": "20,20,20",
     "accent": "55,55,58",
-    "top": "male_casualsuit01",
     "hair": "short04",
     "glasses": "20,20,22",
-    "coat": "236,238,240"
+    "coat": "238,240,242"
    },
    "eye": 429,
    "chin": 686,
@@ -211,10 +267,33 @@
     "baked": "c_scientist_m",
     "face": "surprised"
    },
-   "notes": "Kit v4: lab-coat skirt tube is too narrow - trouser legs poke through it when walking/pointing (dark 'cow' patches).",
+   "notes": "Kit v5: shirt + closed lab-coat skirt tube (coat colour also painted on the thighs); temples-only glasses.",
    "mouth": 620,
    "idle": "c_scientist_idle",
-   "skin": "middleage_asian_female"
+   "skin": "middleage_asian_female",
+   "garment": {
+    "top": {
+     "type": "shirt",
+     "col": [
+      238,
+      240,
+      242
+     ],
+     "inner": [
+      200,
+      215,
+      234
+     ],
+     "coat": [
+      232,
+      234,
+      236
+     ]
+    },
+    "bottom": {
+     "type": "trousers"
+    }
+   }
   },
   {
    "slug": "dogwalker",
@@ -236,8 +315,8 @@
     "upper": "110,115,120",
     "sole": "60,60,60",
     "accent": "230,120,40",
-    "top": "male_casualsuit05",
-    "hair": "short01"
+    "hair": "short01",
+    "prop": "leash"
    },
    "eye": 400,
    "chin": 699,
@@ -246,11 +325,25 @@
     "baked": "c_dogwalker_m",
     "face": "smile"
    },
-   "notes": "Kit v4: jacket mesh; pocket flaps a bit dark.",
+   "notes": "Kit v5: two-tone zip jacket (black yoke), joggers with cuffs, red leash in hand (no dog attached).",
    "mouth": 591,
    "throat": 735,
    "idle": "c_dogwalker_idle",
-   "skin": "young_caucasian_male"
+   "skin": "young_caucasian_male",
+   "garment": {
+    "top": {
+     "type": "jacket",
+     "yoke": 1,
+     "accent": [
+      28,
+      30,
+      30
+     ]
+    },
+    "bottom": {
+     "type": "joggers"
+    }
+   }
   },
   {
    "slug": "youngwoman",
@@ -269,7 +362,6 @@
     "weight": 0.42,
     "race": "0,1,0",
     "shoe": "sneaker",
-    "top": "male_casualsuit03",
     "hair": "long01"
    },
    "eye": 414,
@@ -279,10 +371,18 @@
     "baked": "c_youngwoman_m",
     "face": "laughing"
    },
-   "notes": "Kit v4: long01 hair; shirt tinted mustard (no knit).",
+   "notes": "Kit v5: knit sweater, jeans, long hair mesh (heaviest hair, ~2k faces).",
    "mouth": 611,
    "idle": "c_youngwoman_idle",
-   "skin": "young_caucasian_female"
+   "skin": "young_caucasian_female",
+   "garment": {
+    "top": {
+     "type": "sweater"
+    },
+    "bottom": {
+     "type": "jeans"
+    }
+   }
   },
   {
    "slug": "police",
@@ -304,7 +404,6 @@
     "upper": "25,25,27",
     "sole": "15,15,15",
     "accent": "50,50,52",
-    "top": "male_casualsuit04",
     "hair": "short02",
     "badge": "214,178,72"
    },
@@ -315,10 +414,28 @@
     "baked": "c_police_m",
     "face": "surprised"
    },
-   "notes": "Kit v4: modelled badge on the left chest (not mirrored); generic tee instead of a uniform shirt.",
+   "notes": "Kit v5: uniform shirt (placket, pockets, epaulettes, gold sleeve patch), modelled badge on the left chest, belt.",
    "mouth": 622,
    "idle": "c_police_idle",
-   "skin": "middleage_caucasian_male"
+   "skin": "middleage_caucasian_male",
+   "garment": {
+    "top": {
+     "type": "uniform_short",
+     "patch": [
+      190,
+      160,
+      70
+     ]
+    },
+    "bottom": {
+     "type": "trousers",
+     "belt": [
+      20,
+      20,
+      22
+     ]
+    }
+   }
   },
   {
    "slug": "delivery",
@@ -340,9 +457,9 @@
     "upper": "40,40,44",
     "sole": "230,230,230",
     "accent": "200,200,200",
-    "top": "male_casualsuit06",
     "hair": "short01",
-    "cap": "22,22,24"
+    "cap": "22,22,24",
+    "prop": "parcel"
    },
    "eye": 437,
    "chin": 738,
@@ -351,10 +468,18 @@
     "baked": "c_delivery_m",
     "face": "scared"
    },
-   "notes": "Kit v4: modelled cap; tee shoulder 'bite' in some poses.",
+   "notes": "Kit v5: polo, cargo trousers with side pockets, modelled cap, parcel held from the hand.",
    "mouth": 650,
    "idle": "c_delivery_idle",
-   "skin": "young_asian_male"
+   "skin": "young_asian_male",
+   "garment": {
+    "top": {
+     "type": "polo"
+    },
+    "bottom": {
+     "type": "cargo"
+    }
+   }
   },
   {
    "slug": "teen",
@@ -374,8 +499,7 @@
     "race": "0,0.4,0.6",
     "shoe": "sneaker",
     "accent": "150,120,200",
-    "top": "male_casualsuit02",
-    "hair": "afro01"
+    "hair": "bob02"
    },
    "eye": 423,
    "chin": 642,
@@ -384,11 +508,19 @@
     "baked": "c_teen_m",
     "face": "smile"
    },
-   "notes": "Kit v4: hair puff = afro01; skin-texture palms lighter than the dark skin.",
+   "notes": "Kit v5: knit sweatshirt-style sweater, jeans; afro01 for the puff.",
    "mouth": 567,
    "top": 225,
    "idle": "c_teen_idle",
-   "skin": "young_african_female"
+   "skin": "young_african_female",
+   "garment": {
+    "top": {
+     "type": "sweater"
+    },
+    "bottom": {
+     "type": "jeans"
+    }
+   }
   },
   {
    "slug": "chef",
@@ -410,9 +542,9 @@
     "upper": "25,25,28",
     "sole": "35,35,38",
     "accent": "45,45,48",
-    "top": "male_casualsuit06",
     "hair": "",
-    "apron": "30,40,80"
+    "apron": "30,40,80",
+    "prop": "spatula"
    },
    "eye": 378,
    "chin": 715,
@@ -421,13 +553,31 @@
     "baked": "c_chef_m",
     "face": "crying"
    },
-   "notes": "Kit v4: modelled apron (flat panel) can clip the trousers; tee shoulder gaps in motion.",
+   "notes": "Kit v5: double-breasted chef jacket, black trousers, apron panel, spatula.",
    "mouth": 592,
    "throat": 745,
    "idle": "c_chef_idle",
    "skin": "middleage_caucasian_male",
    "colour_override": {
     "bottom": "20,20,22"
+   },
+   "garment": {
+    "top": {
+     "type": "chef",
+     "col": [
+      240,
+      240,
+      238
+     ]
+    },
+    "bottom": {
+     "type": "trousers",
+     "col": [
+      24,
+      24,
+      26
+     ]
+    }
    }
   },
   {
@@ -450,20 +600,27 @@
     "upper": "60,120,210",
     "sole": "245,245,245",
     "accent": "255,200,60",
-    "top": "male_casualsuit02",
     "hair": "ponytail01"
    },
    "eye": 394,
    "chin": 662,
    "motion": {
-    "clip": "elated_walk_FW",
+    "clip": "happy_80_43",
     "baked": "c_jogger_m",
     "face": "laughing"
    },
-   "notes": "Kit v4: long-sleeve top + regular trousers (not leggings); neutral mouth reads a little tense.",
+   "notes": "Kit v5: zip running top with high collar, leggings with side stripe.",
    "mouth": 585,
    "idle": "c_jogger_idle",
-   "skin": "young_caucasian_female"
+   "skin": "young_caucasian_female",
+   "garment": {
+    "top": {
+     "type": "zip"
+    },
+    "bottom": {
+     "type": "leggings"
+    }
+   }
   },
   {
    "slug": "oldman",
@@ -485,10 +642,8 @@
     "upper": "100,62,35",
     "sole": "40,28,20",
     "accent": "130,90,55",
-    "top": "male_casualsuit05",
     "hair": "short03",
-    "flatcap": "98,98,95",
-    "inner_on": 1
+    "flatcap": "98,98,95"
    },
    "eye": 404,
    "chin": 733,
@@ -497,12 +652,25 @@
     "baked": "c_oldman_m",
     "face": "crying"
    },
-   "notes": "Kit v4: modelled flat cap is bulky/grey; jacket + inner shirt.",
+   "notes": "Kit v5: blazer with lapels over a white shirt, slimmer flat cap.",
    "mouth": 634,
    "idle": "c_oldman_idle",
    "skin": "old_caucasian_male",
    "colour_override": {
     "hair": "226,226,220"
+   },
+   "garment": {
+    "top": {
+     "type": "blazer",
+     "inner": [
+      236,
+      236,
+      232
+     ]
+    },
+    "bottom": {
+     "type": "trousers"
+    }
    }
   },
   {
@@ -525,9 +693,8 @@
     "upper": "22,22,24",
     "sole": "15,15,15",
     "accent": "45,45,48",
-    "top": "male_elegantsuit01",
     "hair": "ponytail01",
-    "inner_on": 1
+    "prop": "briefcase"
    },
    "eye": 374,
    "chin": 680,
@@ -536,10 +703,23 @@
     "baked": "c_businesswoman_m",
     "face": "surprised"
    },
-   "notes": "Kit v4: male elegant suit tinted charcoal; shirt/tie not separated (all dark).",
+   "notes": "Kit v5: charcoal blazer over a white blouse V, trousers, briefcase.",
    "mouth": 587,
    "idle": "c_businesswoman_idle",
-   "skin": "middleage_asian_female"
+   "skin": "middleage_asian_female",
+   "garment": {
+    "top": {
+     "type": "blazer",
+     "inner": [
+      242,
+      242,
+      240
+     ]
+    },
+    "bottom": {
+     "type": "trousers"
+    }
+   }
   }
  ]
 }

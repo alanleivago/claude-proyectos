@@ -35,6 +35,21 @@ m = np.clip((m - 0.25) / 0.5, 0, 1)                                             
 m[int(chin + 0.015 * N):] = 0
 Image.fromarray((m * 255).astype(np.uint8)).save(os.path.join(D, "faces", "mask.png"))
 
+# ---- open-mouth faces: the dropped jaw is squashed back toward the neutral chin (no stretched mouth on the mesh chin)
+if "mouth" in FJ:
+    m0, c0 = FJ["mouth"] * N - 0.03 * N, FJ["chin"] * N
+    for e, k_ in (("surprised", 0.78), ("laughing", 0.82), ("scared", 0.85)):
+        pth = os.path.join(D, "faces", e + ".png")
+        if not os.path.exists(pth):
+            continue
+        A_ = np.asarray(Image.open(pth).convert("RGB")).astype(np.float32); out = A_.copy()
+        span = (c0 + 0.12 * N) - m0
+        for yo in range(int(m0), N):                                   # output row -> source row (stretch the source down)
+            ys = m0 + (yo - m0) / k_ if yo < m0 + span * k_ else yo + span * (1 - k_)
+            ys = min(ys, N - 1); y0 = int(ys); f_ = ys - y0
+            out[yo] = A_[y0] * (1 - f_) + A_[min(y0 + 1, N - 1)] * f_
+        Image.fromarray(out.clip(0, 255).astype(np.uint8)).save(pth)
+
 # ---- cheek colour (as prep_human.py) and the matched skin texture
 cheek = (yy > eye + 0.10 * N) & (yy < chin - 0.06 * N) & (np.abs(xx - cx) < 0.10 * N)
 CHEEK = np.median(ref[cheek], 0)

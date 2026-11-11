@@ -1,6 +1,6 @@
-"""Kit v4: build + self-check one cast member from styles/zawdog/humans/cast.json (fresh Blender per step).
+"""Kit v5: build + self-check one cast member from styles/zawdog/humans/cast.json (fresh Blender per step).
     .venv/bin/python pieces/cast-pack/tools/build_cast.py <slug> [--skip-build] [--only-build]
-prep_human (faces, landmarks) -> prep_look (skin.png, face mask, outfit colours; cast "look" overrides) -> build_human2
+prep_human (faces, landmarks) -> prep_look (skin.png, face mask, outfit colours; cast "look" overrides) -> build_human3
 -> idle bake (c_<slug>_idle) -> inspect_human + sheet.py (review/work/<slug>/sheet.jpg) -> cast sheet (review/<slug>_cast.jpg)."""
 import json, os, subprocess, sys
 R = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
@@ -23,8 +23,9 @@ def run(cmd, tag):
 if "--skip-build" not in sys.argv:
     run([PY, "styles/zawdog/humans/prep_human.py", slug, "--eye", str(c["eye"]), "--chin", str(c["chin"])]
         + sum((["--" + k, str(c[k])] for k in ("mouth", "throat", "top") if c.get(k)), []), "prep")
+    json.dump(c.get("garment", {}), open(os.path.join(R, "styles/zawdog/humans", slug, "garment.json"), "w"), indent=1)
     run([PY, "styles/zawdog/humans/prep_look.py", slug, c["skin"]] + [f"{k}={v}" for k, v in c.get("colour_override", {}).items()], "look")
-    run([BL, "-b", "-P", "styles/zawdog/humans/build_human2.py", "--", slug, f"height={c['height']}"] + [f"{k}={v}" for k, v in c["build"].items()], "build")
+    run([BL, "-b", "-P", "styles/zawdog/humans/build_human3.py", "--", slug, f"height={c['height']}"] + [f"{k}={v}" for k, v in c["build"].items()], "build")
     run([BL, "-b", "-P", "styles/zawdog/tools/retarget.py", "--", "styles/zawdog/motions/100style/Neutral_ID.bvh", f"c_{slug}_idle",
          "start=700", "end=820", f"human={slug}", "still=1", "stance=0.1"], "idle")
 if "--only-build" in sys.argv:
