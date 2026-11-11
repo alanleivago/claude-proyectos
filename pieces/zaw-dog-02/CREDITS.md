@@ -7,7 +7,7 @@ relatedTo: [pieces/zaw-dog-02/sound/mix_zaw.py, pieces/zaw-dog-01/CREDITS.md]
 # Credits: zaw-dog #2 "How You're Accidentally Ruining Your Dog's Trust"
 
 ## Music
-- "Simpler Times" from the *16-Bit Starter Pack*. Music composed by Bert Cole, https://bitbybitsound.com (free license; credit required).
+- "A Little R & R" from the *16-Bit Starter Pack* (the dog-series track, as in zaw-dog #1). Music composed by Bert Cole, https://bitbybitsound.com (free license; credit required).
 
 ## Sound effects (Freesound)
 Every effect in the mix is CC0 (public domain), so none needs attribution. They are listed here so they can be traced. All were picked and trimmed with earshot (rank, find) and checked as real recordings (realness p_real 0.87–0.99).
@@ -45,6 +45,7 @@ Every effect in the mix is CC0 (public domain), so none needs attribution. They 
   - four people sheets (front, profile and back, A-pose) for the researcher, the second pointer and the two strangers, built into 3D with `photohuman.py`;
   - one product sheet: tennis ball, two cups, biscuit, clear box, clipboard, steel bowl, red mug, succulent;
   - the four funny dog pictures on the kitchen walls.
+  - revision 3: four hand sheets (`ref/flow/hands`: relaxed, gripping fist, pointing index, open palm), each the same right hand from the back/palm and edge-on, lofted into the people's hands and tinted to each person's own skin.
 - Reused from zaw-dog #1: the owner, the set textures and props, the pictures in the living room and hallway, and the sky photo (originally from pieces/lps-erfurt).
 - The dog: the approved zaw-dog v2 model (`pieces/zaw-dog-v2`), built from the original dog's real photos.
 

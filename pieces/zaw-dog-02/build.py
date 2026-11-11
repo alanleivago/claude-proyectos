@@ -791,20 +791,13 @@ for i in range(1):
     mv = K.link(bpy.data.objects.new(f"mover{i}", None)); arm.parent = mv
     sh = D.blob_shadow(mv)
     DOGS.append(dict(o=o, arm=arm, fn=fn, mv=mv, sh=sh))
-import photohuman as PH  # noqa: E402
+import photohuman2 as PH  # noqa: E402   (revision 2: welded shoulders, wrap-textured heads, real hands + shoes)
 OWNER = PH.PhotoPerson("owner")
 RES = PH.PhotoPerson("researcher")          # Kyoto researcher: own face + body (lab coat)
 PNT = PH.PhotoPerson("pointer")             # the second pointer: own face + body (mustard sweatshirt)
 STA = PH.PhotoPerson("stranger_a")          # the unhelpful stranger (burgundy vest)
 STB = PH.PhotoPerson("stranger_b")          # the other stranger (teal cardigan)
 PEOPLE = (OWNER, RES, PNT, STA, STB)
-SKIN = {"owner": "#C4927A", "researcher": "#D9B097", "pointer": "#6E4632", "stranger_a": "#D9A890", "stranger_b": "#B98466"}
-FINGERS = {}
-for P_ in PEOPLE:
-    for s in "LR":
-        f_ = K.box(f"{P_.name}_finger{s}", (0.016, 0.065, 0.016), (0, 0, 0), mcol(SKIN[P_.name]))
-        f_.parent = P_.arm; f_.parent_type = "BONE"; f_.parent_bone = f"hand.{s}"; f_.location = (0, 0.0, 0); f_.hide_render = True
-        FINGERS[(P_.name, s)] = f_
 QMARK = K.Letters3D("qmark", "?", size=0.42, front="#E52521", side="#8C0F0F", seed=4, jitter=0.4)
 
 CAM = K.camera("Cam", 24)
@@ -880,6 +873,7 @@ def aim_bone(P, bone, target):
 
 def wpt(P, local):
     """a point in the person's own space (faces -Y, their left = +X, z up from the floor) -> world."""
+    bpy.context.view_layer.update()                                   # show() moved the armature: refresh matrix_world first
     return P.arm.matrix_world @ Vector(local)
 
 
@@ -901,7 +895,7 @@ def pose_arm(P, side, elbow, hand):
 
 
 def finger(P, side, on=True):
-    hide(FINGERS[(P.name, side)], not on)
+    P.hand(side, "point" if on else "relax")
 
 
 def crouch(P, loc, yaw, k=1.0):
@@ -935,8 +929,6 @@ def reset():
         hide(d["o"], True); hide(d["sh"], True)
     for P_ in PEOPLE:
         P_.show(False); P_.rest(); P_.arm.location = (0, -40, 0)
-        for s in "LR":
-            finger(P_, s, False)
     for o in [BALL, BOXC, GLOW, TREAT] + SNACKS + PORTRAITS:
         hide(o, True)
         for c in o.children:
@@ -955,7 +947,8 @@ def show_cups(glow=True):
 
 
 def hold_ball(P, side="R"):
-    hx, hy, hz = P.hand_pos(side); hide(BALL, False); BALL.location = (hx, hy, hz - 0.045)
+    """the ball sits IN the fist: fingers wrapped round it, its centre on the palm's grip point."""
+    P.hand(side, "grip"); g = P.grip_point(side, 0.03); hide(BALL, False); BALL.location = (g.x, g.y, g.z - 0.033)
 
 
 # ---------------------------------------------------------------- beats (t = s into the beat, d = beat length)
@@ -1001,7 +994,8 @@ def b01b(t, d):   # hallway, low: the dog sprints toward us, skids, turns its he
 
 def b01c(t, d):   # living room, low behind the dog: the ball is still in the owner's raised hand
     OWNER.show(True, OWN_LR, math.pi / 2 + 0.5)
-    OWNER.rot("upperarm.R", [((1, 0, 0), -1.5), ((0, 1, 0), -0.4)]); OWNER.rot("forearm.R", [((1, 0, 0), -1.2)])
+    za = OWNER.J["z_armpit"]                                   # ball held up at shoulder height, clear of the head
+    pose_arm(OWNER, "R", (0.24, -0.12, za - 0.12), (0.3, -0.3, za + 0.14))
     hold_ball(OWNER)
     dd = dog(0, (1.75, -1.0, 0), yaw_to((1.75, -1.0), OWN_LR), "shocked", t)
     D.rot2(dd["arm"], "head", [((1, 0, 0), -0.22)])
@@ -1077,12 +1071,13 @@ def b04b(t, d):   # side-on low: the dog trots to the treat cup, knocks it over,
     cam(lerpv((KX + 1.75, -1.7, 0.5), (KX + 1.62, -1.58, 0.5), u), (KX, -0.25, 0.35), 22)
 
 
-def b05a(t, d):   # the researcher lifts both cups: one has the treat, the other is empty
+def b05a(t, d):   # the researcher bends, grips both cups and lifts them: one has the treat, the other is empty
     RES.show(True, RES_AT, 0.0)
     k = K.ease(clamp01(t / 0.5))
+    RES.rot("chest", [((1, 0, 0), 0.55 * (1 - k) + 0.12)]); RES.rot("neck", [((1, 0, 0), 0.25)])
     for side, cx, ci in (("R", CUP_A[0], 0), ("L", CUP_B[0], 1)):
-        aim(RES, side, (cx, CUPS[ci].location.y, 0.12 + 0.35 * k))
-        hx, hy, hz = RES.hand_pos(side); CUPS[ci].location = (cx, CUP_A[1], max(0.0, hz - 0.12))
+        aim(RES, side, (cx, CUP_A[1] + 0.05, 0.1 + 0.6 * k)); RES.hand(side, "cup")
+        g = RES.grip_point(side, 0.042); CUPS[ci].location = (g.x, g.y, max(0.0, g.z - 0.06))     # the cup in the hand
     TREAT.location = (CUP_B[0], CUP_B[1], 0.0); hide(TREAT, False)
     for c in CUPS:
         hide(c, False)
@@ -1177,11 +1172,13 @@ DOG_K = (KX - 0.75, -0.05, 0)
 
 
 def box_struggle(t, k=1.0, yaw=0.5):
-    OWNER.show(True, OWN_K, yaw); za = OWNER.J["z_armpit"]; w = 0.03 * math.sin(14 * t) * k
-    pose_arm(OWNER, "L", (0.18, -0.2, za - 0.25), (0.1 + w, -0.42, za - 0.12 + w))
-    pose_arm(OWNER, "R", (0.18, -0.2, za - 0.25), (0.1 - w, -0.42, za - 0.12 - w))
+    """both hands grip the clear box's sides and twist at the lid."""
+    OWNER.show(True, OWN_K, yaw); za = OWNER.J["z_armpit"]; w = 0.025 * math.sin(14 * t) * k
+    pose_arm(OWNER, "L", (0.2, -0.18, za - 0.27), (0.13 + w, -0.4, za - 0.16 + w))
+    pose_arm(OWNER, "R", (0.2, -0.18, za - 0.27), (0.13 - w, -0.4, za - 0.16 - w))
+    OWNER.hand("L", "cup"); OWNER.hand("R", "cup")
     OWNER.rot("neck", [((1, 0, 0), 0.3)])
-    l, r = OWNER.hand_pos("L"), OWNER.hand_pos("R")
+    l, r = OWNER.grip_point("L", 0.0), OWNER.grip_point("R", 0.0)
     hide(BOXC, False); BOXC.location = ((l.x + r.x) / 2, (l.y + r.y) / 2, (l.z + r.z) / 2 - 0.065)
     BOXC.rotation_euler = (0.12 * math.sin(11 * t) * k, 0.15 * math.sin(9 * t) * k, yaw)
 
@@ -1221,22 +1218,33 @@ def b10c(t, d):   # low CU from the counter side: the dog watching from the floo
 
 # ----- lines 11-12: both strangers crouch, a snack on each open palm, looking away from the dog
 DOG_S = (KX, 0.55, 0)              # the dog sits facing -Y (the lens); its nose ~0.5 m in front of the mover
-STA_C = (KX - 0.62, 0.1, 0)       # unhelpful stranger on the dog's left of frame (-X), facing +X
-STB_C = (KX + 0.62, 0.1, 0)       # the other one (+X), facing -X
-PALM = {"A": (KX - 0.24, -0.02, 0.5), "B": (KX + 0.24, -0.02, 0.5)}
+STA_C = (KX - 0.82, 0.12, 0)       # unhelpful stranger on the dog's left of frame (-X), facing +X
+STB_C = (KX + 0.82, 0.12, 0)       # the other one (+X), facing -X
+PALM = {"A": (KX - 0.3, -0.04, 0.64), "B": (KX + 0.3, -0.04, 0.64)}
 
 
 def offer(P, loc, yaw, side, snack, palm, look=1.0):
-    # final QA: the deep crouch smeared the legs/shoes; now they stand and bend over, the palm at the sitting dog's nose
-    P.show(True, loc, yaw); P.rot("chest", [((1, 0, 0), 0.5 * max(look, 0.4))]); P.rot("hips", [((1, 0, 0), 0.12)])
-    aim(P, side, palm, bend=0.1)
-    P.rot("neck", [((0, 0, 1), (0.85 if P is STA else -0.85) * look)])     # looking away from the dog (toward the back wall)
-    hx, hy, hz = P.hand_pos(side); hide(snack, False); snack.location = (hx, hy, hz + 0.004)
+    """they bow a little; the arm reaches out, the wrist turns the fingers level toward the dog and the palm up; the
+    snack lies flat on the palm at the sitting dog's nose height. Heads turned away (they don't look at the dog)."""
+    k = max(look, 0.4)
+    P.show(True, loc, yaw); P.rot("hips", [((1, 0, 0), 0.3 * k)]); P.rot("chest", [((1, 0, 0), 0.3 * k)])
+    for sd in "LR":
+        P.rot(f"thigh.{sd}", [((1, 0, 0), -0.3 * k)])
+    aim(P, side, palm); P.hand(side, "open")
+    tw = Vector((DOG_S[0] - loc[0], 0, 0)).normalized()                   # fingers level, toward the dog
+    P.aim_bone(f"hand.{side}", Vector(P.hand_pos(side)) * 0 + Vector(palm) + tw * 0.25 + Vector((0, 0, 0.02)))
+    P.twist(side, math.pi / 2); bpy.context.view_layer.update()
+    h = P.hands[side]; nz = (h["palm"].matrix_world.to_3x3() @ Vector((h["ps"], 0, 0))).z
+    if nz < 0:
+        P.twist(side, math.pi)                                              # palm up, whichever hand
+    P.rot("neck", [((0, 0, 1), (0.85 if P is STA else -0.85) * look)])
+    g = P.grip_point(side, 0.0); hide(snack, False)                    # the bone-shaped biscuit, tilted up to show its shape
+    snack.location = (g.x, g.y, g.z + 0.016); snack.rotation_euler = (1.05, 0, 0); snack.scale = (1.25, 1.25, 1.25)
 
 
 def both_offer(k=1.0, eaten=False):
-    offer(STA, STA_C, math.pi / 2, "L", SNACKS[0], PALM["A"], k)
-    offer(STB, STB_C, -math.pi / 2, "R", SNACKS[1], PALM["B"], k)
+    offer(STA, STA_C, math.pi / 2, "R", SNACKS[0], PALM["A"], k)       # the near (camera-side) arm
+    offer(STB, STB_C, -math.pi / 2, "L", SNACKS[1], PALM["B"], k)
     if eaten:
         hide(SNACKS[1], True)
 
@@ -1253,7 +1261,7 @@ def b11b(t, d):   # CU over the unhelpful stranger's snack: the dog looks from o
     dd = dog(0, DOG_S, 0.0, "neutral", t)
     D.rot2(dd["arm"], "head", [((0, 0, 1), 0.35 * math.sin(2.4 * t)), ((1, 0, 0), 0.3)]); dog_sit(0)
     u = K.ease(t / d)
-    cam(lerpv((KX + 0.14, -0.62, 0.36), (KX + 0.12, -0.52, 0.37), u), (KX + 0.04, 0.2, 0.42), 22)
+    cam(lerpv((KX + 0.02, -0.85, 0.45), (KX + 0.02, -0.75, 0.46), u), (KX, 0.2, 0.5), 24)        # tight: the palms enter from the sides, heads out of frame
 
 
 def eat_path(t, T_=0.75):
@@ -1272,7 +1280,7 @@ def b12a(t, d):   # the dog gets up, walks past the unhelpful palm and eats from
         D.rot2(dd["arm"], "neck", [((1, 0, 0), 0.3)]); D.rot2(dd["arm"], "head", [((1, 0, 0), 0.2 + 0.08 * math.sin(14 * t))])
     happy_wag(dd["arm"], t, 1.0)
     u = K.ease(t / d)
-    cam(lerpv((KX - 0.3, -1.4, 0.5), (KX - 0.2, -1.25, 0.5), u), (KX + 0.1, 0.3, 0.4), 22)
+    cam(lerpv((KX + 0.1, -1.88, 0.72), (KX + 0.14, -1.72, 0.7), u), (KX + 0.18, 0.3, 0.62), 20)
 
 
 def b12b(t, d):   # CU: chewing, he side-eyes back over his shoulder at the unhelpful stranger (judging)
@@ -1281,10 +1289,10 @@ def b12b(t, d):   # CU: chewing, he side-eyes back over his shoulder at the unhe
     dd = dog(0, (p[0], p[1], 0), yaw, "judging", t)
     hp = dog_head(0)                                   # camera on the head BEFORE the side-eye turn (QA: no whip pan)
     k = K.ease(clamp01(t / 0.35))
-    D.rot2(dd["arm"], "neck", [((0, 0, 1), -0.55 * k)]); D.rot2(dd["arm"], "head", [((0, 0, 1), -0.4 * k), ((1, 0, 0), 0.04 * math.sin(12 * t))])
-    happy_wag(dd["arm"], t, 0.6)
+    D.rot2(dd["arm"], "neck", [((0, 0, 1), -0.55 * k)]); D.rot2(dd["arm"], "head", [((0, 0, 1), -0.4 * k), ((1, 0, 0), 0.02 * math.sin(9 * t))])
+    D.happy_wag(dd["arm"], t, 0.2, 2.2, up=0.25)   # CU: a slow, small wag (the hip wiggle shook the frame)
     u = K.ease(t / d)
-    cam(lerpv((p[0] + 0.4, p[1] - 1.4, 0.68), (p[0] + 0.36, p[1] - 1.25, 0.66), u), (p[0] + 0.12, p[1] - 0.05, 0.5), 24)
+    cam(lerpv((p[0] - 0.05, p[1] - 1.0, 0.55), (p[0] - 0.05, p[1] - 0.96, 0.55), u), (p[0] - 0.05, p[1], 0.5), 32)
 
 
 def b13a(t, d):   # living room: ball raised behind his head, he freezes mid-wind-up (slow push)
@@ -1374,9 +1382,9 @@ elif MODE == "thumb":
     OWNER.show(True, o_at, yaw_to(o_at, (o_at[0] - 0.76, o_at[1] - 0.65)))
     za = OWNER.J["z_armpit"]
     pose_arm(OWNER, "R", (0.24, -0.3, za + 0.05), (0.22, -0.6, za + 0.2))
-    pose_arm(OWNER, "L", (0.2, 0.12, za - 0.3), (0.1, 0.26, za - 0.45))
+    pose_arm(OWNER, "L", (0.24, 0.12, za - 0.3), (0.22, 0.3, za - 0.42))
     OWNER.rot("neck", [((0, 0, 1), 0.15)])
-    hold_ball(OWNER, "L")
+    hold_ball(OWNER, "L"); OWNER.hand("L", "cup"); g_ = OWNER.grip_point("L", -0.062); BALL.location = (g_.x, g_.y, g_.z - 0.033)   # thumbnail: the ball must read
     d_at = (1.24, -1.72, 0)
     dd = dog(0, d_at, yaw_to(d_at, (cpos[0] - 0.5, cpos[1])), "judging", 0.3); dog_sit(0)
     hx, hy, hz = OWNER.hand_pos("R")

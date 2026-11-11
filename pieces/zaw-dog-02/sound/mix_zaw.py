@@ -10,7 +10,7 @@ H = os.path.dirname(os.path.abspath(__file__)); P = os.path.dirname(H); OUT = os
 SR = 48000
 TIM = json.load(open(os.path.join(P, "voice", "timing.json")))
 DUR = TIM["end"]; N = int(round(DUR * SR))
-MUSIC = os.path.join(P, "..", "lps-onoda", "audio", "assets", "music", "bertcole", "16-Bit Starter Pack", "Various Themes", "Simpler Times.ogg")
+MUSIC = os.path.join(P, "..", "lps-onoda", "audio", "assets", "music", "bertcole", "16-Bit Starter Pack", "Various Themes", "A Little R & R.ogg")
 
 
 def load(path, a=0.0, b=None, mono=True):
@@ -42,12 +42,12 @@ def lp(x, f):
 
 FS = lambda n: os.path.join(H, "fs", n)
 # (time s, file, start, end, level dB rel. voice RMS, fade in, fade out, filter)
-HERO_T = 0.62
+HERO_T = 1.08                 # in the comma gap after "ball," (1.09-1.25 s): the bark never covers a word
 CUES = [   # (time s, file, start, end, level dB rel. voice RMS, fade in, fade out, filter)
     # line 1: fake throw -> HERO bark (Zaw's meow) over the voice, the sprint, the skid
     (0.08, "squeak_toy_483922.mp3", 0.062, 0.30, -8, 0.003, 0.05, None),        # he squeezes the ball, wind-up
     (0.47, "whoosh_arm_389590.mp3", 0.0, 0.3, -10, 0.0, 0.08, None),            # the fake throw: arm whip
-    (HERO_T, "hero_bark_483180.mp3", 0.25, 0.64, 9, 0.003, 0.06, None),          # HERO bark, ~9 dB over the voice
+    (HERO_T, "hero_bark_483180.mp3", 0.25, 0.47, 6.5, 0.003, 0.05, None),        # HERO bark: the main burst only, ~+3 dB over the voice
     (0.70, "dog_paws_208654.mp3", 0.0, 1.0, -12, 0.01, 0.1, None),             # claws scrabbling off
     (0.75, "collar_420191.mp3", 0.78, 1.70, -16, 0.02, 0.2, ("lp", 7000)),
     (1.12, "dog_skid_208654.mp3", 1.2, 2.2, -11, 0.02, 0.2, None),               # hallway sprint + skid
@@ -91,7 +91,7 @@ DIPS = []
 voice = np.zeros(N); v = load(os.path.join(P, "voice", "voice_retro.wav")); voice[:min(N, len(v))] = v[:N]
 vref = rms_db(voice[np.abs(voice) > 0.02])                                   # speech-only RMS
 vpk = np.abs(voice).max()
-vd = np.ones(N); vd[int(HERO_T * SR):int((HERO_T + 0.4) * SR)] = 10 ** (-8 / 20)   # the voice leans back 8 dB under the hero bark
+vd = np.ones(N)                                                                  # no voice ducking: the bark sits in the gap
 from scipy.ndimage import uniform_filter1d as _uf
 voice = voice * _uf(vd, int(0.03 * SR))
 sfx = np.zeros(N); hero = np.zeros(N)
@@ -102,9 +102,9 @@ for t, f, a, b, lvl, fi, fo, flt in CUES:
         x = (lp if flt[0] == "lp" else hp)(x, flt[1])
     x = hp(x, 150 if "cloth" in f else 80)
     if t in HERO:                                                               # denser yip: soft saturation, same peak
-        pk = np.abs(x).max(); x = np.tanh(7.0 * x / pk) / np.tanh(7.0) * pk
+        pk = np.abs(x).max(); x = np.tanh(3.5 * x / pk) / np.tanh(3.5) * pk
     x = fade(x, fi, fo); x *= 10 ** ((vref + lvl - rms_db(x[np.abs(x) > 1e-4])) / 20)
-    cap = min(1.0, vpk * 10 ** ((11.5 if t in HERO else -5) / 20) / (np.abs(x).max() + 1e-9)); x *= cap  # SFX peak <= voice peak - 5 dB
+    cap = min(1.0, vpk * 10 ** ((9 if t in HERO else -5) / 20) / (np.abs(x).max() + 1e-9)); x *= cap  # SFX peak <= voice peak - 5 dB
     if os.environ.get("CUELOG"): print(f"{t:6.2f} {f[:26]:26s} lvl {lvl:4d} cap {20*np.log10(cap):5.1f} dB")
     for dt, d0, d1, ddb in DIPS:
         if dt == t:
@@ -123,19 +123,21 @@ mu_m = mu.mean(1); g0 = vref - 7 - rms_db(mu_m)
 env = np.convolve((np.abs(voice) > 0.02).astype(float), np.ones(int(0.25 * SR)) / int(0.25 * SR), "same")
 duck = 10 ** ((g0 + 3 * (1 - np.clip(env * 3, 0, 1))) / 20)
 duck[:int(0.3 * SR)] *= np.linspace(0, 1, int(0.3 * SR)); duck[-int(0.8 * SR):] *= np.linspace(1, 0, int(0.8 * SR))
-hd = np.ones(N); i0, i1 = int((HERO_T - 0.05) * SR), int((HERO_T + 0.45) * SR)                        # music steps aside for the yip
-hd[i0:i1] = 10 ** (-8 / 20); hd = uniform_filter1d(hd, int(0.04 * SR))
+hd = np.ones(N); i0, i1 = int((HERO_T - 0.03) * SR), int((HERO_T + 0.25) * SR)                        # music steps aside for the yip
+hd[i0:i1] = 10 ** (-4 / 20); hd = uniform_filter1d(hd, int(0.04 * SR))
 music = mu * (duck * hd)[:, None]
 st = lambda m: np.stack([m, m], 1)
+VOICE_UP = 10 ** (2 / 20)                                       # user: the voice +2 dB over music and SFX
+voice = voice * VOICE_UP
 pre = st(voice) + music + st(sfx)
 for n_, x in (("voice", st(voice)), ("music", music), ("sfx", st(sfx)), ("premaster", pre)):
     sf.write(os.path.join(OUT, f"{n_}.wav"), x.astype(np.float32), SR, subtype="FLOAT")
 # master: loudnorm 2-pass -> -11 LUFS integrated, -1 dBTP
 src = os.path.join(OUT, "premaster.wav"); dst = os.path.join(OUT, "final_mix.wav")
-r = subprocess.run(["ffmpeg", "-hide_banner", "-i", src, "-af", "loudnorm=I=-11:TP=-1.2:LRA=9:print_format=json", "-f", "null", "-"], capture_output=True, text=True).stderr
+r = subprocess.run(["ffmpeg", "-hide_banner", "-i", src, "-af", "loudnorm=I=-11:TP=-1.7:LRA=9:print_format=json", "-f", "null", "-"], capture_output=True, text=True).stderr
 js = json.loads(r[r.rindex("{"):r.rindex("}") + 1])
-af = (f"loudnorm=I=-11:TP=-1.2:LRA=9:measured_I={js['input_i']}:measured_TP={js['input_tp']}:measured_LRA={js['input_lra']}:"
-      f"measured_thresh={js['input_thresh']}:offset={js['target_offset']}:linear=true,alimiter=limit=0.89:level=false,aresample=48000")
+af = (f"loudnorm=I=-11:TP=-1.7:LRA=9:measured_I={js['input_i']}:measured_TP={js['input_tp']}:measured_LRA={js['input_lra']}:"
+      f"measured_thresh={js['input_thresh']}:offset={js['target_offset']}:linear=true,alimiter=limit=0.83:level=false,aresample=48000")
 subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", src, "-af", af, "-ar", "48000", "-c:a", "pcm_s24le", dst], check=True)
 m = subprocess.run(["ffmpeg", "-hide_banner", "-i", dst, "-af", "ebur128=peak=true", "-f", "null", "-"], capture_output=True, text=True).stderr
 print("voice RMS", round(vref, 1), "music gain", round(g0, 1), "dB")

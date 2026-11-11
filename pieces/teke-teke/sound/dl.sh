@@ -1,0 +1,1 @@
+while IFS='|' read q d; do python3 fs.py "$q" 6 > /dev/null 2>&1 && s=$(python3 -c "import re;print(re.sub(r'\W+','_','$q')[:30])") && [ -d "fs/$s" ] && mv "fs/$s" "fs/$d" ; echo "$d $(ls fs/$d 2>/dev/null | wc -l)"; done < q.txt

@@ -1,0 +1,10 @@
+{"name":"hand","image":"work/hand_keyed.png","weave_bg":"assets/bg.jpg","mesh_step":14,"blend":40,
+ "joints":{"r0":[300,1330],"r1":[300,1200],"el":[262,800],"wr":[310,385],"ft":[322,40]},
+ "bones":[{"name":"root","parent":null,"head":"r0","tail":"r1"},
+          {"name":"upper","parent":"root","head":"r1","tail":"el"},
+          {"name":"fore","parent":"upper","head":"el","tail":"wr"},
+          {"name":"palm","parent":"fore","head":"wr","tail":"ft"}],
+ "layers":[{"name":"mound","bones":["root"],"below":1175,"poly":[[0,1175],[620,1175],[620,1334],[0,1334]],"blend":20},
+           {"name":"arm","bones":["upper","fore","palm"],"blend":40,
+            "fill":[{"poly":[[205,1140],[300,1140],[300,1200],[200,1200]],"from":[250,1100]}]}],
+ "draw":["arm","mound"],"anchor":[300,1330],"props":[]}

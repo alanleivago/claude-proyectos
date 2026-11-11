@@ -58,7 +58,7 @@ NOTES = {"01a": "living room, dog height: owner fake-throws, dog launches (happy
          "07": "low 3/4-front CU: dog sits, side-eye (judging), slow push", "08a": "new person steps in + points; dog bottom-right, slow push",
          "08b": "wide low from the corner: dog goes at once (happy)", "09": "hallway behind the dog at the kitchen door; strangers' portraits drift",
          "10a": "low wide: owner struggles with the clear box, stranger beside him", "10b": "counter height: he asks; the stranger turns his back",
-         "10c": "low CU from the counter: dog sits, sad puppy eyes", "11a": "square on, dog height: both strangers crouch, snacks out, looking away",
+         "10c": "low CU from the counter: dog sits, sad puppy eyes", "11a": "square on, dog height: both strangers bow, snack on an open palm, looking away",
          "11b": "low CU between the two palms: dog looks from one to the other", "12a": "low wide: dog walks past the unhelpful palm, eats the other (wag)",
          "12b": "CU: chewing, side-eye back at the unhelpful stranger", "13a": "living room low: ball raised behind his head, frozen; dog sits",
          "13b": "owner POV high CU, dutch -9: dog looks up with tears; hard cut to 01a (loop)"}
@@ -69,7 +69,13 @@ def caption_at(t):
     for c in TIM["captions"]:
         if c["s"] - 0.05 <= t:
             cur = c
-    return cur["text"].replace("bbc", "BBC") if cur and t <= cur["e"] + 0.6 else ""
+    if not cur:
+        return ""
+    hold = cur["e"] + 0.6                                         # a block lingers 0.6 s ... but never across a line cut
+    nxt = [s_ for s_ in TIM["starts"] if s_ > cur["s"] + 0.01]
+    if nxt:
+        hold = min(hold, nxt[0] - 0.15)
+    return cur["text"].replace("bbc", "BBC") if t < hold else ""
 
 
 def base(name):

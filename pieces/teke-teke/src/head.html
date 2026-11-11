@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teke Teke</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #020306; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; image-rendering: pixelated; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  TEKE TEKE — 9:16, 71s, 24fps. A first-person tale in on-screen paragraphs: a snowy town in Niigata, a single-track
+//  railway along a block wall, a level crossing. A legless schoolgirl leans over the wall, drops and chases my friend
+//  Kenta on her elbows to the crossing, and asks him where her legs are. Style: yokai (three.js, dithered).
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 71.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 71, () => sceneTale()]];
+const SHOTS = [
+  ['hook',  0, 0.0,  4.5,  'she leans over the snowy wall top, grinning, the red crossing light flashing on her face'],
+  ['card',  0, 4.5,  8.5,  'the card: Teke Teke'],
+  ['town',  0, 8.5,  14.6, 'the snowy crossing at night; a girl\'s school bag dropped in the snow by the rails'],
+  ['marks', 0, 14.6, 20.6, 'empty tracks: elbow drag marks in the snow between the rails'],
+  ['walk',  0, 20.6, 26.6, 'Kenta and I walk home along the wall after cram school'],
+  ['hear',  0, 26.6, 32.6, 'teke, teke: we stop and look back; nothing'],
+  ['wall',  0, 32.6, 38.6, 'a girl leaning over the wall, smiling at us; she drags herself over: no legs'],
+  ['chase', 0, 38.6, 45.6, 'Kenta runs; she drops off the wall and comes after him on her elbows toward the crossing; black'],
+  ['hit',   0, 45.6, 51.6, 'THE HIT: her face right by his in the pulsing red light: where are my legs?'],
+  ['train', 0, 51.6, 58.6, 'the barrier comes down, the train goes past, only Kenta\'s bag on the tracks'],
+  ['dawn',  0, 58.6, 71.0, 'the crossing at dawn, the bag gone; badge'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { tilt: 0.25, dig: 0.5, card: 4.5, town: 8.5, marks: 14.6, walk: 20.6, hear: 26.6, stop: 28.1, turn: 28.5, wall: 32.6, over: 35.6, chase: 38.6, drop: 38.6, land: 39.4, arms: 43.0, black: 45.0, hit: 45.6, train: 51.6, barrier: 51.8, pass: 54.0, gone: 56.3, lampsOff: 57.4, dawn: 58.6, badge: 66.2 },
+  acts: [
+    { name: '1 The rule',     role: 'build',   t0: 0.0,  t1: 8.5 },
+    { name: '2 The legend',   role: 'turn',    t0: 8.5,  t1: 20.6 },
+    { name: '3 Teke teke',    role: 'peak',    t0: 20.6, t1: 45.0 },
+    { name: '4 Silence',      role: 'silence', t0: 45.0, t1: 45.6 },
+    { name: '5 The question', role: 'gift',    t0: 45.6, t1: 58.6 },
+    { name: '6 The answer',   role: 'goodbye', t0: 58.6, t1: 71.0 },
+  ],
+  board: [
+    { t: 2.0,  title: 'Hook: over the wall', sound: 'crossing bell ding-ding loop, low snow wind; nails scraping frozen concrete as her fingers dig in (0.5)', next: 'dither' },
+    { t: 6.9,  title: 'Card: Teke Teke', sound: 'card hit, a breathy shakuhachi note, the bell far away', next: 'dither in' },
+    { t: 12.0, title: 'A girl slipped on the tracks', sound: 'snow hush, a far dog, streetlamp buzz, one distant train horn', next: 'cut' },
+    { t: 18.0, title: 'Elbow marks in the snow', sound: 'wind over the rails, a faint rhythmic scrape far down the line', next: 'cut' },
+    { t: 24.0, title: 'Walking home along the line', sound: 'two pairs of boots crunching snow on the walk cycle, bag straps, breath', next: 'cut' },
+    { t: 30.4, title: 'Teke. Teke. Teke.', sound: 'steps stop (28.1); three dry taps of nails on concrete, close and behind; silence', next: 'cut' },
+    { t: 36.9, title: 'Leaning over the wall', sound: 'a wet hair drip, nails clicking on the wall top, a soft rising drone; cloth dragging over concrete (35.6)', next: 'cut' },
+    { t: 42.4, title: 'On her elbows, faster', sound: 'his running boots and breath, her rapid teke-teke elbow taps on the snow; crossing bell starts, louder; barrier motor (43)', next: 'black, 0.6 s silence' },
+    { t: 48.4, title: 'Where are my legs?', sound: 'THE HIT (45.6): sub drop, a bell clang, then a close dry whisper; his breath trembling', next: 'cut' },
+    { t: 52.8, title: 'The barrier comes down', sound: 'bell ding-ding, barrier motor whine, rails start singing', next: 'continuous' },
+    { t: 55.0, title: 'The train goes past', sound: 'horn blast, train roar and wheel clatter rushing past, wind gust', next: 'continuous' },
+    { t: 57.6, title: 'Only his bag', sound: 'the roar fades away, the bell stops (57.4), snow hush', next: 'dither' },
+    { t: 63.0, title: 'I knew the answer', sound: 'dawn wind, a crow far away, the bell silent', next: 'end' },
+    { t: 68.4, title: 'kodamashorts', sound: 'wind fades out', next: 'end' },
+  ],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

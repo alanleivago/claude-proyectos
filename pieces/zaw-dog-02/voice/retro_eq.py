@@ -37,6 +37,16 @@ y = sosfilt(butter(2, 230, "highpass", fs=SR, output="sos"), y)
 y = sosfilt(butter(4, 2900, "lowpass", fs=SR, output="sos"), y)
 y = np.tanh(2.2 * y / np.abs(y).max()) / np.tanh(2.2)
 y *= np.sqrt((v ** 2).mean() / (y ** 2).mean())               # same loudness, the mix sets the level
+# zaw-dog-02 (user: the first word must be clear): the retro band cut the /f/ of "Fake" (ASR heard "Think"). Over the
+# first word only, the unfiltered voice (150 Hz high-pass) keeps the fricative; 25 ms crossfades.
+import json as _j
+_w = [w for w in _j.load(open(os.path.join(H, "timing.json")))["words"] if w["line"] == 0][0]
+lt = sosfilt(butter(2, 150, "highpass", fs=SR, output="sos"), v)            # full band: the /f/ cue lives up high
+seg = slice(int((_w["s"] - 0.06) * SR), int((_w["e"] - 0.02) * SR))
+lt *= np.sqrt((y[seg] ** 2).mean() / max((lt[seg] ** 2).mean(), 1e-12))
+wgt = np.zeros(len(y)); wgt[seg] = 1.0
+from scipy.ndimage import uniform_filter1d as _uf
+wgt = _uf(wgt, int(0.025 * SR)); y = y * (1 - wgt) + lt * wgt
 import wave
 with wave.open(os.path.join(H, "voice_retro.wav"), "wb") as w:
     w.setnchannels(1); w.setsampwidth(2); w.setframerate(SR)

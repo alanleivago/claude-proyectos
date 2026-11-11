@@ -109,3 +109,13 @@ Scripts de referencia: `pieces/rbx-rope/voice/` (gen.sh, fix.py, c*.txt) y `piec
 
 Siempre **"TEMPOREX - Numbers (Instrumental | Perfect intro loop)"** (https://www.youtube.com/watch?v=ecvbCDTcAco) desde el segundo 0, fade-out de 2 s al final, **9 LU bajo la voz** (20 y 12 LU quedaron bajos). El wav no está en git: en otra máquina bajarlo con
 `yt-dlp --no-playlist -x --audio-format wav -o "styles/roblox/bgm/bgm.%(ext)s" "https://www.youtube.com/watch?v=ecvbCDTcAco"`.
+
+## Protagonista fijo (desde 2026-11-10, obligatorio)
+
+El héroe de la capucha de dinosaurio (pieces/rbx-thursday, imagen de marca en pieces/rbx-thursday/brand/) es el protagonista de TODOS los videos: es la imagen del canal. Nunca se reemplaza por un héroe nuevo. El estilo Gneef (pelos, atuendos) se aplica al resto del elenco; el héroe mantiene su capucha y su identidad, con caras que cambian como en Gneef.
+
+## Criaturas (desde 2026-11-10)
+Las criaturas o entidades no tienen que tener forma de avatar Roblox: pueden tener formas propias e inquietantes (como el monstruo de rbx-sock). Solo las personas son avatares de bloques. Tono: terror suave, al nivel de rbx-sock.
+
+## Apertura fija (desde 2026-11-10)
+Todos los guiones empiezan con **"In this town, …"** + la regla (p. ej. "In this town, you can't return a library book late."). Reemplaza la recomendación de variar la apertura.

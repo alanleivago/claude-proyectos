@@ -1,0 +1,72 @@
+# rbx-library sound credits
+
+Music: TEMPOREX - Numbers (Instrumental) (styles/roblox/bgm/bgm.wav).
+
+SFX / ambiences (Freesound, all CC0):
+- Sub drone and crackling by xkeril (freesound.org/s/612796) CC0
+- JM_AMB_Room Tone 01_MONO by Julien_Matthey (freesound.org/s/837886) CC0
+- Birds Chirping In Suburbs Midwest by moxcr (freesound.org/s/388196) CC0
+- Wood Creak Single V9 by Rudmer_Rotteveel (freesound.org/s/506664) CC0
+- Creaking Wooden Floor [6] by SoundDesignForYou (freesound.org/s/646692) CC0
+- Tick Tock Dry by GammaGool (freesound.org/s/759501) CC0
+- concrete footsteps by seth-m (freesound.org/s/271039) CC0
+- Walking on concrete.m4a by SoaringAaronJohnson51397 (freesound.org/s/412457) CC0
+- Sniffles_07.wav by deleted_user_2104797 (freesound.org/s/346681) CC0
+- Clothes Rustling Movement 8_2 by Joao_Janz (freesound.org/s/493457) CC0
+- Clothes Rustling Movement 8_5 by Joao_Janz (freesound.org/s/493462) CC0
+- 249716__daandraait__slow-heartbeat(mezcelized).mp3 by mezcel (freesound.org/s/390425) CC0
+- WomansFinalGasps by Soundjougi (freesound.org/s/826716) CC0
+- Paper shuffling.mp3 by meeser9 (freesound.org/s/642770) CC0
+- G55-07-Howling wind.wav by craigsmith (freesound.org/s/438861) CC0
+- wind drone howl tunnel stairwell4 eerie.flac by kyles (freesound.org/s/454355) CC0
+- Leather Belt Stretching 1_6 by Joao_Janz (freesound.org/s/493210) CC0
+- Lock rattle 3.wav by deleted_user_2104797 (freesound.org/s/164638) CC0
+- Sort of rattle Bt-Hs Lg.wav by beskhu (freesound.org/s/273901) CC0
+- Phantoms' Whispers by NicknameLarry (freesound.org/s/489897) CC0
+- Creepy Whispering by RaspberryTickle (freesound.org/s/234044) CC0
+- Deep Inhale & Exhale 1.wav by EverydayEldritch (freesound.org/s/615047) CC0
+- Inhale.wav by guitargeorge-2 (freesound.org/s/608216) CC0
+- Bodyfall by magnuswaker (freesound.org/s/614064) CC0
+- Ghostly Whoosh - Horror Game UI by TommasoMotteran (freesound.org/s/850767) CC0
+- Dark Whoosh Transition Horror 01 by TommasoMotteran (freesound.org/s/850424) CC0
+- slightmetallicthud.mp3 by profoundsounds (freesound.org/s/686282) CC0
+- Child's laugh 1 - medyk3D.wav by medyk3D (freesound.org/s/616088) CC0
+- Windbreaker Pop by VANWINKLE3 (freesound.org/s/607123) CC0
+- AMB_Rural_Summer_Night.wav by AnthonyRamirez (freesound.org/s/425425) CC0
+- Kettle Rolling Boil by jashngooyen (freesound.org/s/556764) CC0
+- Dull_Thud_01.flac by wwstudioswastaken (freesound.org/s/616295) CC0
+- Medium Crowd Walla by IENBA (freesound.org/s/867051) CC0
+- Turn over the book page 2 by phantastonia (freesound.org/s/457916) CC0
+- Page Turn - 20 by SpaceJoe (freesound.org/s/484940) CC0
+- Page Turn - 13 by SpaceJoe (freesound.org/s/484933) CC0
+- Shimmery.wav by opticaillusions (freesound.org/s/521886) CC0
+- Mysterious Sparkle Flourish by SkySpeira (freesound.org/s/844398) CC0
+- bell2.wav by Tairblenn (freesound.org/s/549897) CC0
+- SFX2 - rocking chair creak.wav by JK129645 (freesound.org/s/547466) CC0
+- two children on the playground have fun by Garuda1982 (freesound.org/s/629652) CC0
+- KidApplause by StuffIamStuffIamnot (freesound.org/s/859076) CC0
+- Puff of Smoke by qubodup (freesound.org/s/714257) CC0
+- Air Puff by waymonds (freesound.org/s/817695) CC0
+- Funny Boing by se2001 (freesound.org/s/543641) CC0
+- Spawn sound by Contant_aghony (freesound.org/s/478179) CC0
+- Iron-Wood Slam by Hakren (freesound.org/s/372877) CC0
+- shriek 3 and laugh.aiff by bevibeldesign (freesound.org/s/315828) CC0
+- Scream!!!! by Maximations (freesound.org/s/713121) CC0
+- Snoring.wav by cmilo1269 (freesound.org/s/491961) CC0
+- FloorBang_03.wav by Faulkin (freesound.org/s/336489) CC0
+- Book dropped on table by Valerie-Vivegnis (freesound.org/s/836521) CC0
+- FloorBang_01.wav by Faulkin (freesound.org/s/336491) CC0
+- traditional stamp.wav by I.fekry (freesound.org/s/470710) CC0
+- Thump.mp3 by mpuffenbarger (freesound.org/s/683031) CC0
+- Ticking Stopwatch (dry) by DavidJGurney (freesound.org/s/275802) CC0
+- fire alarm bell by msx2plus (freesound.org/s/678345) CC0
+- German fire engine by Breviceps (freesound.org/s/465700) CC0
+- Slime 5.wav by Archos (freesound.org/s/433829) CC0
+- desk bell center.mp3 by tonmayster (freesound.org/s/685111) CC0
+- Metal Slide 4 by LordForklift (freesound.org/s/448403) CC0
+- Metal Slide 1 by LordForklift (freesound.org/s/448413) CC0
+- MOVE THROUGH THE DARK (MP3) by MadGravityStudio (freesound.org/s/724667) CC0
+- pages.wav by synxwtf (freesound.org/s/695924) CC0
+- giggles_girl_daughter by 3LMN_audio (freesound.org/s/754382) CC0
+- Footsteps tap.wav by gpag1 (freesound.org/s/392482) CC0
+- Jacket Zipper 3 by brandondelehoy (freesound.org/s/494799) CC0

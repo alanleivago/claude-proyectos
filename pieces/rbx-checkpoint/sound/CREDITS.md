@@ -1,0 +1,65 @@
+# rbx-checkpoint sound credits
+
+Music: TEMPOREX - Numbers (Instrumental) (styles/roblox/bgm/bgm.wav).
+
+SFX / ambiences (Freesound, all CC0):
+- 04-PerritoMasticando.wav by Caap (freesound.org/s/427112) CC0
+- 14 - Polea.wav by MichaelGillighan (freesound.org/s/429215) CC0
+- 249716__daandraait__slow-heartbeat(mezcelized).mp3 by mezcel (freesound.org/s/390425) CC0
+- 5_Beagle_Panting by 16G_Panska_Dolezal_Stepan (freesound.org/s/498702) CC0
+- Air Puff by waymonds (freesound.org/s/817695) CC0
+- BODY FALL - V HVY - DIRT by leonelmail (freesound.org/s/504626) CC0
+- BerlinGameScene.com Crowd Cheer 4 by BerlinGameScene (freesound.org/s/267246) CC0
+- Blow_5 by Dragon20C (freesound.org/s/803291) CC0
+- Bodyfall by magnuswaker (freesound.org/s/614064) CC0
+- Boots Gravel Feet Slide  1_7 by Joao_Janz (freesound.org/s/504381) CC0
+- Bulldozer Shaking Rocks .wav by johnnydekk (freesound.org/s/615309) CC0
+- CRWDReac_Crowd Gasping In Surprise, Voiced 01_ShaneVincent_GSC24_XY-AKG214-96k.wav by ShangusBurger (freesound.org/s/763875) CC0
+- Chalk.wav by LukeUPF (freesound.org/s/233049) CC0
+- Cheers and Yays by qubodup (freesound.org/s/848423) CC0
+- Chihuahua Puppy Whine by AustinXYZ (freesound.org/s/350593) CC0
+- Child's laugh 1 - medyk3D.wav by medyk3D (freesound.org/s/616088) CC0
+- Clothes Rustling Movement 8_5 by Joao_Janz (freesound.org/s/493462) CC0
+- Crickets, very distant barks summer night.wav by Daphne_in_Wonderland (freesound.org/s/383479) CC0
+- Dog_Ear_Flap_Edited.wav by AmberdeMeillon (freesound.org/s/443042) CC0
+- FX swanee whistle down.wav by v0idation (freesound.org/s/497093) CC0
+- Fabric Flapping by IENBA (freesound.org/s/701647) CC0
+- Falling Down Stairs by elliott.klein (freesound.org/s/194911) CC0
+- Falling body hits the floor by courtneyeck (freesound.org/s/673424) CC0
+- FallingWhoosh1 by Huglex (freesound.org/s/842982) CC0
+- Funny Boing by se2001 (freesound.org/s/543641) CC0
+- Group Ooh 1 by CHallSmith (freesound.org/s/870650) CC0
+- Iron-Wood Slam by Hakren (freesound.org/s/372877) CC0
+- JM_AMB_Room Tone 01_MONO by Julien_Matthey (freesound.org/s/837886) CC0
+- KidApplause by StuffIamStuffIamnot (freesound.org/s/859076) CC0
+- Lasso rope being spun, spinning through air then throw by zapsplat.com (freesound.org/s/719638) CC0
+- Marching band in parade by SoundsAreGr8 (freesound.org/s/340938) CC0
+- Medium Crowd Walla by IENBA (freesound.org/s/867051) CC0
+- Mysterious Sparkle Flourish by SkySpeira (freesound.org/s/844398) CC0
+- Puff of Smoke by qubodup (freesound.org/s/714257) CC0
+- QUIET_CLASSROOM_ROOMTONE_02.wav by justingregoire (freesound.org/s/205173) CC0
+- Referee whistle sound.wav by Rosa-Orenes256 (freesound.org/s/538422) CC0
+- Rope - Quick snatch by Vrymaa (freesound.org/s/802697) CC0
+- Rubble Trouble 3 by magnuswaker (freesound.org/s/758582) CC0
+- S_Spawn_Whoosh.wav by Grubzyy (freesound.org/s/422730) CC0
+- Scream!!!! by Maximations (freesound.org/s/713121) CC0
+- Small Dog Bark by SecureSubset (freesound.org/s/800278) CC0
+- Snoring.wav by cmilo1269 (freesound.org/s/491961) CC0
+- Soft breeze at Budaorsi koparok - No2 by rubindaniel (freesound.org/s/844818) CC0
+- Spawn sound by Contant_aghony (freesound.org/s/478179) CC0
+- Stein Aufschlag mit langem Decay 01.wav by mbezzola (freesound.org/s/105278) CC0
+- Stein Aufschlag mit langem Decay 05.wav by mbezzola (freesound.org/s/105282) CC0
+- Street Village Ambience on a Summer Windy Day by sounds_from_palestine (freesound.org/s/818390) CC0
+- Swimming Pool by Fission9 (freesound.org/s/565475) CC0
+- Tuba - staccato - A#1 (Tuba3_stac_A#0_v2_rr4_Sum.wav) by sgossner (freesound.org/s/374241) CC0
+- Tuba - sustain - E#3 (Tuba3_sus_F2_v3_rr1_Mid.wav) by sgossner (freesound.org/s/374271) CC0
+- carrusel_feria.wav by SergioJbs (freesound.org/s/579801) CC0
+- concrete footsteps by seth-m (freesound.org/s/271039) CC0
+- dig.wav by zepurple (freesound.org/s/540264) CC0
+- goblin-fall.mp3 by Kneeling (freesound.org/s/502553) CC0
+- imp_11.wav by blaukreuz (freesound.org/s/52145) CC0
+- landslider longdrum 1 by Logicogonist (freesound.org/s/811070) CC0
+- shriek 3 and laugh.aiff by bevibeldesign (freesound.org/s/315828) CC0
+- single bark - small to medium dog by haulaway (freesound.org/s/630648) CC0
+- two children on the playground have fun by Garuda1982 (freesound.org/s/629652) CC0
+- water splash 2 by swordofkings128 (freesound.org/s/398039) CC0
