@@ -10,7 +10,10 @@
    "wave_hello_141_16",
    "elated_walk_FW",
    "elated_idle_ID",
-   "proud_walk_FW"
+   "proud_walk_FW",
+   "kimodo_happy_jump",
+   "kimodo_laugh_bend_back",
+   "kimodo_wave_hello"
   ],
   "SAD": [
    "sad_79_71",
@@ -19,7 +22,9 @@
    "sad_walk_91_13",
    "sad_mope_walk_141_27",
    "depressed_walk_FW",
-   "depressed_idle_ID"
+   "depressed_idle_ID",
+   "kimodo_facepalm",
+   "kimodo_sad_slump"
   ],
   "SCARED": [
    "startle_surprise_cower_120_16",
@@ -31,14 +36,17 @@
    "scared_walk_142_17",
    "rushed_walk_FW",
    "inthedark_walk_FW",
-   "followed_walk_FW"
+   "followed_walk_FW",
+   "kimodo_cower_crouch",
+   "kimodo_startle_jump_back"
   ],
   "PAIN": [
    "pain_hurt_stomach_walk_91_26",
    "pain_limp_hurt_right_leg_77_19",
    "pain_limp_91_16",
    "old_walk_FW",
-   "limpleft_walk_FW"
+   "limpleft_walk_FW",
+   "kimodo_stomach_pain"
   ],
   "RUDE": [
    "rude_upset_79_74",
@@ -47,7 +55,9 @@
    "rude_angry_walk_17_01",
    "rude_fists_up_56_02",
    "angry_walk_FW",
-   "angry_idle_ID"
+   "angry_idle_ID",
+   "kimodo_facepalm",
+   "kimodo_shake_fist_angry"
   ],
   "IDLE": [
    "walk_start_from_stand_82_08",
@@ -89,18 +99,22 @@
   "SIT": [
    "sit_chair_getup_113_15",
    "sit_down_getup_143_18",
-   "sit_medium_75_17"
+   "sit_medium_75_17",
+   "kimodo_sit_on_sofa"
   ],
   "POINT": [
    "wave_hello_141_16",
    "wave_113_27",
    "wave_both_arms_143_25",
-   "point_traffic_14_24"
+   "point_traffic_14_24",
+   "kimodo_point_forward",
+   "kimodo_wave_hello"
   ],
   "SHRUG": [
    "shrug_141_21",
    "shrug_113_16",
-   "shrug_subtle_111_25"
+   "shrug_subtle_111_25",
+   "kimodo_shrug_palms_up"
   ]
  },
  "clips": {
@@ -943,6 +957,198 @@
     8966
    ],
    "loop": false
+  },
+  "kimodo_cower_crouch": {
+   "file": "kimodo/cower_crouch.bvh",
+   "source": "NVIDIA Kimodo SOMA-SEED-v1.1 (official nv-tlabs/kimodo, run on the PC, text encoder on CPU)",
+   "description": "A person crouches down and covers their head with both arms in fear.",
+   "licence": "NVIDIA Open Model License (commercial use allowed)",
+   "credit": "Motion generated with NVIDIA Kimodo (SOMA-SEED-v1.1)",
+   "frames": 120,
+   "fps": 30,
+   "suggested_range": [
+    1,
+    120
+   ],
+   "loop": false,
+   "baked_action": "k_cower_crouch",
+   "retarget": "Blender -b -P styles/zawdog/tools/retarget.py -- styles/zawdog/motions/kimodo/cower_crouch.bvh k_cower_crouch"
+  },
+  "kimodo_facepalm": {
+   "file": "kimodo/facepalm.bvh",
+   "source": "NVIDIA Kimodo SOMA-SEED-v1.1 (official nv-tlabs/kimodo, run on the PC, text encoder on CPU)",
+   "description": "A person slowly raises a hand and covers their face in disappointment.",
+   "licence": "NVIDIA Open Model License (commercial use allowed)",
+   "credit": "Motion generated with NVIDIA Kimodo (SOMA-SEED-v1.1)",
+   "frames": 105,
+   "fps": 30,
+   "suggested_range": [
+    1,
+    105
+   ],
+   "loop": false,
+   "baked_action": "k_facepalm",
+   "retarget": "Blender -b -P styles/zawdog/tools/retarget.py -- styles/zawdog/motions/kimodo/facepalm.bvh k_facepalm"
+  },
+  "kimodo_happy_jump": {
+   "file": "kimodo/happy_jump.bvh",
+   "source": "NVIDIA Kimodo SOMA-SEED-v1.1 (official nv-tlabs/kimodo, run on the PC, text encoder on CPU)",
+   "description": "A person jumps up and down happily with both arms raised in celebration.",
+   "licence": "NVIDIA Open Model License (commercial use allowed)",
+   "credit": "Motion generated with NVIDIA Kimodo (SOMA-SEED-v1.1)",
+   "frames": 120,
+   "fps": 30,
+   "suggested_range": [
+    1,
+    120
+   ],
+   "loop": false,
+   "baked_action": "k_happy_jump",
+   "retarget": "Blender -b -P styles/zawdog/tools/retarget.py -- styles/zawdog/motions/kimodo/happy_jump.bvh k_happy_jump"
+  },
+  "kimodo_laugh_bend_back": {
+   "file": "kimodo/laugh_bend_back.bvh",
+   "source": "NVIDIA Kimodo SOMA-SEED-v1.1 (official nv-tlabs/kimodo, run on the PC, text encoder on CPU)",
+   "description": "A person laughs hard, bending backward and holding their belly.",
+   "licence": "NVIDIA Open Model License (commercial use allowed)",
+   "credit": "Motion generated with NVIDIA Kimodo (SOMA-SEED-v1.1)",
+   "frames": 120,
+   "fps": 30,
+   "suggested_range": [
+    1,
+    120
+   ],
+   "loop": false,
+   "baked_action": "k_laugh_bend_back",
+   "retarget": "Blender -b -P styles/zawdog/tools/retarget.py -- styles/zawdog/motions/kimodo/laugh_bend_back.bvh k_laugh_bend_back"
+  },
+  "kimodo_point_forward": {
+   "file": "kimodo/point_forward.bvh",
+   "source": "NVIDIA Kimodo SOMA-SEED-v1.1 (official nv-tlabs/kimodo, run on the PC, text encoder on CPU)",
+   "description": "A person points forward with the right arm extended.",
+   "licence": "NVIDIA Open Model License (commercial use allowed)",
+   "credit": "Motion generated with NVIDIA Kimodo (SOMA-SEED-v1.1)",
+   "frames": 90,
+   "fps": 30,
+   "suggested_range": [
+    1,
+    90
+   ],
+   "loop": false,
+   "baked_action": "k_point_forward",
+   "retarget": "Blender -b -P styles/zawdog/tools/retarget.py -- styles/zawdog/motions/kimodo/point_forward.bvh k_point_forward"
+  },
+  "kimodo_sad_slump": {
+   "file": "kimodo/sad_slump.bvh",
+   "source": "NVIDIA Kimodo SOMA-SEED-v1.1 (official nv-tlabs/kimodo, run on the PC, text encoder on CPU)",
+   "description": "A person lowers their head and slumps their shoulders sadly, then stands still.",
+   "licence": "NVIDIA Open Model License (commercial use allowed)",
+   "credit": "Motion generated with NVIDIA Kimodo (SOMA-SEED-v1.1)",
+   "frames": 120,
+   "fps": 30,
+   "suggested_range": [
+    1,
+    120
+   ],
+   "loop": false,
+   "baked_action": "k_sad_slump",
+   "retarget": "Blender -b -P styles/zawdog/tools/retarget.py -- styles/zawdog/motions/kimodo/sad_slump.bvh k_sad_slump"
+  },
+  "kimodo_shake_fist_angry": {
+   "file": "kimodo/shake_fist_angry.bvh",
+   "source": "NVIDIA Kimodo SOMA-SEED-v1.1 (official nv-tlabs/kimodo, run on the PC, text encoder on CPU)",
+   "description": "A person angrily shakes their fist in the air.",
+   "licence": "NVIDIA Open Model License (commercial use allowed)",
+   "credit": "Motion generated with NVIDIA Kimodo (SOMA-SEED-v1.1)",
+   "frames": 90,
+   "fps": 30,
+   "suggested_range": [
+    1,
+    90
+   ],
+   "loop": false,
+   "baked_action": "k_shake_fist_angry",
+   "retarget": "Blender -b -P styles/zawdog/tools/retarget.py -- styles/zawdog/motions/kimodo/shake_fist_angry.bvh k_shake_fist_angry"
+  },
+  "kimodo_shrug_palms_up": {
+   "file": "kimodo/shrug_palms_up.bvh",
+   "source": "NVIDIA Kimodo SOMA-SEED-v1.1 (official nv-tlabs/kimodo, run on the PC, text encoder on CPU)",
+   "description": "A person shrugs both shoulders with palms turned up, as if saying \"I don't know\".",
+   "licence": "NVIDIA Open Model License (commercial use allowed)",
+   "credit": "Motion generated with NVIDIA Kimodo (SOMA-SEED-v1.1)",
+   "frames": 90,
+   "fps": 30,
+   "suggested_range": [
+    1,
+    90
+   ],
+   "loop": false,
+   "baked_action": "k_shrug_palms_up",
+   "retarget": "Blender -b -P styles/zawdog/tools/retarget.py -- styles/zawdog/motions/kimodo/shrug_palms_up.bvh k_shrug_palms_up"
+  },
+  "kimodo_sit_on_sofa": {
+   "file": "kimodo/sit_on_sofa.bvh",
+   "source": "NVIDIA Kimodo SOMA-SEED-v1.1 (official nv-tlabs/kimodo, run on the PC, text encoder on CPU)",
+   "description": "A person turns around and sits down on a sofa, leaning back.",
+   "licence": "NVIDIA Open Model License (commercial use allowed)",
+   "credit": "Motion generated with NVIDIA Kimodo (SOMA-SEED-v1.1)",
+   "frames": 150,
+   "fps": 30,
+   "suggested_range": [
+    1,
+    150
+   ],
+   "loop": false,
+   "baked_action": "k_sit_on_sofa",
+   "retarget": "Blender -b -P styles/zawdog/tools/retarget.py -- styles/zawdog/motions/kimodo/sit_on_sofa.bvh k_sit_on_sofa"
+  },
+  "kimodo_startle_jump_back": {
+   "file": "kimodo/startle_jump_back.bvh",
+   "source": "NVIDIA Kimodo SOMA-SEED-v1.1 (official nv-tlabs/kimodo, run on the PC, text encoder on CPU)",
+   "description": "A man is startled and jumps back in fright, then freezes.",
+   "licence": "NVIDIA Open Model License (commercial use allowed)",
+   "credit": "Motion generated with NVIDIA Kimodo (SOMA-SEED-v1.1)",
+   "frames": 105,
+   "fps": 30,
+   "suggested_range": [
+    1,
+    105
+   ],
+   "loop": false,
+   "baked_action": "k_startle_jump_back",
+   "retarget": "Blender -b -P styles/zawdog/tools/retarget.py -- styles/zawdog/motions/kimodo/startle_jump_back.bvh k_startle_jump_back"
+  },
+  "kimodo_stomach_pain": {
+   "file": "kimodo/stomach_pain.bvh",
+   "source": "NVIDIA Kimodo SOMA-SEED-v1.1 (official nv-tlabs/kimodo, run on the PC, text encoder on CPU)",
+   "description": "A person bends forward holding their stomach with both hands in pain.",
+   "licence": "NVIDIA Open Model License (commercial use allowed)",
+   "credit": "Motion generated with NVIDIA Kimodo (SOMA-SEED-v1.1)",
+   "frames": 120,
+   "fps": 30,
+   "suggested_range": [
+    1,
+    120
+   ],
+   "loop": false,
+   "baked_action": "k_stomach_pain",
+   "retarget": "Blender -b -P styles/zawdog/tools/retarget.py -- styles/zawdog/motions/kimodo/stomach_pain.bvh k_stomach_pain"
+  },
+  "kimodo_wave_hello": {
+   "file": "kimodo/wave_hello.bvh",
+   "source": "NVIDIA Kimodo SOMA-SEED-v1.1 (official nv-tlabs/kimodo, run on the PC, text encoder on CPU)",
+   "description": "A person waves hello with the right hand.",
+   "licence": "NVIDIA Open Model License (commercial use allowed)",
+   "credit": "Motion generated with NVIDIA Kimodo (SOMA-SEED-v1.1)",
+   "frames": 90,
+   "fps": 30,
+   "suggested_range": [
+    1,
+    90
+   ],
+   "loop": false,
+   "baked_action": "k_wave_hello",
+   "retarget": "Blender -b -P styles/zawdog/tools/retarget.py -- styles/zawdog/motions/kimodo/wave_hello.bvh k_wave_hello"
   }
  }
 }

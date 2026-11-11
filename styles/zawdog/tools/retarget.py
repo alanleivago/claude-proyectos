@@ -1,6 +1,6 @@
 """Kit v3: mocap (BVH / Kimodo GLB) -> MakeHuman "default" rig action, headless, with foot planting.
     Blender -b -P styles/zawdog/tools/retarget.py -- <motion.bvh|.glb> <action_name> [start=a end=b] [fps=30]
-            [human=owner] [plant=1] [yaw=auto|path|none|<deg>] [origin=1] [scale=auto|<k>] [ground=frame|clip] [arms=relax|off] [still=1: standing gesture, both feet locked] [stance=<m>: with still, half foot spacing]
+            [human=owner] [plant=1] [yaw=auto|path|none|<deg>] [origin=1] [scale=auto|<k>] [ground=frame|clip] [arms=relax|off] [rest=auto|frame|swing] [still=1: standing gesture, both feet locked] [stance=<m>: with still, half foot spacing]
 -> styles/zawdog/motions/baked/<action_name>.blend : one Action (fake user) for any humans/<name> rig (same bone names).
    + styles/zawdog/motions/baked/<action_name>.json : frames, contacts, root path, foot QA numbers.
 Use in a scene:  act = HU.load_action("walk_in"); P.rig.animation_data_create(); P.rig.animation_data.action = act
@@ -112,10 +112,42 @@ for s_, d_ in MAP.items():
         C[d_] = dd.rotation_difference(sd)
     else:
         C[d_] = Quaternion()
+# Sources whose rest pose is NOT an upright figure (the official Kimodo 77-joint SOMA BVH: BONES-SEED rest, bones laid
+# along +X in cm) need a full rest frame per bone, not just a limb swing: C maps the target's rest bone frame (y = the
+# segment to the next mapped joint, x = the skeleton's left-right axis) onto the source's.
+DNEXT = {"root": "spine05", "spine05": "spine03", "spine03": "spine01", "spine01": "neck01", "neck01": "neck03", "neck03": "head",
+         "clavicle.L": "upperarm01.L", "upperarm01.L": "lowerarm01.L", "lowerarm01.L": "wrist.L", "wrist.L": "finger3-1.L",
+         "clavicle.R": "upperarm01.R", "upperarm01.R": "lowerarm01.R", "lowerarm01.R": "wrist.R", "wrist.R": "finger3-1.R",
+         "upperleg01.L": "lowerleg01.L", "lowerleg01.L": "foot.L", "foot.L": "toe3-1.L",
+         "upperleg01.R": "lowerleg01.R", "lowerleg01.R": "foot.R", "foot.R": "toe3-1.R"}
+SNEXT_EXTRA = {"Head": "HeadEnd", "LeftHand": "LeftHandMiddle1", "RightHand": "RightHandMiddle1", "LeftFoot": "LeftToeBase", "RightFoot": "RightToeBase"}
+INV = {d: s for s, d in MAP.items()}
+_lr = ([n for n in ("LeftUpLeg", "LeftHip", "LeftLeg") if n in sb][0], [n for n in ("RightUpLeg", "RightHip", "RightLeg") if n in sb][0])
+_sp = [n for n in ("Chest", "Spine1", "Chest4", "Spine") if n in sb]
+_up = (RW_src[_sp[0]].translation - RW_src["Hips"].translation).normalized() if _sp else Vector((0, 0, 1))
+UPRIGHT = _up.z > 0.8
+REST_MODE = OPT.get("rest", "auto")
+if REST_MODE == "frame" or (REST_MODE == "auto" and not UPRIGHT):
+    def frame(head, nxt, lat):
+        y = (nxt - head); y = y.normalized() if y.length > 1e-6 else Vector((0, 0, 1))
+        x = lat - lat.project(y); x = x.normalized() if x.length > 1e-6 else Vector((1, 0, 0))
+        z = x.cross(y)
+        return Matrix((x, y, z)).transposed()                          # columns x, y, z
+    lat_s = RW_src[_lr[0]].translation - RW_src[_lr[1]].translation
+    lat_d = RW_dst["upperleg01.L"].translation - RW_dst["upperleg01.R"].translation
+    for s_, d_ in MAP.items():
+        dn = DNEXT.get(d_); sn = INV.get(dn) if dn else None
+        sn = sn or SNEXT_EXTRA.get(s_)
+        dh = RW_dst[d_].translation; sh = RW_src[s_].translation
+        dt = RW_dst[dn].translation if dn in RW_dst else (RW_dst[d_] @ Vector((0, DB[d_].length, 0)))
+        st = RW_src[sn].translation if sn in RW_src else (RW_src[s_] @ Vector((0, src.data.bones[s_].length, 0)))
+        C[d_] = (frame(sh, st, lat_s) @ frame(dh, dt, lat_d).transposed()).to_quaternion()
+    print(f"rest mode: per-bone frames (source rest not upright, spine dir {tuple(round(v, 2) for v in _up)})")
+
 # the hand continues the forearm: same rest correction (CMU's hand joint has zero length, so its own axis is noise and the
 # hands came out bent 90 deg outward at the wrist)
 for s_ in "LR":
-    if f"wrist.{s_}" in C and f"lowerarm01.{s_}" in C:
+    if f"wrist.{s_}" in C and f"lowerarm01.{s_}" in C and UPRIGHT and REST_MODE != "frame":
         C[f"wrist.{s_}"] = C[f"lowerarm01.{s_}"]
 
 # translation scale = leg-length ratio (hip joint -> knee -> ankle), so the scaled stride matches the target's legs and a
