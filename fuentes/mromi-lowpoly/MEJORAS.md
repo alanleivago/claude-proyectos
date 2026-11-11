@@ -20,8 +20,8 @@ Fuentes: [notas](how-to-make-low-poly-shorts-using-claude-full-workflow.md), [pa
 | Subtítulos | Amarillos chicos con contorno oscuro, de 2 a 5 palabras, centrados sobre el cuerpo | Courier amarillo | Ya coincide |
 
 ## Orden de trabajo
-1. Kit v3, prueba: humano MPFB2 low poly con cara de Flow, 3 clips de mocap (caminar, susto, encogerse de hombros), cambio de 6 caras y grito sutil. Render de una prueba de unos 8 s en un set del kit.
+1. **Hecho (2026-11-11), falta la aprobación del usuario:** `pieces/kit-v3-test`, resumen en [STYLE.md](../../styles/zawdog/STYLE.md) (sección Kit v3). Kit v3, prueba: humano MPFB2 low poly con cara de Flow, 3 clips de mocap (caminar, susto, encogerse de hombros), cambio de 6 caras y grito sutil. Render de una prueba de unos 8 s en un set del kit.
 2. Si el usuario la aprueba, pasa a [STYLE.md](../../styles/zawdog/STYLE.md) y se aplica desde el video 6.
-3. Opcional: Kimodo con kimodo.cpp en CPU, sin CUDA, o por Colab, que necesita acceso a Llama-3 en Hugging Face.
+3. Kimodo: kimodo.cpp funciona en CPU en el Mac (el susto del test salió de ahí). En el PC con NVIDIA: [KIMODO_PC.md](../../styles/zawdog/KIMODO_PC.md).
 
 Licencias: CMU es libre para cualquier uso. 100STYLE es CC BY 4.0, así que hay que acreditarlo. Bandai Namco y el mocap de perros de AI4Animation son no comerciales: **no usar**. El perro sigue animado a mano o por código.
