@@ -25,7 +25,7 @@ P = HU.Human(SLUG); act = HU.load_action(ACT); P.play(act); P.face("neutral")
 f0, f1 = int(act.frame_range[0]), int(act.frame_range[1])
 sc = bpy.context.scene; sc.render.engine = "BLENDER_EEVEE"; sc.render.resolution_x, sc.render.resolution_y = 720, 1280
 sc.world = sc.world or bpy.data.worlds.new("w"); sc.world.use_nodes = True
-sc.world.node_tree.nodes["Background"].inputs[0].default_value = (0.55, 0.62, 0.72, 1)
+sc.world.node_tree.nodes["Background"].inputs[0].default_value = (0.45, 0.62, 0.85, 1)
 sun = bpy.data.objects.new("sun", bpy.data.lights.new("sun", "SUN")); sc.collection.objects.link(sun)
 sun.rotation_euler = (math.radians(52), 0, math.radians(-35)); sun.data.energy = 3.0
 
@@ -51,9 +51,19 @@ win = list(range(f0 + best, f0 + best + w))
 while len(win) < NF:
     win.append(win[-1])                                                    # short clip: hold the last pose
 c = pts[best:best + w, 0].mean(0)
-box("floor", (14, 14, 0.02), (c[0], c[1], -0.01), (0.22, 0.14, 0.08))      # warm wood-ish floor (linear colours)
-box("wall", (14, 0.1, 4), (c[0], c[1] + 3.2, 2), (0.42, 0.36, 0.26))
-box("skirting", (14, 0.12, 0.12), (c[0], c[1] + 3.12, 0.06), (0.92, 0.92, 0.9))
+# a simple front yard of the kit street (linear colours): lawn, path, house front with door + windows, picket fence
+X, Y = c[0], c[1]
+box("lawn", (16, 16, 0.02), (X, Y, -0.01), (0.10, 0.22, 0.05))
+box("path", (1.4, 16, 0.025), (X + 1.6, Y, -0.005), (0.40, 0.37, 0.33))
+box("house", (16, 0.3, 5), (X, Y + 3.4, 2.5), (0.55, 0.42, 0.30))
+box("door", (1.0, 0.06, 2.1), (X + 1.6, Y + 3.24, 1.05), (0.18, 0.06, 0.04))
+for wx in (-1.6, -3.6, 4.0):
+    box("win", (1.3, 0.06, 1.1), (X + wx, Y + 3.24, 1.6), (0.45, 0.62, 0.80))
+    box("sill", (1.45, 0.14, 0.08), (X + wx, Y + 3.2, 1.02), (0.85, 0.85, 0.82))
+for fx in np.arange(-7, 7.01, 0.35):
+    if abs(fx - 1.6) > 0.8:
+        box("picket", (0.08, 0.04, 0.8), (X + fx, Y + 2.3, 0.4), (0.85, 0.85, 0.82))
+box("rail", (14, 0.04, 0.06), (X, Y + 2.3, 0.55), (0.85, 0.85, 0.82))
 
 cam = bpy.data.objects.new("cam", bpy.data.cameras.new("cam")); sc.collection.objects.link(cam); sc.camera = cam
 cam.data.lens = 35

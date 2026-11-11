@@ -39,7 +39,7 @@ class Human:
         self.mface = self.body.material_slots[1].material; self.msheet = self.body.material_slots[0].material
         if flat_shading:
             for sl in self.body.material_slots:                       # sheet, face portrait, modelled sneakers
-                if sl.material and "img" in sl.material.node_tree.nodes:
+                if sl.material and "img" in sl.material.node_tree.nodes and not sl.material.get("flat_ready"):   # kit v4 builds them flat
                     flat(sl.material)
         self.faces = {}
         for e in EXPR:
