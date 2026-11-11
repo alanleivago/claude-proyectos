@@ -19,7 +19,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 DEFAULT_PROMPTS = ROOT / "styles/zawdog/motions/kimodo/prompts.txt"
 DEFAULT_OUT = ROOT / "styles/zawdog/motions/kimodo"
-MODEL = "Kimodo-SOMA-SEED-v1.1"  # NVIDIA Open Model License (commercial OK). Never SMPLX-RP (R&D only).
+MODEL = "Kimodo-SOMA-SEED-v1.1"  # NVIDIA Open Model License (commercial OK). The RP models are not used (R&D-only for this channel).
 
 
 def read_prompts(path):
@@ -89,8 +89,8 @@ def main():
     ap.add_argument("--cli", action="store_true", help="use kimodo_gen per prompt instead of the Python API")
     args = ap.parse_args()
 
-    if "SMPLX" in args.model.upper():
-        sys.exit("SMPL-X RP is R&D-only (no commercial use). Use Kimodo-SOMA-SEED-v1.1 or Kimodo-SOMA-RP-v1.x.")
+    if "SEED" not in args.model.upper() or "RP" in args.model.upper().replace("SEED", ""):
+        sys.exit("Only Kimodo-SOMA-SEED-v1.1 (commercial OK) is allowed here; the RP models are treated as R&D-only.")
     rows = read_prompts(args.prompts)
     if args.only:
         rows = [r for r in rows if r[0] in set(args.only)]

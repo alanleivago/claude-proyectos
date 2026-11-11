@@ -91,12 +91,18 @@ for v in me.vertices:
 CO = np.array([v.co[:] for v in me.vertices])
 REG = np.array(vreg)
 
-# ---- shoes: inflate the feet into a sneaker, flat sole on the floor
+# ---- feet: measured for the modelled sneakers (below), then shrunk inside them (the bare MakeHuman foot never shows)
+FOOT = {}
+for s_ in "LR":
+    P_ = CO[REG == "foot" + s_]
+    L_ = P_[:, 1].max() - P_[:, 1].min()
+    heel = P_[P_[:, 1] > P_[:, 1].max() - 0.15 * L_].mean(0); toe = P_[P_[:, 1] < P_[:, 1].min() + 0.15 * L_].mean(0)
+    FOOT[s_] = dict(heel=heel, toe=toe, ymin=P_[:, 1].min(), ymax=P_[:, 1].max(), w=np.ptp(P_[:, 0]), c=P_.mean(0))
 for i, v in enumerate(me.vertices):
-    if REG[i].startswith("foot") or (REG[i].startswith("leg") and v.co.z < 0.13):
-        k = 1.0 if REG[i].startswith("foot") else max(0.0, (0.13 - v.co.z) / 0.05)
-        v.co += v.normal * 0.018 * min(k, 1.0)                        # a real sneaker volume, not a flat tab
-        v.co.z = max(v.co.z, 0.0)
+    if REG[i].startswith("foot"):
+        c_ = FOOT[REG[i][-1]]["c"]
+        v.co.x = c_[0] + (v.co.x - c_[0]) * 0.55; v.co.z = 0.02 + (v.co.z - 0.0) * 0.55
+        v.co.y = c_[1] + (v.co.y - c_[1]) * 0.85
 CO = np.array([v.co[:] for v in me.vertices])
 Z_CROTCH = min(CO[REG == "torso"][:, 2].min() + 0.03, 0.9)
 Z_TOP = CO[:, 2].max()
@@ -275,9 +281,12 @@ for p in me.polygons:
         # in the profile photo the hanging arm and hand cover the hips/thighs: take the silhouette edge of the
         # front (or back) photo instead, so no skin from the hand lands on the jeans or the shirt
         view = "front" if p.center.y < 0.0 else "back"
-    portrait = r == "eye" or (r in ("head", "neck") and (n.y < -0.25 or (r == "head" and n.z > 0.55 and p.center.y < CO[HEAD][:, 1].mean())))
-    if r == "neck":                                                    # the whole neck (front + sides) down to the collar takes the
-        portrait = n.y < 0.3 and p.center.z > Z_COLLAR and abs(p.center.x) < 0.085   # portrait: one skin, no seam
+    front_lim = 0.05 if p.center.z < z_eye - 0.02 else -0.25             # cheeks / jaw sides take the portrait too (no dark
+    portrait = r == "eye" or (r in ("head", "neck") and (n.y < front_lim or (r == "head" and n.z > 0.55 and p.center.y < CO[HEAD][:, 1].mean())))   # sideburn stroke)
+    if r in ("neck", "torso") and p.center.z > Z_COLLAR - 0.045 and abs(p.center.x) < 0.085 and n.y < 0.3:
+        portrait = True                                                # neck + the collar band: the PHOTO's collar line (smooth,
+    elif r == "neck":                                                  # no polygon notches); below it the sheet's shirt
+        portrait = False
         #                                                                under the jaw; the trapezius keeps the sheet's shirt
     if portrait:
         FACE_SET.add(p.index)
@@ -286,7 +295,11 @@ for p in me.polygons:
         if portrait:                                                   # under the jaw: sample the throat, not the
             uv = uv_face(co - np.array((0, 0, 0.03))) if (n.z < -0.3 and p.center.z < z_chin + 0.02) else uv_face(co)   # jaw shadow
         elif r.startswith("arm"):
-            uv = uv_arm(r[-1], co, "back" if n.y > 0.2 else "front")
+            s_ = r[-1]; A_ = ARMS[s_]; t_ = (co - A_["sh"]) @ A_["d"] / A_["L"]
+            if s_ == "R":                                                      # right arm: the photo has a grey sleeve fold there,
+                uv = uv_arm("L", co * np.array((-1, 1, 1)), "back" if n.y > 0.2 else "front")   # use the evenly lit left sleeve
+            else:
+                uv = uv_arm(s_, co, "back" if n.y > 0.2 else "front")
         elif r.startswith(("leg", "foot")) and co[2] <= Z_CROTCH:
             s = r[-1]
             coord = co[0] if view != "side" else -co[1]
@@ -295,13 +308,15 @@ for p in me.polygons:
                 uv = (2 * (sum(leg_run(view, s)(row_of(view, co[2])[0]) or (0, 0)) / 2) / W_ - uv[0], uv[1])
         else:
             mask = HEAD if r == "head" else TORSO
-            if r != "head" and co[2] > 1.36 and abs(co[0]) > 0.05:    # shoulder tops: sample the shirt just below the
+            if r != "head" and co[2] > 1.36 and (abs(co[0]) > 0.12 or (abs(co[0]) > 0.05 and n.z > 0.35)):   # shoulder tops: the shirt below the
                 co = np.array((co[0] * 0.6, co[1] * 0.6, 1.36))       # photo's shoulder line, toward the chest (no skin, magenta
                 #                                                       edge or the grey armpit shadow on the shoulder tops)
                 view = "front" if view == "side" and p.center.y < 0 else ("back" if view == "side" else view)
             if view == "side":
                 uv = uv_body("side", co[2], mask, -co[1])
             else:
+                if r != "head" and view == "front" and co[2] > 1.22:          # upper chest: mirror the evenly lit half of the
+                    co = np.array((abs(co[0]), co[1], co[2]))                 # photo (its other half has a grey fold shadow)
                 uv = uv_body(view, co[2], mask, co[0])
                 if view == "back":                                    # seen from behind: mirror around the view centre
                     uv = (2 * CX["back"] / W_ - uv[0], uv[1])
@@ -371,5 +386,89 @@ body.modifiers.move(len(body.modifiers) - 1, 0)
 bpy.context.view_layer.objects.active = body
 bpy.ops.object.modifier_apply(modifier="dec")
 body.vertex_groups.remove(body.vertex_groups["_keep"])
+
+
+# ---- modelled low-poly sneakers: rubber sole with thickness, white upper, grey toe cap / heel tab / side stripe, laces on
+#      top (one 128 px PS1 texture), every vertex 100 % on its foot bone (rigid: never bends or crumples)
+def shoe_texture(path):
+    T = np.zeros((128, 128, 3), np.float32); v = (np.arange(128)[::-1] + 0.5)[:, None] / 128; u = (np.arange(128) + 0.5)[None, :] / 128
+    T[:] = (238, 237, 233)
+    T[(v < 0.12).repeat(128, 1)] = (186, 176, 160)                        # gum outsole
+    T[((v >= 0.12) & (v < 0.18)).repeat(128, 1)] = (246, 246, 244)        # midsole
+    T[((v >= 0.035) & (v < 0.05)).repeat(128, 1)] = (120, 112, 100)       # tread line
+    up = (v >= 0.2) & (v < 0.75)
+    toe = up & (np.abs(u - 0.5) < 0.09); T[np.broadcast_to(toe, (128, 128))] = (214, 214, 210)
+    heel = up & ((u < 0.06) | (u > 0.94)); T[np.broadcast_to(heel, (128, 128))] = (150, 150, 150)
+    for c in (0.27, 0.73):                                                # side stripe
+        st = up & (np.abs((u - c) - 0.35 * (v - 0.45)) < 0.035) & (v > 0.3) & (v < 0.62)
+        T[np.broadcast_to(st, (128, 128))] = (190, 190, 192)
+    stitch = up & (np.abs(v - 0.22) < 0.006); T[np.broadcast_to(stitch, (128, 128))] = (200, 200, 198)
+    top = v >= 0.78
+    tongue = top & (np.abs(u - 0.5) < 0.1); T[np.broadcast_to(tongue, (128, 128))] = (225, 225, 222)
+    lace = top & (np.abs(u - 0.5) < 0.085) & (((v - 0.78) * 128).astype(int) % 5 < 2) & (v > 0.84) & (v < 0.95)
+    T[np.broadcast_to(lace, (128, 128))] = (70, 70, 76)
+    im = bpy.data.images.new("shoe_tex", 128, 128); im.pixels = np.dstack([T / 255.0, np.ones((128, 128))]).ravel()[:]
+    px = np.dstack([T[::-1] / 255.0, np.ones((128, 128))]).ravel(); im.pixels = px
+    im.filepath_raw = path; im.file_format = "PNG"; im.save()
+    return path
+
+
+def sneaker(s_):
+    F = FOOT[s_]; heel, toe = F["heel"], F["toe"]
+    d = np.array((toe[0] - heel[0], toe[1] - heel[1])); Lf = np.linalg.norm(d); d /= Lf
+    nrm = np.array((-d[1], d[0]))
+    L = Lf + 0.075; W = max(F["w"], 0.085) + 0.02
+    org = np.array((heel[0], heel[1])) - d * 0.03
+    TS = [0.0, 0.08, 0.25, 0.45, 0.65, 0.82, 0.93, 1.0]
+    WF = [0.62, 0.86, 0.94, 1.0, 1.0, 0.9, 0.7, 0.32]
+    HT = [0.105, 0.105, 0.098, 0.085, 0.066, 0.052, 0.044, 0.038]
+    outline = [(t, +1, wf, h) for t, wf, h in zip(TS, WF, HT)] + [(t, -1, wf, h) for t, wf, h in zip(TS[::-1], WF[::-1], HT[::-1])]
+    n = len(outline)
+    rings = [(0.0, 1.03, 0.0), (0.03, 1.03, 0.12), (0.03, 1.0, 0.2), (None, 0.97, 0.55), (None, 0.6, 0.75)]   # (z, width scale, v)
+    verts, faces, fuv = [], [], []
+    for z, ws, vv in rings:
+        for t, sd, wf, h in outline:
+            p2 = org + d * (t * L) + nrm * sd * wf * ws * W / 2
+            zz = z if z is not None else (0.03 + (h - 0.03) * (0.6 if ws > 0.9 else 1.0))
+            verts.append((p2[0], p2[1], zz))
+    per = np.cumsum([0] + [np.linalg.norm(np.array(verts[(k + 1) % n][:2]) - np.array(verts[k][:2])) for k in range(n)]); per /= per[-1]
+    for r in range(len(rings) - 1):
+        for k in range(n):
+            k2 = (k + 1) % n; a, b, c, e = r * n + k, r * n + k2, (r + 1) * n + k2, (r + 1) * n + k
+            faces.append((a, b, c, e))
+            u0, u1 = per[k], per[k + 1] if k + 1 < n else 1.0
+            fuv.append([(u0, rings[r][2]), (u1, rings[r][2]), (u1, rings[r + 1][2]), (u0, rings[r + 1][2])])
+    top = len(rings) - 1
+    half = n // 2
+    for k in range(half - 1):                                             # top: strips across the shoe (laces), closed
+        a, b = top * n + k, top * n + k + 1; c, e = top * n + (n - 2 - k), top * n + (n - 1 - k)
+        faces.append((a, b, c, e))
+        tv = lambda kk: 0.78 + 0.22 * TS[min(kk, half - 1)]               # noqa: E731
+        fuv.append([(0.6, tv(k)), (0.6, tv(k + 1)), (0.4, tv(k + 1)), (0.4, tv(k))])
+    faces.append(tuple(range(n))[::-1]); fuv.append([(0.5 + 0.4 * np.cos(2 * np.pi * k / n), 0.06 + 0.05 * np.sin(2 * np.pi * k / n)) for k in range(n)][::-1])
+    m = bpy.data.meshes.new(f"sneaker_{s_}"); m.from_pydata(verts, [], faces); m.update()
+    bm_ = bmesh.new(); bm_.from_mesh(m); bmesh.ops.recalc_face_normals(bm_, faces=bm_.faces); bm_.to_mesh(m); bm_.free()
+    ul = m.uv_layers.new(name="proj")
+    for pi, poly in enumerate(m.polygons):
+        src = faces[pi]; uvs = dict(zip(src, fuv[pi]))
+        for li, vi in zip(poly.loop_indices, poly.vertices):
+            ul.data[li].uv = uvs[vi]
+    o = bpy.data.objects.new(f"sneaker_{s_}", m); bpy.context.scene.collection.objects.link(o)
+    o.vertex_groups.new(name=f"foot.{s_}").add(list(range(len(verts))), 1.0, "REPLACE")
+    return o
+
+
+shoe_png = shoe_texture(os.path.join(D, "shoe.png"))
+smat = mat(NAME + "_shoe", shoe_png)
+shoes = [sneaker(s_) for s_ in "LR"]
+for o in shoes:
+    o.data.materials.append(smat)
+bpy.ops.object.select_all(action="DESELECT")
+for o in shoes:
+    o.select_set(True)
+body.select_set(True); bpy.context.view_layer.objects.active = body
+bpy.ops.object.join()
+for p in me.polygons:
+    p.use_smooth = False
 print(f"{NAME}: {len(me.polygons)} faces, {len(me.vertices)} verts, {len(rig.data.bones)} bones; z_eye {z_eye:.3f} chin {z_chin:.3f} top {Z_TOP:.3f}")
 bpy.ops.wm.save_as_mainfile(filepath=os.path.join(D, NAME + ".blend"))

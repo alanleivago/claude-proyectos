@@ -32,6 +32,12 @@ ACT = {k: HU.load_action(k) for k in ("walk_test", "startle_kimodo", "shrug_cmu1
 for n_, xy in (("dogbed", (1.85, 0.62)), ("dogbed_c", (1.85, 0.62))):
     o_ = bpy.data.objects[n_]; o_.location.x, o_.location.y = xy
 bpy.data.objects["toy_bone"].location = (-0.9, 0.95, 0.004)
+# set fixes (review 2026-11-11): a real wooden top on the TV cabinet (the TV sits on it), and the owner's portrait on
+# the wall becomes a funny dog picture (STYLE: wall pictures are dog images)
+box("tv_cab_top", (1.66, 0.5, 0.03), (0, LY0 + 0.25, 0.555), CT, 2.0)   # noqa: F821
+for n_ in ("tv", "tv_screen"):
+    bpy.data.objects[n_].location.z += 0.03
+_pic = bpy.data.objects["pic1"]; _pic.data.materials.clear(); _pic.data.materials.append(mtex("pic_dog"))   # noqa: F821
 SHADOW = CSH[3]                                                         # noqa: F821  contact blob under the human
 
 
@@ -77,7 +83,7 @@ def shot_a(f):
 
 # ---- shot B: dog hop + bark, startle, face swap, slow push-in to his face
 B_LOC = (0.25, -1.05)
-B_DOG = (-0.42, -1.18)
+B_DOG = (-0.5, -1.15)                                                    # nose ~30 cm from his shins (no overlap)
 HOP0, BARK_F, SCARE_F = 6, 9, 11                                         # frames into the shot (scare = Kimodo frame 9)
 K_OFF = 2                                                                # Kimodo frame 1 at shot frame 2
 
@@ -99,15 +105,12 @@ def shot_b(f):
             D.rot(arm, "jaw", (1, 0, 0), 0.5 * math.sin(math.pi * b))    # noqa: F821
             D.rot2(arm, "neck", [((1, 0, 0), -0.25 * math.sin(math.pi * b))])   # noqa: F821
     ground_dog(0)                                                        # noqa: F821
-    # camera: medium at human height -> slow push-in onto the face. Smooth path from fixed key points (it used to follow
-    # the head every frame and inherited the step bob = camera shake): the face ends ~1.3 m back (+X) after his jump.
+    # camera (review: keep the dog in frame): from the sofa side at human height, a slow push-in that follows him as he
+    # jumps back, framing owner + dog to the end (smooth fixed key points: no head-bob shake)
     u = ease(k / 90.0)
-    end_face = Vector((B_LOC[0] + 1.32, B_LOC[1], 1.62))
-    near = end_face + Vector((-1.35, -0.6, -0.08))                       # medium close-up, not the face filling the frame
-    far = Vector((-1.2, -2.25, 1.45))                                    # the dog's hop reads on the left of frame
-    pos = far.lerp(near, u)
-    tgt = Vector((B_LOC[0] - 0.2, B_LOC[1], 1.05)).lerp(end_face, ease(k / 75.0))
-    cam(tuple(pos), tuple(tgt), 24 + 6 * u)                             # noqa: F821
+    pos = Vector((0.3, 1.05, 1.45)).lerp(Vector((0.72, 0.95, 1.42)), u)
+    tgt = Vector((0.05, -1.1, 0.8)).lerp(Vector((0.66, -1.1, 0.98)), u)
+    cam(tuple(pos), tuple(tgt), 20 - 2 * u)                              # noqa: F821  (slight widen as he jumps back)
 
 
 # ---- shot C: the shrug (palms up) with the smile; the dog wags; short orbit

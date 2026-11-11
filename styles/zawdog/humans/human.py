@@ -38,7 +38,9 @@ class Human:
         self.body = next(o for o in dst.objects if o.type == "MESH")
         self.mface = self.body.material_slots[1].material; self.msheet = self.body.material_slots[0].material
         if flat_shading:
-            flat(self.mface); flat(self.msheet)
+            for sl in self.body.material_slots:                       # sheet, face portrait, modelled sneakers
+                if sl.material and "img" in sl.material.node_tree.nodes:
+                    flat(sl.material)
         self.faces = {}
         for e in EXPR:
             p = os.path.join(self.dir, "faces", e + ".png")
