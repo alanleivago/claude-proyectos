@@ -8,11 +8,39 @@ const spanOf = (id) => shotSpan(SHOT_LIST.findIndex((r) => r[0] === id));
 const wAfter = (w, t0, fb) => { const x = WORDS.find((q) => q.s >= t0 - 0.01 && q.w.replace(/[^\w]/g, '').toLowerCase() === w.toLowerCase()); return x ? x.s : fb; };
 // camera: keys give the move, a creep and a slow orbit keep it alive, the last 0.35 s rush into the cut
 function camMove(K, lt, id, o = {}) {
+  if (C3_SNAP && SNAPS[id] && !SNAP_BUILD) return c3SnapCam(snapKeys(id, K), lt);   // ref 6WTahOqdEl4: hold, then snap to what the voice names
+  if (C3_SNAP) { const c = c3CamAt(K, lt); return { p: c.p, l: c.l, fov: c.fov }; }   // (while snap keys are being measured: the plain framing)
   const c = c3CamAt(K, lt), [a, b] = spanOf(id), dur = b - a;
   const P = V3(...c.p), L = V3(...c.l), d = L.clone().sub(P), dist = d.length(); d.normalize();
   const off = P.clone().sub(L).applyAxisAngle(V3(0, 1, 0), (o.orbit ?? 0.03) * lt);
   const tail = clamp((lt - (dur - 0.35)) / 0.35, 0, 1.6), push = (o.creep ?? 0.05) * lt + (o.rush ?? 0.09) * tail * tail;
   return { p: L.clone().add(off).add(d.multiplyScalar(dist * push)).toArray(), l: c.l, fov: c.fov };
+}
+// the snap keys of a shot, measured ONCE (user: the camera shook when targets were re-measured every frame as arms moved):
+// each target box is read with the shot posed at that key's own time (a dry run), so every frame and every export worker
+// gets the same keys. A mid-hold punch-in (+18 %, same subject) only where the hold is > 1.2 s.
+let SNAP_BUILD = false; const SNAP_KEYS = {};
+function snapKeys(id, K) {
+  if (SNAP_KEYS[id]) return SNAP_KEYS[id];
+  const c = c3CamAt(K, 0), dir = V3(...c.l).sub(V3(...c.p)), i = SHOT_LIST.findIndex((r) => r[0] === id), [t0, end] = shotSpan(i), S = SNAPS[id], keys = [];
+  const boxAt = (t, tg) => { const keep = [C3_DRY, CUR_SHOT, TT]; SNAP_BUILD = true; C3_DRY = true; CUR_SHOT = id; TT = t;
+    try { SHOT_FN[id](t, clamp((t - t0) / (end - t0)), t - t0); return snapBox(id, tg); } finally { SNAP_BUILD = false; [C3_DRY, CUR_SHOT, TT] = keep; } };
+  S.forEach(([t, tg, fill], j) => { const t1 = j + 1 < S.length ? S[j + 1][0] : end, box = boxAt(Math.min(t + 0.25, t1 - 0.05), tg);
+    keys.push([Math.max(0, t - t0), ...c3FrameBox(box, dir, fill, c.fov)]);
+    if (t1 - t > 1.2) keys.push([(t + t1) / 2 - t0, ...c3FrameBox(box, dir, Math.min(0.95, fill * 1.18), c.fov)]); });
+  return (SNAP_KEYS[id] = keys);
+}
+// the world box of a snap target list (see SNAPS in shots.js); people are read live from the shot's set
+function snapBox(id, tg) {
+  const set = SHOT_LIST.find((r) => r[0] === id)[2], s = { rest: RS.s, street: SX.s, care: CR.s }[set], B = new THREE.Box3();
+  for (const x of tg) {
+    if (Array.isArray(x)) { B.union(new THREE.Box3().setFromCenterAndSize(V3(x[0], x[1], x[2]), V3(x[3], x[4], x[5] ?? 0.5))); continue; }
+    const [k, n] = x.split(':'), o = k === 'o' ? s && s[n] : s && s.p && s.p[n] && s.p[n].g; if (!o) continue;
+    o.updateMatrixWorld(true); const b = new THREE.Box3().setFromObject(o); if (b.isEmpty()) continue;
+    if (k === 'u') b.min.y = b.max.y - (b.max.y - b.min.y) * 0.55;
+    B.union(b);
+  }
+  return B.isEmpty() ? new THREE.Box3().setFromCenterAndSize(V3(0, 8, 20), V3(10, 10, 1)) : B;
 }
 const rackOf = (lt, id, a, b) => { const [t0, t1] = spanOf(id); return lerp(a, b, EZ.io(clamp(lt / (t1 - t0)))); };
 // blurred foreground props: placed in the WORLD where `at` (camera space) is at the shot's first frame, then the camera

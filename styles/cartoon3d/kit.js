@@ -368,6 +368,19 @@ function c3HeadDisc(x, w, h, skin) {   // creamy disc, glow brighter at upper le
   x.beginPath(); x.ellipse(cx, cy, r, r * 0.96, 0, 0, TAU); x.fillStyle = g; x.fill();
   x.lineWidth = w * 0.035; x.strokeStyle = C3.ink; x.stroke();
 }
+// C3_HEADSHADE (2026-11-08, tutorial youtube _XllAGyvdd8, fuentes/cartoon3d/tut-XllAGyvdd8-frames.md): the head reads as a
+// lit sphere — a soft highlight up-left, a warm falloff to the lower-right edge, a small specular dot. Opt-in overlay plane.
+let C3_HEADSHADE = null;
+function c3HeadShade(x, w, h) {
+  const r = w * 0.425, cx = w / 2, cy = h / 2, S = C3_HEADSHADE || {};
+  x.save(); x.beginPath(); x.ellipse(cx, cy, r, r * 0.96, 0, 0, TAU); x.clip();
+  const g = x.createRadialGradient(cx - r * 0.38, cy - r * 0.42, r * 0.05, cx - r * 0.1, cy - r * 0.1, r * 1.25);
+  g.addColorStop(0, `rgba(255,255,250,${S.hi ?? 0.35})`); g.addColorStop(0.35, 'rgba(255,240,220,0)'); g.addColorStop(0.72, 'rgba(150,90,50,0.10)');
+  g.addColorStop(1, `rgba(120,64,34,${S.edge ?? 0.55})`); x.fillStyle = g; x.fillRect(0, 0, w, h);
+  const s = x.createRadialGradient(cx - r * 0.42, cy - r * 0.5, 0, cx - r * 0.42, cy - r * 0.5, r * 0.16);
+  s.addColorStop(0, `rgba(255,255,255,${S.spec ?? 0.55})`); s.addColorStop(1, 'rgba(255,255,255,0)'); x.fillStyle = s; x.fillRect(0, 0, w, h);
+  x.restore();
+}
 function c3BodyBean(x, w, h, o) {   // flat bean torso with a soft side shade, collar, tie, pattern, ink rim
   const P = new Path2D(); const cx = w / 2;
   P.moveTo(cx, h * 0.04); P.bezierCurveTo(cx + w * 0.42, h * 0.04, cx + w * 0.44, h * 0.55, cx + w * 0.4, h * 0.82);
@@ -419,6 +432,7 @@ function c3Person(o = {}) {
   const hp = (wd, ht, map, z, ro) => { const m = new THREE.Mesh(new THREE.PlaneGeometry(wd, ht), mat(map)); m.position.z = z; m.renderOrder = ro; headG.add(m); return m; };
   const hImg = c3Img(`head_${o.skinKey ?? 'white'}`);
   hp(HS, HS * (hImg ? hImg.aspect : 1), hImg ? hImg.tex : c3SprTex(`head_${o.skinKey ?? 'white'}`, (x, w, h) => c3HeadDisc(x, w, h, o.skin)), 0, 2);
+  if (C3_HEADSHADE) hp(HS, HS * (hImg ? hImg.aspect : 1), c3SprTex('headshade', (x, w, h) => c3HeadShade(x, w, h)), 0.006, 2.5);   // tutorial _XllAGyvdd8 look: a sphere-like head
   const faceM = hp(HS * 1.2, HS * 1.2, c3FaceTex('neutral'), 0.024, 3);   // layers: head 0, beard/moustache 0.012, face 0.024, hair 0.032, glasses 0.04   // refs: eyes ~0.25 of the head's width apart
   // hair: the lit cap only (the dark back of the head cut away), glued to the head: the hairline measured in each
   // sprite (fraction from its top, at the centre columns) sits on the forehead at +0.24 D, as in ref 6 (D = disc diameter)
@@ -575,7 +589,8 @@ function c3Render(scene, cam, o = {}) {
   cam.layers.set(C3.L_BG); r.setClearColor(o.bg ?? '#000000', 1); r.render(scene, cam);
   ctx.filter = o.grade ?? 'saturate(1.3) contrast(1.06)'; ctx.drawImage(cv, 0, 0, W, H); ctx.filter = 'none';
   if ((o.bgBlur ?? 0) > 0.3) { ctx.filter = `blur(${o.bgBlur.toFixed(2)}px) ${o.grade ?? 'saturate(1.3) contrast(1.06)'}`; ctx.drawImage(cv, 0, 0, W, H); ctx.filter = 'none'; }
-  if (C3_INK2) c3EdgePass(scene, cam, C3.L_BG, o.bgBlur ?? 0);   // Ricks marker ink on the background
+  if (typeof C3_AO !== 'undefined' && C3_AO) c3AOPass(scene, cam, o.bgBlur ?? 0);   // opt-in SSAO on the set (setlook.js)
+  if (C3_INK2 && C3_INK2.bg !== false) c3EdgePass(scene, cam, C3.L_BG, o.bgBlur ?? 0);   // Ricks marker ink on the background (opt-out: C3_INK2.bg = false, setlook.js)
   // 2. the subject layer, sharp
   cam.layers.set(C3.L_FOCUS); r.setClearColor(0x000000, 0); r.render(scene, cam); ctx.drawImage(cv, 0, 0, W, H);
   if (C3_INK2) c3EdgePass(scene, cam, C3.L_FOCUS, 0);
@@ -631,7 +646,7 @@ function c3CamFx(c, t) {
   const F = C3_CAMFX, f = Math.max(0, (t - (C3_SHOT ? C3_SHOT.t0 : t)) * FPS);
   let s = F.rate * f;
   for (const tp of F.punch) { const x = (t - tp) * FPS; if (x > 0) for (let i = 0; i < Math.min(x, F.punchN); i++) s += (F.punchRate - F.rate) * clamp(Math.min((i + 0.5) / 8, (F.punchN - i - 0.5) / 8)); }
-  const k = Math.max(1 - F.max, Math.exp(-s));
+  const k = C3_SNAP ? c3SnapPunch(t) : Math.max(1 - F.max, Math.exp(-s));
   const p = c.p.map((v, j) => c.l[j] + (v - c.l[j]) * k);
   let roll = (c.roll ?? 0) + ((C3_SHOT && F.roll[C3_SHOT.id]) || 0) * Math.PI / 180, l = c.l;
   let a = 0;
@@ -642,6 +657,61 @@ function c3CamFx(c, t) {
     l = [l[0] - (d[2] / h) * m, l[1] + 0.6 * m, l[2] + (d[0] / h) * m]; roll += a * 0.004;
   }
   return Object.assign({}, c, { p, l, roll });
+}
+
+// C3_SNAP (2026-11-03, user: "camera moves exactly this dynamic from now on"; ref youtube.com/shorts/6WTahOqdEl4,
+// measured frame by frame in refs-ext/cam-6WTahOqdEl4 + fuentes/cartoon3d/camara-dinamica-6WTahOqdEl4.md): the camera
+// HOLDS almost still (drift ~4 px/f at 1080), then SNAPS to the next framing in ~5 frames (3-11) with a bell speed curve
+// peaking ~255 px/f (p90 630) and a dolly/zoom of up to +-86 % per snap, ~80 snaps a minute (one every ~0.6 s, on top of
+// ~50 cuts a minute); punch words get a crash zoom-in; fast frames carry motion blur; place changes are whip pans
+// (1-3 frames, huge travel + roll + smear). Opt-in: a piece sets C3_SNAP = Object.assign({}, C3_SNAP_DEF) in shots.js;
+// sets frame each shot with c3SnapCam(keys, lt) (several framings per shot, snapping on spoken words).
+const C3_SNAP_DEF = { dur: 5 / 30, punchK: 0.88, punchMax: 0.25, drift: 0.0008, blur: 12, blurMin: 0.2, whip: 3 / 30 };
+let C3_SNAP = null, C3_SNAP_V = 0;   // C3_SNAP_V: how fast the camera snaps on this frame, 0..1 (motion blur reads it)
+const c3Smoother = (x) => x * x * x * (x * (x * 6 - 15) + 10);
+// frame a world box (the thing the voice names) from the direction `dir`: the whole box fits (its height = `fill` of the
+// frame height, or its width fits the 9:16 width), sitting a little above centre, clear of the subtitle band
+// (ref 6WTahOqdEl4 re-measured: snaps land on the narrated object, texts whole and legible, heads always whole)
+function c3FrameBox(box, dir, fill = 0.7, fov = 42) {
+  const C = box.getCenter(new THREE.Vector3()), d = dir.clone().normalize(), up0 = new THREE.Vector3(0, 1, 0);
+  const r = new THREE.Vector3().crossVectors(d, up0).normalize(), u = new THREE.Vector3().crossVectors(r, d).normalize();
+  let hw = 0, hh = 0, front = 0;
+  for (let i = 0; i < 8; i++) { const q = new THREE.Vector3(i & 1 ? box.max.x : box.min.x, i & 2 ? box.max.y : box.min.y, i & 4 ? box.max.z : box.min.z).sub(C);
+    hw = Math.max(hw, Math.abs(q.dot(r))); hh = Math.max(hh, Math.abs(q.dot(u))); front = Math.max(front, -q.dot(d)); }
+  const hv = Math.max(hh, hw / (W / H)) / fill, dist = hv / Math.tan(fov * Math.PI / 360) + front;
+  const l = C.clone().addScaledVector(u, -hv * 0.12), p = l.clone().addScaledVector(d, -dist);
+  return [p.toArray(), l.toArray(), fov];
+}
+// keys [[t, p, l, fov], ...] in shot seconds: hold key i until key i+1's t, then snap to it in `dur` s
+function c3SnapCam(K, lt, dur) {
+  dur = dur ?? (C3_SNAP || C3_SNAP_DEF).dur; let i = 0; while (i + 1 < K.length && lt >= K[i + 1][0]) i++;
+  const B = K[i], A = K[Math.max(0, i - 1)], x = i > 0 ? clamp((lt - B[0]) / dur) : 1, e = c3Smoother(x);
+  if (x > 0 && x < 1) C3_SNAP_V = Math.max(C3_SNAP_V, 30 * x * x * (1 - x) * (1 - x) / 1.875);
+  const L = (a, b) => a.map((v, j) => v + (b[j] - v) * e);
+  return { p: L(A[1], B[1]), l: L(A[2], B[2]), fov: A[3] + (B[3] - A[3]) * e };
+}
+// crash zoom-ins on the shot's punch words (replaces the slow punch push when C3_SNAP is on)
+function c3SnapPunch(t) {
+  const F = C3_SNAP, t0 = C3_SHOT ? C3_SHOT.t0 : t; let k = 1;
+  for (const tp of (C3_CAMFX && C3_CAMFX.punch) || []) { if (tp < t0 - 0.01 || t < tp) continue; const x = clamp((t - tp) / F.dur);
+    k *= 1 + (F.punchK - 1) * c3Smoother(x); if (x < 1) C3_SNAP_V = Math.max(C3_SNAP_V, 30 * x * x * (1 - x) * (1 - x) / 1.875); }
+  return Math.max(1 - F.punchMax, k) * Math.exp(-F.drift * Math.max(0, (t - t0) * FPS));
+}
+// motion blur: when the camera snaps, average `blur` sub-frames across ~0.9 frame (draw(t) renders the whole frame)
+function c3SnapBlur(draw, t) {
+  C3_SNAP_V = 0; draw(t); if (!C3_SNAP || C3_SNAP_V < C3_SNAP.blurMin) return;
+  const L = c3SnapBlur.L ||= Object.assign(document.createElement('canvas'), { width: W, height: H }), lx = L.getContext('2d'), n = C3_SNAP.blur, T0 = TT;
+  lx.globalAlpha = 1; lx.drawImage(ctx.canvas, 0, 0);
+  for (let k = 1; k < n; k++) { const tt = t + ((k / (n - 1)) - 0.5) * 0.6 / FPS; TT = tt; draw(tt); lx.globalAlpha = 1 / (k + 1); lx.drawImage(ctx.canvas, 0, 0); }
+  TT = T0; ctx.save(); screen(); ctx.globalAlpha = 1; ctx.drawImage(L, 0, 0); ctx.restore();
+}
+// whip pan on the frame already drawn: u 0..1 = how far into the whip (1 = fastest), dir +-1; smeared copies + roll
+function c3Whip(u, dir) {
+  if (u <= 0) return; const L = c3Whip.L ||= Object.assign(document.createElement('canvas'), { width: W, height: H }), lx = L.getContext('2d');
+  lx.clearRect(0, 0, W, H); lx.drawImage(ctx.canvas, 0, 0); const sh = dir * W * 0.75 * u * u, rot = dir * 0.12 * u * u, n = 7, step = dir * W * 0.06 * u;
+  ctx.save(); screen(); ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
+  for (let k = 0; k < n; k++) { ctx.globalAlpha = k ? 1 / (k + 1) : 1; ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.translate(W / 2 + sh - k * step, H / 2); ctx.rotate(rot); ctx.scale(1 + 0.25 * u, 1 + 0.25 * u); ctx.drawImage(L, -W / 2, -H / 2); }
+  ctx.restore();
 }
 
 // ---- colour looks measured on the 7 refs (per shot: mean luminance 0.3-0.6, whites rarely clipped, shadows tinted):
@@ -973,6 +1043,9 @@ function c3EdgeMats() {
     'void main(){ vUv = uv; vec4 mv = modelViewMatrix * vec4(position,1.0); vN = normalize(normalMatrix * normal); vD = -mv.z; gl_Position = projectionMatrix * mv; }';
   C3E.solid = new THREE.ShaderMaterial({ vertexShader: vs, uniforms: { far: { value: 300 } }, side: THREE.DoubleSide,
     fragmentShader: 'uniform float far; varying vec3 vN; varying float vD; void main(){ vec3 n = normalize(vN); if(!gl_FrontFacing) n = -n; gl_FragColor = vec4(n*0.5+0.5, vD/far); }' });
+  // opt-in (setlook.js): meshes flagged userData.inkOcc draw no ink but still hide the ink of what is behind them
+  C3E.occ = new THREE.ShaderMaterial({ vertexShader: vs, uniforms: { far: { value: 300 } }, side: THREE.DoubleSide,
+    fragmentShader: 'uniform float far; varying float vD; void main(){ gl_FragColor = vec4(0.0, 0.0, 0.0, vD/far); }' });
   C3E.sprite = (map) => new THREE.ShaderMaterial({ vertexShader: vs, uniforms: { far: { value: 300 }, map: { value: map } }, side: THREE.DoubleSide,
     fragmentShader: 'uniform float far; uniform sampler2D map; varying float vD; varying vec2 vUv; void main(){ if(texture2D(map,vUv).a < 0.5) discard; gl_FragColor = vec4(0.5,0.5,1.0, vD/far); }' });
   C3E.rt = new THREE.WebGLRenderTarget(W, H, { type: THREE.HalfFloatType, minFilter: THREE.NearestFilter, magFilter: THREE.NearestFilter });
@@ -983,8 +1056,10 @@ function c3EdgeMats() {
     fragmentShader: [
       'uniform sampler2D tex; uniform vec2 px; uniform float r, tn, td, al; uniform vec3 col; varying vec2 vUv;',
       'void main(){ vec4 c = texture2D(tex, vUv); float e = 0.0;',
+      '  if (c.a > 0.0 && dot(c.rgb, c.rgb) < 1e-4) { gl_FragColor = vec4(col, 0.0); return; }',
       '  for (int i = 0; i < 8; i++) { float a = float(i) * 0.7853982; vec2 o = vec2(cos(a), sin(a)) * px * r;',
       '    vec4 s = texture2D(tex, vUv + o);',
+      '    if (s.a > 0.0 && dot(s.rgb, s.rgb) < 1e-4) { if (c.a <= 0.0 || s.a < c.a * 0.995) continue; }',
       '    bool ce = c.a > 0.0; bool se = s.a > 0.0;',
       '    if (ce != se) { e = 1.0; break; }',
       '    if (!ce) continue;',
@@ -1004,7 +1079,8 @@ function c3EdgePass(scene, cam, layer, blurPx) {
     if (m.userData.hull || m.userData.noInk2 || (mat && mat.side === THREE.BackSide)) { swap.push([m, mat, true]); m.visible = false; return; }
     const sprite = mat && mat.transparent && (mat.alphaTest > 0 || mat.map);
     swap.push([m, mat, true]);
-    if (sprite && mat.map) { m.userData.c3e ||= E.sprite(mat.map); m.material = m.userData.c3e; m.material.uniforms.far.value = cam.far; }
+    if (m.userData.inkOcc && !(sprite && mat.alphaTest > 0)) { m.material = E.occ; E.occ.uniforms.far.value = cam.far; }
+    else if (sprite && mat.map) { m.userData.c3e ||= E.sprite(mat.map); m.material = m.userData.c3e; m.material.uniforms.far.value = cam.far; }
     else if (sprite) { m.visible = false; }
     else { m.material = E.solid; E.solid.uniforms.far.value = cam.far; }
   });
@@ -1021,7 +1097,7 @@ function c3EdgePass(scene, cam, layer, blurPx) {
 // real cast shadows from the scene's key light (the strongest DirectionalLight), set up once per scene
 function c3ShadowSetup(scene) {
   if (scene.userData.c3shadow) return;
-  const { r } = c3Renderer(); r.shadowMap.enabled = true; r.shadowMap.type = THREE.PCFSoftShadowMap;
+  const { r } = c3Renderer(); r.shadowMap.enabled = true; r.shadowMap.type = C3_SHADOW.type === 'vsm' ? THREE.VSMShadowMap : THREE.PCFSoftShadowMap;   // opt-in VSM: soft, acne-free
   let key = null; const hemi = [];
   scene.traverse((o) => { if (o.isDirectionalLight && (!key || o.intensity > key.intensity)) key = o; if (o.isHemisphereLight || o.isAmbientLight) hemi.push(o); });
   scene.userData.c3shadow = true; if (!key) return;
@@ -1039,14 +1115,14 @@ function c3ShadowSetup(scene) {
       const cm = new THREE.Mesh(m.geometry, sm); cm.receiveShadow = true; cm.userData.c3catch = true; cm.userData.noInk2 = true; cm.layers.mask = m.layers.mask; cm.renderOrder = m.renderOrder + 1; m.add(cm);
     }
     else if (mat.transparent && mat.map && mat.alphaTest > 0) {   // billboard people cast their silhouette
-      m.castShadow = true; m.customDepthMaterial = new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking, map: mat.map, alphaTest: 0.5 });
+      m.castShadow = true; m.customDepthMaterial ||= new THREE.MeshDepthMaterial({ depthPacking: THREE.RGBADepthPacking, map: mat.map, alphaTest: 0.5 });   // toon.js presets its own (offset, no self-shadow acne)
     }
   });
   if (box.isEmpty()) return;
-  const c = box.getCenter(new THREE.Vector3()), rad = Math.min(90, box.getSize(new THREE.Vector3()).length() * 0.5);
+  const c = box.getCenter(new THREE.Vector3()), rad = Math.min(C3_SHADOW.maxRad ?? 90, box.getSize(new THREE.Vector3()).length() * 0.5);
   const dir = C3_SHADOW.dir ? new THREE.Vector3(...C3_SHADOW.dir).normalize() : key.position.clone().sub(key.target.position).normalize();   // Ricks: a raking key so shadows read on the floor
   key.target.position.copy(c); scene.add(key.target); key.position.copy(c).addScaledVector(dir, rad * 2);
-  key.castShadow = true; key.shadow.mapSize.set(C3_SHADOW.size, C3_SHADOW.size); key.shadow.bias = -0.0004; key.shadow.normalBias = 0.03; key.shadow.radius = 4;
+  key.castShadow = true; key.shadow.mapSize.set(C3_SHADOW.size, C3_SHADOW.size); key.shadow.bias = C3_SHADOW.bias ?? -0.0004; key.shadow.normalBias = C3_SHADOW.normalBias ?? 0.03; key.shadow.radius = C3_SHADOW.radius ?? 4; if (C3_SHADOW.blurSamples) key.shadow.blurSamples = C3_SHADOW.blurSamples;
   const sc = key.shadow.camera; sc.left = -rad; sc.right = rad; sc.top = rad; sc.bottom = -rad; sc.near = 0.5; sc.far = rad * 4; sc.updateProjectionMatrix();
   sc.layers.enableAll();
   hemi.forEach((h) => { h.intensity *= C3_SHADOW.dark; }); key.intensity *= C3_SHADOW.key ?? 1;

@@ -14,6 +14,9 @@ const SHOT_FN = {};
 // ALT_BOOM (alternate cut, user 2026-11-02): after the voice the tag is the facade outside, then everything explodes and
 // the film cuts dead mid-blast at 61.0 s. tools: set true, build, export -> renders/final_boom.mp4, set back to false.
 const ALT_BOOM = false;
+// SNAP_TEST (2026-11-03): the ref-6WTahOqdEl4 camera (kit C3_SNAP): holds + 5-frame snaps, crash zooms on punch words,
+// motion blur, hard cuts, whip pans at place changes. Export -> renders/video_only_snap.mp4.
+const SNAP_TEST = false;
 // [id, t0, set file, what we see] — t0 from the voice (take 13 tightened, voice/words.json); one clause per shot
 const SHOT_LIST = [
   ["s01", 0.00, 'street', "You walk into a little restaurant in Tokyo: a lantern-lit alley at dusk, you push through the noren of a tiny wooden restaurant"],
@@ -43,6 +46,38 @@ const SHOT_LIST = [
   ["s25", 54.62, 'rest', "So next time a waiter mixes up your order, maybe just eat the dumplings: you eat one, happy"],
   ["s26", 57.94, ALT_BOOM ? 'street' : 'rest', "(no voice) the tag: the waitress proudly brings THE BURGER to the coffee guy; he shrugs and bites"],
 ];
+// SNAPS (SNAP_TEST, ref 6WTahOqdEl4 re-measured): per shot, the framings the camera holds and snaps between, each on the
+// word that names its subject: [t (absolute s; the first = shot start), targets, fill]. Targets: 'p:who' (a person's
+// whole billboard), 'u:who' (head + torso), 'o:name' (a set mesh), or a box [x, y, z, w, h, d]. c3FrameBox fits the
+// whole target in frame (texts whole, heads whole); zoom-outs reopen the context after each detail.
+const SNAPS = {
+  s01: [[0, ['p:you'], 0.3], [1.68, [[0, 12, 0, 34, 26, 2]], 0.95]],
+  s02: [[1.94, ['p:you', 'p:wait'], 0.6], [2.6, ['u:you', [2.0, 12.6, 28.4, 5, 5]], 0.9]],
+  s03: [[3.02, ['p:wait'], 0.6], [4.26, ['u:wait'], 0.8]],
+  s04: [[5.28, ['o:clkM', 'o:menuM'], 0.85], [5.62, ['o:clkM'], 0.75]],
+  s05: [[6.26, ['p:you', [1.4, 4.2, 28.6, 3, 1.4, 3]], 0.7], [7.2, [[1.4, 4.3, 28.6, 3.4, 1.6, 3]], 0.75]],
+  s06: [[8.42, ['p:you'], 0.55], [9.0, ['u:you'], 0.75]],
+  s07: [[9.58, ['u:you'], 0.75], [9.98, ['o:signM', 'p:you'], 0.9], [11.28, ['o:signM'], 0.85]],
+  s08: [[12.96, ['p:coffee', 'p:wait2'], 0.6], [14.42, ['u:coffee', [11.0, 12.6, 28.4, 5, 5]], 0.9]],
+  s09: [[15.04, [[15.2, 4.2, 28.6, 5.5, 2, 3]], 0.75], [16.76, [[14.6, 4.6, 29, 2.6, 1.8, 2]], 0.6]],
+  s10: [[17.46, ['p:coffee'], 0.5], [18.42, [[0, 8, 30, 48, 14, 20]], 0.95]],
+  s11: [[19.56, ['p:you', [8, 7, 30, 10, 9, 4]], 0.75], [22.12, ['p:you', [8.4, 13.2, 28.8, 5, 3, 1], [5.6, 14.9, 29, 5, 3, 1], [7.8, 6, 28.6, 3, 8, 2]], 0.92]],
+  s12: [[23.36, [[0, 12, 0, 34, 24, 2]], 0.9], [24.98, ['o:sign'], 0.85]],
+  s13: [[26.86, ['p:wait', 'p:wait2', 'p:wait3'], 0.7], [28.58, ['u:wait2'], 0.7]],
+  s14: [[28.82, [[2, 9, 18, 30, 16, 12]], 0.9], [30.08, ['p:dir', [11, 13.6, 28, 5, 2, 1]], 0.75]],
+  s15: [[31.56, ['p:dir', 'p:gran'], 0.65], [32.04, ['u:dir', [5.6, 12.6, 22.4, 5, 5, 1]], 0.9], [32.9, [[2.0, 4.3, 22.8, 3.4, 1.6, 3]], 0.7]],
+  s16: [[33.68, ['u:dir'], 0.7], [35.2, ['u:dir'], 0.8]],
+  s17: [[36.40, ['u:dir', 'u:gran'], 0.75], [36.98, ['u:dir'], 0.82]],
+  s18: [[37.64, [[-26, 13, 0.3, 12, 20, 1]], 0.9], [38.8, ['o:menuM'], 0.9]],
+  s19: [[40.46, [[-8, 11.5, 0.3, 18, 14, 1]], 0.9], [41.08, ['o:tkM'], 0.95]],
+  s20: [[42.66, [[30, 8, 46, 16, 14, 10]], 0.9], [43.82, ['o:hapM'], 0.8]],
+  s21: [[44.76, [[-14.8, 4.4, 28.6, 4.5, 2, 3]], 0.7], [45.76, ['p:d1', 'p:d2', 'p:wait2'], 0.75]],
+  s22: [[47.04, ['p:wait'], 0.6], [50.76, ['u:wait'], 0.75]],
+  s23: [[51.18, ['p:wait'], 0.6]],
+  s24: [[52.22, [[0, 8, 30, 50, 15, 20]], 0.95], [53.96, ['p:wait', 'p:you'], 0.7]],
+  s25: [[54.62, ['p:you'], 0.55], [57.66, ['u:you'], 0.8]],
+  s26: [[57.94, ['p:you', 'p:coffee'], 0.8], [59.0, ['p:coffee', 'p:wait'], 0.7], [60.25, ['u:coffee'], 0.8]],
+};
 // mromidev camera grammar (kit C3_CAMFX, refs-ext/claude-animated-shorts): every hold creeps in, punch words push harder,
 // 4-5 deg tilts on emphasis, 7-frame impact shakes; background lens blur per shot (C3_DOF, CU 7 / MS 5 / wides 0)
 C3_CAMFX = Object.assign({}, C3_CAMFX_DEF, {
@@ -60,12 +95,13 @@ const DISSOLVE = 6 / FPS;
 // framing is set per shot in the set files (ported from the approved test), so no extra widening here
 const SHOT_WIDEN = Object.fromEntries(SHOT_LIST.map(([id]) => [id, ({ s01: 1, s10: 1, s12: 1, s14: 1.15, s20: 1.2, s24: 1, s21: 1.4, s03: 3.0, s16: 2.8, s17: 2.7, s25: 2.6, s06: 2.6, s12: 1.25, s18: 2.1 })[id] ?? 1.9]));   // Ricks framing: full-body medium shots
 const CONTINUOUS = { s07: 's06', s16: 's15', s23: 's22' };   // long takes: the camera glides on, no dissolve
-const CONT_BLEND = 0.55;
+const CONT_BLEND = SNAP_TEST ? 0.2 : 0.55;
+if (SNAP_TEST) { C3_SNAP = Object.assign({}, C3_SNAP_DEF); C3_CAMFX.punch = []; C3_CAMFX.roll = {}; }   // the authored SNAPS are the zooms: no extra punch-ins or rolls on top (user: zooms collided and shook)
 const SHOT_INK = {};
 const SHOT_INSERT = { s04: 1, s05: 1, s09: 1, s18: 1, s19: 1 };
 let CUR_SHOT = null, C3_DRY = false, C3_DRY_CAM = null, CONT_A = null, CONT_ID = null;
 { const setCam0 = c3SetCam;
-  c3SetCam = function (cam, c) { const k = !CUR_SHOT ? 1 : SHOT_INSERT[CUR_SHOT] ? (SHOT_WIDEN[CUR_SHOT] > 1.7 ? SHOT_WIDEN[CUR_SHOT] : 1.7) : SHOT_WIDEN[CUR_SHOT] || 1;   // everything else wider too (Ricks head median ~10 % of frame height)
+  c3SetCam = function (cam, c) { const k = !CUR_SHOT || C3_SNAP ? 1 : SHOT_INSERT[CUR_SHOT] ? (SHOT_WIDEN[CUR_SHOT] > 1.7 ? SHOT_WIDEN[CUR_SHOT] : 1.7) : SHOT_WIDEN[CUR_SHOT] || 1;   // everything else wider too (Ricks head median ~10 % of frame height)
     if (k === 1) return setCam0(cam, c);
     const p = c.p.map((v, j) => c.l[j] + (v - c.l[j]) * k); return setCam0(cam, Object.assign({}, c, { p })); };
   const render1 = c3Render;
@@ -117,7 +153,11 @@ function drawShot(i, t) {
 const SHOT_LAYER = (() => { const c = document.createElement('canvas'); c.width = W; c.height = H; return c; })();
 function sceneApple() {
   const t = TT, i = shotIndexAt(t), [a] = shotSpan(i);
-  if (i > 0 && t < a + DISSOLVE && !CONTINUOUS[SHOT_LIST[i][0]]) {   // dissolve: the outgoing shot keeps moving under the incoming one (not inside a long take)
+  const place = (j) => j > 0 && j < SHOT_LIST.length && SHOT_LIST[j][2] !== SHOT_LIST[j - 1][2];
+  if (C3_SNAP) c3SnapBlur((tt) => { const j = shotIndexAt(tt), [a0] = shotSpan(j), n = j + 1 < SHOT_LIST.length ? shotSpan(j + 1)[0] : 1e9, wh = C3_SNAP.whip;
+    drawShot(j, tt);   // hard cuts; a whip pan across every change of place
+    if (place(j + 1) && tt > n - wh) c3Whip((tt - (n - wh)) / wh, -1); else if (place(j) && tt < a0 + wh) c3Whip(1 - (tt - a0) / wh, 1); }, t);
+  else if (i > 0 && t < a + DISSOLVE && !CONTINUOUS[SHOT_LIST[i][0]]) {   // dissolve: the outgoing shot keeps moving under the incoming one (not inside a long take)
     drawShot(i - 1, t);
     const lx = SHOT_LAYER.getContext('2d'); lx.clearRect(0, 0, W, H); lx.drawImage(ctx.canvas, 0, 0);
     drawShot(i, t);
