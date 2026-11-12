@@ -378,6 +378,11 @@ REGM = np.where(CORN >= 0, flat_reg[np.maximum(CORN, 0)], 0).astype(int)
 skin_im = bpy.data.images.load(os.path.join(D, "skin.png")); skin_im.scale(S, S)
 SK = (np.array(skin_im.pixels[:], np.float32).reshape(S, S, 4)[::-1, :, :3] * 255)
 TEX = GA.paint(PM, NM, REGM, COV, SK, LM, GKEY)
+if OPT.get("flow"):                                                                 # clothes = the Flow outfit sheet (garments_flow.py)
+    import garments_flow as GF
+    _sh = bpy.data.images.load(os.path.join(D, "sheet_bleed.png")); _w, _h = _sh.size
+    SHEET = np.array(_sh.pixels[:], np.float32).reshape(_h, _w, 4)[::-1, :, :3] * 255
+    TEX = GF.project(TEX, PM, NM, COV, SHEET, json.load(open(os.path.join(D, "sheet.json"))), LM, OPT["height"], CO, REG)
 TEX = GA.dilate(TEX, COV, 6)
 TEX = TEX.reshape(S // 2, 2, S // 2, 2, 3).mean((1, 3))                             # 256 px PS1 texels
 bim = next(im for im in bpy.data.images if os.path.basename(im.filepath) == "body.png")

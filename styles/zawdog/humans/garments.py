@@ -1,4 +1,4 @@
-"""Kit v5 garments: clothes PAINTED into the low-poly body's own MakeHuman-UV texture (nothing can poke through), plus
+﻿"""Kit v5 garments: clothes PAINTED into the low-poly body's own MakeHuman-UV texture (nothing can poke through), plus
 the matching silhouette (vertex inflation). Pure numpy, used by build_human3.py inside Blender.
 
 paint(): rasterise the body triangles into UV space (a position / normal / region map), then evaluate a procedural
@@ -223,6 +223,10 @@ def paint(pos, nrm, reg, cov, skin, L, G, seed=1):
         # finger separation: darker lines between the fingers (texels whose normal turns sideways on the hand)
         side = hand & (np.abs(nrm[..., 0]) > 0.75)
         out[side] *= 0.8
+    cloth = top_m | bot_m
+    if open_v:
+        cloth = cloth | inner_m
+    paint.masks = dict(cloth=cloth, top=top_m, bot=bot_m, t=t, arm=arm, leg=leg, torso=torso, front=front, tc=tc, bc=bc, sleeve=sleeve)      # garments_flow.py (Flow photo clothes)
     return np.clip(out, 0, 255)
 
 
