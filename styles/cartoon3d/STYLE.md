@@ -4,6 +4,8 @@ Guía autosuficiente para hacer un short nuevo de la serie desde cero, en cualqu
 de aquí choca con una nota de `memoria/`, manda la nota más reciente (fecha en la nota). Última actualización:
 2026-11-11, tras lost-luggage (APROBADO y enviado).
 
+> **NIVEL APROBADO (2026-11-12): `pieces/trash-library`** — el usuario: "quedó excelente, este es el nivel que quiero para estos videos". Todo short cartoon3d nuevo arranca copiando trash-library: cámara secuencial Ricks (`seqCam`/`CAMSEQ`, un plano continuo por set, whips entre sets; ver `fuentes/cartoon3d/camara-secuencial-ricks.md`), grade Ricks de `shots.js` COLOR, `stableShadow` + gemelos de sombra, `pose({look, heading})`, props en capa FOCUS + oclusores de profundidad, sets densos y detallados, y las lecciones de §9 "trash-library v2". Sonido: copiar `pieces/trash-library/sound`.
+
 **Qué es:** shorts verticales en inglés (1080×1920, 30 fps, 60,5 s) que cuentan un hecho real y raro como una escena
 ("You walk into…"). Personajes 2D-3D dibujados en código (`toon.js`: cabeza redonda blanca, cara de kit, brazos de
 goma, manos-punto), dentro de sets 3D densos de three.js con luz, sombras y color diseñados. Cámara siempre en
@@ -38,6 +40,9 @@ Lo que NO viaja por git y hay que tener instalado o copiado aparte:
 VoiceStudio desde el audio de referencia original (pedírselo al usuario o copiar el perfil desde
 `%APPDATA%\OmniVoice` del PC), y poner el id nuevo en `voice/gen_takes.py`. La misma semilla en otro hardware
 (MPS contra CUDA) puede no dar exactamente la misma toma: los takes ya entregados no se regeneran, solo los nuevos.
+**Hecho (2026-11-11):** en el Mac la voz es el perfil **"3d cartoon" `227af074`** (la de punkpolyshorts/doggo). Todos los
+`voice/gen_takes.py` eligen el id por máquina: `"227af074" if sys.platform == "darwin" else "d9b69bea"`; mantener ese
+switch al copiar `gen_takes.py` a una pieza nueva.
 
 ---
 
@@ -291,6 +296,10 @@ para personajes**, nunca los sprites viejos `c3Person`. Aprobado en `pieces/toon
 ## 7. Cámara, cortes y texto
 
 **Cámara** (estudios: `fuentes/cartoon3d/ricks-documentos-camara.md`, `camara-dinamica-6WTahOqdEl4.md`)
+- **REGLA DEL USUARIO (2026-11-11): cámara secuencial tipo Ricks en todos los videos** — un plano continuo que viaja
+  por el set encadenando push, whip, órbita con paralaje, grúa y roll holandés; cambia de dirección cada 1,2-1,8 s; 3-4
+  ejes a la vez el 60-75 % del tiempo; cambios de lugar con whip + motion blur, nunca un paneo 2D en una sola dirección.
+  Medido en `fuentes/cartoon3d/camara-secuencial-ricks.md` (refs i4hYq1oSXTg, 7xS87iActkU, Mz72MuPgnGY).
 - **Siempre en movimiento** (Ricks: solo 4-10 % de frames quietos). En common2 `camMove(K, lt, id)`: los encuadres de
   `SNAPS[id] = [[t, targets, fill], …]` cambian SOBRE la palabra que nombra al objetivo con un movimiento con easing de
   ~0,34-0,45 s, y encima cada plano tiene deriva propia: **push-in** (`push` 0,13/s ≈ 10-20 %/s), **órbita** (±0,05
@@ -378,6 +387,31 @@ Pipeline en `pieces/<p>/sound/` (copiar de lost-luggage; correr desde esa carpet
 - [ ] gente que desaparece/teletransporta entre planos; cámara que atraviesa paredes
 - [ ] voz cortada al inicio/final de una palabra; música que no suena desde el frame 0; SFX tapando la voz
 - [ ] sprites con bordes de quad visibles; props pequeños que quedan enormes; parpadeo de props ambientales
+
+**Lecciones de trash-library v2 (2026-11-12, revisión del usuario):**
+- [ ] **Sombras estables:** el frustum de sombra no puede seguir a la cámara libremente (titila/"nada"): snap del target de la
+  luz a texels del shadow map en espacio de luz cada frame (`stableShadow` en common2). Las tarjetas NO proyectan su propia
+  sombra (miran a la cámara → la sombra gira en cada órbita): un gemelo invisible de la tarjeta orientado a la luz proyecta
+  la silueta (`toonShadowTwin`). Revisar tiras de frames consecutivos (1/30 s) en cada set.
+- [ ] **Nada de tarjetas de papel en grúas/cenitales:** la tarjeta se inclina hacia una cámara alta (pitch en `pose`), y la
+  gente solo desaparece fuera de cuadro; nunca verla de canto.
+- [ ] **Capas = interpenetración:** la capa FOCUS se dibuja ENCIMA del set. Props sostenidos van en FOCUS, delante del plano
+  de la tarjeta (empujados hacia la cámara por su media profundidad); lo que debe tapar a una persona (cama, sillón, compuerta,
+  mostrador, techo, columnas) lleva un doble solo-profundidad en FOCUS (`colorWrite:false`, inkOcc, renderOrder -5), creado
+  DESPUÉS de `c3SetLook` (si no, lo vuelve material iluminado). Muebles del set NUNCA en FOCUS (atraviesan techos).
+- [ ] **Agarre de props:** gripProp en las dos manos + el prop escalado a la distancia entre manos, estable cuadro a cuadro;
+  libros que salen de una bolsa SALEN visiblemente (la mano entra, el libro sube), nunca aparecen de golpe.
+- [ ] **Lágrimas ancladas a los ojos:** se dibujan dentro de la tarjeta con el layout de ojos de la cara para el facing
+  actual, cada frame (no un sprite 3D aparte que se desfasa).
+- [ ] **Personajes vivos:** `look:[x,z]` (facing calculado desde la cámara cada frame → giran con la órbita), anticipación
+  (agacharse antes de saltar), aterrizaje con squash y asentado, peso que se mueve en los holds. Un salto = uno, claro.
+- [ ] **Cámara:** velocidad angular pico < ~110°/s fuera de los whips (v1 tuvo 684°/s a 14,8 s: ilegible).
+- [ ] **Grade Ricks (medido):** L p5/p50/p95 ≈ 0,12-0,17 / 0,46-0,58 / 0,80-0,89; saturación oscuros/medios/luces ≈
+  1,05-1,2 / 1,3-1,6 / 1,0-1,45 en `sat`; `liftK` 0,08-0,2 (0,4 = lechoso), `contrast` 1,12-1,2, `hi` naranja (#ffb468-#ffc078),
+  `shadow` azul (#2f68b0-#4a7ae0). Luz key cálida + relleno/entorno AZUL cielo (un entorno durazno/lavanda vuelve violeta el
+  asfalto). Libros/papeles saturados, nunca pilas crema. Comparar siempre hoja ref-vs-nuestra.
+- [ ] **Sets densos:** siluetas reales (mezquita otomana con semicúpulas, minaretes con şerefe y capuchón en punta; bloques
+  con balcones, AC, tanques, toldos); nunca cajas lisas de fondo.
 
 ---
 

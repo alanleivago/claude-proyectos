@@ -11,7 +11,7 @@ norm = lambda t: re.sub(r"[^a-z0-9 ]", " ", t.lower().replace("-", " ")).split()
 for s in seeds:
     p = here / "takes" / f"take_{s}.wav"
     if not p.exists():
-        body = json.dumps({"model": "omnivoice", "input": text, "voice": "d9b69bea", "response_format": "wav", "num_step": 32,
+        body = json.dumps({"model": "omnivoice", "input": text, "voice": ("227af074" if sys.platform == "darwin" else "d9b69bea"), "response_format": "wav", "num_step": 32,
                            "language": "English", "seed": s, "guidance_scale": 3.0, "duration": 59.0}).encode()
         r = urllib.request.urlopen(urllib.request.Request(API, data=body, headers={"Content-Type": "application/json"}), timeout=900)
         a, sr = sf.read(io.BytesIO(r.read()), dtype="float32"); a = a.mean(1) if a.ndim > 1 else a
