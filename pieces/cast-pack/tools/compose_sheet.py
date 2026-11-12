@@ -4,13 +4,14 @@ import json, os, sys
 from PIL import Image, ImageDraw, ImageFont
 R = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
 slug, d, out = sys.argv[1:4]
-cast = {c["slug"]: c for c in json.load(open(os.path.join(R, "styles/zawdog/humans/cast.json")))["cast"]} if os.path.exists(
-    os.path.join(R, "styles/zawdog/humans/cast.json")) else {}
+cast = {c["slug"]: c for f in ("cast.json", "cast_pc.json") if os.path.exists(os.path.join(R, "styles/zawdog/humans", f))
+        for c in json.load(open(os.path.join(R, "styles/zawdog/humans", f), encoding="utf-8"))["cast"]}
 c = cast.get(slug, {"role": slug})
 E = ("neutral", "smile", "surprised", "crying", "laughing", "scared")
 W = 6 * 300; S = Image.new("RGB", (W, 60 + 1000 + 340), (30, 31, 34)); dr = ImageDraw.Draw(S)
+FP = "C:/Windows/Fonts/courbd.ttf" if os.name == "nt" else "/System/Library/Fonts/Supplemental/Courier New Bold.ttf"
 try:
-    f = ImageFont.truetype("/System/Library/Fonts/Supplemental/Courier New Bold.ttf", 34); f2 = ImageFont.truetype("/System/Library/Fonts/Supplemental/Courier New Bold.ttf", 20)
+    f = ImageFont.truetype(FP, 34); f2 = ImageFont.truetype(FP, 20)
 except OSError:
     f = f2 = ImageFont.load_default()
 dr.text((20, 12), f"{slug} - {c.get('role', '')}  ({c.get('age', '?')} y, {c.get('height', '?')} m, {c.get('footwear', '')})", fill=(250, 220, 60), font=f)

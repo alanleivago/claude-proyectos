@@ -29,7 +29,8 @@ import numpy as np
 from mathutils import Matrix, Vector
 
 H = os.path.dirname(os.path.abspath(__file__))
-UD = os.path.expanduser("~/Library/Application Support/Blender/5.2/mpfb/data")
+UD = (os.path.join(os.environ["APPDATA"], "Blender Foundation/Blender/5.2/mpfb/data") if os.name == "nt"
+      else os.path.expanduser("~/Library/Application Support/Blender/5.2/mpfb/data"))
 A = sys.argv[sys.argv.index("--") + 1:]
 NAME = A[0]
 OPT = dict(height=1.78, gender=1.0, muscle=0.55, weight=0.5, ratio=0.16, age=0.5, proportions=0.5, cupsize=0.5, race="",
@@ -45,9 +46,12 @@ GARM = json.load(open(os.path.join(D, "garment.json")))
 sys.path.insert(0, H)
 import garments as GA  # noqa: E402
 
-bpy.ops.preferences.addon_enable(module="bl_ext.user_default.mpfb")
-from bl_ext.user_default.mpfb.services.humanservice import HumanService  # noqa: E402
-from bl_ext.user_default.mpfb.services.targetservice import TargetService  # noqa: E402
+import importlib  # noqa: E402
+import addon_utils  # noqa: E402
+_MPFB = next(m.__name__ for m in addon_utils.modules() if m.__name__.endswith(".mpfb"))   # Mac: user_default, PC: blender_org
+bpy.ops.preferences.addon_enable(module=_MPFB)
+HumanService = importlib.import_module(_MPFB + ".services.humanservice").HumanService
+TargetService = importlib.import_module(_MPFB + ".services.targetservice").TargetService
 
 for o in list(bpy.data.objects):
     bpy.data.objects.remove(o)

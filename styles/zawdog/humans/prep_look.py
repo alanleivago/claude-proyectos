@@ -16,7 +16,8 @@ from PIL import Image, ImageFilter
 from scipy import ndimage as nd
 
 H = os.path.dirname(os.path.abspath(__file__))
-UD = os.path.expanduser("~/Library/Application Support/Blender/5.2/mpfb/data")
+UD = (os.path.join(os.environ["APPDATA"], "Blender Foundation/Blender/5.2/mpfb/data") if os.name == "nt"
+      else os.path.expanduser("~/Library/Application Support/Blender/5.2/mpfb/data"))
 name, skin_name = sys.argv[1], sys.argv[2]
 OV = dict(a.split("=", 1) for a in sys.argv[3:])
 D = os.path.join(H, name)

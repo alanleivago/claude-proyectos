@@ -1,18 +1,609 @@
 {
- "_note": "Pack de 15 personajes hecho en el PC (distintos de los 15 de la Mac). face = persona; top = lo que se ve en el cuello; outfit = ropa completa; body = params de build_human.py",
- "firefighter": {"face": "a 38-year-old Black man, short tight-cropped black hair, neat short beard", "top": "a plain navy-blue crew-neck t-shirt", "outfit": "a plain navy-blue crew-neck t-shirt tucked into dark khaki work trousers with side pockets and a black belt, black leather lace-up work boots", "body": {"height": 1.86, "gender": 1.0, "muscle": 0.75, "weight": 0.55}},
- "gardener": {"face": "a 62-year-old white man with a weathered tanned face, short grey hair and grey stubble", "top": "an olive-green henley shirt under the straps of brown canvas bib overalls", "outfit": "an olive-green short-sleeve henley shirt under brown canvas bib overalls, tan suede work boots", "body": {"height": 1.72, "gender": 1.0, "muscle": 0.5, "weight": 0.6}},
- "librarian": {"face": "a 45-year-old East Asian woman, black hair tied in a low bun, thin round wire glasses", "top": "a cream blouse under a burgundy cardigan", "outfit": "a cream blouse under a burgundy knit cardigan, straight grey trousers, brown leather loafers", "body": {"height": 1.6, "gender": 0.0, "muscle": 0.4, "weight": 0.5}},
- "mechanic": {"face": "a 50-year-old Latino man with a thick black moustache, short dark hair with grey temples", "top": "a dark-blue work coverall with a small collar and a front zip", "outfit": "a dark-blue one-piece work coverall with short sleeves, a front zip and chest pockets, a few light grease marks, black work boots", "body": {"height": 1.75, "gender": 1.0, "muscle": 0.6, "weight": 0.7}},
- "nurse": {"face": "a 30-year-old South Asian woman, black hair pulled back in a ponytail", "top": "a teal scrubs top with a V-neck", "outfit": "a teal short-sleeve scrubs top with a V-neck and matching teal scrubs trousers, white sneakers", "body": {"height": 1.63, "gender": 0.0, "muscle": 0.45, "weight": 0.45}},
- "painter": {"face": "a 27-year-old white man with short ginger hair and freckles, clean-shaven", "top": "a grey t-shirt under the straps of white painter's overalls", "outfit": "a grey short-sleeve t-shirt under white painter's bib overalls with small paint splatters, white sneakers with paint specks", "body": {"height": 1.8, "gender": 1.0, "muscle": 0.5, "weight": 0.45}},
- "barista": {"face": "a 24-year-old mixed-race woman with short curly brown hair", "top": "a black crew-neck t-shirt with the neck strap of a brown canvas apron", "outfit": "a black short-sleeve t-shirt with a brown canvas bib apron, black jeans, white sneakers", "body": {"height": 1.66, "gender": 0.0, "muscle": 0.45, "weight": 0.45}},
- "guard": {"face": "a 45-year-old heavy-set white man with a shaved head and a short brown goatee", "top": "a plain black polo shirt with no logo", "outfit": "a plain black short-sleeve polo shirt with no logo or badge, black trousers, black leather shoes", "body": {"height": 1.85, "gender": 1.0, "muscle": 0.6, "weight": 0.85}},
- "teacher": {"face": "a 55-year-old white woman with a short grey bob haircut", "top": "a light-blue collared shirt under a navy blazer", "outfit": "a light-blue collared shirt under a navy blazer, beige trousers, brown flat shoes", "body": {"height": 1.65, "gender": 0.0, "muscle": 0.4, "weight": 0.6}},
- "tourist": {"face": "a 48-year-old white man with light-brown hair, a slightly sunburned face and a short beard", "top": "a short-sleeve Hawaiian shirt with a palm-leaf print and an open collar", "outfit": "a short-sleeve blue Hawaiian shirt with a palm-leaf print, beige cargo shorts, white socks and white sneakers", "body": {"height": 1.76, "gender": 1.0, "muscle": 0.4, "weight": 0.75}},
- "skater": {"face": "a 20-year-old Latino man with messy black hair, clean-shaven", "top": "a grey hoodie with the hood down", "outfit": "a grey pullover hoodie with the hood down, loose black jeans, black-and-white skate shoes", "body": {"height": 1.74, "gender": 1.0, "muscle": 0.45, "weight": 0.4}},
- "vendor": {"face": "a 58-year-old Mexican woman with black hair streaked with grey in a single braid", "top": "a floral blouse under the neck strap of a green apron", "outfit": "a short-sleeve floral blouse with a green bib apron, dark-brown trousers, black flat shoes", "body": {"height": 1.55, "gender": 0.0, "muscle": 0.45, "weight": 0.7}},
- "driver": {"face": "a 52-year-old Black woman with short natural grey hair", "top": "a light-grey short-sleeve button-up shirt with a collar", "outfit": "a light-grey short-sleeve button-up shirt, navy trousers, black leather shoes", "body": {"height": 1.68, "gender": 0.0, "muscle": 0.5, "weight": 0.65}},
- "yogi": {"face": "a 33-year-old white woman with blonde hair in a high bun", "top": "a fitted sage-green long-sleeve athletic top", "outfit": "a fitted sage-green long-sleeve athletic top, black leggings, grey sneakers", "body": {"height": 1.7, "gender": 0.0, "muscle": 0.55, "weight": 0.35}},
- "fisherman": {"face": "a 66-year-old white man with a full white beard and white hair", "top": "a navy cable-knit sweater with a round neck", "outfit": "a navy cable-knit sweater, grey work trousers, dark-green rubber boots", "body": {"height": 1.78, "gender": 1.0, "muscle": 0.5, "weight": 0.6}}
+ "note": "Pack de 15 personajes hecho en el PC (distintos de los 15 de la Mac), mismo esquema que cast.json (kit v5). face/top/outfit = prompts de Flow (make_cast.py); eye/chin/mouth/throat/top_px en unidades de 1024 del retrato neutral.",
+ "cast": [
+  {
+   "slug": "firefighter",
+   "role": "firefighter (off duty)",
+   "sex": "M",
+   "age": 38,
+   "height": 1.86,
+   "face": "a 38-year-old Black man, short tight-cropped black hair, neat short beard",
+   "outfit": "a plain navy-blue crew-neck t-shirt tucked into dark khaki work trousers with side pockets and a black belt, black leather lace-up work boots",
+   "footwear": "black work boots",
+   "eye": 378,
+   "chin": 668,
+   "mouth": 556,
+   "throat": 700,
+   "skin": "middleage_african_male",
+   "build": {
+    "gender": 1,
+    "age": 0.58,
+    "muscle": 0.75,
+    "weight": 0.55,
+    "race": "0,0.05,0.95",
+    "shoe": "boot",
+    "upper": "28,25,22",
+    "sole": "15,15,15",
+    "accent": "50,48,45",
+    "hair": "short01"
+   },
+   "garment": {
+    "top": {
+     "type": "tee"
+    },
+    "bottom": {
+     "type": "cargo",
+     "belt": [
+      20,
+      20,
+      22
+     ]
+    }
+   },
+   "top_prompt": "a plain navy-blue crew-neck t-shirt"
+  },
+  {
+   "slug": "gardener",
+   "role": "gardener",
+   "sex": "M",
+   "age": 62,
+   "height": 1.72,
+   "face": "a 62-year-old white man with a weathered tanned face, short grey hair and grey stubble",
+   "outfit": "an olive-green short-sleeve henley shirt under brown canvas bib overalls, tan suede work boots",
+   "footwear": "tan work boots",
+   "eye": 396,
+   "chin": 700,
+   "mouth": 577,
+   "throat": 735,
+   "skin": "old_caucasian_male",
+   "build": {
+    "gender": 1,
+    "age": 0.78,
+    "muscle": 0.5,
+    "weight": 0.6,
+    "race": "0,1,0",
+    "shoe": "boot",
+    "upper": "165,128,88",
+    "sole": "70,55,40",
+    "accent": "185,150,105",
+    "hair": "short02",
+    "apron": "130,92,55"
+   },
+   "garment": {
+    "top": {
+     "type": "tee",
+     "col": [
+      104,
+      110,
+      70
+     ]
+    },
+    "bottom": {
+     "type": "trousers"
+    }
+   },
+   "top_prompt": "an olive-green henley shirt under the straps of brown canvas bib overalls"
+  },
+  {
+   "slug": "librarian",
+   "role": "librarian",
+   "sex": "F",
+   "age": 45,
+   "height": 1.6,
+   "face": "a 45-year-old East Asian woman, black hair tied in a low bun, thin round wire glasses",
+   "outfit": "a cream blouse under a burgundy knit cardigan, straight grey trousers, brown leather loafers",
+   "footwear": "brown loafers",
+   "eye": 418,
+   "chin": 657,
+   "mouth": 560,
+   "skin": "middleage_asian_female",
+   "build": {
+    "gender": 0,
+    "age": 0.62,
+    "muscle": 0.4,
+    "weight": 0.5,
+    "race": "0.9,0.1,0",
+    "shoe": "shoe",
+    "upper": "110,70,40",
+    "sole": "50,35,25",
+    "accent": "130,90,55",
+    "hair": "ponytail01",
+    "glasses": "70,70,72"
+   },
+   "garment": {
+    "top": {
+     "type": "cardigan",
+     "inner": [
+      236,
+      228,
+      210
+     ]
+    },
+    "bottom": {
+     "type": "trousers"
+    }
+   },
+   "top_prompt": "a cream blouse under a burgundy cardigan"
+  },
+  {
+   "slug": "mechanic",
+   "role": "mechanic",
+   "sex": "M",
+   "age": 50,
+   "height": 1.75,
+   "face": "a 50-year-old Latino man with a thick black moustache, short dark hair with grey temples",
+   "outfit": "a dark-blue one-piece work coverall with short sleeves, a front zip and chest pockets, a few light grease marks, black work boots",
+   "footwear": "black work boots",
+   "eye": 370,
+   "chin": 645,
+   "mouth": 538,
+   "skin": "middleage_caucasian_male",
+   "build": {
+    "gender": 1,
+    "age": 0.66,
+    "muscle": 0.6,
+    "weight": 0.7,
+    "race": "0.1,0.6,0.3",
+    "shoe": "boot",
+    "upper": "28,26,25",
+    "sole": "15,15,15",
+    "accent": "50,50,50",
+    "hair": "short02"
+   },
+   "garment": {
+    "top": {
+     "type": "zip",
+     "col": [
+      32,
+      40,
+      68
+     ]
+    },
+    "bottom": {
+     "type": "trousers",
+     "col": [
+      32,
+      40,
+      68
+     ]
+    }
+   },
+   "top_prompt": "a dark-blue work coverall with a small collar and a front zip"
+  },
+  {
+   "slug": "nurse",
+   "role": "nurse",
+   "sex": "F",
+   "age": 30,
+   "height": 1.63,
+   "face": "a 30-year-old South Asian woman, black hair pulled back in a ponytail",
+   "outfit": "a teal short-sleeve scrubs top with a V-neck and matching teal scrubs trousers, white sneakers",
+   "footwear": "white sneakers",
+   "eye": 372,
+   "chin": 614,
+   "mouth": 532,
+   "skin": "young_asian_female",
+   "build": {
+    "gender": 0,
+    "age": 0.45,
+    "muscle": 0.45,
+    "weight": 0.45,
+    "race": "0.4,0.3,0.3",
+    "shoe": "sneaker",
+    "hair": "ponytail01"
+   },
+   "garment": {
+    "top": {
+     "type": "scrubs"
+    },
+    "bottom": {
+     "type": "scrubs"
+    }
+   },
+   "top_prompt": "a teal scrubs top with a V-neck"
+  },
+  {
+   "slug": "painter",
+   "role": "house painter",
+   "sex": "M",
+   "age": 27,
+   "height": 1.8,
+   "face": "a 27-year-old white man with short ginger hair and freckles, clean-shaven",
+   "outfit": "a grey short-sleeve t-shirt under white painter's bib overalls with small paint splatters, white sneakers with paint specks",
+   "footwear": "white sneakers",
+   "eye": 367,
+   "chin": 657,
+   "mouth": 555,
+   "skin": "young_caucasian_male",
+   "build": {
+    "gender": 1,
+    "age": 0.45,
+    "muscle": 0.5,
+    "weight": 0.45,
+    "race": "0,1,0",
+    "shoe": "sneaker",
+    "hair": "short01",
+    "apron": "236,236,232"
+   },
+   "garment": {
+    "top": {
+     "type": "tee"
+    },
+    "bottom": {
+     "type": "trousers",
+     "col": [
+      236,
+      236,
+      232
+     ]
+    }
+   },
+   "top_prompt": "a grey t-shirt under the straps of white painter's overalls"
+  },
+  {
+   "slug": "barista",
+   "role": "barista",
+   "sex": "F",
+   "age": 24,
+   "height": 1.66,
+   "face": "a 24-year-old mixed-race woman with short curly brown hair",
+   "outfit": "a black short-sleeve t-shirt with a brown canvas bib apron, black jeans, white sneakers",
+   "footwear": "white sneakers",
+   "eye": 410,
+   "chin": 657,
+   "mouth": 568,
+   "skin": "young_caucasian_female",
+   "build": {
+    "gender": 0,
+    "age": 0.42,
+    "muscle": 0.45,
+    "weight": 0.45,
+    "race": "0.1,0.5,0.4",
+    "shoe": "sneaker",
+    "hair": "afro01",
+    "apron": "140,95,55"
+   },
+   "garment": {
+    "top": {
+     "type": "tee",
+     "col": [
+      26,
+      26,
+      28
+     ]
+    },
+    "bottom": {
+     "type": "jeans",
+     "col": [
+      28,
+      28,
+      32
+     ]
+    }
+   },
+   "top_prompt": "a black crew-neck t-shirt with the neck strap of a brown canvas apron"
+  },
+  {
+   "slug": "guard",
+   "role": "security guard",
+   "sex": "M",
+   "age": 45,
+   "height": 1.85,
+   "face": "a 45-year-old heavy-set white man with a shaved head and a short brown goatee",
+   "outfit": "a plain black short-sleeve polo shirt with no logo or badge, black trousers, black leather shoes",
+   "footwear": "black shoes",
+   "eye": 384,
+   "chin": 712,
+   "mouth": 563,
+   "throat": 735,
+   "skin": "middleage_caucasian_male",
+   "build": {
+    "gender": 1,
+    "age": 0.62,
+    "muscle": 0.6,
+    "weight": 0.85,
+    "race": "0,1,0",
+    "shoe": "shoe",
+    "upper": "22,22,24",
+    "sole": "15,15,15",
+    "accent": "45,45,48",
+    "hair": ""
+   },
+   "garment": {
+    "top": {
+     "type": "polo",
+     "col": [
+      24,
+      24,
+      26
+     ]
+    },
+    "bottom": {
+     "type": "trousers",
+     "col": [
+      22,
+      22,
+      24
+     ],
+     "belt": [
+      15,
+      15,
+      15
+     ]
+    }
+   },
+   "top_prompt": "a plain black polo shirt with no logo"
+  },
+  {
+   "slug": "teacher",
+   "role": "teacher",
+   "sex": "F",
+   "age": 55,
+   "height": 1.65,
+   "face": "a 55-year-old white woman with a short grey bob haircut",
+   "outfit": "a light-blue collared shirt under a navy blazer, beige trousers, brown flat shoes",
+   "footwear": "brown flats",
+   "eye": 372,
+   "chin": 628,
+   "mouth": 541,
+   "skin": "middleage_caucasian_female",
+   "build": {
+    "gender": 0,
+    "age": 0.7,
+    "muscle": 0.4,
+    "weight": 0.6,
+    "race": "0,1,0",
+    "shoe": "shoe",
+    "upper": "115,75,45",
+    "sole": "50,35,25",
+    "accent": "135,95,60",
+    "hair": "short03"
+   },
+   "garment": {
+    "top": {
+     "type": "blazer",
+     "inner": [
+      200,
+      215,
+      234
+     ]
+    },
+    "bottom": {
+     "type": "chinos"
+    }
+   },
+   "top_prompt": "a light-blue collared shirt under a navy blazer"
+  },
+  {
+   "slug": "tourist",
+   "role": "tourist",
+   "sex": "M",
+   "age": 48,
+   "height": 1.76,
+   "face": "a 48-year-old white man with light-brown hair, a slightly sunburned face and a short beard",
+   "outfit": "a short-sleeve blue Hawaiian shirt with a palm-leaf print, beige cargo shorts, white socks and white sneakers",
+   "footwear": "white sneakers",
+   "eye": 362,
+   "chin": 657,
+   "mouth": 538,
+   "throat": 690,
+   "skin": "middleage_caucasian_male",
+   "build": {
+    "gender": 1,
+    "age": 0.64,
+    "muscle": 0.4,
+    "weight": 0.75,
+    "race": "0,1,0",
+    "shoe": "sneaker",
+    "hair": "short02"
+   },
+   "garment": {
+    "top": {
+     "type": "shirt"
+    },
+    "bottom": {
+     "type": "cargo"
+    }
+   },
+   "top_prompt": "a short-sleeve Hawaiian shirt with a palm-leaf print and an open collar"
+  },
+  {
+   "slug": "skater",
+   "role": "skater",
+   "sex": "M",
+   "age": 20,
+   "height": 1.74,
+   "face": "a 20-year-old Latino man with messy black hair, clean-shaven",
+   "outfit": "a grey pullover hoodie with the hood down, loose black jeans, black-and-white skate shoes",
+   "footwear": "black skate shoes",
+   "eye": 418,
+   "chin": 683,
+   "mouth": 606,
+   "skin": "young_caucasian_male",
+   "build": {
+    "gender": 1,
+    "age": 0.4,
+    "muscle": 0.45,
+    "weight": 0.4,
+    "race": "0.2,0.5,0.3",
+    "shoe": "sneaker",
+    "upper": "30,30,32",
+    "sole": "240,240,240",
+    "accent": "240,240,240",
+    "hair": "short02"
+   },
+   "garment": {
+    "top": {
+     "type": "hoodie"
+    },
+    "bottom": {
+     "type": "jeans",
+     "col": [
+      30,
+      30,
+      34
+     ]
+    }
+   },
+   "top_prompt": "a grey hoodie with the hood down"
+  },
+  {
+   "slug": "vendor",
+   "role": "market vendor",
+   "sex": "F",
+   "age": 58,
+   "height": 1.55,
+   "face": "a 58-year-old Mexican woman with black hair streaked with grey in a single braid",
+   "outfit": "a short-sleeve floral blouse with a green bib apron, dark-brown trousers, black flat shoes",
+   "footwear": "black flats",
+   "eye": 393,
+   "chin": 649,
+   "mouth": 563,
+   "skin": "middleage_caucasian_female",
+   "build": {
+    "gender": 0,
+    "age": 0.72,
+    "muscle": 0.45,
+    "weight": 0.7,
+    "race": "0.2,0.5,0.3",
+    "shoe": "shoe",
+    "upper": "25,25,27",
+    "sole": "15,15,15",
+    "accent": "45,45,48",
+    "hair": "braid01",
+    "apron": "30,80,52"
+   },
+   "garment": {
+    "top": {
+     "type": "tee",
+     "col": [
+      196,
+      88,
+      104
+     ]
+    },
+    "bottom": {
+     "type": "trousers",
+     "col": [
+      60,
+      42,
+      32
+     ]
+    }
+   },
+   "top_prompt": "a floral blouse under the neck strap of a green apron"
+  },
+  {
+   "slug": "driver",
+   "role": "bus driver",
+   "sex": "F",
+   "age": 52,
+   "height": 1.68,
+   "face": "a 52-year-old Black woman with short natural grey hair",
+   "outfit": "a light-grey short-sleeve button-up shirt, navy trousers, black leather shoes",
+   "footwear": "black shoes",
+   "eye": 367,
+   "chin": 640,
+   "mouth": 546,
+   "skin": "middleage_african_female",
+   "build": {
+    "gender": 0,
+    "age": 0.68,
+    "muscle": 0.5,
+    "weight": 0.65,
+    "race": "0,0.05,0.95",
+    "shoe": "shoe",
+    "upper": "22,22,24",
+    "sole": "15,15,15",
+    "accent": "45,45,48",
+    "hair": "short01"
+   },
+   "garment": {
+    "top": {
+     "type": "uniform_short"
+    },
+    "bottom": {
+     "type": "trousers",
+     "belt": [
+      20,
+      20,
+      22
+     ]
+    }
+   },
+   "top_prompt": "a light-grey short-sleeve button-up shirt with a collar"
+  },
+  {
+   "slug": "yogi",
+   "role": "yoga instructor",
+   "sex": "F",
+   "age": 33,
+   "height": 1.7,
+   "face": "a 33-year-old white woman with blonde hair in a high bun",
+   "outfit": "a fitted sage-green long-sleeve athletic top, black leggings, grey sneakers",
+   "footwear": "grey sneakers",
+   "eye": 384,
+   "chin": 623,
+   "mouth": 538,
+   "skin": "young_caucasian_female",
+   "build": {
+    "gender": 0,
+    "age": 0.48,
+    "muscle": 0.55,
+    "weight": 0.35,
+    "race": "0,1,0",
+    "shoe": "sneaker",
+    "upper": "150,152,156",
+    "sole": "240,240,240",
+    "accent": "200,200,204",
+    "hair": "ponytail01"
+   },
+   "garment": {
+    "top": {
+     "type": "sweater"
+    },
+    "bottom": {
+     "type": "leggings"
+    }
+   },
+   "top_prompt": "a fitted sage-green long-sleeve athletic top",
+   "top": 240
+  },
+  {
+   "slug": "fisherman",
+   "role": "fisherman",
+   "sex": "M",
+   "age": 66,
+   "height": 1.78,
+   "face": "a 66-year-old white man with a full white beard and white hair",
+   "outfit": "a navy cable-knit sweater, grey work trousers, dark-green rubber boots",
+   "footwear": "green rubber boots",
+   "eye": 398,
+   "chin": 690,
+   "mouth": 589,
+   "throat": 708,
+   "skin": "old_caucasian_male",
+   "build": {
+    "gender": 1,
+    "age": 0.82,
+    "muscle": 0.5,
+    "weight": 0.6,
+    "race": "0,1,0",
+    "shoe": "boot",
+    "upper": "40,72,48",
+    "sole": "28,40,30",
+    "accent": "55,90,60",
+    "hair": "short02"
+   },
+   "garment": {
+    "top": {
+     "type": "sweater"
+    },
+    "bottom": {
+     "type": "trousers"
+    }
+   },
+   "top_prompt": "a navy cable-knit sweater with a round neck"
+  }
+ ]
 }

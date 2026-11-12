@@ -6,9 +6,10 @@ from PIL import Image, ImageDraw, ImageFont
 H = os.path.dirname(os.path.abspath(__file__)); R = os.path.abspath(os.path.join(H, "..", ".."))
 sys.path.insert(0, os.path.join(R, "pieces", "lps-lowpoly-test"))
 from photoprop import BAYER4  # noqa: E402
-SRC = os.path.join(H, "renders", "frames"); DST = os.path.join(H, "renders", "post"); os.makedirs(DST, exist_ok=True)
-CAST = {c["slug"]: c for c in json.load(open(os.path.join(R, "styles/zawdog/humans/cast.json")))["cast"]}
-FONT = "/System/Library/Fonts/Supplemental/Courier New Bold.ttf"; STEP = 255 / 31
+RD = sys.argv[2] if len(sys.argv) > 2 else "renders"                  # renders_pc for the PC pack
+SRC = os.path.join(H, RD, "frames"); DST = os.path.join(H, RD, "post"); os.makedirs(DST, exist_ok=True)
+CAST = {c["slug"]: c for f in ("cast.json", "cast_pc.json") for c in json.load(open(os.path.join(R, "styles/zawdog/humans", f), encoding="utf-8"))["cast"]}
+FONT = "C:/Windows/Fonts/courbd.ttf" if os.name == "nt" else "/System/Library/Fonts/Supplemental/Courier New Bold.ttf"; STEP = 255 / 31
 k = 0
 for shot in sorted(d for d in os.listdir(SRC) if not d.startswith((".", "_"))):
     slug = shot.split("_", 1)[1]; ref = q = None

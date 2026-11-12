@@ -13,7 +13,7 @@ import sys
 H = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(H, "../../.."))
 CLI = os.path.join(ROOT, "tools/srzGoogleFlowMCP/srzGoogleFlowMCP")
-CAST = {k: v for k, v in json.load(open(os.path.join(H, "cast_pc.json"), encoding="utf-8")).items() if not k.startswith("_")}
+CAST = {c["slug"]: dict(c, top=c["top_prompt"]) for c in json.load(open(os.path.join(H, "cast_pc.json"), encoding="utf-8"))["cast"]}
 
 NEUTRAL = ("Studio passport-style portrait photo of {face}, calm neutral expression, mouth closed, looking straight into the "
            "camera, perfectly frontal and symmetrical head, both ears visible. Wearing {top}, the collar and the base of the neck "

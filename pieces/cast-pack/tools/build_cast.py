@@ -4,14 +4,18 @@ prep_human (faces, landmarks) -> prep_look (skin.png, face mask, outfit colours;
 -> idle bake (c_<slug>_idle) -> inspect_human + sheet.py (review/work/<slug>/sheet.jpg) -> cast sheet (review/<slug>_cast.jpg)."""
 import json, os, subprocess, sys
 R = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", ".."))
-BL = "/Applications/Blender.app/Contents/MacOS/Blender"; PY = os.path.join(R, ".venv/bin/python")
+if os.name == "nt":
+    BL = r"C:\Program Files\Blender Foundation\Blender 5.2\blender.exe"; PY = os.path.join(R, ".venv/Scripts/python.exe")
+else:
+    BL = "/Applications/Blender.app/Contents/MacOS/Blender"; PY = os.path.join(R, ".venv/bin/python")
 slug = sys.argv[1]
-c = next(x for x in json.load(open(os.path.join(R, "styles/zawdog/humans/cast.json")))["cast"] if x["slug"] == slug)
+c = next(x for f in ("cast.json", "cast_pc.json") for x in json.load(open(os.path.join(R, "styles/zawdog/humans", f), encoding="utf-8"))["cast"]
+         if x["slug"] == slug)
 W = os.path.join(R, "pieces/cast-pack/review/work", slug)
 
 
 def run(cmd, tag):
-    p = subprocess.run(cmd, cwd=R, capture_output=True, text=True)
+    p = subprocess.run(cmd, cwd=R, capture_output=True, text=True, encoding="utf-8", errors="replace")
     out = p.stdout + p.stderr
     bad = [l for l in out.splitlines() if "Traceback" in l or "Error" in l]
     keep = [l for l in out.splitlines() if l.startswith((slug + ":", slug + " {"))]

@@ -903,7 +903,7 @@ def plush(loc, yaw, t=0.0, bark=0.0, wag=1.0, roll=0.0, surface=None):
 
 # ================================================================ zaw-dog #5 additions (Flow props sheet 2026-11-10, prep_05.py)
 # big yellow 3D texts (user: clean bright yellow, square to the lens, the whole word pops at once; edges pixelated in post)
-UNI = "/Library/Fonts/Arial Unicode.ttf"                                              # (the logo font has no check / cross)
+UNI = "C:/Windows/Fonts/seguisym.ttf" if os.name == "nt" else "/Library/Fonts/Arial Unicode.ttf"   # (the logo font has no check / cross)
 TXT = {k: K.Letters3D(f"t_{k}", v, size=0.16, front="#FFE21A", side="#B8860B", seed=3, jitter=0.12)
        for k, v in (("r300", "300,000,000"), ("r6", "6,000,000"), ("barn", "BARNARD COLLEGE,\n2019"), ("wk2", "2 WEEKS"),
                     ("opt", "MORE\nOPTIMISTIC"), ("qm", "?"), ("no", "NO!"))}
