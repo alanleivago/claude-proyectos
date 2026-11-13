@@ -45,6 +45,13 @@ LOOK = json.load(open(os.path.join(D, "look.json")))
 GARM = json.load(open(os.path.join(D, "garment.json")))
 sys.path.insert(0, H)
 import garments as GA  # noqa: E402
+sys.path.insert(0, os.path.join(H, "photo_tools"))
+import photo_map as PH  # noqa: E402
+# kit v6 (2026-11-12): garments from a Flow ghost-mannequin photo (photo/map.npz from photo_tools/parts.py), never painted
+PHOTO = os.path.exists(os.path.join(D, "photo", "map.npz")) and OPT.get("photo", 1.0) != 0
+if PHOTO:
+    MAPD = dict(np.load(os.path.join(D, "photo", "map.npz")))
+    GF = json.load(open(os.path.join(D, "photo", "guide.json")))
 
 import importlib  # noqa: E402
 import addon_utils  # noqa: E402
@@ -377,12 +384,28 @@ flat_reg = np.array(tri_reg, np.float32).reshape(-1)
 REGM = np.where(CORN >= 0, flat_reg[np.maximum(CORN, 0)], 0).astype(int)
 skin_im = bpy.data.images.load(os.path.join(D, "skin.png")); skin_im.scale(S, S)
 SK = (np.array(skin_im.pixels[:], np.float32).reshape(S, S, 4)[::-1, :, :3] * 255)
-TEX = GA.paint(PM, NM, REGM, COV, SK, LM, GKEY)
-if OPT.get("flow"):                                                                 # clothes = the Flow outfit sheet (garments_flow.py)
-    import garments_flow as GF
+if PHOTO:   # v6.1 (video 6 review): body skin toned to the face portrait's own jaw/neck edge (no darker neck patch, no seam)
+    def _px(path):
+        im_ = bpy.data.images.load(path); im_.scale(512, 512)
+        a_ = np.array(im_.pixels[:], np.float32).reshape(512, 512, 4)[::-1]; bpy.data.images.remove(im_); return a_
+    _fp, _mk = _px(os.path.join(D, "faces", "neutral.png")), _px(os.path.join(D, "faces", "mask.png"))[..., 0]
+    _ys = np.nonzero(_mk > 0.9)[0]; _y0, _y1 = _ys.min(), _ys.max(); _rows = np.arange(512)[:, None]
+    _band = (_mk > 0.9) & (_rows > _y0 + 0.45 * (_y1 - _y0)) & (_rows < _y0 + 0.65 * (_y1 - _y0))   # the cheeks (the jaw band has beard / hair)
+    _tgt = np.median(_fp[np.broadcast_to(_band, _mk.shape)][:, :3], 0) * 255 * 0.93
+    _hm = COV & np.isin(REGM, [GA.RC["head"], GA.RC["neck"]])
+    _cur = np.median(SK[_hm], 0)
+    _gain = np.clip(_tgt / np.maximum(_cur, 1), 0.7, 1.45)
+    SK = np.clip(SK * _gain[None, None, :], 0, 255)
+    print(NAME + ": skin toned to the face cheeks, gain", np.round(_gain, 2))
+if PHOTO:
+    HD = dict(np.load(os.path.join(D, "photo", "hand.npz"))) if os.path.exists(os.path.join(D, "photo", "hand.npz")) else None
+    LM["hand"] = PH.hand_frames(CO, REG, {b.name: (tuple(b.head_local), tuple(b.tail_local)) for b in rig.data.bones}, LM)
+TEX = PH.paint(PM, NM, REGM, COV, SK, LM, GF, MAPD, HD)[0] if PHOTO else GA.paint(PM, NM, REGM, COV, SK, LM, GKEY)
+if OPT.get("flow") and not PHOTO:                                                                 # clothes = the Flow outfit sheet (garments_flow.py)
+    import garments_flow as GFL
     _sh = bpy.data.images.load(os.path.join(D, "sheet_bleed.png")); _w, _h = _sh.size
     SHEET = np.array(_sh.pixels[:], np.float32).reshape(_h, _w, 4)[::-1, :, :3] * 255
-    TEX = GF.project(TEX, PM, NM, COV, SHEET, json.load(open(os.path.join(D, "sheet.json"))), LM, OPT["height"], CO, REG)
+    TEX = GFL.project(TEX, PM, NM, COV, SHEET, json.load(open(os.path.join(D, "sheet.json"))), LM, OPT["height"], CO, REG)
 TEX = GA.dilate(TEX, COV, 6)
 TEX = TEX.reshape(S // 2, 2, S // 2, 2, 3).mean((1, 3))                             # 256 px PS1 texels
 bim = next(im for im in bpy.data.images if os.path.basename(im.filepath) == "body.png")
@@ -599,7 +622,7 @@ if OPT.get("badge"):
 
 if OPT.get("bag"):
     col = [float(x) for x in OPT["bag"].split(",")]
-    zc = Z_WAIST - 0.02 * KS; gx, gy, rx, ry = girth(zc); x_ = -(rx + 0.045 * K)
+    zc = Z_WAIST - 0.02 * KS; gx, gy, rx, ry = girth(zc); x_ = -(rx + 0.07 * K); zc += 0.03 * K   # v6: off the thigh
     parts_ = [((x_, gy, zc), [Vector((1, 0, 0)), Vector((0, 1, 0)), Vector((0, 0, 1))], (0.03 * K, 0.16 * K, 0.12 * K), col),
               ((x_ - 0.032 * K, gy, zc + 0.07 * K), [Vector((1, 0, 0)), Vector((0, 1, 0)), Vector((0, 0, 1))], (0.004, 0.16 * K, 0.05 * K), [c * 0.8 for c in col])]
     EXTRA.append(multi_box("mailbag", parts_, "spine05"))
@@ -620,17 +643,33 @@ if OPT.get("coat"):                                                             
     col = [float(x) for x in OPT["coat"].split(",")]                             # each side follows its thigh, blended at the seams
     gx, gy, rx, ry = girth(Z_WAIST - 0.06 * KS)
     zs = np.linspace(Z_WAIST + 0.02 * KS, Z_KNEE - 0.02 * KS, 4)
-    rings_ = [(gx, gy, z_, (rx + 0.04 * K) * (1 + 0.15 * j), (ry + 0.055 * K) * (1 + 0.15 * j)) for j, z_ in enumerate(zs)]
+    rings_ = [(gx, gy, z_, (rx + 0.045 * K) * (1 + 0.15 * j), (ry + 0.065 * K) * (1 + 0.18 * j)) for j, z_ in enumerate(zs)]
     vs, fs = ring_mesh(rings_, 16); gr = {}
     for i_, v_ in enumerate(vs):
-        j = i_ // 16; t_ = 0.9 * j / (len(zs) - 1)
+        j = i_ // 16; t_ = min(0.97, (j / (len(zs) - 1)) ** 0.6)              # v6: follows the thighs sooner
         sL = float(np.clip(0.5 + (v_[0] - gx) / (rx * 0.9), 0, 1))
         gr.setdefault("spine05", []).append((i_, 1 - t_))
         if sL > 0:
             gr.setdefault("upperleg01.L", []).append((i_, t_ * sL))
         if sL < 1:
             gr.setdefault("upperleg01.R", []).append((i_, t_ * (1 - sL)))
-    EXTRA.append(mk_obj("coatskirt", vs, fs, groups=gr, col=col))
+    if PHOTO:                                                                    # the coat's own photo texture (128 px)
+        fuv = [[(((f_[i] % 16) + (16 if i in (1, 2) and f_[1] % 16 == 0 else 0)) / 16, (f_[i] // 16) / 3) for i in range(4)] for f_ in fs]
+        V = np.array(vs, np.float32); NV = V - np.array([gx, gy, 0], np.float32); NV[:, 2] = 0; NV /= np.linalg.norm(NV, axis=1, keepdims=True) + 1e-9
+        tuv_, tpos_, tnrm_ = [], [], []
+        for f_, uvq in zip(fs, fuv):
+            for ids in ((0, 1, 2), (0, 2, 3)):
+                tuv_.append([uvq[i] for i in ids]); tpos_.append([V[f_[i]] for i in ids]); tnrm_.append([NV[f_[i]] for i in ids])
+        tuv_ = np.array(tuv_, np.float32); tuv_[..., 1] = 1 - tuv_[..., 1]
+        (CP, CN), CC, _ = GA.raster(tuv_, [np.array(tpos_, np.float32), np.array(tnrm_, np.float32)], 128)
+        CT = np.zeros((128, 128, 3), np.float32); cm = CC
+        col_, _ = PH.sample_views(CP[cm], CN[cm], np.full(cm.sum(), PH.RC["coat"]), GF, MAPD)
+        CT[cm] = col_; CT = GA.dilate(CT, CC, 6)
+        cim = bpy.data.images.new(NAME + "_coat", 128, 128); cim.pixels = np.dstack([CT[::-1] / 255.0, np.ones((128, 128, 1))]).ravel()
+        cim.filepath_raw = os.path.join(D, "coat.png"); cim.file_format = "PNG"; cim.save(); cim.pack()
+        EXTRA.append(mk_obj("coatskirt", vs, fs, fuv, groups=gr, mat=mat_img(NAME + "_coat", cim)))
+    else:
+        EXTRA.append(mk_obj("coatskirt", vs, fs, groups=gr, col=col))
 
 if OPT.get("apron"):
     col = [float(x) for x in OPT["apron"].split(",")]
@@ -672,9 +711,10 @@ if OPT["prop"]:
         parts_ = [(A0 + u * 0.06 * K, [u, v, w], (0.13 * K, 0.01, 0.008), (30, 30, 32)),
                   (A0 + u * 0.24 * K, [u, v, w], (0.06 * K, 0.045 * K, 0.003), (190, 190, 195))]
     elif P == "briefcase":
-        parts_ = [(A0 + u * 0.03 * K, [u, v, w], (0.02 * K, 0.05 * K, 0.008), (30, 22, 18)),
-                  (A0 + u * 0.20 * K, [u, v, w], (0.15 * K, 0.21 * K, 0.045 * K), (52, 36, 26)),
-                  (A0 + u * 0.06 * K, [u, v, w], (0.004, 0.2 * K, 0.046 * K), (190, 170, 110))]
+        off = -w * 0.075 * K                                                      # v6: the case hangs outside the thigh
+        parts_ = [(A0 + u * 0.03 * K - w * 0.035 * K, [u, v, w], (0.02 * K, 0.05 * K, 0.008), (30, 22, 18)),
+                  (A0 + u * 0.18 * K + off, [u, v, w], (0.13 * K, 0.19 * K, 0.04 * K), (52, 36, 26)),
+                  (A0 + u * 0.06 * K + off, [u, v, w], (0.004, 0.18 * K, 0.041 * K), (190, 170, 110))]
     elif P == "leash":
         parts_ = [(A0 + u * 0.01, [u, v, w], (0.05 * K, 0.012, 0.012), (200, 40, 40))]
         tip = Vector((wt.x, wt.y - 0.06, 0.25))                                       # the strap hangs to a clip near the floor
