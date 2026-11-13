@@ -95,10 +95,10 @@ function pose(s, who, t, x, z, o = {}) { const p = s.p[who]; p.g.visible = true;
     const tilt = o.noTilt ? 0 : Math.min(1.0, Math.max(0, el - 0.3) * 0.85); p.root.rotation.x = -tilt; p.sh.rotation.x = -Math.PI / 2 + tilt; p.root.updateMatrixWorld(true); }
   toonShadowTwin(s, p); return r; }
 function toonShadowTwin(s, p) {
-  if (!p.shTwin) { const m = new THREE.Mesh(p.card.geometry, new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, colorWrite: false, depthWrite: false }));
+  if (!p.shTwin) { const m = new THREE.Mesh(p.card.geometry, new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, colorWrite: false, depthWrite: false, map: p.mat.map, alphaTest: 0.5 }));
     m.customDepthMaterial = p.card.customDepthMaterial; m.castShadow = true; m.receiveShadow = false; m.userData.noInk2 = true; m.userData.noCast = false; m.frustumCulled = false; m.renderOrder = -5;
     c3Layer(m, C3.L_FOCUS); p.g.add(m); p.shTwin = m; }
-  p.card.castShadow = false; p.shTwin.castShadow = true;
+  p.card.castShadow = false; p.shTwin.castShadow = true; p.shTwin.material.map = p.mat.map; p.shTwin.customDepthMaterial.map = p.mat.map;   // three's VSM depth-variant cache copies map/alphaTest from the OBJECT's material: keep the twin's in sync (else it cast a full rectangle)
   let key = s.scene.userData.t3L && s.scene.userData.t3L.key; if (!key) return;
   const d = key.position.clone().sub(key.target.position); let ry = 0; for (let q = p.g.parent; q; q = q.parent) ry += q.rotation.y;
   p.shTwin.rotation.set(0, Math.atan2(d.x, d.z) - ry, 0); p.shTwin.position.set(0, 0, 0);
