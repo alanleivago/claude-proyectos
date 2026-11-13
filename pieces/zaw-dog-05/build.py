@@ -1745,6 +1745,43 @@ def people_low(dg):
     return out
 
 
+# ================================================================ set scale (2026-11-13, fuentes/zawpolyshorts-style/planos/ENCUADRE.md)
+# Zaw's furniture is ~2x taller than his cat; with real-size furniture our big dog (0.87 m sitting) dwarfs the sofa.
+# scale_set(s) makes every static set object (rooms, furniture, street, park) s times bigger about the world origin
+# through one parent empty; the dog, the people, the 3D texts, the bowls/props, contact shadows, leash, collar and the
+# camera keep their size. NEVER called here: #5/#6 (and anything that does not call it) render exactly as before.
+# Call it from a shot script AFTER its own set dressing and BEFORE loading kit humans (objects added later are not
+# scaled). Set coordinates (as written in this file) -> world: sw((x, y[, z])). Set objects keep set-unit .location.
+SET_S = [1.0]
+
+
+def scale_set(s, keep=()):
+    if abs(s - 1.0) < 1e-6:
+        return None
+    mov = set(keep) | {CAM.name}
+    for d_ in DOGS:
+        mov |= {d_[k].name for k in ("o", "sh", "mv", "arm") if d_.get(k) is not None}
+    for P_ in PEOPLE:
+        mov |= {o.name for o in P_.parts} | {P_.arm.name}
+    for L_ in TXT.values():
+        mov |= {o.name for o, *_ in L_.letters} | ({L_.root.name} if getattr(L_, "root", None) else set())
+    for o in PLUSH_PARTS + LEASH + [COLLAR, PLUSH, PAIL, BOOK, DIV, FLEECE] + CSH + NEW5:
+        mov.add(o.name)
+    root = K.link(bpy.data.objects.new("set_scale_root", None))
+    bpy.context.view_layer.update()
+    for o in list(bpy.data.objects):
+        if o is root or o.parent is not None or o.name in mov or o.type in ("CAMERA",) or (o.type == "LIGHT" and o.data.type == "SUN"):
+            continue
+        mw = o.matrix_world.copy(); o.parent = root; o.matrix_parent_inverse.identity(); o.matrix_world = mw
+    root.scale = (s, s, s); SET_S[0] = s
+    bpy.context.view_layer.update()
+    return root
+
+
+def sw(p):
+    return tuple(v * SET_S[0] for v in p)
+
+
 if MODE == "board":
     out = os.path.join(H, "review", "raw"); os.makedirs(out, exist_ok=True)
     names = ARGS[1:] or [b[0] for b in BEATS]

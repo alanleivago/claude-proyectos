@@ -9,7 +9,7 @@ relatedTo: [pieces/zaw-dog-01, pieces/zaw-dog-02, pieces/zaw-dog-v2]
 Copy of the user's approved rules (memory), so they can be used on another machine.
 
 ## Format
-- 9:16 English shorts, ~30-40 s. Dog-behaviour premise ("Your Dog Thinks X When You Y"), true-fact twist, ending that loops into the first line.
+- 9:16 English shorts, ~15-20 s (from video 7; #1-6 were 30-40 s with loops). Zaw structure in 5 beats: claim ("Your Dog Thinks X When You Y"), premise, dog logic (a study in 1 line max), behaviour, closing punchline. NO loop.
 - Notes on Zaw's channel: fuentes/zawpolyshorts-style/. Dog tutorials: fuentes/blender-lowpoly-perro/. VLVT guide: fuentes/blender-lowpoly/vlvt-guide.md.
 
 ## Dog (APPROVED)
@@ -49,18 +49,29 @@ Script, then storyboard (wait for approval), then final, then QA (pop, flicker a
 ## Sets per video (from all 21 Zaw shorts, fuentes/zawpolyshorts-style/escenarios.md)
 - Zaw reuses a fixed world: 2-5 sets per video, and a new set only every 2-3 videos, for the hook.
 - Ours: a reusable kit (living room, hallway + front door, bedroom, kitchen-dining, street, yard or park), plus at most 1 new hook set per video, which then joins the kit. Vary props, colours and lighting.
+- Kit hallway + front door (used from #7 for the doorstep): hide `facade_e0` and `facade_e_eave` (the house front cuts through the hallway), open the door with `DOOR_PIV.rotation_euler.z = -1.75`; the porch and the street photo show through it (`pieces/zaw-dog-07/shots.py` `hall()`).
 
-## Planos (análisis de Zaw, 2026-11-09; detalle en fuentes/zawpolyshorts-style/planos/PLANOS.md)
-- **Corrección del usuario:** en el video 4 había demasiado contrapicado.
-- **Mezcla de alturas de cámara:**
-  - ~55% a la altura del perro, frontal, horizontal y centrado;
-  - ~20% picado suave (mano humana desde arriba, perro mirando a cámara);
-  - ~16% humanos a altura humana, en plano medio;
-  - contrapicado como máximo 1 por video, con intención;
-  - insertos cenitales para objetos.
-- **Movimiento — CORRECCIÓN del usuario (2026-11-09):** planos variados PERO la cámara SIEMPRE en movimiento, como en los videos 2 y 3: push-in o pull-out lento, travelling o paneo suave y órbita corta en cada toma. Nunca toda la cámara fija. (El "82% fijo" del análisis salía de fotogramas sueltos cada 2 s y no sirve como regla.)
-- **Tamaños:** sobre todo plano medio y entero; nunca dos planos iguales seguidos.
+## Planos (medido 2026-11-13: 14 shorts de Zaw, 187 planos reales; detalle y tablas en fuentes/zawpolyshorts-style/planos/ENCUADRE.md)
+- **Corrección del usuario (2026-11-13):** los sets de Zaw se sienten MÁS GRANDES respecto de los personajes y los planos están casi siempre CERCA del gato y de la gente; los nuestros eran más abiertos. Reglas medidas:
+- **Lente:** 25 mm (sensor vertical 36 mm: FOV horizontal 44°, vertical 72°). 22 mm solo para whips/insertos; 28-30 mm solo para caras. Altura de cuadro = 1.44 x distancia.
+- **Escala de set:** `scale_set(1.35)` de `pieces/zaw-dog-05/build.py` en todo video nuevo (desde #7; #5/#6 no lo llaman). Muebles, cuartos, puertas y calle x1.35; el perro, la gente, los cuencos/props del perro, los textos 3D y las sombras quedan igual. Las coordenadas del set se pasan a mundo con `sw((x, y))`. (Zaw: el sillón mide 1.2x la altura del gato; nuestro sillón real medía 0.55x nuestro perro sentado de 0.87 m.)
+- **Perro (el sujeto en ~65 % de los planos):**
+  - visible 0.40-0.60 del alto del cuadro (Zaw: mediana 0.43); cortado por los lados o abajo en la mitad de los planos;
+  - distancia 1.0-1.4 m (perro entero sentado) o 0.65-0.8 m (cabeza + pecho);
+  - cámara a 0.75-0.85 m (ojo del perro 0.68 m) con pitch −5° a −15°; Zaw mira levemente hacia abajo (mediana −5°). Nunca por debajo de 0.6 m mirando hacia arriba;
+  - el `dog_sit` del kit levanta la cabeza: en los planos sentados bajar el cuello ~0.3 rad (#7 `nod`), si no lee como aullido/contrapicado.
+- **Gente:** de la cintura o la rodilla para arriba, nunca de cuerpo entero salvo 1 plano de puerta/entrada.
+  - cintura arriba: 0.65-0.8 m de distancia; rodilla arriba: 1.0-1.2 m; cámara a la altura del pecho (1.2-1.4 m), casi horizontal;
+  - la cabeza arriba, a ~0.2 del borde superior (Zaw 0.20; nosotros teníamos 0.25-0.27);
+  - el recurso típico de Zaw: solo un brazo, una mano o las piernas entrando al cuadro junto al perro (cámara a la altura de la cadera o detrás del hombro);
+  - la gente visible en ≤ 60 % de los planos (Zaw 25 %; nuestras historias piden más) y solo-humano ≤ 20 %.
+- **Mezcla de tamaños:** perro MFS ~45 %, MS ~30 %, insertos ~10 %, general/entero ≤ 10 % (un plano de ubicación como mucho), CU ≤ 5 %. Nunca dos tamaños iguales seguidos con el mismo sujeto.
+- **Fondo:** detrás del sujeto una pared o un rincón en ≥ 45 % de los planos; el cuarto entero en ≤ 50 %; sin techo en los planos de perro. Objeto en primer plano a 0.35-0.7 m de la lente en ~60 % de los planos (Zaw 0.5 m; nosotros 0.8-1.1 m).
+- **Contrapicado como máximo 1 por video**, con intención (corrección del usuario, video 4). Cenital solo para insertos de objetos.
+- **Movimiento — CORRECCIÓN del usuario (2026-11-09), sigue vigente:** la cámara se mueve en TODOS los planos (push-in/pull-out, travelling, órbita corta, grúa), dinámica como el #6: zoom ~0.10-0.17 log/s y paneo ~0.15-0.25 anchos de cuadro/s (Zaw: 0.10 y 0.14; el #6: 0.17 y 0.23).
+- **Duración:** 1.0-1.4 s por plano, corte duro (Zaw: media 1.37 s, mediana 1.28 s, 0.73 cortes/s).
 - **Textos amarillos en 3D:** escalones de ~1/11 de la altura de la letra (4-8 px), con los huecos de las letras abiertos, siempre legibles a tamaño de teléfono.
+- Medición repetible: `fuentes/zawpolyshorts-style/planos/medir_encuadre.py` (cortes + movimiento por píxeles + API) y `resumen_encuadre.py`; correrla también sobre el preview de cada video nuevo.
 
 ## Texturas (user, 2026-11-10, video 5 — "a partir de ahora")
 - **Alfombras:** textura nítida, nunca borrosa ni difuminada (foto Flow de alta resolución o filtrado nearest/closest).

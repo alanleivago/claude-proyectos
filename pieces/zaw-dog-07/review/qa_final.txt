@@ -1,0 +1,59 @@
+zaw-dog #7 FINAL QA - renders/Your Dog Knows When You're Lying.mp4 (1080x1920, 30 fps, 16.2 s), 2026-11-13
+
+## popcheck (renders/post, consecutive frames)
+487 frames; cut steps (expected): 13; in-shot step median 5.83
+flags (beat, frame, step, beat median): [('01a', 34, 19.1, 4.3), ('01a', 35, 17.8, 4.3), ('03b', 184, 12.9, 2.9), ('03b', 185, 15.9, 2.9), ('03b', 186, 17.6, 2.9), ('03b', 187, 18.7, 2.9), ('03b', 188, 19.1, 2.9), ('03b', 189, 19.3, 2.9), ('03b', 190, 17.6, 2.9), ('03b', 191, 16.7, 2.9), ('03b', 192, 15.1, 2.9), ('03b', 193, 15.2, 2.9), ('04a', 240, 26.1, 5.8), ('04a', 241, 25.0, 5.8), ('05a', 313, 27.6, 4.6), ('05a', 314, 30.1, 4.6), ('05a', 315, 29.4, 4.6), ('05a', 316, 18.4, 4.6)]
+(01a f34-35 bark snap-zoom, 04a f240-241 snap, 05a f313-316 whip-in = intended accents; 03b f184-193 = the arm swinging in close to the lens (continuous motion, 13-19 vs a 2.9 median), not a pop)
+
+## flip-flop flicker (true jump-and-back)
+01a: flip-flop 0.22%  worst 3.38%
+01b: flip-flop 0.52%  worst 1.05%
+02a: flip-flop 0.15%  worst 0.86%
+02b: flip-flop 2.43%  worst 5.97%
+03a: flip-flop 0.32%  worst 0.73%
+03b: flip-flop 0.79%  worst 4.47%
+04a: flip-flop 1.11%  worst 7.58%
+04b: flip-flop 0.36%  worst 0.67%
+04c: flip-flop 0.67%  worst 0.86%
+05a: flip-flop 1.15%  worst 8.55%
+05b: flip-flop 1.64%  worst 4.12%
+06a: flip-flop 3.70%  worst 8.39%
+06b: flip-flop 0.56%  worst 1.71%
+06c: flip-flop 0.34%  worst 0.81%
+
+## 2nd-difference flicker (counts fast camera motion too; #6 final peaked at 15 % flicker px)
+01a: 2nd-diff mean 7.75  flicker px 4.16%  worst frame 35 27.84%
+01b: 2nd-diff mean 8.16  flicker px 4.72%  worst frame 57 6.87%
+02a: 2nd-diff mean 4.26  flicker px 2.09%  worst frame 85 6.27%
+02b: 2nd-diff mean 24.02  flicker px 19.63%  worst frame 115 33.60%
+03a: 2nd-diff mean 11.60  flicker px 6.85%  worst frame 166 13.96%
+03b: 2nd-diff mean 10.36  flicker px 7.91%  worst frame 189 29.90%
+04a: 2nd-diff mean 13.80  flicker px 9.58%  worst frame 241 37.85%
+04b: 2nd-diff mean 8.04  flicker px 4.72%  worst frame 271 7.43%
+04c: 2nd-diff mean 13.26  flicker px 10.02%  worst frame 281 12.96%
+05a: 2nd-diff mean 12.86  flicker px 10.25%  worst frame 315 45.07%
+05b: 2nd-diff mean 19.00  flicker px 15.62%  worst frame 379 19.46%
+06a: 2nd-diff mean 31.48  flicker px 27.71%  worst frame 385 34.50%
+06b: 2nd-diff mean 10.35  flicker px 8.44%  worst frame 431 14.75%
+06c: 2nd-diff mean 5.18  flicker px 2.98%  worst frame 458 4.24%
+
+## feet / intersections (shots.py feet, every 2nd frame)
+01b: dog lowest -0.004..-0.004 m, dog-bowl gap min +9.000 m | owner lowest -0.002..-0.000 m | dog in owner: 0 verts, min gap 0.052 m
+02b: dog lowest -0.007..-0.003 m, dog-bowl gap min +0.065 m | owner lowest -0.001..-0.000 m | dog in owner: 0 verts, min gap 0.372 m
+01a: dog lowest -0.007..-0.004 m, dog-bowl gap min +9.000 m | owner lowest -0.006..-0.001 m | dog in owner: 0 verts, min gap 1.160 m
+04a: dog lowest -0.006..-0.003 m, dog-bowl gap min +0.238 m
+04c: | owner lowest -0.003..-0.000 m
+05a: | mailman lowest -0.005..-0.002 m
+06a: dog lowest -0.007..-0.004 m, dog-bowl gap min +0.226 m | mailman lowest -0.003..-0.001 m | dog in mailman: 0 verts, min gap 0.222 m
+06b: | owner lowest -0.002..-0.000 m
+06c: dog lowest -0.012..-0.008 m, dog-bowl gap min +0.229 m | mailman lowest -0.008..-0.003 m | owner lowest -0.002..-0.000 m | dog in mailman: 0 verts, min gap 0.226 m | dog in owner: 0 verts, min gap 1.726 m
+04b: dog lowest -0.009..-0.005 m, dog-bowl gap min +0.694 m | owner lowest -0.001..+0.000 m | dog in owner: 0 verts, min gap 0.774 m
+02a: dog lowest -0.010..-0.005 m, dog-bowl gap min +0.692 m | owner lowest -0.003..+0.001 m | dog in owner: 0 verts, min gap 0.825 m
+05b: dog lowest -0.010..-0.001 m, dog-bowl gap min +0.072 m | mailman lowest -0.000..+0.000 m | dog in mailman: 0 verts, min gap 0.530 m
+03a: dog lowest -0.004..-0.004 m, dog-bowl gap min +0.611 m | owner lowest -0.000..+0.000 m | dog in owner: 0 verts, min gap 0.553 m
+03b: dog lowest -0.005..-0.002 m, dog-bowl gap min +0.072 m | owner lowest -0.003..+0.000 m | dog in owner: 0 verts, min gap 0.391 m
+
+## sound
+final_mix.wav: -11.4 LUFS integrated, -2.6 dBTP, LRA 1.2 LU; hero bark ~1.10 s in the 0.97-1.45 s gap; gasps 9.60 / 13.96 s (unchanged mix)
+
+## API review: renders/Your Dog Knows When You're Lying_revision.md

@@ -1,0 +1,44 @@
+zaw-dog #7 QA on review/preview_moves.mp4 (2026-11-13)
+
+## popcheck (consecutive-frame steps, preview frames without captions)
+487 frames; cut steps (expected): 13; in-shot step median 7.61
+flags (beat, frame, step, beat median): [('05a', 314, 26.8, 6.6)]
+(05a f314 = the whip-in revealing the owner at the frame edge, intended)
+
+## flipflop flicker
+01a: flip-flop 0.39%  worst 3.67%
+01b: flip-flop 1.00%  worst 1.68%
+02a: flip-flop 0.31%  worst 0.70%
+02b: flip-flop 1.70%  worst 5.09%
+03a: flip-flop 0.53%  worst 1.08%
+03b: flip-flop 0.32%  worst 0.66%
+04a: flip-flop 0.96%  worst 5.74%
+04b: flip-flop 1.26%  worst 1.79%
+04c: flip-flop 0.57%  worst 1.32%
+05a: flip-flop 1.18%  worst 7.30%
+05b: flip-flop 1.39%  worst 3.48%
+06a: flip-flop 2.12%  worst 4.57%
+06b: flip-flop 0.85%  worst 3.34%
+06c: flip-flop 0.64%  worst 1.15%
+
+## feet / intersections (every 2nd frame; z of the lowest vertex, rug top = +0.0125; dog-bowl gap = paws/legs below 7 cm vs the bowl rim radius)
+03a:
+02a: dog lowest -0.007..-0.004 m, dog-bowl gap min +0.798 m | owner lowest -0.007..-0.000 m
+04b: dog lowest -0.007..-0.005 m, dog-bowl gap min +0.797 m | owner lowest -0.008..-0.004 m
+06b: | owner lowest -0.002..+0.000 m
+04a: dog lowest -0.007..-0.003 m, dog-bowl gap min +0.238 m
+01b: dog lowest -0.005..-0.003 m, dog-bowl gap min +0.356 m | owner lowest -0.003..-0.001 m
+05a: dog lowest -0.005..-0.003 m, dog-bowl gap min +0.815 m | mailman lowest -0.007..-0.003 m | owner lowest -0.006..-0.002 m
+06a: dog lowest -0.007..-0.005 m, dog-bowl gap min +0.164 m | mailman lowest -0.004..-0.002 m
+04c: | owner lowest -0.002..+0.000 m
+06c: dog lowest -0.012..-0.007 m, dog-bowl gap min +0.161 m | mailman lowest -0.008..-0.003 m | owner lowest -0.007..-0.002 m
+01a: dog lowest -0.008..-0.004 m, dog-bowl gap min +0.225 m | owner lowest -0.007..-0.002 m
+02b: dog lowest -0.007..-0.003 m, dog-bowl gap min +0.063 m | owner lowest -0.008..-0.003 m
+03b: dog lowest -0.008..-0.003 m, dog-bowl gap min +0.069 m | owner lowest -0.007..-0.001 m
+05b: dog lowest -0.006..-0.003 m, dog-bowl gap min +0.066 m | mailman lowest -0.000..-0.000 m | owner lowest -0.001..+0.000 m
+
+## sound
+final_mix.wav: -11.4 LUFS integrated, -2.6 dBTP, LRA 1.2 LU, 0 clipped samples; hero bark onset ~1.10 s inside the 0.97-1.45 s gap; gasps at 9.60 / 13.96 s
+ASR of the preview: 'Your dog knows when you're lying. Point at a treat and it runs straight over. Then Kyoto scientists pointed at an empty bowl. After that, most dogs ignored that person's finger. The stranger pointed and off they went. Which means your dog trusts the mailman more than you.'
+
+## API review: review/preview_moves_revision.md (verdict CASI)

@@ -1,0 +1,48 @@
+zaw-dog #7 QA on review/preview_moves.mp4 - storyboard v2 (Zaw framing, set x1.35), 2026-11-13
+
+## popcheck (consecutive-frame steps, preview frames without captions)
+487 frames; cut steps (expected): 13; in-shot step median 6.27
+flags (beat, frame, step, beat median): [('01a', 34, 21.1, 4.7), ('01a', 35, 19.5, 4.7), ('04a', 240, 28.2, 6.5), ('04a', 241, 27.4, 6.5), ('05a', 312, 18.9, 4.7), ('05a', 313, 31.9, 4.7), ('05a', 314, 37.4, 4.7), ('05a', 315, 36.4, 4.7), ('05a', 316, 23.8, 4.7)]
+(01a f34-35 = the snap-zoom on the hero bark, 04a f240-241 = the snap on the shocked look, 05a f312-316 = the whip-in on the doorstep: all intended accents; no other pops)
+
+## flipflop flicker
+01a: flip-flop 0.24%  worst 3.26%
+01b: flip-flop 0.55%  worst 1.06%
+02a: flip-flop 0.30%  worst 1.00%
+02b: flip-flop 2.65%  worst 5.86%
+03a: flip-flop 0.53%  worst 0.86%
+03b: flip-flop 0.56%  worst 3.60%
+04a: flip-flop 1.52%  worst 8.95%
+04b: flip-flop 0.39%  worst 0.71%
+04c: flip-flop 0.67%  worst 0.88%
+05a: flip-flop 1.16%  worst 10.09%
+05b: flip-flop 1.70%  worst 4.22%
+06a: flip-flop 2.57%  worst 4.97%
+06b: flip-flop 0.54%  worst 1.66%
+06c: flip-flop 0.20%  worst 0.54%
+
+## feet / intersections (every 2nd frame; z of the lowest vertex - floor 0, rug top now +0.017 with the set x1.35; dog-bowl gap = paws/legs below 7 cm vs the bowl rim; dog in human = dog vertices inside a human mesh, ray parity on a BVH)
+01b: dog lowest -0.004..-0.004 m, dog-bowl gap min +9.000 m | owner lowest -0.002..-0.000 m | dog in owner: 0 verts, min gap 0.052 m
+02b: dog lowest -0.007..-0.003 m, dog-bowl gap min +0.065 m | owner lowest -0.001..-0.000 m | dog in owner: 0 verts, min gap 0.372 m
+01a: dog lowest -0.007..-0.004 m, dog-bowl gap min +9.000 m | owner lowest -0.006..-0.001 m | dog in owner: 0 verts, min gap 1.160 m
+03a:
+04a: dog lowest -0.006..-0.003 m, dog-bowl gap min +0.238 m
+04c: | owner lowest -0.003..-0.000 m
+05a: | mailman lowest -0.005..-0.002 m
+06a: dog lowest -0.007..-0.004 m, dog-bowl gap min +0.226 m | mailman lowest -0.003..-0.001 m | dog in mailman: 0 verts, min gap 0.222 m
+06b: | owner lowest -0.002..-0.000 m
+06c: dog lowest -0.012..-0.008 m, dog-bowl gap min +0.229 m | mailman lowest -0.008..-0.003 m | owner lowest -0.002..-0.000 m | dog in mailman: 0 verts, min gap 0.226 m | dog in owner: 0 verts, min gap 1.726 m
+04b: dog lowest -0.009..-0.005 m, dog-bowl gap min +0.694 m | owner lowest -0.001..+0.000 m | dog in owner: 0 verts, min gap 0.774 m
+02a: dog lowest -0.010..-0.005 m, dog-bowl gap min +0.692 m | owner lowest -0.003..+0.001 m | dog in owner: 0 verts, min gap 0.825 m
+05b: dog lowest -0.010..-0.001 m, dog-bowl gap min +0.072 m | mailman lowest -0.000..+0.000 m | dog in mailman: 0 verts, min gap 0.530 m
+03b: dog lowest -0.007..-0.003 m, dog-bowl gap min +0.072 m | owner lowest -0.002..-0.000 m | dog in owner: 0 verts, min gap 0.392 m
+
+## true framing (Blender, board frame): review/framing_truth.json (v2), review/framing_truth_v1.json (v1)
+
+## sound
+unchanged from v1 (same voice, timing and sound/out/final_mix.wav): -11.4 LUFS integrated, -2.6 dBTP, hero bark ~1.10 s in the 0.97-1.45 s gap, gasps 9.60 / 13.96 s
+
+## framing measurement of this preview (fuentes/zawpolyshorts-style/planos/medir_encuadre.py, tag ours7v2)
+dog 0.40 of the frame (Zaw 0.43; v1 0.48 API / truth median 0.45 -> 0.51), people 0.82 cropped in 88 % (Zaw 0.72, 74 %; v1 0.47, 27 %), head top 0.17 (Zaw 0.20), pitch median -3 (Zaw -5, v1 -4), 0 low angles, zoom 0.10/s pan 0.21/s
+
+## API review: review/preview_moves_revision.md (verdict CASI)
