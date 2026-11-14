@@ -10,7 +10,7 @@
 import fs from 'node:fs';
 import { parseArgs } from 'node:util';
 import { ensureChrome, copyProfile, userDataDir } from './chrome.js';
-import { generateImages, newProject, writeState, getProjectId, uploadFile, listAssets, DEFAULT_OUT } from './flow.js';
+import { generateImages, generateVideo, newProject, writeState, getProjectId, uploadFile, listAssets, DEFAULT_OUT } from './flow.js';
 
 const USAGE = `Usage:
   node src/cli.js "prompt" [--aspect 1:1|16:9|9:16|4:3|3:4] [--count 1-4] [--model pro|2|lite] [--out DIR]
@@ -33,6 +33,8 @@ const { values, positionals } = parseArgs({
     replace: { type: 'boolean', default: false },
     'from-profile': { type: 'string' },
     json: { type: 'boolean', default: false },
+    duration: { type: 'string', default: '8' },
+    mode: { type: 'string', default: 'ingredients' },
   },
 });
 
@@ -53,6 +55,12 @@ try {
     if (!arg1) throw new Error('Use: node src/cli.js upload FILE [--name NAME] [--replace]');
     const r = await uploadFile({ filePath: arg1, name: values.name, replace: values.replace });
     console.log(r.reused ? `"${r.name}" already exists, reused it (use --replace to upload again)` : `✓ uploaded as "${r.name}"`);
+  } else if (cmd === 'video') {
+    // node src/cli.js video --prompt-file p.txt [--aspect 9:16] [--duration 8] [--model omni] [--mode ingredients|frames] [--out DIR]
+    const prompt = values['prompt-file'] ? fs.readFileSync(values['prompt-file'], 'utf8') : positionals.slice(1).join(' ');
+    const r = await generateVideo({ prompt, aspect: values.aspect === '1:1' ? '9:16' : values.aspect, duration: Number(values.duration),
+      model: values.model === '2' ? 'omni' : values.model, mode: values.mode, count: Number(values.count), outDir: values.out });
+    console.log(`✓ ${r.files.length} video(s) in ${r.seconds}s (${r.model}, ${r.aspect}, ${r.duration}s)`); r.files.forEach((f) => console.log(f));
   } else if (cmd === 'assets') {
     (await listAssets()).forEach((a) => console.log(a.name));
   } else if (cmd || values['prompt-file']) {

@@ -29,6 +29,9 @@ ESTILOS = {
     "sinaboto": ["sinaboto-style.md"],
     "emberlite": ["emberlite-style.md"],
     "scroll3d": ["scroll3d-style.md"],
+    "stimulus": ["stimulus-style.md"],
+    "f1motion": ["f1motion-style.md"],
+    "docucollage": ["docucollage-style.md"],
     "lowpolyshorts": ["project-lowpolyshorts-style.md", "feedback-distinct-characters.md", "feedback-frame-by-frame-qa.md"],
 }
 

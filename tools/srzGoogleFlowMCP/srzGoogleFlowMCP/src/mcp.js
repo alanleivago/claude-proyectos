@@ -4,7 +4,7 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { z } from 'zod';
-import { generateImages, newProject, uploadFile, listAssets, ASPECTS, DEFAULT_OUT } from './flow.js';
+import { generateImages, generateVideo, newProject, uploadFile, listAssets, ASPECTS, DEFAULT_OUT } from './flow.js';
 import { withFlowLock } from './lock.js';
 
 const server = new McpServer({ name: 'srz-google-flow-mcp', version: '1.0.1' });
@@ -59,6 +59,26 @@ server.registerTool('flow_generate_image', {
     const r = await serial(() => generateImages({ prompt, aspect, count, model, outDir: outDir || DEFAULT_OUT }));
     return text(`Generated ${r.files.length} image(s) in ${r.seconds}s with ${r.model} (${r.aspect}):\n${r.files.join('\n')}`);
   } catch (err) { return fail('Flow generation', err); }
+});
+
+server.registerTool('flow_generate_video', {
+  description: 'Generate a video with Google Flow (Omni 1.1 Flash by default, or Veo 3.1) in the user\'s signed-in Chrome and save the mp4; returns the local file path(s). Uses Flow credits. '
+    + 'mode "ingredients": reference images (characters, locations, props) attached with @{name} (upload first with flow_upload_file; up to 7 on Omni). '
+    + 'mode "frames": @{name} images are the start (and optional end) frame. Write dialogue literally in the prompt, with the accent/language of each speaker.',
+  inputSchema: {
+    prompt: z.string().min(1).describe('Shot description + dialogue. Use @{name} to attach uploaded references'),
+    aspect: z.enum(['9:16', '16:9']).default('9:16'),
+    duration: z.number().int().default(8).describe('Seconds; must be one Flow offers for the model (Omni 4/6/8/10, Veo 8)'),
+    model: z.enum(['omni', 'lite', 'fast', 'quality']).default('omni'),
+    mode: z.enum(['ingredients', 'frames']).default('ingredients'),
+    count: z.number().int().min(1).max(4).default(1),
+    outDir: z.string().optional().describe(`Folder to save into (default ${DEFAULT_OUT})`),
+  },
+}, async ({ prompt, aspect, duration, model, mode, count, outDir }) => {
+  try {
+    const r = await serial(() => generateVideo({ prompt, aspect, duration, model, mode, count, outDir: outDir || DEFAULT_OUT }));
+    return text(`Generated ${r.files.length} video(s) in ${r.seconds}s with ${r.model} (${r.aspect}, ${r.duration}s):\n${r.files.join('\n')}`);
+  } catch (err) { return fail('Flow video generation', err); }
 });
 
 server.registerTool('flow_new_project', {

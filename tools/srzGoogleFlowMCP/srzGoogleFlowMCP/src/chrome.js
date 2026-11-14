@@ -8,6 +8,7 @@ import { spawn } from 'node:child_process';
 
 export const CDP_PORT = Number(process.env.FLOW_CDP_PORT || 9333);
 export const FLOW_URL = 'https://flow.google.com/';
+export const FLOW_ACCOUNT = process.env.FLOW_ACCOUNT || 'tiktokeeuu691@gmail.com';
 
 const isWin = process.platform === 'win32';
 const isMac = process.platform === 'darwin';

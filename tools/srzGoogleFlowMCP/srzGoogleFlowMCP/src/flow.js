@@ -6,7 +6,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright-core';
-import { CDP_PORT, FLOW_URL, ensureChrome } from './chrome.js';
+import { CDP_PORT, FLOW_URL, FLOW_ACCOUNT, ensureChrome } from './chrome.js';
 
 export const MODELS = {
   'pro': 'Nano Banana Pro',
@@ -60,9 +60,9 @@ export async function newProject() {
   const { browser, context } = await connect();
   try {
     const page = await flowPage(context);
-    await page.goto(FLOW_URL, { waitUntil: 'domcontentloaded' });
+    await page.goto(`${FLOW_URL}?authuser=${FLOW_ACCOUNT}`, { waitUntil: 'domcontentloaded' });
     await assertSignedIn(page);
-    const btn = page.getByRole('button', { name: /^(Nuevo proyecto|New project|Nouveau projet|Nuovo progetto|Neues Projekt|Novo projeto)$/i });
+    const btn = page.getByRole('button', { name: /^(Nuevo proyecto|Proyecto nuevo|New project|Nouveau projet|Nuovo progetto|Neues Projekt|Novo projeto)$/i });
     await btn.click({ timeout: 20000 });
     await page.waitForURL(/\/project\/[0-9a-f-]{36}/, { timeout: 30000 });
     const projectId = page.url().match(/\/project\/([0-9a-f-]{36})/)[1];
@@ -81,7 +81,7 @@ async function inProject(fn) {
   try {
     const page = await flowPage(context);
     const url = `${FLOW_URL}project/${projectId}`;
-    if (!page.url().startsWith(url)) await page.goto(url, { waitUntil: 'domcontentloaded' });
+    if (!page.url().includes(`/project/${projectId}`)) await page.goto(`${url}?authuser=${FLOW_ACCOUNT}`, { waitUntil: 'domcontentloaded' });
     await assertSignedIn(page);
     await page.locator('div.ProseMirror').waitFor({ state: 'visible', timeout: 30000 });
     await closePicker(page);
@@ -168,6 +168,9 @@ export async function uploadFile({ filePath, name, replace = false }) {
     let mediaId;
     for (let i = 0; i < 60 && !mediaId; i++) {
       await page.waitForTimeout(1000);
+      // First upload on an account asks to confirm the rights to the image.
+      const agree = page.getByRole('button', { name: /^(Acepto|I agree|Agree|Aceptar)$/i });
+      if (await agree.isVisible().catch(() => false)) await agree.click();
       mediaId = (await tiles(page)).find((t) => !before.has(t.mediaId))?.mediaId;
     }
     if (!mediaId) throw new Error(`Upload of ${path.basename(filePath)} did not finish within 60s`);
@@ -188,7 +191,7 @@ async function clearPrompt(page) {
     await clear.click();
     await page.waitForTimeout(800);
   }
-  if (await page.locator('flow-ingredient-chip').count()) throw new Error('Could not remove the previous reference images from the prompt');
+  if (await page.locator('flow-base-prompt-box flow-ingredient-chip').count()) throw new Error('Could not remove the previous reference images from the prompt');
   const editor = page.locator('div.ProseMirror');
   await editor.click();
   await page.keyboard.press(SELECT_ALL);
@@ -206,17 +209,25 @@ async function typeText(page, text) {
 async function insertMention(page, name) {
   const chips = page.locator('div.ProseMirror span.mention-chip');
   const before = await chips.count();
-  await page.keyboard.type('@'); // a typed "@" opens the asset picker with its search focused
-  await picker(page).waitFor({ state: 'visible', timeout: 10000 });
-  await page.keyboard.type(name, { delay: 20 });
   const option = page.locator('button.asset-item').filter({
     has: page.locator('.asset-title', { hasText: new RegExp(`^\\s*${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*$`) }),
   }).first();
-  await option.waitFor({ state: 'visible', timeout: 10000 }).catch(() => {
-    throw new Error(`No asset named "${name}" in the Flow project. Upload it first (flow_upload_file).`);
-  });
-  await option.click();
-  await page.waitForFunction(([n]) => document.querySelectorAll('div.ProseMirror span.mention-chip').length > n, [before], { timeout: 5000 });
+  // the picker sometimes misses an asset that exists: close it, erase "@name" and search again
+  for (let t = 0; ; t++) {
+    await page.keyboard.type('@'); // a typed "@" opens the asset picker with its search focused
+    await picker(page).waitFor({ state: 'visible', timeout: 10000 });
+    await page.keyboard.type(name, { delay: 20 });
+    if (await option.waitFor({ state: 'visible', timeout: 10000 }).then(() => true, () => false)) break;
+    if (t >= 2) throw new Error(`No asset named "${name}" in the Flow project. Upload it first (flow_upload_file).`);
+    await page.keyboard.press('Escape');
+    for (let i = 0; i <= name.length; i++) await page.keyboard.press('Backspace');
+  }
+  for (let k = 0; ; k++) {
+    await option.click();
+    const ok = await page.waitForFunction(([n]) => document.querySelectorAll('div.ProseMirror span.mention-chip').length > n, [before], { timeout: 8000 }).then(() => true, () => false);
+    if (ok) return;
+    if (k >= 2 || !(await option.isVisible())) throw new Error(`mention chip for "${name}" not inserted`);
+  }
 }
 
 async function writePrompt(page, prompt) {
@@ -275,7 +286,9 @@ function modelName(text) {
 // the number of error tiles grows after this submit.
 function failedTiles(page) {
   return page.evaluate(() => [...document.querySelectorAll('flow-image-tile, flow-tile-container')]
-    .map((e) => e.innerText).filter((s) => /error|fail|unusual|no se ha podido|falló|política|policy|inusual/i.test(s)));
+    .map((e) => e.innerText)
+    // a tile still generating shows "NN%" plus the prompt text, which may itself contain "error"/"fail"
+    .filter((s) => !/\b\d{1,3}\s*%|play_circle/.test(s) && /error|fail|unusual|no se ha podido|no se pudo|falló|política|policy|inusual/i.test(s)));
 }
 
 function mediaIds(page) {
@@ -351,5 +364,110 @@ export async function generateImages({ prompt, aspect = '1:1', count = 1, model 
       files.push(file);
     }
     return { files, projectId, model, aspect, seconds: Math.round((Date.now() - started) / 1000) };
+  });
+}
+
+// ---------- video ----------
+
+export const VIDEO_MODELS = { 'omni': 'Omni 1.1 Flash', 'lite': 'Veo 3.1 - Lite', 'fast': 'Veo 3.1 - Fast', 'quality': 'Veo 3.1 - Quality' };
+
+async function configureVideo(page, { aspect, count, model, duration, mode }) {
+  const agent = page.locator('flow-agent-mode-toggle-chip button');
+  if (await agent.count() && (await agent.getAttribute('aria-pressed')) === 'true') await agent.click();
+  const panel = page.locator('flow-prompt-box-settings');
+  for (let i = 0; i < 4 && !(await panel.isVisible()); i++) {
+    await page.locator('button.settings-trigger-button').click();
+    await panel.waitFor({ state: 'visible', timeout: 2500 }).catch(() => {});
+  }
+  if (!(await panel.isVisible())) throw new Error('Could not open Flow\'s settings panel');
+  const groups = panel.getByRole('radiogroup');
+  await groups.first().getByRole('radio').nth(1).click(); // video
+  await page.waitForTimeout(800);
+  await groups.nth(1).getByRole('radio').nth(mode === 'frames' ? 0 : 1).click(); // frames | ingredients
+  await panel.getByRole('radio').filter({ hasText: aspect }).click();
+  const modelBtn = panel.locator('button[aria-haspopup], button').filter({ hasText: /Omni|Veo/ }).first();
+  if (!(await modelBtn.innerText()).includes(model)) {
+    await modelBtn.click();
+    await page.getByRole('menuitem').filter({ hasText: model }).click();
+    await page.waitForTimeout(800);
+  }
+  const dur = panel.getByRole('radio').filter({ hasText: new RegExp(`^\\s*${duration}\\s*s\\s*$`) });
+  if (!(await dur.count())) throw new Error(`Duration ${duration}s is not offered for ${model}`);
+  await dur.click();
+  const res = panel.getByRole('radio').filter({ hasText: /^\s*720p\s*$/ });
+  if (await res.count()) await res.click(); // Omni defaults to 360p
+  await panel.getByRole('radio', { name: `x${count}`, exact: true }).click();
+  for (let i = 0; i < 4 && (await panel.isVisible()); i++) {
+    await page.keyboard.press('Escape');
+    await panel.waitFor({ state: 'hidden', timeout: 1500 }).catch(() => {});
+  }
+  const summary = await page.locator('button.settings-trigger-button').innerText();
+  if (!new RegExp(`${duration}\\s*s`).test(summary.replace(/ /g, ' ')) || !summary.includes(aspect.replace(':', '_'))) throw new Error(`Flow settings did not apply (shows "${summary}")`);
+}
+
+// Every media tile in the grid (image or video), by media id; videos expose a <video> src once ready.
+function videoTiles(page) {
+  return page.evaluate(() => [...document.querySelectorAll('flow-grid-tile-container')].map((t) => ({
+    id: t.querySelector('[data-media-id]')?.dataset.mediaId || t.getAttribute('aria-label') || '',
+    src: t.querySelector('video')?.src || t.querySelector('video source')?.src || '',
+    text: t.innerText || '',
+  })));
+}
+
+export async function generateVideo({ prompt, aspect = '9:16', count = 1, model = 'omni', duration = 8, mode = 'ingredients', outDir = DEFAULT_OUT, timeoutMs = 90000 }) {
+  if (!prompt?.trim()) throw new Error('prompt is required');
+  if (!['9:16', '16:9'].includes(aspect)) throw new Error('aspect must be 9:16 or 16:9');
+  model = VIDEO_MODELS[String(model).toLowerCase()] || model;
+  return inProject(async (page, context, projectId) => {
+    await configureVideo(page, { aspect, count, model, duration, mode });
+    const tilesSel = page.locator('flow-grid-tile-container');
+    await page.evaluate(() => document.querySelectorAll('flow-grid-tile-container').forEach((t) => { t.dataset.seen = '1'; }));
+    const failedBefore = (await failedTiles(page)).length;
+    await writePrompt(page, prompt);
+    const submit = page.locator('flow-generate-icon-button button[type=submit]');
+    await page.waitForFunction((el) => !el.disabled, await submit.elementHandle(), { timeout: 10000 });
+    await submit.click();
+
+    // New tiles are prepended; a finished video tile shows the play_circle icon. Its <video> src only loads on hover.
+    const started = Date.now();
+    const fresh = [];
+    // user rule: 90 s max per attempt, no extension
+
+    let limit = timeoutMs;
+    while (Date.now() - started < limit && fresh.length < count) {
+      await page.waitForTimeout(5000);
+      const failed = await failedTiles(page);
+      if (failed.length > failedBefore) throw new Error(`Flow reported a failed generation: ${failed[0].replace(/\s+/g, ' ').slice(0, 200)}`);
+      const news = page.locator('flow-grid-tile-container:not([data-seen])');
+      if ((await news.count()) < count) continue;
+
+      fresh.length = 0;
+      for (let i = 0; i < count; i++) {
+        const t = news.nth(i);
+        if (!/play_circle/.test(await t.innerText())) break;
+        await t.hover();
+        await page.waitForTimeout(2000);
+        const src = await t.evaluate((e) => e.querySelector('video')?.src || '');
+        if (src) fresh.push({ src });
+      }
+    }
+    if (fresh.length < count) throw new Error(`No video appeared within ${Math.round(timeoutMs / 1000)}s`);
+
+    fs.mkdirSync(outDir, { recursive: true });
+    const stamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+    const files = [];
+    for (const [i, t] of fresh.slice(0, count).entries()) {
+      let body = null;
+      for (let attempt = 0; attempt < 10 && !body; attempt++) {
+        if (attempt) await page.waitForTimeout(3000);
+        const res = await context.request.get(t.src).catch(() => null);
+        if (res?.ok()) body = await res.body();
+      }
+      if (!body) throw new Error(`Download failed for ${t.src.slice(0, 80)}`);
+      const file = path.join(outDir, `${stamp}-${slug(prompt)}-${i + 1}.mp4`);
+      fs.writeFileSync(file, body);
+      files.push(file);
+    }
+    return { files, projectId, model, aspect, duration, seconds: Math.round((Date.now() - started) / 1000) };
   });
 }

@@ -1,0 +1,99 @@
+fuentes\referencias2\videos\DfIHLMYtKee_analisis.md
+fuentes\referencias2\videos\7697901687620635917_analisis.md
+Traceback (most recent call last):
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\httpcore2\_exceptions.py", line 13, in map_exceptions
+    yield
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\httpcore2\_sync\http11.py", line 197, in _receive_event
+    event = self._h11_state.next_event()
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\h11\_connection.py", line 481, in next_event
+    event = self._extract_next_receive_event()
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\h11\_connection.py", line 431, in _extract_next_receive_event
+    event = self._reader.read_eof()
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\h11\_readers.py", line 207, in read_eof
+    raise RemoteProtocolError(
+h11._util.RemoteProtocolError: peer closed connection without sending complete message body (incomplete chunked read)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\httpx2\_transports\default.py", line 98, in map_httpcore_exceptions
+    yield
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\httpx2\_transports\default.py", line 124, in __iter__
+    yield from self._httpcore_stream
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\httpcore2\_sync\connection_pool.py", line 426, in __iter__
+    for chunk in iterator:
+                 ^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\httpcore2\_sync\http11.py", line 320, in __iter__
+    raise exc
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\httpcore2\_sync\http11.py", line 312, in __iter__
+    for chunk in iterator:
+                 ^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\httpcore2\_sync\http11.py", line 188, in _receive_response_body
+    event = self._receive_event(timeout=timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\httpcore2\_sync\http11.py", line 196, in _receive_event
+    with map_exceptions({h11.RemoteProtocolError: RemoteProtocolError}):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\httpcore2\_exceptions.py", line 17, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore2.RemoteProtocolError: peer closed connection without sending complete message body (incomplete chunked read)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "F:\Claude Proyectos\tools\analizar_novela.py", line 126, in <module>
+    main()
+  File "F:\Claude Proyectos\tools\analizar_novela.py", line 122, in main
+    out.write_text(f"vistas: {vistas} | planos: {len(shots)} | dur: {dur:.0f}s\n\n" + ask(client, content), encoding="utf-8")
+                                                                                      ^^^^^^^^^^^^^^^^^^^^
+  File "F:\Claude Proyectos\tools\analizar_novela.py", line 91, in ask
+    msg = s.get_final_message()
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\anthropic\lib\streaming\_messages.py", line 100, in get_final_message
+    self.until_done()
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\anthropic\lib\streaming\_messages.py", line 127, in until_done
+    consume_sync_iterator(self)
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\anthropic\_utils\_streams.py", line 6, in consume_sync_iterator
+    for _ in iterator:
+             ^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\anthropic\lib\streaming\_messages.py", line 74, in __iter__
+    for item in self._iterator:
+                ^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\anthropic\lib\streaming\_messages.py", line 138, in __stream__
+    for sse_event in self._raw_stream:
+                     ^^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\anthropic\_streaming.py", line 65, in __iter__
+    for item in self._iterator:
+                ^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\anthropic\_streaming.py", line 92, in __stream__
+    for sse in iterator:
+               ^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\anthropic\_streaming.py", line 71, in _iter_events
+    yield from self._decoder.iter_bytes(self.response.iter_bytes())
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\anthropic\_streaming.py", line 351, in iter_bytes
+    for chunk in self._iter_chunks(iterator):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\anthropic\_streaming.py", line 362, in _iter_chunks
+    for chunk in iterator:
+                 ^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\httpx2\_models.py", line 893, in iter_bytes
+    for raw_bytes in self.iter_raw():
+                     ^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\httpx2\_models.py", line 948, in iter_raw
+    for raw_stream_bytes in self.stream:
+                            ^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\httpx2\_client.py", line 143, in __iter__
+    yield from self._stream
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\httpx2\_transports\default.py", line 123, in __iter__
+    with map_httpcore_exceptions():
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\httpx2\_transports\default.py", line 115, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx2.RemoteProtocolError: peer closed connection without sending complete message body (incomplete chunked read)

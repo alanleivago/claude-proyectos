@@ -10,18 +10,20 @@ import json, os, re, subprocess, sys, time, urllib.request
 API = "http://127.0.0.1:3900/v1/audio/speech"
 VOICE = "d31aa86f"   # 'Agente davis' clone
 SEED = 7             # same seed for every paragraph so the voice stays consistent
-PAUSE = 0.45         # seconds of silence between paragraphs
+PAUSE = 0.6          # seconds of silence between paragraphs
+SPEED = 0.9          # user (2026-11-05): habla un poco más despacio
 
 
 # how the voice must say certain words (the script keeps the normal spelling)
-SAY = {r"\bICE\b": "ais"}  # user: "ICE" se pronuncia "ais", no letra por letra
+SAY = {r"\bICE\b": "ais", r"Stephen Miller": "Stíven Míler", r"\bNBC\b": "ene be ce",
+       r"\bAP\b": "a pe", r"\bTPS\b": "te pe ese", r"WhatsApp": "guasap"}  # user: "ICE" se pronuncia "ais", no letra por letra
 
 
 def tts(text, out):
     for pat, rep in SAY.items():
         text = re.sub(pat, rep, text)
     body = json.dumps({"model": "omnivoice", "input": text, "voice": VOICE, "language": "es",
-                       "response_format": "wav", "num_step": 32, "seed": SEED}).encode()
+                       "response_format": "wav", "num_step": 32, "seed": SEED, "speed": SPEED}).encode()
     req = urllib.request.Request(API, body, {"Content-Type": "application/json"})
     with urllib.request.urlopen(req, timeout=1800) as r, open(out, "wb") as f:
         f.write(r.read())

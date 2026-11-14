@@ -10,7 +10,8 @@ relatedTo: [styles/yokai/STYLE.md, pieces/gashadokuro, pieces/corpo-seco, pieces
 This file collects every correction the user has given on yokai pieces (2026-10-22 to 11-01), so any machine can make this style. Read it together with `STYLE.md` (the look). Run this checklist at four points: story, look, storyboard and final.
 
 ## Channel and topics
-- The channel is **kodamashorts**: 9:16, about 71 s, English first-person paragraphs on screen, no voice.
+- The channel is **kodamashorts**: 9:16, English first-person paragraphs on screen, no voice.
+- **Length (user, 2026-11-03): 40 s maximum** for now (it used to be about 71 s). Expect about 6–7 beats, and scale the hit's silence and the badge to the shorter clock.
 - **Rotation:** alternate a proven hit from TikTok @theredarchivesyt / @earlobehuman with a Japanese yōkai.
   - Authored IP (Trevor Henderson, SCP, creepypasta, analog horror) is fine, because copyright is not a blocker.
   - Earlobe's own topics are allowed if you retell them with a different but similar story and place.

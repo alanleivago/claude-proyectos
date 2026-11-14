@@ -1,0 +1,71 @@
+[1/36] 13s  El martes en la noche mucha gente se acostó feliz.
+[2/36] 11s  Así que hoy quiero hablarte claro, porque en estos
+[3/36] 14s  Soy el agente Patrick Davis y durante más de una d
+[4/36] 19s  Empecemos por lo que pasó. En las elecciones de es
+[5/36] 18s  Pero aquí viene la primera cosa que tienes que ent
+[6/36] 12s  Y la segunda cosa, que casi nadie explica, es esta
+[7/36] 24s  Ahora, ¿y el dinero? Mucha gente piensa que, como 
+[8/36] 9s  ¿Qué quiere decir eso para ti? Que ICE no depende 
+[9/36] 13s  Trump sigue siendo presidente dos años más. Y el p
+[10/36] 12s  Y hay una cuarta cosa que la gente no sabe. Las co
+[11/36] 14s  Y por si quedaba alguna duda, mira lo que pasó ape
+[12/36] 30s  Y antes de continuar, quiero recomendarte algo que
+[13/36] 12s  Entonces, ¿qué está haciendo ICE en este momento? 
+[14/36] 19s  Para que tengas una idea del tamaño de esto, según
+[15/36] 7s  Entonces, ¿no cambia nada? No. Sí cambian cosas, y
+[16/36] 23s  Lo primero que cambia es la vigilancia. Hasta ahor
+[17/36] 22s  ¿Qué quieren investigar? Por ejemplo, las bodegas 
+[18/36] 13s  Lo segundo que cambia son algunas leyes que ahora 
+[19/36] 23s  Lo tercero que cambia es el próximo presupuesto. A
+[20/36] 21s  Y ahora te voy a hablar de lo que más me preocupa 
+[21/36] 24s  ¿Y por qué me preocupa tanto esa palabra? Porque c
+[22/36] 20s  Ahora, déjame darte el otro lado también, porque t
+[23/36] 5s  Ahora, esto no le pega igual a todo el mundo. Depe
+[24/36] 17s  Si tienes green card, este resultado no cambia nad
+[25/36] 9s  Si tienes un caso abierto, un asilo, una audiencia
+[26/36] 11s  Y si no tienes papeles, tus derechos siguen siendo
+[27/36] 4s  Entonces, ¿qué haces tú en estos meses? Te voy a d
+[28/36] 10s  Uno, no bajes la guardia. Todo lo que sabías la se
+[29/36] 8s  Dos, si tienes una cita en la corte de inmigración
+[30/36] 9s  Tres, ten tu plan familiar listo. Que tus hijos se
+[31/36] 10s  Cuatro, ten tus papeles en orden y en un solo luga
+[32/36] 8s  Y cinco, infórmate bien. Sigue las noticias, pero 
+[33/36] 18s  Entonces, para que te quede claro. Los demócratas 
+Traceback (most recent call last):
+  File "F:\Claude Proyectos\agente-davis\gen_voice.py", line 78, in <module>
+    main(sys.argv[1], sys.argv[2])
+  File "F:\Claude Proyectos\agente-davis\gen_voice.py", line 40, in main
+    tts(p, out)
+  File "F:\Claude Proyectos\agente-davis\gen_voice.py", line 28, in tts
+    with urllib.request.urlopen(req, timeout=1800) as r, open(out, "wb") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\urllib\request.py", line 215, in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\urllib\request.py", line 515, in open
+    response = self._open(req, data)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\urllib\request.py", line 532, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\urllib\request.py", line 492, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\urllib\request.py", line 1373, in http_open
+    return self.do_open(http.client.HTTPConnection, req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\urllib\request.py", line 1348, in do_open
+    r = h.getresponse()
+        ^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\http\client.py", line 1430, in getresponse
+    response.begin()
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\http\client.py", line 331, in begin
+    version, status, reason = self._read_status()
+                              ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\http\client.py", line 292, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\socket.py", line 720, in readinto
+    return self._sock.recv_into(b)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+ConnectionResetError: [WinError 10054] Se ha forzado la interrupción de una conexión existente por el host remoto

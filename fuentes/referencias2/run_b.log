@@ -1,0 +1,83 @@
+fuentes\referencias2\videos\7694110464388730134_analisis.md
+fuentes\referencias2\videos\7699640321801522463_analisis.md
+Traceback (most recent call last):
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\httpx2\_transports\default.py", line 98, in map_httpcore_exceptions
+    yield
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\httpx2\_transports\default.py", line 245, in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\httpcore2\_sync\connection_pool.py", line 242, in handle_request
+    raise exc from None
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\httpcore2\_sync\connection_pool.py", line 224, in handle_request
+    response = connection.handle_request(pool_request.request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\httpcore2\_sync\connection.py", line 94, in handle_request
+    raise exc
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\httpcore2\_sync\connection.py", line 74, in handle_request
+    stream = self._connect(request)
+             ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\httpcore2\_sync\connection.py", line 117, in _connect
+    stream = self._network_backend.connect_tcp(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\httpcore2\_backends\sync.py", line 203, in connect_tcp
+    with map_exceptions(exc_map):
+         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\httpcore2\_exceptions.py", line 17, in map_exceptions
+    raise to_exc(exc) from exc
+httpcore2.ConnectError: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\anthropic\_base_client.py", line 1439, in _attempt_request
+    response = self._client.send(
+               ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\httpx2\_client.py", line 979, in send
+    response = self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\httpx2\_client.py", line 1007, in _send_handling_auth
+    response = self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\httpx2\_client.py", line 1042, in _send_handling_redirects
+    response = self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\httpx2\_client.py", line 1075, in _send_single_request
+    response = transport.handle_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\httpx2\_transports\default.py", line 244, in handle_request
+    with map_httpcore_exceptions():
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\httpx2\_transports\default.py", line 115, in map_httpcore_exceptions
+    raise mapped_exc(message) from exc
+httpx2.ConnectError: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "F:\Claude Proyectos\tools\analizar_novela.py", line 126, in <module>
+    main()
+  File "F:\Claude Proyectos\tools\analizar_novela.py", line 122, in main
+    out.write_text(f"vistas: {vistas} | planos: {len(shots)} | dur: {dur:.0f}s\n\n" + ask(client, content), encoding="utf-8")
+                                                                                      ^^^^^^^^^^^^^^^^^^^^
+  File "F:\Claude Proyectos\tools\analizar_novela.py", line 90, in ask
+    with client.messages.stream(model=MODEL, max_tokens=32000, messages=[{"role": "user", "content": content}]) as s:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\anthropic\lib\streaming\_messages.py", line 185, in __enter__
+    raw_stream = self.__api_request()
+                 ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\anthropic\_base_client.py", line 1679, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\anthropic\_base_client.py", line 1230, in request
+    return self._request(cast_to, options, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\anthropic\_base_client.py", line 1264, in _request
+    response, prepared = self._attempt_request(
+                         ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Alan Leiva\AppData\Local\Programs\Python\Python312\Lib\site-packages\anthropic\_base_client.py", line 1453, in _attempt_request
+    raise APIConnectionError(request=request) from err
+anthropic.APIConnectionError: Connection error.

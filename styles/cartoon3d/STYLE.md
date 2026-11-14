@@ -86,7 +86,7 @@ switch al copiar `gen_takes.py` a una pieza nueva.
     `pieces/lost-luggage/caption.txt` y `pieces/guinea-rent/caption.txt`.
 12. **Telegram — SOLO en el PC Windows** (regla de `CLAUDE.local.md`, no existe en el Mac; `tools/enviar_telegram.py`
     está git-ignorado): `python tools/enviar_telegram.py pieces/<p>/renders/<p>.mp4 "<título TikTok con emoji y 4-5
-    hashtags>"`. Dar al usuario la ruta absoluta del mp4. Copiar SOLO el final a `pieces/3D cartoon rickclips/NN - Título.mp4`.
+    hashtags>"`. Dar al usuario la ruta absoluta del mp4. Copiar SOLO el final a `pieces/Alterbase/<pieza>.mp4`.
     En el Mac: entregar la ruta y el título; el envío lo hace el PC.
 
 ---

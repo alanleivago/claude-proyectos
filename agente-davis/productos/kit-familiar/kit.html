@@ -1,0 +1,930 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Kit Plan de Emergencia Familiar - Agente Patrick Davis</title>
+<style>
+@page { size: letter; margin: 0.6in; }
+* { box-sizing: border-box; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body {
+  font-family: "Segoe UI", "Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif;
+  font-size: 12.5pt; line-height: 1.4; color: #1c1c1c; margin: 0;
+}
+.page { page-break-before: always; break-before: page; }
+.tight { font-size: 11.8pt; line-height: 1.35; }
+
+/* Títulos */
+.kick { font-size: 10pt; letter-spacing: .14em; text-transform: uppercase; color: #1d3557; font-weight: 700; margin: 0; }
+h2 { font-size: 25pt; line-height: 1.1; color: #1d3557; margin: 2px 0 12px; padding-bottom: 6px; border-bottom: 4px solid #1d3557; }
+h3 { font-size: 14.5pt; color: #1d3557; margin: 12px 0 4px; }
+p { margin: 0 0 8px; }
+ul { margin: 4px 0 8px; padding-left: 22px; }
+li { margin-bottom: 4px; }
+
+/* Recuadros */
+.box { background: #fdf8f0; border: 1.5px solid #1d3557; border-radius: 6px; padding: 9px 14px; margin: 10px 0; }
+.box h3 { margin-top: 0; }
+.warn { background: #fff4f4; border: 2px solid #c1121f; border-left: 10px solid #c1121f; border-radius: 4px; padding: 9px 14px; margin: 12px 0; }
+.warn strong.t { color: #c1121f; text-transform: uppercase; letter-spacing: .04em; }
+.cols { display: flex; gap: 14px; }
+.cols > * { flex: 1; }
+
+/* Formularios */
+.f { display: flex; align-items: flex-end; gap: 8px; min-height: 0.45in; margin: 0 0 3px; }
+.f b { white-space: nowrap; font-weight: 600; color: #1d3557; padding-bottom: 3px; font-size: 11.5pt; }
+.f i { flex: 1; display: block; border-bottom: 1.3px solid #333; height: 0.32in; min-width: 0.5in; }
+.row { display: flex; gap: 20px; }
+.row > .f { flex: 1; }
+.ln { border-bottom: 1.3px solid #333; height: 0.38in; margin: 0; }
+.u { display: inline-block; border-bottom: 1.3px solid #333; min-width: 1.6in; height: 0.3in; vertical-align: bottom; }
+.u.l { min-width: 3.2in; }
+.u.s { min-width: 0.9in; }
+.o { white-space: nowrap; margin-right: 14px; }
+.cb { font-size: 15pt; line-height: 1; vertical-align: -1px; }
+
+table.t { width: 100%; border-collapse: collapse; margin: 6px 0 10px; }
+.t th { background: #1d3557; color: #fff; font-size: 10.5pt; text-align: left; padding: 6px 7px; border: 1.2px solid #1d3557; }
+.t td { border: 1.2px solid #555; height: 0.46in; padding: 4px 7px; vertical-align: middle; font-size: 11pt; }
+.t tr { break-inside: avoid; page-break-inside: avoid; }
+.t td.x { font-size: 10.5pt; line-height: 1.25; }
+.t.big td { height: 0.5in; }
+
+/* Pasos */
+.step { display: flex; gap: 12px; margin: 9px 0; align-items: flex-start; }
+.n { flex: 0 0 34px; height: 34px; border-radius: 50%; background: #1d3557; color: #fff; font-weight: 700; text-align: center; line-height: 34px; font-size: 15pt; margin-top: 2px; }
+.step div p { margin: 0; }
+.step strong { color: #1d3557; }
+
+/* Portada */
+.cover { background: #1d3557; color: #fff; height: 9.55in; padding: 0.75in 0.6in 0.6in; display: flex; flex-direction: column; justify-content: space-between; }
+.cover .tag { font-size: 12pt; letter-spacing: .25em; text-transform: uppercase; border-top: 3px solid #fdf8f0; padding-top: 10px; display: inline-block; }
+.cover h1 { font-size: 50pt; line-height: 1.02; margin: 18px 0 18px; font-weight: 800; }
+.cover .sub { font-size: 19pt; line-height: 1.3; max-width: 6in; }
+.cover .by { font-size: 17pt; font-weight: 700; margin-top: 6px; }
+.cover .by small { display: block; font-size: 11pt; font-weight: 400; opacity: .85; margin-top: 3px; }
+.cover .crema { background: #fdf8f0; color: #1d3557; border-radius: 8px; padding: 18px 22px; }
+.cover .crema .big { font-size: 20pt; font-weight: 800; line-height: 1.2; margin-bottom: 8px; }
+.cover .crema .f b { color: #1d3557; }
+.cover .foot { font-size: 9.5pt; opacity: .85; margin-top: 12px; }
+
+/* Tarjetas */
+.cards { display: grid; grid-template-columns: 1fr 1fr; border-top: 1.5px dashed #444; border-left: 1.5px dashed #444; margin-top: 8px; }
+.card { height: 2.25in; border-right: 1.5px dashed #444; border-bottom: 1.5px dashed #444; padding: 0.13in 0.16in; overflow: hidden; }
+.card .lab { font-size: 8.5pt; letter-spacing: .1em; text-transform: uppercase; color: #1d3557; font-weight: 700; }
+.card .en { font-size: 14pt; font-weight: 800; color: #1d3557; line-height: 1.2; margin: 6px 0 6px; }
+.card .es { font-size: 11.5pt; line-height: 1.3; }
+.card .mini { font-size: 8.5pt; color: #444; margin-top: 6px; }
+.card .f { min-height: 0.36in; }
+.card .f b { font-size: 9.5pt; }
+.card .f i { height: 0.26in; }
+
+@media screen {
+  body { max-width: 7.4in; margin: 0 auto; padding: 20px; background: #fff; }
+  .page { border-top: 2px dashed #bbb; margin-top: 30px; padding-top: 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- 1. PORTADA -->
+<section class="cover">
+  <div>
+    <span class="tag">Kit familiar</span>
+    <h1>Kit Plan de Emergencia Familiar</h1>
+    <div class="sub">Lo que tu familia necesita tener listo antes de que pase algo</div>
+  </div>
+  <div class="by">Por el Agente Patrick Davis
+    <small>Canal de YouTube sobre inmigración para la comunidad latina</small>
+  </div>
+  <div>
+    <div class="crema">
+      <div class="big">Llénalo hoy. Guárdalo en un lugar que tu familia conozca.</div>
+      <div class="f"><b>Familia:</b><i></i></div>
+      <div class="f"><b>Lo empecé a llenar el:</b><i></i></div>
+    </div>
+    <div class="foot">Información educativa general. No es asesoría legal.</div>
+  </div>
+</section>
+
+<!-- 2. CÓMO USAR -->
+<section class="page">
+  <p class="kick">Antes de empezar</p>
+  <h2>Cómo usar este kit</h2>
+  <p>Hola, soy Patrick. Si estás leyendo esto, probablemente tienes miedo de lo que pueda pasar con tus hijos, tu dinero y tus cosas si ICE detiene a alguien de tu familia. Es normal sentirlo. Lo que sí puedes hacer es prepararte.</p>
+  <div class="box">
+    <h3>Por qué hacerlo ahora</h3>
+    <p style="margin:0">Estando detenido es muy difícil firmar documentos, hacer llamadas largas o encontrar papeles. Todo eso tiene que quedar listo antes. Lo he visto muchas veces: la familia que tenía su plan listo sufrió mucho menos.</p>
+  </div>
+  <p>Este kit no evita una deportación ni reemplaza a un abogado. Sirve para que tu familia sepa qué hacer y a quién llamar.</p>
+
+  <h3>Los 5 pasos</h3>
+  <div class="step"><div class="n">1</div><div><p><strong>Llena las hojas.</strong> Con letra clara y de preferencia con pluma. Si no sabes un dato, déjalo en blanco y búscalo después.</p></div></div>
+  <div class="step"><div class="n">2</div><div><p><strong>Elige a tu persona de confianza.</strong> Y también a un suplente, por si la primera no puede.</p></div></div>
+  <div class="step"><div class="n">3</div><div><p><strong>Firma o notariza lo que haga falta.</strong> Por ejemplo, el permiso para el cuidado de tus hijos. Primero consulta con un abogado u organización de confianza.</p></div></div>
+  <div class="step"><div class="n">4</div><div><p><strong>Guarda copias.</strong> Una en tu casa, en un lugar que todos conozcan. Otra con tu persona de confianza. Y una foto en tu teléfono, en una carpeta o app protegida con clave.</p></div></div>
+  <div class="step"><div class="n">5</div><div><p><strong>Practica con tu familia.</strong> Un plan que nadie ha practicado se olvida rápido cuando hay miedo.</p></div></div>
+
+  <div class="warn"><strong class="t">Aviso importante:</strong> las leyes cambian y son distintas en cada estado. Antes de firmar documentos legales, consulta con un abogado de inmigración o con una organización sin fines de lucro.</div>
+
+  <div class="box">
+    <h3>Mi avance</h3>
+    <p style="margin:0 0 4px"><span class="o"><span class="cb">☐</span> Paso 1</span><span class="o"><span class="cb">☐</span> Paso 2</span><span class="o"><span class="cb">☐</span> Paso 3</span><span class="o"><span class="cb">☐</span> Paso 4</span><span class="o"><span class="cb">☐</span> Paso 5</span></p>
+    <div class="f"><b>Terminé el kit el:</b><i></i></div>
+  </div>
+</section>
+
+<!-- 3. CHECKLIST (1/2) -->
+<section class="page">
+  <p class="kick">Checklist</p>
+  <h2>15 cosas para tener listas</h2>
+  <p>Marca cada casilla cuando la tengas. Guarda los originales en un lugar seguro y deja copias con tu persona de confianza.</p>
+  <table class="t big">
+    <tr><th style="width:0.45in"></th><th>Qué necesitas</th><th style="width:2.1in">¿Dónde lo guardo?</th></tr>
+    <tr><td><span class="cb">☐</span></td><td><strong>1. Pasaporte o acta de nacimiento</strong> de cada miembro de la familia.</td><td></td></tr>
+    <tr><td><span class="cb">☐</span></td><td><strong>2. Actas de nacimiento de los hijos.</strong> Ayudan a probar quiénes son sus padres y dónde nacieron.</td><td></td></tr>
+    <tr><td><span class="cb">☐</span></td><td><strong>3. Tu número A</strong> (si tienes). Es el número que inmigración te asigna. Empieza con la letra A.</td><td></td></tr>
+    <tr><td><span class="cb">☐</span></td><td><strong>4. Documentos de tus casos migratorios:</strong> solicitudes, recibos, avisos de corte, cartas.</td><td></td></tr>
+    <tr><td><span class="cb">☐</span></td><td><strong>5. Prueba de tiempo en EE. UU.:</strong> recibos, contratos, taxes con ITIN, cartas médicas o escolares.</td><td></td></tr>
+    <tr><td><span class="cb">☐</span></td><td><strong>6. Documentos de la escuela:</strong> inscripción, boletas de calificaciones, planes especiales si los hay.</td><td></td></tr>
+    <tr><td><span class="cb">☐</span></td><td><strong>7. Seguro médico, vacunas y medicinas:</strong> tarjetas, cartilla de vacunas y lista de medicinas.</td><td></td></tr>
+    <tr><td><span class="cb">☐</span></td><td><strong>8. Contrato de renta o escrituras</strong> de la casa, y títulos del carro.</td><td></td></tr>
+  </table>
+</section>
+
+<!-- CHECKLIST (2/2) -->
+<section class="page">
+  <p class="kick">Checklist (continuación)</p>
+  <h2>15 cosas para tener listas</h2>
+  <table class="t big">
+    <tr><th style="width:0.45in"></th><th>Qué necesitas</th><th style="width:2.1in">¿Dónde lo guardo?</th></tr>
+    <tr><td><span class="cb">☐</span></td><td><strong>9. Cuentas bancarias:</strong> lista de bancos y tipos de cuenta. No escribas contraseñas completas.</td><td></td></tr>
+    <tr><td><span class="cb">☐</span></td><td><strong>10. Tarjeta "conoce tus derechos"</strong> en tu cartera y otra junto a la puerta. Las encuentras en este kit.</td><td></td></tr>
+    <tr><td><span class="cb">☐</span></td><td><strong>11. Número de un abogado memorizado.</strong> También escrito en papel.</td><td></td></tr>
+    <tr><td><span class="cb">☐</span></td><td><strong>12. Dinero de emergencia y para fianza,</strong> en un lugar que tu persona de confianza conozca.</td><td></td></tr>
+    <tr><td><span class="cb">☐</span></td><td><strong>13. Poder notarial para el cuidado de los hijos,</strong> preparado con ayuda de un abogado u organización.</td><td></td></tr>
+    <tr><td><span class="cb">☐</span></td><td><strong>14. Poder para asuntos financieros,</strong> para que alguien de confianza pueda pagar cuentas por ti.</td><td></td></tr>
+    <tr><td><span class="cb">☐</span></td><td><strong>15. Cargador y teléfono</strong> a la mano, con los contactos importantes también escritos en papel.</td><td></td></tr>
+  </table>
+  <div class="box">
+    <h3>Cuántas llevo</h3>
+    <div class="f"><b>Tengo listas</b><i style="max-width:0.8in"></i><b>de 15.</b></div>
+    <p style="margin:0">Si hoy solo puedes hacer una, empieza con el número del abogado y la persona que cuidaría a tus hijos. Lo demás se va armando.</p>
+  </div>
+  <div class="box">
+    <h3>Mis pendientes</h3>
+    <div class="ln"></div><div class="ln"></div><div class="ln"></div>
+  </div>
+</section>
+
+<!-- 4. MIS DATOS -->
+<section class="page">
+  <p class="kick">Formulario</p>
+  <h2>Mis datos</h2>
+  <p>Si hay dos adultos en la casa, cada uno llena su propia hoja. Haz una copia de esta página antes de llenarla.</p>
+  <div class="f"><b>Nombre completo:</b><i></i></div>
+  <div class="f"><b>Otros nombres que he usado:</b><i></i></div>
+  <div class="row">
+    <div class="f"><b>Fecha de nacimiento:</b><i></i></div>
+    <div class="f"><b>País de nacimiento:</b><i></i></div>
+  </div>
+  <div class="f"><b>Dirección:</b><i></i></div>
+  <div class="row">
+    <div class="f"><b>Número A:</b><i></i></div>
+    <div class="f"><b>Número de caso:</b><i></i></div>
+  </div>
+  <div class="f"><b>Próxima cita o audiencia (fecha y lugar):</b><i></i></div>
+  <div class="row">
+    <div class="f"><b>Abogado/a:</b><i></i></div>
+    <div class="f"><b>Teléfono:</b><i></i></div>
+  </div>
+  <div class="f"><b>Consulado más cercano:</b><i></i></div>
+  <div class="f"><b>Teléfono del consulado:</b><i></i></div>
+  <div class="box" style="padding-bottom:4px">
+    <h3>Salud</h3>
+    <div class="f"><b>Alergias:</b><i></i></div>
+    <div class="f"><b>Medicinas (nombre, dosis y hora):</b><i></i></div>
+    <div class="f"><b>Condiciones médicas:</b><i></i></div>
+    <div class="f"><b>Doctor y teléfono:</b><i></i></div>
+  </div>
+</section>
+
+<!-- 5. CONTACTOS (1/2) -->
+<section class="page">
+  <p class="kick">Contactos de emergencia</p>
+  <h2>Familia y personas de confianza</h2>
+  <div class="box">
+    <p style="margin:0 0 6px"><strong>Memoriza al menos 2 números.</strong> Si te detienen, no tendrás tu teléfono. Solo podrás marcar los números que te sepas de memoria.</p>
+    <p style="margin:0"><span class="o"><span class="cb">☐</span> Ya me sé el número 1</span><span class="o"><span class="cb">☐</span> Ya me sé el número 2</span></p>
+  </div>
+  <p style="font-size:11pt">Anota si cada persona tiene papeles para saber quién puede ir a una escuela o a una oficina con menos riesgo.</p>
+  <table class="t">
+    <tr><th style="width:27%">Nombre</th><th style="width:17%">Relación</th><th style="width:22%">Teléfono</th><th style="width:17%">¿Tiene papeles?</th><th style="width:17%">¿Sabe del plan?</th></tr>
+    <tr><td></td><td></td><td></td><td class="x">☐ Sí &nbsp;☐ No</td><td class="x">☐ Sí &nbsp;☐ No</td></tr>
+    <tr><td></td><td></td><td></td><td class="x">☐ Sí &nbsp;☐ No</td><td class="x">☐ Sí &nbsp;☐ No</td></tr>
+    <tr><td></td><td></td><td></td><td class="x">☐ Sí &nbsp;☐ No</td><td class="x">☐ Sí &nbsp;☐ No</td></tr>
+    <tr><td></td><td></td><td></td><td class="x">☐ Sí &nbsp;☐ No</td><td class="x">☐ Sí &nbsp;☐ No</td></tr>
+    <tr><td></td><td></td><td></td><td class="x">☐ Sí &nbsp;☐ No</td><td class="x">☐ Sí &nbsp;☐ No</td></tr>
+    <tr><td></td><td></td><td></td><td class="x">☐ Sí &nbsp;☐ No</td><td class="x">☐ Sí &nbsp;☐ No</td></tr>
+    <tr><td></td><td></td><td></td><td class="x">☐ Sí &nbsp;☐ No</td><td class="x">☐ Sí &nbsp;☐ No</td></tr>
+    <tr><td></td><td></td><td></td><td class="x">☐ Sí &nbsp;☐ No</td><td class="x">☐ Sí &nbsp;☐ No</td></tr>
+    <tr><td></td><td></td><td></td><td class="x">☐ Sí &nbsp;☐ No</td><td class="x">☐ Sí &nbsp;☐ No</td></tr>
+  </table>
+</section>
+
+<!-- CONTACTOS (2/2) -->
+<section class="page">
+  <p class="kick">Contactos de emergencia (continuación)</p>
+  <h2>Ayuda profesional</h2>
+  <p>Aquí van el abogado, la organización de tu zona, el consulado, la escuela y el médico de los niños. Si todavía no tienes alguno, la sección "Dónde buscar ayuda real" te dice cómo empezar.</p>
+  <table class="t big">
+    <tr><th style="width:21%">Quién es</th><th style="width:25%">Nombre</th><th style="width:21%">Teléfono</th><th style="width:33%">Dirección, correo u horario</th></tr>
+    <tr><td><strong>Abogado/a</strong></td><td></td><td></td><td></td></tr>
+    <tr><td><strong>Organización local</strong></td><td></td><td></td><td></td></tr>
+    <tr><td><strong>Consulado</strong></td><td></td><td></td><td></td></tr>
+    <tr><td><strong>Escuela de los niños</strong></td><td></td><td></td><td></td></tr>
+    <tr><td><strong>Médico de los niños</strong></td><td></td><td></td><td></td></tr>
+    <tr><td><strong>Trabajo</strong></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+  <div class="box">
+    <h3>Lo que voy a memorizar</h3>
+    <div class="row">
+      <div class="f"><b>Número 1:</b><i></i></div>
+      <div class="f"><b>De quién es:</b><i></i></div>
+    </div>
+    <div class="row">
+      <div class="f"><b>Número 2:</b><i></i></div>
+      <div class="f"><b>De quién es:</b><i></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. MIS HIJOS x3 -->
+<section class="page">
+  <p class="kick">Mis hijos · Ficha 1 de 3</p>
+  <h2>Datos de mi hijo/a</h2>
+  <p style="font-size:11.5pt">Esta ficha es para la persona que cuidará a tus hijos. Llénala como si se la fueras a explicar a alguien que no conoce su día a día.</p>
+  <div class="f"><b>Nombre completo:</b><i></i></div>
+  <div class="row">
+    <div class="f"><b>Fecha de nacimiento:</b><i></i></div>
+    <div class="f"><b>Grado:</b><i></i></div>
+  </div>
+  <div class="f"><b>Escuela (nombre y teléfono):</b><i></i></div>
+  <div class="row">
+    <div class="f"><b>Maestro/a:</b><i></i></div>
+    <div class="f"><b>Horario (entrada y salida):</b><i></i></div>
+  </div>
+  <div class="f"><b>Quién lo recoge normalmente:</b><i></i></div>
+  <div class="f"><b>Médico (nombre y teléfono):</b><i></i></div>
+  <div class="row">
+    <div class="f"><b>Alergias:</b><i></i></div>
+    <div class="f"><b>Medicinas (dosis y hora):</b><i></i></div>
+  </div>
+  <div class="row">
+    <div class="f"><b>Talla de ropa:</b><i></i></div>
+    <div class="f"><b>Talla de zapatos:</b><i></i></div>
+  </div>
+  <div class="f"><b>Comida favorita:</b><i></i></div>
+  <div class="f"><b>Qué lo calma cuando está asustado:</b><i></i></div>
+  <div class="ln"></div>
+  <p style="margin:12px 0 4px"><strong>¿Es ciudadano?</strong> <span class="o"><span class="cb">☐</span> Sí</span><span class="o"><span class="cb">☐</span> No</span><span class="o"><span class="cb">☐</span> No sé</span></p>
+  <p style="margin:0 0 4px"><strong>¿Tiene pasaporte?</strong> <span class="o"><span class="cb">☐</span> Sí</span><span class="o"><span class="cb">☐</span> No</span></p>
+  <div class="f"><b>¿Dónde está el pasaporte y el acta de nacimiento?</b><i></i></div>
+</section>
+
+<section class="page">
+  <p class="kick">Mis hijos · Ficha 2 de 3</p>
+  <h2>Datos de mi hijo/a</h2>
+  <p style="font-size:11.5pt">Si tienes dudas sobre la ciudadanía de alguno de tus hijos, pregunta a un abogado de inmigración. No lo dejes para después.</p>
+  <div class="f"><b>Nombre completo:</b><i></i></div>
+  <div class="row">
+    <div class="f"><b>Fecha de nacimiento:</b><i></i></div>
+    <div class="f"><b>Grado:</b><i></i></div>
+  </div>
+  <div class="f"><b>Escuela (nombre y teléfono):</b><i></i></div>
+  <div class="row">
+    <div class="f"><b>Maestro/a:</b><i></i></div>
+    <div class="f"><b>Horario (entrada y salida):</b><i></i></div>
+  </div>
+  <div class="f"><b>Quién lo recoge normalmente:</b><i></i></div>
+  <div class="f"><b>Médico (nombre y teléfono):</b><i></i></div>
+  <div class="row">
+    <div class="f"><b>Alergias:</b><i></i></div>
+    <div class="f"><b>Medicinas (dosis y hora):</b><i></i></div>
+  </div>
+  <div class="row">
+    <div class="f"><b>Talla de ropa:</b><i></i></div>
+    <div class="f"><b>Talla de zapatos:</b><i></i></div>
+  </div>
+  <div class="f"><b>Comida favorita:</b><i></i></div>
+  <div class="f"><b>Qué lo calma cuando está asustado:</b><i></i></div>
+  <div class="ln"></div>
+  <p style="margin:12px 0 4px"><strong>¿Es ciudadano?</strong> <span class="o"><span class="cb">☐</span> Sí</span><span class="o"><span class="cb">☐</span> No</span><span class="o"><span class="cb">☐</span> No sé</span></p>
+  <p style="margin:0 0 4px"><strong>¿Tiene pasaporte?</strong> <span class="o"><span class="cb">☐</span> Sí</span><span class="o"><span class="cb">☐</span> No</span></p>
+  <div class="f"><b>¿Dónde está el pasaporte y el acta de nacimiento?</b><i></i></div>
+</section>
+
+<section class="page">
+  <p class="kick">Mis hijos · Ficha 3 de 3</p>
+  <h2>Datos de mi hijo/a</h2>
+  <p style="font-size:11.5pt">Si tienes más de tres hijos, copia esta hoja las veces que haga falta.</p>
+  <div class="f"><b>Nombre completo:</b><i></i></div>
+  <div class="row">
+    <div class="f"><b>Fecha de nacimiento:</b><i></i></div>
+    <div class="f"><b>Grado:</b><i></i></div>
+  </div>
+  <div class="f"><b>Escuela (nombre y teléfono):</b><i></i></div>
+  <div class="row">
+    <div class="f"><b>Maestro/a:</b><i></i></div>
+    <div class="f"><b>Horario (entrada y salida):</b><i></i></div>
+  </div>
+  <div class="f"><b>Quién lo recoge normalmente:</b><i></i></div>
+  <div class="f"><b>Médico (nombre y teléfono):</b><i></i></div>
+  <div class="row">
+    <div class="f"><b>Alergias:</b><i></i></div>
+    <div class="f"><b>Medicinas (dosis y hora):</b><i></i></div>
+  </div>
+  <div class="row">
+    <div class="f"><b>Talla de ropa:</b><i></i></div>
+    <div class="f"><b>Talla de zapatos:</b><i></i></div>
+  </div>
+  <div class="f"><b>Comida favorita:</b><i></i></div>
+  <div class="f"><b>Qué lo calma cuando está asustado:</b><i></i></div>
+  <div class="ln"></div>
+  <p style="margin:12px 0 4px"><strong>¿Es ciudadano?</strong> <span class="o"><span class="cb">☐</span> Sí</span><span class="o"><span class="cb">☐</span> No</span><span class="o"><span class="cb">☐</span> No sé</span></p>
+  <p style="margin:0 0 4px"><strong>¿Tiene pasaporte?</strong> <span class="o"><span class="cb">☐</span> Sí</span><span class="o"><span class="cb">☐</span> No</span></p>
+  <div class="f"><b>¿Dónde está el pasaporte y el acta de nacimiento?</b><i></i></div>
+</section>
+
+<!-- 7. QUIÉN CUIDA A MIS HIJOS (1/3) -->
+<section class="page">
+  <p class="kick">Quién cuida a mis hijos</p>
+  <h2>Mi persona de confianza y mi suplente</h2>
+  <p>Esta es la decisión más importante del kit. Piensa en alguien que tus hijos conozcan y que pueda llegar rápido. Escoge también a un suplente, por si la primera persona no contesta o no puede.</p>
+  <div class="box" style="padding-bottom:4px">
+    <h3>Persona principal</h3>
+    <div class="f"><b>Nombre completo:</b><i></i></div>
+    <div class="row">
+      <div class="f"><b>Relación con mis hijos:</b><i></i></div>
+      <div class="f"><b>Teléfono:</b><i></i></div>
+    </div>
+    <div class="f"><b>Dirección:</b><i></i></div>
+    <div class="row">
+      <div class="f"><b>Otro teléfono:</b><i></i></div>
+      <div class="f"><b>Horario de trabajo:</b><i></i></div>
+    </div>
+    <p style="margin:2px 0 6px"><strong>¿Tiene llave de mi casa?</strong> <span class="o"><span class="cb">☐</span> Sí</span><span class="o"><span class="cb">☐</span> No</span></p>
+  </div>
+  <div class="box" style="padding-bottom:4px">
+    <h3>Suplente</h3>
+    <div class="f"><b>Nombre completo:</b><i></i></div>
+    <div class="row">
+      <div class="f"><b>Relación con mis hijos:</b><i></i></div>
+      <div class="f"><b>Teléfono:</b><i></i></div>
+    </div>
+    <div class="f"><b>Dirección:</b><i></i></div>
+    <div class="row">
+      <div class="f"><b>Otro teléfono:</b><i></i></div>
+      <div class="f"><b>Horario de trabajo:</b><i></i></div>
+    </div>
+    <p style="margin:2px 0 6px"><strong>¿Tiene llave de mi casa?</strong> <span class="o"><span class="cb">☐</span> Sí</span><span class="o"><span class="cb">☐</span> No</span></p>
+  </div>
+</section>
+
+<!-- QUIÉN CUIDA (2/3) -->
+<section class="page tight">
+  <p class="kick">Quién cuida a mis hijos (continuación)</p>
+  <h2>Cómo elegir y qué hablar</h2>
+  <h3 style="margin-top:0">Preguntas para elegir</h3>
+  <table class="t">
+    <tr><th>Pregunta</th><th style="width:1.35in">Principal</th><th style="width:1.35in">Suplente</th></tr>
+    <tr><td>¿Tiene estatus legal estable? <span style="font-size:9.5pt">(Una persona con estatus estable corre menos riesgo al ir a la escuela o a una oficina.)</span></td><td class="x">☐ Sí &nbsp;☐ No</td><td class="x">☐ Sí &nbsp;☐ No</td></tr>
+    <tr><td>¿Vive cerca de la escuela y de mi casa?</td><td class="x">☐ Sí &nbsp;☐ No</td><td class="x">☐ Sí &nbsp;☐ No</td></tr>
+    <tr><td>¿Mis hijos la conocen y le tienen confianza?</td><td class="x">☐ Sí &nbsp;☐ No</td><td class="x">☐ Sí &nbsp;☐ No</td></tr>
+    <tr><td>¿Puede cuidarlos varios días o semanas?</td><td class="x">☐ Sí &nbsp;☐ No</td><td class="x">☐ Sí &nbsp;☐ No</td></tr>
+    <tr><td><strong>¿Aceptó?</strong> Habla con ella antes de anotarla.</td><td class="x">☐ Sí &nbsp;☐ No</td><td class="x">☐ Sí &nbsp;☐ No</td></tr>
+  </table>
+  <h3>Qué hablar con ella</h3>
+  <ul>
+    <li><strong>Rutinas:</strong> a qué hora despiertan, comen, hacen tarea y duermen.</li>
+    <li><strong>Escuela y salud:</strong> quién es el maestro, quién es el médico, dónde están los documentos.</li>
+    <li><strong>Dinero:</strong> quién paga la comida y los gastos de los niños, y de dónde sale ese dinero.</li>
+    <li><strong>Un tema difícil:</strong> si tus hijos se irían con el padre o la madre deportado, o se quedarían en EE. UU. Piénsalo con calma y, si puedes, consúltalo con un abogado.</li>
+  </ul>
+  <div class="f"><b>Lo que decidimos:</b><i></i></div>
+  <div class="ln"></div>
+  <div class="ln"></div>
+  <div class="box" style="margin-top:12px">
+    <p style="margin:0"><strong>Recomendación:</strong> agrega a esta persona en la escuela como adulto autorizado para recoger a tus hijos. En la hoja siguiente tienes un modelo de carta.</p>
+  </div>
+</section>
+
+<!-- QUIÉN CUIDA (3/3) CARTA -->
+<section class="page">
+  <p class="kick">Quién cuida a mis hijos (continuación)</p>
+  <h2>Modelo de carta a la escuela</h2>
+  <p>Llénala a mano y entrégala en la oficina de la escuela. Haz una carta por cada hijo si están en escuelas distintas.</p>
+  <div style="border:1.5px solid #1d3557; border-radius:6px; padding:0.2in 0.28in; line-height:2.25;">
+    <div>Fecha: <span class="u"></span></div>
+    <div>A: Dirección de la escuela <span class="u l"></span></div>
+    <div><strong>Asunto: Adulto autorizado para recoger a mi hijo/a</strong></div>
+    <div>Yo, <span class="u l"></span>, soy el padre / la madre de <span class="u l"></span>,</div>
+    <div>estudiante del grado <span class="u s"></span> con el maestro/a <span class="u l" style="min-width:2.4in"></span>.</div>
+    <div>Autorizo a <span class="u l"></span> (relación: <span class="u" style="min-width:1.4in"></span>)</div>
+    <div>a recoger a mi hijo/a en la escuela y a ser contactado/a en caso de emergencia.</div>
+    <div>Su teléfono es <span class="u l"></span>.</div>
+    <div>Como segunda opción, autorizo a <span class="u l"></span>, teléfono <span class="u" style="min-width:1.6in"></span>.</div>
+    <div>Por favor, agréguelas a la lista de adultos autorizados.</div>
+    <div>Firma: <span class="u l"></span> Teléfono: <span class="u" style="min-width:1.6in"></span></div>
+  </div>
+  <div class="box">
+    <p style="margin:0">Pregunta en la oficina si la escuela tiene su propio formulario de contactos de emergencia y personas autorizadas. Muchas lo tienen y lo prefieren. Guarda una foto de lo que entregaste.</p>
+  </div>
+</section>
+
+<!-- 8. PODER NOTARIAL (1/2) -->
+<section class="page tight">
+  <p class="kick">Poder notarial</p>
+  <h2>Poder notarial para el cuidado de los hijos: explicado</h2>
+  <p>Es uno de los documentos más útiles para una familia con hijos, y también uno de los que más confunden. Vamos por partes.</p>
+  <div class="cols">
+    <div class="box" style="margin-top:4px">
+      <h3>Qué es</h3>
+      <p style="margin:0">Un documento entre tú y una persona de confianza. No viene de una corte. Le da permiso temporal para tomar decisiones sobre la escuela y la salud de tus hijos cuando tú no puedas.</p>
+    </div>
+    <div class="box" style="margin-top:4px">
+      <h3>Qué NO hace</h3>
+      <ul style="margin:0">
+        <li>No te quita la custodia.</li>
+        <li>Lo puedes cancelar cuando quieras.</li>
+        <li>No transfiere la custodia legal. Eso solo lo hace un juez.</li>
+      </ul>
+    </div>
+  </div>
+  <h3>Debe notarizarse</h3>
+  <p>Un notario (<em>notary public</em>) comprueba quién eres y que la firma es tuya. En EE. UU. un notario no es abogado y no puede darte asesoría migratoria. En muchos países de Latinoamérica el notario sí es un abogado con funciones especiales, pero aquí no.</p>
+  <h3>Cada estado tiene su propio formulario y sus reglas</h3>
+  <p>El nombre y los requisitos cambian de un estado a otro. En California, por ejemplo, existe la "Declaración Jurada de Autorización del Cuidador", y la custodia solo la da un juez. Usa el formulario oficial de tu estado y no uno cualquiera de internet.</p>
+  <h3>Cómo conseguir el formulario oficial de tu estado, gratis</h3>
+  <ul>
+    <li><strong>ILRC</strong> (Immigrant Legal Resource Center, ilrc.org): organización sin fines de lucro con guías para familias.</li>
+    <li><strong>Legal aid de tu estado:</strong> organizaciones de ayuda legal gratuita o de bajo costo.</li>
+    <li><strong>El consulado de tu país:</strong> suele orientar a las familias de su comunidad.</li>
+    <li>El sitio web de los tribunales de tu estado a veces publica formularios gratis.</li>
+  </ul>
+  <div class="warn"><strong class="t">Cuidado:</strong> no firmes nada que te dé un "notario" que cobra por "arreglar papeles". Solo los abogados o los representantes acreditados por el Departamento de Justicia (DOJ) pueden darte asesoría migratoria.</div>
+</section>
+
+<!-- PODER NOTARIAL (2/2) HOJA DE TRABAJO -->
+<section class="page">
+  <p class="kick">Poder notarial (continuación)</p>
+  <h2>Hoja de trabajo</h2>
+  <p style="font-size:11.5pt">Esta hoja solo sirve para juntar la información. No es el documento legal. Llévala cuando consigas el formulario oficial de tu estado.</p>
+  <h3 style="margin-top:6px">Los padres o tutores</h3>
+  <div class="row">
+    <div class="f"><b>Nombre 1:</b><i></i></div>
+    <div class="f"><b>Teléfono:</b><i></i></div>
+  </div>
+  <div class="row">
+    <div class="f"><b>Nombre 2:</b><i></i></div>
+    <div class="f"><b>Teléfono:</b><i></i></div>
+  </div>
+  <div class="f"><b>Dirección:</b><i></i></div>
+  <h3>La persona de confianza (apoderado/a)</h3>
+  <div class="row">
+    <div class="f"><b>Nombre completo:</b><i></i></div>
+    <div class="f"><b>Relación:</b><i></i></div>
+  </div>
+  <div class="row">
+    <div class="f"><b>Dirección:</b><i></i></div>
+    <div class="f"><b>Teléfono:</b><i></i></div>
+  </div>
+  <h3>Los hijos</h3>
+  <table class="t">
+    <tr><th style="width:55%">Nombre completo</th><th>Fecha de nacimiento</th></tr>
+    <tr><td></td><td></td></tr>
+    <tr><td></td><td></td></tr>
+    <tr><td></td><td></td></tr>
+  </table>
+  <h3 style="margin-top:2px">Qué permisos quiero dar</h3>
+  <p style="margin:0 0 3px"><span class="cb">☐</span> <strong>Escuela:</strong> inscribirlos, hablar con maestros, recogerlos.</p>
+  <p style="margin:0 0 3px"><span class="cb">☐</span> <strong>Salud:</strong> llevarlos al médico y autorizar tratamientos.</p>
+  <p style="margin:0 0 3px"><span class="cb">☐</span> <strong>Viajar:</strong> acompañarlos en viajes (anota si es dentro o fuera de EE. UU.).</p>
+  <p style="margin:0 0 3px"><span class="cb">☐</span> <strong>Documentos:</strong> pedir copias de actas, boletas o récords médicos.</p>
+  <p style="margin:0 0 6px"><span class="cb">☐</span> <strong>Otro:</strong> <span class="u l" style="min-width:3.8in"></span></p>
+  <p style="margin:4px 0 2px"><strong>Duración:</strong> <span class="o"><span class="cb">☐</span> Hasta que yo lo cancele</span><span class="o"><span class="cb">☐</span> Por <span class="u s" style="min-width:0.6in"></span> meses o años</span></p>
+  <div class="f"><b>Cita para firmar (fecha, lugar y notario):</b><i></i></div>
+</section>
+
+<!-- 9. DINERO (1/3) -->
+<section class="page">
+  <p class="kick">Mi dinero y mis cosas</p>
+  <h2>Cuentas y pagos del mes</h2>
+  <h3 style="margin-top:0">Cuentas bancarias</h3>
+  <p style="font-size:11pt;margin-bottom:2px">Escribe solo los últimos 4 dígitos. No anotes números completos ni contraseñas en este kit.</p>
+  <table class="t">
+    <tr><th style="width:32%">Banco o cooperativa</th><th style="width:20%">Tipo</th><th style="width:16%">Últimos 4</th><th>Quién puede acceder</th></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+  <h3>Pagos mensuales</h3>
+  <table class="t">
+    <tr><th style="width:27%">Pago</th><th style="width:17%">Monto</th><th style="width:17%">Fecha</th><th>A nombre de / cómo se paga</th></tr>
+    <tr><td><strong>Renta o hipoteca</strong></td><td></td><td></td><td></td></tr>
+    <tr><td><strong>Luz</strong></td><td></td><td></td><td></td></tr>
+    <tr><td><strong>Agua o gas</strong></td><td></td><td></td><td></td></tr>
+    <tr><td><strong>Carro</strong></td><td></td><td></td><td></td></tr>
+    <tr><td><strong>Teléfono</strong></td><td></td><td></td><td></td></tr>
+    <tr><td><strong>Seguro</strong></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td></tr>
+  </table>
+</section>
+
+<!-- DINERO (2/3) -->
+<section class="page">
+  <p class="kick">Mi dinero y mis cosas (continuación)</p>
+  <h2>Efectivo, carro, casa y trabajo</h2>
+  <div class="box" style="padding-bottom:4px">
+    <h3>Dinero en efectivo y de emergencia</h3>
+    <div class="f"><b>Dónde está:</b><i></i></div>
+    <div class="row">
+      <div class="f"><b>Cuánto hay (aprox.):</b><i></i></div>
+      <div class="f"><b>Quién sabe:</b><i></i></div>
+    </div>
+  </div>
+  <div class="box" style="padding-bottom:4px">
+    <h3>Carro</h3>
+    <div class="row">
+      <div class="f"><b>Marca y año:</b><i></i></div>
+      <div class="f"><b>Placas:</b><i></i></div>
+    </div>
+    <div class="f"><b>Dónde está el título y el seguro:</b><i></i></div>
+    <div class="f"><b>Quién lo puede manejar o mover:</b><i></i></div>
+  </div>
+  <div class="box" style="padding-bottom:4px">
+    <h3>Casa</h3>
+    <p style="margin:0 0 4px"><span class="o"><span class="cb">☐</span> Rentamos</span><span class="o"><span class="cb">☐</span> Es nuestra</span></p>
+    <div class="row">
+      <div class="f"><b>Casero o banco:</b><i></i></div>
+      <div class="f"><b>Teléfono:</b><i></i></div>
+    </div>
+    <div class="f"><b>A quién llamar si no podemos pagar a tiempo:</b><i></i></div>
+  </div>
+  <div class="box" style="padding-bottom:4px">
+    <h3>Trabajo y último cheque</h3>
+    <div class="row">
+      <div class="f"><b>Empleador:</b><i></i></div>
+      <div class="f"><b>Teléfono:</b><i></i></div>
+    </div>
+    <div class="f"><b>Supervisor:</b><i></i></div>
+    <p style="font-size:11pt;margin:4px 0 2px">Las reglas para el pago final cambian según el estado. Pregunta a una organización de derechos laborales. También puedes preguntar a tu empleador si puede depositar el cheque en tu cuenta o entregarlo a la persona que tú autorices por escrito.</p>
+    <div class="f"><b>Cómo cobrar mi último cheque:</b><i></i></div>
+  </div>
+</section>
+
+<!-- DINERO (3/3) -->
+<section class="page tight">
+  <p class="kick">Mi dinero y mis cosas (continuación)</p>
+  <h2>Poder para asuntos financieros y meta de fianza</h2>
+  <div class="box" style="margin-top:0">
+    <h3>Qué es el poder financiero</h3>
+    <p style="margin:0">Es un documento donde nombras a una persona de confianza para que maneje ciertos asuntos de dinero por ti. Puede pagar cuentas, hacer trámites en el banco o ayudar a pagar una fianza. No se convierte en dueña de tu dinero. Se firma cuando estás libre y en tus cabales. Los bancos a veces piden su propio formulario y las reglas cambian por estado, así que consúltalo con un abogado o una organización.</p>
+  </div>
+  <div class="row">
+    <div class="f"><b>Persona de confianza:</b><i></i></div>
+    <div class="f"><b>Teléfono:</b><i></i></div>
+  </div>
+  <p style="margin:2px 0 2px"><strong>Quiero que pueda:</strong></p>
+  <p style="margin:0 0 2px"><span class="o"><span class="cb">☐</span> Pagar renta y cuentas</span><span class="o"><span class="cb">☐</span> Entrar a mi cuenta de banco</span></p>
+  <p style="margin:0 0 6px"><span class="o"><span class="cb">☐</span> Ayudar a pagar una fianza</span><span class="o"><span class="cb">☐</span> Mover o vender el carro</span><span class="o"><span class="cb">☐</span> Cobrar mi último cheque</span></p>
+
+  <div class="box">
+    <h3>Mi meta de ahorro para fianza</h3>
+    <p style="margin:0 0 4px">Las fianzas migratorias suelen empezar en $1,500 y pueden ser mucho más. La cantidad la decide ICE o un juez, y algunas personas no tienen derecho a fianza. Ahorrar algo antes ayuda a tu familia a reaccionar rápido.</p>
+    <div class="row">
+      <div class="f"><b>Mi meta: $</b><i></i></div>
+      <div class="f"><b>Ahorro por mes: $</b><i></i></div>
+    </div>
+  </div>
+  <table class="t">
+    <tr><th style="width:30%">Fecha</th><th style="width:35%">Cuánto puse</th><th>Total ahorrado</th></tr>
+    <tr><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td></tr>
+  </table>
+</section>
+
+<!-- 10. PRIMERAS 48 HORAS (1/3) -->
+<section class="page">
+  <p class="kick">Si pasa</p>
+  <h2>Si ICE detiene a alguien de mi familia: las primeras 48 horas</h2>
+  <p>Sigue estos pasos en orden. Ten este kit a la mano y pídele ayuda a tu persona de confianza.</p>
+  <div class="step"><div class="n">1</div><div><p><strong>Mantén la calma y no firmes nada.</strong> Ni tú ni la persona detenida deben firmar papeles sin hablar antes con un abogado. Esto incluye documentos de salida voluntaria.</p></div></div>
+  <div class="step"><div class="n">2</div><div><p><strong>Consigue los datos de la persona:</strong> nombre completo, fecha de nacimiento, país de nacimiento y número A. Los tienes en la hoja "Mis datos".</p></div></div>
+  <div class="step"><div class="n">3</div><div><p><strong>Búscala en el localizador oficial de detenidos de ICE:</strong> <em>locator.ice.gov</em>. Puedes buscar con el número A y el país de nacimiento, o con el nombre y el país. A veces tarda horas o días en aparecer, sobre todo si la trasladaron. Vuelve a revisar.</p></div></div>
+  <div class="step"><div class="n">4</div><div><p><strong>Llama al abogado o a la organización.</strong> Dales el nombre, el número A, dónde y cuándo ocurrió y a dónde crees que la llevaron.</p></div></div>
+  <div class="step"><div class="n">5</div><div><p><strong>Avisa al consulado.</strong> Los consulados suelen poder orientar a la familia y ayudar a ubicar a la persona.</p></div></div>
+  <div class="step"><div class="n">6</div><div><p><strong>Activa el plan de los niños.</strong> Llama a tu persona de confianza, avisa a la escuela y lleva los documentos y las fichas de cada hijo.</p></div></div>
+  <div class="box">
+    <p style="margin:0"><strong>Si la persona te llama desde detención:</strong> las llamadas pueden ser grabadas, así que no hables de los detalles de su caso. Apunta el número desde donde llamó y pregúntale lo básico: dónde está y si necesita medicinas.</p>
+  </div>
+</section>
+
+<!-- 48 HORAS (2/3) -->
+<section class="page tight">
+  <p class="kick">Si pasa (continuación)</p>
+  <h2>Fianza, estafas y papeles</h2>
+  <div class="step"><div class="n">7</div><div><p><strong>No le mandes dinero a desconocidos que prometen sacarla.</strong> Es una de las estafas más comunes. Si alguien te pide dinero por adelantado, por transferencia o en tarjetas de regalo, desconfía. Habla primero con tu abogado u organización.</p></div></div>
+  <div class="step"><div class="n">8</div><div><p><strong>Entiende cómo funciona la fianza, en general.</strong> En algunos casos, ICE o un juez de inmigración permite que la persona salga mientras sigue su caso, si se paga una cantidad de dinero. Algunos puntos que debes saber:</p></div></div>
+  <ul style="margin-left:46px">
+    <li>Suele empezar en $1,500 y puede ser mucho más.</li>
+    <li>No todas las personas tienen derecho a fianza.</li>
+    <li>Por lo general, quien paga o firma debe tener estatus legal en EE. UU. Un abogado te dice quién puede hacerlo en tu caso.</li>
+    <li>Si usas una compañía de fianzas, cobra una cuota que normalmente no se devuelve. Pide todo por escrito y exige recibo.</li>
+    <li>La persona detenida debe ir a todas sus citas. Si falla, se pierde el dinero y puede haber consecuencias graves.</li>
+  </ul>
+  <div class="step"><div class="n">9</div><div><p><strong>Guarda todos los papeles que te den.</strong> Avisos, recibos, tarjetas, números de teléfono. Tómales fotos y anota la fecha en que los recibiste.</p></div></div>
+  <div class="step"><div class="n">10</div><div><p><strong>Cuídate tú también.</strong> Come, duerme lo que puedas y pide ayuda a tu familia. Los niños necesitan a un adulto que esté en pie.</p></div></div>
+  <div class="warn"><strong class="t">Recuerda:</strong> nadie puede garantizarte que una persona saldrá o que no será deportada. Si alguien te lo asegura, aléjate.</div>
+  <div class="box">
+    <h3>Lo primero que voy a hacer yo</h3>
+    <div class="ln"></div><div class="ln"></div>
+  </div>
+</section>
+
+<!-- 48 HORAS (3/3) HOJA -->
+<section class="page">
+  <p class="kick">Si pasa (continuación)</p>
+  <h2>Hoja para anotar todo</h2>
+  <p style="font-size:11.5pt">Llénala lo antes posible, aunque solo sepas una parte. Los detalles se olvidan rápido.</p>
+  <div class="row">
+    <div class="f"><b>Fecha de la detención:</b><i></i></div>
+    <div class="f"><b>Hora:</b><i></i></div>
+  </div>
+  <div class="f"><b>Lugar (dirección y ciudad):</b><i></i></div>
+  <div class="row">
+    <div class="f"><b>Nombre del agente:</b><i></i></div>
+    <div class="f"><b>Placa:</b><i></i></div>
+  </div>
+  <p style="margin:2px 0 2px"><strong>Quién la detuvo:</strong> <span class="o"><span class="cb">☐</span> ICE</span><span class="o"><span class="cb">☐</span> Policía local</span><span class="o"><span class="cb">☐</span> No sé</span></p>
+  <p style="margin:0 0 2px"><strong>¿Mostraron una orden?</strong> <span class="o"><span class="cb">☐</span> Sí</span><span class="o"><span class="cb">☐</span> No</span><span class="o"><span class="cb">☐</span> No la vi</span></p>
+  <div class="f"><b>A dónde la llevaron:</b><i></i></div>
+  <div class="row">
+    <div class="f"><b>Número A:</b><i></i></div>
+    <div class="f"><b>Teléfono del centro:</b><i></i></div>
+  </div>
+  <div class="row">
+    <div class="f"><b>Abogado contactado:</b><i></i></div>
+    <div class="f"><b>Fecha y hora de la llamada:</b><i></i></div>
+  </div>
+  <div class="f"><b>Testigos (nombre y teléfono):</b><i></i></div>
+  <p style="margin:6px 0 2px"><span class="o"><span class="cb">☐</span> Consulado avisado</span><span class="o"><span class="cb">☐</span> Escuela avisada</span><span class="o"><span class="cb">☐</span> Persona de confianza avisada</span></p>
+  <h3>Notas</h3>
+  <div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div>
+</section>
+
+<!-- 11. CÓMO HABLAR CON TUS HIJOS (1/2) -->
+<section class="page">
+  <p class="kick">Con tu familia</p>
+  <h2>Cómo hablar con tus hijos sin asustarlos</h2>
+  <p>Los niños sienten cuando algo pasa, aunque no les digas. Lo que no saben suele asustarlos más que la verdad contada con calma. Habla en un momento tranquilo, sin prisa, y repítelo varias veces.</p>
+  <div class="box">
+    <h3>El "plan de bomberos"</h3>
+    <p style="margin:0">En la escuela practican qué hacer si hay un incendio. Nadie espera que haya fuego, pero todos saben qué hacer. Nuestro plan familiar funciona igual. Esperamos no usarlo nunca, y todos sabemos qué hacer si llega el día.</p>
+  </div>
+  <h3>De 3 a 6 años</h3>
+  <p>Usa palabras muy simples y pocas ideas. Que sientan seguridad.</p>
+  <ul>
+    <li>"Si mamá o papá no llegan, la tía Rosa va a venir por ti. Ella te quiere mucho."</li>
+    <li>"Solo te vas con las personas que están en nuestra lista."</li>
+    <li>Enséñales el número de teléfono con una canción o un ritmo.</li>
+    <li>Ponles una tarjeta de contacto en la mochila (está al final del kit).</li>
+  </ul>
+  <h3>De 7 a 12 años</h3>
+  <p>Ya entienden más. Dales información honesta, sin detalles que den pesadillas.</p>
+  <ul>
+    <li>"Hay personas del gobierno que a veces detienen a gente que no tiene papeles. Quizás nunca pase. Si pasa, esto es lo que hacemos."</li>
+    <li>"Nada de esto es tu culpa."</li>
+    <li>"Puedes preguntarme lo que quieras, las veces que quieras."</li>
+    <li>Pídeles que repitan el plan con sus palabras.</li>
+  </ul>
+</section>
+
+<!-- CÓMO HABLAR (2/2) -->
+<section class="page">
+  <p class="kick">Con tu familia (continuación)</p>
+  <h2>Adolescentes, desconocidos y números</h2>
+  <h3 style="margin-top:0">Adolescentes</h3>
+  <p>Ellos quieren información completa y que los tomes en serio. Dale las cosas claras, pero sin cargarles lo que le toca a un adulto.</p>
+  <ul>
+    <li>"Quiero que sepas dónde están los documentos y a quién llamar."</li>
+    <li>"No publiques en redes nada sobre el estatus de nadie de la familia."</li>
+    <li>"Si llegan a la puerta, no abras. Llámame o llama a tu tía."</li>
+    <li>"Tu trabajo es cuidarte y cuidar a tus hermanos menores. Los trámites los hacemos los adultos."</li>
+  </ul>
+  <h3>Si un adulto que no conocen va a la escuela</h3>
+  <p>Diles: "Si alguien que no conoces te dice que viene de parte de mamá o papá, no te vayas con esa persona. Pídele a tu maestra que llame a la persona de confianza." Pueden usar una palabra secreta de la familia que solo ustedes sepan.</p>
+  <div class="f"><b>Nuestra palabra secreta:</b><i></i></div>
+  <h3>Que memoricen un número</h3>
+  <p>Un solo número les basta. Practíquenlo en el carro, en la cena o antes de dormir. Cuando lo digan sin ayuda, marca la casilla.</p>
+  <table class="t">
+    <tr><th>Hijo/a</th><th style="width:2.2in">Número que va a memorizar</th><th style="width:1.3in">Ya se lo sabe</th></tr>
+    <tr><td></td><td></td><td class="x">☐ Sí</td></tr>
+    <tr><td></td><td></td><td class="x">☐ Sí</td></tr>
+    <tr><td></td><td></td><td class="x">☐ Sí</td></tr>
+  </table>
+  <div class="box">
+    <h3>La frase que voy a usar con mis hijos</h3>
+    <div class="ln"></div><div class="ln"></div>
+  </div>
+</section>
+
+<!-- 12. PRACTIQUEN EL PLAN (1/2) -->
+<section class="page tight">
+  <p class="kick">Practiquen el plan</p>
+  <h2>Guion para la puerta</h2>
+  <p>Léanlo juntos y actúenlo como si fuera un juego. Repetirlo ayuda a que, cuando haya nervios, el cuerpo sepa qué hacer.</p>
+  <div class="step"><div class="n">1</div><div><p><strong>Tocan la puerta.</strong> Nadie abre. Los niños van al cuarto que escogimos.</p><p style="font-size:11pt">Nuestro cuarto seguro: <span class="u l" style="min-width:2.8in"></span></p></div></div>
+  <div class="step"><div class="n">2</div><div><p><strong>Un adulto se acerca a la puerta sin abrirla</strong> y pregunta: "¿Quién es?"</p></div></div>
+  <div class="step"><div class="n">3</div><div><p><strong>Si dicen que son de inmigración o ICE,</strong> el adulto dice: "No abro la puerta. Si tiene una orden firmada por un juez, páseme el papel por debajo de la puerta o péguelo en la ventana."</p></div></div>
+  <div class="step"><div class="n">4</div><div><p><strong>Revisen el papel.</strong> ¿Está firmado por un juez? ¿Están bien el nombre y la dirección? Un papel firmado solo por un agente de ICE no es una orden de un juez y no les da permiso de entrar. Si no están seguros, no abran.</p></div></div>
+  <div class="step"><div class="n">5</div><div><p><strong>Derecho a guardar silencio.</strong> Di: "Voy a guardar silencio. Quiero hablar con un abogado." No contestes preguntas sobre dónde naciste ni sobre tu estatus. No mientas y no muestres documentos falsos.</p></div></div>
+  <div class="step"><div class="n">6</div><div><p><strong>Si entran a la fuerza,</strong> no corras ni te resistas. Di en voz clara: "No doy mi permiso para entrar ni para registrar." Si es seguro, graba o anota todo lo que puedas.</p></div></div>
+  <div class="step"><div class="n">7</div><div><p><strong>Otro adulto llama</strong> a la persona de confianza y al abogado.</p></div></div>
+  <div class="box">
+    <p style="margin:0;font-size:11pt">Esta es información general. Si tienes dudas sobre tus derechos en tu estado, pregunta a una organización de tu comunidad o a un abogado.</p>
+  </div>
+</section>
+
+<!-- PRACTIQUEN (2/2) -->
+<section class="page">
+  <p class="kick">Practiquen el plan (continuación)</p>
+  <h2>Quién hace qué</h2>
+  <p>Decidan los roles antes. Si alguien no está en casa ese día, el siguiente adulto toma su lugar.</p>
+  <table class="t big">
+    <tr><th style="width:2.6in">Rol</th><th style="width:1.8in">Quién</th><th>Suplente</th></tr>
+    <tr><td><strong>Habla con la puerta</strong> (sin abrirla)</td><td></td><td></td></tr>
+    <tr><td><strong>Lleva a los niños</strong> al cuarto seguro</td><td></td><td></td></tr>
+    <tr><td><strong>Llama</strong> a la persona de confianza y al abogado</td><td></td><td></td></tr>
+    <tr><td><strong>Graba o anota</strong> lo que pase, si es seguro</td><td></td><td></td></tr>
+    <tr><td><strong>Lleva el kit</strong> y los documentos</td><td></td><td></td></tr>
+  </table>
+  <div class="box" style="padding-bottom:4px">
+    <h3>Próxima práctica</h3>
+    <div class="row">
+      <div class="f"><b>Fecha:</b><i></i></div>
+      <div class="f"><b>Hora:</b><i></i></div>
+    </div>
+    <div class="f"><b>Quiénes van a participar:</b><i></i></div>
+  </div>
+  <h3>Registro de prácticas</h3>
+  <table class="t">
+    <tr><th style="width:22%">Fecha</th><th style="width:30%">Quiénes</th><th>Qué hay que mejorar</th></tr>
+    <tr><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td></tr>
+  </table>
+  <p style="font-size:11pt">Practiquen cada pocos meses y cada vez que alguien nuevo se una al plan.</p>
+</section>
+
+<!-- 13. DÓNDE BUSCAR AYUDA (1/2) -->
+<section class="page tight">
+  <p class="kick">Ayuda real</p>
+  <h2>Dónde buscar ayuda real</h2>
+  <p>Aquí no te doy teléfonos porque cambian. Te explico qué tipo de ayuda existe y dónde buscarla. Anota tus contactos cuando los encuentres.</p>
+  <div class="box">
+    <h3>Directorio de abogados pro bono de la Corte de Inmigración</h3>
+    <p style="margin:0 0 2px">La Oficina Ejecutiva para la Revisión de Casos de Inmigración (EOIR) es la que maneja las cortes de inmigración. En <strong>justice.gov/eoir</strong> publica listas de organizaciones y abogados que dan servicio legal gratis (pro bono), por estado y por corte.</p>
+    <div class="f"><b>Mi contacto:</b><i></i></div>
+  </div>
+  <div class="box">
+    <h3>Representantes acreditados por el DOJ</h3>
+    <p style="margin:0 0 2px">Son personas de organizaciones reconocidas por el Departamento de Justicia que pueden dar asesoría migratoria sin ser abogados, a precios bajos o gratis. La lista también está en el sitio de EOIR.</p>
+    <div class="f"><b>Mi contacto:</b><i></i></div>
+  </div>
+  <div class="box">
+    <h3>ILRC (Immigrant Legal Resource Center)</h3>
+    <p style="margin:0 0 2px">Organización sin fines de lucro. En <strong>ilrc.org</strong> tiene información y materiales para familias inmigrantes, incluso sobre planes familiares.</p>
+    <div class="f"><b>Lo que encontré:</b><i></i></div>
+  </div>
+  <div class="box">
+    <h3>Legal aid de tu estado</h3>
+    <p style="margin:0 0 2px">Busca "legal aid" y el nombre de tu estado. Son organizaciones que dan ayuda legal gratis o de bajo costo, y pueden ayudarte con el formulario de tu estado para el cuidado de tus hijos.</p>
+    <div class="f"><b>Mi contacto:</b><i></i></div>
+  </div>
+</section>
+
+<!-- AYUDA (2/2) -->
+<section class="page tight">
+  <p class="kick">Ayuda real (continuación)</p>
+  <h2>Más apoyo y señales de fraude</h2>
+  <div class="box" style="margin-top:0">
+    <h3>Consulado de tu país</h3>
+    <p style="margin:0 0 2px">Puede orientar a tu familia, ayudar con pasaportes y documentos de tus hijos, y apoyar si alguien es detenido. Muchos consulados tienen programas para proteger a sus connacionales en EE. UU.</p>
+    <div class="f"><b>Mi consulado:</b><i></i></div>
+  </div>
+  <div class="box">
+    <h3>United We Dream</h3>
+    <p style="margin:0 0 2px">Red de jóvenes inmigrantes. En <strong>unitedwedream.org</strong> hay información y recursos para la comunidad.</p>
+  </div>
+  <div class="box">
+    <h3>Línea de redadas o red de respuesta rápida de tu ciudad</h3>
+    <p style="margin:0 0 2px">En muchas ciudades hay redes comunitarias que verifican reportes de operativos y mandan ayuda. Pregunta a una organización de tu zona si existe una y cómo funciona.</p>
+    <div class="f"><b>Mi contacto:</b><i></i></div>
+  </div>
+  <div class="warn">
+    <strong class="t">Señales de fraude</strong>
+    <ul style="margin:4px 0 0">
+      <li>Te garantiza la residencia o que "todo sale bien".</li>
+      <li>Te cobra por formularios que son gratis.</li>
+      <li>Te pide que firmes papeles en blanco.</li>
+      <li>Dice que "conoce a alguien" en inmigración.</li>
+      <li>Te pide dinero por adelantado en efectivo o por una app, sin darte recibo.</li>
+    </ul>
+    <p style="margin:6px 0 0">Si ves una de estas señales, no firmes ni pagues. Consulta con un abogado o una organización de confianza.</p>
+  </div>
+</section>
+
+<!-- 14. TARJETAS -->
+<section class="page">
+  <p class="kick">Para recortar</p>
+  <h2 style="font-size:22pt;margin-bottom:6px">Tarjetas de derechos y contacto</h2>
+  <p style="font-size:11pt;margin-bottom:4px">Recorta por las líneas punteadas. Lleva las 4 primeras en tu cartera y deja otra copia junto a la puerta. Las 2 últimas son para la mochila de tus hijos.</p>
+  <div class="cards">
+    <div class="card">
+      <div class="lab">Mis derechos · My rights</div>
+      <div class="en">I am exercising my right to remain silent.</div>
+      <div class="es">Estoy ejerciendo mi derecho a guardar silencio.</div>
+    </div>
+    <div class="card">
+      <div class="lab">Mis derechos · My rights</div>
+      <div class="en">I do not consent to a search.</div>
+      <div class="es">No doy mi consentimiento para un registro.</div>
+    </div>
+    <div class="card">
+      <div class="lab">Mis derechos · My rights</div>
+      <div class="en">I want to speak to a lawyer.</div>
+      <div class="es">Quiero hablar con un abogado.</div>
+    </div>
+    <div class="card">
+      <div class="lab">Mis derechos · My rights</div>
+      <div class="en">I will not sign anything without a lawyer.</div>
+      <div class="es">No voy a firmar nada sin un abogado.</div>
+    </div>
+    <div class="card">
+      <div class="lab">Contacto de emergencia · Emergency contact</div>
+      <div class="f"><b>Mi nombre / My name:</b><i></i></div>
+      <div class="f"><b>Llamar a / Call:</b><i></i></div>
+      <div class="f"><b>Tel. 1:</b><i></i></div>
+      <div class="f"><b>Tel. 2:</b><i></i></div>
+    </div>
+    <div class="card">
+      <div class="lab">Contacto de emergencia · Emergency contact</div>
+      <div class="f"><b>Mi nombre / My name:</b><i></i></div>
+      <div class="f"><b>Llamar a / Call:</b><i></i></div>
+      <div class="f"><b>Tel. 1:</b><i></i></div>
+      <div class="f"><b>Tel. 2:</b><i></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- 15. CIERRE -->
+<section class="page">
+  <p class="kick">Para terminar</p>
+  <h2>Unas palabras de Patrick</h2>
+  <p>Si llegaste hasta aquí, ya hiciste lo más difícil: sentarte a pensar en lo que da miedo. Eso necesita valor, y lo hiciste por tu familia.</p>
+  <p>Guarda este kit donde todos sepan encontrarlo. Revísalo cada seis meses y cambia lo que haya cambiado: un teléfono, una escuela, un trabajo, una dirección. Habla con tus hijos con calma y practiquen juntos.</p>
+  <p>Busca también a un abogado de inmigración o a una organización de confianza. Tu situación es única, y ellos pueden decirte lo que ningún kit puede.</p>
+  <p>Cuenta conmigo desde el canal. Cuídense mucho.</p>
+  <p style="font-weight:700;color:#1d3557;font-size:14pt;margin-top:10px">Agente Patrick Davis</p>
+
+  <div class="box" style="margin-top:14px">
+    <h3>Revisiones de mi kit</h3>
+    <div class="row">
+      <div class="f"><b>Revisé el:</b><i></i></div>
+      <div class="f"><b>Cambié:</b><i></i></div>
+    </div>
+    <div class="row">
+      <div class="f"><b>Revisé el:</b><i></i></div>
+      <div class="f"><b>Cambié:</b><i></i></div>
+    </div>
+  </div>
+
+  <div class="warn" style="margin-top:16px">
+    <strong class="t">Aviso legal</strong>
+    <p style="margin:6px 0 0">Este kit es información educativa general, no es asesoría legal. Las leyes cambian y varían por estado. Antes de firmar documentos legales, consulta con un abogado de inmigración o un representante acreditado.</p>
+  </div>
+
+  <h3>Notas</h3>
+  <div class="ln"></div><div class="ln"></div><div class="ln"></div><div class="ln"></div>
+</section>
+
+</body>
+</html>

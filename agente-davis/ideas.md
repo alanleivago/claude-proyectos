@@ -32,3 +32,9 @@
 7. **Los documentos que todo inmigrante debe tener listos en 2026.** (Visa USA en Español 226k.)
 8. **Por qué USCIS niega green cards por matrimonio (y la entrevista).** (Darian 97k.)
 9. **Países a donde se están mudando los estadounidenses (y latinos con ciudadanía) por lo que pasa en EE. UU.** (Digital Émigré 1,3M.)
+
+## Outliers 2026-11-07 (vistas ÷ mediana del canal, últimos 80 videos)
+- Angel Leal (mediana 7,6k): "MASS DEPORTATION: Who are Immigration's new TARGETS?" ×77 · "Supreme Court ELIMINATES Deportation Relief!" ×17 · "NEW rule: Is your RESIDENCY at RISK?" ×15 · "The criminal mistake that destroys your permanent residency" ×15 · "Will there be an IMPEACHMENT against Trump?" ×9,5
+- Abogada Erika Jurado (mediana 3,6k): "¿El consulado te negó y te pidió un perdón?" ×68 · "¿DUI? ¡Las reglas cambiaron!" ×11 · "USCIS reabre casos de residencia, ¿quién está en peligro?" ×5
+- La Hora del Inmigrante (mediana 9k): "¿Qué ciudades están en la mira de ICE?" ×7 · "Urgente: Trump propone cambios migratorios" ×5,7 · "ICE pone bajo la lupa a estos inmigrantes" ×3 · "Lugares donde ICE ahora podrá arrestar" ×2,6
+- Patrón: "nuevos objetivos / quién está en riesgo / la regla cambió" + noticia urgente. Pendientes: "Los nuevos objetivos de ICE", "El delito pequeño que te quita la green card", "¿Te negaron en el consulado? El perdón", "¿Habrá juicio político a Trump? Qué significa para inmigrantes".
