@@ -1,0 +1,50 @@
+"""board/shots.json + a per-shot action list -> events.json (t = shot start + u * shot length). One line per on-screen action."""
+import json
+S = json.load(open('../board/shots.json'))
+A = {  # shot number: [(u, key, what)]
+ 1: [(0.0, 'swish', 'aerial over the rope street'), (0.3, 'creak', 'the rope')], 2: [(0.1, 'strain', 'hands gripping'), (0.55, 'heave', 'row of faces pulls')],
+ 3: [(0.05, 'whoosh', 'low along the road'), (0.5, 'creak', 'rope')], 4: [(0.05, 'swish', 'out over the sea'), (0.4, 'creak', 'rope on the posts')],
+ 5: [(0.05, 'fogwind', 'the Fog wall'), (0.5, 'creak', 'rope into the fog')], 6: [(0.1, 'yank', 'pulled from inside'), (0.3, 'strain', 'rope taut'), (0.55, 'gasp', 'Oona and hero')],
+ 7: [(0.05, 'heave', 'everyone leans back'), (0.5, 'strain', 'white knuckles')], 8: [(0.1, 'pop', 'the baby on a stool'), (0.5, 'giggle', 'baby')],
+ 9: [(0.15, 'cloth', 'tiny mittens'), (0.6, 'pop', 'DAY 1 tag')], 10: [(0.05, 'bells', 'wedding bells'), (0.4, 'strain', 'one-handed grip')],
+ 11: [(0.1, 'shimmer', 'the ring sparkles'), (0.5, 'creak', 'rope')], 12: [(0.05, 'zip', 'mail hook slides'), (0.6, 'zip', 'slides on')],
+ 13: [(0.05, 'zip', 'card over the sea'), (0.3, 'gulls', 'gulls')], 14: [(0.1, 'pop', 'card arrives'), (0.45, 'gasp', 'HAPPY 1ST B-DAY?')],
+ 15: [(0.1, 'thump', 'NO SNEEZING sign')], 16: [(0.0, 'inhale', 'ah-'), (0.45, 'sneeze', 'MEGA SNEEZE'), (0.5, 'boom', 'the world shakes')],
+ 17: [(0.15, 'slip', 'the knot slips an inch'), (0.6, 'stake', '-1 INCH')], 18: [(0.2, 'murmur', 'neighbours glare')],
+ 19: [(0.0, 'swish', 'cut to the Front'), (0.05, 'fogwind', 'night at the Front'), (0.5, 'creak', 'the first knot')], 20: [(0.0, 'thump', 'knot No.1'), (0.1, 'creak', 'knot No.1'), (0.4, 'fogwind', 'the Fog right there')],
+ 21: [(0.1, 'strain', 'work gloves on the rope')], 22: [(0.05, 'shimmer', 'notes float into the Fog')], 23: [(0.05, 'shimmer', 'notes come back'), (0.4, 'gasp', 'hero turns')],
+ 24: [(0.1, 'swish', 'Oona turns')], 25: [(0.0, 'swish', 'cut to Oona'), (0.5, 'creak', 'rope')], 26: [(0.2, 'fogwind', 'night')],
+ 27: [(0.0, 'kids', 'recess'), (0.4, 'heave', 'two teams pull')], 28: [(0.15, 'stumble', 'hero leans forward on purpose'), (0.5, 'kidscheer', 'other team wins')],
+ 29: [(0.2, 'kids', 'recess')], 30: [(0.0, 'whoosh', 'HEAVE DAY'), (0.05, 'thump', 'HEAVE DAY banner'), (0.3, 'murmur', 'the street')],
+ 31: [(0.05, 'heave', 'the whole world heaves'), (0.1, 'grunt', 'grunt'), (0.45, 'strain', 'rope groans'), (0.6, 'boom', 'one pull')],
+ 32: [(0.15, 'step', 'one step back'), (0.4, 'cheer', 'we win one step')], 33: [(0.1, 'chalk', 'teacher writes')], 34: [(0.1, 'chalk', 'the rule')],
+ 35: [(0.2, 'pop', 'kids shrug')], 36: [(0.05, 'fogwind', 'night'), (0.6, 'creak', 'rope')],
+ 37: [(0.05, 'slip', 'rope slides through her gloves'), (0.4, 'strain', 'Oona holds')], 38: [(0.1, 'slip', 'knot slides past 1 m'), (0.6, 'stake', '1 m')],
+ 39: [(0.1, 'slip', 'past 10 m'), (0.5, 'stake', '10 m')], 40: [(0.05, 'fogwind', 'the Fog creeps closer'), (0.5, 'rumble', 'fog')],
+ 41: [(0.05, 'slip', 'Oona dragged'), (0.2, 'scrape', 'heels skid'), (0.5, 'grunt', 'strain')], 42: [(0.05, 'heave', 'the world pulls harder'), (0.4, 'grunt', 'grunt')],
+ 43: [(0.0, 'tractor', 'tractors')], 44: [(0.05, 'elephant', 'elephants trumpet'), (0.5, 'stomp', 'elephant step')],
+ 45: [(0.05, 'heave', 'eight billion'), (0.3, 'rumble', 'everyone')], 46: [(0.0, 'boom', 'all at once'), (0.1, 'heave', 'mega heave')],
+ 47: [(0.05, 'strain', 'we pull'), (0.5, 'slip', 'still creeps')], 48: [(0.05, 'yank', 'they pull'), (0.3, 'slip', 'rope jerks in')],
+ 49: [(0.05, 'fogwind', 'seventh night')], 50: [(0.1, 'fogwind', 'feet in the fog'), (0.5, 'scrape', 'shoes')], 51: [(0.3, 'heart', 'she stopped humming')],
+ 52: [(0.0, 'swish', 'into the fog'), (0.1, 'step', 'hero walks in'), (0.6, 'step', 'into the Fog'), (0.0, 'fogwind', 'fog')], 53: [(0.1, 'grab', 'hand'), (0.55, 'grab', 'over hand')],
+ 54: [(0.05, 'fogwind', 'white nothing'), (0.5, 'grab', 'hand over hand')], 55: [(0.2, 'grab', 'fingers on rope')], 56: [(0.1, 'gasp', 'he hears it')],
+ 57: [(0.05, 'shimmer', 'notes in the fog')], 58: [(0.05, 'whoosh', 'out of the fog'), (0.3, 'mtnwind', 'mountain')], 59: [(0.1, 'pulley', 'rope over the roller')],
+ 60: [(0.1, 'grunt', 'climbing'), (0.5, 'gravel', 'boots on rock')], 61: [(0.2, 'gasp', 'looks down')], 62: [(0.0, 'boom', 'another world'), (0.05, 'mtnwind', 'wind')],
+ 63: [(0.1, 'swish', 'their city')], 64: [(0.1, 'heave', 'their line holding')], 65: [(0.1, 'strain', 'their hands')], 66: [(0.1, 'pop', 'a girl')],
+ 67: [(0.2, 'shimmer', 'the girl')], 68: [(0.1, 'shimmer', 'humming')], 69: [(0.0, 'boom', 'the mountain slides'), (0.0, 'landslide', 'the mountain slides'), (0.4, 'rumble', 'sea')],
+ 70: [(0.0, 'swish', 'house'), (0.1, 'creakwood', 'house tilts')], 71: [(0.1, 'gravel', 'road cracks')], 72: [(0.1, 'landslide', 'everything slides')],
+ 73: [(0.1, 'crowdgasp', 'terror faces'), (0.4, 'strain', 'hanging on')], 74: [(0.1, 'grunt', 'her grandma clings')], 75: [(0.0, 'whoosh', 'back to our side'), (0.05, 'heave', 'we pull')],
+ 76: [(0.05, 'gravel', 'they slip'), (0.1, 'crowdgasp', 'scream')], 77: [(0.05, 'landslide', 'their line lurches')], 78: [(0.05, 'slip', 'Oona dragged into the Fog'), (0.3, 'fogwind', 'fog')],
+ 79: [(0.2, 'heart', 'realisation')], 80: [(0.0, 'swish', 'two-shot'), (0.1, 'creak', 'one rope between them')], 81: [(0.1, 'kids', 'recess flashback')], 82: [(0.3, 'mtnwind', 'wind')],
+ 83: [(0.05, 'shout', 'he yells down')], 84: [(0.2, 'creak', 'rope')], 85: [(0.1, 'strain', 'One')], 86: [(0.1, 'strain', 'Two')],
+ 87: [(0.05, 'heave', 'Three'), (0.1, 'boom', 'together')], 88: [(0.1, 'step', 'we stepped'), (0.15, 'gravel', 'step up')], 89: [(0.2, 'creak', 'the knot holds')],
+ 90: [(0.05, 'pulley', 'the rope moves'), (0.3, 'shimmer', 'it moved')], 91: [(0.1, 'chalk', 'the rule')], 92: [(0.1, 'step', 'step'), (0.55, 'step', 'by step')],
+ 93: [(0.05, 'swish', 'aerial'), (0.4, 'cheer', 'two worlds climb')], 94: [(0.05, 'whoosh', 'the fog thins'), (0.4, 'birds', 'dawn')],
+ 95: [(0.1, 'shimmer', 'they see each other')], 96: [(0.0, 'whoosh', 'grandmas'), (0.05, 'cheer', 'grandmas wave')], 97: [(0.1, 'shimmer', 'happy tears')],
+ 98: [(0.05, 'thump', 'WAVE DAY banner'), (0.3, 'cheer', 'crowd')], 99: [(0.1, 'step', 'both sides step up')], 100: [(0.05, 'cheer', 'everyone waves')],
+ 101: [(0.2, 'creak', 'both hands on the rope')], 102: [(0.05, 'swish', 'crane up'), (0.3, 'cheer', 'both worlds')],
+}
+ev = []
+for s in S:
+    for u, k, w in A.get(s['i'] + 1, []): ev.append({'t': round(s['t0'] + u * (s['t1'] - s['t0']), 3), 'k': k, 'what': w})
+json.dump(sorted(ev, key=lambda e: e['t']), open('events.json', 'w'), indent=1); print(len(ev), 'events')

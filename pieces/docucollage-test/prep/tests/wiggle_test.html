@@ -1,0 +1,77 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<style>
+@font-face{font-family:"Besley";src:url("assets/fonts/Besley.ttf");font-weight:400 900}
+@font-face{font-family:"EBG";src:url("assets/fonts/EBGaramond.ttf");font-weight:400 800}
+@font-face{font-family:"Bebas";src:url("assets/fonts/BebasNeue-Regular.ttf")}
+html,body{margin:0;background:#000}
+#root{position:relative;width:1080px;height:1920px;overflow:hidden;background:#2a1d14}
+.bg{position:absolute;left:0;top:0;width:1080px;height:1920px;object-fit:cover;filter:sepia(.6) brightness(.55)}
+.tline{position:absolute;left:0;width:1080px;text-align:center;line-height:1;white-space:pre}
+.t-cond{font-family:"Bebas";-webkit-text-stroke:2px #FFD08D}
+.t-serif{font-family:"EBG";font-weight:800}
+.lt,.wg{display:inline-block}
+.sp{display:inline-block;width:.28em}
+.shine{color:#FFF6E2 !important;text-shadow:none !important;-webkit-text-stroke:0;--sx:130%;-webkit-mask-image:linear-gradient(105deg,transparent 47%,#000 50%,transparent 53%);-webkit-mask-size:300% 100%;-webkit-mask-position:var(--sx) 0;-webkit-mask-repeat:no-repeat;opacity:.85}
+.lab{position:absolute;left:0;width:1080px;top:1700px;text-align:center;font:600 40px sans-serif;color:#fff8}
+</style></head><body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="4" data-width="1080" data-height="1920" data-fps="24">
+<img class="bg clip" data-start="0" data-duration="4" data-track-index="1" src="assets/img2/locker.jpg">
+<div id="T"></div>
+<div class="lab">ours v3b: EB Garamond 800, short shadow, slow shine, softer wiggle</div>
+</div>
+<script>
+// ---- per-letter wiggle measured on youtu.be/TbJZ0m8Uv5g (AE wiggly selector, final result 3.6-12 s, 25 fps):
+// letters independent; smooth noise ~5 wiggles/s (zero-crossings ~2.9/s per axis, autocorr 0.7 @0.08 s, ~0 @0.2 s);
+// std x = 2.9 %, y = 5.5 % of the ascender height (4.7 / 9 px at 164 px), peaks ~2.2x std. Tutorial poses at 15/s; we step at 12 fps (user).
+// Position only (the tutorial also rotates; the user asked for position only).
+var STEP = 12, WPS = 3.5, AX = 0.6 * 0.029, AY = 0.6 * 0.055, CAP = 0.70;   // v3b: user asked softer + a bit slower
+var lines = [["cond", "CLUB", 132, 300], ["serif", "DIRECTORS", 150, 404]];
+var html = "", sh = "", seed = 7;
+lines.forEach(function (L) {
+  var sp = "", ssp = "";
+  for (var c of L[1]) {
+    seed++;
+    if (c === " ") { sp += '<span class="sp"> </span>'; ssp += sp; continue; }
+    var a = (L[2] * CAP).toFixed(1);
+    sp += '<span class="lt" style="opacity:0"><span class="wg" data-s="' + seed + '" data-h="' + a + '">' + c + '</span></span>';
+    ssp += '<span class="lt" style="opacity:0"><span class="wg" data-s="' + seed + '" data-h="' + a + '">' + c + '</span></span>';
+  }
+  var s = Math.max(3, Math.round(L[2] * 0.04));
+  var st = 'top:' + L[3] + 'px;font-size:' + L[2] + 'px;letter-spacing:' + (L[0] === "cond" ? .2 : .02) + 'em;';
+  html += '<div class="tline t-' + L[0] + '" style="' + st + 'color:#FFD08D;text-shadow:' + s + 'px ' + Math.round(s * .8) + 'px 0 #422F1A">' + sp + '</div>';
+  html += '<div class="tline t-' + L[0] + ' shine" style="' + st + '">' + ssp + '</div>';
+});
+document.getElementById("T").innerHTML = html;
+
+function H(a) { a = (a ^ 61) ^ (a >>> 16); a = a + (a << 3); a = a ^ (a >>> 4); a = Math.imul(a, 0x27d4eb2d); a = a ^ (a >>> 15); return (a >>> 0) / 4294967295; }
+function G(s, k) { var u = Math.max(1e-6, H(s * 7919 + k * 104729)), v = H(s * 31337 + k * 7477); return Math.max(-2.5, Math.min(2.5, Math.sqrt(-2 * Math.log(u)) * Math.cos(6.2831853 * v))); }
+function CR(s, u) { var i = Math.floor(u), f = u - i, p0 = G(s, i - 1), p1 = G(s, i), p2 = G(s, i + 1), p3 = G(s, i + 2);
+  return 0.5 * ((2 * p1) + (-p0 + p2) * f + (2 * p0 - 5 * p1 + 4 * p2 - p3) * f * f + (-p0 + 3 * p1 - 3 * p2 + p3) * f * f * f); }
+var WG = Array.prototype.slice.call(document.querySelectorAll(".wg"));
+function wiggle(step) {
+  var t = step / STEP;
+  for (var i = 0; i < WG.length; i++) {
+    var e = WG[i], s = +e.dataset.s, h = +e.dataset.h;
+    e.style.transform = "translate(" + (CR(s * 3 + 1, t * WPS) * AX * h).toFixed(2) + "px," + (CR(s * 3 + 2, t * WPS) * AY * h).toFixed(2) + "px)";
+  }
+}
+var tl = gsap.timeline({ paused: true }), tlg = gsap.timeline({ paused: true });
+var main = document.querySelectorAll("#T .tline:not(.shine)"), shn = document.querySelectorAll("#T .shine");
+var tt = 0.1;
+[0, 1].forEach(function (li) {
+  var a = main[li].querySelectorAll(".lt"), b = shn[li].querySelectorAll(".lt"), fpl = li ? 2 : 1;
+  for (var k = 0; k < a.length; k++) {
+    var ta = Math.round((tt + k * fpl / 24) * STEP) / STEP;
+    tlg.set([a[k], b[k]], { opacity: 0.45 }, ta); tlg.set([a[k], b[k]], { opacity: 1 }, ta + 1 / STEP);
+  }
+  tt += a.length * fpl / 24;
+});
+tlg.fromTo(shn[0], { "--sx": "80%" }, { "--sx": "20%", duration: 1.33, ease: "none" }, Math.round((tt + 0.05) * STEP) / STEP);
+tlg.fromTo(shn[1], { "--sx": "80%" }, { "--sx": "20%", duration: 1.33, ease: "none" }, Math.round((tt + 0.05) * STEP) / STEP);
+// shine steps on the 12 fps clock too
+var drv = { v: 0 };
+tl.to(drv, { v: 1, duration: 4, ease: function (p) { var st = Math.floor(p * 4 * STEP + 1e-6); tlg.totalTime(st / STEP, true); wiggle(st); return p; } }, 0);
+window.__timelines = { main: tl };
+</script></body></html>

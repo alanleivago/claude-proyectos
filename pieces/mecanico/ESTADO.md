@@ -1,0 +1,13 @@
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories]
+relatedTo: [suegra, recetario, buen-hijo, tele-nueva, canasta, encendedor, padre-veladoras, chocolate-rancho, hacienda-sangre, reten-sierra, medalla-mezcal, agua-hacienda]
+---
+# mecanico (El Mecánico) — estado
+- Remake de 7694128114238033183 de @informativo0001 ("Reemplazaron al mejor mecánico para quitarle su bono"; 1.5M vistas, 246 s; allá es Parte 2, aquí Parte 1 autónoma). 15.º remake, marca MAJESTIC STORIES (el 14.º, suegra, fue VISTA; el siguiente es MEXI). Archivos listos: guion.md, make_sheets.py, clips.py (31 clips hablados, 236 s brutos, 56 frases), edit.py (copia de suegra, EDL vacía, marca MAJESTIC STORIES, cama cálida entre c22 y c28), phr.py, music/ (copia de suegra), caption.txt. Nada generado en Flow todavía.
+- Assets nuevos (únicos frente a todas las pieces con make_sheets.py, sin subcadenas en ningún sentido; tampoco NICANOR, MAYORAL, FAUSTO ni MARISOL): EVARISTO, FERMIN, OSVALDO, CELSO, LOC_PECERA, LOC_NAVE, LOC_SOLAR, PROP_CAJAROJA.
+- Atuendos: los de la ref (mosaico de 24 cuadros) con otros colores: Evaristo overol verde olivo y trapo azul y blanco (en vez de mono azul marino y trapo blanco y rojo); Fermín chamarra vino y camisa azul claro (en vez de chamarra azul marino y camisa blanca); Osvaldo overol gris claro nuevo (en vez de mono azul marino); Celso gorra beige, chaleco verde oscuro y camisa a cuadros roja y azul marino (en vez de gorra café, chaleco negro y cuadros gris y morado).
+- Siguiente: `python -I make_sheets.py > sheets_log.txt`, revisar hojas (md5, mestizos de piel morena, bigote y barba de cada uno, que cada nombre tenga su imagen), `python -I clips.py > clips_log.txt` con Monitor, QA por agente (bordes y ropa por escena, UNA caja roja en la mano derecha de Evaristo en c06-c09 y cerrada en el banco en c22-c25, UN cable en su mano derecha en c26-c27, Fermín y Osvaldo sin barba ni bigote), regenerar malos, `python -I phr.py`, EDL por frases en edit.py (BLACK 0.4 entre c30 y c31), `python -I edit.py`, verificación completa, Telegram con caption.txt.
+- Riesgos: c01 sin plano abierto (Fermín habla de una), caja roja que se duplique o cambie de mano, c14 y c26-c27 cofre abierto de la camioneta blanca, c16 Osvaldo mira a la oficina, c20 Celso se acomoda la gorra, c30 Fermín solo junto al ventanal, c31 CTA mudo (el prompt pide labios desde el primer frame). Pronunciación: "Evaristo", "Fermín", "Osvaldo", "sulfatado", "refacciones".
+- Política: sin policías, sin armas, sin contacto brusco, sin dedo acusador, sin cifras ni dinero exigido ni banco (solo "el bono" y "lo que me tocaba"), sin niños, edades numéricas.

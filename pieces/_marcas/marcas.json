@@ -1,0 +1,7 @@
+{
+  "_nota": "Cada marca tiene su música fija (carpeta <MARCA>/) y su posición de marca de agua (lienzo 720x1280). Un video fue descalificado en TikTok por 'no original': no mezclar música ni posiciones entre marcas. hit = golpe grave del final; tension2_from = segundo desde el que arranca la 2.a cama de tensión. Las pistas se nivelan por la banda que suena en un celular (sobre 200 Hz), no solo por LUFS: tension -23.5±0.5 y calida ~-17 LUFS en esa banda, LRA < 4 LU y sin huecos al loopear; así edit.py usa las mismas ganancias (MUSIC_VOL 0.13, tensión x2.4) en todas las marcas. SINMARCA = videos sin marca de agua: text vacío, brand_wm() devuelve un png 100 % transparente (edit.py no cambia) y la música sale de SINMARCA/ (guitarra oscura y pads). Ver <MARCA>/CREDITOS.md.",
+  "VISTA":    {"text": "VISTA STORIES",    "size": 22, "alpha": 80, "align": "center", "y": 135, "hit": "boom/701308.mp3", "tension2_from": 20},
+  "MAJESTIC": {"text": "MAJESTIC STORIES", "size": 22, "alpha": 80, "align": "left",  "x": 36, "y": 210, "hit": "boom/hit.mp3", "tension2_from": 20},
+  "MEXI":     {"text": "MEXI STORIES",     "size": 22, "alpha": 80, "align": "right", "margin": 36, "y": 210, "hit": "boom/hit.mp3", "tension2_from": 20},
+  "SINMARCA": {"text": "", "hit": "boom/hit.mp3", "tension2_from": 20}
+}

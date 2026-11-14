@@ -1,0 +1,7 @@
+  const tx = (w, h, fn) => L.cvs(w, h, fn);
+  const PLANK = tx(32, 32, (c) => { c.fillStyle = '#b07a44'; c.fillRect(0, 0, 32, 32); for (let y = 0; y < 32; y += 6) { c.fillStyle = '#6a4220'; c.fillRect(0, y, 32, 1); c.fillStyle = '#c48e56'; c.fillRect(0, y + 1, 32, 1); } for (let i = 0; i < 6; i++) { c.fillStyle = '#5a3418'; c.fillRect((i * 11) % 31, (i * 6 + 3) % 31, 1, 1); } });
+  function q3D(scene, ch, tq) { const g = letters3D(scene, '?', { size: 0.2, x: 0, y: 0, z: 0, jitter: 0.3, seed: 3 }); g.visible = false; let hd = null; ch.root.traverse((o) => { if (!hd && o.isBone && o.name === 'Head') hd = o; }); let s0 = 1, done = false;
+    return (t) => { if (!done) { done = true; ch.root.updateMatrixWorld(true); const p2 = hd.getWorldPosition(V3([0, 0, 0])); g.position.copy(p2).add(V3([0.22, 0.32, 0.05])); g.rotation.set(0, ch.root.rotation.y, 0.15); g.updateMatrixWorld(true); hd.attach(g); s0 = g.scale.x; }
+      const f = (q15(t) - tq) * 30; g.visible = f >= 0; g.scale.setScalar(s0 * (f < 0 ? 0.01 : f < 3 ? [0.6, 1.15, 0.97][Math.floor(f)] : 1)); }; }
+  function holdIn(ch, side, prop, off = [0, 0, 0], rot = [0, 0, 0]) { let done = false; return () => { if (done) return; done = true; ch.root.updateMatrixWorld(true); const p = ch.fist(side, V3([0, 0, 0])); if (!prop.parent) ch.root.parent.add(prop);
+    prop.position.copy(p).add(V3(off)); prop.rotation.set(...rot); prop.updateMatrixWorld(true); ch.hand(side).attach(prop); }; }

@@ -1,0 +1,229 @@
+  // ===================================== DIGGER 08: "how people listened to music before Spotify" (cat.explains.it format, vertical) =====================================
+  // problem -> solution chain; EVERYTHING WITH VOLUME: the CLEAN meter is a physical HUD panel parented to the camera, labels and years
+  // are extruded 3D letters, eras are sepia LIGHT in the scene (grade of the set, never a 2D layer).
+  const LGF = new Font(LUCKIEST);
+  function letters3D(parent, txt, { size = 0.3, x = 0, y = 2, z = 0, seed = 7, jitter = 1, front = 0xffe21a, side = 0xa87800 } = {}) {
+    const g = new THREE.Group(); g.position.set(x, y, z); parent.add(g); let r = seed; const rnd2 = () => { r = (r * 16807) % 2147483647; return r / 2147483647; };
+    const mats = [new THREE.MeshBasicMaterial({ color: front }), new THREE.MeshBasicMaterial({ color: side })];
+    txt.split('|').forEach((line, li) => { let cx = 0; const items = [];
+      for (const ch of line) { if (ch === ' ') { cx += size * 0.32; continue; }
+        const geo = new TextGeometry(ch, { font: LGF, size, depth: size * 0.3, curveSegments: 4, bevelEnabled: true, bevelThickness: size * 0.02, bevelSize: size * 0.012, bevelSegments: 1 });
+        geo.computeBoundingBox(); const bb = geo.boundingBox, w = LUCKIEST.glyphs[ch] ? LUCKIEST.glyphs[ch].ha / LUCKIEST.resolution * size * 0.92 : bb.max.x - bb.min.x; geo.translate(-(bb.min.x + bb.max.x) / 2, -size * 0.36, -size * 0.1);
+        const m = new THREE.Mesh(geo, mats); const s = 1 + (rnd2() - 0.4) * 0.16 * jitter; m.scale.setScalar(s); m.rotation.set((rnd2() - 0.5) * 0.12 * jitter, (rnd2() - 0.5) * 0.16 * jitter, (rnd2() - 0.5) * 0.2 * jitter);
+        m.position.set(cx + w / 2, -li * size * 1.08 + (rnd2() - 0.5) * size * 0.08 * jitter, 0); g.add(m); items.push(m); cx += w * s + size * 0.04; }
+      for (const m of items) m.position.x -= cx / 2; }); return g; }
+  // a 3D label that pops in at time tw (scale 0 -> 1.15 -> 1), facing the camera, tilted a little
+  let CURCAM = null;
+  function label3D(scene, txt, x, y, z, tw, { size = 0.14, ry = 0, front, side, slot = null } = {}) {
+    if (slot === null) slot = /^\d{4}$/.test(txt) ? 0 : (size < 0.135 ? 1 : 0);
+    const cam = CURCAM, d = 1.2, halfH = d * Math.tan(THREE.MathUtils.degToRad(cam.fov / 2)), sz = Math.min(slot ? 0.055 : 0.08, 0.5 / (txt.length * 0.62));
+    const g = letters3D(cam, txt, { size: sz, x: 0, y: halfH * (slot ? 0.38 : 0.56), z: -d, seed: txt.length * 7, front, side }); g.rotation.set(-0.25, 0.18, 0.03); g.visible = false;
+    cue(tw, 'label'); return (t) => { const f = (q15(t) - tw) * 30; g.visible = f >= 0; g.scale.setScalar(f < 0 ? 0 : f < 3 ? [0.6, 1.15, 0.97][Math.floor(f)] : 1); }; }
+  // ---- the CLEAN meter: MML2 HUD panel (bevelled dark plate, teal rim, extruded CLEAN, 5 bevelled emissive cells) parented to the camera ----
+  const LV = []; const lvAt = (t) => { let n = 0, fl = false; for (const [tt, v, flick] of LV) if (t >= tt) { n = v; fl = !!flick && t < tt + 1.2; } return [n, fl]; };
+  function meter(scene, cam) {
+    scene.add(cam); CURCAM = cam; const g = new THREE.Group(); cam.add(g);
+    const d = 1.2, halfH = d * Math.tan(THREE.MathUtils.degToRad(cam.fov / 2)), halfW = halfH * LW / LH, w = 0.36, h = 0.11;
+    g.position.set(-halfW + w / 2 + 0.03, halfH - h / 2 - 0.05, -d); g.rotation.set(0.12, 0.18, 0);
+    L.box(w + 0.02, h + 0.02, 0.025, new THREE.MeshBasicMaterial({ color: 0x1f4a52 }), 0, 0, -0.006, g); L.box(w, h, 0.03, new THREE.MeshBasicMaterial({ color: 0x18203a }), 0, 0, 0, g);
+    L.box(w - 0.01, 0.006, 0.032, new THREE.MeshBasicMaterial({ color: 0x5c8892 }), 0, h / 2 - 0.004, 0.001, g);
+    letters3D(g, 'X', { size: 0.034, x: -w / 2 + 0.06, y: 0.0, z: 0.02, jitter: 0.4, front: 0xffffff, side: 0x9ab0c0 });
+    const cells = []; for (let i = 0; i < 5; i++) { const on = new THREE.MeshBasicMaterial({ color: 0x5cff7a }), off = new THREE.MeshBasicMaterial({ color: 0x24303a });
+      const c = L.box(0.038, 0.06, 0.02, off, -w / 2 + 0.135 + i * 0.046, 0, 0.02, g); const hi = L.box(0.03, 0.008, 0.022, new THREE.MeshBasicMaterial({ color: 0xb8ffc8 }), -w / 2 + 0.135 + i * 0.046, 0.022, 0.022, g); hi.visible = false; cells.push([c, on, off, hi]); }
+    return (t) => { const [n, fl] = lvAt(t); const blink = fl && Math.floor(t * 10) % 2; cells.forEach(([c, on, off, hi], i) => { const lit = i < n || (blink && i === n); c.material = lit ? on : off; hi.visible = lit; }); }; }
+  // ---- sets and props ----
+  const SEPIA = [1.05, 0.78, 0.48];
+  const sepia = (scene, keep = []) => { keep = keep.map((k) => k.root || k); if (scene.background && scene.background.isColor) scene.background.multiply(new THREE.Color(...SEPIA)); scene.add(new THREE.PointLight(0xffb060, 1.6, 6).translateY(2.2).translateZ(1.2)); grade(scene, SEPIA, { lit: true, skip: (o) => { let p = o; while (p) { if (keep.includes(p)) return true; p = p.parent; } return false; } }); };
+  function waterBox(parent, w, d, y, x, z, col = 0x4a9ad8, op = 0.75) { return L.box(w, 0.04, d, new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: op }), x, y, z, parent); }
+  function crownOf(n) { const h = headInfo(n), r = Math.max(h.rx, h.rz), g = new THREE.Group(), gold = litM(null, 0xf0c030);
+    L.mesh(new THREE.CylinderGeometry(r * 1.05, r * 1.05, r * 0.5, 10, 1, true), gold, 0, r * 0.15, 0, g); for (let k = 0; k < 6; k++) { const a = k / 6 * Math.PI * 2; L.mesh(new THREE.ConeGeometry(r * 0.18, r * 0.4, 4), gold, Math.sin(a) * r * 1.0, r * 0.55, Math.cos(a) * r * 1.0, g); }
+    L.mesh(new THREE.SphereGeometry(r * 0.12, 6, 4), litM(null, 0xd83030), 0, r * 0.2, r * 1.05, g); return seat(n, g); }
+  const tx = (w, h, fn) => L.cvs(w, h, fn);
+  const PLANK = tx(32, 32, (c) => { c.fillStyle = '#b07a44'; c.fillRect(0, 0, 32, 32); for (let y = 0; y < 32; y += 6) { c.fillStyle = '#6a4220'; c.fillRect(0, y, 32, 1); c.fillStyle = '#c48e56'; c.fillRect(0, y + 1, 32, 1); } for (let i = 0; i < 6; i++) { c.fillStyle = '#5a3418'; c.fillRect((i * 11) % 31, (i * 6 + 3) % 31, 1, 1); } });
+  function q3D(scene, ch, tq) { const g = letters3D(scene, '?', { size: 0.2, x: 0, y: 0, z: 0, jitter: 0.3, seed: 3 }); g.visible = false; let hd = null; ch.root.traverse((o) => { if (!hd && o.isBone && o.name === 'Head') hd = o; }); let s0 = 1, done = false;
+    return (t) => { if (!done) { done = true; ch.root.updateMatrixWorld(true); const p2 = hd.getWorldPosition(V3([0, 0, 0])); g.position.copy(p2).add(V3([0.22, 0.32, 0.05])); g.rotation.set(0, ch.root.rotation.y, 0.15); g.updateMatrixWorld(true); hd.attach(g); s0 = g.scale.x; }
+      const f = (q15(t) - tq) * 30; g.visible = f >= 0; g.scale.setScalar(s0 * (f < 0 ? 0.01 : f < 3 ? [0.6, 1.15, 0.97][Math.floor(f)] : 1)); }; }
+  function holdIn(ch, side, prop, off = [0, 0, 0], rot = [0, 0, 0]) { let done = false; return () => { if (done) return; done = true; ch.root.updateMatrixWorld(true); const p = ch.fist(side, V3([0, 0, 0])); if (!prop.parent) ch.root.parent.add(prop);
+    prop.position.copy(p).add(V3(off)); prop.rotation.set(...rot); prop.updateMatrixWorld(true); ch.hand(side).attach(prop); }; }
+  const SAND = tx(16, 16, (c) => { c.fillStyle = '#e8d49a'; c.fillRect(0, 0, 16, 16); for (let i = 0; i < 26; i++) { c.fillStyle = ['#d8c088', '#f2e2b0', '#cdb47c'][i % 3]; c.fillRect((i * 7) % 15, (i * 5) % 15, 2, 1); } });
+  function palm(scene, x, z, s = 1) { const g = new THREE.Group(); g.position.set(x, 0, z); g.scale.setScalar(s); scene.add(g); const tr = litM(null, 0x8a6a42);
+    for (let k = 0; k < 6; k++) { const seg2 = L.mesh(new THREE.CylinderGeometry(0.07, 0.09, 0.42, 6), tr, Math.sin(k * 0.35) * 0.18, 0.21 + k * 0.4, 0, g); seg2.rotation.z = -0.12; }
+    const top = V3([Math.sin(5 * 0.35) * 0.18 + 0.05, 2.5, 0]); for (let k = 0; k < 7; k++) { const a = k / 7 * Math.PI * 2; const lf = L.box(1.0, 0.04, 0.24, litM(null, k % 2 ? 0x3e9a3a : 0x52b244), top.x + Math.cos(a) * 0.45, top.y - 0.12, Math.sin(a) * 0.45, g); lf.rotation.set(0, -a, -0.45); }
+    for (let k = 0; k < 3; k++) L.mesh(new THREE.SphereGeometry(0.07, 6, 4), litM(null, 0x6a4a22), top.x + Math.cos(k * 2) * 0.1, top.y - 0.12, Math.sin(k * 2) * 0.1, g); return g; }
+  function handTo(ch, side, target, segs) { ch.drive(0, segs, [[-99, 'open', 'neutral']], false); ch.root.updateMatrixWorld(true); const f = ch.fist(side, V3([0, 0, 0])); ch.root.position.x += target.x - f.x; ch.root.position.z += target.z - f.z; }
+  // a crank turning around a pivot: arm + handle orbiting in the plane normal to the shaft (world axis ax)
+  // ===================================== DIGGER 09: the toothbrush (ARTIFACT 004) — artifact format, desert dune + oasis, everything with volume =====================================
+  const ART = 'ARTIFACT 004';
+  const lab2D = (o, t, tw, txt, y = 70, col = '#fff2a0', bd = '#fdd941') => { if (t >= tw) plateText(o, txt, CX, y, { size: 14, border: bd, fg: col, scale: popS(t, tw) }); };
+  const STONEW = tx(16, 16, (c) => { c.fillStyle = '#7a7468'; c.fillRect(0, 0, 16, 16); c.fillStyle = '#8a8478'; c.fillRect(1, 1, 6, 6); c.fillRect(9, 1, 6, 6); c.fillRect(1, 9, 14, 6); c.fillStyle = '#5a564c'; c.fillRect(0, 7, 16, 1); c.fillRect(8, 0, 1, 7); c.fillRect(0, 15, 16, 1); });
+  // ---- the desert dune with an oasis (palms, grass ring, pond)
+  function desert(scene, { sunset = false } = {}) { L.addSky(scene, { near: 30, far: 140, preset: 'morning' }); scene.fog = null; if (sunset) scene.background = new THREE.Color(0xf0a070);
+    const sm = new THREE.MeshLambertMaterial({ map: L.rep(SAND, 40, 40), color: sunset ? 0xf0b080 : 0xffffff, flatShading: true }); const gr = L.mesh(new THREE.PlaneGeometry(80, 80), sm, 0, 0, 0, scene); gr.rotation.x = -Math.PI / 2;
+    for (const [x, z, r, h] of [[-4, -8, 5, 0.35], [5, -10, 6, 0.4], [9, -4, 4, 0.3], [-9, -3, 4.5, 0.3], [0, -16, 8, 0.35]]) { const d = L.mesh(new THREE.SphereGeometry(r, 14, 6, 0, Math.PI * 2, 0, Math.PI / 2), sm, x, -0.05, z, scene); d.scale.y = h; }
+    const oz = new THREE.Group(); oz.position.set(-2.6, 0, -3.2); scene.add(oz); const grs = L.mesh(new THREE.CylinderGeometry(2.2, 2.4, 0.06, 18), new THREE.MeshLambertMaterial({ map: meadowTex(32, 32, GRASS, [4, 4]), flatShading: true }), 0, 0.02, 0, oz);
+    const pond = L.mesh(new THREE.CylinderGeometry(1.2, 1.2, 0.04, 18), new THREE.MeshBasicMaterial({ color: 0x3aa0d8 }), 0.2, 0.05, 0.3, oz); for (const [x, z, s] of [[-1.3, -0.8, 1.1], [1.4, -1.0, 1.2], [-0.6, -1.6, 1.0], [1.8, 0.6, 0.9], [-1.8, 0.5, 0.95]]) palm(oz, x, z, s);
+    for (const [x, z] of [[-1.0, 1.2], [1.2, 1.3], [0.4, -1.4]]) bush(oz, x, z, 0.35);
+    scene.add(new THREE.AmbientLight(sunset ? 0xffc890 : 0xfff4e0, 0.45)); const sun = new THREE.DirectionalLight(sunset ? 0xffa060 : 0xfff0d0, 1.2); sun.position.set(3, 5, 2); scene.add(sun); return oz; }
+  function drone() { const g = new THREE.Group(); const w = litM(null, 0xf4f4f0), d = litM(null, 0x2a2a34); L.box(0.3, 0.08, 0.3, w, 0, 0, 0, g); L.mesh(new THREE.SphereGeometry(0.05, 8, 6), litM(null, 0x18181c), 0, -0.06, 0.12, g);
+    const rot = []; for (const [x, z] of [[-0.25, -0.25], [0.25, -0.25], [-0.25, 0.25], [0.25, 0.25]]) { const a = L.box(0.32, 0.03, 0.03, d, x / 2, 0, z / 2, g); a.rotation.y = Math.atan2(-z, x); L.mesh(new THREE.CylinderGeometry(0.025, 0.025, 0.06, 8), d, x, 0.04, z, g);
+      const r = new THREE.Group(); r.position.set(x, 0.08, z); g.add(r); L.box(0.26, 0.008, 0.03, litM(null, 0x5a5a64), 0, 0, 0, r); L.mesh(new THREE.CylinderGeometry(0.13, 0.13, 0.004, 14), new THREE.MeshBasicMaterial({ color: 0xc8d4e0, transparent: true, opacity: 0.35, depthWrite: false }), 0, 0, 0, r); rot.push(r); }
+    L.mesh(new THREE.SphereGeometry(0.015, 6, 4), L.basic(null, 0x5af05a), 0.13, 0.05, 0.13, g); g.userData.rot = rot; return g; }
+  function toothbrush(col = 0x3a8ae8) { const g = new THREE.Group(); const h = litM(null, col); L.box(0.03, 0.2, 0.018, h, 0, 0, 0, g); L.box(0.026, 0.06, 0.016, h, 0, 0.13, 0, g);
+    for (let k = 0; k < 6; k++) for (const s2 of [-1, 1]) L.box(0.009, 0.009, 0.03, litM(null, k % 2 ? 0xf8f8f8 : 0x8ad0f8), s2 * 0.006, 0.105 + k * 0.009, 0.022, g); return g; }
+  function chewStick() { const g = new THREE.Group(); L.mesh(new THREE.CylinderGeometry(0.012, 0.014, 0.2, 6), litM(null, 0x8a6a3a), 0, 0, 0, g); for (let k = 0; k < 9; k++) { const f = L.box(0.004, 0.035, 0.004, litM(null, 0xd8c08a), Math.cos(k) * 0.008, 0.11, Math.sin(k) * 0.008, g); f.rotation.set(Math.sin(k * 2) * 0.4, 0, Math.cos(k * 3) * 0.4); } return g; }
+  function bristleBrush() { const g = new THREE.Group(); L.box(0.03, 0.22, 0.02, litM(null, 0xeee4c8), 0, 0, 0, g); for (let k = 0; k < 5; k++) for (const s2 of [-1, 1]) L.box(0.01, 0.01, 0.035, litM(null, 0x2a2420), s2 * 0.007, 0.07 + k * 0.012, 0.025, g); return g; }
+  function bigMolar(parent, x, y, z, s = 1) { const g = new THREE.Group(); g.position.set(x, y, z); g.scale.setScalar(s); parent.add(g); const m = litM(null, 0xfaf8f0);
+    const cr = L.mesh(new THREE.SphereGeometry(0.22, 10, 8), m, 0, 0.12, 0, g); cr.scale.set(1.1, 0.75, 0.95); for (const [px, pz] of [[-0.09, -0.07], [0.09, -0.07], [-0.09, 0.07], [0.09, 0.07]]) L.mesh(new THREE.SphereGeometry(0.08, 8, 6), m, px, 0.25, pz, g);
+    for (const s2 of [-1, 1]) { const r = L.mesh(new THREE.ConeGeometry(0.08, 0.32, 8), m, s2 * 0.1, -0.12, 0, g); r.rotation.set(Math.PI, 0, s2 * 0.15); } L.mesh(new THREE.SphereGeometry(0.025, 6, 4), litM(null, 0x18181c), -0.07, 0.15, 0.2, g); L.mesh(new THREE.SphereGeometry(0.025, 6, 4), litM(null, 0x18181c), 0.07, 0.15, 0.2, g); return g; }
+  function bigBone(parent, x, y, z, s = 1) { const g = new THREE.Group(); g.position.set(x, y, z); g.scale.setScalar(s); parent.add(g); const m = litM(null, 0xf4ecd8); L.mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.6, 8), m, 0, 0, 0, g).rotation.z = Math.PI / 2;
+    for (const s2 of [-1, 1]) for (const s3 of [-1, 1]) L.mesh(new THREE.SphereGeometry(0.07, 8, 6), m, s2 * 0.32, s3 * 0.05, 0, g); return g; }
+  function pig(parent, x, z, ry = 0, s = 1) { const g = new THREE.Group(); g.position.set(x, 0, z); g.rotation.y = ry; g.scale.setScalar(s); parent.add(g); const p = litM(null, 0xf0a8b0), dk = litM(null, 0xd8808c);
+    const b = L.mesh(new THREE.SphereGeometry(0.3, 10, 8), p, 0, 0.35, 0, g); b.scale.set(1.4, 1, 1); const hd = L.mesh(new THREE.SphereGeometry(0.2, 10, 8), p, 0.45, 0.45, 0, g); L.mesh(new THREE.CylinderGeometry(0.08, 0.09, 0.08, 10), dk, 0.64, 0.42, 0, g).rotation.z = Math.PI / 2;
+    for (const s2 of [-1, 1]) { L.mesh(new THREE.SphereGeometry(0.018, 6, 4), dk, 0.69, 0.43, s2 * 0.03, g); L.mesh(new THREE.ConeGeometry(0.06, 0.12, 4), dk, 0.42, 0.65, s2 * 0.1, g).rotation.x = s2 * 0.4; L.mesh(new THREE.SphereGeometry(0.025, 6, 4), litM(null, 0x18181c), 0.6, 0.52, s2 * 0.09, g); }
+    for (const [lx, lz] of [[-0.25, -0.15], [-0.25, 0.15], [0.25, -0.15], [0.25, 0.15]]) L.box(0.08, 0.2, 0.08, p, lx, 0.1, lz, g); L.mesh(new THREE.TorusGeometry(0.05, 0.015, 4, 8), dk, -0.43, 0.45, 0, g); return g; }
+  function germ(parent, x, y, z, s = 1) { const g = new THREE.Group(); g.position.set(x, y, z); g.scale.setScalar(s); parent.add(g); const m = litM(null, 0x7ad84a); const b = L.mesh(new THREE.SphereGeometry(0.06, 8, 6), m, 0, 0, 0, g); b.scale.y = 0.85;
+    for (let k = 0; k < 5; k++) { const a = k / 5 * Math.PI * 2; L.mesh(new THREE.SphereGeometry(0.02, 6, 4), m, Math.cos(a) * 0.06, 0.03 + (k % 2) * 0.02, Math.sin(a) * 0.04 - 0.01, g); }
+    for (const s2 of [-1, 1]) { L.mesh(new THREE.SphereGeometry(0.016, 6, 4), litM(null, 0xffffff), s2 * 0.022, 0.012, 0.05, g); L.mesh(new THREE.SphereGeometry(0.008, 6, 4), litM(null, 0x18181c), s2 * 0.022, 0.012, 0.064, g); }
+    L.box(0.03, 0.008, 0.008, litM(null, 0x2a5a1a), 0, -0.018, 0.055, g); return g; }
+  // ---- 1498 courtyard (Ming): reuse the Chinese room with a pig pen in front; 1770 prison cell; Georgian shop; 1938 lab
+  function prison(scene) { L.addSky(scene, { near: 8, far: 40, preset: 'interior' }); scene.fog = null; const sw = litM(L.rep(STONEW, 8, 4), 0xffffff);
+    L.box(9, 0.08, 7, mm(MT.flag, 6, 5, 0x9a9488), 0, -0.04, 0.5, scene); L.box(9, 3.4, 0.2, sw, 0, 1.7, -1.8, scene); L.box(0.2, 3.4, 7, sw, -2.6, 1.7, 0.5, scene);
+    const wn = new THREE.Group(); wn.position.set(0.6, 2.2, -1.68); scene.add(wn); L.plane(0.7, 0.5, L.basic(tx(8, 6, (c) => { c.fillStyle = '#8ad0f4'; c.fillRect(0, 0, 8, 6); c.fillStyle = '#4eae3e'; c.fillRect(0, 3, 8, 3); }), 1), 0, 0, 0, wn); for (let k = -2; k <= 2; k++) L.mesh(new THREE.CylinderGeometry(0.015, 0.015, 0.55, 6), litM(null, 0x2a2a30), k * 0.13, 0, 0.04, wn);
+    for (let k = 0; k < 9; k++) L.mesh(new THREE.CylinderGeometry(0.02, 0.02, 3.0, 6), litM(null, 0x2a2a30), 1.6 + k * 0.0, 1.5, -1.6 + k * 0.4, scene); L.box(1.6, 0.08, 0.5, mm(MT.wood, 2, 0.5), -1.6, 0.45, -1.4, scene); for (const x2 of [-2.3, -0.9]) L.box(0.08, 0.45, 0.4, mm(MT.darkWood, 0.2, 1), x2, 0.22, -1.4, scene);
+    for (let k = 0; k < 18; k++) { const st = L.box(0.25, 0.01, 0.015, litM(null, 0xd8c070), -1.8 + hash(k) * 1.4, 0.01, -0.6 + hash(k + 5) * 0.9, scene); st.rotation.y = hash(k + 9) * 3; } const ivyG = new THREE.Group(); scene.add(ivyG); L.box(9, 0.2, 7, sw, 0, 3.45, 0.5, scene);
+    const pl = new THREE.PointLight(0xfff0d0, 1.0, 5); pl.position.set(0.6, 2.2, -1.0); scene.add(pl); scene.add(new THREE.AmbientLight(0xb8c0d0, 0.5)); }
+  function shop(scene) { const R0 = roomWithWindow(scene, { preset: 'morning', wx: 1.2 }); scene.fog = null; const ct = new THREE.Group(); ct.position.set(0.2, 0, -0.6); scene.add(ct); L.box(2.2, 0.9, 0.5, mm(MT.darkWood, 2, 1, 0x8a5a34), 0, 0.45, 0, ct); L.box(2.3, 0.06, 0.6, mm(MT.wood, 2, 0.4), 0, 0.92, 0, ct);
+    for (let k = 0; k < 7; k++) { const b = bristleBrush(); b.position.set(-0.9 + k * 0.3, 1.0, 0.1); b.rotation.set(-1.4, 0, 0.2); b.scale.setScalar(1.4); ct.add(b); }
+    for (let k = 0; k < 3; k++) L.box(1.6, 0.04, 0.25, mm(MT.wood, 2, 0.3), -1.2, 1.3 + k * 0.45, -1.65, scene); for (let k = 0; k < 9; k++) L.box(0.12, 0.2, 0.12, litM(null, [0xd8b040, 0xc85a5a, 0x5a8ae8][k % 3]), -1.8 + (k % 3) * 0.5, 1.42 + Math.floor(k / 3) * 0.45, -1.62, scene);
+    pottedTree(scene, 2.2, -1.1, 0.55); return R0; }
+  function lab1938(scene) { L.addSky(scene, { near: 8, far: 40, preset: 'interior' }); scene.fog = null; const wall = litM(null, 0xe8eef0); L.box(9, 0.08, 7, mm(MT.flag, 6, 5, 0xa8b8b8), 0, -0.04, 0.5, scene); L.box(9, 3.4, 0.12, wall, 0, 1.7, -1.8, scene); L.box(0.12, 3.4, 7, wall, -2.6, 1.7, 0.5, scene);
+    L.box(9, 0.9, 0.04, litM(null, 0x3a8a8a), 0, 0.45, -1.72, scene); const mc = new THREE.Group(); mc.position.set(-1.1, 0, -1.1); scene.add(mc); L.box(1.2, 1.0, 0.7, litM(null, 0x6a8a9a), 0, 0.5, 0, mc); L.box(1.0, 0.1, 0.5, litM(null, 0x2a2a30), 0, 1.05, 0, mc);
+    const sp = L.mesh(new THREE.CylinderGeometry(0.18, 0.18, 0.3, 14), litM(null, 0xf8f8f8), -0.2, 1.3, 0, mc); sp.rotation.z = Math.PI / 2; L.mesh(new THREE.CylinderGeometry(0.22, 0.22, 0.02, 14), litM(null, 0xc83a2a), -0.36, 1.3, 0, mc).rotation.z = Math.PI / 2;
+    const th = L.mesh(new THREE.CylinderGeometry(0.006, 0.006, 0.8, 4), litM(null, 0xf8f8f8), 0.2, 1.2, 0, mc); th.rotation.z = 1.2; mc.userData.spool = sp;
+     const wn = new THREE.Group(); wn.position.set(1.3, 1.8, -1.7); scene.add(wn); L.plane(1.0, 0.9, L.basic(tx(8, 8, (c) => { c.fillStyle = '#8ad0f4'; c.fillRect(0, 0, 8, 8); c.fillStyle = '#4eae3e'; c.fillRect(0, 5, 8, 3); c.fillRect(2, 3, 3, 2); }), 1), 0, 0, 0, wn);
+    for (const s2 of [-1, 1]) L.box(0.06, 0.95, 0.06, litM(null, 0x2a2a30), s2 * 0.5, 0, 0.02, wn); pottedTree(scene, 2.2, -1.2, 0.55);
+    for (let k = 0; k < 3; k++) { L.box(0.35, 0.03, 2.2, mm(MT.wood, 0.4, 2), -2.4, 1.2 + k * 0.5, -0.2, scene); for (let j2 = 0; j2 < 6; j2++) L.mesh(new THREE.CylinderGeometry(0.045, 0.055, 0.16 + hash(j2 + k) * 0.1, 8), new THREE.MeshBasicMaterial({ color: [0x5ac85a, 0x5a8ae8, 0xe8c040, 0xc85a5a][(j2 + k) % 4], transparent: true, opacity: 0.85 }), -2.4, 1.3 + k * 0.5, -1.1 + j2 * 0.35, scene); }
+    const bn = new THREE.Group(); bn.position.set(0.9, 0, -1.25); scene.add(bn); L.box(1.6, 0.06, 0.55, litM(null, 0x3a4a52), 0, 0.88, 0, bn); for (const [x2, z2] of [[-0.75, -0.22], [0.75, -0.22], [-0.75, 0.22], [0.75, 0.22]]) L.box(0.05, 0.88, 0.05, litM(null, 0x2a2a30), x2, 0.44, z2, bn);
+    for (let k = 0; k < 5; k++) { const sp2 = L.mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.1, 12), litM(null, [0xf8f8f8, 0xe8e0d0, 0xf8f8f8, 0x8ad0f8, 0xf8f8f8][k]), -0.6 + k * 0.22, 0.96, 0.05, bn); L.mesh(new THREE.CylinderGeometry(0.075, 0.075, 0.012, 12), litM(null, 0xc83a2a), -0.6 + k * 0.22, 1.01, 0.05, bn); } pottedTree(bn, 0.6, -0.1, 0.35);
+    const bob = L.mesh(new THREE.CylinderGeometry(0.12, 0.12, 0.25, 12), litM(null, 0xf0f0f0), 0.15, 1.3, 0, mc); bob.rotation.z = Math.PI / 2; mc.userData.bob = bob; { const A = V3([-0.2, 1.48, 0]), B = V3([0.15, 1.42, 0]); const th2 = L.mesh(new THREE.CylinderGeometry(0.006, 0.006, A.distanceTo(B), 4), litM(null, 0xffffff), 0, 0, 0, mc); th2.position.copy(A).lerp(B, 0.5); th2.quaternion.setFromUnitVectors(V3([0, 1, 0]), B.clone().sub(A).normalize()); }
+    for (const x2 of [-1.2, 0.4, 1.6]) { L.box(0.01, 0.5, 0.01, litM(null, 0x2a2a30), x2, 3.0, -0.3, scene); L.mesh(new THREE.ConeGeometry(0.2, 0.16, 10, 1, true), litM(null, 0x3a8a8a), x2, 2.7, -0.3, scene).material.side = THREE.DoubleSide; L.mesh(new THREE.SphereGeometry(0.06, 6, 4), L.basic(null, 0xfff4c0), x2, 2.64, -0.3, scene); } scene.add(new THREE.AmbientLight(0xffffff, 0.55)); return mc; }
+  // a 3D extruded label in camera space (slot 0 top, slot 1 below), pops in at tw
+  function L3(scene, cam, txt, tw, slot = 0, front, side) { if (!cam.parent) scene.add(cam); CURCAM = cam; return label3D(scene, txt, 0, 0, 0, tw, { slot, front, side, size: slot ? 0.12 : 0.15 }); }
+  // the rotor wash: a translucent sand cone under the drone + sand grains flung outward
+  function sandBlast(scene, at) { const cone = L.mesh(new THREE.ConeGeometry(0.55, 1, 14, 1, true), new THREE.MeshBasicMaterial({ color: 0xe8c880, transparent: true, opacity: 0.6, side: THREE.DoubleSide, depthWrite: false }), at.x, 0.5, at.z, scene);
+    const gr = []; for (let i = 0; i < 26; i++) gr.push(L.box(0.035, 0.035, 0.035, litM(null, i % 3 ? 0xe8cc88 : 0xd8b870), 0, 0, 0, scene));
+    return (t, top, on) => { cone.visible = on; cone.scale.set(1 + 0.08 * Math.sin(t * 30), top, 1 + 0.08 * Math.sin(t * 30)); cone.position.y = top / 2; gr.forEach((g, i) => { const a = i / 26 * Math.PI * 2 + i, k = ((t * 1.6 + hash(i)) % 1); g.visible = on; g.position.set(at.x + Math.cos(a) * (0.2 + k * 1.1), 0.05 + Math.sin(k * Math.PI) * 0.35, at.z + Math.sin(a) * (0.2 + k * 0.8)); g.rotation.set(k * 6, i, 0); }); }; }
+  function gimlet() { const g = new THREE.Group(); L.box(0.2, 0.035, 0.035, mm(MT.wood, 0.5, 0.2), 0, 0.12, 0, g); L.mesh(new THREE.CylinderGeometry(0.008, 0.004, 0.14, 6), litM(null, 0x8a8e98), 0, 0.04, 0, g); return g; }
+  function stickBundle(parent, x, y, z, s = 1, rz = 0) { const g = new THREE.Group(); g.position.set(x, y, z); g.scale.setScalar(s); g.rotation.z = rz; parent.add(g); for (let k = 0; k < 7; k++) { const c = chewStick(); c.position.set((k % 3 - 1) * 0.022, 0, (Math.floor(k / 3) - 1) * 0.022); c.rotation.set(0, k, (hash(k) - 0.5) * 0.15); g.add(c); }
+    L.mesh(new THREE.TorusGeometry(0.045, 0.01, 4, 10), litM(null, 0xc83a2a), 0, -0.02, 0, g).rotation.x = Math.PI / 2; return g; }
+  function cup(parent, x, y, z) { const g = new THREE.Group(); g.position.set(x, y, z); parent.add(g); L.mesh(new THREE.CylinderGeometry(0.07, 0.06, 0.14, 12, 1, true), new THREE.MeshLambertMaterial({ color: 0xd8e8f0, side: THREE.DoubleSide }), 0, 0.07, 0, g); L.mesh(new THREE.CircleGeometry(0.06, 12), litM(null, 0xd8e8f0), 0, 0.005, 0, g).rotation.x = -Math.PI / 2; return g; }
+  // ===================================== SHOTS =====================================
+  // ===== 1. "Operator… my drone just blew the sand off another human artifact."  the drone hovers low: a sand cone + flung grains blow the mound away, the toothbrush rises with sparkles
+  SH([1, 'Operator'], 'C', (t0) => { const scene = new THREE.Scene(); desert(scene); const dr = drone(); dr.scale.setScalar(1.6); scene.add(dr); const at = V3([0.85, 0, 0.45]); const mound = L.mesh(new THREE.ConeGeometry(0.5, 0.36, 12), new THREE.MeshLambertMaterial({ map: L.rep(SAND, 2, 2), flatShading: true }), at.x, 0.18, at.z, scene);
+    const tb = toothbrush(); tb.position.set(at.x, 0.03, at.z); tb.rotation.set(-Math.PI / 2, 0, 0.6); tb.scale.setScalar(2.0); scene.add(tb); const sb = sandBlast(scene, at); const ch = hero(scene, { p: [-0.25, 0, 1.0], ry: 0.7 });
+    const cam = CAM([[0.3, 1.5, 4.6], [0.27, 1.4, 4.2]], [[0.3, 0.85, 0.6]], 50); const tB = ws(1, 'blew'), tA = ws(1, 'artifact'); cue(t0 + 0.1, 'drone_buzz'); cue(tB, 'sand_whoosh'); cue(tA, 'sparkle');
+    const fx = new FX(LW, LH).add('dust', { world: [at.x, 0.15, at.z], t0: tB - 0.2, dur: 2.0 }).add('sparkle', { world: [at.x, 0.12, at.z], t0: tA, dur: 99, n: 5, radius: 16 });
+    return { scene, cam, fx, upd(t) { const q = q15(t); const dy = 1.15 + 0.05 * Math.sin(q * 3); dr.position.set(at.x + 0.04 * Math.sin(q * 2), dy, at.z); dr.userData.rot.forEach((r) => { r.rotation.y = q * 40; }); const k = Math.min(1, Math.max(0, (q - tB) / 1.4));
+      mound.scale.set(Math.max(0.02, 1 - k), Math.max(0.02, 1 - k), Math.max(0.02, 1 - k)); sb(q, dy - 0.05, q >= tB - 0.3 && q < tA + 0.4); tb.visible = k > 0.3; tb.position.y = 0.03 + 0.05 * Math.max(0, k - 0.3);
+      ch.drive(t, [still('present', 1.2)], [[-99, 'open', 'smile'], [tA, 'surprised', 'gasp']]); } }; });
+  // ===== 2. "Humans called it… a toothbrush."  she holds it up, scan -> ARTIFACT 004
+  SH([1, 'Humans'], 'C', (t0) => { const scene = new THREE.Scene(); desert(scene); const dr = drone(); dr.position.set(1.0, 1.25, -0.9); scene.add(dr); const ch = hero(scene, { p: [0, 0, 0.75], ry: 0.15 }); const tb = toothbrush(); tb.scale.setScalar(1.8); const hold = holdIn(ch, 'L', tb, [0.0, 0.05, 0.05], [0, -0.3, 0]);
+    const cam = CAM([[0.36, 1.39, 3.69], [0.36, 1.36, 3.51]], [[0.30, 1.15, 0.5]], 46); const tT = ws(1, 'toothbrush'); cue(tT, 'scan'); cue(tT + 0.6, 'sting');
+    const fx = new FX(LW, LH).add('sparkle', { target: tb, offset: [0, 0.1, 0], t0: tT, dur: 99, n: 4, radius: 14 });
+    const lsc = L3(scene, cam, 'SCANNING', tT, 1, 0xc8f8ff, 0x3a8a9a), lart = L3(scene, cam, ART, tT + 0.6, 0);
+    return { scene, cam, fx, upd(t) { lsc(t < tT + 0.6 ? t : -99); lart(t); dr.userData.rot.forEach((r) => { r.rotation.y = q15(t) * 40; }); ch.drive(t, [still('present', 1.2)], [[-99, 'open', 'smile'], [tT, 'open', 'smileOpen']]); hold(); } }; });
+  // ===== 3. "You scrub your bones with this twice a day… and it used to be pig hair?"  she scrubs a big cartoon bone with the toothbrush, puzzled
+  SH([2, 'You'], 'C', (t0) => { const scene = new THREE.Scene(); desert(scene); const ch = hero(scene, { p: [-0.35, 0, 0.75], ry: 0.3 }); ch.drive(0, [still('present', 1.2)], [[-99, 'open', 'smile']], false); ch.root.updateMatrixWorld(true); const f0 = ch.fist('L', V3([0, 0, 0])); const bn = bigBone(scene, f0.x + 0.38, f0.y + 0.02, f0.z, 0.7); bn.rotation.y = 0.3;
+    L.box(0.3, f0.y - 0.05, 0.3, mm(MT.stone, 1, 2, 0xd8b880), f0.x + 0.38, (f0.y - 0.05) / 2, f0.z, scene); const tb = toothbrush(); tb.scale.setScalar(1.8); const hold = holdIn(ch, 'L', tb, [0.0, 0.05, 0.05], [0, -0.3, -0.4]);
+    const cam = CAM([[0.15, 1.40, 3.9], [0.15, 1.37, 3.7]], [[0.15, 1.05, 0.5]], 46); cue(ws(2, 'scrub'), 'brush_scrub'); const qm = q3D(scene, ch, ws(2, 'hair'));
+    const fx = new FX(LW, LH).add('bubbles', { world: [0.3, 1.05, 0.8], t0: ws(2, 'scrub'), dur: 3 });
+    return { scene, cam, fx, upd(t) { const q = q15(t); bn.position.y = f0.y + 0.02 + 0.006 * Math.sin(q * 20); ch.drive(t, [still('present', 1.2)], [[-99, 'open', 'smile'], [ws(2, 'pig'), 'surprised', 'talkO']]); hold(); qm(t); } }; });
+  // ===== 4. "Well… teeth. Close enough."  a big 3D molar pops up beside her (with a little face); she shrugs
+  SH([3, 'Well'], 'C', (t0) => { const scene = new THREE.Scene(); desert(scene); const ml = bigMolar(scene, 0.45, 0.4, 0.6, 1.3); const ch = hero(scene, { p: [-0.3, 0, 0.8], ry: 0.3 });
+    const cam = CAM([[0.15, 1.36, 3.9], [0.15, 1.34, 3.78]], [[0.15, 0.95, 0.5]], 48); const tT = ws(3, 'teeth'); cue(tT, 'pop'); const fx = new FX(LW, LH).add('sparkle', { target: ml, offset: [0, 0.3, 0], t0: tT, dur: 99, n: 4, radius: 16 });
+    const LB = [L3(scene, cam, 'TEETH', tT, 0, undefined, undefined)];
+    return { scene, cam, fx, upd(t) { LB.forEach((f) => f(t)); const k = Math.min(1, Math.max(0, (q15(t) - tT) / 0.25)); ml.scale.setScalar(1.3 * k + 0.001); ch.drive(t, [seg('shake_head', tT - 0.2)], [[-99, 'open', 'talkO'], [tT, 'wink', 'blushSmile']]); } }; });
+  // ===== 5. "If you chew the end of a twig until it frays… you have a toothbrush."  under the palms by the pond: face to camera, chewing a twig held at the side of her mouth (chips fly)
+  SH([4, 'If'], 'C', (t0) => { const scene = new THREE.Scene(); desert(scene); const ch = hero(scene, { p: [-1.75, 0.04, -1.5], ry: 0.15 }); const cs = chewStick(); cs.scale.setScalar(2.0); const hold = holdIn(ch, 'R', cs, [0.0, 0.06, 0.1], [-0.35, 0, 0.15]);
+    const cam = CAM([[-1.45, 1.4, 1.2], [-1.47, 1.38, 1.05]], [[-1.6, 1.15, -1.5]], 44); const tC = ws(4, 'chew'), tF = ws(4, 'frays'); cue(tC, 'twig_chew'); cue(tC + 0.5, 'twig_chew'); cue(tF, 'twig_chew');
+    const fx = new FX(LW, LH).add('dust', { target: cs, offset: [0, 0.2, 0.05], t0: tC, dur: tF - tC + 0.6 });
+    return { scene, cam, fx, upd(t) { const q = q15(t), chew = q >= tC && q < tF + 0.6; ch.drive(t, [still('surprised', 1.0)], [[-99, 'open', 'smile'], [tC, 'open', chew && Math.floor(q * 6) % 2 ? 'talkA' : 'talkO'], [tF + 0.6, 'open', 'smileOpen']], false); hold(); cs.rotation.x = chew ? 0.12 * Math.sin(q * 18) : 0; } }; });
+  // ===== 6. "This is a chew stick."  close on the frayed twig held out
+  SH([4, 'This'], 'C', (t0) => { const scene = new THREE.Scene(); desert(scene); const ch = hero(scene, { p: [-1.6, 0.04, -1.3], ry: 0.3 }); const cs = chewStick(); cs.scale.setScalar(2.2); const hold = holdIn(ch, 'L', cs, [0.0, 0.05, 0.05], [0, 0, -0.5]);
+    const cam = CAM([[-0.95, 1.39, 1.41], [-0.97, 1.36, 1.30]], [[-1.30, 1.15, -1.3]], 44); const tS = ws(4, 'stick'); cue(tS, 'sting'); const fx = new FX(LW, LH).add('sparkle', { target: cs, offset: [0, 0.2, 0], t0: tS, dur: 99, n: 3, radius: 12 });
+    const LB = [L3(scene, cam, 'CHEW STICK', tS, 0, undefined, undefined)];
+    return { scene, cam, fx, upd(t) { LB.forEach((f) => f(t)); ch.drive(t, [still('present', 1.2)], [[-99, 'open', 'smileOpen']]); hold(); } }; });
+  // ===== 7. "People used them for thousands of years. Some still do: the miswak."  a miswak market on the edge of the oasis: striped awnings, bundles of sticks, a seller behind the stall
+  SH([5, 'People'], 'C', (t0) => { const scene = new THREE.Scene(); desert(scene); const mk = new THREE.Group(); mk.position.set(3.2, 0, -1.4); mk.rotation.y = -0.25; scene.add(mk);
+    const AWN = tx(16, 4, (c) => { for (let x = 0; x < 16; x += 4) { c.fillStyle = (x / 4) % 2 ? '#f4ecd8' : '#2a8a6a'; c.fillRect(x, 0, 4, 4); } }), AWN2 = tx(16, 4, (c) => { for (let x = 0; x < 16; x += 4) { c.fillStyle = (x / 4) % 2 ? '#f4ecd8' : '#c85a3a'; c.fillRect(x, 0, 4, 4); } });
+    for (const [ox, aw] of [[-0.6, AWN], [1.3, AWN2]]) { const st = new THREE.Group(); st.position.set(ox, 0, 0); mk.add(st); const roof = L.box(1.6, 0.05, 1.0, litM(L.rep(aw, 2, 1), 0xffffff), 0, 1.95, 0.1, st); roof.rotation.x = 0.18;
+      for (const [x2, z2] of [[-0.75, -0.4], [0.75, -0.4], [-0.75, 0.5], [0.75, 0.5]]) L.box(0.05, 1.95, 0.05, mm(MT.wood, 0.2, 1), x2, 0.97, z2, st); L.box(1.4, 0.7, 0.5, mm(MT.wood, 2, 0.6, 0xa87040), 0, 0.35, 0.3, st);
+      for (let k = 0; k < 5; k++) stickBundle(st, -0.55 + k * 0.27, 0.78, 0.3, 1.5, Math.PI / 2 + 0.05 * k);
+      for (const s2 of [-1, 1]) { const bk = L.mesh(new THREE.CylinderGeometry(0.16, 0.12, 0.25, 10, 1, true), litM(null, 0xc8a060), s2 * 0.95, 0.12, 0.65, st); bk.material.side = THREE.DoubleSide; for (let k = 0; k < 3; k++) stickBundle(st, s2 * 0.95 + (k - 1) * 0.06, 0.3, 0.65, 1.4, 0.1 * (k - 1)); } }
+    const sel = npcAt(mk, 'bank_teller', 'olive', -0.6, -0.15, 0, 1.0); sel.walk(0); npcSet(sel, 'Bone002', -1.2); const n2 = npcAt(mk, 'art_student', 'teal', 1.3, -0.15, 0, 0.95); n2.walk(0); palm(mk, -1.9, -0.6, 1.0); palm(mk, 2.6, -0.5, 0.9); bush(mk, 0.35, -0.6, 0.35);
+    const ch = hero(scene, { p: [3.75, 0, 0.5], ry: -0.5 }); const cam = CAM([[3.35, 1.45, 4.3], [3.33, 1.43, 4.1]], [[3.35, 1.0, -0.6]], 52); const tM = ws(5, 'miswak'); cue(t0 + 0.1, 'market_amb'); cue(tM, 'sting');
+    const l1 = L3(scene, cam, 'THOUSANDS OF YEARS', ws(5, 'thousands'), 0), l2 = L3(scene, cam, 'MISWAK', tM, 1);
+    return { scene, cam, upd(t) { l1(t < tM ? t : -99); l2(t); ch.drive(t, [seg('look_around', t0 - 0.2), seg('point', tM - 0.3, { fade: 0.15 })], [[-99, 'open', 'smile'], [tM, 'open', 'smileOpen']]); } }; });
+  // ===== 8. "Operator Leo asks: So who made the first real brush? Leo… China."  she sits at the pond's edge reading the comment sticker
+  SH([6, 'Operator'], 'C', (t0) => { const scene = new THREE.Scene(); desert(scene); const ch = hero(scene, { p: [-2.0, 0.04, -1.95], ry: 0.2 }); const cam = CAM([[-1.75, 0.95, 0.4]], [[-1.95, 0.75, -2.0]], 46);
+    const tN = ws(6, 'Leo'), tC = ws(6, 'China'); cue(tN, 'comment_pop'); const qm = q3D(scene, ch, ws(6, 'brush')); const lc = L3(scene, cam, 'CHINA', tC, 1);
+    return { scene, cam, upd(t) { lc(t); ch.drive(t, [still('sit_floor', 1.5)], [[-99, 'open', 'talkO'], [tC, 'open', 'smileOpen']]); qm(t); },
+      ov(o, t) { if (t >= tN) sticker(o, t - tN, { user: 'operator_leo', lines: ['so who made the', 'f\u200Cirst real brush?'], y: 48 }); } }; });
+  // ===== 9. "In 1498, Chinese brushes had stiff hairs from the back of a pig's neck… tied to bone or bamboo."  a Ming room; a pig in the doorway; she holds the bristle brush
+  SH([7, 'In'], 'C', (t0) => { const scene = new THREE.Scene(); chinaRoom(scene); const pg = pig(scene, 0.85, -0.2, -0.6, 0.9); const ch = hero(scene, { p: [-0.25, 0, 0.8], ry: 0.3 }); const bb = bristleBrush(); bb.scale.setScalar(1.8); const hold = holdIn(ch, 'L', bb, [0.0, 0.05, 0.05], [0, -0.3, 0]);
+    const cam = CAM([[0.15, 1.47, 4.19], [0.15, 1.45, 4.02]], [[0.15, 1.0, 0.3]], 48); const tY = ws(7, '1498'), tP = ws(7, "pig's"); cue(tY, 'stamp'); cue(tP, 'oink');
+    const LB = [L3(scene, cam, '1498 CHINA', tY, 0, undefined, undefined), L3(scene, cam, 'HOG HAIR', tP, 1, 0xffb0c0, 0xa85a6a)];
+    return { scene, cam, upd(t) { LB.forEach((f) => f(t)); pg.rotation.y = -0.6 + 0.1 * Math.sin(q15(t) * 3); ch.drive(t, [still('present', 1.2)], [[-99, 'open', 'smile'], [tP, 'surprised', 'talkO']]); hold(); } }; });
+  // ===== 10. "This is a bristle brush."  close on the bone handle and the dark bristles
+  SH([7, 'This'], 'C', (t0) => { const scene = new THREE.Scene(); chinaRoom(scene); const ch = hero(scene, { p: [-0.1, 0, 0.8], ry: 0.25 }); const bb = bristleBrush(); bb.scale.setScalar(2.0); const hold = holdIn(ch, 'L', bb, [0.0, 0.05, 0.05], [0, -0.3, 0]);
+    const cam = CAM([[0.3, 1.44, 3.6], [0.3, 1.42, 3.48]], [[0.25, 1.1, 0.6]], 46); const tB = ws(7, 'bristle'); cue(tB, 'sting'); const fx = new FX(LW, LH).add('sparkle', { target: bb, offset: [0, 0.15, 0], t0: tB, dur: 99, n: 3, radius: 12 });
+    const LB = [L3(scene, cam, 'BRISTLE BRUSH', tB, 0, undefined, undefined)];
+    return { scene, cam, fx, upd(t) { LB.forEach((f) => f(t)); ch.drive(t, [still('present', 1.2)], [[-99, 'open', 'smileOpen']]); hold(); } }; });
+  // ===== 11. "Pig hair. In your mouth. Gross."  frontal reaction close-up: real disgust face, stink lines, shiver; the pig oinks behind her
+  SH([8, 'Pig'], 'C', (t0) => { const scene = new THREE.Scene(); chinaRoom(scene); const pg = pig(scene, 0.7, -0.4, -0.9, 0.9); const ch = hero(scene, { p: [-0.05, 0, 0.85], ry: 0.0 });
+    const cam = CAM([[0.0, 1.5, 2.75], [0.0, 1.5, 2.6]], [[0.0, 1.32, 0.8]], 44); const tG = ws(8, 'Gross'); cue(t0 + 0.1, 'oink'); cue(tG, 'gross');
+    const fx = new FX(LW, LH).add('stink', { obj: ch.root, bone: 'Head', offset: [0.22, 0.05, 0.1], t0, dur: 99 }).add('shake', { obj: ch.root, bone: 'Head', offset: [0.0, -0.05, 0], t0: tG, dur: 1.2 });
+    return { scene, cam, fx, upd(t) { ch.drive(t, [seg('idle', -99, { loop: true })], [[-99, 'disgust', 'disgust']]); } }; });
+  // ===== 12. "The story goes, in 1770, William Addis sat in prison for starting a riot."  a stone cell: Addis (existing NPC + brown coat, bigger) on his bench; she by the bars
+  SH([9, 'The'], 'C', (t0) => { const scene = new THREE.Scene(); prison(scene); const ad = labCoat(npcAt(scene, 'bank_teller', 'grey', -1.05, -1.0, 0.35, 1.25), 0x6a4a2a); ad.walk(0); const ch = hero(scene, { p: [0.1, 0, 0.55], ry: -0.4 });
+    const cam = CAM([[-0.4, 1.55, 3.9], [-0.4, 1.53, 3.7]], [[-0.45, 1.15, -0.4]], 50); const tY = ws(9, '1770'), tR = ws(9, 'riot'); cue(tY, 'stamp'); cue(tR, 'jail_door');
+    const l1 = L3(scene, cam, '1770', tY, 0), l2 = L3(scene, cam, 'WILLIAM ADDIS', tY + 0.3, 1);
+    return { scene, cam, upd(t) { l1(t); l2(t); ch.drive(t, [seg('idle', -99, { loop: true }), seg('surprised', tR - 0.2, { fade: 0.15 })], [[-99, 'open', 'smile'], [tR, 'surprised', 'talkO']]); } }; });
+  // ===== 13. "He drilled holes in a leftover bone… and tied in bristles."  medium close: the bone lies on a little table, Addis turns a gimlet down into it with his fist on the handle; tufts pop into the holes
+  SH([9, 'He'], 'C', (t0) => { const scene = new THREE.Scene(); prison(scene); const ad = labCoat(npcAt(scene, 'bank_teller', 'grey', -0.35, -0.6, 0.15, 1.25), 0x6a4a2a); ad.walk(0); npcSet(ad, 'Bone004', -1.05); const hr = npcHand(ad, 'R');
+    const gm = gimlet(); gm.scale.setScalar(1.5); gm.position.copy(hr).add(V3([0, -0.12 * 1.5 - 0.01, 0])); scene.add(gm); const by = gm.position.y - 0.035 * 1.5 - 0.02;
+    const tbl = new THREE.Group(); tbl.position.set(hr.x, 0, hr.z); scene.add(tbl); L.box(0.6, 0.05, 0.45, mm(MT.wood, 1, 0.5), 0, by - 0.035, 0, tbl); for (const [x2, z2] of [[-0.26, -0.18], [0.26, -0.18], [-0.26, 0.18], [0.26, 0.18]]) L.box(0.05, by - 0.06, 0.05, mm(MT.darkWood, 0.2, 1), x2, (by - 0.06) / 2, z2, tbl);
+    const bone = new THREE.Group(); bone.position.set(hr.x, by, hr.z); scene.add(bone); const bm = litM(null, 0xeee4c8); L.box(0.4, 0.035, 0.06, bm, 0.05, 0, 0, bone); for (const s2 of [-1, 1]) L.mesh(new THREE.SphereGeometry(0.04, 6, 4), bm, 0.05 + s2 * 0.21, 0, 0, bone);
+    const tufts = []; for (let k = 0; k < 6; k++) { L.box(0.018, 0.04, 0.018, litM(null, 0x3a3020), -0.05 + k * 0.035, 0.0, 0, bone); const tf = L.box(0.022, 0.06, 0.022, litM(null, 0x2a2420), -0.05 + k * 0.035, 0.045, 0, bone); tf.visible = false; tufts.push(tf); }
+    ad.updateMatrixWorld(true); ad.bones.Bone005.attach(gm); const ch = hero(scene, { p: [0.45, 0, 0.55], ry: -0.55 }); const cam = CAM([[0.15, 1.6, 3.0], [0.15, 1.58, 2.88]], [[0.0, 1.0, -0.3]], 48);
+    const tD = ws(9, 'drilled'), tT = ws(9, 'tied'); cue(tD, 'drill'); cue(tT, 'tie'); const fx = new FX(LW, LH).add('dust', { target: bone, offset: [0, 0.03, 0.03], t0: tD, dur: tT - tD });
+    return { scene, cam, fx, upd(t) { const q = q15(t); gm.rotation.y = q >= tD && q < tT ? q * 14 : 0; tufts.forEach((tf, k) => { tf.visible = q >= tT + k * 0.12; }); ch.drive(t, [still('surprised', 1.0)], [[-99, 'open', 'talkO'], [tT, 'open', 'smileOpen']]); } }; });
+  // ===== 15. "But animal hair stayed wet… and grew germs."  close on the wet brush in a cup: drips, cute 3D germs pop up on the bristles; she recoils at the side
+  SH([10, 'But'], 'C', (t0) => { const scene = new THREE.Scene(); shop(scene); cup(scene, 0.25, 0.95, -0.4); const bb = bristleBrush(); bb.scale.setScalar(1.9); bb.position.set(0.25, 1.15, -0.4); bb.rotation.z = 0.2; scene.add(bb);
+    const gs = [[0.18, 1.42, -0.32], [0.32, 1.36, -0.33], [0.12, 1.3, -0.33], [0.3, 1.5, -0.35], [0.4, 1.25, -0.33], [0.08, 1.45, -0.36]].map(([x, y, z]) => germ(scene, x, y, z, 1.6)); const ch = hero(scene, { p: [-0.12, 0, 0.35], ry: 0.45 });
+    const cam = CAM([[-0.15, 1.5, 3.2], [-0.15, 1.49, 3.1]], [[-0.1, 1.1, -0.3]], 46); const tW = ws(10, 'wet'), tG = ws(10, 'germs'); cue(tW, 'drip'); cue(tG, 'germs');
+    const fx = new FX(LW, LH).add('drip', { target: bb, offset: [0.03, 0.1, 0.04], t0: tW, dur: 99 }).add('drip', { target: bb, offset: [-0.03, 0.05, 0.04], t0: tW + 0.3, dur: 99 }); const lg = L3(scene, cam, 'GERMS', tG, 0, 0x9cf09c, 0x3a8a4a);
+    return { scene, cam, fx, upd(t) { lg(t); gs.forEach((g, i) => { const k = Math.min(1, Math.max(0, (q15(t) - tG - i * 0.1) / 0.2)); g.scale.setScalar(1.6 * k + 0.001); g.rotation.y = 0.3 * Math.sin(q15(t) * 3 + i); g.position.y += 0; }); ch.drive(t, [seg('idle', -99, { loop: true }), seg('step_back', tG - 0.1, { fade: 0.1 })], [[-99, 'open', 'neutral'], [tG, 'disgust', 'disgust']]); } }; });
+  // ===== 16. "In 1938 came nylon bristles. They dried fast…"  wide on the filled 1938 lab: the thread machine spinning, she holds the new brush
+  SH([11, 'In'], 'C', (t0) => { const scene = new THREE.Scene(); const mc = lab1938(scene); const ch = hero(scene, { p: [0.15, 0, 0.6], ry: 0.15 }); const tb = toothbrush(0xe83a3a); tb.scale.setScalar(1.8); const hold = holdIn(ch, 'L', tb, [0.0, 0.05, 0.05], [0, -0.3, 0]);
+    const cam = CAM([[0.0, 1.6, 4.4], [0.0, 1.58, 4.2]], [[0.1, 1.2, -0.6]], 52); const tY = ws(11, '1938'), tD = ws(11, 'dried'); cue(tY, 'stamp'); cue(tD, 'sparkle'); cue(t0 + 0.2, 'machine');
+    const fx = new FX(LW, LH).add('sparkle', { target: tb, offset: [0, 0.12, 0], t0: tD, dur: 99, n: 4, radius: 14 }); const l1 = L3(scene, cam, '1938', tY, 0), l2 = L3(scene, cam, 'NYLON', tY + 0.3, 1);
+    return { scene, cam, fx, upd(t) { l1(t); l2(t); mc.userData.spool.rotation.x = q15(t) * 4; mc.userData.bob.rotation.x = q15(t) * 6; ch.drive(t, [still('present', 1.2)], [[-99, 'open', 'smile'], [tD, 'open', 'smileOpen']]); hold(); } }; });
+  // ===== 17. "…no pig required."  a happy pig in a green meadow
+  SH([11, 'no'], 'C', (t0) => { const scene = new THREE.Scene(); L.addSky(scene, { near: 25, far: 110, preset: 'morning' }); scene.fog = null; meadow(scene); const pg = pig(scene, 0.0, 0.0, 0.3, 0.9); flowers3D(scene, 0, 0.8, 2, 1);
+    const cam = CAM([[0.44, 1.09, 3.49], [0.44, 1.09, 3.37]], [[0.2, 0.5, 0.3]], 44); cue(t0 + 0.1, 'oink'); const fx = new FX(LW, LH).add('heart', { target: pg, offset: [0.4, 0.8, 0], t0: t0 + 0.2, dur: 99 });
+    return { scene, cam, fx, upd(t) { pg.position.y = Math.abs(Math.sin(q15(t) * 6)) * 0.06; } }; });
+  // ===== 17b. "This is a nylon toothbrush."  a different angle: from the window side, close on her and the brush, the machine spinning behind
+  SH([11, 'This'], 'C', (t0) => { const scene = new THREE.Scene(); const mc = lab1938(scene); const ch = hero(scene, { p: [-0.25, 0, 0.0], ry: 0.55 }); const tb = toothbrush(0xe83a3a); tb.scale.setScalar(2.0); const hold = holdIn(ch, 'L', tb, [0.0, 0.05, 0.05], [0, -0.3, 0]);
+    const cam = CAM([[1.1, 1.4, 2.4], [1.05, 1.38, 2.3]], [[0.0, 1.15, -0.2]], 46); const tN = ws(11, 'nylon', 2); cue(tN, 'sting'); const fx = new FX(LW, LH).add('sparkle', { target: tb, offset: [0, 0.12, 0], t0: tN, dur: 99, n: 4, radius: 14 }); const ln = L3(scene, cam, 'NYLON TOOTHBRUSH', tN, 0);
+    return { scene, cam, fx, upd(t) { ln(t); mc.userData.spool.rotation.x = q15(t) * 4; mc.userData.bob.rotation.x = q15(t) * 6; ch.drive(t, [still('present', 1.2)], [[-99, 'open', 'smileOpen']]); hold(); } }; });
+  // ===== 18. "Humans put pig hair in their mouths… for over four hundred years?"  back at the oasis at sunset, she holds the toothbrush up, puzzled
+  SH([12, 'Humans'], 'C', (t0) => { const scene = new THREE.Scene(); desert(scene, { sunset: true }); const ch = hero(scene, { p: [-1.4, 0.04, -1.1], ry: -0.4 }); const tb = toothbrush(); tb.scale.setScalar(1.8); const hold = holdIn(ch, 'L', tb, [0.0, 0.05, 0.05], [0, -0.3, 0]);
+    const cam = CAM([[-2.0, 0.95, 1.4], [-1.95, 0.95, 1.3]], [[-1.15, 1.15, -1.1]], 48); const qm = q3D(scene, ch, ws(12, 'years'));
+    return { scene, cam, upd(t) { ch.drive(t, [still('present', 1.2)], [[-99, 'open', 'talkO']]); hold(); qm(t); } }; });
+  // ===== 19. "Artifact understood. Logging off."  by the pond at sunset, a different framing; the drone lands beside her; she waves; outro
+  SH([13, 'Artifact'], 'C', (t0) => { const scene = new THREE.Scene(); desert(scene, { sunset: true }); const dr = drone(); dr.position.set(-1.85, 0.08, -0.9); scene.add(dr); const ch = hero(scene, { p: [-2.45, 0.04, -1.25], ry: 0.6 });
+    const cam = CAM([[-1.4, 1.24, 1.9], [-1.4, 1.35, 2.3]], [[-2.2, 1.0, -1.25]], 48); const tLo = ws(13, 'Logging'), tOut = TL.dur + 0.05; cue(tLo, 'blip'); cue(tOut, 'end_jingle');
+    return { scene, cam, upd(t) { ch.drive(t, [seg('present', t0 - 0.2), seg('wave', tLo - 0.3, { fade: 0.12 })], [[-99, 'open', 'smileOpen'], [tLo, 'wink', 'blushSmile']]); },
+      ov(o, t, c) { if (t >= tOut) { plateText(o, CHANNEL, CX, 40, { size: 12, border: '#fdd941', fg: '#fdd941', scale: popS(t, tOut) }); if (t >= tOut + 0.25) plateText(o, ART + ': TOOTHBRUSH', 135, 62, { size: 10, border: '#7cf0ff', fg: '#c8f8ff', scale: popS(t, tOut + 0.25) });
+        if (t >= tOut + 0.4) { const w = 90, h = 14, X = CX - w / 2, Y = 80; c.fillStyle = '#040412'; c.fillRect(X - 2, Y - 2, w + 4, h + 4); c.fillStyle = '#fe2c55'; c.fillRect(X, Y, w, h); bitText(c, 'FOLLOW', CX, Y + 7, 1, '#ffffff', { outline: null }); } } } }; });

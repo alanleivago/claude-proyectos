@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Noppera-bo</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #020306; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; image-rendering: pixelated; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  NOPPERA-BO — 9:16, 40s, 24fps. A first-person tale in on-screen paragraphs: a woman crying by a roadside jizō in the
+//  rain; my grandfather asks what is wrong; she lowers her sleeve and has no face; he runs home; my grandmother keeps her
+//  back to him and asks "Was it like this?" Style: yokai (three.js at 216×384, dithered).
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 40.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 40, () => sceneTale()]];
+const SHOTS = [
+  ['hook',   0, 0.0,  4.0,  'a woman in a kimono crouched crying by a jizō in the rain, her back to us; a candle stutters'],
+  ['card',   0, 4.0,  7.0,  'the card: Noppera-bo'],
+  ['road',   0, 7.0,  12.5, 'my grandfather walks the wet path with his lantern and finds her'],
+  ['sleeve', 0, 12.5, 19.0, 'he kneels and asks; she lowers her sleeve: a smooth face'],
+  ['run',    0, 19.0, 24.5, 'he runs down the path to the house, the lantern swinging'],
+  ['home',   0, 24.5, 30.0, 'my grandmother at the irori, her back to him; silence 29.4-30.0'],
+  ['turn',   0, 30.0, 35.5, 'THE HIT: she turns: the same smooth face; it splits into a mouth of teeth'],
+  ['end',    0, 35.5, 40.0, 'the lamp dies; the face close in the last ember light; badge'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { open: 0.3, card: 4.0, road: 7.0, sleeve: 12.5, touch: 13.5, look: 14.5, reveal: 16.5, run: 19.0, home: 24.5, black: 29.4, hit: 30.0, split: 31.8, end: 35.5, out: 36.8, badge: 36.0 },
+  acts: [
+    { name: '1 The rule',     role: 'build',   t0: 0.0,  t1: 7.0 },
+    { name: '2 The jizō',     role: 'turn',    t0: 7.0,  t1: 19.0 },
+    { name: '3 Home',         role: 'peak',    t0: 19.0, t1: 29.4 },
+    { name: '4 Silence',      role: 'silence', t0: 29.4, t1: 30.0 },
+    { name: '5 Like this?',   role: 'gift',    t0: 30.0, t1: 35.5 },
+    { name: '6 Keep walking', role: 'goodbye', t0: 35.5, t1: 40.0 },
+  ],
+  board: [
+    { t: 2.0,  title: 'Hook: crying by the jizō', sound: 'rain on leaves and the path, a woman sobbing softly, the candle sputtering in stutters', next: 'dither' },
+    { t: 5.6,  title: 'Card: Noppera-bo', sound: 'card hit, a shakuhachi breath, a temple bell far off', next: 'dither in' },
+    { t: 10.5, title: 'He finds her', sound: 'rain, his straw sandals on wet earth, the lantern creaks on its pole, the sobbing nearer', next: 'cut' },
+    { t: 17.5, title: 'Smooth skin, like an egg', sound: 'the sobbing stops dead (16.5); a hit and a low drone swell; rain', next: 'cut' },
+    { t: 22.5, title: 'He ran home', sound: 'running splashes on the path, his breath, the lantern rattling', next: 'cut' },
+    { t: 27.5, title: 'Her back to him', sound: 'the irori ticks, his breath slowing, rain on the roof; drops to exact silence 29.4', next: 'black-silence' },
+    { t: 32.5, title: '"Was it like this?"', sound: 'THE HIT (30.0): sub drop and impact; a wet tearing as the face splits (31.8)', next: 'cut' },
+    { t: 37.5, title: 'kodamashorts', sound: 'the lamp sputters out (36.8); rain only, fading', next: 'end' },
+  ],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

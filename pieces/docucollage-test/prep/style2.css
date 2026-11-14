@@ -1,0 +1,24 @@
+@font-face{font-family:"Besley";src:url("assets/fonts/Besley.ttf");font-weight:400 900}
+@font-face{font-family:"Bebas";src:url("assets/fonts/BebasNeue-Regular.ttf")}
+@font-face{font-family:"Hand";src:url("assets/fonts/CoveredByYourGrace.ttf")}
+@font-face{font-family:"CourierPrime";src:url("assets/fonts/CourierPrime-Bold.ttf");font-weight:700}
+@font-face{font-family:"Poppins";src:url("assets/fonts/Poppins-Bold.ttf");font-weight:700}
+html,body{margin:0;background:#000}
+#root{position:relative;width:1080px;height:1920px;overflow:hidden;background:#000}
+.abs{position:absolute}
+.full{left:0;top:0;width:1080px;height:1920px}
+.scene{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden}
+.cam{position:absolute;left:0;top:0;width:1080px;height:1920px}
+.ht{position:absolute;left:-500px;top:-500px;width:2080px;height:2920px;background-image:radial-gradient(rgba(0,0,0,.22) 1.3px,transparent 1.9px);background-size:7px 7px;transform:rotate(45deg);opacity:.7}
+.vig{position:absolute;left:0;top:0;width:1080px;height:1920px;background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,0) 55%,rgba(0,0,0,.42) 100%)}
+.tline{position:absolute;left:0;width:1080px;text-align:center;line-height:1;white-space:pre}
+.tleft{left:60px;width:auto;text-align:left}
+.t-cond{font-family:"Bebas";-webkit-text-stroke:2px #FFD08D}
+.t-serif{font-family:"Besley";font-weight:900}
+.t-hand{font-family:"Hand"}
+.lt,.wg{display:inline-block}
+.sp{display:inline-block;width:.28em}
+.shine{color:#FFF6E2 !important;text-shadow:none !important;-webkit-text-stroke:0;--sx:130%;-webkit-mask-image:linear-gradient(105deg,transparent 42%,#000 50%,transparent 58%);mask-image:linear-gradient(105deg,transparent 42%,#000 50%,transparent 58%);-webkit-mask-size:300% 100%;mask-size:300% 100%;-webkit-mask-position:var(--sx) 0;mask-position:var(--sx) 0;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;opacity:.85}
+.f-mono{font-family:"CourierPrime";font-weight:700}
+.cap{position:absolute;height:86px;background:#FBF5E5;box-shadow:0 4px 14px rgba(0,0,0,.28);border-radius:30px;font-family:"Poppins";font-weight:700;font-size:44px;line-height:86px;text-align:center;white-space:nowrap}
+.tag{position:absolute;padding:4px 18px;background:linear-gradient(180deg,#FFE3A8,#D9A752);color:#2A1C12;font-family:"Poppins";font-weight:700;font-size:46px;border-radius:14px;box-shadow:0 6px 10px rgba(0,0,0,.35);z-index:7}

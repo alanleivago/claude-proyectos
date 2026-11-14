@@ -1,0 +1,28 @@
+@font-face{font-family:"Lora";src:url("assets/fonts/Lora-Bold.ttf");font-weight:700}
+@font-face{font-family:"Bebas";src:url("assets/fonts/BebasNeue-Regular.ttf")}
+@font-face{font-family:"CourierPrime";src:url("assets/fonts/CourierPrime-Bold.ttf");font-weight:700}
+@font-face{font-family:"MontX";src:url("assets/fonts/Montserrat-ExtraBold.ttf");font-weight:800}
+@font-face{font-family:"Poppins";src:url("assets/fonts/Poppins-Bold.ttf");font-weight:700}
+@font-face{font-family:"Gaegu";src:url("assets/fonts/Gaegu-Bold.ttf");font-weight:700}
+html,body{margin:0;background:#000}
+#root{position:relative;width:1080px;height:1920px;overflow:hidden;background:#000}
+.abs{position:absolute}
+.full{left:0;top:0;width:1080px;height:1920px}
+.scene{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden}
+.cam{position:absolute;left:0;top:0;width:1080px;height:1920px}
+.ht{position:absolute;left:-500px;top:-500px;width:2080px;height:2920px;background-image:radial-gradient(rgba(0,0,0,.26) 1.4px,transparent 2px);background-size:7px 7px;transform:rotate(45deg);opacity:.75}
+.vig{position:absolute;left:0;top:0;width:1080px;height:1920px;background:radial-gradient(ellipse at 50% 45%,rgba(0,0,0,0) 55%,rgba(0,0,0,.42) 100%)}
+.dust{position:absolute;border-radius:50%;background:#FFFFFF}
+.tline{position:absolute;line-height:1;white-space:pre;filter:drop-shadow(3px 4px 0 rgba(0,0,0,.42))}
+.f-lora{font-family:"Lora";font-weight:700}
+.f-bebas{font-family:"Bebas"}
+.f-mono{font-family:"CourierPrime";font-weight:700;filter:none}
+.f-mont{font-family:"MontX";font-weight:800;letter-spacing:-.01em}
+.f-hand{font-family:"Gaegu";font-weight:700;line-height:1}
+.g{background:linear-gradient(180deg,#F6DA92 15%,#E2B566 55%,#B9853A 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.gl{filter:drop-shadow(4px 5px 0 rgba(20,12,6,.55))}
+.cap{position:absolute;top:1339px;height:103px;background:#FDF9ED;border-radius:16px;font-family:"Poppins";font-weight:700;font-size:54px;line-height:103px;text-align:center;white-space:nowrap}
+.tag{position:absolute;padding:4px 18px;background:linear-gradient(180deg,#F6DA92,#C08B3A);color:#2A1C12;font-family:"Poppins";font-weight:700;font-size:46px;border-radius:14px;box-shadow:0 6px 10px rgba(0,0,0,.35);z-index:7}
+.tile{position:absolute;background:#FFFFFF;border-radius:66px;box-shadow:0 12px 26px rgba(0,0,0,.35)}
+.dim{position:absolute;left:0;top:0;width:1080px;height:1920px;background:linear-gradient(180deg,rgba(8,8,10,.72),rgba(8,8,10,.45) 60%,rgba(8,8,10,.25))}
+.dim2{background:linear-gradient(180deg,rgba(8,8,10,.86),rgba(8,8,10,.7) 45%,rgba(8,8,10,.3))}

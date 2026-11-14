@@ -1,0 +1,22 @@
+"""Writes index.html (HyperFrames) for Stimulus 05 from the word timings + the beat plan below.
+Shared body (approved v4 code + v5 corrections): styles/stimulus/gen5_body.py
+Markup in caption lines:  ^red^  ~green~
+Run: python prep/gen.py   then  npx hyperframes check / snapshot / render
+"""
+import html, json, sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+KIT = ROOT.parent.parent / "styles/stimulus"
+sys.path.insert(0, str(KIT))
+import hfkit as K
+K.install(ROOT)
+W = json.loads((ROOT / "prep/words_edit.json").read_text())
+words, segs, D = W["words"], W["segments"], W["duration"]
+OUTRO = 2.336
+TOTAL = round(D - 0.3 + OUTRO, 3)
+WORD_FIX = {}
+for i, s in WORD_FIX.items(): words[i]["s"] = s
+ws = lambda i: words[i]["s"]
+we = lambda i: words[i]["e"]
+

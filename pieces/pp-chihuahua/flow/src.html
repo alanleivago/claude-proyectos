@@ -1,0 +1,239 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>pp-chihuahua flow</title>
+<style>html,body{margin:0;background:#000}canvas{height:100vh;display:block;margin:auto}</style></head>
+<body><canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+const ASSETS = /*ASSETS*/;
+const FPS = 30, W = 1080, H = 1920, LW = 180, LH = 320, PX = 6, DUR = 10.3;
+window.TIMELINE = { fps: FPS, duration: DUR, width: W, height: H };
+const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+const L = document.createElement('canvas'); L.width = LW; L.height = LH;
+const lc = L.getContext('2d', { willReadFrequently: true });
+const F = document.createElement('canvas'); F.width = LW; F.height = LH;   // figure layer (for outlines)
+const fc = F.getContext('2d', { willReadFrequently: true });
+const IMG = {};
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const lerp = (a, b, k) => a + (b - a) * k;
+const ease = (k) => (k = clamp(k, 0, 1), k * k * (3 - 2 * k));
+const step2 = (t) => Math.floor(t * 15) / 15;   // animate on 2s
+function hash(n) { n = (n ^ 61) ^ (n >>> 16); n = n + (n << 3); n ^= n >>> 4; n = Math.imul(n, 0x27d4eb2d); n ^= n >>> 15; return (n >>> 0) / 4294967296; }
+
+// ---------- palette (measured on the reference + the art) ----------
+const PAL_HEX = ['#120a1e', '#1d1030', '#2a1840', '#3a2050', '#4e2c66', '#6a3c80', '#8a5aa0', '#050308', '#1a1014',
+  '#f3c2b2', '#eaa797', '#e8a493', '#d98d7d', '#c97c6e', '#b8705f', '#9c5a4e', '#8e4f45', '#6a3530', '#4a2420',
+  '#c0364a', '#8f1f30', '#4a0f18', '#2a0810', '#e06070', '#f4f1ee', '#d8d4dc', '#a8a2ae', '#2a64c8', '#0d2a6e', '#7aa8e8',
+  '#d0606a', '#4a2a18', '#7a4a2a', '#c8c4d0', '#8a8494', '#5a5466', '#6c6c70', '#8c8c90', '#4a4a50', '#ffe080', '#ffb030',
+  '#ff6a10', '#c83a00', '#3ee03a', '#1a9a20', '#f2f2f2', '#d8d4cc', '#9e7bb0', '#b48fa8', '#ffffff', '#e04040', '#a01818'];
+const PAL = PAL_HEX.map((h) => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)]);
+const QCACHE = new Map();
+function near2(r, g, b) {
+  const key = (r >> 2) << 12 | (g >> 2) << 6 | (b >> 2);
+  let v = QCACHE.get(key); if (v) return v;
+  let d1 = 1e9, d2 = 1e9, i1 = 0, i2 = 0;
+  for (let i = 0; i < PAL.length; i++) {
+    const p = PAL[i], dr = r - p[0], dg = g - p[1], db = b - p[2];
+    const d = dr * dr * 0.3 + dg * dg * 0.59 + db * db * 0.11;
+    if (d < d1) { d2 = d1; i2 = i1; d1 = d; i1 = i; } else if (d < d2) { d2 = d; i2 = i; }
+  }
+  const k = Math.sqrt(d1) / (Math.sqrt(d1) + Math.sqrt(d2) + 1e-6);   // 0 = on c1, 0.5 = halfway
+  v = [i1, i2, k]; QCACHE.set(key, v); return v;
+}
+// quantize the low-res buffer: nearest palette colour, checker dither when between two colours
+function quantize() {
+  const id = lc.getImageData(0, 0, LW, LH), d = id.data;
+  for (let y = 0; y < LH; y++) for (let x = 0; x < LW; x++) {
+    const o = (y * LW + x) * 4, [i1, i2, k] = near2(d[o], d[o + 1], d[o + 2]);
+    const c = (k > 0.36 && ((x + y) & 1)) ? PAL[i2] : PAL[i1];
+    d[o] = c[0]; d[o + 1] = c[1]; d[o + 2] = c[2]; d[o + 3] = 255;
+  }
+  lc.putImageData(id, 0, 0);
+}
+// draw a keyed figure through F, add a 1-px dark outline around its alpha, composite onto L
+function figure(draw) {
+  fc.setTransform(1, 0, 0, 1, 0, 0); fc.clearRect(0, 0, LW, LH); fc.imageSmoothingEnabled = true; fc.imageSmoothingQuality = 'high';
+  draw(fc);
+  const id = fc.getImageData(0, 0, LW, LH), d = id.data, A = new Uint8Array(LW * LH);
+  for (let i = 0; i < LW * LH; i++) A[i] = d[i * 4 + 3] > 110 ? 1 : 0;
+  for (let y = 0; y < LH; y++) for (let x = 0; x < LW; x++) {
+    const i = y * LW + x, o = i * 4;
+    if (A[i]) { d[o + 3] = 255; continue; }
+    const nb = (x > 0 && A[i - 1]) || (x < LW - 1 && A[i + 1]) || (y > 0 && A[i - LW]) || (y < LH - 1 && A[i + LW]);
+    if (nb) { d[o] = 26; d[o + 1] = 16; d[o + 2] = 20; d[o + 3] = 255; } else d[o + 3] = 0;
+  }
+  fc.putImageData(id, 0, 0);
+  lc.drawImage(F, 0, 0);
+}
+// image placed by its centre in low-res units; w = width in low-res px
+function put(g, name, cx, cy, w, o = {}) {
+  const im = IMG[name], h = w * im.height / im.width;
+  g.save(); if (o.alpha != null) g.globalAlpha = o.alpha;
+  if (o.clip) { g.beginPath(); o.clip(g, cx - w / 2, cy - h / 2, w, h); g.clip(); }
+  g.drawImage(im, o.sx || 0, o.sy || 0, o.sw || im.width, o.sh || im.height, cx - w / 2, cy - h / 2, w, h);
+  g.restore();
+}
+
+// ---------- backgrounds ----------
+function wallGrid(dark, light, glowY) {   // the purple tiled wall, a light falloff, black grid lines
+  const gr = lc.createRadialGradient(LW / 2, glowY, 4, LW / 2, glowY, 170);
+  gr.addColorStop(0, light); gr.addColorStop(1, dark);
+  lc.fillStyle = gr; lc.fillRect(0, 0, LW, LH);
+  lc.fillStyle = '#050308';
+  for (let x = 3; x < LW; x += 11) lc.fillRect(x, 0, 1, LH);
+  for (let y = 4; y < LH; y += 11) lc.fillRect(0, y, LW, 1);
+}
+function room(vy, o = {}) {   // one-point perspective room: wall grid above vy, floor grid below
+  const gr = lc.createRadialGradient(LW / 2, vy - 40, 4, LW / 2, vy - 40, 190);
+  gr.addColorStop(0, o.wallL || '#8a5aa0'); gr.addColorStop(0.55, o.wallM || '#3a2050'); gr.addColorStop(1, '#120a1e');
+  lc.fillStyle = gr; lc.fillRect(0, 0, LW, vy);
+  const fg = lc.createLinearGradient(0, vy, 0, LH); fg.addColorStop(0, '#1d1030'); fg.addColorStop(0.5, o.floor || '#8a8494'); fg.addColorStop(1, o.floorN || '#c8c4d0');
+  lc.fillStyle = fg; lc.fillRect(0, vy, LW, LH - vy);
+  const cg = lc.createRadialGradient(LW / 2, LH - 30, 6, LW / 2, LH - 30, 120); cg.addColorStop(0, 'rgba(240,236,248,0.55)'); cg.addColorStop(1, 'rgba(240,236,248,0)');
+  lc.fillStyle = cg; lc.fillRect(0, vy, LW, LH - vy);
+  lc.fillStyle = '#050308';
+  for (let x = 2; x < LW; x += 12) lc.fillRect(x, 0, 1, vy);
+  for (let y = 6; y < vy; y += 12) lc.fillRect(0, y, LW, 1);
+  for (let i = -12; i <= 12; i++) { lc.beginPath(); lc.moveTo(LW / 2 + i * 4, vy); lc.lineTo(LW / 2 + i * 34, LH + 4); lc.lineWidth = 1.4; lc.strokeStyle = '#050308'; lc.stroke(); }
+  for (let k = 1; k < 9; k++) { const y = vy + Math.pow(k / 8, 2.1) * (LH - vy + 10); lc.fillRect(0, Math.round(y), LW, k > 4 ? 2 : 1); }
+}
+function sign(cx, cy, s = 1) {   // "POSIT PIXEL" fire sign: glow + bone letters
+  const gl = lc.createRadialGradient(cx, cy, 2, cx, cy, 46 * s);
+  gl.addColorStop(0, 'rgba(255,120,30,0.65)'); gl.addColorStop(1, 'rgba(255,90,0,0)');
+  lc.fillStyle = gl; lc.fillRect(cx - 60 * s, cy - 50 * s, 120 * s, 100 * s);
+  lc.save(); lc.font = `bold ${Math.round(17 * s)}px Impact, "Arial Black", sans-serif`; lc.textAlign = 'center'; lc.textBaseline = 'middle';
+  const tg = lc.createLinearGradient(0, cy - 18 * s, 0, cy + 18 * s); tg.addColorStop(0, '#ffe080'); tg.addColorStop(0.5, '#ffb030'); tg.addColorStop(1, '#ff6a10');
+  lc.lineWidth = 2; lc.strokeStyle = '#c83a00';
+  for (const [tx, ty] of [['POSIT', cy - 9 * s], ['PIXEL', cy + 9 * s]]) { lc.strokeText(tx, cx, ty); lc.fillStyle = tg; lc.fillText(tx, cx, ty); }
+  lc.restore();
+}
+
+// ---------- shots ----------
+function headScale(t) {   // hard steps then a smooth shrink
+  const steps = [[0, 1.3], [0.13, 1.22], [0.27, 1.14], [0.37, 1.06], [0.5, 0.98], [0.63, 0.9], [0.73, 0.84]];
+  if (t < 0.73) { let s = 1.3; for (const [a, v] of steps) if (t >= a) s = v; return s; }
+  return lerp(0.84, 0.48, ease((step2(t) - 0.73) / 1.1));
+}
+function shot1(t) {
+  wallGrid('#120a1e', '#6a3c80', 40); sign(90, 38, 1.2);
+  const s = headScale(t), bob = ((Math.floor(t * 7.5)) & 1) * 1;   // voice jitter on 2s/4s
+  // vertical warp: each 4-row slice of the art scales by f(row) around x=300 — the head (rows < 700) by s,
+  // the neck blends to the shoulders (rows > 860) at 1, stacked from the bottom of the frame up: no seam
+  figure((g) => {
+    const im = IMG.head, k = 200 / im.width, cx = 100;
+    let y = LH + 6, y700 = 0;
+    for (let r = im.height - 4; r >= 0; r -= 4) {
+      const f = r >= 860 ? 1 : r <= 700 ? s : lerp(s, 1, ease((r - 700) / 160));
+      const h = 4 * f * k, xx = cx + (r >= 860 ? 0 : (1 - f) * 0) - 300 * f * k;
+      y -= h;
+      g.drawImage(im, 0, r, im.width, 4, xx, y + (r < 860 ? bob : 0), im.width * f * k, h + 0.6);
+      if (r === 700) y700 = y + bob;
+    }
+    // "while your eyes remain large": from 1.56 the eyes keep (and grow past) their size while the head shrinks
+    const ek = ease((step2(t) - 1.5) / 0.5);
+    if (ek > 0) for (const [ex, ey, rr] of [[75, 357, 44], [232, 357, 50]]) {
+      const es = lerp(s, 1.0, ek), R = rr * k * es;
+      const dx = cx + (ex - 300) * s * k, dy = y700 - (700 - ey) * s * k;
+      g.save(); g.beginPath(); g.ellipse(dx, dy, R, R * 0.8, 0, 0, Math.PI * 2); g.clip();
+      g.drawImage(im, ex - rr, ey - rr, rr * 2, rr * 2, dx - R, dy - R, R * 2, R * 2); g.restore();
+    }
+  });
+}
+function shot2(t) {
+  wallGrid('#120a1e', '#4e2c66', 120);
+  const k = ease((t - 1.87) / 0.7), zoom = 1 + 0.06 * k;
+  figure((g) => {
+    const im = IMG.front, w = 190 * zoom, sc = w / im.width, x0 = 100 - 300 * sc, y0 = 150 - 430 * sc;
+    g.drawImage(im, x0, y0, w, im.height * sc);
+    for (const [ex, ey, r] of [[65, 365, 62], [242, 365, 78]]) {   // swell each eye
+      const es = 1 + 0.32 * k, R = r * sc * es;
+      g.save(); g.beginPath(); g.arc(x0 + ex * sc, y0 + ey * sc, R, 0, Math.PI * 2); g.clip();
+      g.drawImage(im, ex - r, ey - r, r * 2, r * 2, x0 + ex * sc - R, y0 + ey * sc - R, R * 2, R * 2); g.restore();
+    }
+  });
+}
+function shot3(t) {
+  const k = clamp((step2(t) - 2.95) / 0.95, 0, 1);
+  const z = 1.5 + 0.05 * (t - 2.7);
+  put(lc, 'profile', 70, 200, 180 * z);
+  if (k > 0) {   // ordered dissolve into the muzzle, head region only, on 2s
+    fc.setTransform(1, 0, 0, 1, 0, 0); fc.clearRect(0, 0, LW, LH); put(fc, 'muzzle', 70, 200, 180 * z);
+    const a = lc.getImageData(0, 0, LW, LH), b = fc.getImageData(0, 0, LW, LH);
+    for (let y = 40; y < 150; y++) for (let x = 40; x < 170; x++) {
+      const th = hash(x * 977 + y * 131) ; if (th < k) { const o = (y * LW + x) * 4; a.data[o] = b.data[o]; a.data[o + 1] = b.data[o + 1]; a.data[o + 2] = b.data[o + 2]; }
+    }
+    lc.putImageData(a, 0, 0);
+  }
+  // red arrow pointing at the jaw from the upper left
+  const bb = Math.sin(step2(t) * 9) * 3, ax = 60 + bb, ay = 58 + bb;
+  lc.save(); lc.translate(ax, ay); lc.rotate(Math.PI / 4);
+  lc.fillStyle = '#1a1014'; lc.fillRect(-23, -5, 26, 10); lc.beginPath(); lc.moveTo(2, -12); lc.lineTo(17, 0); lc.lineTo(2, 12); lc.fill();
+  lc.fillStyle = '#e04040'; lc.fillRect(-22, -3, 25, 6); lc.beginPath(); lc.moveTo(4, -9); lc.lineTo(14, 0); lc.lineTo(4, 9); lc.fill();
+  lc.restore();
+}
+function shot4(t) {
+  const k = (t - 4.34) / 1.4, z = 1.05 + 0.3 * ease(k);
+  lc.fillStyle = '#c97c6e'; lc.fillRect(0, 0, LW, LH);
+  put(lc, 'mouth', 90, 160 + 14 * ease(k), 180 * z);
+  for (let i = 0; i < 26; i++) {   // shimmering saliva bubbles
+    if (hash(i * 31 + Math.floor(t * 15)) < 0.35) continue;
+    const x = 20 + hash(i * 7) * 140, y = (hash(i * 13) < 0.5 ? 70 : 230) + hash(i * 17) * 30, r = 1 + hash(i * 3) * 2.4;
+    lc.strokeStyle = '#f4f1ee'; lc.lineWidth = 0.8; lc.beginPath(); lc.arc(x, y, r, 0, Math.PI * 2); lc.stroke();
+  }
+}
+function shot5(t) {   // skin whip: soft horizontal bands sliding up
+  const off = (t - 5.74) * 260;
+  const bands = ['#e8a493', '#d98d7d', '#c97c6e', '#b8705f', '#d98d7d', '#eaa797', '#c97c6e', '#e8a493'];
+  for (let i = -2; i < 12; i++) { const y = Math.round(i * 44 - (off % 44)); lc.fillStyle = bands[(i + Math.floor(off / 44) + 16) % bands.length]; lc.fillRect(0, y, LW, 45); }
+  lc.globalAlpha = 0.5; lc.drawImage(L, 0, -8); lc.drawImage(L, 0, 8); lc.globalAlpha = 1;
+}
+function shot6(t) {
+  room(168); sign(90, 40, 1.15);
+  const k = ease((step2(t) - 6.1) / 1.5), h = lerp(250, 70, k), feet = lerp(300, 290, k);
+  figure((g) => { const im = IMG.body, w = h * im.width / (im.height * 0.86); g.drawImage(im, 90 - w / 2, feet - h * 1.03, w, w * im.height / im.width); });
+  creature(146, 200);
+}
+function creature(x, y) {   // small fleshy thing on the right (background life)
+  const b = (Math.floor(T * 7.5) & 1);
+  lc.fillStyle = '#1a1014'; lc.beginPath(); lc.ellipse(x, y - b, 8, 7, 0, 0, 7); lc.fill();
+  lc.fillStyle = '#b8705f'; lc.beginPath(); lc.ellipse(x, y - b, 7, 6, 0, 0, 7); lc.fill();
+  lc.fillStyle = '#d98d7d'; lc.beginPath(); lc.ellipse(x - 2, y - 2 - b, 3, 2, 0, 0, 7); lc.fill();
+  lc.strokeStyle = '#8e4f45'; lc.lineWidth = 2; lc.beginPath(); lc.moveTo(x + 5, y + 3); lc.quadraticCurveTo(x + 18, y + 2, x + 20, y + 12 - b); lc.stroke();
+}
+function shot7(t) {
+  room(150, { wallL: '#3a2050', wallM: '#1d1030', floor: '#4a4a50', floorN: '#8a8494' });
+  const k = clamp((t - 7.78) / 0.55, 0, 1), grab = t > 8.36;
+  if (!grab) figure((g) => { const im = IMG.body, h = 34, w = h * im.width / (im.height * 0.86); g.drawImage(im, 90 - w / 2, 288 - h * 1.03, w, w * im.height / im.width); });
+  const hx = lerp(-80, 80, ease(k)), hy = lerp(150, 250, ease(k));
+  for (let j = 0; j < (k < 1 ? 3 : 1); j++) {   // smear
+    lc.globalAlpha = j ? 0.35 : 1; put(lc, 'hand', hx - j * 14, hy - j * 10, 260);
+  }
+  lc.globalAlpha = 1;
+}
+function shot8(t) {
+  const k = (t - 8.67) / 1.6, bob = Math.round(Math.sin(step2(t) * 5) * 1.2);
+  put(lc, 'held', 90, 164 + bob, 180 * (1.12 + 0.05 * k));
+}
+const SHOTS = [[0, shot1], [1.87, shot2], [2.7, shot3], [4.34, shot4], [5.74, shot5], [5.91, shot6], [7.78, shot7], [8.68, shot8]];
+const CAPS = [[0, 'Your head shrinks'], [0.94, 'while your eyes'], [1.56, 'remain large and'], [2.56, 'your jaw forms'], [3.34, 'a muzzle that'], [4.12, 'overcrowds your teeth'],
+  [5.48, 'Because of selective'], [6.3, 'breeding your body'], [7.38, 'mass shrinks to'], [8.28, '1/6 of'], [9.12, 'its normal size'], [10.2, 'and now you']];
+let T = 0;
+function caption(t) {
+  let s = ''; for (const [a, x] of CAPS) if (t >= a) s = x;
+  ctx.save(); ctx.font = '900 66px "Segoe UI Black", "Arial Black", sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+  ctx.lineJoin = 'round'; ctx.shadowColor = 'rgba(0,0,0,0.6)'; ctx.shadowBlur = 10; ctx.lineWidth = 12; ctx.strokeStyle = '#000'; ctx.strokeText(s, 540, 1392);
+  ctx.shadowBlur = 0; ctx.fillStyle = '#fff'; ctx.fillText(s, 540, 1392); ctx.restore();
+}
+function renderFrame(t) {
+  T = t;
+  lc.setTransform(1, 0, 0, 1, 0, 0); lc.imageSmoothingEnabled = true; lc.imageSmoothingQuality = 'high'; lc.globalAlpha = 1;
+  lc.fillStyle = '#000'; lc.fillRect(0, 0, LW, LH);
+  let fn = null; for (const [a, f] of SHOTS) if (t >= a - 1e-6) fn = f;
+  ctx.imageSmoothingEnabled = false;
+  if (!fn) { ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H); caption(t); return; }
+  fn(t); quantize();
+  ctx.drawImage(L, 0, 0, W, H);
+  caption(t);
+}
+let left = Object.keys(ASSETS).length;
+for (const [k, src] of Object.entries(ASSETS)) { const im = new Image(); im.onload = () => { IMG[k] = im; if (--left === 0) { window.renderFrame = renderFrame; renderFrame(0); } }; im.src = src; }
+</script></body></html>
