@@ -1,0 +1,14 @@
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories]
+relatedTo: [recetario, buen-hijo, tele-nueva, canasta, encendedor, padre-veladoras, chocolate-rancho, hacienda-sangre, reten-sierra, medalla-mezcal, agua-hacienda]
+---
+# suegra (La Suegra) — estado
+- Remake de 7699640321801522463 de @asombrosasreflexiones ("Mi suegra se adueñó de nuestra casa"; 2.2M vistas, 134 s; allá es Parte 2, aquí Parte 1 autónoma). 14.º remake, marca VISTA STORIES (el 13.º, recetario, fue SAGA FILMS). Archivos listos: guion.md, make_sheets.py, clips.py (31 clips hablados, 230 s brutos, 53 frases), edit.py (copia de recetario, EDL vacía, marca VISTA STORIES, cama ligera entre c07 y c14), phr.py, music/ (copia de recetario), caption.txt. Nada generado en Flow todavía.
+- Assets nuevos (únicos frente a todas las pieces con make_sheets.py, sin subcadenas en ningún sentido): PALOMA, RODRIGO, SOCORRO, PANCHO, YADIRA, IRENE, LOC_DEPTO, LOC_AZOTEA, LOC_CORPORATIVO, PROP_CONTROL.
+- Atuendos: los de la ref (mosaico 24 cuadros) con otros colores: Paloma blusa de punto verde salvia y pantalón gris (en vez de crema y beige); Rodrigo camisa amarillo pálido (en vez de azul claro); Socorro vestido floral verde oscuro (en vez de azul marino con rosa); Pancho playera azul marino y shorts caqui (en vez de gris y negro); Yadira playera durazno y pijama azul claro (en vez de gris y rosa); Irene blazer azul marino (en vez de beige).
+- Siguiente: `python -I make_sheets.py > sheets_log.txt`, revisar hojas (md5, etnia mestiza, que cada nombre tenga su imagen), `python -I clips.py > clips_log.txt` con Monitor, QA por agente (bordes y ropa, bolsa en el hombro izquierdo de Paloma en c01-c06 y c14-c16, UNA sola blusa en la mano derecha de Paloma c11-c13, UN solo control en la mano derecha de Socorro en c30), regenerar malos, `python -I phr.py`, EDL por frases en edit.py (BLACK 0.4 entre c30 y c31), `python -I edit.py`, verificación completa, Telegram con caption.txt.
+- Riesgos: c01 sin plano abierto (Rodrigo habla de una), c07 refri vacío, c11-c13 blusa (que no se duplique), c17 sobre el hombro en la oficina (sin gafetes), c28 dos personajes de pie frente a frente, c30 control en la mano, c31 CTA mudo (el prompt pide labios desde el primer frame). Pronunciación: "Socorro", "Yadira", "Aguántame", "avergonzarme", "egoísta".
+- Política: sin policías, sin armas, sin contacto brusco, sin dedo acusador, sin dinero exigido ni tarjeta ni banco (el control de la cochera reemplaza a la tarjeta), sin bebé ni niños, edades numéricas.
+- 2026-11-04: renders/v1.mp4 (121.0 s, 53 planos, -14.3 LUFS, pico -1.8 dBFS). Regenerados OK: c09, c21, c27, c28; c29 lados OK pero camisa con bolsillo; c11 nuevo con blusa de manga corta -> se usa clips/old/c11 (blusa en la mano izquierda). Reacciones mudas para llegar a 2:00. Pendiente: revisión del usuario y Telegram.

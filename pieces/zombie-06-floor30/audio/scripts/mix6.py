@@ -40,7 +40,7 @@ def steps(t0, t1, period, db, src, k0=0):
     while t < t1: put(sfx, src[i % len(src)], t, db + (-2 if i % 2 else 0)); t += period; i += 1
 ease = lambda a, b, x: (lambda u: u * u * (3 - 2 * u))(min(1, max(0, (x - a) / (b - a))))
 # ---------------- eventos ----------------
-put(sfx, S["whoosh"], 0.05, -14, fin=0.05); put(sfx, S["whoosh"], 3.4, -19)                     # 01 la grua sube / llega a la ventana
+put(sfx, S["whoosh"], 0.05, -14, fin=0.05); put(sfx, S["whoosh"], 1.45, -19)                     # 01 la grua sube / llega a la ventana
 put(sfx, S["stinger"], W["tonight"] - 0.05, -14, maxlen=2.4, fade=1.0)                          # "until tonight"
 steps(T["door"] + 0.05, T["alert"] - 0.05, 0.42, -16, WALK)                                      # 02 POV hasta la puerta 3012
 put(sfx, DEFAULT, T["door"], -15, maxlen=0.5)                                                    # HUD entra
@@ -78,9 +78,9 @@ put(sfx, S["whoosh"], W["stop"] - 0.15, -15)                                    
 steps(T["peep"] + 0.3, T["peep"] + 2.6, 0.7, -21, STEP, 3)                                        # 10 se acerca desde lo oscuro
 put(sfx, S["stinger"], W["eleven"] - 0.05, -12, maxlen=2.5, fade=1.0)
 for i in range(3): put(sfx, KNOCK[i % len(KNOCK)] if KNOCK else DEFAULT, W["knock"] + i * 0.28, -8)   # golpes
-s = "PLEASE...  I JUST NEED WATER."
+s = "PLEASE... I NEED WATER."
 for i, ch in enumerate(s):
-    if ch not in " .": put(sfx, KEY, W["knock"] + 0.25 + (i + 1) / 20, -17)
+    if ch not in " .": put(sfx, KEY, W["knock"] + 0.1 + (i + 1) / 40, -17)
 put(sfx, S["stinger"], W["fudge"] - 0.05, -18, maxlen=1.2, fade=0.6)                              # 11 fudge
 put(sfx, INV, T["choice"], -11)                                                                   # 12 menu
 put(sfx, DEFAULT, W["open"] - 0.2, -14, maxlen=0.4); put(sfx, DEFAULT, W["quiet"] - 0.2, -14, maxlen=0.4); put(sfx, DEFAULT, W["comment"], -15, maxlen=0.4)

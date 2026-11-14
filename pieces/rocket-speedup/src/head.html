@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rocket Speedup</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0b0d12; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { width: min(100vw, calc(100vh * 16 / 9)); height: auto; aspect-ratio: 16 / 9; display: block; cursor: pointer; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1920" height="1080"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  WHAT IF YOUR ROCKET COULDN'T STOP SPEEDING UP? — 16:9, 8:30, 30 fps, motion on 1s. Style pov3d-hd.
+//  F5 fixed hero: you sit in the pilot seat. The engine pushes a constant 1 g forever. One continuous POV from the
+//  cockpit: launch pad -> the black sky -> the Moon -> the planets -> the stars -> the starbow -> the whole galaxy behind.
+//  0-5.2 s is a teaser from later in the trip (story time 350 s), then 0.8 s of black.
+//  Everything is a function of the STORY time ST (= TT, except in the teaser).
+// =====================================================================
+const FPS = 30, W = 1920, H = 1080;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 510.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 60, bottom: 60, right: 60 };
+const HAND = 'Georgia, Cambria, "Times New Roman", serif';
+const CX = W / 2;
+
+// ---- story time: the teaser shows the trip at ST 350 s, then black, then the trip from the start
+const TEASE = { t1: 5.2, black: 6.0, at: 350 };
+const storyT = (t) => (t < TEASE.t1 ? TEASE.at + t : t);
+
+// ---- a smooth monotone curve through knots [[t, v], ...] (monotone cubic Hermite)
+function knots(K, t) {
+  if (t <= K[0][0]) return K[0][1];
+  if (t >= K[K.length - 1][0]) return K[K.length - 1][1];
+  let i = 0; while (t > K[i + 1][0]) i++;
+  const [t0, v0] = K[i], [t1, v1] = K[i + 1], h = t1 - t0, u = (t - t0) / h;
+  const sl = (j) => (K[Math.min(j + 1, K.length - 1)][1] - K[Math.max(j - 1, 0)][1]) / (K[Math.min(j + 1, K.length - 1)][0] - K[Math.max(j - 1, 0)][0]);
+  let m0 = sl(i) * h, m1 = sl(i + 1) * h; const d = v1 - v0;
+  if (d === 0) { m0 = m1 = 0; } else { m0 = Math.sign(d) * Math.min(Math.abs(m0), 3 * Math.abs(d)) * (Math.sign(m0) === Math.sign(d) ? 1 : 0); m1 = Math.sign(d) * Math.min(Math.abs(m1), 3 * Math.abs(d)) * (Math.sign(m1) === Math.sign(d) ? 1 : 0); }
+  const u2 = u * u, u3 = u2 * u;
+  return (2 * u3 - 3 * u2 + 1) * v0 + (u3 - 2 * u2 + u) * m0 + (-2 * u3 + 3 * u2) * v1 + (u3 - u2) * m1;
+}
+
+// ---- physics: constant proper acceleration 1 g (the brief). tau = ship (your) time since liftoff, s.
+//  v = c tanh(g tau / c), Earth time t = (c/g) sinh(g tau / c), distance d = (c^2/g)(cosh(g tau / c) - 1)
+const CLIGHT = 299792458, G1 = 9.80665, CG = CLIGHT / G1, YEAR = 365.25 * 86400, DAY = 86400;
+const LIFTOFF = 22.0;                 // film time of liftoff (before it: the countdown)
+// film time -> log10(tau seconds), keyed to the approved beats (each knot is a milestone the picture shows)
+const LOGTAU = [
+  [45, Math.log10(35)],               // Mach 1 (35 s)
+  [90, Math.log10(795)],              // 7.8 km/s, orbital speed, but it doesn't stay
+  [97, Math.log10(1130)],             // 39,897 km/h = 11.08 km/s: the Apollo 10 record
+  [102, Math.log10(1145)],            // 11.2 km/s: escape speed
+  [128, Math.log10(2.5 * 3600)],      // the Moon (2.5 h)
+  [158, Math.log10(18000)],           // Parker Solar Probe, 176 km/s (5 h)
+  [190, Math.log10(2.5 * DAY)],       // Mars (2.5 days)
+  [222, Math.log10(13 * DAY)],        // Pluto (13 days)
+  [240, Math.log10(27 * DAY)],        // Voyager 1's distance (27 days)
+  [265, Math.log10(CG * Math.atanh(0.1))],    // 10 % c
+  [308, Math.log10(CG * Math.atanh(0.98))],   // 98 % c
+  [318, Math.log10(2.3 * YEAR)],      // Proxima Centauri
+  [345, Math.log10(4.8 * YEAR)],      // 99.99 % c, the starbow
+  [385, Math.log10(10.6 * YEAR)],     // the galactic centre
+  [415, Math.log10(12 * YEAR)],       // out of the Milky Way
+  [445, Math.log10(15 * YEAR)],       // Andromeda
+  [480, Math.log10(CG * Math.asinh(5e9 * YEAR / CG))],   // the Earth clock reads 5 billion years
+  [510, Math.log10(CG * Math.asinh(5e9 * YEAR / CG)) + 0.012],
+];
+// ship time since liftoff (s); negative = the countdown
+function shipTau(st) {
+  if (st < LIFTOFF) return st - LIFTOFF;
+  if (st < 45) return (st - LIFTOFF) * 35 / (45 - LIFTOFF);
+  return Math.pow(10, knots(LOGTAU, st));
+}
+const rapid = (tau) => Math.max(0, tau) / CG;                       // g tau / c
+const speedOf = (tau) => CLIGHT * Math.tanh(rapid(tau));                 // m/s
+const oneMinusBeta = (tau) => { const x = rapid(tau), e = Math.exp(-2 * x); return 2 * e / (1 + e); };
+const gammaOf = (tau) => Math.cosh(rapid(tau));
+const earthOf = (tau) => tau <= 0 ? tau : CG * Math.sinh(rapid(tau));          // Earth time since liftoff, s
+const distOf = (tau) => tau <= 0 ? 0 : CLIGHT * CG * (Math.cosh(rapid(tau)) - 1);    // m (the ship frame of Earth)
+
+// ---- what you pass next (left HUD): [ship time s, name]
+const NEXTS = [
+  [35, 'the speed of sound'], [795, 'orbital speed'], [1130, 'the Apollo 10 record'], [1142, 'escape speed'], [2.5 * 3600, 'the Moon'],
+  [18000, 'the Parker Solar Probe'], [2.5 * DAY, 'Mars'], [13 * DAY, 'Pluto'], [27 * DAY, 'Voyager 1'], [CG * Math.atanh(0.1), '10% of light speed'],
+  [2.3 * YEAR, 'Proxima Centauri'], [10.6 * YEAR, 'the galactic centre'], [12 * YEAR, 'the edge of the galaxy'], [15 * YEAR, 'Andromeda'],
+  [CG * Math.asinh(5e9 * YEAR / CG), 'the Sun\'s last days'],
+];
+
+// ---- the beats (story time)
+const SHOTS = [
+  ['teaser', 0, 0.0,   5.2,   'teaser: the universe squeezed into a ring ahead'],
+  ['black',  0, 5.2,   6.0,   'black'],
+  ['pad',    0, 6.0,   45.0,  'launch pad, countdown, liftoff, Mach 1'],
+  ['sky',    0, 45.0,  95.0,  'clouds, the sky goes black, orbital speed'],
+  ['moon',   0, 95.0,  150.0, 'escape, Apollo 10, the Moon sweeps past'],
+  ['planets',0, 150.0, 210.0, 'Parker, Mars, Jupiter, Saturn'],
+  ['stars',  0, 210.0, 265.0, 'Pluto, Voyager, stars turn blue, radiation'],
+  ['dust',   0, 265.0, 330.0, 'the dust grain, Proxima, the glass cracks'],
+  ['starbow',0, 330.0, 400.0, 'the starbow, the galactic centre'],
+  ['galaxy', 0, 400.0, 460.0, 'out of the Milky Way, Andromeda'],
+  ['end',    0, 460.0, 510.0, '5 billion years: the photo, end card'],
+];
+const ERA_LIST = [[0, DURATION, () => sceneRocket()]];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  // review sheets: each beat split into parts of at most 12 s (the picture is one continuous shot)
+  shots: SHOTS.flatMap(([key, era, t0, t1, title]) => { const n = Math.ceil((t1 - t0) / 12 - 1e-9); return Array.from({ length: n }, (_, j) => ({ key: n > 1 ? `${key}-${j + 1}` : key, era, t0: t0 + (t1 - t0) * j / n, t1: t0 + (t1 - t0) * (j + 1) / n, title: n > 1 ? `${title} (${j + 1}/${n})` : title })); }).map((o, i) => ({ id: i + 1, ...o })),
+  cuts: [TEASE.t1, TEASE.black],
+  morphs: [],
+  cues: { black: TEASE.t1, start: TEASE.black, liftoff: LIFTOFF, mach1: 45, moon: 131, dustHit: 326.2, card: 498 },
+  anchor: null,
+  acts: [
+    { name: '0 Teaser',  role: 'hook',    t0: 0,   t1: 6 },
+    { name: '1 Pad',     role: 'build',   t0: 6,   t1: 45 },
+    { name: '2 Sky',     role: 'journey', t0: 45,  t1: 95 },
+    { name: '3 Moon',    role: 'journey', t0: 95,  t1: 150 },
+    { name: '4 Planets', role: 'journey', t0: 150, t1: 210 },
+    { name: '5 Stars',   role: 'journey', t0: 210, t1: 265 },
+    { name: '6 Dust',    role: 'peak',    t0: 265, t1: 330 },
+    { name: '7 Starbow', role: 'peak',    t0: 330, t1: 400 },
+    { name: '8 Galaxy',  role: 'peak',    t0: 400, t1: 460 },
+    { name: '9 Home',    role: 'goodbye', t0: 460, t1: 510 },
+  ],
+  board: [],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

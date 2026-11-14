@@ -1,0 +1,173 @@
+# Lista maestra de tomas del LARGO 2 ("AVA: DAY 2 — The Police Station Part 2"). Una toma por trozo entre "…" (nunca se corta
+# dentro de una toma). (id, capitulo, voz, texto, reuso|None, pausa_despues_s).
+# voz: ava (narra, speed 0.88) | think ([PIENSA] whisper, speed 0.80, seca y cerca) | shake (*temblando*: whisper + low pitch, 0.82)
+#      | radio (Vickers por la cinta, cf919aa6 + tos) | dutch (644338f4) | marla (996b1578) | breath ([RESPIRA], grabacion CC0)
+# Pausa (···) = 1.8 s de silencio con ambiente: va en la pausa_despues de la toma anterior (PAUSE).
+PAUSE = 1.8
+CH = {"hook": None, "c0600": "6:00 AM", "c0640": "6:40 AM", "c0715": "7:15 AM", "c0800": "8:00 AM", "c0910": "9:10 AM", "c0940": "9:40 AM",
+      "c1020": "10:20 AM", "c1100": "11:00 AM", "c1130": "11:30 AM", "c1230": "12:30 PM", "c1245": "12:45 PM", "c1300": "1:00 PM",
+      "c1430": "2:30 PM", "c1600": "4:00 PM", "c1730": "5:30 PM", "c1800": "6:00 PM", "final": None}
+P = PAUSE
+T = [
+ # ---------- gancho ----------
+ ("h1", "hook", "ava", "You said no,", None, 0.35),
+ ("h2", "hook", "ava", "so the door stays shut.", None, P),
+ ("h3", "hook", "ava", "Officer Vickers knocks on the glass all night. You don't sleep. You just sit on the floor with your back to the wall,", None, 0.4),
+ ("h4", "hook", "ava", "and listen.", None, 0.6),
+ ("h5", "hook", "think", "Don't look. Don't look at him.", None, 0.7),
+ ("h6", "hook", "ava", "At sunrise you finally notice it. He isn't knocking at random. Seven knocks,", None, P),
+ ("h7", "hook", "ava", "three,", None, P),
+ ("h8", "hook", "ava", "seven.", None, 0.6),
+ ("h9", "hook", "ava", "Days, rules, days. Whatever's left of him,", None, 0.35),
+ ("h10", "hook", "ava", "still remembers the code.", None, 1.5),
+ # ---------- 6:00 AM luces ----------
+ ("l1", "c0600", "ava", "First problem,", None, 0.35),
+ ("l2", "c0600", "ava", "every light in the station is still on. In a city with no power, one lit building is a lighthouse. You can see it for miles, and the generator hums loud enough to hear from the street.", None, 0.5),
+ ("l3", "c0600", "ava", "You count the shapes outside the glass. You lose count.", None, P),
+ ("l4", "c0600", "ava", "The counter says eighty.", None, 0.6),
+ ("l5", "c0600", "think", "Eighty. Okay. Breathe.", None, 0.6),
+ ("l6", "c0600", "ava", "So before breakfast, before water, before anything,", None, 0.35),
+ ("l7", "c0600", "ava", "you go find that generator.", None, 1.5),
+ # ---------- 6:40 AM combustible ----------
+ ("g1", "c0640", "ava", "It's in the motor pool, behind the squad cars, with the big door cracked open just enough for the fumes to get out.", None, 0.6),
+ ("g2", "c0640", "think", "Whoever did this,", None, 0.3),
+ ("g3", "c0640", "think", "knew what they were doing.", None, 0.6),
+ ("g4", "c0640", "ava", "The tank is half full. A generator like this burns about half a gallon an hour, so left alone it's dead by tonight. Run it one hour a day, for the fridge and the radio, and it lasts you more than a week.", None, 0.5),
+ ("g5", "c0640", "ava", "Your hand is on the switch.", None, P),
+ ("g6", "c0640", "ava", "You pull it.", None, 0.6),
+ ("g7", "c0640", "ava", "The building goes dark. And outside,", None, 0.35),
+ ("g8", "c0640", "ava", "eighty heads slowly turn away.", None, 0.4),
+ ("g9", "c0640", "breath", "[RESPIRA]", "breath:exhale", 1.5),
+ # ---------- 7:15 AM la cinta ----------
+ ("t1", "c0715", "ava", "Next stop, the radio room. The tape recorder is still looping, still calling the whole city to your door.", None, 0.4),
+ ("t2", "c0715", "radio", "Help arrives in seven days.", None, 0.5),
+ ("t3", "c0715", "ava", "You press stop. Click.", None, P),
+ ("t4", "c0715", "ava", "For the first time since nine o'clock last night,", None, 0.35),
+ ("t5", "c0715", "ava", "the station is completely silent.", None, 0.7),
+ ("t6", "c0715", "think", "I think I liked the noise better.", None, 1.5),
+ # ---------- 8:00 AM baños ----------
+ ("w1", "c0800", "ava", "Here's one nobody puts in the movies. No power means no pumps, and you promised yourself you wouldn't flush the toilet tanks,", None, 0.35),
+ ("w2", "c0800", "ava", "that's drinking water.", None, 0.5),
+ ("w3", "c0800", "ava", "A bucket, two trash bags inside it, and something dry on top. Cat litter is perfect, sawdust works, and the break room has coffee grounds. Tie it off, put it outside, done. That's straight from the government's own emergency checklist,", None, 0.35),
+ ("w4", "c0800", "ava", "trash bags and plastic ties.", None, 1.0),
+ ("w5", "c0800", "think", "Day two of the apocalypse,", None, 0.3),
+ ("w6", "c0800", "think", "and I'm making a toilet out of a bucket. Great.", None, 1.5),
+ # ---------- 9:10 AM la respiración ----------
+ ("b1", "c0910", "ava", "Then Ribbon stops at the dark hallway again. Ears up. Tail low.", None, P),
+ ("b2", "c0910", "ava", "Last night something in there was breathing, and you ran. This time you have daylight,", None, 0.35),
+ ("b3", "c0910", "ava", "and a flashlight that suddenly feels very small.", None, 0.6),
+ ("b4", "c0910", "shake", "Okay, girl. Stay with me.", None, 0.6),
+ ("b5", "c0910", "ava", "Records,", None, 0.35),
+ ("b6", "c0910", "ava", "empty. Supply closet,", None, 0.35),
+ ("b7", "c0910", "ava", "empty. Cell block.", None, P),
+ ("b8", "c0910", "ava", "Your light finds a pair of eyes in cell four.", None, 0.4),
+ ("b9", "c0910", "breath", "[RESPIRA]", "breath:gasp", 0.5),
+ ("b10", "c0910", "ava", "A man in an orange jumpsuit, sitting on the floor with an empty water cup.", None, 0.5),
+ ("b11", "c0910", "dutch", "Took you long enough.", None, 1.5),
+ # ---------- 9:40 AM Dutch ----------
+ ("d1", "c0940", "ava", "His name is Dutch. He's been locked in there for two days, and the officers never came back for him. He looks at your keys,", None, 0.35),
+ ("d2", "c0940", "ava", "then at you.", None, 0.5),
+ ("d3", "c0940", "dutch", "I know who started the generator. I know where the old lady went. Open the cell and I'll tell you everything.", None, 0.6),
+ ("d4", "c0940", "think", "He's lying. Or he isn't. I can't tell.", None, 0.6),
+ ("d5", "c0940", "ava", "You don't open the cell. You pour him a cup of water through the bars instead, and he drinks it like it's the best thing he's ever tasted. That's two people now, so two gallons a day,", None, 0.35),
+ ("d6", "c0940", "ava", "fifty-one gallons just became twenty-five days.", None, 0.6),
+ ("d7", "c0940", "dutch", "The clover key. Ask yourself what it opens.", None, 1.5),
+ # ---------- 10:20 AM comida para dos ----------
+ ("f1", "c1020", "ava", "Food is next. Last night you had two and a half days of candy bars for one person,", None, 0.35),
+ ("f2", "c1020", "ava", "and now you're feeding two.", None, 0.5),
+ ("f3", "c1020", "ava", "So you search properly this time. The lost-and-found has a box of granola bars. The evidence cage has eight cans of beans, tagged and sealed,", None, 0.35),
+ ("f4", "c1020", "ava", "somebody's case just went cold. And every patrol car in the motor pool has a little emergency kit in the trunk.", None, 0.5),
+ ("f5", "c1020", "ava", "Here's the trick with cans,", None, 0.35),
+ ("f6", "c1020", "ava", "if it isn't bulging, leaking or rusted through, it's good for years past the date on the label.", None, 1.0),
+ ("f7", "c1020", "think", "Day three just got a little easier.", None, 1.5),
+ # ---------- 11:00 AM la llave trébol ----------
+ ("k1", "c1100", "ava", "You try that key everywhere,", None, 0.35),
+ ("k2", "c1100", "ava", "desks, lockers, the evidence cage. Nothing.", None, 0.5),
+ ("k3", "c1100", "ava", "Then, behind a filing cabinet in the records room, there's a small iron door,", None, 0.35),
+ ("k4", "c1100", "ava", "with a clover carved into it.", None, P),
+ ("k5", "c1100", "ava", "The key turns. Cold air comes up through the gap, and stone stairs go down into the dark.", None, 0.6),
+ ("k6", "c1100", "think", "Of course it goes down. It always goes down.", None, 0.6),
+ ("k7", "c1100", "ava", "This building was built on top of the old station, the one from nineteen twenty,", None, 0.35),
+ ("k8", "c1100", "ava", "and nobody ever filled it in.", None, 1.5),
+ # ---------- 11:30 AM la estación vieja ----------
+ ("o1", "c1130", "ava", "It's cold down here. Stone cells, rusted bars, and a map on the wall from a hundred years ago. There's a tunnel, and it runs all the way to the old courthouse,", None, 0.35),
+ ("o2", "c1130", "ava", "right next to the river bridge.", None, 0.5),
+ ("o3", "c1130", "ava", "And on a desk, under a lantern, there's a notebook. You know the handwriting.", None, P),
+ ("o4", "c1130", "ava", "It's Marla's.", None, 0.5),
+ ("o5", "c1130", "ava", "The last page says,", None, 0.35),
+ ("o6", "c1130", "marla", "Lit up the building. If anyone's alive out there, they'll see it.", None, 0.7),
+ ("o7", "c1130", "think", "Oh, Marla,", None, 0.3),
+ ("o8", "c1130", "think", "what did you do.", None, 0.6),
+ ("o9", "c1130", "ava", "She started the generator. She was trying to get rescued,", None, 0.35),
+ ("o10", "c1130", "ava", "and she brought eighty of them instead.", None, 1.5),
+ # ---------- 12:30 PM sala de guardado ----------
+ ("s1", "c1230", "ava", "There's a typewriter down here too, older than the first one, with one ink ribbon left in the drawer.", None, 0.5),
+ ("s2", "c1230", "ava", "Before you save, you check the map. The tunnel to the courthouse, the roof is still plan B, and the back gate is still chained.", None, 0.5),
+ ("s3", "c1230", "ava", "You save your game. Day two,", None, 0.35),
+ ("s4", "c1230", "ava", "twelve thirty P M. Old station.", None, 0.6),
+ ("s5", "c1230", "think", "Just in case.", None, 1.5),
+ # ---------- 12:45 PM el túnel ----------
+ ("u1", "c1245", "ava", "The tunnel is narrow, wet, and pitch black past the first ten steps. Ribbon goes first.", None, 0.5),
+ ("u2", "c1245", "ava", "Down here every sound carries,", None, 0.35),
+ ("u3", "c1245", "ava", "your footsteps, your breathing, water dripping somewhere ahead. Stone walls bounce noise a long way, so anything at the other end hears you long before it sees you.", None, 0.5),
+ ("u4", "c1245", "ava", "So you walk on the dry edge, flashlight pointed at the floor,", None, 0.35),
+ ("u5", "c1245", "ava", "and every twenty steps, you stop and listen.", None, P),
+ ("u6", "c1245", "ava", "Nothing.", None, P),
+ ("u7", "c1245", "ava", "Nothing.", None, P),
+ ("u8", "c1245", "ava", "On the fourth stop,", None, 0.35),
+ ("u9", "c1245", "ava", "something answers. Shuffling, a long way ahead.", None, 0.4),
+ ("u10", "c1245", "breath", "[RESPIRA]", "breath:shaky", 0.5),
+ ("u11", "c1245", "shake", "Ribbon,", None, 0.3),
+ ("u12", "c1245", "shake", "don't.", None, 0.6),
+ ("u13", "c1245", "ava", "But Ribbon doesn't growl this time. She wags her tail.", None, 1.5),
+ # ---------- 1:00 PM Marla ----------
+ ("m1", "c1300", "ava", "You find her at the end of the tunnel, sitting against the wall with her arm wrapped in a scarf.", None, 0.5),
+ ("m2", "c1300", "marla", "Don't come closer. It got me on the way back.", None, 0.6),
+ ("m3", "c1300", "think", "No. No, no, no.", None, 0.6),
+ ("m4", "c1300", "ava", "You know the first rule for any bite. Water and soap, scrubbing, for fifteen full minutes. That's what doctors tell people about animal bites, and it's all you have. So you wash it,", None, 0.35),
+ ("m5", "c1300", "ava", "and she lets you. Neither of you says a word.", None, P),
+ ("m6", "c1300", "marla", "Don't stay with me. And don't trust that man in cell four.", None, 1.5),
+ # ---------- 2:30 PM señal ----------
+ ("r1", "c1430", "ava", "You need a way out, so you climb to the roof. Plan B. The wind hits your face, and for a second,", None, 0.35),
+ ("r2", "c1430", "ava", "the whole city is quiet.", None, 0.6),
+ ("r3", "c1430", "think", "Someone has to be out there. Someone.", None, 0.6),
+ ("r4", "c1430", "ava", "The universal distress signal is three of anything,", None, 0.35),
+ ("r5", "c1430", "ava", "three fires, three whistles, three flashes. And a small mirror in sunlight can flash a pilot from about ten miles away, with no noise at all.", None, 0.5),
+ ("r6", "c1430", "ava", "You aim the mirror from the locker room at the sky. Flash,", None, 0.35),
+ ("r7", "c1430", "ava", "flash,", None, 0.35),
+ ("r8", "c1430", "ava", "flash.", None, P),
+ ("r9", "c1430", "ava", "You wait.", None, P),
+ ("r10", "c1430", "ava", "And you do it again.", None, 1.5),
+ # ---------- 4:00 PM el helicóptero ----------
+ ("c1", "c1600", "ava", "At four o'clock you hear it before you see it.", None, P),
+ ("c2", "c1600", "ava", "A helicopter comes in low over the river, circles the station twice,", None, 0.35),
+ ("c3", "c1600", "ava", "and drops a metal tube on the roof.", None, 0.5),
+ ("c4", "c1600", "ava", "Your hands are shaking so much it takes three tries to open it. Inside there's a note.", None, 0.6),
+ ("c5", "c1600", "shake", "Bridge. Day three. Dawn. One seat.", None, P),
+ ("c6", "c1600", "think", "One seat.", None, 1.5),
+ # ---------- 5:30 PM un asiento ----------
+ ("e1", "c1730", "ava", "So here's what you've got. Ribbon, who saved your life last night. Marla, who's bitten and told you to leave her. And Dutch, who's been in a cell for three days and knows something about that tunnel he isn't telling you.", None, 0.5),
+ ("e2", "c1730", "ava", "The tunnel is the only safe way to the bridge,", None, 0.35),
+ ("e3", "c1730", "ava", "and the only one who knows the way through it is sitting in cell four.", None, 0.6),
+ ("e4", "c1730", "think", "I can't save everybody. Can I?", None, 1.5),
+ # ---------- 6:00 PM las luces ----------
+ ("n1", "c1800", "ava", "The sun goes down. You haven't touched the generator.", None, P),
+ ("n2", "c1800", "ava", "And then every light in the station turns on,", None, 0.35),
+ ("n3", "c1800", "ava", "by itself.", None, 0.6),
+ ("n4", "c1800", "shake", "Oh, fudge.", None, 0.6),
+ ("n5", "c1800", "ava", "Marla is in the tunnel. Dutch is in his cell. You're holding the only keys.", None, P),
+ ("n6", "c1800", "ava", "And outside, for the first time all day,", None, 0.35),
+ ("n7", "c1800", "ava", "the knocking has stopped.", None, 1.5),
+ # ---------- final ----------
+ ("x1", "final", "ava", "So right now you've got a dog, fifteen bullets, twenty-five days of water, a clover key, a signal mirror and one seat on a helicopter at dawn,", None, 0.35),
+ ("x2", "final", "ava", "and somebody else in this building just turned the lights back on.", None, 0.5),
+ ("x3", "final", "ava", "Dutch is calling your name from cell four. He says he knows the way through the tunnel.", None, 0.6),
+ ("x4", "final", "think", "Do I trust him?", None, 0.8),
+ ("x5", "final", "ava", "Do you let Dutch out? Comment yes or no,", None, 0.35),
+ ("x6", "final", "ava", "most comments decide Day three.", None, 0.0),
+]
+VOICE = {"ava": "f2a102da", "think": "f2a102da", "shake": "f2a102da", "radio": "cf919aa6", "dutch": "644338f4", "marla": "996b1578"}
+STYLE = {"ava": (0.88, None), "think": (0.76, "whisper"), "shake": (0.80, "whisper, low pitch"), "radio": (1.0, None), "dutch": (0.92, None), "marla": (0.9, None)}
+if __name__ == "__main__":
+    new = [t for t in T if t[4] is None]
+    print(len(T), "tomas;", len(new), "a generar;", sum(len(t[3].split()) for t in new), "palabras")

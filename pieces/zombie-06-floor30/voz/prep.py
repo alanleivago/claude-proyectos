@@ -8,14 +8,14 @@ ids = lambda *t: ",".join(P[x] for x in t)
 L = [  # id, tomas, texto, pausa tras la linea (pausas cortas 0,3-0,45 s). Ep6 "Floor 30"
  ("01_hook", ids("01_0", "01_1"), "Imagine you live on the thirtieth floor… and that was the worst thing about your apartment. Until tonight.", 0.4),
  ("02_alert", ids("02_0"), "Then every phone in the building goes off at once.", 0.9),
- ("03_water", ids("03_0", "03_1"), "First problem: water. The building's pumps run on electricity… so Ava fills the tub, and a bucket, while there's still pressure. A full tub is about forty gallons.", 0.4),
- ("04_food", ids("04_0", "04_1"), "Next, she counts the food… and splits it into days.", 0.4),
- ("05_dark", ids("05_0", "05_1"), "Around seven, the city goes dark, block by block… then her building. The fridge dies.", 0.45),
- ("06_tap", ids("06_0", "06_1", "06_2"), "Ava tries the faucet… nothing. Without power, the pumps can't push water up thirty floors.", 0.4),
- ("07_math", ids("07_0", "07_1"), "FEMA says a gallon a day per person… so that tub is about forty days. And her phone's at eighteen percent.", 0.4),
- ("08_dresser", ids("08_0"), "So she pushes the dresser against the door.", 0.45),
- ("09_steps", ids("09_0", "09_1"), "Close to midnight, footsteps in the hallway. She freezes… and the footsteps stop too.", 0.6),
- ("10_peep", ids("10_0", "10_1"), "Through the peephole, it's the guy from thirty-eleven… staring right at it.", 2.3),   # golpes + caja PLEASE… I JUST NEED WATER.
+ ("03_water", ids("03_0", "03_1"), "First problem: water. The building's pumps run on electricity… so you fill the tub, and a bucket, while there's still pressure. A full tub is about forty gallons.", 0.4),
+ ("04_food", ids("04_0", "04_1"), "Next, you count the food… and split it into days.", 0.4),
+ ("05_dark", ids("05_0", "05_1"), "Around seven, the city goes dark, block by block… then your building. The fridge dies.", 0.45),
+ ("06_tap", ids("06_0", "06_1", "06_2"), "You try the faucet… nothing. Without power, the pumps can't push water up thirty floors.", 0.4),
+ ("07_math", ids("07_0", "07_1"), "FEMA says a gallon a day per person… so that tub is about forty days. And your phone's at eighteen percent.", 0.4),
+ ("08_dresser", ids("08_0"), "So you push the dresser against the door.", 0.45),
+ ("09_steps", ids("09_0", "09_1"), "Close to midnight, footsteps in the hallway. You freeze… and the footsteps stop too.", 0.6),
+ ("10_peep", ids("10_0", "10_1"), "Through the peephole, it's the guy from thirty-eleven… staring right at it.", 1.7),   # golpes + caja PLEASE… I JUST NEED WATER.
  ("11_fudge", "ep1", "Oh, fudge.", 0.45),
  ("12_cta", ids("12_0", "12_1", "12_2"), "So, do you open the door, or stay quiet? Comment one or two… most comments decide Part 2.", 0.0),
 ]

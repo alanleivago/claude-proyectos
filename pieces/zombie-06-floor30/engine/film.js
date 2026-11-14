@@ -19,7 +19,7 @@ const COLOR = {   // ep6 Floor 30
   tub: '#4fd6ff', bucket: '#4fd6ff', pressure: '#4fd6ff', forty: '#8cff5a', gallons: '#8cff5a', food: '#ff7b2e', days: '#8cff5a', seven: '#ffd23f',
   dark: '#ff4030', fridge: '#4fd6ff', dies: '#ff4030', faucet: '#4fd6ff', nothing: '#ff4030', power: '#ffd23f', thirty: '#ffd23f', floors: '#ffd23f',
   fema: '#8cff5a', gallon: '#8cff5a', "phone's": '#4fd6ff', eighteen: '#ff4030', percent: '#ff4030', dresser: '#ff7b2e', door: '#ff7b2e', midnight: '#ffd23f',
-  footsteps: '#ff4030', freezes: '#4fd6ff', stop: '#ff4030', peephole: '#ffd23f', 'thirty-eleven': '#ff4030', staring: '#ff4030', fudge: '#ffd23f', 'oh fudge': '#ffd23f',
+  footsteps: '#ff4030', freezes: '#4fd6ff', freeze: '#4fd6ff', "phone's": '#4fd6ff', stop: '#ff4030', peephole: '#ffd23f', 'thirty-eleven': '#ff4030', staring: '#ff4030', fudge: '#ffd23f', 'oh fudge': '#ffd23f',
   open: '#5ab0ff', quiet: '#ff5a4a', one: '#5ab0ff', two: '#ff5a4a', 2: '#ffd23f',
 };
 function buildCaps(words) {

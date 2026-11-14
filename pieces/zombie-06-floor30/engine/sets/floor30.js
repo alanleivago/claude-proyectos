@@ -113,7 +113,7 @@ export async function shots({ L, TL }) {
     }
     blocks.forEach((b) => scene.add(b.g));
   }
-  const setBlocks = (k) => blocks.forEach((b, i) => { const off = k > i + 0.5 ? 1 : 0; for (const m of b.mats) m.color.setScalar(off ? 0.05 : 1); for (const m of b.lamps) m.color.set(off ? 0x141414 : 0xffd890); });
+  const setBlocks = (k) => blocks.forEach((b, i) => { const off = k > i + 0.5 ? 1 : 0; for (const m of b.mats) m.color.setScalar(off ? 0.025 : 1); for (const m of b.lamps) m.color.set(off ? 0x141414 : 0xffd890); });
   // luna
   L.mesh(new THREE.CircleGeometry(9, 12), L.basic(null, 0xe8ecf4, { fog: false }), -60, 210, 400, scene).lookAt(0, 90, 0);
 
@@ -215,7 +215,8 @@ export async function shots({ L, TL }) {
   L.plane(2.5, 3.4, lam(L.rep(tTile, 6, 8), 0xb8c0c8), (XB + XL) / 2, 0.004, -2.7, bath, 0, -Math.PI / 2);
   L.plane(2.5, 3.4, lam(tCeil), (XB + XL) / 2, HH, -2.7, bath, 0, Math.PI / 2);
   const tub = await prop('bathtub'); tub.position.set(XB + 0.4, 0, -2.7); tub.rotation.y = Math.PI / 2; bath.add(tub);
-  const bucket = await prop('bucket'); bucket.position.set(-4.62, 0, -2.75); bucket.rotation.y = 0.3; bath.add(bucket);
+  const tubHandle = tub.getObjectByName('handle_hot_lever') || tub.getObjectByName('handle_hot') || new THREE.Group();
+  const bucket = await prop('bucket'); bucket.position.set(-4.55, 0, -1.45); bucket.rotation.y = 0.3; bath.add(bucket);
   const bathL = new THREE.PointLight(0xf0f4ff, 5.5, 6, 1.3); bathL.position.set(-4.5, 2.3, -2.6); bath.add(bathL); aLights.push(bathL); bathL.userData.i = 5.5;
   L.mesh(new THREE.BoxGeometry(0.5, 0.04, 0.3), L.basic(null, 0xf4f8ff), -4.5, HH - 0.03, -2.6, bath);
   // grifo de pared sobre el balde (codigo) y el espejo + lavabo
@@ -229,7 +230,7 @@ export async function shots({ L, TL }) {
   const bucketW = L.mesh(new THREE.CircleGeometry(0.135, 10), mWater, 0, 0.06, 0, bucket); bucketW.rotation.x = -Math.PI / 2;
   const stream2 = L.box(0.02, 1, 0.02, L.basic(null, 0x9cd0ff, { transparent: true, opacity: 0.85 }), 0, 0, 0, bath);
   const setWater = (k, kb, run) => {   // k: 0..1 llenado de la banera; kb: del balde; run: chorros
-    const y = 0.13 + 0.33 * k; tubW.position.y = y;
+    const y = 0.13 + 0.33 * k; tubW.position.y = y; tubW.visible = k > 0.01;
     stream.visible = run; if (run) { stream.scale.y = Math.max(0.02, spoutP.y - 0.04 - y); stream.position.set(spoutP.x + 0.015, (spoutP.y - 0.04 + y) / 2, 0); }
     const yb = 0.05 + 0.27 * kb; bucketW.position.y = yb; bucketW.visible = kb > 0.02;
     stream2.visible = false; spig.visible = false; if (false) { const top = 0.58, bot = yb; stream2.scale.y = top - bot; stream2.position.set(-4.05, (top + bot) / 2, -4.1); }
@@ -296,28 +297,45 @@ export async function shots({ L, TL }) {
       else { uv[i * 2] = (x + z) * 4; uv[i * 2 + 1] = y * 4; } }
     g.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
   });
+  // v7 (usuario): NO parece zombi. Civil normal pero sospechoso: piel normal, sudadera con capucha oscura, vaqueros oscuros,
+  // la capucha le deja los ojos en sombra, mirada fija, una mano vendada. Sin sangre.
   const shirtT = L.cvs(32, 64, (c) => { const r = L.rng(3011);
-    for (let y = 0; y < 32; y++) for (let x = 0; x < 32; x++) { const n = r() * 12 - 6; px(c, x, y, `rgb(${150 + n},${148 + n},${140 + n})`); }   // pantalon (abajo en v)
-    for (let y = 0; y < 32; y++) for (let x = 0; x < 32; x++) { const n = r() * 10 - 5; px(c, x, y, `rgb(${46 + n},${52 + n},${70 + n})`); }
-    for (let y = 32; y < 64; y++) for (let x = 0; x < 32; x++) { const n = r() * 12 - 6; px(c, x, y, `rgb(${168 + n},${164 + n},${150 + n})`); }   // camiseta gris clara
-    for (let k = 0; k < 9; k++) { c.fillStyle = r() < 0.6 ? 'rgba(110,14,10,0.85)' : 'rgba(80,60,30,0.6)'; c.beginPath(); c.ellipse(r() * 32, 34 + r() * 28, 1 + r() * 4, 1 + r() * 5, 0, 0, 7); c.fill(); } });
+    for (let y = 0; y < 32; y++) for (let x = 0; x < 32; x++) { const n = r() * 8 - 4; px(c, x, y, `rgb(${34 + n},${40 + n},${54 + n})`); }   // vaqueros oscuros (abajo en v)
+    for (let x = 0; x < 32; x += 16) px(c, x + 7, 0, '#22283a', 1, 32);
+    for (let y = 32; y < 64; y++) for (let x = 0; x < 32; x++) { const n = r() * 8 - 4; px(c, x, y, `rgb(${42 + n},${42 + n},${46 + n})`); }   // sudadera gris carbon
+    px(c, 0, 52, '#2e2e32', 32, 6); for (let x = 2; x < 32; x += 8) px(c, x, 36, '#bfbfc4', 1, 6);   // bolsillo canguro + cordones
+  });
   shirtT.wrapS = THREE.RepeatWrapping;
-  const skinT = L.rep(L.cvs(16, 16, (c) => { const r = L.rng(33); for (let y = 0; y < 16; y++) for (let x = 0; x < 16; x++) { const n = r() * 16 - 8; px(c, x, y, `rgb(${150 + n},${150 + n},${138 + n})`); } for (let k = 0; k < 5; k++) px(c, r() * 14 | 0, r() * 14 | 0, '#6a1210', 2, 1); }), 1, 1);
+  const skinT = L.rep(L.cvs(16, 16, (c) => { const r = L.rng(33); for (let y = 0; y < 16; y++) for (let x = 0; x < 16; x++) { const n = r() * 10 - 5; px(c, x, y, `rgb(${222 + n},${164 + n},${126 + n})`); } }), 1, 1);
   const nb3011 = L.ps1Clone(cityG.scene); const nbMats = [];
-  nb3011.traverse((o) => { if (!o.isMesh) return; const n = o.material.name || ''; o.material = n.includes('Outfit') ? L.lam(shirtT) : n.includes('Body') ? L.lam(skinT) : L.lam(null, 0x4a2a20); nbMats.push(o.material); });
+  nb3011.traverse((o) => { if (!o.isMesh) return; const n = o.material.name || ''; o.material = n.includes('Outfit') ? L.lam(shirtT) : n.includes('Body') ? L.lam(skinT) : L.lam(null, 0x5a4034); nbMats.push(o.material); });
   const nbW = new THREE.Group(); nbW.add(nb3011); hall.add(nbW);
   { nb3011.updateMatrixWorld(true); const bb = new THREE.Box3().setFromObject(nb3011), k = 1.82 / (bb.max.y - bb.min.y); nb3011.scale.multiplyScalar(k); nb3011.position.y = -bb.min.y * k; }
-  const nbMix = new THREE.AnimationMixer(nb3011); const nbIdle = nbMix.clipAction(THREE.AnimationClip.findByName(cityG.animations, 'Zombie_Idle')); nbIdle.play();
+  const nbMix = new THREE.AnimationMixer(nb3011); const nbIdle = nbMix.clipAction(THREE.AnimationClip.findByName(cityG.animations, L.QS.get('nbclip') || 'Zombie_Idle2')); nbIdle.play();
   let nbHip = null; nb3011.traverse((o) => { if (!nbHip && o.isSkinnedMesh) nbHip = o.skeleton.bones[0]; }); const nbHip0 = nbHip.position.clone();
-  const poseNb = (t, vis) => { nbIdle.time = (t * 0.6) % nbIdle.getClip().duration; nbMix.update(0); nbHip.position.x = nbHip0.x; nbHip.position.z = nbHip0.z;
-    const k = vis; nbMats.forEach((m) => m.color.setRGB(k, k, k)); nbW.visible = true; };
+  const nbBone = (re) => { let b = null; nb3011.traverse((o) => { if (!b && re.test(o.name)) b = o; }); return b; };
+  const nbHead = nbBone(/Head$/), nbHandR = nbBone(/RightHand$/);   // three quita los ":" de los nombres
+  // capucha (casquete oscuro abierto delante) + sombra sobre los ojos; venda en la mano derecha. Tamano en metros (se compensa la escala del hueso)
+  const mHood = L.lam(null, 0x2c2c30, { side: THREE.DoubleSide }), hood = new THREE.Group();
+  L.mesh(new THREE.SphereGeometry(0.165, 10, 7, Math.PI * 0.72, Math.PI * 1.56, 0, Math.PI * 0.7), mHood, 0, 0.0, -0.02, hood);
+  L.mesh(new THREE.SphereGeometry(0.168, 10, 4, 0, Math.PI * 2, 0, Math.PI * 0.3), mHood, 0, 0.0, -0.02, hood);   // la capucha tapa la coronilla
+  const tShade = L.cvs(8, 16, (c) => { const g = c.createLinearGradient(0, 0, 0, 16); g.addColorStop(0, 'rgba(0,0,0,0.95)'); g.addColorStop(0.6, 'rgba(0,0,0,0.75)'); g.addColorStop(1, 'rgba(0,0,0,0)'); c.fillStyle = g; c.fillRect(0, 0, 8, 16); });
+  L.plane(0.2, 0.13, L.basic(tShade, 0xffffff, { transparent: true, depthWrite: false }), 0, -0.07, 0.125, hood);   // sombra de la capucha sobre los ojos
+  const bandage = L.mesh(new THREE.BoxGeometry(0.09, 0.05, 0.1), L.lam(null, 0xd8d4c8), 0, 0.03, 0, null);
+  const attach = (bone, obj, off) => { bone.add(obj); bone.updateMatrixWorld(true); const s = new THREE.Vector3(); bone.getWorldScale(s); obj.scale.set(1 / s.x, 1 / s.y, 1 / s.z); obj.position.set(off[0] / s.x, off[1] / s.y, off[2] / s.z); };
+  hall.add(hood); hall.add(bandage); void attach;   // siguen al hueso cada cuadro (como hijos del hueso no se veian)
+  nbMats.push(mHood, bandage.material); nbMats.forEach((m) => { m.userData.base = m.color.clone(); });
+  const poseNb = (t, vis, walk = 1) => { nbIdle.time = walk ? (t * 0.9) % nbIdle.getClip().duration : 0.0; nbMix.update(0); nbHip.position.x = nbHip0.x; nbHip.position.z = nbHip0.z;
+    nbW.updateMatrixWorld(true); hall.updateMatrixWorld(true); if (nbHead) { const hp = hall.worldToLocal(nbHead.getWorldPosition(V())); hood.position.copy(hp).add(V(0, 0.15, 0)); hood.rotation.y = nbW.rotation.y; }
+    if (nbHandR) { bandage.position.copy(hall.worldToLocal(nbHandR.getWorldPosition(V()))); } hood.visible = bandage.visible = true;
+    const k = vis; nbMats.forEach((m) => m.color.copy(m.userData.base).multiplyScalar(k)); nbW.visible = true; };
   nbW.visible = false;
 
   // ================= estado =================
   const state = ({ noPhone = false, lights = 1, moon = 0, hero = true, nb = false, hallLit = 1, dresserAt = 0, planks: pk = false, fridgeOn = true } = {}) => {
     aLights.forEach((p) => { p.intensity = p.userData.i * lights; }); bulbs.forEach((b) => { b.material.color.setScalar(0.1 + 0.9 * lights); }); lampShade.material.color.set(lights > 0.5 ? 0xf0dca8 : 0x5a5448);
     moonL.intensity = 6.0 * moon; hemi.intensity = 1.25 - 0.1 * moon; hemi.color.set(moon > 0.5 ? 0x8098d0 : 0x9aa8d0);
-    ch.root.visible = hero; nbW.visible = nb; if (typeof ph1 !== 'undefined' && !noPhone) ph1.visible = false; hallL.intensity = 3.2 * hallLit; hallL2.intensity = 2.0 * hallLit;
+    ch.root.visible = hero; nbW.visible = nb; hood.visible = bandage.visible = nb; if (typeof ph1 !== 'undefined' && !noPhone) ph1.visible = false; hallL.intensity = 3.2 * hallLit; hallL2.intensity = 2.0 * hallLit;
     const z = L.lerp(-3.1, ZB + 0.27, dresserAt); dresser.position.set(-1.8, 0, z); dresser.rotation.y = 0;   // el frente mira al living (+Z)
     planks.forEach((p) => { p.visible = pk; });
     setWater(1, 1, false); drip.visible = false; void fridgeOn;
@@ -331,10 +349,10 @@ export async function shots({ L, TL }) {
       state({ lights: 1 }); setBlocks(0); AVA(0, -0.75, 0);
       ch.pose(lt, [L.seg('idle', -99, { loop: true })], [[-99, 'half', mouthAt(t, 'neutral')], [W.worst - 0.3, 'open', 'frown'], [W.tonight - 0.2, 'sad', 'frown']]);
       const up = ease(0.0, 3.6, lt);   // la grua (rapida al principio, frena al llegar)
-      const cp = cr([[0, 3, 2.2, 30], [1.4, 1.5, 34, 22], [2.8, 0.6, 72, 11], [3.8, 0.3, FY + 1.5, 4.0], [6.2, 0.1, FY + 1.5, 1.5]], lt);
-      const tg = cr([[0, 0, 26, 0], [1.4, 0, 52, 0], [2.8, 0, FY - 4, 0], [3.8, 0, FY + 1.35, -0.6], [6.2, 0, FY + 1.36, -0.75]], lt);
+      const cp = cr([[0, 2.2, 22, 25], [0.8, 1.0, 55, 14], [1.7, 0.3, FY + 1.5, 4.0], [6.2, 0.1, FY + 1.5, 1.5]], lt);   // v7: grua mas rapida, Ava en la ventana hacia los 2 s
+      const tg = cr([[0, 0, 44, 0], [0.8, 0, FY - 8, 0], [1.7, 0, FY + 1.35, -0.6], [6.2, 0, FY + 1.36, -0.75]], lt);
       look(c, cp, tg); void up;
-      if (lt > 4.3) ch.lookAt(c, ease(4.3, 4.9, lt), 30);
+      if (lt > 2.4) ch.lookAt(c, ease(2.4, 3.0, lt), 30);
     } };
   }
   // 02 POV en el pasillo frente al 3012 (llega a su puerta) -> el telefono sube DERECHO y nivelado: EMERGENCY ALERT
@@ -376,16 +394,16 @@ export async function shots({ L, TL }) {
   { const c = cam(54); const D = T.item - T.water;
     out['03_water'] = { scene, camera: c, overlay(lt, dt, a, o) { vign(0.3)(lt, dt, a, o); const t = T.water + lt;
       if (t > W.forty - 0.1) tag(o, c, A(XB + 0.4, 0.45, -2.7), 250, 150, '= 40 GAL', '#8cff5a', ease(W.forty - 0.1, W.forty + 0.1, t), 2);
-      if (t > W.bucket - 0.3) tag(o, c, A(-4.62, 0.45, -2.75), 80, 250, '+5 GAL', '#ffb050', ease(W.bucket - 0.3, W.bucket - 0.1, t), 1);
+      if (t > W.bucket - 0.3) tag(o, c, A(-4.55, 0.45, -1.45), 60, 210, '+5 GAL', '#ffb050', ease(W.bucket - 0.3, W.bucket - 0.1, t), 1);
       if (t > W.pumps && t < W.tub) tag(o, c, A(XB + 0.4, 0.62, -2.15), 96, 150, 'PUMPS = POWER', '#ffd23f', ease(W.pumps, W.pumps + 0.2, t) * (1 - ease(W.tub - 0.3, W.tub, t)), 1);
     }, update(lt, t) {
-      state({}); const kt = ease(0.2, D - 0.6, lt), kb = 0.92; setWater(kt, kb, true);
-      AVA(-4.55, -3.45, 0.6);
-      ch.pose(lt, [L.seg('idle', -99, { loop: true }), L.seg('point', W.tub - T.water - 0.3, { fade: 0.25, speed: 0.8 }), L.seg('idle', W.pressure - T.water, { loop: true, fade: 0.3 })], [[-99, 'half', mouthAt(t, 'neutral')], [W.bucket - T.water, 'open', mouthAt(t, 'smile')]]);
-      if (lt < D * 0.5) ch.lookAt(c, 0.8, 30);
-      const cp = crA([[0, -3.55, 1.55, -1.35], [D * 0.45, -3.75, 1.65, -1.6], [D * 0.8, -4.2, 2.35, -1.6], [D, -4.6, 2.5, -1.75]], lt);
-      const tg = crA([[0, -4.5, 0.95, -3.2], [D * 0.45, -4.7, 0.75, -3.1], [D, -5.2, 0.25, -2.8]], lt);
-      look(c, cp, tg);
+      const PZ = 'scoop_kneel', TK = 0.35, TT = TK + 0.9;   // estira el brazo al grifo de la banera y lo gira; el agua sale al girar
+      state({}); const kt = ease(TT, D - 0.6, lt), kb = 0.92; setWater(kt, kb, lt > TT - 0.05); tubHandle.rotation.y = -1.3 * ease(TK + 0.45, TT, lt);
+      AVA(-5.25, -1.6, Math.PI);
+      ch.pose(lt, [L.seg(PZ, 0, { speed: 0.75 }), L.seg('idle', TT + 0.6, { loop: true, fade: 0.35 })], [[-99, 'half', mouthAt(t, 'neutral')], [W.bucket - T.water, 'open', mouthAt(t, 'smile')]]);
+      const cp = crA([[0, -4.65, 1.5, -3.6], [D * 0.45, -4.55, 1.65, -3.75], [W.forty - T.water - 0.75, -4.6, 1.75, -3.8], [W.forty - T.water - 0.25, -4.5, 2.2, -3.75], [D, -4.45, 2.25, -3.7]], lt);
+      const tg = crA([[0, -5.1, 0.75, -1.8], [D * 0.45, -5.05, 0.8, -1.9], [W.forty - T.water - 0.75, -5.05, 0.85, -1.95], [W.forty - T.water - 0.25, -5.3, 0.3, -2.95], [D, -5.3, 0.3, -2.95]], lt);
+      look(c, cp, tg); if (lt > TT + 0.5 && lt < D * 0.55) ch.lookAt(c, 0.7, 30);
     } };
   }
   // 04 ITEM (RE): latas, galletas y agua; RATION 2/DIA -> 1/DIA; DAYS 6 -> 12 (contador que sube en "splits it into days")
@@ -401,7 +419,7 @@ export async function shots({ L, TL }) {
     L.plane(LW, LH, L.basic(bg), 0, 0, -400, s);
     const icon = (g, x, y, sc, rx = 0.25) => { const w = new THREE.Group(); w.add(g); g.scale.multiplyScalar(sc); const [X, Y] = P2(x, y); w.position.set(X, Y, 0); w.rotation.x = rx; s.add(w); return w; };
     const iCans0 = 0; const iCans = icon(cans.clone(), 100, 200, 300); iCans.children[0].position.set(0, 0, 0); iCans.children[0].rotation.set(0, 0.4, 0);
-    const crack = new THREE.Group(); { const t = L.cvs(32, 32, (cx) => { px(cx, 0, 0, '#d82020', 32, 32); px(cx, 2, 8, '#f0d070', 28, 14); cx.fillStyle = '#a01010'; cx.font = 'bold 8px monospace'; cx.textAlign = 'center'; cx.fillText('CRACK', 16, 18); });
+    const crack = new THREE.Group(); { const t = L.cvs(32, 32, (cx) => { px(cx, 0, 0, '#d82020', 32, 32); px(cx, 2, 8, '#f0d070', 28, 14); cx.fillStyle = '#a01010'; cx.font = 'bold 6px monospace'; cx.textAlign = 'center'; cx.fillText('CRACKERS', 16, 17); });
       const m = L.lam(t), m2 = L.lam(null, 0xb01818); L.box(0.16, 0.22, 0.06, [m2, m2, m2, m2, m, m], 0, 0.11, 0, crack); const c2 = L.box(0.16, 0.22, 0.06, [m2, m2, m2, m2, m, m], 0.05, 0.1, -0.08, crack); c2.rotation.z = 0.2; }
     const iCr = icon(crack, 260, 200, 330);
     const iBk = icon(bucket.clone(), 100, 340, 240); iBk.children[0].position.set(0, 0, 0); iBk.children[0].rotation.set(0, 0.3, 0);
@@ -447,13 +465,13 @@ export async function shots({ L, TL }) {
   // 06 el grifo: Ava lo abre -> una gota y nada; diagrama: bomba en el sotano, el agua no sube 30 pisos sin luz
   { const c = cam(46); const D = T.note - T.tap;
     const diagram = (o, t) => { const k = ease(W.power - 0.2, W.power + 0.15, t); if (k <= 0) return; const cx = o.tctx; cx.globalAlpha = k;
-      const x0 = 206, y0 = 96, w = 130, h = 226; px(cx, x0 - 8, y0 - 22, 'rgba(4,8,16,0.9)', w + 16, h + 52); cx.strokeStyle = '#8a90a8'; cx.strokeRect(x0 - 7.5, y0 - 21.5, w + 15, h + 51);
+      const x0 = 206, y0 = 96, w = 130, h = 226; px(cx, x0 - 8, y0 - 22, 'rgba(4,8,16,0.9)', w + 16, h + 66); cx.strokeStyle = '#8a90a8'; cx.strokeRect(x0 - 7.5, y0 - 21.5, w + 15, h + 65);
       bitText(cx, 'WATER UP', x0 + w / 2, y0 - 10, 1, '#9cd4ff', { outline: null });
       px(cx, x0 + 30, y0, '#3a3e4a', 60, h); for (let f = 0; f < 30; f++) px(cx, x0 + 30, y0 + h - (f + 1) * (h / 30), '#20232c', 60, 1);
       const lvl = Math.min(6, 6 * ease(W.power, W.power + 0.8, t)); px(cx, x0 + 55, y0 + h - lvl * (h / 30), '#4aa0f0', 10, lvl * (h / 30));
       px(cx, x0 + 30, y0 + 2, '#ffd23f', 60, 6); bitText(cx, '30', x0 + 104, y0 + 6, 1, '#ffd23f', { outline: null }); bitText(cx, '6', x0 + 104, y0 + h - 6 * (h / 30), 1, '#9cd4ff', { outline: null });
       px(cx, x0 + 46, y0 + h + 4, '#6a6e7a', 28, 12); bitText(cx, 'PUMP', x0 + 60, y0 + h + 22, 1, '#c8ccd8', { outline: null });
-      if (t > W.thirty - 0.2) { const kk = ease(W.thirty - 0.2, W.thirty + 0.1, t); cx.globalAlpha = k * kk; cx.strokeStyle = '#ff4030'; cx.lineWidth = 3; cx.beginPath(); cx.moveTo(x0 + 40, y0 + h - 2); cx.lineTo(x0 + 80, y0 + h + 18); cx.moveTo(x0 + 80, y0 + h - 2); cx.lineTo(x0 + 40, y0 + h + 18); cx.stroke(); bitText(cx, 'NO POWER', x0 + 60, y0 + h + 36, 1, '#ff4030', { outline: null }); }
+      if (t > W.thirty - 0.2) { const kk = ease(W.thirty - 0.2, W.thirty + 0.1, t); cx.globalAlpha = k * kk; cx.strokeStyle = '#ff4030'; cx.lineWidth = 3; cx.beginPath(); cx.moveTo(x0 + 40, y0 + h - 2); cx.lineTo(x0 + 80, y0 + h + 18); cx.moveTo(x0 + 80, y0 + h - 2); cx.lineTo(x0 + 40, y0 + h + 18); cx.stroke(); bitText(cx, 'NO POWER', x0 + 60, y0 + h + 32, 1, '#ff4030', { outline: null }); }
       cx.globalAlpha = 1; };
     out['06_tap'] = { scene, camera: c, overlay(lt, dt, a, o) { vign(0.42)(lt, dt, a, o); const t = T.tap + lt;
       if (t > W.nothing - 0.05 && t < W.power) tag(o, c, A(XR - 0.32, 1.1, -1.6), 110, 150, 'NO PRESSURE', '#ff4030', ease(W.nothing - 0.05, W.nothing + 0.1, t), 1);
@@ -477,7 +495,7 @@ export async function shots({ L, TL }) {
         ['R', '1 / day', 82, 14, '#1a2a6a', w(W.gallon + 0.3, 4)], ['R', 'phone 18%', 118, 14, '#b01818', w(W.eighteen - 0.15, 5)]]);
       drawPh2(18, Math.floor(t * 2.5) % 2 === 0 || t < W.eighteen);
       const kp = ease(W.forty7 + 0.5, W.forty7 + 1.1, t), kf = ease(W.phone7 - 0.3, W.phone7 + 0.3, t);   // pagina izquierda -> derecha -> telefono
-      const tx = L.lerp(L.lerp(0.315, 0.53, kp), 0.835, kf), tz = L.lerp(-2.6, -2.575, kf), hh = 0.6 - 0.04 * ease(0, D, lt) - 0.15 * kf, ang = 0.06 * Math.sin(lt * 0.5) * (1 - kf);
+      const tx = L.lerp(L.lerp(0.315, 0.53, kp), 0.88, kf), tz = L.lerp(-2.6, -2.575, kf), hh = 0.6 - 0.04 * ease(0, D, lt) - 0.1 * kf, ang = 0.06 * Math.sin(lt * 0.5) * (1 - kf);
       c.up.set(Math.sin(ang), 0, -Math.cos(ang)); c.position.copy(A(tx, 0.45 + hh, tz + 0.1 * (1 - kf) + 0.03 * kf)); c.lookAt(A(tx, 0.45, tz + 0.035 * (1 - kf) + 0.03 * kf)); c.updateProjectionMatrix();
     } };
   }
@@ -516,7 +534,7 @@ export async function shots({ L, TL }) {
       const g = cx.createRadialGradient(cxp, cyp, R0 * 0.55, cxp, cyp, R0); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,0.85)'); cx.fillStyle = g; cx.beginPath(); cx.arc(cxp, cyp, R0, 0, 7); cx.fill();
       cx.strokeStyle = 'rgba(160,200,255,0.25)'; cx.lineWidth = 2; cx.beginPath(); cx.arc(cxp, cyp, R0 - 2, 0, 7); cx.stroke();
       if (t >= W.knock + 0.1) {   // caja de dialogo RE: nombre + texto a maquina
-        const s = 'PLEASE...  I JUST NEED WATER.', n = Math.floor((t - W.knock - 0.1) * 30), x = 20, y = 486, w = 320, h = 54;
+        const s = 'PLEASE... I NEED WATER.', n = Math.floor((t - W.knock - 0.1) * 40), x = 20, y = 486, w = 320, h = 54;
         cx.fillStyle = 'rgba(6,8,16,0.9)'; cx.fillRect(x, y, w, h); cx.strokeStyle = '#8a90a8'; cx.strokeRect(x + 0.5, y + 0.5, w - 1, h - 1);
         left(cx, '3011', x + 8, y - 8, 1, '#ff7b2e'); left(cx, s.slice(0, n), x + 10, y + 27, 1, '#e8e8f0');
       }
@@ -524,7 +542,7 @@ export async function shots({ L, TL }) {
       state({ lights: 0.05, moon: 1, dresserAt: 1, planks: true, hero: false, nb: true, hallLit: 0.55 }); setBlocks(99);
       // sale de la sombra del fondo del pasillo (z -6.5, sin luz) y avanza hasta la puerta; la luz lo descubre poco a poco
       const kw = ease(0.4, 2.8, lt), z = L.lerp(-6.55, -5.75, kw); nbW.position.set(-1.78, 0, z); nbW.rotation.y = 0;
-      poseNb(t, ease(0.7, 2.8, lt));
+      poseNb(t, ease(0.7, 2.8, lt), kw < 0.995);
       const kn = t - W.knock, bob = kn > 0 && kn < 0.9 ? 0.012 * Math.max(0, Math.sin(kn * 22)) * (1 - kn / 0.9) : 0;   // los golpes mueven SOLO la hoja de la puerta (la mirilla con ella)
       look(c, A(-1.8, 1.58 + bob, ZB - 0.13), A(-1.8, 1.78, -6.6));
     } };
@@ -569,4 +587,3 @@ export async function shots({ L, TL }) {
   }
   return out;
 }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          

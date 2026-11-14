@@ -1,0 +1,3132 @@
+{
+  "ok": true,
+  "strict": false,
+  "browserSkipped": false,
+  "lint": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 70,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "duplicate_media_discovery_risk",
+        "severity": "warning",
+        "message": "Detected 5 matching img entries with the same source/start/duration.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Avoid duplicated media nodes that can be discovered twice during compilation."
+      },
+      {
+        "code": "duplicate_media_discovery_risk",
+        "severity": "warning",
+        "message": "Detected 2 matching img entries with the same source/start/duration.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Avoid duplicated media nodes that can be discovered twice during compilation."
+      },
+      {
+        "code": "duplicate_media_discovery_risk",
+        "severity": "warning",
+        "message": "Detected 3 matching img entries with the same source/start/duration.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Avoid duplicated media nodes that can be discovered twice during compilation."
+      },
+      {
+        "code": "composition_file_too_large",
+        "severity": "warning",
+        "message": "This HTML composition file has 979 lines. Smaller sub-compositions are easier to read, iterate on, and diff.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Split coherent scenes or layers into separate .html files under compositions/, then mount them from the parent with data-composition-src so each file stays small enough to inspect, revise, and validate independently."
+      },
+      {
+        "code": "timeline_track_too_dense",
+        "severity": "warning",
+        "message": "Track 3 has 26 timed elements in this HTML file. Smaller sub-compositions keep timelines easier to read, iterate on, and diff.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move coherent scene groups into separate .html files under compositions/ and mount them from the parent with data-composition-src so the timeline stays easier to inspect, revise, and validate."
+      },
+      {
+        "code": "timeline_track_too_dense",
+        "severity": "warning",
+        "message": "Track 4 has 20 timed elements in this HTML file. Smaller sub-compositions keep timelines easier to read, iterate on, and diff.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move coherent scene groups into separate .html files under compositions/ and mount them from the parent with data-composition-src so the timeline stays easier to inspect, revise, and validate."
+      },
+      {
+        "code": "composition_heavy_overlay_count_high",
+        "severity": "warning",
+        "message": "This composition has 41 elements carrying \"heavy overlay\" CSS (filter:blur, radial-gradient, or clip-path). Field signal: a composition with ~40 such elements (including opacity:0 / visibility:hidden ones) captures solid-black for the first ~half of the render, recovering near the end. Reproduces identically via drawElement, forced screenshot capture, and snapshot, so the capture layer itself is the offender (not encoder/mux). Independent of duration. Presence alone matters; only display:none elements are excluded here.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Split coherent scenes / transitions into separate .html files under compositions/ and concat the pieces (FFmpeg or the runtime's slideshow) so each capture only sees a small subset of heavy overlays at once. Even hidden overlays (opacity:0 / visibility:hidden) contribute: either remove truly unused ones from the source or scope them into their own per-transition sub-composition. If an overlay is genuinely inert for the whole clip, use display:none so it never enters the render tree. Field ref ts=1784040753 (#hyperframes-cli-feedback)."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"hk-dir\"> is a timeline element that contains nested <div>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#hk-dir",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"hk-dir\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"cap1\"> is a timeline element that contains nested <div id=\"cap1-0\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#cap1",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"cap1\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"cap2\"> is a timeline element that contains nested <div id=\"cap2-0\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#cap2",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"cap2\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"ic3\"> is a timeline element that contains nested <img>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#ic3",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"ic3\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"ic4\"> is a timeline element that contains nested <img>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#ic4",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"ic4\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"cap5\"> is a timeline element that contains nested <div id=\"cap5-0\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#cap5",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"cap5\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"cap6\"> is a timeline element that contains nested <div id=\"cap6-0\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#cap6",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"cap6\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"ic7\"> is a timeline element that contains nested <img>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#ic7",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"ic7\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"cap8\"> is a timeline element that contains nested <div id=\"cap8-0\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#cap8",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"cap8\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"ic9\"> is a timeline element that contains nested <img>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#ic9",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"ic9\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"cap10\"> is a timeline element that contains nested <div id=\"cap10-0\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#cap10",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"cap10\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"ic11\"> is a timeline element that contains nested <img>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#ic11",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"ic11\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"cap12\"> is a timeline element that contains nested <div id=\"cap12-0\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#cap12",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"cap12\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"ic13\"> is a timeline element that contains nested <img>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#ic13",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"ic13\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"ic14\"> is a timeline element that contains nested <img>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#ic14",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"ic14\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"cap15\"> is a timeline element that contains nested <div id=\"cap15-0\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#cap15",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"cap15\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"cap16\"> is a timeline element that contains nested <div id=\"cap16-0\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#cap16",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"cap16\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"cap17\"> is a timeline element that contains nested <div id=\"cap17-0\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#cap17",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"cap17\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"cap18\"> is a timeline element that contains nested <div id=\"cap18-0\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#cap18",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"cap18\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"ic19\"> is a timeline element that contains nested <img>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#ic19",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"ic19\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"ic20\"> is a timeline element that contains nested <img>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#ic20",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"ic20\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"cap21\"> is a timeline element that contains nested <div id=\"cap21-0\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#cap21",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"cap21\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"ic22\"> is a timeline element that contains nested <img>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#ic22",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"ic22\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"cap23\"> is a timeline element that contains nested <div id=\"cap23-0\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#cap23",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"cap23\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"ic24\"> is a timeline element that contains nested <img>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#ic24",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"ic24\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"ic25\"> is a timeline element that contains nested <img>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#ic25",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"ic25\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"cap26\"> is a timeline element that contains nested <div id=\"cap26-0\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#cap26",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"cap26\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"ic27\"> is a timeline element that contains nested <img>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#ic27",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"ic27\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"cap28\"> is a timeline element that contains nested <div id=\"cap28-0\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#cap28",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"cap28\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"cap29\"> is a timeline element that contains nested <div id=\"cap29-0\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#cap29",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"cap29\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"cap30\"> is a timeline element that contains nested <div id=\"cap30-0\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#cap30",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"cap30\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"ic31\"> is a timeline element that contains nested <img>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#ic31",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"ic31\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"cap32\"> is a timeline element that contains nested <div id=\"cap32-0\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#cap32",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"cap32\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"cap33\"> is a timeline element that contains nested <div id=\"cap33-0\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#cap33",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"cap33\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"ic34\"> is a timeline element that contains nested <img>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#ic34",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"ic34\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"cap35\"> is a timeline element that contains nested <div id=\"cap35-0\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#cap35",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"cap35\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"cap36\"> is a timeline element that contains nested <div id=\"cap36-0\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#cap36",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"cap36\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"ic37\"> is a timeline element that contains nested <img>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#ic37",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"ic37\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"cap38\"> is a timeline element that contains nested <div id=\"cap38-0\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#cap38",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"cap38\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"ic39\"> is a timeline element that contains nested <img>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#ic39",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"ic39\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"cap40\"> is a timeline element that contains nested <div id=\"cap40-0\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#cap40",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"cap40\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"ic41\"> is a timeline element that contains nested <img>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#ic41",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"ic41\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"cap42\"> is a timeline element that contains nested <div id=\"cap42-0\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#cap42",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"cap42\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"ic43\"> is a timeline element that contains nested <img>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#ic43",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"ic43\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"cap44\"> is a timeline element that contains nested <div id=\"cap44-0\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#cap44",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"cap44\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"ic45\"> is a timeline element that contains nested <img>. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#ic45",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"ic45\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "nested_structure_needs_subcomposition",
+        "severity": "warning",
+        "message": "<div id=\"cta\"> is a timeline element that contains nested <div id=\"cta0\">. The timeline shows one row per top-level element, and the root composition is built only from sub-compositions.",
+        "selector": "#cta",
+        "dataAttributes": {},
+        "sourceFile": "F:\\Claude Proyectos\\pieces\\stimulus-08-hf\\index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Move <div id=\"cta\"> and its contents into a sub-composition file and mount it with data-composition-src."
+      },
+      {
+        "code": "duplicate_audio_track",
+        "severity": "warning",
+        "message": "Multiple audible <audio>/<video> elements on track 8 overlap (assets/music.mp3 at 0-51.07s, assets/music.mp3 at 50.17-52.5s). This causes layered audio playback.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Use non-overlapping time windows or different track indices."
+      },
+      {
+        "code": "duplicate_audio_track",
+        "severity": "warning",
+        "message": "Multiple audible <audio>/<video> elements on track 9 overlap (assets/sfx/riser_fast.wav at 17.32-52.5s, assets/sfx/riser_fast.wav at 39.64-52.5s). This causes layered audio playback.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Use non-overlapping time windows or different track indices."
+      },
+      {
+        "code": "duplicate_audio_track",
+        "severity": "warning",
+        "message": "Multiple audible <audio>/<video> elements on track 9 overlap (assets/sfx/riser_fast.wav at 17.32-52.5s, assets/sfx/burn1.wav at 18.12-52.5s). This causes layered audio playback.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Use non-overlapping time windows or different track indices."
+      },
+      {
+        "code": "duplicate_audio_track",
+        "severity": "warning",
+        "message": "Multiple audible <audio>/<video> elements on track 9 overlap (assets/sfx/riser_fast.wav at 17.32-52.5s, assets/sfx/burn2.wav at 32.99-52.5s). This causes layered audio playback.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Use non-overlapping time windows or different track indices."
+      },
+      {
+        "code": "duplicate_audio_track",
+        "severity": "warning",
+        "message": "Multiple audible <audio>/<video> elements on track 9 overlap (assets/sfx/riser_fast.wav at 17.32-52.5s, assets/sfx/burn3.wav at 40.26-52.5s). This causes layered audio playback.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Use non-overlapping time windows or different track indices."
+      },
+      {
+        "code": "duplicate_audio_track",
+        "severity": "warning",
+        "message": "Multiple audible <audio>/<video> elements on track 9 overlap (assets/sfx/riser_fast.wav at 17.32-52.5s, assets/sfx/burn4.wav at 46.09-52.5s). This causes layered audio playback.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Use non-overlapping time windows or different track indices."
+      },
+      {
+        "code": "duplicate_audio_track",
+        "severity": "warning",
+        "message": "Multiple audible <audio>/<video> elements on track 9 overlap (assets/sfx/riser_fast.wav at 39.64-52.5s, assets/sfx/burn1.wav at 18.12-52.5s). This causes layered audio playback.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Use non-overlapping time windows or different track indices."
+      },
+      {
+        "code": "duplicate_audio_track",
+        "severity": "warning",
+        "message": "Multiple audible <audio>/<video> elements on track 9 overlap (assets/sfx/riser_fast.wav at 39.64-52.5s, assets/sfx/burn2.wav at 32.99-52.5s). This causes layered audio playback.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Use non-overlapping time windows or different track indices."
+      },
+      {
+        "code": "duplicate_audio_track",
+        "severity": "warning",
+        "message": "Multiple audible <audio>/<video> elements on track 9 overlap (assets/sfx/riser_fast.wav at 39.64-52.5s, assets/sfx/burn3.wav at 40.26-52.5s). This causes layered audio playback.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Use non-overlapping time windows or different track indices."
+      },
+      {
+        "code": "duplicate_audio_track",
+        "severity": "warning",
+        "message": "Multiple audible <audio>/<video> elements on track 9 overlap (assets/sfx/riser_fast.wav at 39.64-52.5s, assets/sfx/burn4.wav at 46.09-52.5s). This causes layered audio playback.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Use non-overlapping time windows or different track indices."
+      },
+      {
+        "code": "duplicate_audio_track",
+        "severity": "warning",
+        "message": "Multiple audible <audio>/<video> elements on track 9 overlap (assets/sfx/burn1.wav at 18.12-52.5s, assets/sfx/burn2.wav at 32.99-52.5s). This causes layered audio playback.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Use non-overlapping time windows or different track indices."
+      },
+      {
+        "code": "duplicate_audio_track",
+        "severity": "warning",
+        "message": "Multiple audible <audio>/<video> elements on track 9 overlap (assets/sfx/burn1.wav at 18.12-52.5s, assets/sfx/burn3.wav at 40.26-52.5s). This causes layered audio playback.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Use non-overlapping time windows or different track indices."
+      },
+      {
+        "code": "duplicate_audio_track",
+        "severity": "warning",
+        "message": "Multiple audible <audio>/<video> elements on track 9 overlap (assets/sfx/burn1.wav at 18.12-52.5s, assets/sfx/burn4.wav at 46.09-52.5s). This causes layered audio playback.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Use non-overlapping time windows or different track indices."
+      },
+      {
+        "code": "duplicate_audio_track",
+        "severity": "warning",
+        "message": "Multiple audible <audio>/<video> elements on track 9 overlap (assets/sfx/burn2.wav at 32.99-52.5s, assets/sfx/burn3.wav at 40.26-52.5s). This causes layered audio playback.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Use non-overlapping time windows or different track indices."
+      },
+      {
+        "code": "duplicate_audio_track",
+        "severity": "warning",
+        "message": "Multiple audible <audio>/<video> elements on track 9 overlap (assets/sfx/burn2.wav at 32.99-52.5s, assets/sfx/burn4.wav at 46.09-52.5s). This causes layered audio playback.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Use non-overlapping time windows or different track indices."
+      },
+      {
+        "code": "duplicate_audio_track",
+        "severity": "warning",
+        "message": "Multiple audible <audio>/<video> elements on track 9 overlap (assets/sfx/burn3.wav at 40.26-52.5s, assets/sfx/burn4.wav at 46.09-52.5s). This causes layered audio playback.",
+        "selector": "[data-composition-id]",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "time": 0,
+        "fixHint": "Use non-overlapping time windows or different track indices."
+      }
+    ],
+    "filesScanned": 1
+  },
+  "runtime": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "layout": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "duration": 52.503,
+    "samples": [
+      2.917,
+      8.75,
+      14.584,
+      20.418,
+      26.252,
+      32.085,
+      37.919,
+      43.753,
+      49.586
+    ],
+    "transitionSamples": [],
+    "transitionSamplesDropped": 0,
+    "tolerance": 2,
+    "totalIssueCount": 0,
+    "truncated": false
+  },
+  "motion": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": false,
+    "samples": 0
+  },
+  "contrast": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": [],
+    "enabled": true,
+    "samples": [
+      2.917,
+      14.584,
+      26.252,
+      37.919,
+      49.586
+    ],
+    "checked": 7,
+    "passed": 7
+  },
+  "craft": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 23,
+    "infoCount": 0,
+    "findings": [
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"happened to you?\" (3 words) is on screen 0.66 s (±0.01 s), under its 1.05 s floor: hold it about 0.5 s + 0.3 s a word (1.40 s here) before it leaves or changes; see references/motion.md.",
+        "text": "happened to you?",
+        "selector": "#cap1-1",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 238.44,
+          "y": 1131.52,
+          "width": 603.1199999999999,
+          "height": 123
+        },
+        "time": 1.738,
+        "words": 3,
+        "seconds": 0.662,
+        "floorSeconds": 1.05,
+        "measured": [
+          {
+            "time": 1.372,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 1.497,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 1.621,
+            "opacity": 0.18,
+            "heightPx": 123
+          },
+          {
+            "time": 1.746,
+            "opacity": 0.52,
+            "heightPx": 123
+          },
+          {
+            "time": 1.871,
+            "opacity": 0.86,
+            "heightPx": 123
+          },
+          {
+            "time": 1.995,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 2.12,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 2.245,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 2.369,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 2.494,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 2.619,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 2.744,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"closes after two weeks,\" (4 words) is on screen 1.10 s (±0.01 s), under its 1.27 s floor: hold it about 0.5 s + 0.3 s a word (1.70 s here) before it leaves or changes; see references/motion.md.",
+        "text": "closes after two weeks,",
+        "selector": "#cap2-1",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 134.34,
+          "y": 976.19,
+          "width": 811.3,
+          "height": 123
+        },
+        "time": 3.305,
+        "words": 4,
+        "seconds": 1.1,
+        "floorSeconds": 1.275,
+        "measured": [
+          {
+            "time": 2.993,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 3.118,
+            "opacity": 0.05,
+            "heightPx": 123
+          },
+          {
+            "time": 3.242,
+            "opacity": 0.39,
+            "heightPx": 123
+          },
+          {
+            "time": 3.367,
+            "opacity": 0.74,
+            "heightPx": 123
+          },
+          {
+            "time": 3.492,
+            "opacity": 0.99,
+            "heightPx": 123
+          },
+          {
+            "time": 3.617,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 3.741,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 3.991,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 4.115,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 4.24,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 4.365,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 4.49,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 4.614,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 4.739,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"in the middle of\" (4 words) is on screen 1.00 s (±0.01 s), under its 1.27 s floor: hold it about 0.5 s + 0.3 s a word (1.70 s here) before it leaves or changes; see references/motion.md.",
+        "text": "in the middle of",
+        "selector": "#cap5-1",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 274.72,
+          "y": 978.44,
+          "width": 530.56,
+          "height": 123
+        },
+        "time": 5.573,
+        "words": 4,
+        "seconds": 0.998,
+        "floorSeconds": 1.275,
+        "measured": [
+          {
+            "time": 5.238,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 5.363,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 5.487,
+            "opacity": 0.28,
+            "heightPx": 123
+          },
+          {
+            "time": 5.612,
+            "opacity": 0.63,
+            "heightPx": 123
+          },
+          {
+            "time": 5.737,
+            "opacity": 0.97,
+            "heightPx": 123
+          },
+          {
+            "time": 5.861,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 5.986,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 6.111,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 6.236,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 6.36,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 6.485,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 6.61,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.734,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.859,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"WEEK SIX. WEEK SIX. WEEK SIX.\" (6 words) is on screen 0.44 s (±0.01 s), under its 1.72 s floor: hold it about 0.5 s + 0.3 s a word (2.30 s here) before it leaves or changes; see references/motion.md.",
+        "text": "WEEK SIX. WEEK SIX. WEEK SIX.",
+        "selector": "#cap5-2 > div:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 168.55,
+          "y": 1042.76,
+          "width": 742.9000000000001,
+          "height": 247
+        },
+        "time": 6.134,
+        "words": 6,
+        "seconds": 0.437,
+        "floorSeconds": 1.725,
+        "measured": [
+          {
+            "time": 5.861,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 5.986,
+            "opacity": 0.08,
+            "heightPx": 247
+          },
+          {
+            "time": 6.111,
+            "opacity": 0.42,
+            "heightPx": 247
+          },
+          {
+            "time": 6.236,
+            "opacity": 0.76,
+            "heightPx": 247
+          },
+          {
+            "time": 6.36,
+            "opacity": 1,
+            "heightPx": 247
+          },
+          {
+            "time": 6.485,
+            "opacity": 1,
+            "heightPx": 247
+          },
+          {
+            "time": 6.61,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.734,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 6.859,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"the store closes.\" (3 words) is on screen 0.69 s (±0.01 s), under its 1.05 s floor: hold it about 0.5 s + 0.3 s a word (1.40 s here) before it leaves or changes; see references/motion.md.",
+        "text": "the store closes.",
+        "selector": "#cap10-1",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 256.67,
+          "y": 975.08,
+          "width": 566.6399999999999,
+          "height": 122.99999999999989
+        },
+        "time": 10.507,
+        "words": 3,
+        "seconds": 0.694,
+        "floorSeconds": 1.05,
+        "measured": [
+          {
+            "time": 10.226,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 10.351,
+            "opacity": 0.13,
+            "heightPx": 123
+          },
+          {
+            "time": 10.476,
+            "opacity": 0.47,
+            "heightPx": 123
+          },
+          {
+            "time": 10.6,
+            "opacity": 0.81,
+            "heightPx": 123
+          },
+          {
+            "time": 10.725,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 10.85,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 10.974,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 11.099,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 11.224,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 11.349,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 11.473,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"then a new kid shows up,\" (6 words) is on screen 1.23 s (±0.01 s), under its 1.72 s floor: hold it about 0.5 s + 0.3 s a word (2.30 s here) before it leaves or changes; see references/motion.md.",
+        "text": "then a new kid shows up,",
+        "selector": "#cap12-1",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 109.92,
+          "y": 976.43,
+          "width": 860.14,
+          "height": 122.99999999999989
+        },
+        "time": 12.269,
+        "words": 6,
+        "seconds": 1.232,
+        "floorSeconds": 1.725,
+        "measured": [
+          {
+            "time": 11.972,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 12.097,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 12.222,
+            "opacity": 0.38,
+            "heightPx": 123
+          },
+          {
+            "time": 12.346,
+            "opacity": 0.72,
+            "heightPx": 123
+          },
+          {
+            "time": 12.471,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 12.596,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 12.72,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 13.095,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 13.219,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 13.344,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 13.469,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 13.593,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 13.718,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 13.843,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"for one kid.\" (3 words) is on screen 0.63 s (±0.01 s), under its 1.05 s floor: hold it about 0.5 s + 0.3 s a word (1.40 s here) before it leaves or changes; see references/motion.md.",
+        "text": "for one kid.",
+        "selector": "#cap15-2",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 347.53,
+          "y": 1128.7,
+          "width": 384.94000000000005,
+          "height": 123
+        },
+        "time": 15.674,
+        "words": 3,
+        "seconds": 0.631,
+        "floorSeconds": 1.05,
+        "measured": [
+          {
+            "time": 15.339,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 15.464,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 15.589,
+            "opacity": 0.27,
+            "heightPx": 123
+          },
+          {
+            "time": 15.713,
+            "opacity": 0.62,
+            "heightPx": 123
+          },
+          {
+            "time": 15.838,
+            "opacity": 0.96,
+            "heightPx": 123
+          },
+          {
+            "time": 15.963,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 16.088,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 16.212,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 16.337,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 16.462,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 16.586,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"in a pinny.\" (3 words) is on screen 0.57 s (±0.01 s), under its 1.05 s floor: hold it about 0.5 s + 0.3 s a word (1.40 s here) before it leaves or changes; see references/motion.md.",
+        "text": "in a pinny.",
+        "selector": "#cap16-2",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 369.11,
+          "y": 1127.53,
+          "width": 341.77,
+          "height": 123
+        },
+        "time": 17.803,
+        "words": 3,
+        "seconds": 0.568,
+        "floorSeconds": 1.05,
+        "measured": [
+          {
+            "time": 17.459,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 17.584,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 17.709,
+            "opacity": 0.32,
+            "heightPx": 123
+          },
+          {
+            "time": 17.834,
+            "opacity": 0.67,
+            "heightPx": 123
+          },
+          {
+            "time": 17.958,
+            "opacity": 0.92,
+            "heightPx": 123
+          },
+          {
+            "time": 18.083,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 18.208,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 18.332,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 18.457,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 18.582,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 18.707,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"GOOD TEAM STORE GOOD TEAM STORE GOOD TEAM STORE\" (9 words) is on screen 1.64 s (±0.01 s), under its 2.40 s floor: hold it about 0.5 s + 0.3 s a word (3.20 s here) before it leaves or changes; see references/motion.md.",
+        "text": "GOOD TEAM STORE GOOD TEAM STORE GOOD TEAM STORE",
+        "selector": "#cap17-1 > div:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 157.69,
+          "y": 1028.54,
+          "width": 764.6199999999999,
+          "height": 135
+        },
+        "time": 19.034,
+        "words": 9,
+        "seconds": 1.637,
+        "floorSeconds": 2.4,
+        "measured": [
+          {
+            "time": 18.707,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 18.831,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 18.956,
+            "opacity": 0.24,
+            "heightPx": 135
+          },
+          {
+            "time": 19.081,
+            "opacity": 0.58,
+            "heightPx": 135
+          },
+          {
+            "time": 19.205,
+            "opacity": 0.93,
+            "heightPx": 135
+          },
+          {
+            "time": 19.33,
+            "opacity": 1,
+            "heightPx": 135
+          },
+          {
+            "time": 19.455,
+            "opacity": 1,
+            "heightPx": 135
+          },
+          {
+            "time": 20.203,
+            "opacity": 1,
+            "heightPx": 135
+          },
+          {
+            "time": 20.328,
+            "opacity": 1,
+            "heightPx": 135
+          },
+          {
+            "time": 20.452,
+            "opacity": 1,
+            "heightPx": 135
+          },
+          {
+            "time": 20.577,
+            "opacity": 1,
+            "heightPx": 135
+          },
+          {
+            "time": 20.702,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 20.827,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 20.951,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"they order that night.\" (4 words) is on screen 0.76 s (±0.01 s), under its 1.27 s floor: hold it about 0.5 s + 0.3 s a word (1.70 s here) before it leaves or changes; see references/motion.md.",
+        "text": "they order that night.",
+        "selector": "#cap23-1",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 179.94,
+          "y": 977.11,
+          "width": 720.1199999999999,
+          "height": 123.00000000000011
+        },
+        "time": 25.472,
+        "words": 4,
+        "seconds": 0.764,
+        "floorSeconds": 1.275,
+        "measured": [
+          {
+            "time": 25.191,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 25.316,
+            "opacity": 0.09,
+            "heightPx": 123
+          },
+          {
+            "time": 25.441,
+            "opacity": 0.43,
+            "heightPx": 123
+          },
+          {
+            "time": 25.566,
+            "opacity": 0.69,
+            "heightPx": 123
+          },
+          {
+            "time": 25.69,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 25.815,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 25.94,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 26.064,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 26.189,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 26.314,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 26.439,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 26.563,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"each player's door,\" (3 words) is on screen 0.83 s (±0.01 s), under its 1.05 s floor: hold it about 0.5 s + 0.3 s a word (1.40 s here) before it leaves or changes; see references/motion.md.",
+        "text": "each player's door,",
+        "selector": "#cap26-1",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 216.97,
+          "y": 978.88,
+          "width": 646.05,
+          "height": 123.00000000000011
+        },
+        "time": 27.007,
+        "words": 3,
+        "seconds": 0.826,
+        "floorSeconds": 1.05,
+        "measured": [
+          {
+            "time": 26.688,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 26.813,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 26.937,
+            "opacity": 0.35,
+            "heightPx": 123
+          },
+          {
+            "time": 27.062,
+            "opacity": 0.61,
+            "heightPx": 123
+          },
+          {
+            "time": 27.187,
+            "opacity": 0.95,
+            "heightPx": 123
+          },
+          {
+            "time": 27.312,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 27.436,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 27.561,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 27.686,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 27.81,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 27.935,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 28.06,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 28.185,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"FAST. FAST. FAST.\" (3 words) is on screen 0.60 s (±0.01 s), under its 1.05 s floor: hold it about 0.5 s + 0.3 s a word (1.40 s here) before it leaves or changes; see references/motion.md.",
+        "text": "FAST. FAST. FAST.",
+        "selector": "#cap28-1 > div:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 334.86,
+          "y": 997.88,
+          "width": 410.27,
+          "height": 247.0000000000001
+        },
+        "time": 28.668,
+        "words": 3,
+        "seconds": 0.6,
+        "floorSeconds": 1.05,
+        "measured": [
+          {
+            "time": 28.309,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 28.434,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 28.559,
+            "opacity": 0.2,
+            "heightPx": 247
+          },
+          {
+            "time": 28.683,
+            "opacity": 0.54,
+            "heightPx": 247
+          },
+          {
+            "time": 28.808,
+            "opacity": 0.88,
+            "heightPx": 247
+          },
+          {
+            "time": 28.933,
+            "opacity": 1,
+            "heightPx": 247
+          },
+          {
+            "time": 29.057,
+            "opacity": 1,
+            "heightPx": 247
+          },
+          {
+            "time": 29.182,
+            "opacity": 1,
+            "heightPx": 247
+          },
+          {
+            "time": 29.307,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 29.432,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 29.556,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"all in one link,\" (4 words) is on screen 0.87 s (±0.01 s), under its 1.27 s floor: hold it about 0.5 s + 0.3 s a word (1.70 s here) before it leaves or changes; see references/motion.md.",
+        "text": "all in one link,",
+        "selector": "#cap29-2",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 302.86,
+          "y": 1129.8,
+          "width": 474.28,
+          "height": 123
+        },
+        "time": 31.536,
+        "words": 4,
+        "seconds": 0.865,
+        "floorSeconds": 1.275,
+        "measured": [
+          {
+            "time": 31.178,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 31.302,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 31.427,
+            "opacity": 0.23,
+            "heightPx": 123
+          },
+          {
+            "time": 31.552,
+            "opacity": 0.58,
+            "heightPx": 123
+          },
+          {
+            "time": 31.676,
+            "opacity": 0.92,
+            "heightPx": 123
+          },
+          {
+            "time": 31.801,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 31.926,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 32.051,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 32.175,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 32.3,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 32.425,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 32.549,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 32.674,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"all season long.\" (3 words) is on screen 0.93 s (±0.01 s), under its 1.05 s floor: hold it about 0.5 s + 0.3 s a word (1.40 s here) before it leaves or changes; see references/motion.md.",
+        "text": "all season long.",
+        "selector": "#cap30-0",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 270.91,
+          "y": 906.3,
+          "width": 538.1699999999998,
+          "height": 123
+        },
+        "time": 32.674,
+        "words": 3,
+        "seconds": 0.928,
+        "floorSeconds": 1.05,
+        "measured": [
+          {
+            "time": 32.3,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 32.425,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 32.549,
+            "opacity": 0.22,
+            "heightPx": 123
+          },
+          {
+            "time": 32.674,
+            "opacity": 0.56,
+            "heightPx": 123
+          },
+          {
+            "time": 32.799,
+            "opacity": 0.81,
+            "heightPx": 123
+          },
+          {
+            "time": 32.923,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 33.048,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 33.173,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 33.298,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 33.422,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 33.547,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 33.672,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 33.796,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 33.921,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"ONE SIMPLE QUESTION. ONE SIMPLE QUESTION. ONE SIMPLE QUES...\" (9 words) is on screen 1.13 s (±0.01 s), under its 2.40 s floor: hold it about 0.5 s + 0.3 s a word (3.20 s here) before it leaves or changes; see references/motion.md.",
+        "text": "ONE SIMPLE QUESTION. ONE SIMPLE QUESTION. ONE SIMPLE QUESTION.",
+        "selector": "#cap32-1 > div:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 88.03,
+          "y": 1121.19,
+          "width": 903.94,
+          "height": 130
+        },
+        "time": 35.137,
+        "words": 9,
+        "seconds": 1.131,
+        "floorSeconds": 2.4,
+        "measured": [
+          {
+            "time": 34.794,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 34.919,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 35.044,
+            "opacity": 0.25,
+            "heightPx": 130
+          },
+          {
+            "time": 35.168,
+            "opacity": 0.6,
+            "heightPx": 130
+          },
+          {
+            "time": 35.293,
+            "opacity": 0.85,
+            "heightPx": 130
+          },
+          {
+            "time": 35.418,
+            "opacity": 1,
+            "heightPx": 130
+          },
+          {
+            "time": 35.542,
+            "opacity": 1,
+            "heightPx": 130
+          },
+          {
+            "time": 35.792,
+            "opacity": 1,
+            "heightPx": 130
+          },
+          {
+            "time": 35.917,
+            "opacity": 1,
+            "heightPx": 130
+          },
+          {
+            "time": 36.041,
+            "opacity": 1,
+            "heightPx": 130
+          },
+          {
+            "time": 36.166,
+            "opacity": 1,
+            "heightPx": 130
+          },
+          {
+            "time": 36.291,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 36.415,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 36.54,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"NEVER CLOSE, NEVER CLOSE, NEVER CLOSE,\" (6 words) is on screen 0.79 s (±0.01 s), under its 1.72 s floor: hold it about 0.5 s + 0.3 s a word (2.30 s here) before it leaves or changes; see references/motion.md.",
+        "text": "NEVER CLOSE, NEVER CLOSE, NEVER CLOSE,",
+        "selector": "#cap36-1 > div:nth-of-type(1)",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 250.84,
+          "y": 975.51,
+          "width": 578.32,
+          "height": 135
+        },
+        "time": 41.708,
+        "words": 6,
+        "seconds": 0.795,
+        "floorSeconds": 1.725,
+        "measured": [
+          {
+            "time": 41.404,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 41.529,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 41.653,
+            "opacity": 0.38,
+            "heightPx": 135
+          },
+          {
+            "time": 41.778,
+            "opacity": 0.72,
+            "heightPx": 135
+          },
+          {
+            "time": 41.903,
+            "opacity": 1,
+            "heightPx": 135
+          },
+          {
+            "time": 42.027,
+            "opacity": 1,
+            "heightPx": 135
+          },
+          {
+            "time": 42.152,
+            "opacity": 1,
+            "heightPx": 135
+          },
+          {
+            "time": 42.277,
+            "opacity": 1,
+            "heightPx": 135
+          },
+          {
+            "time": 42.401,
+            "opacity": 1,
+            "heightPx": 135
+          },
+          {
+            "time": 42.526,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 42.651,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 42.776,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"and they don't cost you\" (5 words) is on screen 1.20 s (±0.01 s), under its 1.50 s floor: hold it about 0.5 s + 0.3 s a word (2.00 s here) before it leaves or changes; see references/motion.md.",
+        "text": "and they don't cost you",
+        "selector": "#cap38-0",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 148.8,
+          "y": 890.15,
+          "width": 782.4000000000001,
+          "height": 123
+        },
+        "time": 42.768,
+        "words": 5,
+        "seconds": 1.2,
+        "floorSeconds": 1.5,
+        "measured": [
+          {
+            "time": 42.401,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 42.526,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 42.651,
+            "opacity": 0.22,
+            "heightPx": 123
+          },
+          {
+            "time": 42.776,
+            "opacity": 0.56,
+            "heightPx": 123
+          },
+          {
+            "time": 42.9,
+            "opacity": 0.91,
+            "heightPx": 123
+          },
+          {
+            "time": 43.025,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 43.15,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 43.524,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 43.649,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 43.773,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 43.898,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 44.023,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 44.147,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 44.272,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"a thing.\" (2 words) is on screen 0.25 s (±0.06 s), under its 0.40 s floor: hold it about 0.5 s + 0.3 s a word (1.10 s here) before it leaves or changes; see references/motion.md.",
+        "text": "a thing.",
+        "selector": "#cap38-1",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 413.86,
+          "y": 976.51,
+          "width": 252.26999999999998,
+          "height": 123
+        },
+        "time": 43.773,
+        "words": 2,
+        "seconds": 0.25,
+        "floorSeconds": 0.4,
+        "measured": [
+          {
+            "time": 43.399,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 43.524,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 43.649,
+            "opacity": 0.38,
+            "heightPx": 123
+          },
+          {
+            "time": 43.773,
+            "opacity": 0.72,
+            "heightPx": 123
+          },
+          {
+            "time": 43.898,
+            "opacity": 0.97,
+            "heightPx": 123
+          },
+          {
+            "time": 44.023,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 44.147,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 44.272,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"for your club?\" (3 words) is on screen 0.62 s (±0.06 s), under its 1.05 s floor: hold it about 0.5 s + 0.3 s a word (1.40 s here) before it leaves or changes; see references/motion.md.",
+        "text": "for your club?",
+        "selector": "#cap40-1",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 302.56,
+          "y": 976.84,
+          "width": 474.88000000000005,
+          "height": 123.00000000000011
+        },
+        "time": 44.771,
+        "words": 3,
+        "seconds": 0.624,
+        "floorSeconds": 1.05,
+        "measured": [
+          {
+            "time": 44.397,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 44.522,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 44.646,
+            "opacity": 0.36,
+            "heightPx": 123
+          },
+          {
+            "time": 44.771,
+            "opacity": 0.7,
+            "heightPx": 123
+          },
+          {
+            "time": 44.896,
+            "opacity": 0.96,
+            "heightPx": 123
+          },
+          {
+            "time": 45.02,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 45.145,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 45.27,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 45.395,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 45.519,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 45.644,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"Just reach out.\" (3 words) is on screen 0.75 s (±0.06 s), under its 1.05 s floor: hold it about 0.5 s + 0.3 s a word (1.40 s here) before it leaves or changes; see references/motion.md.",
+        "text": "Just reach out.",
+        "selector": "#cap42-0",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 285.44,
+          "y": 903.53,
+          "width": 509.10999999999996,
+          "height": 123
+        },
+        "time": 45.644,
+        "words": 3,
+        "seconds": 0.748,
+        "floorSeconds": 1.05,
+        "measured": [
+          {
+            "time": 45.27,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 45.395,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 45.519,
+            "opacity": 0.32,
+            "heightPx": 123
+          },
+          {
+            "time": 45.644,
+            "opacity": 0.67,
+            "heightPx": 123
+          },
+          {
+            "time": 45.769,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 45.893,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 46.018,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 46.143,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 46.267,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 46.392,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 46.517,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 46.642,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "\"joins in week six,\" (4 words) is on screen 1.00 s (±0.06 s), under its 1.27 s floor: hold it about 0.5 s + 0.3 s a word (1.70 s here) before it leaves or changes; see references/motion.md.",
+        "text": "joins in week six,",
+        "selector": "#cap44-1",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 248.75,
+          "y": 977.23,
+          "width": 582.5,
+          "height": 123
+        },
+        "time": 47.515,
+        "words": 4,
+        "seconds": 0.998,
+        "floorSeconds": 1.275,
+        "measured": [
+          {
+            "time": 47.14,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 47.265,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 47.39,
+            "opacity": 0.34,
+            "heightPx": 123
+          },
+          {
+            "time": 47.515,
+            "opacity": 0.68,
+            "heightPx": 123
+          },
+          {
+            "time": 47.639,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 47.764,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 47.889,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 48.013,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 48.138,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 48.263,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 48.388,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 48.512,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 48.637,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 48.762,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "The film's last line \"they can order\" (3 words) is on screen 1.62 s (±0.06 s), under the 2.00 s a closing line needs: hold it about 0.5 s + 0.3 s a word and at least 2 s before the film ends; see references/motion.md.",
+        "text": "they can order",
+        "selector": "#cta0",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 292.08,
+          "y": 915.23,
+          "width": 495.83,
+          "height": 123
+        },
+        "time": 48.886,
+        "words": 3,
+        "seconds": 1.622,
+        "floorSeconds": 2,
+        "measured": [
+          {
+            "time": 48.512,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 48.637,
+            "opacity": 0.2,
+            "heightPx": 123
+          },
+          {
+            "time": 48.762,
+            "opacity": 0.46,
+            "heightPx": 123
+          },
+          {
+            "time": 48.886,
+            "opacity": 0.8,
+            "heightPx": 123
+          },
+          {
+            "time": 49.011,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 49.136,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 49.261,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 50.009,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 50.134,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 50.258,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 50.383,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 50.508,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 50.632,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 50.757,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      },
+      {
+        "code": "line_unread",
+        "severity": "warning",
+        "message": "The film's last line \"that same night.\" (3 words) is on screen 1.25 s (±0.06 s), under the 2.00 s a closing line needs: hold it about 0.5 s + 0.3 s a word and at least 2 s before the film ends; see references/motion.md.",
+        "text": "that same night.",
+        "selector": "#cta1",
+        "dataAttributes": {},
+        "sourceFile": "index.html",
+        "bbox": {
+          "x": 263.27,
+          "y": 1008.81,
+          "width": 553.45,
+          "height": 123
+        },
+        "time": 49.261,
+        "words": 3,
+        "seconds": 1.247,
+        "floorSeconds": 2,
+        "measured": [
+          {
+            "time": 48.886,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 49.011,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 49.136,
+            "opacity": 0.35,
+            "heightPx": 123
+          },
+          {
+            "time": 49.261,
+            "opacity": 0.61,
+            "heightPx": 123
+          },
+          {
+            "time": 49.385,
+            "opacity": 0.95,
+            "heightPx": 123
+          },
+          {
+            "time": 49.51,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 49.635,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 50.009,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 50.134,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 50.258,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 50.383,
+            "opacity": 1,
+            "heightPx": 123
+          },
+          {
+            "time": 50.508,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 50.632,
+            "opacity": null,
+            "heightPx": null
+          },
+          {
+            "time": 50.757,
+            "opacity": null,
+            "heightPx": null
+          }
+        ]
+      }
+    ],
+    "enabled": true,
+    "step": 0.125,
+    "samples": 421
+  },
+  "audio": {
+    "ok": true,
+    "errorCount": 0,
+    "warningCount": 0,
+    "infoCount": 0,
+    "findings": []
+  },
+  "hdr": {
+    "autoPromotion": null,
+    "inspection": "available"
+  },
+  "snapshots": {
+    "enabled": false,
+    "files": [],
+    "times": [],
+    "findingFiles": []
+  }
+}
