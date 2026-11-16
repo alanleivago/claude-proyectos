@@ -46,3 +46,18 @@ Los zips guardan rutas relativas a la raíz del repo, así que caen en su lugar.
 
 ## No incluido (a propósito)
 - `node_modules` (se reinstalan), renders/frames/review, stems y mix.wav (se regeneran), las ~1.500 tomas de semillas descartadas (`voz/takes*`), el wav fuente de 120 MB de Dino Crisis, `assets/zombie-kit`, `crashsune`, `Grego…`, `tyrant-x.zip` (no los usa ninguna pieza de Ava), los largos L1 (252 MB) y farm (293 MB) en mp4.
+
+## `_assets/` (Día 3 y el gigante, 2026-11-16)
+PC `C:\Volumes\alanwork\trabajo\Renders finales claude\Ava Restfield\_assets\` · Mac `/Volumes/alanwork/trabajo/Renders finales claude/Ava Restfield/_assets/`
+
+| Ruta | Qué trae |
+|---|---|
+| `_assets/stalker/stalker_ps1.glb` | Modelo actual del gigante (v3.1, 19 huesos; también en git en `largo3/stalker/` y `largo3/engine/models/`) |
+| `_assets/stalker/stalker_ps1_v2.glb`, `stalker_ps1_v3.glb` | Versiones anteriores |
+| `_assets/stalker/stalker_src.zip` | Todo `largo3/stalker/` sin los glb: concept de Flow, hoja turnaround, `v3/mesh.blend`, perfiles, `src/*.npz`, texturas, renders, compare*.png, tools (rutas relativas a la raíz del repo) |
+| `_assets/stalker/sound/` | Kit de sonido del gigante (rugido 366837, gruñido 222523, respiración 634201, aterrizaje 673424, paso 735421, vidrio, madera, drone) + candidatos `monster_roar/`, `monster_growl/` con `meta.json` |
+| `_assets/day3/day3_voice.zip` | `largo3/voz/lines/*.wav` (tomas elegidas), `voz/takes/fix/` (variantes v3) y `voz/track.wav` |
+| `_assets/day3/day3_audio_cand.zip` | `largo3/audio/cand/**` (todos los CC0 del Día 3) |
+| `_assets/day3/stems/` | `mix.wav` final y stems voice/music/sfx/amb del Día 3 |
+
+Ver [STALKER.md](STALKER.md) para el uso del gigante en el motor.

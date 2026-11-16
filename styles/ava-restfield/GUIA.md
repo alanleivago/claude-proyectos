@@ -8,7 +8,7 @@ relatedTo: [zombie-channel, ava-rules]
 # Ava Restfield — guía completa del estilo (para seguir en la Mac)
 
 Esta guía es autosuficiente: un Claude nuevo en la Mac la lee y puede seguir el canal sin la memoria del PC.
-Junto a ella: [PROPUESTAS.md](PROPUESTAS.md) (próximos videos) y [ASSETS.md](ASSETS.md) (qué assets pesados bajar de LucidLink y dónde ponerlos).
+Junto a ella: [PROPUESTAS.md](PROPUESTAS.md) (próximos videos), [ASSETS.md](ASSETS.md) (qué assets pesados bajar de LucidLink y dónde ponerlos) y [STALKER.md](STALKER.md) (el gigante, enemigo recurrente desde el Día 3).
 
 ---
 
@@ -78,7 +78,7 @@ Muletilla de Ava cuando el final sale mal, en TODOS los episodios. Reusar SIEMPR
 |---|---|---|
 | Desconocido en la puerta (ep10, radio ep12, baño ep13) | `b0469a54` | male, elderly, moderate pitch, american accent, seed 42 |
 | Policía RPD / Officer Vickers (largos) | `cf919aa6` | male, middle-aged, low pitch, american accent, seed 42 |
-| Marla (archivista superviviente) | `996b1578` | female, middle-aged, low pitch, whisper, american accent, seed 42 (sin wav de referencia: es diseño puro) |
+| Marla (archivista superviviente) | `996b1578` | perfil = diseño con "whisper"; desde el Día 3 v3 se genera con `instruct` = "female, middle-aged, low pitch, american accent" (voz con cuerpo, cansada, NO susurro), seed 1 para todas sus líneas; los gritos ("Go! Don't you look back!") con el "!" en el texto |
 | Dutch (preso de la celda 4) | `644338f4` | male, middle-aged, very low pitch, american accent, seed 42 |
 En la Mac: recrear los diseños con esos parámetros (o clonar desde el wav del kit). Efectos: radio = filtro de banda + saturación; voz tras puerta = paso bajo 1.3 kHz + eco corto (ver `voz/assemble.py` de ep12/ep13).
 
@@ -165,6 +165,19 @@ Cada regla es una corrección que el usuario tuvo que pedir; repetirla cuesta un
 - Personajes en pantallas de resumen = render 3D real, no íconos.
 - Tarjetas negras de hora (largos): solo texto, SIN recuadro gris debajo.
 
+### Correcciones del Día 3 (largo 3, v2 → v3, 2026-11-16): reglas fijas
+- **Las linternas alumbran:** donde Ava sostenga una linterna tiene que verse el charco de luz donde pega el haz (la luz por vértice PS1 no dibuja el foco en suelos de pocos vértices). `r2kit.flashlight().on()` hace raycast y pone un charco aditivo + un cono muy tenue; para linternas sueltas, `mkPoolX` en `largo3/engine/sets/p3new.js`. Revisar TODOS los planos con linterna.
+- **Nada de temblor constante en personajes:** nunca un clip corto en bucle como "idle" (el `Standing` de Quaternius, 0,83 s, hacía temblar a Marla). Pose casi quieta + respiración lenta. Ojo: un hueso que el clip no anima no lo resetea el mixer (las rotaciones extra se acumulan): restaurar a reposo antes de rotar.
+- **Sin cámara que tiemble:** la cámara nunca sigue un hueso que se balancea (mano/cabeza al caminar); seguir el cuerpo/raíz. A lo sumo un handheld sutil.
+- **Sin z-fighting ni parpadeo:** alfombras, caminos y calcomanías separados ≥ 2 cm y con `polygonOffset`; revisar cuadros consecutivos en planos generales altos.
+- **Continuidad de luces:** si un plano apaga algo (el generador, "The station goes dark again"), los planos siguientes del mismo lugar quedan apagados (en `reuse.js`: opción `dark`).
+- **Puertas/portones abiertos muestran lo de afuera** (calle, oscuridad), nunca una pared detrás.
+- **Escaleras de mano:** animación real de subir/bajar (de cara a la escalera, mano sobre mano en los peldaños, pies en los peldaños; IK de 2 huesos `climbDown` en `p3new.js`). Nunca flotar. Las bocas/escotillas por donde pasaron quedan ABIERTAS (sin rejas tapando).
+- **Personajes secundarios hablan con voz** (cansada, débil si toca, pero con voz), no susurrando, salvo que el guion lo marque. Gritos = grito.
+- **Nunca repetir palabras** tipo "stay. Stay." o "Static. Static.": una sola vez.
+- **Cualquier toma que suene robótica se regenera** (varias semillas, elegir la más humana: earshot `rank` "a frightened young woman whispering, natural breathy human voice" + transcripción exacta). Los susurros a velocidad 0.76 sonaban robóticos: usar ~0.88.
+- El gigante ruge (ver [STALKER.md](STALKER.md)); nunca narrar que "no hace ruido".
+
 ### Finales y tarjetas
 - Shorts: **"FOLLOW FOR MORE!"**. Largos: **"SUBSCRIBE!"** (y la BGM suena hasta el final). Ya no "FOLLOW AVA RESTFIELD!".
 - Tarjeta "NEXT:" (no "NEXT WEEK:") a máquina en Courier, con un objeto 3D examinado girando justo arriba del texto.
@@ -218,10 +231,14 @@ Cada regla es una corrección que el usuario tuvo que pedir; repetirla cuesta un
 | 13 | `zombie-13-gasstation` | "Gas Station, Part 1" — bombas sin luz, agua antes que snacks, cámara frigorífica = safe room, mano vendada bajo la puerta del baño | entregado (último short, plantilla) |
 | L1 | `zombie-03-station/largo` | LARGO "Zombie Outbreak: 1 Night Locked Inside a Police Station" (~7:40, 18 capítulos) | APROBADO v3 |
 | L2 | `zombie-03-station/largo2` | LARGO "Zombie Outbreak: Day 2 Locked Inside a Police Station" (~9 min, 18 capítulos) | entregado v3 (LucidLink `police-station-part-2.mp4`) |
+| L3 | `zombie-03-station/largo3` | LARGO "Zombie Outbreak: Day 3 Something Followed Me Out of the Sewers" (~9:57, 19 capítulos): alcantarillas → bosque → mansión, aparece el gigante | entregado v3 (correcciones del usuario; LucidLink `police-station-part-3.mp4`) |
 
 ### Continuidad de la serie de la estación (largos)
 - **Noche 1:** zombis toman la ciudad a las 9 PM; Ava encerrada en la vieja comisaría. Encuentra a **Ribbon**, perra K-9 (chaleco K-9, pelota mordida; oye ~4× más lejos). **Marla**, archivista, escondida tras la puerta de records ("don't trust that radio"), desaparece. Puerta del fondo con un trébol en la cerradura → **llave trébol** de latón. Radio repite "help arrives in seven days" con la misma tos. 3:14 AM golpean el vidrio: **Officer Vickers** (convertido), contador de zombis 20 → 50. Las luces se encienden solas (alguien prendió el generador). La cinta en la radio la grabó Vickers. Final: "Do you open the door?" → ganó NO.
 - **Día 2:** "You said no… so the door stays shut." Vickers golpea en código 7-3-7. Generador (media galón/hora, nunca adentro), apagar la cinta, inodoro de balde, **Dutch** en la celda 4, comida para dos, llave trébol abre la estación de 1920 bajo el piso, túnel. **Marla mordida** al final del túnel ("don't trust that man in cell four"), se lava la mordida 15 min. Azotea: espejo de señales, tres destellos. Helicóptero deja nota: "Bridge. Day three. Dawn. One seat." Las luces se encienden solas otra vez; los golpes paran. Inventario: perro, 15 balas, 25 días de agua, llave trébol, espejo, un asiento. Dutch dice que conoce el camino por el túnel. **CTA: "Do you let Dutch out? Comment YES or NO — most comments decide Day 3."**
+
+- **Día 3:** "Last night you had to choose… most of you said no" → Dutch se queda en la celda 4. El generador lo puso Marla con un temporizador "M"; Ava lo apaga y deja el portón entreabierto (CO), la estación queda a oscuras; **los golpes en código 7-3-7 eran de Vickers** y ya no vuelven. Ruta: túnel de 1920 contando pasos (65 pasos = 100 m) → derrumbe a los 400 pasos → rejilla y escalera a las **alcantarillas** (gas H2S, agua en movimiento, horda de 80 bajando) → **Marla se sacrifica** (baja la compuerta y llama a la horda golpeando un tubo: "Go! Don't you look back!") → perdidos, regla de la mano en la pared → cuarto de obreros (guardado 12:30 AM) → desagüe al **bosque** (frío, Osa Mayor → Polar, cuervos, zombi que pasa, **huellas descalzas gigantes**) → **mansión** (fuego: secarse antes de calentarse; muerto de esmoquin que gira la cabeza; llave de plata; desván con radio, 146.52 MHz; Eagle One espera 1 hora en el río) → 5:40 AM **el gigante entra por la ventana** y mira escalera arriba. Ahora solo quedan **Ava + Ribbon**. Inventario: perro, 15 balas, llave de plata, helicóptero 1 hora en el río. **CTA: "Option one: jump out the window and run for the river. Option two: stand your ground and fight… Comment one or two — most comments decide Day 4."**
+- **Desde el Día 4:** el gigante ("the Stalker") es el enemigo recurrente que persigue a Ava por los videos siguientes: [STALKER.md](STALKER.md).
 
 ### Continuidad Gas Station
 - Part 1 termina con la gota de sangre bajo la puerta del baño y el menú **"Unlock it / Leave it locked"** + "Part 1 · Follow for Part 2". "Bites bleed, but so do cuts." La voz del baño = b0469a54 apagada por la puerta.
