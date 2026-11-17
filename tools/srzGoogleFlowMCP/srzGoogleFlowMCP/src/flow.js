@@ -210,7 +210,7 @@ async function insertMention(page, name) {
   const chips = page.locator('div.ProseMirror span.mention-chip');
   const before = await chips.count();
   const option = page.locator('button.asset-item').filter({
-    has: page.locator('.asset-title', { hasText: new RegExp(`^\\s*${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*$`) }),
+    has: page.locator('.asset-title', { hasText: new RegExp(`^\\s*${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(\\.(jpe?g|png|webp))?\\s*$`) }),  // re-subidas a otro proyecto quedan como NOMBRE.jpg
   }).first();
   // the picker sometimes misses an asset that exists: close it, erase "@name" and search again
   for (let t = 0; ; t++) {
@@ -244,11 +244,16 @@ async function writePrompt(page, prompt) {
 // ---------- generation ----------
 
 async function configure(page, { aspect, count, model }) {
+  // New projects open Flow's agent side panel, which hides the plain prompt box: close it.
+  const agentPanelClose = page.locator('flow-agent-panel button[aria-label="Cerrar"], flow-agent-panel button[aria-label="Close"]');
+  if (await agentPanelClose.count() && await agentPanelClose.first().isVisible()) { await agentPanelClose.first().click(); await page.waitForTimeout(1500); }
   // Plain generation, not Flow's chat agent.
   const agent = page.locator('flow-agent-mode-toggle-chip button');
   if (await agent.count() && (await agent.getAttribute('aria-pressed')) === 'true') await agent.click();
 
   // The trigger sometimes ignores the first click after the panel was closed: retry.
+  const agentChip = page.locator('flow-agent-mode-toggle-chip button');
+  if (await agentChip.count() && (await agentChip.getAttribute('aria-pressed')) === 'true') await agentChip.click();
   const panel = page.locator('flow-prompt-box-settings');
   for (let i = 0; i < 4 && !(await panel.isVisible()); i++) {
     await page.locator('button.settings-trigger-button').click();
@@ -372,6 +377,9 @@ export async function generateImages({ prompt, aspect = '1:1', count = 1, model 
 export const VIDEO_MODELS = { 'omni': 'Omni 1.1 Flash', 'lite': 'Veo 3.1 - Lite', 'fast': 'Veo 3.1 - Fast', 'quality': 'Veo 3.1 - Quality' };
 
 async function configureVideo(page, { aspect, count, model, duration, mode }) {
+  // New projects open Flow's agent side panel, which hides the plain prompt box: close it.
+  const agentPanelClose = page.locator('flow-agent-panel button[aria-label="Cerrar"], flow-agent-panel button[aria-label="Close"]');
+  if (await agentPanelClose.count() && await agentPanelClose.first().isVisible()) { await agentPanelClose.first().click(); await page.waitForTimeout(1500); }
   const agent = page.locator('flow-agent-mode-toggle-chip button');
   if (await agent.count() && (await agent.getAttribute('aria-pressed')) === 'true') await agent.click();
   const panel = page.locator('flow-prompt-box-settings');

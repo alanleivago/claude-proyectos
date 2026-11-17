@@ -1,0 +1,14 @@
+  const tx = (w, h, fn) => L.cvs(w, h, fn);
+  const PLANK = tx(32, 32, (c) => { c.fillStyle = '#b07a44'; c.fillRect(0, 0, 32, 32); for (let y = 0; y < 32; y += 6) { c.fillStyle = '#6a4220'; c.fillRect(0, y, 32, 1); c.fillStyle = '#c48e56'; c.fillRect(0, y + 1, 32, 1); } for (let i = 0; i < 6; i++) { c.fillStyle = '#5a3418'; c.fillRect((i * 11) % 31, (i * 6 + 3) % 31, 1, 1); } });
+  function q3D(scene, ch, tq) { const g = letters3D(scene, '?', { size: 0.2, x: 0, y: 0, z: 0, jitter: 0.3, seed: 3 }); g.visible = false; let hd = null; ch.root.traverse((o) => { if (!hd && o.isBone && o.name === 'Head') hd = o; }); let s0 = 1, done = false;
+    return (t) => { if (!done) { done = true; ch.root.updateMatrixWorld(true); const p2 = hd.getWorldPosition(V3([0, 0, 0])); g.position.copy(p2).add(V3([0.22, 0.32, 0.05])); g.rotation.set(0, ch.root.rotation.y, 0.15); g.updateMatrixWorld(true); hd.attach(g); s0 = g.scale.x; }
+      const f = (q15(t) - tq) * 30; g.visible = f >= 0; g.scale.setScalar(s0 * (f < 0 ? 0.01 : f < 3 ? [0.6, 1.15, 0.97][Math.floor(f)] : 1)); }; }
+  function holdIn(ch, side, prop, off = [0, 0, 0], rot = [0, 0, 0]) { let done = false; return () => { if (done) return; done = true; ch.root.updateMatrixWorld(true); const p = ch.fist(side, V3([0, 0, 0])); if (!prop.parent) ch.root.parent.add(prop);
+    prop.position.copy(p).add(V3(off)); prop.rotation.set(...rot); prop.updateMatrixWorld(true); ch.hand(side).attach(prop); }; }
+  const SAND = tx(16, 16, (c) => { c.fillStyle = '#e8d49a'; c.fillRect(0, 0, 16, 16); for (let i = 0; i < 26; i++) { c.fillStyle = ['#d8c088', '#f2e2b0', '#cdb47c'][i % 3]; c.fillRect((i * 7) % 15, (i * 5) % 15, 2, 1); } });
+  function palm(scene, x, z, s = 1) { const g = new THREE.Group(); g.position.set(x, 0, z); g.scale.setScalar(s); scene.add(g); const tr = litM(null, 0x8a6a42);
+    for (let k = 0; k < 6; k++) { const seg2 = L.mesh(new THREE.CylinderGeometry(0.07, 0.09, 0.42, 6), tr, Math.sin(k * 0.35) * 0.18, 0.21 + k * 0.4, 0, g); seg2.rotation.z = -0.12; }
+    const top = V3([Math.sin(5 * 0.35) * 0.18 + 0.05, 2.5, 0]); for (let k = 0; k < 7; k++) { const a = k / 7 * Math.PI * 2; const lf = L.box(1.0, 0.04, 0.24, litM(null, k % 2 ? 0x3e9a3a : 0x52b244), top.x + Math.cos(a) * 0.45, top.y - 0.12, Math.sin(a) * 0.45, g); lf.rotation.set(0, -a, -0.45); }
+    for (let k = 0; k < 3; k++) L.mesh(new THREE.SphereGeometry(0.07, 6, 4), litM(null, 0x6a4a22), top.x + Math.cos(k * 2) * 0.1, top.y - 0.12, Math.sin(k * 2) * 0.1, g); return g; }
+  function handTo(ch, side, target, segs) { ch.drive(0, segs, [[-99, 'open', 'neutral']], false); ch.root.updateMatrixWorld(true); const f = ch.fist(side, V3([0, 0, 0])); ch.root.position.x += target.x - f.x; ch.root.position.z += target.z - f.z; }
+  // a crank turning around a pivot: arm + handle orbiting in the plane normal to the shaft (world axis ax)

@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>girl2 face review</title>
+<style>html,body{margin:0;background:#111}canvas{display:block}</style>
+<script type="importmap">{ "imports": { "three": "../../sina-test/node_modules/three/build/three.module.js", "three/addons/": "../../sina-test/node_modules/three/examples/jsm/" } }</script>
+</head>
+<body>
+<script type="module">
+// The GLB as the digger engine draws a character (shots.js zero(): MeshBasicMaterial, Nearest, alphaTest 0.5, DoubleSide,
+// face materials cloned + flipY false) and the engine's setFace (cell names + cols x rows from face_tracks.json "_meta").
+// face(view, eyes, mouth): close-up of the head (his_idle pose), view = yaw in degrees (0 front, + = toward her left).
+// his(eyes, mouth): his calibrated turntable camera of f001 (for the side-by-side with her real face).
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+const q = new URLSearchParams(location.search);
+const W = +(q.get('w') || 400), H = +(q.get('h') || 440);
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1); renderer.setSize(W, H); renderer.outputColorSpace = THREE.SRGBColorSpace;
+document.body.appendChild(renderer.domElement);
+const scene = new THREE.Scene(); scene.background = new THREE.Color().setRGB(235 / 255, 221 / 255, 199 / 255, THREE.SRGBColorSpace);
+const cam = new THREE.PerspectiveCamera(30, W / H, 0.05, 400);
+const gltf = await new GLTFLoader().loadAsync('../out/' + (q.get('glb') || 'girl2_curvy_bare.glb') + '?t=' + Date.now());
+const FACES = await (await fetch('../out/face_tracks.json?t=' + Date.now())).json();
+const TT = await (await fetch('../out/turntable_cam.json')).json();
+const root = gltf.scene;
+const nearest = (t) => { if (t) { t.minFilter = t.magFilter = THREE.NearestFilter; t.generateMipmaps = false; t.needsUpdate = true; } return t; };
+root.traverse((o) => {
+  if (!o.isMesh) return; o.frustumCulled = false;
+  const conv = (m) => new THREE.MeshBasicMaterial({ name: m.name, map: nearest(m.map), alphaTest: 0.5, side: THREE.DoubleSide });
+  o.material = Array.isArray(o.material) ? o.material.map(conv) : conv(o.material);
+});
+// ---- engine setFace (digger-09-toothbrush/engine/shots.js, same code)
+const CELLS = 16;
+const FACE = {
+  face_eyes: ['open', 'half', 'blink', 'happy', 'surprised', 'angry', 'sad', 'wink', 'hearts', 'shocked', 'dizzy', 'relaxed', 'disgust', 'smirk', 'soft', 'sparkle'],
+  face_mouth: ['neutral', 'smile', 'smileOpen', 'talkA', 'talkO', 'surprised', 'frown', 'shout', 'blep', 'cat', 'gasp', 'bigShock', 'disgust', 'smirk', 'blushSmile', 'blushGasp'],
+};
+function setFace(root, { eyes, mouth } = {}, meta = FACES && FACES._meta) {
+  const cols = (meta && (meta.cols || meta.cells)) || CELLS, rows = (meta && meta.rows) || 1;
+  root.traverse((o) => {
+    if (!o.isMesh) return;
+    const list = Array.isArray(o.material) ? o.material : [o.material];
+    list.forEach((m, i) => {
+      const cells = (meta && meta[m.name]) || FACE[m.name]; if (!cells) return;
+      if (!m.userData.faceOwn) {
+        m = m.clone(); m.map = m.map.clone();
+        m.map.magFilter = m.map.minFilter = THREE.NearestFilter; m.map.generateMipmaps = false; m.map.flipY = false; m.map.needsUpdate = true;
+        m.userData.faceOwn = true; if (Array.isArray(o.material)) o.material[i] = m; else o.material = m;
+      }
+      const k = cells.indexOf(m.name === 'face_eyes' ? eyes : mouth); if (k >= 0) m.map.offset.set((k % cols) / cols, Math.floor(k / cols) / rows);
+      else console.error('no cell', m.name, m.name === 'face_eyes' ? eyes : mouth);
+    });
+  });
+}
+const pivot = new THREE.Group(); pivot.add(root); scene.add(pivot);
+const mixer = new THREE.AnimationMixer(root);
+const act = mixer.clipAction(THREE.AnimationClip.findByName(gltf.animations, 'his_idle')); act.play(); act.time = 0; mixer.update(0);
+root.updateMatrixWorld(true);
+const head = root.getObjectByName('Head'); const hp = new THREE.Vector3(); head.getWorldPosition(hp);
+// face centre: a bit in front of / above the head bone (found once from the face material's bounds)
+const box = new THREE.Box3();
+root.traverse((o) => { if (o.isMesh && (o.material.name === 'face_eyes' || o.material.name === 'face_mouth')) { o.updateMatrixWorld(true); const b = new THREE.Box3().setFromObject(o, true); box.union(b); } });
+const fc = new THREE.Vector3(); box.getCenter(fc);
+window.INFO = { head: hp.toArray(), face: fc.toArray(), size: box.getSize(new THREE.Vector3()).toArray() };
+window.face = (view, eyes, mouth, dist = +(q.get('d') || 2.3), dy = 0) => {
+  pivot.rotation.y = 0; setFace(root, { eyes, mouth });
+  const a = view * Math.PI / 180, T = new THREE.Vector3(hp.x, fc.y + dy, hp.z);
+  cam.fov = 30; cam.aspect = W / H; cam.up.set(0, 1, 0); cam.updateProjectionMatrix();
+  cam.position.set(T.x + Math.sin(a) * dist, T.y + 0.05, T.z + Math.cos(a) * dist); cam.lookAt(T);
+  renderer.render(scene, cam);
+};
+const toThree = (p) => new THREE.Vector3(p[0] * TT.S, (p[2] - TT.zmin) * TT.S - 9.0, -p[1] * TT.S);
+window.his = (eyes = 'open', mouth = 'neutral', k = 0) => {
+  pivot.rotation.y = TT.alphas[k] * Math.PI / 180; setFace(root, { eyes, mouth });
+  const C = toThree(TT.C), F = toThree([TT.C[0] + TT.F[0], TT.C[1] + TT.F[1], TT.C[2] + TT.F[2]]);
+  const Uv = new THREE.Vector3(TT.U[0], TT.U[2], -TT.U[1]);
+  cam.fov = 2 * Math.atan(18 / TT.f) * 180 / Math.PI; cam.aspect = W / H; cam.updateProjectionMatrix();
+  cam.position.copy(C); cam.up.copy(Uv); cam.lookAt(F);
+  renderer.render(scene, cam);
+};
+window.READY = true;
+</script>
+</body>
+</html>

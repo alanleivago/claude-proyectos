@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Pip gnome viewer</title>
+<style>html,body{margin:0;background:#111}canvas{display:block;image-rendering:pixelated}</style>
+<script type="importmap">{ "imports": { "three": "../sina-test/node_modules/three/build/three.module.js", "three/addons/": "../sina-test/node_modules/three/examples/jsm/" } }</script>
+</head>
+<body>
+<script type="module">
+// Unlit viewer for out/gnome_anim.glb (same material conversion as the engine: MeshBasicMaterial + Nearest, DoubleSide).
+// API (render.mjs): setView(view, shot) ; setAction(name|null) ; renderFrame(f30, eyes?, mouth?) -> canvas
+// Browser: viewer.html?a=walk&v=3q plays at 15 fps.
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+const q = new URLSearchParams(location.search);
+const W = +(q.get('w') || 360), H = +(q.get('h') || 480);
+const renderer = new THREE.WebGLRenderer({ antialias: false, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1); renderer.setSize(W, H);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+document.body.appendChild(renderer.domElement);
+const scene = new THREE.Scene(); scene.background = new THREE.Color(0x8f9aa3);
+const floor = new THREE.Mesh(new THREE.CircleGeometry(4, 24), new THREE.MeshBasicMaterial({ color: 0x6f7a6a }));
+floor.rotation.x = -Math.PI / 2; floor.position.y = -0.002; scene.add(floor);
+const cam = new THREE.PerspectiveCamera(30, W / H, 0.05, 100);
+
+const gltf = await new GLTFLoader().loadAsync('out/gnome_anim.glb');                 // eyes option A (Servbot eyes)
+const gltfB = await new GLTFLoader().loadAsync('out/gnome_anim_eyesB.glb');          // eyes option B (small eyes + brows)
+let eyeMapB = null;
+gltfB.scene.traverse((o) => { if (o.isMesh) (Array.isArray(o.material) ? o.material : [o.material]).forEach((m) => { if (m.name === 'gnome_eyes') eyeMapB = m.map; }); });
+const char = gltf.scene;
+char.traverse((o) => {
+  if (!o.isMesh) return; o.frustumCulled = false;
+  const conv = (s) => {
+    if (s.map) { s.map.minFilter = s.map.magFilter = THREE.NearestFilter; s.map.generateMipmaps = false; s.map.needsUpdate = true; }
+    const m = new THREE.MeshBasicMaterial({ name: s.name, map: s.map || null, side: THREE.DoubleSide });
+    return m;
+  };
+  o.material = Array.isArray(o.material) ? o.material.map(conv) : conv(o.material);
+});
+scene.add(char);
+let eyeMapA = null;
+char.traverse((o) => { if (o.isMesh) (Array.isArray(o.material) ? o.material : [o.material]).forEach((m) => { if (m.name === 'gnome_eyes') eyeMapA = m.map; }); });
+for (const t of [eyeMapB]) { t.minFilter = t.magFilter = THREE.NearestFilter; t.generateMipmaps = false; t.needsUpdate = true; }
+window.setEyes = (v) => char.traverse((o) => { if (o.isMesh) (Array.isArray(o.material) ? o.material : [o.material]).forEach((m) => {
+  if (m.name === 'gnome_eyes') { const off = m.map.offset.x; m.map = v === 'b' ? eyeMapB : eyeMapA; m.map.offset.x = off; m.needsUpdate = true; } }); });
+const faces = await (await fetch('out/face_tracks.json')).json();
+const CELLS = 16;
+const FACE = {
+  gnome_eyes: ['deadpan', 'open', 'unimpressed', 'blink', 'skeptical', 'surprised', 'annoyed', 'sleepy', 'happy', 'lookside'],
+  gnome_mouth: ['neutral', 'smile', 'talkA', 'talkO', 'talkE', 'talkM', 'surprised', 'frown', 'smirk', 'sleepy'],
+};
+function setFace(eyes, mouth) {
+  char.traverse((o) => {
+    if (!o.isMesh) return;
+    (Array.isArray(o.material) ? o.material : [o.material]).forEach((m) => {
+      const cells = FACE[m.name]; if (!cells) return;
+      const k = cells.indexOf(m.name === 'gnome_eyes' ? eyes : mouth);
+      if (k >= 0) m.map.offset.x = k / CELLS;
+    });
+  });
+}
+function faceAt(name, f) {
+  const tr = faces[name] || [[1, 'deadpan', 'neutral']];
+  let cur = tr[0];
+  for (const k of tr) if (k[0] <= f) cur = k;
+  return cur;
+}
+const mixer = new THREE.AnimationMixer(char);
+let action = null, name = null;
+const VIEWS = { front: 0, '3q': 0.6, side: Math.PI / 2, back: Math.PI, '3qL': -0.6, sideL: -Math.PI / 2, '3qb': 2.4 };
+window.ACTIONS = gltf.animations.map((c) => ({ name: c.name, frames: Math.round(c.duration * 30) }));
+window.setView = (view = '3q', shot = 'full', low = 0) => {
+  const a = VIEWS[view] ?? +view;
+  let r = 15, h = 3.2, ty = 3.2;                         // full body, gnome is 6.6 tall
+  if (shot === 'face') { r = 5.0; h = 3.55; ty = 3.45; }
+  if (shot === 'mid') { r = 9; h = 2.6; ty = 2.6; }
+  const tz = shot === 'face' ? 0.9 : 0;
+  cam.position.set(Math.sin(a) * r, h - low, tz + Math.cos(a) * r);
+  cam.lookAt(0, ty, tz);
+};
+window.setAction = (n) => {
+  mixer.stopAllAction(); name = n; action = null;
+  if (n) { action = mixer.clipAction(THREE.AnimationClip.findByName(gltf.animations, n)); action.play(); }
+};
+window.renderFrame = (f = 0, eyes, mouth) => {
+  if (action) { action.time = f / 30; mixer.update(0); }
+  const k = faceAt(name, f + 1); setFace(eyes || k[1], mouth || k[2]);
+  renderer.render(scene, cam);
+  return renderer.domElement.toDataURL('image/png');
+};
+if (q.get('a')) {
+  window.setView(q.get('v') || '3q'); window.setAction(q.get('a'));
+  const dur = action.getClip().duration, t0 = performance.now();
+  const loop = () => { const t = ((performance.now() - t0) / 1000) % dur; window.renderFrame(Math.floor(t * 15) * 2); requestAnimationFrame(loop); };
+  loop();
+}
+window.READY = true;
+</script>
+</body>
+</html>

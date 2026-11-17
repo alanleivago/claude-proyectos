@@ -1,4 +1,4 @@
-"""Genera los clips de invernadero-atlixco PARTE 1 (Las Nochebuenas de Atlixco, remake transformado de "Veinte años a su lado… y lo vendieron" de @atriumstories_, valle de Atlixco, Puebla, VISTA STORIES) con Omni Flash por el Flow MCP (CLI), uno por uno. Salta los que ya existen.
+﻿"""Genera los clips de invernadero-atlixco PARTE 1 (Las Nochebuenas de Atlixco, remake transformado de "Veinte años a su lado… y lo vendieron" de @atriumstories_, valle de Atlixco, Puebla, VISTA STORIES) con Omni Flash por el Flow MCP (CLI), uno por uno. Salta los que ya existen.
 Copia del clips.py de piloncillo-rio (todas sus defensas: gatito en imagen, reload_flow, new_project, control de duplicados md5, TRIES=6, SAFE/SOFT, NOREF). Diálogos en lines.json (fuente única). Uso: python -I clips.py [ID ...]   -> imprime "FIN P1" al terminar la tanda.
 Con IDs: regenera solo esos (la versión anterior pasa a clips/old/<id>_vN.mp4)."""
 import json, re, subprocess, sys, os, tempfile, time
@@ -218,6 +218,7 @@ def gen(text, dur, out):
                            cwd=MCP, env=dict(os.environ), capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=600)
     except subprocess.TimeoutExpired:
         return [], "timeout del CLI (600 s)"
+    if "LIMITE DE CREDITOS" in r.stdout: print(r.stdout.strip(), flush=True); sys.exit("FIN por limite de creditos")
     return [l for l in r.stdout.splitlines() if l.endswith(".mp4")], r.stdout + r.stderr
 
 def flow_ok():

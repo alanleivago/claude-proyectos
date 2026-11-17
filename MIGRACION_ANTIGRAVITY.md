@@ -6,7 +6,7 @@ relatedTo: [CLAUDE.md, CLAUDE.local.md, tools/exportar_contexto.py]
 ---
 # Contexto completo para continuar el trabajo en Antigravity
 
-Generado el 2026-11-14 en la máquina Windows con `tools/exportar_contexto.py`, a partir de todo lo trabajado con Claude Code: instrucciones, memoria, estilos, estado de piezas, el historial completo de mensajes del usuario, herramientas y git. Solo incluye texto: los videos, audios y modelos 3D están en el repo y en los discos.
+Generado el 2026-11-17 en la máquina Windows con `tools/exportar_contexto.py`, a partir de todo lo trabajado con Claude Code: instrucciones, memoria, estilos, estado de piezas, el historial completo de mensajes del usuario, herramientas y git. Solo incluye texto: los videos, audios y modelos 3D están en el repo y en los discos.
 
 ## 0. Léeme primero (instrucciones para el agente de Antigravity)
 
@@ -217,6 +217,14 @@ El plan Max 20x trae USD 200 al mes de créditos de la API de Claude (no se acum
 Herramientas que ya usan los créditos:
 - `ver-youtube` (skill): yt-dlp + Whisper local + fotogramas → notas en `fuentes/<tema>/`.
 - `python tools/revisar_render.py --estilo <estilo> video.mp4` → `<video>_revision.md` con veredicto y fallos por regla. Correrlo antes de mostrar un render al usuario.
+
+## Entrega de renders finales (todas las sesiones, todos los estilos — desde 2026-11-13)
+
+- Cada video terminado se entrega en `/Volumes/alanwork/trabajo/Renders finales claude/<carpeta del canal>/`, con el título como nombre de archivo. Carpetas: Agente davis, Ali Abdaal, Alterbase, Amphorus, Ava Restfield, Cartoon3d, Doggo poly shorts, Edicion de videos Reels, Kodama yokai, Madfable, Majestic, Mechayuki, MexiTV, Punk poly shorts, Roblox, Stimulus, Tuneles, Vista. **cartoon3d ("3D cartoon") → Alterbase.** Si no está claro qué carpeta, preguntar una vez.
+- Se envía la versión **share** (como `export.mjs --share`: libx264 CRF 24 preset slow, yuv420p, AAC 192k, +faststart), no el master.
+- Después de entregar, borrar las versiones anteriores en `pieces/<pieza>/renders/` (silent vN, raw, duplicados final.mp4/<pieza>.mp4); queda solo el master con el título.
+- La miniatura va en `<carpeta del canal>/Miniaturas/`, con el mismo nombre (título) en .png.
+- Esa carpeta (`/Volumes/alanwork/...` en la Mac; el mismo disco está activo en la PC) es el canal para pasar archivos entre la PC y la Mac: renders, miniaturas y cualquier archivo pesado que no va a git.
 
 ## `CLAUDE.local.md`
 
@@ -446,18 +454,19 @@ Never export a video before the user has approved its storyboard. This applies t
 - [Esfuerzo pov3d moderado](pov3d-effort.md) — buenos pero rápidos: reutilizar sets, ≤3 agentes sin high, una pasada de storyboard
 - [Estilo corte de cueva](cavecut-style.md) — pieces/cavernas: corte 3D three.js, roca verde-negra con toque marrón + musgo, OXÍGENO; look aprobado
 - [Entrega de videos largos](long-video-delivery.md) — al entregar la versión final de un largo: título + miniatura 1280x720 siempre
-- [LucidLink renders](lucidlink-renders.md) — render final → C:\Volumes\alanwork\trabajo\Renders finales claude\<Estilo>\ (+ caption .txt); reemplaza Telegram desde 2026-11-12; miniatura en <Estilo>/Miniaturas/
+- [LucidLink renders](lucidlink-renders.md) — render final → C:\Volumes\alanwork\trabajo\Renders finales claude\<Estilo>\ (+ caption .txt); reemplaza Telegram desde 2026-11-12 (salvo novelas mexicanas: LucidLink + Telegram); miniatura en <Estilo>/Miniaturas/
 - [Low poly desde foto](lowpoly-from-photo.md) — método vlvt: foto→script Blender loft 6-12 lados, tex 128px/32 colores, revisar al lado de la foto
 - [Artemis](artemis.md) — F:\artemis instalado (Android por lenguaje natural); para publicar en FB/TikTok desde sus teléfonos, NO configurar hasta que avise
 - [pov3d-hd nicho](pov3d-hd-niche.md) — largo 16:9 "Couldn't Stop" 8:30, sin voz (como Minute Zero); rocket-speedup en curso
 - [yokai 40 s máx](yokai-40s.md) — kodamashorts/yokai: videos de 40 s como máximo por ahora (desde 2026-11-03)
 - [lemo-opuscar](lemo-opuscar.md) — plugin con 66 estilos de película hechos en código; copia y galería en opuscar/styleboard/index.html
 - [Novelas Atrium](atrium-novelas.md) — telenovelas IA estilo @atriumstories_ con Omni Flash; Flow Ultra 25k créditos, generar uno por uno; clips Omni de 8-10 s (varias líneas por clip, se cortan en montaje)
-- [Solo Flow MCP](flow-mcp-only.md) — NUNCA flow-auto/Flow Connector; todo Flow por srz-google-flow-mcp (video: extender el MCP); cuenta tiktokeeuu691 (desde 2026-11-08; antes lyrics33231363), nunca manuelleivapro60
+- [Solo Flow MCP](flow-mcp-only.md) — NUNCA flow-auto/Flow Connector; todo Flow por srz-google-flow-mcp (video: extender el MCP); cuenta monetizadotiktok18 (desde 2026-11-16, gastar todo; luego correoderecuperacion496), nunca manuelleivapro60
+- [Cuenta de créditos Flow](flow-creditos.md) — pieces/_creditos.json: cli.js suma 10 por clip Omni y corta al límite (11.400 en la tanda del 2026-11-14); sin gastar tokens en vigilarlo
 - [Reglas novelas VISTA/MAJESTIC](atrium-reglas.md) — MAYORÍA tipo capos/figura de poder (análisis atrium-vista), ≤2 s por plano; Parte 2 con la misma marca de la Parte 1; APROBADO reten-sierra v4 + hacienda-sangre v2 (edit.py por frases, saltos del mismo personaje, CTA con carisma, continuidad de bordes, marca alterna); VERIFICAR antes de entregar
 - [Autonomía atrium](atrium-autonomia.md) — autorizado encadenar remakes (medalla-mezcal → El Retén → ...); estado en pieces/medalla-mezcal/ESTADO.md
 - [Flow rápido + vigilar](flow-generacion-rapida.md) — clips encadenados sin pausa fija; Monitor sobre el log; si falla Flow RECARGAR (tools/flow_reload.js), nunca esperar
-- [Caption novelas](atrium-telegram-caption.md) — caption.txt al lado del mp4; antes Telegram con 3er arg = marca (VISTA/MAJESTIC/MEXI/SIN MARCA) en mayúsculas al inicio; título gancho + descripción + CTA + hashtags en <pieza>/caption.txt; enviar_telegram.py lo lee
+- [Caption novelas](atrium-telegram-caption.md) — caption.txt al lado del mp4; antes Telegram con 3er arg = marca (VISTA/MAJESTIC/MEXI/MEXITV/SIN MARCA; MEXITV = marca nueva distinta de MEXI, videos de @mexitve) en mayúsculas al inicio; título gancho + descripción + CTA + hashtags en <pieza>/caption.txt; enviar_telegram.py lo lee
 - [Tesseract](tesseract.md) — tsrct CLI 0.5.0 + skills tesseract-* para talking heads/motion; ruta del .cmd, telemetría on
 - [Estilo Stimulus](stimulus-style.md) — talking heads de Dariel: spec styles/stimulus/ESTILO.md, outro real + logo en assets, fuente DIN Next LT Arabic Bold
 - [FilmCraft](filmcraft.md) — editor NLE en Rust en F:\filmcraft, MCP filmcraft (user scope) + CLI con 700+ comandos
@@ -475,10 +484,15 @@ Never export a video before the user has approved its storyboard. This applies t
 - [zawdog: solo personajes necesarios](zawdog-only-needed-chars.md) — pulir solo los humanos que usa el próximo video; ropa Flow = build_human3 flow=1
 - [Estilo Ali Abdaal 2](ali-abdaal-2-style.md) — APROBADO 2026-11-12: réplica McDonald's 1:1 (Instrument Serif + subrayado ondulado, captions en caja gris, burbujas de chat, crema con motas, sin viñeta); spec styles/ali-abdaal-2/
 - [Links clicables](links-clicables.md) — siempre link markdown relativo a la raíz del workspace para cada archivo entregado
-- [VMOS Cloud](vmos-cloud.md) — teléfonos en la nube por API con tools/vmos.py; Pixel 10 Pro APP6958QPXXF8LD7; captura = getLongGenerateUrl sin tocar la URL
+- [VMOS Cloud](vmos-cloud.md) — teléfonos en la nube por API con tools/vmos.py; Pixel APP6958QPXXF8LD7 (naldo) + V06 ATP63362YSJXJF2F (Patrick @agentedavis, VMOS_PAD=)
 - [agent-browser](agent-browser.md) — CLI navegador instalado; usarlo a mi criterio (piezas HTML, webs sin API), nunca para Flow
 - [Gumroad](gumroad.md) — MCP conectado a la tienda agentpatrickdavis; confirmar antes de publicar
 - [Migración Antigravity](migracion-antigravity.md) — MIGRACION_ANTIGRAVITY.md se regenera solo (Stop hook); Mac genera MIGRACION_MAC.md
+- [P2 solo si la P1 pasa 10k](atrium-p2-solo-si-funciona.md) — novelas: solo Partes 1; P2 en Flow únicamente si la P1 supera 10k vistas en @vistastoriestv / @wepsychologic (MAJESTIC) / @mexistories / @mexitve (MEXI TV, Pixel VMOS)
+- [DMs Patrick = ventas](patrick-dm-ventas.md) — siempre mandar link de guía/producto; demanda sin producto → crear producto; no resolver casos
+- [Mechayuki UpNext remakes](mechayuki-upnext-remake.md) — NUEVO formato 2026-11-15: rehacer reels de @jongmin.design con mismos planos + diálogo parafraseado; specs en fuentes/jongmin-design/remake/
+- [Horario @mexitve](mexitv-horario.md) — 3 días 18:00, luego 08:00+18:00; tools/mexitv_cola.json + tarea programada
+- [Miniaturas Ava](ava-thumbnails.md) — fórmula APROBADA v6A (key art RE Requiem: Ava + busto del gigante low poly + zombis + HUNTER en Anton detrás de la cabeza); nunca fuente pixel
 
 ## memoria: `agent-browser.md`
 
@@ -769,6 +783,28 @@ Desde 2026-11-03: replicar las telenovelas cortas de TikTok @atriumstories_ (gui
 **How to apply:** no frenar por coste de créditos en Flow; un job a la vez.
 - Omni Flash: aprovechar clips de 8 y 10 s (pedido del usuario): varias líneas/planos por clip y cortar en el montaje. MCP a 720p (default de Flow es 360p).
 
+## memoria: `atrium-p2-solo-si-funciona.md`
+
+---
+name: atrium-p2-solo-si-funciona
+description: "Novelas VISTA/MEXI/MAJESTIC: generar solo Partes 1; la Parte 2 solo si la P1 pasa 10k vistas en su TikTok"
+metadata:
+  node_type: memory
+  type: feedback
+  originSessionId: 50c3c1ee-af27-4bdd-ab17-c508335a8f8f
+  modified: 2026-11-15T20:17:14.710Z
+---
+
+Desde 2026-11-15: generar en Flow SOLO Partes 1 de las novelas. Una Parte 2 se genera únicamente cuando su Parte 1 supera las **10.000 vistas** en la cuenta de TikTok de su marca:
+- VISTA → https://www.tiktok.com/@vistastoriestv
+- MAJESTIC → https://www.tiktok.com/@wepsychologic
+- MEXI → https://www.tiktok.com/@mexistories
+- MEXITV (marca APARTE de MEXI; en Telegram 3er arg = MEXITV; en edit.py BRAND = "MEXITV": marca de agua "MEXI TV" arriba-izquierda y=135, kit pieces/_marcas/MEXITV) → https://www.tiktok.com/@mexitve (cuenta del Pixel 10 Pro de VMOS, APP6958QPXXF8LD7; desde 2026-11-16 también se generan videos para ella, mismas reglas)
+
+**Why:** no gastar créditos de Flow en segundas partes de historias que no funcionaron.
+
+**How to apply:** antes de escribir/generar una P2, revisar las vistas de la P1 en su cuenta (Apify/vidiq tiktok profile videos). Guion de la P2 se puede dejar escrito, pero no gastar Flow hasta que pase 10k. Ver [[atrium-reglas]], [[atrium-autonomia]], [[flow-creditos]].
+
 ## memoria: `atrium-reglas.md`
 
 ---
@@ -861,6 +897,29 @@ Cuando el usuario avise de un video descalificado: texto de apelación ≤500 ca
 
 ## Remakes transformados (usuario, 2026-11-08)
 Preferir remakes de los videos de Atrium con >1M vistas (fuentes/atrium-vista/ranking.md), pero NUNCA iguales: si la historia se parece demasiado, TikTok lo descalifica por contenido no original. Mantener solo el esqueleto (humillación + plazo → llega la figura de poder → plazo invertido → giro familiar → castigo en P2) y cambiar escenario, oficio, objeto clave, nombres, diálogos, giro y CTA.
+
+## Re-análisis 2026-11-14 (fuentes/atrium-vista/ranking2.md)
+El usuario pidió enfocarse en las historias de Atrium (las que mejor funcionan). Datos de 49 posts: madrastra (mediana 336K) y padre que pone orden a los hijos (276K) superan a capos (188K, aunque capos tiene los picos 1.6M/1.1M); esas sagas sostienen la P2 (Evaristo P2 > P1). Flojos: infidelidad, bondad, humilde-dignidad. Tanda del 2026-11-14: solo VISTA, MEXI y MAJESTIC (sin SIN MARCA).
+
+## Nunca abrir con inserto vacío (usuario, 2026-11-14)
+No empezar el video con un plano donde no se ve a nadie (algo que cae, alguien rompe/tira algo, manos, pies, objetos). Atrium nunca lo hace: el primer tramo es el personaje hablando, directo en el conflicto. Insertos solo en medio.
+
+## Velocidad 1.2x (2026-11-14)
+Atrium acelera sus videos a 1.20x (rango 1.15-1.25): imagen y voz por igual, con el tono conservado (atempo), y exporta a 30 fps. Informe: fuentes/atrium-vista/velocidad.md. Desde jipi-becal, edit.py aplica después del concat `setpts=PTS/1.2,fps=30` + `atempo=1.2` y divide at() entre SPEED; la música no se acelera.
+**Usuario (2026-11-14): le gusta acelerar pero un poco menos: usar SPEED = 1.15** (setpts=PTS/1.15, atempo=1.15), no 1.2.
+
+## Encuadres con 2 personajes (usuario, 2026-11-14; fuentes/atrium-vista/encuadres.md)
+Atrium: 15 % planos de 1 persona, 62 % sobre el hombro (OTS: el que habla de frente, el que escucha de espaldas desenfocado en el borde), 16 % two-shot, 6 % grupo. Nosotros hacíamos 94 % de 1 persona. Meta: ~50 % OTS, ~25 % 1 persona (CTA, llamadas, llanto), ~15 % two-shot, ~10 % grupo. La persona de espaldas va con su @{ASSET} + ropa vista de atrás (si no, Omni mete dobles); solo mueve los labios el de frente. Snippet: pieces/_encuadres_snippet.py; primera pieza: costal-cuyutlan.
+Resultado costal-cuyutlan: 17/17 OTS, 6/6 two-shot y 3/3 grupo bien a la primera, sin dobles. Plantilla de encuadres = pieces/costal-cuyutlan/clips.py; usarla en TODAS las piezas nuevas.
+
+## Flow: diálogos inventados y contaminación (2026-11-15)
+- Omni a veces inventa diálogos ajenos ("No me mientas, Eduardo"). Arreglo: en talk() poner el diálogo AL INICIO del prompt: "DIALOGUE (exact Spanish words, nothing else): …". Usarlo en todas las plantillas nuevas.
+- Un proyecto de Flow compartido entre piezas mete personajes de otra pieza y gatitos del test de control. Usar un proyecto Flow nuevo por pieza (o borrar los assets "Kitten playing with yarn").
+
+- **Subtítulos quemados (desde 2026-11-16):** todo render lleva subtítulos amarillos en negrita con contorno oscuro, tercio inferior centrado, 1-2 líneas por frase, sincronizados, texto de lines.json sin errores (como la ref @alisorxomrb 7706249552289860896). No re-renderizar lo ya entregado.
+
+- **Historias variadas (2026-11-17):** PROHIBIDO repetir la fórmula desalojo/echar a alguien con plazo ("antes de que suenen las campanas te vas"). Cada pieza con premisa distinta (identidad oculta, herencia, doble vida, traición de hermano, boda interrumpida, paternidad...) sacada de fuentes/novelas-variedad/CATALOGO.md; sin repetir estructura ni patrón de frase final.
+- **Patronas y haciendas (2026-11-17):** el usuario pidió sumar historias tipo Soy tu dueña / Destilando Amor / La Patrona / Doña Bárbara / Pasión de Gavilanes: catálogo #45-#56, ~1 de cada 2 piezas nuevas; solo arquetipos, nunca tramas reales.
 
 ## memoria: `atrium-telegram-caption.md`
 
@@ -1056,6 +1115,24 @@ Long-form version (16:9, ≥ 8 min) of every short — template = pieces/zombie-
 **Desde 2026-11-11 (largo Day 2), para TODO lo de Ava:** voz más lenta (VoiceStudio `speed` ≈ 0.88; ella iba muy rápido) y tono cinematográfico/humano: más pausas entre frases (silencios de 1-2 s con ambiente), pensamientos internos susurrados ([PIENSA], instruct "whisper", más cerca/secos en la mezcla), miedo audible (respiración, tragar saliva, voz que tiembla), que parezca que lo está viviendo. **Why:** el usuario lo pidió como regla fija. **How to apply:** marcar en el guion [PIENSA]/[RESPIRA]/(pausa) y respetarlos al generar y mezclar.
 
 **Correcciones largo Day 2 v2 (2026-11-12), reglas fijas:** Ava NUNCA dice "click" (onomatopeyas fuera del guion; el sonido va como SFX). Tarjetas negras de hora: solo texto, SIN recuadro gris debajo. Inicio de una Parte N nunca brusco: recapitular la elección con una frase ("Last night you had to choose..."). Nada de sílabas estiradas por speed bajo (revisar palabras sueltas tipo "three... seven" y regenerar a speed normal si se alargan). Cabezas de zombies sin temblor. Nada quieto >4 s: cambiar planos. Pensamientos de miedo (no, no, no) con toma humana, no robótica. SFX sin duplicar ni duros. Personajes en pantallas de resumen = render 3D real, no iconos.
+
+## memoria: `ava-thumbnails.md`
+
+---
+name: ava-thumbnails
+description: "Ava Restfield thumbnails — approved RE Requiem key-art formula (Day 3 v6A), Anton font, no pixel font"
+metadata:
+  node_type: memory
+  type: feedback
+  originSessionId: 3b008220-5710-444f-9064-2bac0d02be64
+  modified: 2026-11-16T23:31:31.887Z
+---
+
+Thumbnail approved 2026-11-16: pieces/zombie-03-station/largo3/miniaturas_v6/v6_A_flowhead_red.png.
+Formula: RE Requiem–style key art, horizontal; Ava right (flashlight glowing, clean pistol down); recurring enemy bust huge upper-left as double exposure over rainy ruins, with a head close to OUR low-poly model (Flow head swap using our render as reference); zombie silhouettes in fog bottom-left; teal palette + rain; a big word in Anton ("HUNTER", blood red) BEHIND the giant's head. Never the old pixel font. Tools: miniaturas_v6/_tools/compose_v6.py, engine/thumb_shoot.mjs.
+
+**Why:** the user iterated v2→v6. They rejected Flow repainting the giant without the low-poly look and wanted the giant bigger with sharper edges.
+**How to apply:** start every Ava thumbnail from this formula. The user wants to improve thumbnails across ALL styles. Related: [[ava-rules]], [[long-video-delivery]].
 
 ## memoria: `bitpix-series.md`
 
@@ -1441,6 +1518,29 @@ Desde 2026-11-12 el usuario pidió dejar de crear copias/duplicados. El render f
 **Why:** demasiadas copias ocupan disco (F: llegó a 62 GB libres).
 **How to apply:** al terminar: renders/share.mp4 → LucidLink/<Estilo>/<titulo-corto>.mp4; borrar renders superados.
 
+## memoria: `flow-creditos.md`
+
+---
+name: flow-creditos
+description: Llevar la cuenta de créditos de Flow (Omni Flash) por clip y parar en el límite que diga el usuario
+metadata:
+  node_type: memory
+  type: feedback
+  originSessionId: 50c3c1ee-af27-4bdd-ab17-c508335a8f8f
+  modified: 2026-11-14T17:16:30.762Z
+---
+
+El usuario pide llevar la cuenta de cada clip generado en Flow y de los créditos gastados, y no pasar nunca el límite que fije (2026-11-14: 11.400 créditos, cuenta correoderecuperacion496).
+
+**Cómo está hecho:** `tools/srzGoogleFlowMCP/srzGoogleFlowMCP/src/cli.js` (comando `video`) lee y escribe `pieces/_creditos.json` ({limite, costo 10, gastado, clips, fallidos}). Suma 10 por cada clip que sale; si el siguiente pasaría el límite, imprime "LIMITE DE CREDITOS" y sale con código 3. clips.py (plata-taxco, invernadero-atlixco y las plantillas nuevas) termina con "FIN por limite de creditos" al ver ese texto. Para una tanda nueva: cambiar `limite` y poner `gastado` a 0.
+
+**Why:** se quedaron sin créditos dos cuentas a mitad de tanda; quiere controlar el gasto. Pidió explícitamente que llevar la cuenta NO gaste muchos tokens: "solo lleva la cuenta normal".
+
+**How to apply:** no vigilar el contador clip a clip; solo leerlo al reportar un render o al terminar la tanda (1 línea: gastado/límite). Ver [[flow-mcp-only]], [[flow-generacion-rapida]].
+
+
+**2026-11-16 — cuenta nueva monetizadotiktok18@gmail.com (ACTIVA, default en chrome.js):** gastar TODOS sus créditos (sin límite; parar cuando Flow diga que no hay). Su cuenta va APARTE en pieces/_creditos_monetizadotiktok18.json (cli.js elige archivo por cuenta). correoderecuperacion496 queda en _creditos.json (11.230/11.400) y NO se usa hasta agotar monetizadotiktok18.
+
 ## memoria: `flow-generacion-rapida.md`
 
 ---
@@ -1504,7 +1604,7 @@ metadata:
   node_type: memory
   type: feedback
   originSessionId: 31217992-d068-4929-9882-eede7428b798
-  modified: 2026-11-03T14:19:26.936Z
+  modified: 2026-11-14T17:16:22.877Z
 ---
 
 Desde 2026-11-03 el usuario prohibió el Flow Connector (CLI `flow-auto`, skill flow-generate). Todo lo de Google Flow va por el MCP srz-google-flow-mcp ([[flow-mcp]]), también los videos de [[atrium-novelas]].
@@ -1512,7 +1612,7 @@ Desde 2026-11-03 el usuario prohibió el Flow Connector (CLI `flow-auto`, skill 
 **Why:** el Connector no generaba nada en su Flow (cola pausada, pestaña oculta) y el usuario quiere usar solo el MCP.
 **How to apply:** imágenes con flow_generate_image (+ flow_upload_file para referencias @{name}). Video: flow_generate_video (Omni 1.1 Flash, 720p, 4/6/8/10 s, ingredients @{name}); CLI `node src/cli.js video --prompt-file p.txt --duration 8 --out DIR`. Acento mexicano aprobado por el usuario (prompt "native Mexican Spanish ... clear lip sync").
 
-**Cuenta (desde 2026-11-08):** usar SIEMPRE tiktokeeuu691@gmail.com (ULTRA, /u/2/; lyrics33231363 se quedó sin créditos) en Flow/Chrome, nunca manuelleivapro60@gmail.com (las dos están logueadas en el Chrome del MCP, FlowImageChrome). El MCP abre Flow con `?authuser=` = FLOW_ACCOUNT (src/chrome.js, default tiktokeeuu691).
+**Cuenta (desde 2026-11-14):** usar SIEMPRE correoderecuperacion496@gmail.com (ULTRA, /u/3/; abre en modo Agente, flow.js lo apaga solo; antes tiktokeeuu691 y lyrics33231363, sin créditos) en Flow/Chrome, nunca manuelleivapro60@gmail.com (las dos están logueadas en el Chrome del MCP, FlowImageChrome). El MCP abre Flow con `?authuser=` = FLOW_ACCOUNT (src/chrome.js, default tiktokeeuu691).
 
 ## memoria: `flow-mcp.md`
 
@@ -1746,6 +1846,8 @@ Cada render final (también corregidos y otros idiomas) se copia a `C:\Volumes\a
 
 **Miniaturas (2026-11-13):** cada carpeta de estilo en LucidLink tiene `Miniaturas/`; la miniatura de cada video (largos sobre todo) va ahí con el mismo nombre que el mp4 (`<titulo-corto>.png`). Al crear una carpeta de estilo nueva, crear también su `Miniaturas/`.
 
+**Excepción novelas mexicanas (usuario, 2026-11-14):** las novelas VISTA/MEXI/MAJESTIC van a LucidLink Y TAMBIÉN a Telegram como antes (`python tools/enviar_telegram.py <render> <caption.txt> <MARCA>`). El resto de estilos solo LucidLink.
+
 ## memoria: `mechayuki-expeditions.md`
 
 ---
@@ -1830,6 +1932,44 @@ Sound
 - Music NOT pure chiptune: original playful plucky track with a real bass line and soft drums (~105-112 BPM, major), ~7 dB under the voice, -12 LUFS master / TP ≤ -1 dBTP (user asked for louder in ep03); the pause after the opening "Operator…" ≈0.4 s, no clipping; real CC0 SFX on actions; check with earshot.
 - Credits: only CC0/CC-BY assets, CC-BY listed in the TikTok description (LOG.md).
 
+## memoria: `mechayuki-upnext-remake.md`
+
+---
+name: mechayuki-upnext-remake
+description: "Nuevo formato Mechayuki (2026-11-15) — remakes de los reels de @jongmin.design (\"UpNext\"): mismos planos, diálogo parafraseado, subtítulos como los suyos"
+metadata:
+  node_type: memory
+  type: project
+  originSessionId: b19cd1d9-332a-4ffd-91ff-b618e0ca55df
+  modified: 2026-11-17T15:01:01.584Z
+---
+
+Los shorts de artefacto y los de cat.explains.it no consiguieron vistas, así que el usuario (2026-11-15) quiere dejar el enfoque androide/artefactos. Desde ahora se rehacen los reels de @jongmin.design (Instagram, serie UpNext, autoayuda en diálogo con un gnomo mentor, low poly PS1): MISMOS planos, encuadres y ritmo, diálogo PARAFRASEADO en inglés y subtítulos iguales a los suyos. En TikTok esos videos no existen.
+Análisis: fuentes/jongmin-design/ (SINTESIS.md, remake/ESTILO.md, una spec por reel en remake/<id>.md, hojas de contacto en remake/cuts/).
+Orden: Dd2YemoPJ9- (342K likes), DeDh, DenX, Dd-HI, luego DeIZ, Dd5E y Deqi.
+**Why:** el formato anterior no agarraba vistas; el usuario eligió replicar esta cuenta.
+**How to apply:** render de prueba del gnomo antes del storyboard (NPC existente + gorro/barba, nunca un modelo a medida), storyboard → aprobación → render → revisión. Cambiar algunos detalles (objetos, nombres) para no quedar calcado. Ver [[mechayuki-rules]].
+Personajes (2026-11-16): gnomo Pip = Servbot con su textura sombreada original recoloreada + ojos estilo Servbot (APROBADO, pieces/upnext-gnome, ojos A). Chica = la del tutorial MercurialForge (youtube DqntXa7dOO8), el usuario la quiere IDÉNTICA (modelada a mano como él, paso a paso; guía extra: tutorial de Crashsune), en pieces/upnext-girl. Verificar con overlays al 50% en sus cámaras.
+Chica, v7 rechazada (2026-11-16): la cara era plana y la de él tiene volumen; la cabeza, el cuerpo y los pies no seguían su malla. Además usaba las caras de Roll (las del flequillo amarillo en el medio), que él solo pone como referencia; las suyas aparecen desde el minuto 9:19. Hay que replicar polígono por polígono su malla gris (7:55 y 7:57, ~470 tris), con Roll de assets/ (zip Roll Caskett) al lado como guía de altura, igual que él. No entregar hasta que sea idéntica. Capturas del usuario en fuentes/mml2-girl-tutorial/user_refs/.
+Chica del tutorial ABANDONADA (2026-11-16): no se logró idéntica. La reemplaza la réplica del modelo de TikTok @.rashiyx (Ashley RE4, vuelta de 360°): pieces/upnext-girl2. El usuario eligió V2 (curvy, piernas desnudas) y V3 (curvy, pantimedias) para alternarlas en los videos. Low poly de 3,6k tris, con el trasero agrandado a pedido.
+Al 2026-11-17: Ashley APROBADA (v5, pieces/upnext-girl2). Voces en VoiceStudio: "Ashley" y "Gnomo personaje apoyo" (quitarles el ruido). Las refs tienen un ojo de pez leve y animación a pocos fps. El usuario evalúa cambiar a Pip por MetalShadow (assets/Grego..., en prueba en pieces/upnext-metalshadow). Primer video en pieces/upnext-01, storyboard v2 gustó.
+Mesera APROBADA (pieces/upnext-waitress, shorts + jeans) para un formato nuevo estilo TikTok @missmedannypsx (análisis en fuentes/missmedannypsx/). Su pretendiente es Artillery de MML modificado (pieces/upnext-suitor). El usuario revisa las animaciones en video de 360°.
+
+## memoria: `mexitv-horario.md`
+
+---
+name: mexitv-horario
+description: Horario de publicación de @mexitve (Pixel VMOS): 3 días a las 18:00, luego 08:00 y 18:00; cola + tarea programada
+metadata:
+  type: project
+---
+
+Horario pedido 2026-11-16 para @mexitve (Pixel 10 Pro VMOS): 17, 18 y 19 de nov solo 1 video a las 18:00 (el 16 nada); desde el 20 de nov, 2 diarios (08:00 y 18:00), hora del PC (Venezuela, -04:00).
+
+**Cómo está hecho:** tarea de Windows "MexiTV publicar TikTok" (08:00 y 18:00) corre `tools/mexitv_publicar.py`, que publica el primero de `tools/mexitv_cola.json` (["Estilo","archivo.mp4"], el mp4 + .txt deben estar en LucidLink) con tiktok_upload.py; log en tools/mexitv_publicar.log. Si falla, queda en la cola.
+
+**How to apply:** la cola lleva SOLO videos generados para @mexitve (no reusar renders de otras cuentas). Cada video nuevo para @mexitve: entregarlo a LucidLink y añadirlo a la cola. Revisar el log y que la cola no se vacíe. Ver [[vmos-cloud]], [[atrium-p2-solo-si-funciona]].
+
 ## memoria: `migracion-antigravity.md`
 
 ---
@@ -1861,6 +2001,23 @@ metadata:
 
 Openverse API: `https://api.openverse.org/v1/audio/?q=<term>&license_type=commercial&page_size=N` (also `/v1/images/`). Works with no key (anonymous rate limit). Results give `title`, `license` (cc0, by...), `duration` (ms), `url` (often freesound HQ mp3 preview), `creator`, `foreign_landing_url` for credits.
 Registered 2026-10-25 as app `alanleiva-video-sfx` (email alanleivago@gmail.com); client_id/secret in `%USERPROFILE%\.openverse.json`. Token: POST `/v1/auth_tokens/token/` with client_id, client_secret, grant_type=client_credentials (lasts 12 h) → header `Authorization: Bearer <token>`. The email verification link returns HTTP 500 "Invalid verification code" (Openverse bug) and `verified` stays false, but the token already gets 100/min and 10000/day (anon: 20/min, 200/day). Always send the token. Use with [[earshot]] (`rank`/`realness`) to pick the best download.
+
+## memoria: `patrick-dm-ventas.md`
+
+---
+name: patrick-dm-ventas
+description: Mensajes y comentarios de Patrick (TikTok): siempre redirigir al link de una guía/producto; cada demanda nueva = crear producto; no resolver problemas
+metadata:
+  type: feedback
+---
+
+En DMs y comentarios de @agentedavis el objetivo es SIEMPRE que entren al link (checklist gratis, kit, guía, paquete), no resolverles el problema ni seguirles la corriente. Cualquier problema que cuenten se aprovecha para ofrecer un producto; si no existe uno que encaje, se crea (guía o documento, aunque la solución sea mínima) — la demanda genera la oferta. Tono educado y cálido como el de la respuesta a Maribel (le gustó). No hay "casos urgentes" que escalar.
+Fuente principal: comentarios de sus videos con "DOCUMENTO", "TARJETA", etc.: convertir cada uno (responder y mandar el link).
+
+**Why:** el usuario lo pidió 2026-11-15 tras ver que respondí a Maribel resolviendo su caso sin link.
+**How to apply:** respuestas cortas, empatía de una línea + link del producto más cercano; anotar demandas sin producto en agente-davis/tiktok/demandas.md para crear productos. Usar script por API (créditos) para leer chats/comentarios y redactar. Ver [[gumroad]], [[vmos-cloud]].
+
+**Videos TikTok (pedido 2026-11-15):** mismo formato que con la tarjeta roja: arriba clip viral generado con IA (ICE vs NYPD, aeropuerto, etc.), abajo Patrick opinando, y al final recomienda el producto (lista gratis / kit / guía) con CTA "comenta DOCUMENTO/LISTA" o "link en mi perfil"; a quien comente se le manda el link por DM. Detalle del formato viejo en agente-davis/tiktok/ESTRATEGIA.md.
 
 ## memoria: `positpixel-code-only.md`
 
@@ -2401,10 +2558,12 @@ metadata:
 - Endpoint list for AI: https://cloud.vmoscloud.com/vmoscloud/doc/zh/server/llms.html (simulateTouch, inputText, startApp, uploadFileV3, asyncCmd, openOnlineAdb).
 - vmos.py also: `shot [out]`, `sh "input tap x y"`, `run "cmd"` (waits output), `push local /sdcard/...` (base64 chunks, max 4096 chars/cmd, ~1 s per 3 KB: OK for photos, too slow for videos). In Git Bash prefix MSYS_NO_PATHCONV=1 or /sdcard gets mangled.
 - ADB tunnel does NOT work on this "real" phone (forward target localhost:1 → device offline); tools/vmos_adb.py left as is.
-- TikTok account @naldo5944 (pkg com.zhiliaoapp.musically), avatar = MEXI TV logo (2026-11-12). Warm-up: `python tools/tiktok_warmup.py [min] [p_like]` — pure script + Haiku 5.5 screen check every 8 videos (API credits); restarts TikTok at start.
+- TikTok account @mexitve (antes @naldo5944) (pkg com.zhiliaoapp.musically), avatar = MEXI TV logo (2026-11-12). Warm-up: `python tools/tiktok_warmup.py [min] [p_like]` — pure script + Haiku 5.5 screen check every 8 videos (API credits); restarts TikTok at start.
 - Purpose: posting to TikTok/FB from cloud phones (related [[artemis]], [[zernio]]).
 - Subida PROBADA 2026-11-12 (chofer-patrona p1 publicado en @naldo5944): LucidLink app → Renders finales claude/<Estilo> → ⋮ → Download → GUARDAR (va a /sdcard/Download) → TikTok "+" → miniatura galería abajo-izq → video → Siguiente → Siguiente → tocar descripción → API `inputText {"padCodes":[pad],"text":caption}` (emojis OK; TikTok deja solo 5 hashtags) → atrás (teclado) → Publicar (≈2337 y). Caption sin la marca (MAJESTIC/VISTA...). Permisos de contactos: NO PERMITIR.
 - SCRIPT de subida (probado en seco 2026-11-12): `python tools/tiktok_upload.py <Estilo> <archivo.mp4> [--dry]` — baja de LucidLink, mira 3-6 videos, sube con el .txt (sin marca, 5 hashtags), luego mira 4-8 videos; toques con jitter. Botones por texto vía uiautomator filtrado en el teléfono (la API corta salidas a 2000 caracteres). Cero tokens.
+- **Teléfono V06 = cuenta de Patrick (2026-11-14):** padCode ATP63362YSJXJF2F (virtual, Android 15, M2012K11AG, SIM T-Mobile US, IP en Industry CA). TikTok @agentedavis (51.8K seguidores, app en español) + LucidLink (alanwork/trabajo) logueados. Zona horaria y GPS puestos en Los Ángeles para que coincidan con la IP. SOLO la cuenta de Patrick en este teléfono. Usar `VMOS_PAD=ATP63362YSJXJF2F python tools/vmos.py ...` (también tiktok_upload.py / tiktok_warmup.py leen VMOS_PAD del entorno; sin él usan el Pixel APP6958). Ver [[gumroad]], [[agente-davis-guiones]].
+- V06 herramientas (2026-11-14): `tools/patrick.py ui|tap|type|key|swipe`, `tools/patrick_inbox.py` (vuelca chats, pero NO lee mensajes largos: verificar con captura), `tools/patrick_dm.py`. inputText AÑADE al borrador: vaciar la caja antes (y en el chat se puede "Cancelar envío" con pulsación larga, 1 h). Pantalla 720x1280. Estrategia y estado: agente-davis/tiktok/ESTRATEGIA.md.
 
 ## memoria: `voice-cuts-in-silence.md`
 
@@ -3140,6 +3299,16 @@ de aquí choca con una nota de `memoria/`, manda la nota más reciente (fecha en
 2026-11-11, tras lost-luggage (APROBADO y enviado).
 
 > **NIVEL APROBADO (2026-11-12): `pieces/trash-library`** — el usuario: "quedó excelente, este es el nivel que quiero para estos videos". Todo short cartoon3d nuevo arranca copiando trash-library: cámara secuencial Ricks (`seqCam`/`CAMSEQ`, un plano continuo por set, whips entre sets; ver `fuentes/cartoon3d/camara-secuencial-ricks.md`), grade Ricks de `shots.js` COLOR, `stableShadow` + gemelos de sombra, `pose({look, heading})`, props en capa FOCUS + oclusores de profundidad, sets densos y detallados, y las lecciones de §9 "trash-library v2". Sonido: copiar `pieces/trash-library/sound`.
+
+> **FORMATO "PERSONAJES FAMOSOS" (aprobado 2026-11-13, `pieces/nvidia-huang`)** — noticias o historias de gente famosa de cualquier industria en este estilo. Arrancar copiando nvidia-huang. Reglas:
+> - **Hechos:** cada dato verificado con 2+ fuentes serias en `facts.md` (fuente + certeza). Acusaciones SIEMPRE atribuidas ("according to the New York Times", "alleged"), incluir la negación y "nobody has been charged" si aplica; nada inventado presentado como hecho; si las fuentes chocan (p. ej. una renuncia) confirmar con el documento oficial (SEC 8-K) o no decirlo. Título, miniatura y caption igual de precisos (nunca "spy" como hecho). PG, nada sexual.
+> - **Guion:** 3 opciones (POV "Imagine you're <famoso>", inversor, parodia); ganó POV con gancho que adelanta el final ("…in just two weeks you go from X to Y"); escalada día a día; 2 gags sin voz (~0.9 s) + gag de cierre ~2.2 s; ~224 palabras; humanizer; sin "!". **Voz a velocidad natural — nunca acelerarla** (el usuario lo rechazó); si no cabe, el video dura más (nvidia = 64.2 s).
+> - **Apertura:** zoom/dolly desde muy lejos (exterior del lugar, de noche, cartel) que atraviesa el vidrio y aterriza en el famoso justo en su nombre (como la ref de Elon Musk, `fuentes/cartoon3d-famosos/`).
+> - **Personajes reales:** caricatura toon con sus rasgos icónicos (Huang: pelo gris, lentes, chaqueta de cuero; Trump: pelo rubio peinado, traje azul, corbata roja larga). Si se nombra a alguien que habla (rueda de prensa, TV), **sale hablando con la boca moviéndose en las palabras** — nunca un podio vacío. Personas acusadas se muestran neutrales (empresaria junto a su cartel + tarjeta de nombre), nunca disfrazadas de lo que se les acusa. Extras: caras inventadas, cada uno con cabeza única (sombreros, gorras).
+> - **Cada línea abstracta necesita su visual** (nunca 5 s sobre un periódico): p. ej. "recruited by China's spy agency" = vitrina "ILLUSTRATION" con el edificio MINISTRY OF STATE SECURITY, agentes con lentes, carpeta "U.S. INTELLIGENCE MEMO · per NYT" con sello ALLEGED. Logos reales no; nombres solo como texto en carteles.
+> - **Cámara:** igual de dinámica que trash-library (3+ ejes ~95 %, cambio cada ~0.75 s, ≤110°/s), PERO en las pausas sobre un sujeto: **una deriva suave en una sola dirección, nunca vaivén adelante-atrás** (marea). Ningún tramo que muestre solo pared: siempre encuadra un sujeto.
+> - **Final:** explosión meme real (green screen de YouTube bajado con yt-dlp a `refs-ext/`, keyeado y compuesto sobre los últimos ~1.7 s, con su audio) después del gag de cierre.
+> - **Entrega:** versión share en `/Volumes/alanwork/trabajo/Renders finales claude/Alterbase/` (ver CLAUDE.md raíz).
 
 **Qué es:** shorts verticales en inglés (1080×1920, 30 fps, 60,5 s) que cuentan un hecho real y raro como una escena
 ("You walk into…"). Personajes 2D-3D dibujados en código (`toon.js`: cabeza redonda blanca, cara de kit, brazos de
@@ -4263,6 +4432,181 @@ head.html SHOT engine → sets.js (15 sets) + props.js (~35 props) → 8 section
 - The hero's head BIG on the right half (≈ 55% of the height), cropped by the bottom, smug face: flat-lidded eyes, a four-point star in one eye, one-sided smirk. Warm glow behind the head, rim light.
 - One glowing prop/opponent on the other side (bullet, IQ meter, the cat), an accent in red (tags "PART 2", a red word). Dark navy night, blurred bokeh background.
 - Template: `pieces/cats-thumb` (scene + `ivPost` override that draws face, bubble and caption on top of the grade, `IV.bar = 0`). Copy it, change the scene.
+
+## `styles\mechayuki\README.md`
+
+---
+type: spec
+status: active
+tags: [mechayuki, digger, ps1, megaman-legends, tiktok-shorts, youtube-expeditions, mac-handoff]
+relatedTo: [mechayuki-rules, mechayuki-expeditions, digger-channel, zero-fem-model, long-video-delivery]
+---
+
+# Mechayuki: guía completa para trabajar el estilo (PC o Mac)
+
+Leer este archivo entero antes de tocar un episodio. Las reglas detalladas, una por cada corrección del usuario, están en [memoria/](memoria/), copiadas tal cual de la memoria de Claude en la PC. Si hay conflicto, **manda la memoria más reciente**. Lo más importante: [memoria/mechayuki-rules.md](memoria/mechayuki-rules.md) para los shorts y [memoria/mechayuki-expeditions.md](memoria/mechayuki-expeditions.md) para los largos.
+
+**En la Mac:** copiar `memoria/*.md` a la carpeta de memoria de Claude Code del proyecto (`~/.claude/projects/<proyecto>/memory/`) y añadir sus líneas al `MEMORY.md` de allá, o pedirle a Claude que lea esta carpeta al empezar.
+
+## 1. El canal
+
+- **Personaje:** Mechayuki (@mechayuki), una androide del futuro lejano. Los humanos desaparecieron y ella desentierra "artefactos humanos" (refrigerador, inodoro, candado, cepillo de dientes…) para entenderlos.
+- **Al espectador** le dice "Operator".
+- **Estética:** PS1 / Mega Man Legends 2. Low poly, texturas chicas, campos verdes con cielo azul enorme.
+- **Modelo:** Zero Volnutt feminizado. Es un modelo COMPRADO, con derechos del usuario.
+- **Dos formatos:**
+  - **Shorts verticales** (TikTok, 1080x1920, **máximo 80 s**).
+  - **Expeditions:** largos horizontales para YouTube, 16:9, de 10 a 11 min.
+
+## 2. Formato vigente de los shorts: ARTEFACTO (desde 2026-11-05)
+
+El formato cat.explains.it ("How people did X before Y", shorts #06–#08) **no funcionó y se abandonó**. Se volvió al formato de artefacto de los ep01–#05, con lugares muy variados.
+
+**Estructura (unas 200 palabras, unos 2,7 palabras por segundo):**
+1. **Apertura:** "Operator… [cómo lo encontró]… another human artifact. Humans called it… a [X]." El "Operator…" es el clip aprobado `megagirl_operator.wav` pegado en un silencio, con una pausa de ~0.4 s.
+2. **Gancho** absurdo o con asco, en forma de pregunta que sube de tono al final.
+3. **Cadena** "If you [do X]… you have a [Y]." con rótulos "This is a…" (3 o más).
+4. **Comentario de "Operator [nombre] asks…"** entre el 35 y el 40 % del guion.
+5. **Personaje histórico + año**, con "The story goes" si la anécdota es dudosa.
+6. **Cierre:** una pregunta-remate, luego "Artifact understood. Logging off."
+7. **Outro** sobre el plano en que se despide (nunca pantalla negra): MECHAYUKI · ARTIFACT 00N: NOMBRE · FOLLOW.
+
+**Variedad obligatoria:**
+- **Hallazgo:** cada episodio, una forma nueva de encontrar el artefacto. Ya usados: pala (ep01–03), dron que sopla la arena (#09). Ideas: detector de metales, bloque de hielo que se derrite, quitanieves, cae de un árbol, pesca con caña…
+- **Lugar:** cada episodio, un bioma o lugar distinto, y en conjunto que domine el verde. Nieve solo si la historia lo pide.
+- **Principio y final:** nunca en el mismo lugar ni con el mismo plano.
+- **Formato:** algunos episodios pueden ser estilo sinaboto, abriendo directo con "If you [do X]… you have a Y." sin escena de hallazgo. Se decide por episodio.
+
+## 3. Flujo de trabajo (el usuario lo exige)
+
+1. **Proponer** de 3 a 5 temas de artefacto, cada uno con su lugar y su forma de hallazgo, y recomendar uno.
+2. **Guion:** usar el gancho puntuado (skill yt-script), pasar el texto por **humanizer**, verificar las fechas con fuentes y guardarlo en `guion.md`.
+3. **Storyboard** (planos con su línea) y style frames → **MOSTRAR Y ESPERAR APROBACIÓN.** Aunque diga "procede", primero el storyboard.
+   - Antes de mostrarlo, revisarlo uno mismo: ¿lugares repetidos?, ¿ella solo parada?, ¿se lee cada acción?, ¿ojos abiertos?, ¿algo plano?, ¿algo atraviesa la mano?, ¿errores históricos?
+4. **Voz:**
+   - VoiceStudio, voz **megagirl** (clon `baab32b2`), cadena limpia (filtro de graves ~170 Hz + compresión suave + −14 LUFS). Nunca el filtro "digger" ni retro.
+   - Revisar cada toma con Whisper contra el guion, más similitud de voz (`speaker_sim.py`) contra los párrafos aprobados.
+   - Las preguntas deben subir de tono; si no, rampa PSOLA en la última palabra.
+5. **Render:** el motor three.js PS1 renderiza sin pantalla con Playwright.
+6. **Revisión:** `python tools/revisar_render.py --estilo mechayuki video.mp4` (usa los créditos de la API) → **arreglar TODOS los fallos válidos uno mismo** → volver a renderizar → recién ahí mostrar. Una sola pasada propia; no encadenar v2, v3, v4…
+7. **Entrega:**
+   - Título viral (yt-package), más una portada vertical de 1080x1920 (shorts) o una miniatura de 1280x720 (largos) en el estilo A1.
+   - Los archivos se llaman como el título, sin `? : " /`.
+   - Va la versión share (libx264 CRF 24, AAC 192k, +faststart) a LucidLink, en `Renders finales claude/Mechayuki/<Título>.mp4`, y la portada a `Mechayuki/Miniaturas/<Título>.png`.
+   - Al lado va el caption `.txt`: título + emoji + hashtags (#history #… #mechayuki #shorts).
+   - Ya no se envía a Telegram.
+   - Después de entregar, borrar los renders superados.
+
+## 4. Reglas de imagen (resumen; el detalle está en mechayuki-rules)
+
+- **Animación:** ella siempre animada y el mundo reacciona. Cada acción se entiende (qué hace, qué tiene en la mano) y tiene su sonido.
+- **Que se lea:** cada acción en primer plano o encuadrada para que se vea. Las manivelas, las perillas y las herramientas van en contacto real con la mano.
+- **Contacto:** las manos nunca atraviesan objetos. Los objetos están APOYADOS en superficies, nada flota. Nunca cortada por el borde del cuadro.
+- **Cara:** ojos abiertos en los planos clave, cara visible (no de perfil ni tapada por el flequillo) y expresiones que coinciden con la línea (asco real en "Gross").
+- **Volumen:** NADA PLANO. Diagramas y paneles en 3D con volumen. Rótulos en letras 3D extruidas amarillas, legibles, nunca encima de su cara.
+- **Cada solución o época en su PROPIO lugar reconocible**, nunca el mismo cuarto. Ella prueba o usa cada objeto.
+- **Personajes históricos:** un NPC existente que se vea bien, más piezas de vestuario (corona, capa, abrigo). Nunca un modelo nuevo hecho a medida (el Enrique VIII a medida quedó horrible). Sombreros PS1 pegados al hueso de la cabeza.
+- **Caca:** siempre estilo anime, en espiral tipo emoji.
+- **Efectos:** muchos (líneas de temblor, chispas, polvo, destellos). Sombra bastante oscura.
+- **Subtítulos:** una palabra a la vez, fuente pixel tipo Pixelify, con el pop-in medido (0.86→1.05→0.98→1.0) y letras espaciadas.
+- **Prados:** como los de MML2 (lomas verdes, cielo grande, nubes, arcoíris, franja de acantilado tostado). Referencia: `pieces/expedition-01-bedroom/review/ref_mml2_prado.png`.
+- **Sin parpadeo** (z-fighting) en flores y pasto. Cámara continua, sin saltos hacia atrás.
+
+## 5. Sonido
+
+- **Música:** NO chiptune puro. Pista original juguetona, con bajo real y batería suave, de 105 a 112 BPM, en tono mayor. Hecha en código: `audio/scripts/music*.py`.
+- **Niveles:** voz unos 14 dB sobre la música mientras habla. Master a −12 LUFS, pico real ≤ −1 dBTP. Pausa de ~0.4 s después de "Operator…".
+- **SFX:** reales CC0 (Freesound, Openverse, real-sfx), uno en cada acción. Elegirlos y verificarlos con **earshot**.
+- **Créditos:** solo CC0 o CC-BY; los CC-BY van en la descripción.
+- **NUNCA "!" en ningún texto para la voz:** cambia el timbre y suena horrible. Usar "…" o ".".
+- **Cortes:** nunca cortar la voz dentro de una palabra ni la última palabra de una pregunta.
+
+## 6. Portadas y miniaturas (estilo A1 aprobado)
+
+- **Referencia:** `pieces/expedition-01-bedroom/miniatura_A1.png`, también en LucidLink `_assets-mac/referencias/`. El código está en `engine/thumb_shots*.js` + `thumb_compose*.py` (fuente Luckiest Guy).
+- **Fondo:** domo de cuadrícula cian/azul curvo. Puede variar: en el ep03 fue un muro de piedra con puerta marrón.
+- **Texto:** una línea corta en letras 3D grandes con jitter por letra, #FFE21A con extrusión ámbar #A87800, **sin contorno negro**.
+- **Ella:** cuerpo COMPLETO de cabeza a pies, **GRANDE (casi toda la altura)**, OJOS ABIERTOS, con una pose ligada al short (manos en la cintura, pensando, sosteniendo el objeto, manos a la cara…).
+- **Objeto:** un artefacto grande con destellos.
+- **Prohibido:** realce de brillo y la fuente de Ava.
+- **Antes de mostrarla:** revisarla al 100 % y en recortes ×4.
+
+## 7. Episodios hechos (estado al 2026-11-14)
+
+| # | Pieza | Título final | Formato | Estado |
+|---|---|---|---|---|
+| 01 | digger-01-fridge | (refrigerador) v3 | artefacto | **NIVEL APROBADO** ("perfect now") |
+| 02 | digger-02-toilet | (inodoro) v3 | artefacto | entregado |
+| 03 | digger-03-lock | The Unpickable Lock Lasted 51 Hours | artefacto | entregado + portada aprobada |
+| 04 | digger-04-alarm | People paid someone to shoot peas at their window | sinaboto/artefacto | entregado + portada aprobada |
+| 05 | digger-05-two-sleeps | You Wake Up at 3 AM Because of This 600-Year-Old Habit | sinaboto | entregado + portada aprobada |
+| 06 | digger-06-bathing | The 1767 Shower That Recycled Your Dirt | cat.explains (abandonado) | aceptado |
+| 07 | digger-07-navigation | 1,000 Years of Getting Lost Before GPS | cat.explains (abandonado) | aceptado |
+| 08 | digger-08-music | 300 Years of Music Before Spotify | cat.explains (abandonado) | entregado con fallos de manos sin arreglar |
+| 09 | digger-09-toothbrush | Your Toothbrush Was Pig Hair Until 1938 | **artefacto (vuelta)** | entregado; quedó pendiente preguntar si se hacía una pasada de arreglos (ver abajo) |
+| Exp01 | expedition-01-bedroom | How Did Humans Sleep Before Beds? An Android Digs Up 8 Clues | largo 16:9 | **NIVEL APROBADO para los largos** (v3) |
+
+**Pendiente del #09** (marcado por la revisión; el usuario no respondió si arreglarlo):
+- las cerdas no tocan el hueso en el chiste de "scrub your bones";
+- el borde la corta en 6 momentos breves;
+- la barrena de Addis queda por encima del hueso;
+- rayas rosas en el abrigo de Addis;
+- en "germs" gira la cara de perfil;
+- las hélices del dron le tocan el zapato;
+- la portada la muestra chica: debe ocupar casi toda la altura.
+
+## 8. Propuestas de próximos videos
+
+Ver [PROPUESTAS.md](PROPUESTAS.md).
+
+## 9. Dónde está cada cosa
+
+**En git** (público, solo código y docs):
+- `pieces/digger-0N-*/`: motor por episodio.
+  - `engine/film.js`, `main.js`, `shots.js`, `d0N_*.js` (planos), `fx.js`, `pixfont.js`, `menukit.js`, `render_film.mjs`
+  - `audio/scripts/`, `voz/`, `LOG.md` (tabla PASS por plano), `guion.md`, `DESCRIPCION.md`, `CREDITS.md`
+- **Para un short nuevo:** copiar la carpeta del último episodio (`digger-09-toothbrush`) como plantilla.
+- `pieces/expedition-01-bedroom/`: plantilla de los largos.
+- `pieces/voice-fx/`: `retro_voice.py`, el README con las mediciones y `splice_operator.py` (está en `digger-02-toilet/voz-studio/scripts/`).
+- `fuentes/`:
+  - `cat-explains-it/`: el análisis del formato abandonado;
+  - `mechayuki-largo/analisis-viralidad.md`: fórmulas de títulos y las 5 expediciones recomendadas;
+  - `tiktok-research/`: la investigación original del nicho;
+  - `megaman-legends2/` y `lowpolyshorts-style/`: la especificación de las letras 3D.
+
+**En LucidLink**, `Renders finales claude/Mechayuki/_assets-mac/`. Son cosas que **NO pueden ir a git** porque el repo es público: el modelo es comprado y hay audios.
+- `engine-models/*.glb`:
+  - incluye `zero_anim.glb`, la androide con sus 30 animaciones;
+  - en la Mac → `pieces/<pieza>/engine/models/`.
+- `engine-lib-models/*.glb`: los NPC y los vehículos → `pieces/<pieza>/engine/lib/models/`.
+- `voz/`:
+  - `megagirl_operator.wav` y su versión limpia → `pieces/voice-fx/`;
+  - `megagirl_clone_ref_baab32b2.m4a` = el audio de referencia para RE-CLONAR la voz megagirl en el VoiceStudio de la Mac; el profile_id nuevo cambiará, así que anotarlo.
+- `crashsune/`:
+  - el `.blend` original comprado de Zero Volnutt → `assets/crashsune/`.
+- `megaman legends sfx general/`:
+  - SFX de menú sacados del juego → `assets/`;
+  - posible reclamo de Content ID en YouTube monetizado: allí, cambiarlos por CC0.
+- `pieces/zero-fem/`: el pipeline de feminización, cara y animación con sus derivados (texturas, atlas, `anim/zero_anim.glb`) → `pieces/zero-fem/`.
+- `pieces/lib-mml/`: assets de relleno de MML2 recoloreados → `pieces/lib-mml/`.
+- `referencias/`: `digger01_megagirl_v3.mp4` (nivel aprobado), `digger02_toilet_v3.mp4` y `miniatura_A1.png`.
+- Los videos finales con su título están en `Mechayuki/` y sus portadas en `Mechayuki/Miniaturas/`.
+
+**Instalación en la Mac:**
+1. Ejecutar `npm install` en el `engine/` de cada pieza (hace falta Playwright con Chromium).
+2. Python: numpy, scipy, soundfile y pyloudnorm para la música y la mezcla; openai-whisper para revisar la voz.
+3. VoiceStudio con la voz re-clonada.
+4. earshot.
+5. La `ANTHROPIC_API_KEY` va en el `.env` de la raíz (nunca como variable del sistema), para `revisar_render.py`.
+
+## 10. Seguridad y límites
+
+- **Repo PÚBLICO:** nunca subir el modelo comprado, sus texturas, renders del modelo sin terminar, ni assets sacados de juegos. Revisar `git status` antes de cada commit; `*.glb`, `assets/` y `*.wav` ya están en el .gitignore.
+- **Voces:** nunca clonar la voz de las cuentas de referencia.
+- **Música:** nada de canciones con copyright; solo original o CC0.
+- **Marca:** evitar logos y nombres de Capcom en títulos y miniaturas.
+- **Publicación:** confirmar con el usuario cada publicación (Zernio).
+- **Créditos:** usar primero los créditos de la API (scripts) para revisiones y análisis.
 
 ## `styles\onebit\STYLE.md`
 
@@ -5402,6 +5746,10 @@ The `kimodo/` folder was made by another session and is not part of this library
 ## Otros documentos de estilo (en el repo, no copiados aquí por tamaño: catálogos y análisis)
 
 - `styles\ali-abdaal-2\CATALOGO.md` (4 KB)
+- `styles\ava-restfield\ASSETS.md` (6 KB)
+- `styles\ava-restfield\GUIA.md` (36 KB)
+- `styles\ava-restfield\PROPUESTAS.md` (8 KB)
+- `styles\ava-restfield\STALKER.md` (7 KB)
 - `styles\bitpix\template\brief.md` (2 KB)
 - `styles\cartoon3d\memoria\api-credits-first.md` (0 KB)
 - `styles\cartoon3d\memoria\audio-recorded-sound.md` (1 KB)
@@ -5436,6 +5784,28 @@ The `kimodo/` folder was made by another session and is not part of this library
 - `styles\f1motion\CATALOGO.md` (98 KB)
 - `styles\ifverse\ANALISIS.md` (10 KB)
 - `styles\ifverse\REFS2.md` (39 KB)
+- `styles\mechayuki\PROPUESTAS.md` (3 KB)
+- `styles\mechayuki\memoria\api-credits-first.md` (0 KB)
+- `styles\mechayuki\memoria\digger-channel.md` (2 KB)
+- `styles\mechayuki\memoria\earshot.md` (0 KB)
+- `styles\mechayuki\memoria\final-renders-folders.md` (0 KB)
+- `styles\mechayuki\memoria\freesound.md` (0 KB)
+- `styles\mechayuki\memoria\humanizer.md` (0 KB)
+- `styles\mechayuki\memoria\links-clicables.md` (0 KB)
+- `styles\mechayuki\memoria\long-video-delivery.md` (3 KB)
+- `styles\mechayuki\memoria\lucidlink-renders.md` (1 KB)
+- `styles\mechayuki\memoria\mechayuki-expeditions.md` (2 KB)
+- `styles\mechayuki\memoria\mechayuki-rules.md` (8 KB)
+- `styles\mechayuki\memoria\openverse.md` (1 KB)
+- `styles\mechayuki\memoria\real-sfx.md` (0 KB)
+- `styles\mechayuki\memoria\script-format.md` (1 KB)
+- `styles\mechayuki\memoria\sinaboto-style.md` (3 KB)
+- `styles\mechayuki\memoria\sonido-pro.md` (1 KB)
+- `styles\mechayuki\memoria\storyboard-before-render.md` (0 KB)
+- `styles\mechayuki\memoria\voice-cuts-in-silence.md` (1 KB)
+- `styles\mechayuki\memoria\voicestudio.md` (2 KB)
+- `styles\mechayuki\memoria\youtube-skills.md` (1 KB)
+- `styles\mechayuki\memoria\zero-fem-model.md` (1 KB)
 - `styles\pov3d\template-luna\brief.md` (6 KB)
 - `styles\pov3d\template-ola\brief.md` (6 KB)
 - `styles\stimulus\analisis\Dariel Stimulus Video_32_estilo.md` (8 KB)
@@ -5457,14 +5827,192 @@ The `kimodo/` folder was made by another session and is not part of this library
 
 ## Todas las piezas (más reciente primero)
 
-- 2026-11-13 `pieces/single-cinnamon` — docs: AGENT_BRIEF.md, shots.md
-- 2026-11-13 `pieces/zaw-dog-08` — docs: borrador_v1_40s.md, guion.md
+- 2026-11-17 `pieces/junta-guadalajara` — docs: ESTADO.md
+- 2026-11-17 `pieces/brindis-orizaba`
+- 2026-11-17 `pieces/upnext-metalshadow`
+- 2026-11-17 `pieces/upnext-suitor`
+- 2026-11-17 `pieces/sobre-alamos` — docs: ESTADO.md
+- 2026-11-17 `pieces/pipian-tlaxcala` — docs: ESTADO.md
+- 2026-11-17 `pieces/cacao-comalcalco` — docs: ESTADO.md
+- 2026-11-17 `pieces/lucero-parral` — docs: ESTADO.md
+- 2026-11-17 `pieces/copita-matatlan` — docs: ESTADO.md
+- 2026-11-17 `pieces/domino-jerez` — docs: ESTADO.md
+- 2026-11-17 `pieces/carta-durango` — docs: ESTADO.md
+- 2026-11-17 `pieces/manteles-apan` — docs: ESTADO.md
+- 2026-11-17 `pieces/silla-izamal` — docs: ESTADO.md
+- 2026-11-17 `pieces/barro-coyotepec` — docs: ESTADO.md
+- 2026-11-17 `pieces/cajeta-celaya` — docs: ESTADO.md
+- 2026-11-17 `pieces/mango-rosario` — docs: ESTADO.md
+- 2026-11-17 `pieces/talavera-cholula` — docs: ESTADO.md
+- 2026-11-17 `pieces/ponche-zitacuaro`
+- 2026-11-17 `pieces/barrica-valle`
+- 2026-11-17 `pieces/camaron-escuinapa`
+- 2026-11-17 `pieces/cantaro-tonala`
+- 2026-11-17 `pieces/cafe-pluma`
+- 2026-11-17 `pieces/obsidiana-teotihuacan`
+- 2026-11-17 `pieces/sombrero-sahuayo` — docs: ESTADO.md
+- 2026-11-17 `pieces/red-janitzio` — docs: ESTADO.md
+- 2026-11-17 `pieces/mole-atocpan` — docs: ESTADO.md
+- 2026-11-17 `pieces/pinata-acolman` — docs: ESTADO.md
+- 2026-11-17 `pieces/jarana-tlacotalpan` — docs: ESTADO.md
+- 2026-11-17 `pieces/pan-comala` — docs: ESTADO.md
+- 2026-11-17 `pieces/trajinera-xochimilco` — docs: ESTADO.md
+- 2026-11-17 `pieces/guitarra-paracho` — docs: ESTADO.md
+- 2026-11-17 `pieces/__pycache__`
+- 2026-11-17 `pieces/yegua-jerez` — docs: ESTADO.md
+- 2026-11-17 `pieces/palofierro-kino` — docs: ESTADO.md
+- 2026-11-17 `pieces/nuez-parras` — docs: ESTADO.md
+- 2026-11-17 `pieces/reloj-zacatlan` — docs: ESTADO.md
+- 2026-11-17 `pieces/upnext-01` — docs: SCRIPT.md
+- 2026-11-16 `pieces/agave-amatitan` — docs: ESTADO.md
+- 2026-11-16 `pieces/queso-tequisquiapan` — docs: ESTADO.md
+- 2026-11-16 `pieces/laca-olinala` — docs: ESTADO.md
+- 2026-11-16 `pieces/upnext-waitress`
+- 2026-11-16 `pieces/alebrije-tilcajete` — docs: ESTADO.md
+- 2026-11-16 `pieces/bota-leon` — docs: ESTADO.md
+- 2026-11-16 `pieces/cobre-santaclara` — docs: ESTADO.md
+- 2026-11-16 `pieces/ladrillo-tecate` — docs: ESTADO.md
+- 2026-11-16 `pieces/paste-realdelmonte` — docs: ESTADO.md
+- 2026-11-16 `pieces/arbol-metepec` — docs: ESTADO.md
+- 2026-11-16 `pieces/vainilla-papantla` — docs: ESTADO.md
+- 2026-11-16 `pieces/gloria-linares` — docs: ESTADO.md
+- 2026-11-16 `pieces/manzana-cuauhtemoc` — docs: ESTADO.md
+- 2026-11-16 `pieces/upnext-girl2`
+- 2026-11-16 `pieces/ambar-simojovel` — docs: ESTADO.md
+- 2026-11-16 `pieces/jaiba-lagunamadre` — docs: ESTADO.md
+- 2026-11-16 `pieces/nieve-tepoztlan` — docs: ESTADO.md
+- 2026-11-16 `pieces/rebozo-santamaria` — docs: ESTADO.md, guion.md
+- 2026-11-16 `pieces/_marcas`
+- 2026-11-16 `pieces/upnext-girl`
+- 2026-11-15 `pieces/upnext-gnome`
+- 2026-11-15 `pieces/gaviota-bacalar-p2` — docs: ESTADO.md, guion.md
+- 2026-11-15 `pieces/ate-calvillo-p2` — docs: ESTADO.md, guion.md
+- 2026-11-15 `pieces/frascos-sanignacio-p2` — docs: ESTADO.md, guion.md
+- 2026-11-15 `pieces/hamaca-comalcalco-p2` — docs: ESTADO.md, guion.md
+- 2026-11-15 `pieces/gaviota-bacalar` — docs: ESTADO.md, guion.md
+- 2026-11-15 `pieces/ate-calvillo` — docs: ESTADO.md, guion.md
+- 2026-11-15 `pieces/costal-cuyutlan-p2` — docs: ESTADO.md, guion.md
+- 2026-11-15 `pieces/sarape-saltillo-p2` — docs: ESTADO.md, guion.md
+- 2026-11-15 `pieces/pulsera-mexcaltitan-p2` — docs: ESTADO.md, guion.md
+- 2026-11-15 `pieces/jipi-becal-p2` — docs: ESTADO.md, guion.md
+- 2026-11-15 `pieces/frascos-sanignacio` — docs: ESTADO.md, guion.md
+- 2026-11-15 `pieces/hamaca-comalcalco` — docs: ESTADO.md, guion.md
+- 2026-11-15 `pieces/cantera-huichapan-p2` — docs: ESTADO.md, guion.md
+- 2026-11-15 `pieces/garrafon-bernal-p2` — docs: ESTADO.md, guion.md
+- 2026-11-14 `pieces/costal-cuyutlan` — docs: ESTADO.md, guion.md
+- 2026-11-14 `pieces/pulsera-mexcaltitan` — docs: ESTADO.md, guion.md
+- 2026-11-14 `pieces/sarape-saltillo` — docs: ESTADO.md, guion.md
+- 2026-11-14 `pieces/jipi-becal` — docs: ESTADO.md, guion.md
+- 2026-11-14 `pieces/zombie-03-station` — docs: shotlist.md, zombie03_station_v1_revision.md
+- 2026-11-14 `pieces/baul-sanmiguel-p2` — docs: ESTADO.md, guion.md
+- 2026-11-14 `pieces/aserrin-huamantla-p2` — docs: ESTADO.md, guion.md
+- 2026-11-14 `pieces/cantera-huichapan` — docs: ESTADO.md, guion.md
+- 2026-11-14 `pieces/garrafon-bernal` — docs: ESTADO.md, guion.md
+- 2026-11-14 `pieces/betun-zacatecas` — docs: ESTADO.md, guion.md
+- 2026-11-14 `pieces/baul-sanmiguel` — docs: ESTADO.md, guion.md
+- 2026-11-14 `pieces/aserrin-huamantla` — docs: ESTADO.md, guion.md
+- 2026-11-14 `pieces/plata-taxco` — docs: ESTADO.md, guion.md
+- 2026-11-14 `pieces/invernadero-atlixco` — docs: ESTADO.md, guion.md
+- 2026-11-14 `pieces/zombie-13-gasstation` — docs: brief.md, PLAN.md
+- 2026-11-14 `pieces/zombie-12-radio` — docs: brief.md, PLAN.md
+- 2026-11-14 `pieces/zombie-11-xvirus` — docs: brief.md, PLAN.md
+- 2026-11-14 `pieces/zombie-10-stairs` — docs: brief.md
+- 2026-11-14 `pieces/zombie-09-subway2` — docs: brief.md
+- 2026-11-14 `pieces/zombie-08-farm` — docs: brief.md, DESCRIPCION.md
+- 2026-11-14 `pieces/zombie-07-saferoom` — docs: brief.md
+- 2026-11-14 `pieces/zaw-dog-08` — docs: borrador_v1_40s.md, guion.md
+- 2026-11-14 `pieces/viuda-aguacate` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/viuda-aguacate-p2` — docs: ESTADO.md, guion.md
+- 2026-11-14 `pieces/velorio-patron` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/tiendita-justa` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/tele-nueva` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/suegra` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/stimulus-11-hf`
+- 2026-11-14 `pieces/stimulus-10-hf`
+- 2026-11-14 `pieces/stimulus-09-hf`
+- 2026-11-14 `pieces/stimulus-08-hf`
+- 2026-11-14 `pieces/stimulus-07-hf`
+- 2026-11-14 `pieces/stimulus-06-hf`
+- 2026-11-14 `pieces/stimulus-05-hf`
+- 2026-11-14 `pieces/stimulus-04-hf`
+- 2026-11-14 `pieces/stimulus-03-hf` — docs: ESTADO.md
+- 2026-11-14 `pieces/stimulus-02-hf`
+- 2026-11-14 `pieces/stimulus-01` — docs: stimulus-01_revision.md
+- 2026-11-14 `pieces/stimulus-01-hf`
+- 2026-11-14 `pieces/single-cinnamon` — docs: AGENT_BRIEF.md, shots.md
+- 2026-11-14 `pieces/sazon-concha` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/rocket-speedup` — docs: brief.md, LOG.md
+- 2026-11-14 `pieces/reten-sierra` — docs: ESTADO.md, guion.md, qa_clips.md, qa_continuidad.md
+- 2026-11-14 `pieces/reten-sierra-p2` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/regreso-chicago` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/regreso-chicago-p2` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/regreso-20` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/regreso-20-p2` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/recetario` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/recetario-p2` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/rbx-followers` — docs: ESTADO.md, script.md
+- 2026-11-14 `pieces/rbx-crossing` — docs: ESTADO.md, script.md
+- 2026-11-14 `pieces/pp-chihuahua` — docs: SPEC.md
+- 2026-11-14 `pieces/posada` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/piloncillo-rio` — docs: ESTADO.md, guion.md
+- 2026-11-14 `pieces/pedida-mano` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/padre-veladoras` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/padre-veladoras-p2` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/noppera-bo` — docs: brief.md, LOG.md
+- 2026-11-14 `pieces/nochebuena` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/nochebuena-p2` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/monedas-carretera` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/mistaken-orders`
+- 2026-11-14 `pieces/medalla-mezcal` — docs: ESTADO.md, guion.md, qa_clips.md, qa_continuidad.md
+- 2026-11-14 `pieces/medalla-mezcal-p2` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/mecanico` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/masa-honrada` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/mariachi-patron` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/mariachi-patron-p2` — docs: ESTADO.md, guion.md
+- 2026-11-14 `pieces/madrina-central` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/lost-luggage` — docs: shots.md
+- 2026-11-14 `pieces/intercambio` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/huipil-robado` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/hacienda-sangre` — docs: ESTADO.md, guion.md, qa_clips.md, qa_continuidad.md
+- 2026-11-14 `pieces/hacienda-sangre-p2` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/guinea-rent` — docs: shots.md
+- 2026-11-14 `pieces/golondrina-muelle` — docs: ESTADO.md, guion.md
+- 2026-11-14 `pieces/gardenia` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/foto-trucada` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/fonda-chela` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/fonda-chela-p2` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/fierro-herradura` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/f1motion-test`
+- 2026-11-14 `pieces/encendedor` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/docucollage-test`
+- 2026-11-14 `pieces/digger-09-toothbrush` — docs: DESCRIPCION.md, guion.md, LOG.md, storyboard.md
+- 2026-11-14 `pieces/digger-08-music` — docs: DESCRIPCION.md, guion.md, LOG.md, storyboard.md
+- 2026-11-14 `pieces/cincha-cortada` — docs: ESTADO.md, guion.md
+- 2026-11-14 `pieces/chofer-patrona` — docs: ESTADO.md, guion.md
+- 2026-11-14 `pieces/chofer-patrona-p2` — docs: ESTADO.md, guion.md
+- 2026-11-14 `pieces/chocolate-rancho` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/chocolate-rancho-p2` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/cheese-bank`
+- 2026-11-14 `pieces/cenote-campana` — docs: ESTADO.md, guion.md
+- 2026-11-14 `pieces/casera-recibos` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/canasta` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/canasta-p2` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/camionetas` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/camionero` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/camionero-p2` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/cafe-neblina` — docs: ESTADO.md, guion.md
+- 2026-11-14 `pieces/buen-hijo` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/buen-hijo-p2` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/bascula-limon` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/ali-abdaal-2-test`
+- 2026-11-14 `pieces/agua-hacienda` — docs: guion.md
+- 2026-11-14 `pieces/agua-hacienda-p2` — docs: ESTADO.md, guion.md, qa_clips.md
+- 2026-11-14 `pieces/_descartes`
+- 2026-11-14 `pieces/nvidia-huang` — docs: facts.md, script-options.md, script.md, shots.md
 - 2026-11-13 `pieces/zaw-dog-07` — docs: CREDITS.md, guion.md
-- 2026-11-13 `pieces/mistaken-orders`
 - 2026-11-13 `pieces/zaw-dog-06` — docs: CREDITS.md, guion.md
 - 2026-11-13 `pieces/zaw-dog-05` — docs: CREDITS.md, guion.md
 - 2026-11-12 `pieces/trash-library` — docs: AGENT_BRIEF.md, shots.md
-- 2026-11-12 `pieces/ali-abdaal-2-test`
 - 2026-11-12 `pieces/Ava Restfield`
 - 2026-11-11 `pieces/cast-pack`
 - 2026-11-11 `pieces/lps-lowpoly-test`
@@ -5483,7 +6031,6 @@ The `kimodo/` folder was made by another session and is not part of this library
 - 2026-11-11 `pieces/zaw-dog-01` — docs: CREDITS.md, guion.md
 - 2026-11-11 `pieces/zaw-dog-03` — docs: CREDITS.md, guion.md
 - 2026-11-11 `pieces/zaw-dog-04` — docs: CREDITS.md, guion.md
-- 2026-11-11 `pieces/zombie-03-station` — docs: shotlist.md, zombie03_station_v1_revision.md
 - 2026-11-11 `pieces/zero-test` — docs: CREDITS.md, LOG.md
 - 2026-11-11 `pieces/universe` — docs: LOG.md
 - 2026-11-11 `pieces/torre-sur` — docs: brief.md, LOG.md
@@ -5512,11 +6059,9 @@ The `kimodo/` folder was made by another session and is not part of this library
 - 2026-11-11 `pieces/periodo` — docs: LOG.md
 - 2026-11-11 `pieces/oxygen-en`
 - 2026-11-11 `pieces/oxigeno` — docs: LOG.md
-- 2026-11-11 `pieces/noppera-bo` — docs: brief.md, LOG.md
 - 2026-11-11 `pieces/luna` — docs: brief.md, LOG.md
 - 2026-11-11 `pieces/ls-fixh` — docs: brief.md
 - 2026-11-11 `pieces/ls-fixbs` — docs: brief.md
-- 2026-11-11 `pieces/lost-luggage` — docs: shots.md
 - 2026-11-11 `pieces/lluvia` — docs: brief.md, LOG.md
 - 2026-11-11 `pieces/lego-sea` — docs: brief.md
 - 2026-11-11 `pieces/learn` — docs: brief.md, LOG.md
@@ -5524,7 +6069,6 @@ The `kimodo/` folder was made by another session and is not part of this library
 - 2026-11-11 `pieces/human-library` — docs: brief.md
 - 2026-11-11 `pieces/hombres` — docs: brief.md, LOG.md
 - 2026-11-11 `pieces/heart` — docs: brief.md, LOG.md
-- 2026-11-11 `pieces/guinea-rent` — docs: shots.md
 - 2026-11-11 `pieces/grow` — docs: CREDITS.md, LOG.md
 - 2026-11-11 `pieces/giro` — docs: brief.md, LOG.md
 - 2026-11-11 `pieces/future-library` — docs: brief.md
@@ -5540,7 +6084,6 @@ The `kimodo/` folder was made by another session and is not part of this library
 - 2026-11-11 `pieces/compresion` — docs: brief.md, LOG.md
 - 2026-11-11 `pieces/coma-en` — docs: CREDITS.md, LOG.md
 - 2026-11-11 `pieces/coma` — docs: CREDITS.md, LOG.md
-- 2026-11-11 `pieces/cheese-bank`
 - 2026-11-11 `pieces/cavernas` — docs: brief.md, LOG.md
 - 2026-11-11 `pieces/c3d-test`
 - 2026-11-11 `pieces/birthday` — docs: brief.md, LOG.md
@@ -5549,20 +6092,7 @@ The `kimodo/` folder was made by another session and is not part of this library
 - 2026-11-11 `pieces/agujero` — docs: brief.md, LOG.md
 - 2026-11-11 `pieces/agua` — docs: brief.md, LOG.md
 - 2026-11-11 `pieces/Ali Abdaal`
-- 2026-11-11 `pieces/docucollage-test`
-- 2026-11-11 `pieces/stimulus-10-hf`
-- 2026-11-11 `pieces/stimulus-11-hf`
-- 2026-11-11 `pieces/stimulus-09-hf`
-- 2026-11-11 `pieces/stimulus-08-hf`
-- 2026-11-11 `pieces/stimulus-07-hf`
-- 2026-11-11 `pieces/stimulus-05-hf`
-- 2026-11-11 `pieces/stimulus-06-hf`
-- 2026-11-11 `pieces/stimulus-04-hf`
-- 2026-11-11 `pieces/stimulus-01-hf`
-- 2026-11-11 `pieces/stimulus-03-hf` — docs: ESTADO.md
-- 2026-11-11 `pieces/stimulus-02-hf`
 - 2026-11-10 `pieces/assets`
-- 2026-11-10 `pieces/rbx-crossing` — docs: ESTADO.md, script.md
 - 2026-11-10 `pieces/Kodama yokai`
 - 2026-11-10 `pieces/Tuneles`
 - 2026-11-10 `pieces/Edicion de videos Reels`
@@ -5575,30 +6105,8 @@ The `kimodo/` folder was made by another session and is not part of this library
 - 2026-11-10 `pieces/Roblox`
 - 2026-11-10 `pieces/Amphorus`
 - 2026-11-10 `pieces/Madfable`
-- 2026-11-10 `pieces/zombie-13-gasstation` — docs: brief.md, PLAN.md
-- 2026-11-10 `pieces/f1motion-test`
-- 2026-11-09 `pieces/rbx-followers` — docs: ESTADO.md, script.md
-- 2026-11-09 `pieces/plata-taxco` — docs: ESTADO.md, guion.md
-- 2026-11-09 `pieces/invernadero-atlixco` — docs: ESTADO.md, guion.md
-- 2026-11-09 `pieces/chofer-patrona-p2` — docs: ESTADO.md, guion.md
-- 2026-11-09 `pieces/piloncillo-rio` — docs: ESTADO.md, guion.md
-- 2026-11-08 `pieces/cafe-neblina` — docs: ESTADO.md, guion.md
 - 2026-11-08 `pieces/rbx-rope` — docs: script.md
 - 2026-11-08 `pieces/rbx-chess` — docs: script.md
-- 2026-11-08 `pieces/cenote-campana` — docs: ESTADO.md, guion.md
-- 2026-11-08 `pieces/mariachi-patron-p2` — docs: ESTADO.md, guion.md
-- 2026-11-08 `pieces/golondrina-muelle` — docs: ESTADO.md, guion.md
-- 2026-11-08 `pieces/cincha-cortada` — docs: ESTADO.md, guion.md
-- 2026-11-08 `pieces/chofer-patrona` — docs: ESTADO.md, guion.md
-- 2026-11-08 `pieces/viuda-aguacate-p2` — docs: ESTADO.md, guion.md
-- 2026-11-08 `pieces/mariachi-patron` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-08 `pieces/viuda-aguacate` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-08 `pieces/velorio-patron` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-08 `pieces/zombie-12-radio` — docs: brief.md, PLAN.md
-- 2026-11-08 `pieces/fonda-chela-p2` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-08 `pieces/madrina-central` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-08 `pieces/pp-chihuahua` — docs: SPEC.md
-- 2026-11-08 `pieces/zombie-11-xvirus` — docs: brief.md, PLAN.md
 - 2026-11-07 `pieces/zelda-oot` — docs: script.md
 - 2026-11-07 `pieces/zaw-dog-test` — docs: README.md
 - 2026-11-07 `pieces/rbx-thursday` — docs: script.md
@@ -5606,61 +6114,6 @@ The `kimodo/` folder was made by another session and is not part of this library
 - 2026-11-07 `pieces/lps-erfurt` — docs: CREDITS.md, guion.md, LOG.md
 - 2026-11-07 `pieces/learning-faces` — docs: brief.md, LOG.md
 - 2026-11-07 `pieces/black-cave` — docs: brief.md, LOG.md
-- 2026-11-07 `pieces/zombie-10-stairs` — docs: brief.md
-- 2026-11-07 `pieces/digger-09-toothbrush` — docs: DESCRIPCION.md, guion.md, LOG.md, storyboard.md
-- 2026-11-07 `pieces/fonda-chela` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-07 `pieces/_descartes`
-- 2026-11-07 `pieces/monedas-carretera` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-07 `pieces/bascula-limon` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-07 `pieces/foto-trucada` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-07 `pieces/nochebuena-p2` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-07 `pieces/casera-recibos` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-07 `pieces/huipil-robado` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-07 `pieces/regreso-20-p2` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-07 `pieces/tiendita-justa` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-07 `pieces/masa-honrada` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-06 `pieces/camionero-p2` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-06 `pieces/pedida-mano` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-06 `pieces/posada` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-06 `pieces/buen-hijo-p2` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-06 `pieces/gardenia` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-06 `pieces/_marcas`
-- 2026-11-06 `pieces/intercambio` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-06 `pieces/sazon-concha` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-06 `pieces/recetario-p2` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-06 `pieces/fierro-herradura` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-05 `pieces/nochebuena` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-05 `pieces/regreso-chicago-p2` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-05 `pieces/zombie-09-subway2` — docs: brief.md
-- 2026-11-05 `pieces/camionero` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-05 `pieces/regreso-20` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-05 `pieces/stimulus-01` — docs: stimulus-01_revision.md
-- 2026-11-05 `pieces/canasta-p2` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-05 `pieces/hacienda-sangre-p2` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-05 `pieces/zombie-08-farm` — docs: brief.md, DESCRIPCION.md
-- 2026-11-05 `pieces/padre-veladoras-p2` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-05 `pieces/chocolate-rancho-p2` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-05 `pieces/reten-sierra-p2` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-05 `pieces/medalla-mezcal-p2` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-05 `pieces/agua-hacienda-p2` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-04 `pieces/mecanico` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-04 `pieces/suegra` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-04 `pieces/recetario` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-04 `pieces/buen-hijo` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-04 `pieces/tele-nueva` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-04 `pieces/camionetas` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-04 `pieces/encendedor` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-04 `pieces/canasta` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-04 `pieces/regreso-chicago` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-04 `pieces/agua-hacienda` — docs: guion.md
-- 2026-11-04 `pieces/reten-sierra` — docs: ESTADO.md, guion.md, qa_clips.md, qa_continuidad.md
-- 2026-11-04 `pieces/padre-veladoras` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-04 `pieces/medalla-mezcal` — docs: ESTADO.md, guion.md, qa_clips.md, qa_continuidad.md
-- 2026-11-04 `pieces/hacienda-sangre` — docs: ESTADO.md, guion.md, qa_clips.md, qa_continuidad.md
-- 2026-11-04 `pieces/chocolate-rancho` — docs: ESTADO.md, guion.md, qa_clips.md
-- 2026-11-04 `pieces/digger-08-music` — docs: DESCRIPCION.md, guion.md, LOG.md, storyboard.md
-- 2026-11-04 `pieces/rocket-speedup` — docs: brief.md, LOG.md
-- 2026-11-04 `pieces/zombie-07-saferoom` — docs: brief.md
 - 2026-11-03 `pieces/zelda-fairy` — docs: script.md, youtube.md
 - 2026-11-03 `pieces/zelda-fairy-v5`
 - 2026-11-03 `pieces/paraguas-auto` — docs: brief.md, LOG.md
@@ -5799,6 +6252,4155 @@ The `kimodo/` folder was made by another session and is not part of this library
 
 ## Archivos de estado / notas de piezas
 
+### `pieces\junta-guadalajara\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista, parte1, capos, jalisco, guadalajara, catalogo]
+relatedTo: [atrium-vista, novelas-variedad]
+---
+# junta-guadalajara (Parte 1): estado
+
+## Hecho (2026-11-17)
+- **CATALOGO.md #26 "La secretaria que no olvidó" [CAPO]. Familia: Revancha del empleado humillado. Cierre tipo 1: entra un personaje inesperado (Beatriz).**
+- VISTA. Cuenta monetizadotiktok18, proyecto Flow propio. 19 clips, 0 regens.
+- Render renders/share.mp4: 57.2 s, SPEED 1.15, subtítulos tamaño 38 revisados en qa/strip.jpg. LUFS -14.2, pico -2.1 dBTP.
+- QA: qa/report.txt (r*/i01 = alucinaciones del ASR en clips mudos), qa/render_report.txt, renders/share_revision.md (CASI). Aceptados: pocos two-shots, Lucía pasa de pie a sentada entre escenas, marca poco legible sobre ventanal (alpha 80, regla vigente).
+
+## Pendiente
+- No entregado (main entrega). caption.txt listo.
+
+### `pieces\sobre-alamos\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexitv, parte1, capos, sonora, alamos, catalogo]
+relatedTo: [atrium-vista, novelas-variedad]
+---
+# sobre-alamos (Parte 1): estado
+
+## Hecho (2026-11-17)
+- **CATALOGO.md #7 "La silla vacía" [CAPO]. Familia: Herencia y testamento. Cierre tipo 2: se lee un documento y se corta antes del dato clave ("Nicanor Durán es mi…").**
+- MEXITV. Cuenta monetizadotiktok18, proyecto Flow propio. 18 clips + 1 regen (c13, el CTA, traía subtítulos quemados).
+- Render renders/share.mp4: 55.5 s, SPEED 1.15, subtítulos tamaño 38 revisados en qa/strip.jpg. LUFS -14.3, pico -2.2 dBTP.
+- QA: qa/report.txt (i01/r1/r3/r4 = alucinaciones del ASR en clips mudos), qa/render_report.txt, renders/share_revision.md (CASI). Aceptados: "marca equivocada" (falso positivo: MEXI TV arriba a la izquierda es el kit MEXITV), una patilla de lentes en la nuca del borde en un OTS, el sombrero del CTA distinto del que sostiene en la mano (se lo pone a cámara).
+
+## Pendiente
+- No entregado (main entrega). caption.txt listo.
+
+### `pieces\pipian-tlaxcala\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic, parte1, tlaxcala, catalogo]
+relatedTo: [atrium-vista, novelas-variedad]
+---
+# pipian-tlaxcala (Parte 1): estado
+
+## Hecho (2026-11-17)
+- **CATALOGO.md #25 "La suegra en la cocina". Familia: Traición familiar. Cierre tipo 7: objeto que delata (el cuaderno de recetas firmado por Amparo Juárez).**
+- MAJESTIC. Cuenta monetizadotiktok18, proyecto Flow propio. 19 clips + 4 regens (c14 dos veces: la primera traía subtítulos quemados; c03 por un morph de los lentes; c13 porque en el borde aparecía otra mujer con blusa floreada).
+- Render renders/share.mp4: 66.0 s, 35 tramos, SPEED 1.15, subtítulos tamaño 38 revisados en qa/strip.jpg y renders/subs/*.json. LUFS -14.2, pico -2.2 dBTP.
+- QA: qa/report.txt, qa/render_report.txt, renders/share_revision.md (CASI). Aceptado: Cristina lleva broche en c03/c14 y collar en el resto (la hoja admite las dos lecturas); "Es domingo" sí tiene subtítulo (14.42-15.10 s), el revisor muestreó en el hueco.
+
+## Pendiente
+- No entregado (main entrega). caption.txt listo.
+
+### `pieces\copita-matatlan\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic, parte1, capos, oaxaca, matatlan, catalogo]
+relatedTo: [atrium-vista, novelas-variedad]
+---
+# copita-matatlan (El Catador de Matatlán · Parte 1): estado
+
+- **CATALOGO.md #1 "El catador" [CAPO]. Familia: Identidad oculta. Cierre tipo 1: entra un personaje inesperado (la compradora saluda a don Teófilo).**
+- MAJESTIC. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN).
+
+### `pieces\domino-jerez\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi, parte1, capos, zacatecas, jerez, catalogo]
+relatedTo: [atrium-vista, novelas-variedad]
+---
+# domino-jerez (Parte 1): estado
+
+## Hecho (2026-11-17)
+- **CATALOGO.md #31 "La partida de dominó" [CAPO]. Familia: Capos, caciques y patrones. Cierre tipo 3: una palabra reveladora ("Ella se llamaba Rosario").**
+- MEXI. Cuenta monetizadotiktok18, proyecto Flow propio. 19 clips, 0 regens (c01 de la primera pasada; el resto con REGEN tras resubir hojas).
+- Render renders/share.mp4: 55.3 s, 32 tramos, SPEED 1.15, subtítulos tamaño 38 revisados en qa/strip.jpg. LUFS -14.4, pico -2.1 dBTP.
+- QA: qa/report.txt (r3/r4 = alucinaciones del ASR en clips mudos), qa/render_report.txt, renders/share_revision.md (CASI). Aceptados: la foto sobre la mesa en c10 no se distingue igual que en el inserto r3, fondo espejado en un plano, CTA no es pregunta (el catálogo pide variar), "nomás/Voltee" que el ASR oye distinto.
+
+## Pendiente
+- No entregado (main entrega). caption.txt listo.
+
+### `pieces\carta-durango\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi, parte1, patronas, durango, catalogo]
+relatedTo: [atrium-vista, novelas-variedad]
+---
+# carta-durango (La Carta de Durango · Parte 1): estado
+
+- **CATALOGO.md #49 "El hacendado y la hija del enemigo" [CAPO]. Familia: Patronas y haciendas. Cierre tipo 4: la descubren (Joaquín la encuentra abriendo el cajón).**
+- MEXI. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN).
+
+### `pieces\cacao-comalcalco\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista, parte1, patronas, tabasco, comalcalco, catalogo]
+relatedTo: [atrium-vista, novelas-variedad]
+---
+# cacao-comalcalco (La Heredera de Comalcalco · Parte 1): estado
+
+- **CATALOGO.md #53 "La heredera salvaje" [CAPO]. Familia: Patronas y haciendas. Cierre tipo 3: una palabra reveladora ("…y de Candelaria").**
+- VISTA. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN).
+
+### `pieces\lucero-parral\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexitv, parte1, capos, chihuahua, parral, catalogo]
+relatedTo: [atrium-vista, novelas-variedad]
+---
+# lucero-parral (El Caballo de Parral · Parte 1): estado
+
+- **CATALOGO.md #22 "El compadre" [CAPO]. Familia: Traición familiar. Cierre tipo 7: objeto que delata (el sombrero del compadre).**
+- MEXITV. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN).
+
+### `pieces\manteles-apan\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi, parte1, patronas, hidalgo, apan, catalogo]
+relatedTo: [atrium-vista, novelas-variedad]
+---
+# manteles-apan (La Patrona de Apan · Parte 1): estado
+
+- **CATALOGO.md #48 "La que regresó convertida en patrona" [CAPO]. Familia: Patronas y haciendas. Cierre tipo 2: se lee un documento y se corta antes del dato clave.**
+- MEXI. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN).
+
+### `pieces\silla-izamal\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista, parte1, capos, yucatan, izamal, catalogo]
+relatedTo: [atrium-vista, novelas-variedad]
+---
+# silla-izamal (La Silla de Izamal · Parte 1): estado
+
+## Hecho (2026-11-17)
+- **CATALOGO.md #14 "El esposo que no camina" [CAPO]. Familia: doble vida y secretos de pareja. Cierre tipo 4: el villano descubre que lo vieron.**
+- En su hacienda henequenera de Izamal, don Jacinto finge seguir en silla de ruedas y sin entender nada desde el accidente. Su esposa Graciela y el administrador Octavio planean poner la hacienda a nombre de ella con su huella; la cocinera Chabela lo defiende. A solas, Jacinto le aprieta la mano a Chabela, le habla, se pone de pie y llama al licenciado: "Son los dos." Graciela vuelve y lo ve de pie.
+- Sin desalojo ni plazo. Cuenta monetizadotiktok18, proyecto Flow propio. 19 clips + 1 regen (c03: "hacienda" sonaba "sienda"; ahora dice "toda la hacienda"). c10 se ajustó a "No haga ruido" en lines.json.
+- Render renders/share.mp4: 57.2 s, 35 tramos, VISTA, SPEED 1.15, subtítulos tamaño 38, revisados en qa/subs_check.jpg. LUFS -14.2, pico -2.2 dBTP.
+- QA: qa/report.txt, qa/s1-s2.jpg, qa/render_report.txt, renders/share_revision.md (CASI). Quedan aceptados un CTA que no es pregunta (el catálogo pide variar), la marca poco visible sobre fondo claro (alpha 80, regla vigente) y que el ASR oyera "sienda" en c03 (se regenera c03 con "toda la hacienda").
+
+## Pendiente
+- No entregado. caption.txt listo. La P2 solo se hace si la P1 pasa 10k en @vistastoriestv.
+
+### `pieces\barro-coyotepec\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexitv, parte1, capos, oaxaca, coyotepec, barro-negro]
+relatedTo: [talavera-cholula, atrium-vista]
+---
+# barro-coyotepec (El Barro de Coyotepec · Parte 1): estado
+
+## Hecho (2026-11-17)
+- Capos transformado (fórmula vieja de desalojo con plazo). Los clips ya estaban generados cuando el usuario prohibió esa fórmula, así que se terminó tal cual, como pidió. En San Bartolo Coyotepec, el licenciado Efrén quiere el taller de barro negro de doña Fidela y le pone plazo "antes de que empiece la Guelaguetza". Llega el poderoso agradecido, Matías, y el plazo se invierte. Giro: el hombre que le incendió el taller hace treinta años.
+- Cuenta monetizadotiktok18, proyecto Flow propio. 24 clips a la primera, sin regens.
+- Render renders/share.mp4: 67.6 s, 44 tramos, MEXITV ("MEXI TV" arriba a la izquierda, correcto), SPEED 1.15, subtítulos tamaño 38, revisados en qa/subs_check.jpg. LUFS -14.4, pico -2.2 dBTP.
+- QA: qa/report.txt, qa/s1-s2.jpg, qa/render_report.txt, renders/share_revision.md (NO LISTO). La marca equivocada es un falso positivo. La fórmula prohibida se sabía de antemano. Quedan aceptados el rebozo y la blusa de Fidela, que cambian entre clips, y dos subtítulos que entran tarde.
+
+## Pendiente
+- No entregado. caption.txt listo. La P2 solo se hace si la P1 pasa 10k en @mexitve, y si se hace, sin la fórmula del plazo.
+
+### `pieces\cajeta-celaya\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi, parte1, padre-hijos, guanajuato, celaya, cajeta]
+relatedTo: [talavera-cholula, mango-rosario, atrium-vista]
+---
+# cajeta-celaya (La Cajeta de Celaya · Parte 1): estado
+
+## Hecho (2026-11-17)
+- Padre que pone orden a los hijos, transformado: en su fábrica de cajeta en Celaya, Leticia le avisa a don Rogaciano que ella y su hermano ya vendieron la fábrica y que él se va a un cuarto atrás "antes de que acabe el mes". Llega el comprador, el licenciado Mendoza, y Rogaciano revela que la fábrica y la receta siguen a su nombre.
+- Cuenta monetizadotiktok18. 22 clips + 3 regens:
+  - c01: labios cerrados al arrancar el gancho.
+  - c06: cambio de frase. "Ustedes crecieron oliendo esta cajeta" pasó a "Ustedes comieron de esta cajeta toda la vida", para no aludir a la infancia.
+  - c17: CTA con carisma y la ropa de la hoja.
+- c15: lines.json se ajustó al audio ("Y lo que les adelanté, ¿dónde está?").
+- Render renders/share.mp4: 70.0 s, 39 tramos, MEXI, SPEED 1.15, subtítulos tamaño 38, revisados en qa/subs_check.jpg. Labios del gancho comprobados en qa/hook_mouth.jpg. LUFS -14.2, pico -2.3 dBTP.
+- QA: qa/report.txt, qa/s1-s2.jpg, qa/regen.jpg, renders/share_revision.md (CASI en v1). Queda aceptado que Rogaciano alterna playera y camisa bajo el chaleco.
+
+## Pendiente
+- No entregado. caption.txt listo. La P2 solo se hace si la P1 pasa 10k en @mexistories.
+
+### `pieces\mango-rosario\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista, parte1, madrastra, sinaloa, mango]
+relatedTo: [talavera-cholula, atrium-vista]
+---
+# mango-rosario (El Mango de El Rosario · Parte 1): estado
+
+## Hecho (2026-11-17)
+- Madrastra transformada: en un rancho de mangos de El Rosario, Sinaloa, Brenda tiene a su hijastra Ximena empacando sola. Arturo llega antes de tiempo, descubre que Brenda cortó el árbol de su difunta Lucía y la corre "antes de que se meta el sol". Giro: el testamento de Lucía deja el rancho a su hermano Gabino, que ya se lo vendió a Brenda.
+- Cuenta monetizadotiktok18. 28 clips + 4 regens: c01 (labios cerrados en el gancho), c05 (sombrero flotante en el borde), c08 (gafas de Brenda sobre los ojos; el prompt ahora las deja en la cabeza) y c14 (doble en el borde).
+- Render renders/share.mp4: 83.0 s, 50 tramos, VISTA, SPEED 1.15, subtítulos tamaño 38, revisados en qa/subs_check.jpg. LUFS -14.4, pico -2.3 dBTP.
+- QA: qa/report.txt, qa/regen.jpg, qa/hook_mouth.jpg, qa/render_report.txt, renders/share_revision.md (CASI en v1; ya se regeneraron los clips señalados).
+
+## Pendiente
+- No entregado. caption.txt listo. La P2 solo se hace si la P1 pasa 10k en @vistastoriestv.
+
+### `pieces\talavera-cholula\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic, parte1, capos, puebla, cholula, talavera]
+relatedTo: [sombrero-sahuayo, atrium-vista]
+---
+# talavera-cholula (La Talavera de Cholula · Parte 1): estado
+
+## Hecho (2026-11-17)
+- Capos transformado (patrón acusa a su hombre de confianza; el traidor es su hijo): en su taller de talavera en Cholula, don Ezequiel acusa a su encargado Rubén; Leonor descubre que Adrián se fue; el rival Fausto Cuéllar llega con los papeles del taller firmados por Adrián, plazo "antes de que se apaguen los hornos".
+- Cuenta monetizadotiktok18. El proyecto Flow compartido perdió los assets EZEQUIEL_OSORIO y RUBEN_TAPIA (c03, c05, c07 salieron con NOREF, caras aceptables); se pasó a un proyecto nuevo con las hojas resubidas.
+- 22 clips + 3 regens (c07 y c08 por figuras en el borde, c11 por las gafas de Fausto).
+- c05: Omni cambió la 2.ª frase; lines.json se ajustó a lo que dice el audio ("Si me mientes, ya no hay nada entre tú y yo.").
+- c11 repetía "Ya tengo los papeles"; en la EDL se recortó a (0.72, 5.75).
+- Render renders/share.mp4: 63.0 s, 42 tramos, MAJESTIC, SPEED 1.15, subtítulos tamaño 38, revisados en qa/subs_check.jpg. LUFS -14.4, pico -0.7 dBTP.
+- QA: qa/report.txt, qa/s1-s3.jpg, qa/regen.jpg, qa/render_report.txt, renders/share_revision.md (CASI en v1; ya se regeneraron los bordes y las gafas).
+
+## Pendiente
+- No entregado. caption.txt listo. La P2 solo se hace si la P1 pasa 10k en @wepsychologic.
+
+### `pieces\sombrero-sahuayo\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexitv, parte1, capos, michoacan, sahuayo, sombreros]
+relatedTo: [pan-comala, palofierro-kino, atrium-vista]
+---
+# sombrero-sahuayo (El Sombrero de Sahuayo · Parte 1): estado
+
+## Hecho (2026-11-17)
+- Capos transformado: bajo el portal de Sahuayo, Joaquín Valencia quiere el local del sombrerero don Isidro, pisa un sombrero de encargo y le da plazo "antes de que termine la feria"; su hija Clara lo defiende. Isidro llama a don Honorio, padrino de Joaquín, que se casó con un sombrero tejido por Isidro. Plazo invertido. Giro: la madre de Clara no se fue de casa: se fue con el papá de Joaquín.
+- Cuenta monetizadotiktok18, proyecto Flow propio; 5 hojas sin duplicados.
+- 24 clips a la primera, sin regens (240 créditos).
+- Render renders/share.mp4: 75.7 s, 47 planos (1.60 s/plano), MEXITV (marca "MEXI TV"), SPEED 1.15, subtítulos quemados (tamaño 38). Verificado en qa/subs_check.jpg.
+- QA: qa/report.txt, tiras qa/s1-s3.jpg, qa/render_report.txt, renders/share_revision.md (CASI; su punto "marca equivocada" es error del revisor: la pieza es MEXITV; Clara alterna falda y jeans entre clips, aceptado).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @mexitve.
+
+### `pieces\red-janitzio\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte1, capos, michoacan, patzcuaro, janitzio, pescadores]
+relatedTo: [jarana-tlacotalpan, agave-amatitan, atrium-vista]
+---
+# red-janitzio (La Red de Janitzio · Parte 1): estado
+
+## Hecho (2026-11-17)
+- Capos transformado: Ignacio, que maneja la cooperativa, le quita el lugar al viejo pescador don Severo, le avienta al agua la red que tejió su esposa y le da plazo "antes de que salgan las canoas"; su nieta Nayeli lo defiende. Severo hace una llamada: llega el gobernador, al que sacó del lago de niño. Giro: a ese niño lo dejaron en el agua... el papá de Ignacio, su tío.
+- Cuenta monetizadotiktok18, proyecto Flow propio; 5 hojas sin duplicados.
+- 23 clips, sin regens, pero con muchos reintentos por políticas de Flow (la palabra "gobernador" y la historia del niño en el agua): r2, c10, c12, c13, c16 al intento 5 (sin referencia para el gobernador, se ve consistente) y c14, c15 al 4. Las líneas de c15/c16 salieron en su versión suavizada. 230 créditos.
+- c13 se quedó sin "entregas la cooperativa" (Omni cortó la frase): en el montaje solo queda "Recoge la red, Ignacio."
+- Render renders/share.mp4: 69.0 s, 46 planos (1.49 s/plano), VISTA, SPEED 1.15, subtítulos quemados (tamaño 38). Verificado en qa/subs_check.jpg.
+- QA: qa/report.txt, tiras qa/s1-s3.jpg, qa/render_report.txt, renders/share_revision.md (CASI).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @vistastoriestv.
+
+### `pieces\mole-atocpan\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte1, madrastra-justicia, cdmx, san-pedro-atocpan, mole]
+relatedTo: [paste-realdelmonte, reloj-zacatlan, atrium-vista]
+---
+# mole-atocpan (El Mole de Atocpan · Parte 1): estado
+
+## Hecho (2026-11-17)
+- Madrastra transformada: Mónica tiene a su hijastra Xóchitl moliendo chiles desde las tres y vende el mole de la difunta Rosario con su propio nombre; Gonzalo la corre "antes de que abra la feria". Giro: la marca del mole ya está registrada a nombre de Mónica; la firmó Patricia, la hija mayor.
+- Cuenta monetizadotiktok18, proyecto Flow propio; 4 hojas sin duplicados.
+- 21 clips a la primera, sin regens (210 créditos).
+- Render renders/share.mp4: 67.8 s, 45 planos (1.50 s/plano), MEXI, SPEED 1.15, subtítulos quemados (tamaño 38). Cortada la repetición del CTA ("para ver la segunda parte"). Verificado en qa/subs_check.jpg.
+- QA: qa/report.txt, tiras qa/s1-s3.jpg, qa/render_report.txt, renders/share_revision.md (CASI: pocos two-shots, aceptado).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @mexistories.
+
+### `pieces\pinata-acolman\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte1, padre-hijos-herencia, navidad, estado-de-mexico, acolman, pinatas]
+relatedTo: [laca-olinala, gloria-linares, atrium-vista]
+---
+# pinata-acolman (La Piñata de Acolman · Parte 1): estado
+
+## Hecho (2026-11-17)
+- Padre-hijos con tema de Navidad: en Nochebuena, la nuera Yesenia le hace la maleta a don Pascual para mandarlo al asilo "antes de que empiece la posada"; su hijo Emilio dice que ya firmó. Llega la licenciada Eugenia, notaria, por las piñatas de la posada del barrio: la firma es falsa. Giro: quien la falsificó fue su propio hijo.
+- Cuenta monetizadotiktok18, proyecto Flow propio; 5 hojas sin duplicados.
+- 22 clips a la primera + 2 regens = 24 clips (240 créditos): c06 (subtítulos quemados por Omni) y c01 (la frase del gancho se cortaba antes de "se va al asilo"; salió en single al intento 4).
+- Render renders/share.mp4: 71.6 s, 49 planos (1.45 s/plano), MAJESTIC, SPEED 1.15, subtítulos quemados (tamaño 38). Verificado en qa/subs_check.jpg.
+- QA: qa/report.txt, tiras qa/s1-s3.jpg + qa/c01.jpg + qa/c06.jpg, qa/render_report.txt, renders/share_revision.md (de la versión anterior, CASI; maleta negra en un plano de Eugenia, aceptado).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @wepsychologic.
+
+### `pieces\jarana-tlacotalpan\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte1, capos, veracruz, tlacotalpan, jarana]
+relatedTo: [red-janitzio, agave-amatitan, atrium-vista]
+---
+# jarana-tlacotalpan (La Jarana de Tlacotalpan · Parte 1): estado
+
+## Hecho (2026-11-17)
+- Capos transformado: en la fiesta de Tlacotalpan, Lorena (organizadora, nuera de doña Cristina) quiere quitar el puesto del jaranero don Matías "antes de que salga la procesión" y le tira una jarana; su nieto Ismael lo defiende. La jarana era el encargo de doña Cristina (la de su difunto marido). Plazo invertido. Giro: Ismael no es nieto de Matías sino de Cristina (hijo de Rodolfo).
+- Cuenta monetizadotiktok18, proyecto Flow propio; 5 hojas sin duplicados.
+- 24 clips a la primera + 1 regen (c11: Lorena con boca cerrada mientras sonaba su voz) = 25 clips (250 créditos). La regen salió con otro vestido blanco y otro abanico (aceptado).
+- Render renders/share.mp4: 78.0 s, 51 planos (1.52 s/plano), VISTA, SPEED 1.15, subtítulos quemados (tamaño 38). Verificado en qa/subs_check.jpg.
+- QA: qa/report.txt, tiras qa/s1-s3.jpg + qa/c11.jpg, qa/render_report.txt, renders/share_revision.md (CASI).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @vistastoriestv.
+
+### `pieces\pan-comala\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexitv, parte1, capos, colima, comala, panaderia]
+relatedTo: [palofierro-kino, cobre-santaclara, atrium-vista]
+---
+# pan-comala (El Pan de Comala · Parte 1): estado
+
+## Hecho (2026-11-17)
+- Capos transformado: Toño, hombre de don Horacio, se niega a pagar el pan, se lo tira a Matilde y le da plazo "antes de que cierre la feria"; la abuela Clemencia manda llamar a Horacio (ella le dio de comer cuando dormía en la plaza). Plazo invertido. Giro: Clemencia es la madre de Horacio; lo dejó en la iglesia cuando era muy joven.
+- Cuenta monetizadotiktok18, proyecto Flow propio; 5 hojas sin duplicados.
+- 24 clips (r2 al 2.º intento) + 1 regen (c05: el borde mostraba a la abuela con la ropa equivocada; rehecho en single de Toño) = 25 clips (250 créditos).
+- Render renders/share.mp4: 72.8 s, 49 planos (1.48 s/plano), MEXITV (marca "MEXI TV"), SPEED 1.15, subtítulos quemados (tamaño 38). Cortada la repetición de c09 ("¿Usted conoce a la señora?"). Verificado en qa/subs_check.jpg.
+- QA: qa/report.txt, tiras qa/s1-s3.jpg + qa/c05.jpg, qa/render_report.txt, renders/share_revision.md (CASI; su punto "marca equivocada" es error del revisor: la pieza es MEXITV; la cara de Horacio varía un poco entre clips, aceptado).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @mexitve.
+
+### `pieces\trajinera-xochimilco\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte1, capos, humillacion-revancha, cdmx, xochimilco, trajinera]
+relatedTo: [guitarra-paracho, yegua-jerez, atrium-vista]
+---
+# trajinera-xochimilco (La Trajinera de Xochimilco · Parte 1): estado
+
+## Hecho (2026-11-17)
+- Estructura de la ref @alisorxomrb (transformada): en el embarcadero de don Celso, el capataz Rubén quiere desarmar la Lupita, la trajinera que hizo el abuelo de Abril; Celso la corre con su trajinera; su abuelo Teodoro cuenta que Celso siempre la quiso desde que perdió una regata; Abril promete correr la regata; remate: Celso se burla.
+- Cuenta monetizadotiktok18, proyecto Flow propio; 6 hojas sin duplicados.
+- 21 clips a la primera + 1 regen (c13: subtítulos quemados por Omni) = 22 clips (220 créditos).
+- Render renders/share.mp4: 79.4 s, 50 planos (1.58 s/plano), MEXI, SPEED 1.15, subtítulos quemados (tamaño 38). Verificado en qa/subs_check.jpg.
+- QA: qa/report.txt, tiras qa/s1-s3.jpg + qa/c13.jpg, qa/render_report.txt, renders/share_revision.md (CASI: la espalda de Abril en el borde muestra la camiseta sin la camisa roja, aceptado).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @mexistories.
+
+### `pieces\guitarra-paracho\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte1, capos, humillacion-revancha, michoacan, paracho, guitarras]
+relatedTo: [yegua-jerez, reloj-zacatlan, atrium-vista]
+---
+# guitarra-paracho (La Guitarra de Paracho · Parte 1): estado
+
+## Hecho (2026-11-17)
+- Estructura de la ref @alisorxomrb (transformada): Ricardo Cuevas, hijo del patrón, se burla de la guitarra campeona del difunto padre de Efraín y la deja caer; el patrón Gilberto corre a Efraín; su madre Josefina lo regaña; Efraín promete arreglarla y ganar el festival; remate: Gilberto se ríe y apuesta su fábrica.
+- Cuenta monetizadotiktok18, proyecto Flow propio; 6 hojas sin duplicados.
+- 23 clips a la primera, sin regens (230 créditos).
+- Render renders/share.mp4: 83.9 s, 50 planos (1.67 s/plano), MAJESTIC, SPEED 1.15, subtítulos quemados (tamaño 38). Cortada la repetición de c16 ("con la guitarra rota"). Verificado en qa/subs_check.jpg y qa/subs_fix.jpg.
+- _subs.py mejorado con esta pieza: frases partidas entre tramos se subtitulan por palabra (Whisper por palabra) y los cortes de subtítulo prefieren fin de oración.
+- QA: qa/report.txt, tiras qa/s1-s3.jpg, qa/render_report.txt, renders/share_revision.md (CASI: la guitarra que toca Efraín en c15 se ve entera, aceptado).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @wepsychologic.
+
+### `pieces\yegua-jerez\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte1, humillacion-revancha, zacatecas, jerez, charreria, yegua]
+relatedTo: [agave-amatitan, guitarra-paracho, atrium-vista]
+---
+# yegua-jerez (La Yegua de Jerez · Parte 1): estado
+
+## Hecho (2026-11-17)
+- Primera pieza basada (transformada) en la ref de @alisorxomrb 7706249552289860896 (fuentes/atrium-vista/videos/7706249552289860896_analisis.md): Rosalba, escaramuza charra, defiende a la Duquesa, yegua campeona lastimada que el capataz Cutberto quiere vender; el patrón Arnulfo la corre con la yegua; la abuela Chayo la regaña; Rosalba promete ganar la charreada de Jerez; remate burlón del patrón.
+- Cuenta monetizadotiktok18, proyecto Flow propio; 7 hojas (4 personajes, la yegua DUQUESA y 2 locaciones) sin duplicados.
+- 23 clips a la primera, sin regens (230 créditos).
+- Render renders/share.mp4: 86.5 s, 54 planos (1.60 s/plano), VISTA, SPEED 1.15, subtítulos quemados (tamaño 38). Arranque cerrado con crop (el c01 abría en plano abierto). Verificado en qa/subs_check.jpg y qa/open.jpg.
+- QA: qa/report.txt, tiras qa/s1-s3.jpg, qa/render_report.txt, renders/share_revision.md (CASI: parche de marca en la chamarra del patrón y foto de la yegua que cambia entre el inserto y el plano, aceptados).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @vistastoriestv.
+
+### `pieces\palofierro-kino\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexitv, parte1, capos, sonora, bahia-de-kino, palo-fierro]
+relatedTo: [vainilla-papantla, cobre-santaclara, atrium-vista]
+---
+# palofierro-kino (El Palo Fierro de Kino · Parte 1): estado
+
+## Hecho (2026-11-17)
+- Capos transformado ("le dio cinco minutos y no le creyó"): Brayan le tira las figuras de palo fierro a don Eliseo y le da plazo "antes de que se meta el sol"; Eliseo le da cinco minutos; Brayan llama a su papá Saúl, que llega y le pide perdón al viejo: Eliseo era "el patrón" de la costa. Giro: el que lo traicionó aquella noche sigue vivo.
+- Cuenta monetizadotiktok18, proyecto Flow propio; 5 hojas sin duplicados.
+- 25 clips a la primera, sin regens (250 créditos).
+- Render renders/share.mp4: 77.2 s, 51 planos (1.51 s/plano), MEXITV (marca "MEXI TV"), SPEED 1.15, subtítulos quemados (tamaño 38). r3 usa el tramo 0.2-1.4 (después de 3 s salía con dos sombreros). Verificado en qa/subs_check.jpg y qa/r3chk.jpg.
+- QA: qa/report.txt, tiras qa/s1-s3.jpg, qa/render_report.txt, renders/share_revision.md (CASI; su punto "marca equivocada" es error del revisor: la pieza es MEXITV).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @mexitve.
+
+### `pieces\nuez-parras\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte1, capos, coahuila, parras, nuez, nogalera]
+relatedTo: [manzana-cuauhtemoc, queso-tequisquiapan, atrium-vista]
+---
+# nuez-parras (La Nuez de Parras · Parte 1): estado
+
+## Hecho (2026-11-17)
+- Capos transformado: Ulises le tira la nuez a don Anacleto y le da plazo "antes de que acabe la cosecha"; Anacleto llama a Mateo, el hijo que no ve hace quince años, que llega en camionetas: Ulises trabaja para él. Giro: Ulises es hijo de Anacleto con otra mujer, hermano de Mateo.
+- Cuenta monetizadotiktok18, proyecto Flow propio; 5 hojas sin duplicados.
+- 26 clips (c17 al 2.º intento), sin regens (260 créditos).
+- Render renders/share.mp4: 76.7 s, 53 planos (1.44 s/plano), MEXI, SPEED 1.15, subtítulos quemados (tamaño 38). Quitada la repetición de c08 ("pero es tu hijo"). Verificado en qa/subs_check.jpg.
+- QA: qa/report_part.txt, tiras qa/s1-s3.jpg, qa/render_report.txt, renders/share_revision.md (CASI: sombrero de Anacleto que cambia de tejido, aceptado).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @mexistories.
+
+### `pieces\reloj-zacatlan\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte1, madrastra-justicia, puebla, zacatlan, relojeria]
+relatedTo: [paste-realdelmonte, ambar-simojovel, atrium-vista]
+---
+# reloj-zacatlan (El Reloj de Zacatlán · Parte 1): estado
+
+## Hecho (2026-11-17)
+- Madrastra transformada: Gisela tiene a Marisol componiendo relojes toda la noche; Ernesto llega antes, encuentra en el suelo el reloj cucú de su difunta Leonor y la corre "antes de que den las doce". Giro: el contrato del reloj de la parroquia se lo dio el primo de Gisela; es ella o el reloj.
+- Cuenta monetizadotiktok18, proyecto Flow propio; 4 hojas sin duplicados.
+- 27 clips (c12 al 2.º intento) + 1 regen (c21: el grupo salió con mal encuadre; rehecho en single de Gisela, con otra blusa morada — aceptado) = 28 clips (280 créditos).
+- Render renders/share.mp4: 88.7 s, 59 planos (1.50 s/plano), MAJESTIC, SPEED 1.15, subtítulos quemados (tamaño 38). Repeticiones de Omni cortadas por palabra (c04 "trabaja de noche", c14 "patrona de mi hija"). Verificado en qa/subs_check.jpg.
+- QA: qa/report.txt, tiras qa/s1-s3.jpg + qa/c21.jpg, qa/render_report.txt, renders/share_revision.md (CASI).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @wepsychologic.
+
+### `pieces\agave-amatitan\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte1, capos, jalisco, amatitan, agave, jimador]
+relatedTo: [arbol-metepec, alebrije-tilcajete, atrium-vista]
+---
+# agave-amatitan (El Agave de Amatitán · Parte 1): estado
+
+## Hecho (2026-11-16)
+- Capos transformado: la licenciada Mariela, gerente de la tequilera, despide al viejo jimador don Tobías, pisa el sombrero de su padre y le da plazo "antes de que se acabe la temporada"; llega el dueño, don Leandro: plazo invertido. Giro: Tobías rechaza su ayuda; el padre de Leandro se quedó con esas tierras con un papel falso.
+- Cuenta monetizadotiktok18, proyecto Flow propio; 5 hojas sin duplicados.
+- 25 clips a la primera, sin regens (250 créditos). i02 traía una mujer dentro de una camioneta en los primeros 2.5 s (se usa solo el tramo 3.3-4.7 de las camionetas); c18 tenía una tercera persona en el borde izquierdo (recortada con crop).
+- Render renders/share.mp4: 77.0 s, 55 planos (1.39 s/plano), VISTA, SPEED 1.15, subtítulos quemados (tamaño 38). Verificado en qa/subs_check.jpg y qa/c18chk.jpg.
+- QA: qa/report_part.txt, tiras qa/s1-s4.jpg, qa/render_report.txt, renders/share_revision.md (CASI: detalles de continuidad de sombreros, lentes y camisa de Tobías aceptados).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @vistastoriestv.
+
+### `pieces\queso-tequisquiapan\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte1, capos, queretaro, tequisquiapan, queso]
+relatedTo: [manzana-cuauhtemoc, paste-realdelmonte, atrium-vista]
+---
+# queso-tequisquiapan (El Queso de Tequisquiapan · Parte 1): estado
+
+## Hecho (2026-11-16)
+- Capos transformado: Vanesa, esposa del ranchero Fulgencio, le corta la leche a doña Petra, le tira los quesos y le da plazo "antes de que suenen las campanas"; Petra le manda saludos a su marido y Fulgencio llega en persona. Giro: Petra es su esposa (nunca se divorciaron) y Nicanor es su primer hijo.
+- Cuenta monetizadotiktok18, proyecto Flow propio; 5 hojas sin duplicados.
+- 26 clips a la primera + 1 regen (c18: en el two-shot movía los labios Nicanor; rehecho en single de Fulgencio, salió sin referencia en el intento 5 y se ve igual) = 27 clips (270 créditos).
+- Render renders/share.mp4: 76.1 s, 55 planos (1.38 s/plano), MEXI, SPEED 1.15, con subtítulos quemados (tamaño 38, el del CTA ya no se sale). Verificado en qa/subs_check.jpg.
+- QA: qa/report.txt, tiras qa/s1-s4.jpg + qa/c18.jpg, qa/render_report.txt, renders/share_revision.md (de la versión anterior; sus dos fallos —c18 y el subtítulo del CTA— quedaron corregidos). Detalle aceptado: Fulgencio con el sombrero en la mano en c11 y puesto en los planos de espaldas.
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @mexistories.
+
+### `pieces\laca-olinala\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexitv, parte1, padre-hijos-herencia, guerrero, olinala, laca]
+relatedTo: [gloria-linares, alebrije-tilcajete, atrium-vista]
+---
+# laca-olinala (La Laca de Olinalá · Parte 1): estado
+
+## Hecho (2026-11-16)
+- Padre-hijos transformado: en su cumpleaños 80, don Isauro recibe a Germán y Rocío después de veinte años; traen un papel para quedarse con la casa "antes de que se acabe la comida" y humillan a Chabela, la que lo cuida. Isauro saca el cofre rojo de laca: la casa ya es de Chabela. Giro: Chabela es su hija mayor.
+- Cuenta monetizadotiktok18, proyecto Flow propio; 5 hojas sin duplicados.
+- 24 clips a la primera + 1 regen (c11: subtítulos quemados por Omni) = 25 clips (250 créditos). c03 salió sin "en esta casa tan grande" (la frase queda bien; el subtítulo ya no muestra lo que no se oye).
+- Render renders/share.mp4: 71.9 s, 47 planos (1.52 s/plano), MEXITV (marca "MEXI TV"), SPEED 1.15, con subtítulos quemados (pieces/_subs.py, tamaño 38; renders/subs/subs.json). Verificado en qa/subs_check.jpg.
+- QA: qa/report.txt, tiras qa/s1-s3.jpg + qa/c11.jpg, qa/render_report.txt, renders/share_revision.md (CASI; su punto "marca equivocada" es error del revisor: la pieza es MEXITV).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @mexitve.
+
+### `pieces\alebrije-tilcajete\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte1, capos, padre-hijos, oaxaca, tilcajete, alebrijes]
+relatedTo: [arbol-metepec, ambar-simojovel, atrium-vista]
+---
+# alebrije-tilcajete (El Alebrije de Tilcajete · Parte 1): estado
+
+## Hecho (2026-11-16)
+- Capos + padre-hijos: la licenciada Paulina quiere el terreno del tallador don Crispín para un hotel, le rompe un alebrije y da plazo "antes de que acabe la Guelaguetza"; llama a su jefe: llega Ezequiel, el hijo que se fue hace veinte años. Giro: fue el propio Ezequiel quien la mandó a apretar "al viejo terco".
+- Cuenta monetizadotiktok18, proyecto Flow propio; 4 hojas sin duplicados.
+- 24 clips (c05 al 2.º intento, línea suavizada "Usted sabe hacerlo mejor") + 1 regen (c09: subtítulos quemados; la regen se cortó por la pausa del usuario y se rehízo al retomar) = 25 clips (250 créditos).
+- Render renders/share.mp4: 71.3 s, 52 planos (1.36 s/plano), VISTA, SPEED 1.15. Re-render 2026-11-16 con subtítulos quemados (pieces/_subs.py, texto de lines.json; renders/subs/subs.json) y sin el tramo repetido de c06 (frases de Whisper solapadas; mk_edl ahora las une). Verificado en qa/subs_check.jpg.
+- QA: qa/report.txt, tiras qa/s1-s3.jpg + qa/c09.jpg, qa/render_report.txt, renders/share_revision.md (CASI: alebrijes que se multiplican en la mesa y lentes de Crispín que cambian de forma; aceptados).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @vistastoriestv.
+
+### `pieces\bota-leon\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte1, capos, guanajuato, leon, botas]
+relatedTo: [ladrillo-tecate, gloria-linares, atrium-vista]
+---
+# bota-leon (La Bota de León · Parte 1): estado
+
+## Hecho (2026-11-16)
+- Capos transformado: Óscar le corta el cuero a Leticia, le tira unas botas de encargo y le da plazo "antes de que acabe la feria" para quedarse con los moldes de su padre; llega don Rodrigo, dueño del encargo, que levantó la curtiduría de Óscar; plazo invertido. Giro: el taller siempre estuvo a nombre de Rodrigo y ahora viene por los moldes.
+- Cuenta monetizadotiktok18, proyecto Flow propio; 5 hojas sin duplicados.
+- 26 clips a la primera, sin regens (260 créditos). c05 trae subtítulo quemado desde 5.0 s; la EDL corta en 4.89 s, no se ve.
+- Render renders/share.mp4: 84.5 s, 58 planos (1.45 s/plano), -14.3 LUFS, pico -2.1 dBTP, MAJESTIC, SPEED 1.15.
+- QA: qa/report_part.txt, tiras qa/s1-s3.jpg, qa/c05end.jpg, qa/render_report.txt, renders/share_revision.md (CASI: gafas dobles de Ramón en r1/c04, aceptado).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @wepsychologic.
+
+### `pieces\cobre-santaclara\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexitv, parte1, capos, michoacan, santa-clara-del-cobre, cobre]
+relatedTo: [vainilla-papantla, atrium-vista]
+---
+# cobre-santaclara (El Cobre de Santa Clara · Parte 1): estado
+
+## Hecho (2026-11-16)
+- Capos transformado: Gerardo le tira a doña Celestina el cazo de cobre de un encargo y le da plazo "antes de que empiece la feria"; llega don Lázaro por el cazo de la boda de su hija: Gerardo es el novio. Plazo invertido y boda cancelada. Giro: viene un nieto en camino... y Gerardo ya tiene otra familia en Morelia.
+- Cuenta monetizadotiktok18, proyecto Flow propio. Pausa a mitad (16/25) por pedido del usuario; retomado a las 19:36 con make_sheets --reupload; los 9 restantes salieron a la primera.
+- 25 clips (c01 al 2.º intento), sin regens (250 créditos).
+- Render renders/share.mp4: 81.9 s, 51 planos (1.60 s/plano), -14.5 LUFS, pico -2.2 dBTP, MEXITV (marca "MEXI TV"), SPEED 1.15.
+- QA: qa/report.txt (todas las frases presentes), tiras qa/s1-s3.jpg, qa/render_report.txt, renders/share_revision.md (su punto "marca equivocada" es error del revisor: la pieza es MEXITV).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @mexitve.
+
+### `pieces\ladrillo-tecate\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte1, capos, baja-california, tecate, ladrillera]
+relatedTo: [gloria-linares, manzana-cuauhtemoc, atrium-vista]
+---
+# ladrillo-tecate (El Ladrillo de Tecate · Parte 1): estado
+
+## Hecho (2026-11-16)
+- Capos transformado (la figura de poder estaba de incógnito): Santiago le tira el ladrillo a don Clemente y le da plazo "antes de que se enfríe el horno"; el peón Teófilo hace una llamada: es "Don Teo", el que manda en Tecate; plazo invertido. Giro: Teo buscaba al hombre que embarazó a su madre Rosa hace 45 años... Clemente es su padre.
+- Cuenta monetizadotiktok18, proyecto Flow nuevo; 4 hojas sin duplicados.
+- 26 clips a la primera + 4 regens = 30 clips (300 créditos): c01 (sombrero flotando en el borde; quedó single de Santiago), c13 (pronunciación de "constructora", sigue sonando ligada), c15 y c19 (sombrero flotando; rehechos en single de Teo).
+- Render renders/share.mp4: 77.7 s, 53 planos (1.46 s/plano), MAJESTIC, SPEED 1.15.
+- QA: qa/report_part.txt, tiras qa/s1-s3.jpg + qa/rg.jpg, qa/render_report.txt, renders/share_revision.md (CASI; detalles menores aceptados).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @wepsychologic.
+
+### `pieces\paste-realdelmonte\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte1, madrastra-justicia, hidalgo, real-del-monte, pastes]
+relatedTo: [ambar-simojovel, rebozo-santamaria, atrium-vista]
+---
+# paste-realdelmonte (El Paste de Real del Monte · Parte 1): estado
+
+## Hecho (2026-11-16)
+- Madrastra transformada: Karla tiene a Daniela amasando sola desde las cuatro; Rogelio llega antes, encuentra el rodillo de su difunta Elvira en la basura y la corre "antes de que salga el turno de la mina". Giro: Rogelio firmó sin leer y el local ya está a nombre de Karla.
+- Cuenta monetizadotiktok18, proyecto Flow nuevo; 4 hojas sin duplicados.
+- 28 clips (c02 al 2.º intento), sin regens (280 créditos).
+- Render renders/share.mp4: 85.6 s, 56 planos (1.52 s/plano), MEXI, SPEED 1.15. r1 recortado (crop) para quitar un letrero con texto que Omni puso sobre la puerta.
+- QA: qa/report_part.txt, tiras qa/s1-s4.jpg, qa/r1chk.jpg, qa/render_report.txt, renders/share_revision.md (CASI: el "cambio de cara" de Karla es la luz, en las tiras es la misma; Rogelio se quita el gorro en su entrada y lo trae puesto después, aceptado).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @mexistories.
+
+### `pieces\arbol-metepec\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte1, capos, estado-de-mexico, metepec, arbol-de-la-vida]
+relatedTo: [ambar-simojovel, vainilla-papantla, atrium-vista]
+---
+# arbol-metepec (El Árbol de Metepec · Parte 1): estado
+
+## Hecho (2026-11-16)
+- Capos transformado: Uriel le rompe a Jazmín el árbol de la vida de un encargo y le da plazo "antes de que acabe la feria"; llega doña Amparo, dueña del encargo, para quien trabaja el papá de Uriel; plazo invertido. Giro (traidor en casa): Ramiro, el marido de Jazmín, ya había firmado el puesto a escondidas.
+- Cuenta monetizadotiktok18, proyecto Flow nuevo; 5 hojas sin duplicados.
+- 26 clips (c04 y c05 al 2.º intento), sin regens (260 créditos).
+- Render renders/share.mp4: 75.0 s, 52 planos (1.44 s/plano), VISTA, SPEED 1.15.
+- QA: qa/report_part.txt, tiras qa/s1-s3.jpg, qa/render_report.txt, renders/share_revision.md (CASI: "Samparo" = "se llama Amparo" ligado; labios del CTA eran muestreo).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @vistastoriestv.
+
+### `pieces\vainilla-papantla\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexitv, parte1, capos, veracruz, papantla, vainilla]
+relatedTo: [manzana-cuauhtemoc, jaiba-lagunamadre, atrium-vista]
+---
+# vainilla-papantla (La Vainilla de Papantla · Parte 1): estado
+
+## Hecho (2026-11-16)
+- Capos transformado del modelo fuentes/atrium-vista/videos/7704056500502793502_analisis.md (traidor en casa), sin federales, armas ni dinero: llegan las camionetas de Fermín al beneficio de don Severiano, que acusa a su compadre Chava; Fermín da plazo "antes de que se seque la vainilla". Giro: la que le abrió la puerta fue su esposa Inés, y Ximena es hija de Fermín.
+- Cuenta monetizadotiktok18, proyecto Flow nuevo; 5 hojas sin duplicados.
+- 29 clips a la primera + 1 regen (c21: el plano de grupo ponía a Severiano al frente; rehecho en single de Fermín) = 30 clips (300 créditos).
+- Render renders/share.mp4: 88.7 s, 58 planos (1.52 s/plano), -14.3 LUFS, pico -2.1 dBTP, MEXITV (marca "MEXI TV"), SPEED 1.15.
+- QA: qa/report.txt, tiras qa/s1-s4.jpg, qa/render_report.txt, renders/share_revision.md (CASI; su punto 1 "marca equivocada" es un error del revisor: la pieza es MEXITV).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @mexitve.
+
+### `pieces\gloria-linares\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte1, padre-hijos-herencia, nuevo-leon, linares, glorias]
+relatedTo: [nieve-tepoztlan, ambar-simojovel, atrium-vista]
+---
+# gloria-linares (La Gloria de Linares · Parte 1): estado
+
+## Hecho (2026-11-16)
+- Padre-hijos transformado: la nuera Fabiola le hace la maleta a don Abundio para que no lo vea la compradora de Monterrey; Mauricio lo deja ir. Llega Consuelo: solo compra las glorias de don Abundio, sin él no hay trato. Giro: Fabiola quiso venderle a escondidas la libreta de recetas... que está en blanco.
+- Cuenta monetizadotiktok18, proyecto Flow nuevo; 5 hojas sin duplicados.
+- 30 clips a la primera + 3 regens = 33 clips (330 créditos): c18 (doble de Mauricio en el borde; rehecho en single), c10 y c13 (borde con ropa equivocada). c10 sigue sin el "¿Don Abundio?" inicial (la frase queda bien) y con dos maletas en el two-shot (aceptado).
+- Render renders/share.mp4: 92.0 s, 65 planos (1.41 s/plano), -14.3 LUFS, pico -2.2 dBTP, MAJESTIC, SPEED 1.15. Insertos i01/i02 acortados a 0.9 s tras la revisión (hueco sin voz).
+- QA: qa/report.txt, tiras qa/s1-s4.jpg + qa/rg.jpg, qa/render_report.txt, renders/share_revision.md (CASI).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @wepsychologic.
+
+### `pieces\manzana-cuauhtemoc\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte1, capos, chihuahua, cuauhtemoc, manzanas]
+relatedTo: [jaiba-lagunamadre, ambar-simojovel, atrium-vista]
+---
+# manzana-cuauhtemoc (La Manzana de Cuauhtémoc · Parte 1): estado
+
+## Hecho (2026-11-16)
+- Capos transformado: Kevin tira la cosecha de doña Herminia y le da plazo "antes de que caiga la helada"; ella llama a Anselmo (lo escondió en su sótano en una nevada hace 30 años), que es el padrino de Kevin; plazo invertido. Giro: Joel, el nieto de Herminia, es hijo de Anselmo (con Rebeca, la hija de Herminia).
+- Cuenta monetizadotiktok18, proyecto Flow nuevo; 5 hojas sin duplicados.
+- 31 clips a la primera + 2 regens = 33 clips (330 créditos): c09 (subtítulos quemados) y c22 (línea corregida "¿Este muchacho es mi hijo?"; salió en el intento 5 sin referencia, Anselmo se ve igual).
+- Render renders/share.mp4: 93.9 s, 64 planos (1.46 s/plano), -14.4 LUFS, pico -2.2 dBTP, MEXI, SPEED 1.15.
+- QA: qa/report.txt, tiras qa/s1-s5.jpg, qa/render_report.txt, renders/share_revision.md (CASI: CTA "rígido" era muestreo, en las tiras se toca el sombrero; pantalón negro en el inserto de la bota, aceptado).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @mexistories.
+
+### `pieces\ambar-simojovel\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte1, madrastra-justicia, chiapas, simojovel, ambar]
+relatedTo: [rebozo-santamaria, nieve-tepoztlan, jaiba-lagunamadre, atrium-vista]
+---
+# ambar-simojovel (El Ámbar de Simojovel · Parte 1): estado
+
+## Hecho (2026-11-16)
+- Madrastra transformada: Rosaura tiene a Itzel puliendo ámbar sola desde las cinco; Fidencio regresa antes de la feria, descubre que vendió el ámbar de la libélula de su difunta Amalia y la corre "antes de que se meta el sol". Giro: la compradora fue Amalia, viva en Comitán, y Fidencio lo sabía.
+- Cuenta Flow monetizadotiktok18, proyecto nuevo b5ed8919-7fc7-4010-913f-994141f5b8d0; 4 hojas sin duplicados.
+- 29 clips a la primera, sin regens (290 créditos).
+- Render renders/share.mp4: 94.0 s, 60 planos (1.56 s/plano), -14.2 LUFS, pico -2.3 dBTP, VISTA, SPEED 1.15.
+- QA: qa/report.txt (todos los diálogos r>0.95), tiras qa/s1-s4.jpg y qa/mouths.jpg, qa/render_report.txt (todas las frases presentes), renders/share_revision.md (CASI: los "labios" son muestreo; "Malia" = Amalia segmentada por Whisper; morral de Fidencio ausente en algunos planos, aceptado).
+- clips.py se arma desde clips.src.py con el build del scratchpad (bloques comunes de jaiba-lagunamadre).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @vistastoriestv.
+
+### `pieces\jaiba-lagunamadre\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, mexitve, parte1, capos, tamaulipas, laguna-madre, jaibas]
+relatedTo: [rebozo-santamaria, nieve-tepoztlan, atrium-vista]
+---
+# jaiba-lagunamadre (La Jaiba de la Laguna Madre · Parte 1): estado
+
+## Hecho (2026-11-16)
+- Capos transformado: Brandon tira las jaibas de Damiana y le da plazo "antes de que regresen las lanchas"; Odilón llama a Belisario (lo salvó del agua hace veinte años), que resulta ser tío de Brandon; plazo invertido; giro: la lancha que lo abandonó era de su propio hermano.
+- Proyecto Flow nuevo 5c4661e8-76d3-4245-9926-4340576ccf87; 5 hojas sin duplicados.
+- 30 clips a la primera (300 créditos), sin regens.
+- Render renders/share.mp4: 95.4 s, 59 planos (1.61 s/plano), -14.3 LUFS, pico -2.2 dBFS, MEXI, SPEED 1.15.
+- Arreglos en montaje: c07 repetía "jaiberos" (cortado por palabra); c12 traía subtítulo quemado en la 2.ª frase (recortado arriba).
+- revisar_render: renders/share_revision.md. Sus puntos de labios eran muestreo (CTA y c04 comprobados con tiras). Detalles menores aceptados: banda del sombrero de Belisario en el CTA, peinado de Damiana en c02, más singles que la meta en la parte de Belisario.
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @mexitve.
+
+### `pieces\nieve-tepoztlan\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, mexitve, parte1, padre-hijos-herencia, morelos, tepoztlan, neveria]
+relatedTo: [rebozo-santamaria, ate-calvillo, atrium-vista]
+---
+# nieve-tepoztlan (La Nevería de Tepoztlán · Parte 1): estado
+
+## Hecho (2026-11-16)
+- Variante de la saga de don Evaristo (padre-hijos-herencia): la nuera le hace la maleta al suegro para el asilo "antes de que cierre el tianguis"; llega la notaria: local, receta y nombre son de él.
+- Proyecto Flow nuevo 08964667-7ca0-456c-97d4-98042c42e6ff; 5 hojas sin duplicados.
+- 32 clips (c13 al 2.º intento) + 1 regen (c13: peinado de Lizbeth) = 33 clips, 330 créditos.
+- Render renders/share.mp4: 103.8 s, 69 planos (1.50 s/plano), -14.2 LUFS, pico -2.1 dBFS, MEXI, SPEED 1.15.
+- Arreglos en montaje: repeticiones de c17 ("amigos del dominó") y c26 ("ahorita mismo") cortadas por palabra; c19 recortado a la izquierda (mano extra en el borde).
+- revisar_render: renders/share_revision.md (los puntos de labios eran muestreo; se comprobó en la transcripción y las tiras).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @mexitve.
+
+### `pieces\rebozo-santamaria\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, mexitve, parte1, madrastra-justicia, san-luis-potosi, rebozos]
+relatedTo: [gaviota-bacalar, ate-calvillo, atrium-vista]
+---
+# rebozo-santamaria (El Rebozo de Santa María · Parte 1): estado
+
+## Hecho (2026-11-16)
+- Proyecto Flow nuevo f637bfe2-decf-4864-ad4f-4d38400e6355, hojas subidas (4, sin duplicados).
+- 34 clips a la primera; regenerados c19 y c27 (camisa sin cuello; CTA más orgánico). 36 clips = 360 créditos.
+- Render: renders/share.mp4, 104.0 s, 69 planos (1.50 s/plano), -14.4 LUFS, pico -2.3 dBFS, MEXI, SPEED 1.15.
+- Verificado: diálogos por Whisper (todos r>0.9), tiras de boca, revisar_render (renders/share_revision.md; los "labios cerrados" eran muestreo, se comprobó con recortes de boca).
+- EDL generada con mk_edl.py desde renders/phr.json.
+
+## Pendiente
+- No entregado (ni LucidLink, ni Telegram, ni TikTok). caption.txt listo.
+- P2 solo si la P1 pasa 10k vistas en @mexitve.
+
+### `pieces\gaviota-bacalar-p2\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte2, remake-transformado, madrastra-justicia, quintana-roo, bacalar, lanchas, hermano-traidor]
+relatedTo: [gaviota-bacalar, costal-cuyutlan-p2, atrium-vista]
+---
+# gaviota-bacalar-p2 (La Gaviota de Bacalar · Parte 2): estado
+
+## La historia
+Parte 2 de pieces/gaviota-bacalar. Arranca desde el gancho de la P1 (Wilberto llega en la última lancha).
+- Gancho con recordatorio: Wilberto en la punta del muelle: "Ya llegó la última lancha, hermano. Y la mitad de este muelle es mía."
+- Desenlace del giro: Ixchel saca de debajo del asiento de La Gaviota el papel de su mamá: cuando Wilberto se fue a Cancún le cedió su mitad a ella; ahora es de Ixchel.
+- Araceli y Wilberto se culpan entre sí. Castigo: se van los dos en la misma última lancha, Wilberto entrega la llave de la bodega y Araceli arrastra la maleta dorada por las tablas recién talladas.
+- Cálida: mañana le pintan el nombre a La Gaviota; Saturnino le quita el cepillo y le pide perdón a su hija.
+- Gancho: Araceli en la lancha, "ya veremos cuando mis hijas lleguen a este muelle". CTA de Saturnino: "¿Ustedes le habrían quitado la llave a su propio hermano?"
+
+Ritmo emocional: Final de la madrastra (7705499092683590942) y la pareja que se culpa del Final de Evaristo (7706344565933985054). Sin armas, sangre, cifras de dinero, deudas, uniformes, niños ni Navidad. Detalle en guion.md.
+
+## Marca
+**VISTA STORIES**, la misma de la Parte 1 (no entra en la rotación): edit.py, BRAND = "VISTA", SPEED = 1.15.
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 2, #parte2).
+- lines.json, fuente única: 362 palabras.
+- clips.py, 30 clips: c01-c23 hablados (c23 = CTA de 10 s), i01 inserto sin caras y r1-r6 mudos.
+  - Copia de pieces/costal-cuyutlan-p2/clips.py: ots(), two(), MOUTH, tuplas (prompt_nuevo, prompt_one), ONE_FROM=3, --one y todas las defensas (gatito en imagen, reload_flow, new_project, descarga corrupta, duplicados md5, TRIES=6, SAFE/SOFT con las frases fuertes primero, NOREF, parada "LIMITE DE CREDITOS"). Imprime "FIN P2".
+  - Reparto: 15 OTS (52 %), 7 single (24 %), 4 two-shot (14 %), 3 grupo (10 %, mudos) + 1 inserto. Geografía fija: Ixchel y Saturnino a la izquierda (lanchas, La Gaviota); Araceli y Wilberto a la derecha (palapa, punta del muelle). c01 es Wilberto hablando.
+- make_sheets.py: reutiliza las 5 hojas de la P1 copiadas a chars/ (SATURNINO_DZIB, ARACELI_BRACAMONTES, IXCHEL_DZIB, WILBERTO_DZIB, LOC_MUELLEBACALAR). Sin hojas nuevas ni personajes nuevos. `--reupload` salta las carpetas gaviota-bacalar* en el control de duplicados.
+- phr.py y edit.py (copia del de costal-cuyutlan-p2, EDL vacía, BRAND = "VISTA", SPEED = 1.15; música cálida de c19 a c22).
+- Comprobaciones: py_compile OK en los 4 .py; pyflakes sin avisos en clips.py y make_sheets.py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); cada clip hablado llama a talk() con su propio ID y los mudos no; los @{ASSET} = los 5 jpg de chars/; frases de SOFT = lines.json; sin dígitos en las líneas; ninguna frase de más de 3 palabras repetida de otra pieza.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py --reupload > sheets_log.txt`: sube las 5 copias, imprime "FIN HOJAS".
+2. `python -I clips.py > clips_log.txt`, con Monitor sobre "^FIN P2", Traceback, "intento 6" y "LIMITE".
+3. QA: dobles en los OTS (regenerar con `--one`), ropa de la P1, Ixchel descalza, Araceli con la maleta dorada a la derecha, el papel y el sobre sin texto, en r6 la lancha lejos y sin caras nítidas, pronunciación ("Ixchel", "Cancún", "Bacalar").
+4. `python -I phr.py`, armar la EDL y `python -I edit.py`. Verificar sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca VISTA arriba al centro.
+5. Copiar a LucidLink (Vista/) con caption.txt.
+
+### `pieces\ate-calvillo-p2\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte2, remake-transformado, padre-hijos-herencia, aguascalientes, calvillo, guayaba, empacadora]
+relatedTo: [ate-calvillo, costal-cuyutlan-p2, atrium-vista]
+---
+# ate-calvillo-p2 (El Ate de Calvillo · Parte 2): estado
+
+## La historia
+Parte 2 de pieces/ate-calvillo. Arranca desde el gancho de la P1 ("el lunes te presentas en la empacadora: ya es hora de que conozcas a tu patrón").
+- Gancho con recordatorio: Eleazar, pálido: "¿Mi patrón? ¿La empacadora es suya, apá?"
+- Desenlace del giro: Cleofas la compró con la guayaba del cañón y pidió el puesto para su hijo; el lunes Eleazar empieza desde abajo, cortando guayaba en la huerta de su hermana.
+- Castigo de la villana: cuaja el ate (la pala queda parada), las llaves se quedan en la mesa de Cleofas y Marcela se va a pie, en tacones, a la central de camiones, como lo mandaron a él.
+- Eleazar se queda, llora y pide perdón; Cleofas lo perdona sin cambiar su decisión ("volver a confiar en ti me va a tomar tiempo"). Se quita el reloj dorado y carga guayaba.
+- Gancho: Marcela al teléfono en la calle, "el viejo no sabe lo que firmó Eleazar". CTA de Cleofas: "Si fuera su hijo, ¿le darían la canasta o el boleto de camión?"
+
+Ritmo emocional: Final de Evaristo (7706344565933985054, bloques 5-9) y salida de la villana del Final de la madrastra (7705499092683590942). Sin armas, sangre, cifras de dinero, deudas, uniformes, niños ni Navidad. Detalle en guion.md.
+
+## Marca
+**MEXI STORIES**, la misma de la Parte 1 (no entra en la rotación): edit.py, BRAND = "MEXI", SPEED = 1.15.
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 2, #parte2).
+- lines.json, fuente única: 369 palabras.
+- clips.py, 30 clips: c01-c24 hablados (c24 = CTA de 10 s), i01 inserto sin caras y r1-r5 mudos.
+  - Copia de pieces/costal-cuyutlan-p2/clips.py: ots(), two(), MOUTH, tuplas (prompt_nuevo, prompt_one), ONE_FROM=3, --one y todas las defensas (gatito en imagen, reload_flow, new_project, descarga corrupta, duplicados md5, TRIES=6, SAFE/SOFT con las frases fuertes primero, NOREF, parada "LIMITE DE CREDITOS"). Imprime "FIN P2".
+  - Reparto: 15 OTS (52 %), 7 single (24 %), 4 two-shot (14 %), 3 grupo (10 %, mudos) + 1 inserto. Geografía fija: Gertrudis y Cleofas a la izquierda (fogón); Marcela y Eleazar a la derecha (portón). c01 es Eleazar hablando.
+- make_sheets.py: reutiliza las 5 hojas de la P1 copiadas a chars/ (CLEOFAS_ELIZALDE, GERTRUDIS_ELIZALDE, MARCELA_COLLADO, ELEAZAR_ELIZALDE, LOC_ATECALVILLO). Sin hojas nuevas ni personajes nuevos. `--reupload` salta las carpetas ate-calvillo* en el control de duplicados.
+- phr.py y edit.py (copia del de costal-cuyutlan-p2, EDL vacía, BRAND = "MEXI", SPEED = 1.15; música cálida de c19 a c23).
+- Comprobaciones: py_compile OK en los 4 .py; pyflakes sin avisos en clips.py y make_sheets.py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); cada clip hablado llama a talk() con su propio ID y los mudos no; los @{ASSET} = los 5 jpg de chars/; frases de SOFT = lines.json; sin dígitos en las líneas; ninguna frase de más de 3 palabras repetida de otra pieza.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py --reupload > sheets_log.txt`: sube las 5 copias, imprime "FIN HOJAS".
+2. `python -I clips.py > clips_log.txt`, con Monitor sobre "^FIN P2", Traceback, "intento 6" y "LIMITE".
+3. QA: dobles en los OTS (regenerar con `--one`), ropa de la P1, Cleofas con sombrero y paliacate, Eleazar sin la llave y con reloj hasta r4, la pala parada en i01, pronunciación ("Calvillo", "cuajó", "terracería").
+4. `python -I phr.py`, armar la EDL y `python -I edit.py`. Verificar sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca MEXI arriba a la derecha.
+5. Copiar a LucidLink (MexiTV/) con caption.txt.
+
+### `pieces\gaviota-bacalar\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte1, remake-transformado, madrastra-justicia, justicia-familiar, quintana-roo, bacalar, lanchas]
+relatedTo: [aserrin-huamantla, jipi-becal, aserrin-huamantla-p2, atrium-vista]
+---
+# gaviota-bacalar (La Gaviota de Bacalar · Parte 1): estado
+
+## Video base
+- Variante transformada del Final de la saga de la madrastra de @atriumstories_, "¡Quería quedarse con la casa de su hijastra! FINAL" (7705499092683590942, 105K; saga 1.07M; tipo madrastra-justicia, mediana 336K, el mejor de `fuentes/atrium-vista/ranking2.md`). Bajado con yt-dlp y analizado por API el 2026-11-15: `fuentes/atrium-vista/videos/7705499092683590942_analisis.md`.
+- aserrin-huamantla y jipi-becal rehicieron la P1 y aserrin-huamantla-p2 la P2; esta toma el Final: la expulsión de la madrastra, su reclamo, la hija que la desmiente y la humillación devuelta.
+
+## Qué se cambió
+- Región y oficio: el dueño de las lanchas del muelle de Bacalar, Quintana Roo.
+- Injusticia y plazo en c01: la madrastra se burla del plazo ("¿antes de que regrese la última lancha?") mientras la hija talla el muelle de rodillas al fondo.
+- Objeto: La Gaviota, la lancha de la madre, a la que la madrastra mandó borrar el nombre; el cepillo de tallar en lugar de la escoba.
+- Giro nuevo: la madrastra llama a Wilberto, el hermano del padre, que llega en la última lancha: "La mitad de este muelle es mía." El plazo se vuelve contra el padre.
+- CTA: Saturnino a cámara, "¿Ustedes qué harían con un hermano así?"
+- Nombres nuevos y únicos en pieces/: Saturnino Dzib (56), Araceli Bracamontes (45), Ixchel Dzib (24), Wilberto Dzib (52).
+
+## Marca
+**VISTA STORIES**: edit.py, BRAND = "VISTA" (kit pieces/_marcas/VISTA, con su música). SPEED = 1.15.
+
+## Archivos
+guion.md, caption.txt, lines.json (fuente única, 373 palabras), clips.py (38 clips: 29 hablados c01-c29, 2 insertos i01-i02 y 7 reacciones/presentaciones r1-r7), make_sheets.py (4 personajes + LOC_MUELLEBACALAR = 5 hojas), phr.py y edit.py (EDL vacía; música cálida de c11 a c13).
+- Copia de hamaca-comalcalco con todas sus defensas: ots(), two(), MOUTH, tuplas (prompt_nuevo, prompt_one), ONE_FROM=3 y --one; gaze + ONE + ALONE, PRES, NOSUB + CLEAN + END, NODOUBLE; SAFE/SOFT con las frases fuertes primero, variant, NOREF, TRIES=6; gatito como IMAGEN, duplicados md5, reload_flow, new_project y la parada "LIMITE DE CREDITOS" en gen(). make_sheets.py con "ordinary non-famous face", DUPLICADO por md5 y --reupload que salta las carpetas gaviota-bacalar*.
+- Encuadres: OTS 19 (53 %), single 10 (28 %), two-shot 4 (11 %), grupo 3 (8 %, todos mudos), insertos 2. c01 es un OTS con una tercera persona al fondo (Ixchel tallando, desenfocada y callada).
+- Comprobaciones: `python -m py_compile` OK en los 4 .py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); cada clip hablado llama a talk() con su propio ID y los mudos no; todos los @{ASSET} tienen hoja y no sobra ninguna; pyflakes sin nombres indefinidos; las frases en español de SOFT coinciden con lines.json; sin dígitos en las líneas; ninguna frase de más de 3 palabras aparece en el lines.json de otra pieza.
+
+## Avance
+- 2026-11-15: archivos escritos. No se generó nada en Flow.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no salga DUPLICADO, `md5sum chars/*.jpg` y hoja de contactos: Saturnino y Wilberto hermanos pero bien distintos.
+2. `python -I clips.py > clips_log.txt` y QA de cada clip: morphs y bordes; en c01 que Ixchel al fondo no mueva la boca; Ixchel descalza y con playera blanca; Araceli siempre a la derecha con la maleta dorada; La Gaviota sin letras legibles; pronunciación de "Bacalar", "Saturnino", "Ixchel", "Wilberto".
+3. phr.py → EDL en edit.py → montaje → verificación (sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca) → copia a LucidLink (carpeta Vista) con caption.txt.
+
+### `pieces\ate-calvillo\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte1, remake-transformado, padre-hijos-herencia, justicia-familiar, aguascalientes, calvillo, guayaba]
+relatedTo: [baul-sanmiguel, sarape-saltillo, hamaca-comalcalco, atrium-vista]
+---
+# ate-calvillo (El Ate de Calvillo · Parte 1): estado
+
+## Video base
+- Variante transformada del Final de la saga de don Evaristo de @atriumstories_, "Su padre por fin tomó una decisión" (7706344565933985054, 210K; saga 1.06M; tipo padre-hijos-herencia, mediana 276K en `fuentes/atrium-vista/ranking2.md`). Bajado con yt-dlp y analizado por API el 2026-11-15: `fuentes/atrium-vista/videos/7706344565933985054_analisis.md`.
+- baul-sanmiguel y sarape-saltillo rehicieron la P1 y hamaca-comalcalco la P3; esta toma el Final: anuncio de la herencia frente al hijo ingrato, el reproche, la pareja que se culpa entre sí y el hijo que se quiebra.
+
+## Qué se cambió
+- Vínculo y región: un guayabero y su hija humilde, en un patio de adobe de Calvillo, Aguascalientes.
+- Injusticia y plazo en c01: la nuera viene por el suegro "antes de que cuaje el ate" porque ya supo de las huertas. Se invierte: "Antes de que cuaje el ate, Marcela, me dejas las llaves."
+- Herida: el hijo lo subió a un camión sin bajarse del carro (en vez de la puerta cerrada).
+- Giro nuevo: la camioneta está a nombre del padre y la empacadora donde el hijo es gerente también es suya ("el lunes conoces a tu patrón").
+- CTA: Cleofas a cámara, "¿Ustedes le devolverían las llaves a un hijo así?"
+- Nombres nuevos y únicos en pieces/: Cleofas Elizalde (74), Eleazar Elizalde (48), Marcela Collado (44), Gertrudis Elizalde (41).
+
+## Marca
+**MEXI STORIES**: edit.py, BRAND = "MEXI" (kit pieces/_marcas/MEXI, con su música). SPEED = 1.15.
+
+## Archivos
+guion.md, caption.txt, lines.json (fuente única, 387 palabras), clips.py (38 clips: 29 hablados c01-c29, 2 insertos i01-i02 y 7 reacciones/presentaciones r1-r7), make_sheets.py (4 personajes + LOC_ATECALVILLO = 5 hojas), phr.py y edit.py (EDL vacía; música cálida de c14 a c19).
+- Copia de hamaca-comalcalco con todas sus defensas: ots(), two(), MOUTH (+ GMOUTH en c25), tuplas (prompt_nuevo, prompt_one), ONE_FROM=3 y --one; gaze + ONE + ALONE, PRES, NOSUB + CLEAN + END, NODOUBLE; SAFE/SOFT con las frases fuertes primero, variant, NOREF, TRIES=6; gatito como IMAGEN, duplicados md5, reload_flow, new_project y la parada "LIMITE DE CREDITOS" en gen(). make_sheets.py con "ordinary non-famous face", DUPLICADO por md5 y --reupload que salta las carpetas ate-calvillo*.
+- Encuadres: OTS 18 (50 %), single 9 (25 %), two-shot 5 (14 %), grupo 4 (11 %, solo c25 hablado), insertos 2.
+- Comprobaciones: `python -m py_compile` OK en los 4 .py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); cada clip hablado llama a talk() con su propio ID y los mudos no; todos los @{ASSET} tienen hoja y no sobra ninguna; pyflakes sin nombres indefinidos; las frases en español de SOFT coinciden con lines.json; sin dígitos en las líneas; ninguna frase de más de 3 palabras aparece en el lines.json de otra pieza.
+
+## Avance
+- 2026-11-15: archivos escritos. No se generó nada en Flow.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no salga DUPLICADO, `md5sum chars/*.jpg` y hoja de contactos: caras comunes y distintas; Eleazar y Gertrudis se parecen como hermanos pero no son la misma cara.
+2. `python -I clips.py > clips_log.txt` y QA de cada clip: morphs y bordes; Cleofas con sombrero y paliacate en todos sus planos; Marcela y Eleazar siempre en el portón a la derecha; la camioneta gris oscuro; pronunciación de "Calvillo", "Cleofas", "Gertrudis", "Eleazar", "cuaje".
+3. phr.py → EDL en edit.py → montaje → verificación (sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca) → copia a LucidLink (carpeta MexiTV) con caption.txt.
+
+### `pieces\frascos-sanignacio-p2\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte2, remake-transformado, capos, baja-california-sur, san-ignacio, partera, boda]
+relatedTo: [frascos-sanignacio, atrium-vista]
+---
+# frascos-sanignacio-p2 (Los Frascos de San Ignacio · Parte 2): estado
+
+## La historia
+Parte 2 de pieces/frascos-sanignacio. Arranca en el mismo instante del gancho de la P1 ("¿Usted… es don Belarmino? Señor, yo no sabía.").
+- Gancho: Belarmino pone a Bastián a levantar los frascos "que la novia ya viene en camino"; Iker quiere irse y lo obliga a quedarse.
+- Llega Jimena (nueva, 27), la novia, hija de Belarmino: Tiburcia la recibió al nacer (desenlace del giro: el novio que humilló a la partera se casa hoy con ella).
+- Castigo: Bastián le besa la mano a Tiburcia ("me lo da el miedo que trae"); Jimena deja el anillo en el puesto, "Hoy en esta plaza no hay boda", y le da su ramo a Tiburcia; Belarmino manda quitar el arco.
+- Gancho: Bastián llama a su papá y Tiburcia: "A él también lo recibí yo." CTA de Jimena: "Me quedé sin boda, pero no sin madrina. ¿Ustedes lo habrían perdonado?"
+
+Sin armas, sangre, cifras de dinero, deudas, uniformes, niños ni Navidad. Detalle en guion.md.
+
+## Marca
+**MAJESTIC STORIES**, la misma de la Parte 1 (no entra en la rotación): edit.py, BRAND = "MAJESTIC", SPEED = 1.15.
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 2, #parte2).
+- lines.json, fuente única: 380 palabras.
+- clips.py, 32 clips: c01-c25 hablados (c25 = CTA de 10 s), i01 inserto sin caras y r1-r6 mudos.
+  - Copia de pieces/sarape-saltillo-p2/clips.py: ots(), two(), MOUTH, tuplas (prompt_nuevo, prompt_one), ONE_FROM=3, --one, y todas las defensas (gatito en imagen, reload_flow, new_project, descarga corrupta, duplicados md5, TRIES=6, SAFE/SOFT con las frases fuertes primero, NOREF con Jimena, parada "LIMITE DE CREDITOS"). Imprime "FIN P2".
+  - Reparto: 16 OTS (52 %), 7 single (23 %), 5 two-shot (16 %), 3 grupo (10 %, los 3 mudos) + 1 inserto. Geografía fija de la P1: Tiburcia, Belarmino y Jimena a la izquierda (puesto); Bastián e Iker a la derecha (arco). c01 es Belarmino hablando.
+- make_sheets.py: reutiliza 6 hojas de la P1 copiadas a chars/ (TIBURCIA_OSUNA, BASTIAN_TALAMANTES, IKER_BARAJAS, BELARMINO_ARCINIEGA, ZACARIAS_MAGANA, LOC_PLAZASANIGN; LOC_DESIERTOBCS no hace falta) y **1 hoja nueva: JIMENA_ARCINIEGA**. `--reupload` salta las carpetas frascos-sanignacio* en el control de duplicados.
+- phr.py y edit.py (copia del de sarape-saltillo-p2, EDL vacía, BRAND = "MAJESTIC", SPEED = 1.15; música cálida de c20 a c22).
+- Comprobaciones: py_compile OK en los 4 .py; pyflakes sin avisos en clips.py y make_sheets.py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); cada clip hablado llama a talk() y D8() con su propio ID y los mudos no; todos los @{ASSET} tienen hoja y no sobra ninguna; frases de SOFT = lines.json; sin cifras; ninguna frase repetida de otra pieza.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py --reupload > sheets_log.txt`: sube las 6 copias, genera y sube JIMENA_ARCINIEGA, imprime "FIN HOJAS". Revisar md5 y que Jimena no se parezca a nadie de otra pieza; vestido con cuello alto y mangas largas.
+2. `python -I clips.py > clips_log.txt`, con Monitor sobre "^FIN P2", Traceback, "intento 6" y "LIMITE".
+3. QA: dobles en los OTS (regenerar con `--one`), ropa de la P1, frascos tirados hasta r2 y de pie después, el ramo (Jimena hasta c20, Tiburcia después), geografía izquierda/derecha, camionetas sin placas, pronunciación.
+4. `python -I phr.py`, armar la EDL y `python -I edit.py`. Verificar sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca MAJESTIC arriba a la izquierda.
+5. Copiar a LucidLink (Majestic/) con caption.txt.
+
+### `pieces\hamaca-comalcalco-p2\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte2, remake-transformado, padre-hijos-herencia, justicia-familiar, tabasco, comalcalco, cacao]
+relatedTo: [hamaca-comalcalco, atrium-vista]
+---
+# hamaca-comalcalco-p2 (La Hamaca de Comalcalco · Parte 2): estado
+
+## La historia
+Parte 2 de pieces/hamaca-comalcalco. Arranca en el mismo instante del gancho de la P1 (el notario: Norberto fue a preguntar cómo quitarle las tierras a su madre; Isaura: "Eso fue idea de él").
+- Gancho: Norberto confiesa y culpa a Isaura. El notario: ella esperaba en la camioneta, abanicándose (desenlace del giro).
+- Zenobia, la hija humilde, no pide nada; Fortunata pone la finca del río a su nombre: "La tierra se le da a quien no la pide."
+- Castigo: el domingo le dejan las llaves de la casa (plazo de la P1 cumplido); a la mamá de Isaura, "en el asoleadero hay lugar de sobra"; Isaura deja a Norberto y Fortunata le pone a él su hamaca en los brazos.
+- Gancho: Isaura llama a su mamá: "Esa finca no va a ser de Zenobia por mucho tiempo." CTA de Fortunata: "Ya repartí el cacao. ¿Hice bien con mi hijo?"
+
+Sin armas, sangre, cifras de dinero, deudas, uniformes, niños ni Navidad. Detalle en guion.md.
+
+## Marca
+**VISTA STORIES**, la misma de la Parte 1 (no entra en la rotación): edit.py, BRAND = "VISTA", SPEED = 1.15.
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 2, #parte2).
+- lines.json, fuente única: 374 palabras.
+- clips.py, 30 clips: c01-c24 hablados (c24 = CTA de 10 s), i01 inserto sin caras y r1-r5 mudos.
+  - Copia de pieces/sarape-saltillo-p2/clips.py: ots(), two(), MOUTH, tuplas (prompt_nuevo, prompt_one), ONE_FROM=3, --one, y todas las defensas (gatito en imagen, reload_flow, new_project, descarga corrupta, duplicados md5, TRIES=6, SAFE/SOFT con las frases fuertes primero, NOREF, parada "LIMITE DE CREDITOS"). Imprime "FIN P2".
+  - Reparto: 15 OTS (52 %), 7 single (24 %), 4 two-shot (14 %), 3 grupo (10 %, los 3 mudos) + 1 inserto. Geografía fija de la P1: Isaura y Norberto a la derecha en el corredor; Zenobia, Fortunata y Olegario a la izquierda en el asoleadero. c01 es Norberto hablando.
+- make_sheets.py: reutiliza las 6 hojas de la P1 copiadas a chars/ (FORTUNATA_LANDERO, ISAURA_GARDUZA, NORBERTO_LANDERO, ZENOBIA_LANDERO, OLEGARIO_OCHOA, LOC_CACAOCOMALC). Sin hojas nuevas. `--reupload` salta las carpetas hamaca-comalcalco* en el control de duplicados.
+- phr.py y edit.py (copia del de sarape-saltillo-p2, EDL vacía, BRAND = "VISTA", SPEED = 1.15; música cálida de c12 a c15).
+- Comprobaciones: py_compile OK en los 4 .py; pyflakes sin avisos en clips.py y make_sheets.py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); cada clip hablado llama a talk() y D8() con su propio ID y los mudos no; todos los @{ASSET} tienen hoja y no sobra ninguna; frases de SOFT = lines.json; sin cifras; ninguna frase repetida de otra pieza.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py --reupload > sheets_log.txt`: sube las 6 copias, imprime "FIN HOJAS".
+2. `python -I clips.py > clips_log.txt`, con Monitor sobre "^FIN P2", Traceback, "intento 6" y "LIMITE".
+3. QA: dobles en los OTS (regenerar con `--one`), ropa de la P1, la hamaca (Fortunata hasta r4, Norberto después), Isaura sentada hasta r3, geografía izquierda/derecha, nada legible en la carpeta, pronunciación.
+4. `python -I phr.py`, armar la EDL y `python -I edit.py`. Verificar sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca VISTA arriba al centro.
+5. Copiar a LucidLink (Vista/) con caption.txt.
+
+### `pieces\costal-cuyutlan-p2\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte2, remake-transformado, capos, colima, cuyutlan, salinas, hermano-traidor]
+relatedTo: [costal-cuyutlan, atrium-vista]
+---
+# costal-cuyutlan-p2 (La Sal de Cuyutlán · Parte 2): estado
+
+## La historia
+Parte 2 de pieces/costal-cuyutlan. Arranca desde el gancho de la P1 (Evelio bajó de la camioneta blanca y cayeron las primeras gotas).
+- Gancho con recordatorio: Leónidas, bajo la llovizna, presume que el bordo se lo vendió el hermano de Atanasio.
+- Remigia (nueva, 78), la salinera más vieja, trae el papel de la asamblea: el padre dejó el bordo al pueblo. Evelio vendió lo que no era suyo (desenlace del giro).
+- Leónidas y Evelio se culpan; Evelio confiesa que solo quería irse de la sal.
+- Castigo del villano: el plazo se cumplió, la camioneta se atasca, nadie la empuja y Leónidas se va a pie por la playa.
+- Castigo del traidor: Evelio carga los costales a la caseta, uno por uno, bajo la lluvia.
+- Gancho: Evelio solo en la caseta, "es quién me presentó a ese señor". CTA de Atanasio: "¿Ustedes lo pondrían a cargar sal o lo correrían del pueblo?"
+
+Sin armas, sangre, cifras de dinero, deudas, uniformes, niños ni Navidad. Detalle en guion.md.
+
+## Marca
+**MEXI STORIES**, la misma de la Parte 1 (no entra en la rotación): edit.py, BRAND = "MEXI", SPEED = 1.15.
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 2, #parte2).
+- lines.json, fuente única: 388 palabras.
+- clips.py, 33 clips: c01-c26 hablados (c26 = CTA de 10 s), i01-i02 insertos sin caras y r1-r5 mudos.
+  - Copia de pieces/jipi-becal-p2/clips.py: ots(), two(), MOUTH, tuplas (prompt_nuevo, prompt_one), ONE_FROM=3, --one, y todas las defensas (gatito en imagen, reload_flow, new_project, descarga corrupta, duplicados md5, TRIES=6, SAFE/SOFT con las frases fuertes primero, NOREF con Remigia, parada "LIMITE DE CREDITOS"). Imprime "FIN P2".
+  - Reparto: 16 OTS (52 %), 8 single (26 %), 4 two-shot (13 %), 3 grupo (10 %) + 2 insertos. Geografía fija: Atanasio, Xóchitl y Remigia a la izquierda; Leónidas y Evelio a la derecha. c01 es Leónidas hablando.
+- make_sheets.py: reutiliza las 5 hojas de la P1 copiadas a chars/ (ATANASIO_VARELA, XOCHITL_VARELA, LEONIDAS_PAZOS, EVELIO_VARELA, LOC_SALINASCUYUT) y **1 hoja nueva: REMIGIA_SOTELO**. `--reupload` salta las carpetas costal-cuyutlan* en el control de duplicados.
+- phr.py y edit.py (copia del de jipi-becal-p2, EDL vacía, BRAND = "MEXI", SPEED = 1.15; música cálida de c22 a c25).
+- Comprobaciones: py_compile OK en los 4 .py; pyflakes sin avisos en clips.py y make_sheets.py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); cada clip hablado llama a talk() con su propio ID y los mudos no; todos los @{ASSET} tienen hoja y no sobra ninguna; frases de SOFT = lines.json; sin cifras; ninguna frase repetida de otra pieza.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py --reupload > sheets_log.txt`: sube las 5 copias, genera y sube REMIGIA_SOTELO, imprime "FIN HOJAS". Revisar md5 y que Remigia no se parezca a nadie de otra pieza.
+2. `python -I clips.py > clips_log.txt`, con Monitor sobre "^FIN P2", Traceback, "intento 6" y "LIMITE".
+3. QA: dobles en los OTS (regenerar con `--one`), ropa de la P1, llovizna constante, Leónidas el único con sombrero, camionetas a su lado sin placas, el papel sin texto, pronunciación.
+4. `python -I phr.py`, armar la EDL y `python -I edit.py`. Verificar sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca MEXI arriba a la derecha.
+5. Copiar a LucidLink (MexiTV/) con caption.txt.
+
+### `pieces\sarape-saltillo-p2\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte2, remake-transformado, padre-hijos-herencia, madre-hijos, saltillo, coahuila, sarape]
+relatedTo: [sarape-saltillo, atrium-vista]
+---
+# sarape-saltillo-p2 (El Sarape de Saltillo · Parte 2): estado
+
+## La historia
+Parte 2 de pieces/sarape-saltillo. Arranca desde el gancho de la P1 (el carro negro del dueño de la fábrica).
+- Gancho con recordatorio: Fabián ve a su suegra bajarse de ese carro a las nueve.
+- Mauricio Arocha (nuevo, 56) dice que Clementina fue su nana y la crió en la fábrica de su padre (desenlace del giro).
+- Florinda (la hija traidora) se hace la que no sabía; Tereso: "En mi panadería a mi amá nadie la corrió."
+- Castigo del villano: por el sarape tirado, Fabián entrega mañana la oficina de gerente. "Yo no combino con su casa."
+- Castigo de la traidora: su madre la perdona pero se queda con Tereso, y le da a él el sarape de la boda de Florinda. Florinda suelta a Fabián.
+- Gancho: Fabián, "todavía no sabe lo que yo sé de esa fábrica". CTA de Clementina: "¿Ustedes habrían perdonado a una hija así?"
+
+Sin armas, sangre, cifras de dinero, deudas, uniformes, niños ni Navidad. Detalle en guion.md.
+
+## Marca
+**VISTA STORIES**, la misma de la Parte 1 (no entra en la rotación): edit.py, BRAND = "VISTA", SPEED = 1.15.
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 2, #parte2).
+- lines.json, fuente única: 378 palabras.
+- clips.py, 32 clips: c01-c26 hablados (c26 = CTA de 10 s), i01-i02 insertos sin caras y r1-r4 mudos.
+  - Copia de pieces/jipi-becal-p2/clips.py: ots(), two(), MOUTH, tuplas (prompt_nuevo, prompt_one), ONE_FROM=3, --one, y todas las defensas (gatito en imagen, reload_flow, new_project, descarga corrupta, duplicados md5, TRIES=6, SAFE/SOFT con las frases fuertes primero, NOREF con Mauricio, parada "LIMITE DE CREDITOS"). Imprime "FIN P2".
+  - Reparto: 16 OTS (53 %), 7 single (23 %), 4 two-shot (13 %), 3 grupo (10 %) + 2 insertos. Geografía fija: Fabián y Florinda arriba a la derecha; Tereso, Clementina y Mauricio abajo a la izquierda. c01 es Fabián hablando.
+- make_sheets.py: reutiliza las 5 hojas de la P1 copiadas a chars/ (CLEMENTINA_RAMOS, FABIAN_ELIZONDO, FLORINDA_RAMOS, TERESO_RAMOS, LOC_CASASALTILLO) y **1 hoja nueva: MAURICIO_AROCHA**. `--reupload` salta las carpetas sarape-saltillo* en el control de duplicados.
+- phr.py y edit.py (copia del de jipi-becal-p2, EDL vacía, BRAND = "VISTA", SPEED = 1.15; música cálida de c19 a c24).
+- Comprobaciones: py_compile OK en los 4 .py; pyflakes sin avisos en clips.py y make_sheets.py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); cada clip hablado llama a talk() con su propio ID y los mudos no; todos los @{ASSET} tienen hoja y no sobra ninguna; frases de SOFT = lines.json; sin cifras; ninguna frase repetida de otra pieza.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py --reupload > sheets_log.txt`: sube las 5 copias, genera y sube MAURICIO_AROCHA, imprime "FIN HOJAS". Revisar md5 y que Mauricio no se parezca a Fabián ni a nadie de otra pieza.
+2. `python -I clips.py > clips_log.txt`, con Monitor sobre "^FIN P2", Traceback, "intento 6" y "LIMITE".
+3. QA: dobles en los OTS (regenerar con `--one`), ropa de la P1, el sarape (brazo de Clementina hasta i02, hombros de Tereso después), geografía arriba/abajo, carro sin placas, pronunciación.
+4. `python -I phr.py`, armar la EDL y `python -I edit.py`. Verificar sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca VISTA arriba al centro.
+5. Copiar a LucidLink (Vista/) con caption.txt.
+
+### `pieces\frascos-sanignacio\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte1, remake-transformado, capos, baja-california-sur, san-ignacio, partera]
+relatedTo: [padre-veladoras, atrium-vista]
+---
+# frascos-sanignacio (Los Frascos de San Ignacio · Parte 1): estado
+
+## Video base
+- Variante transformada de "Se burlaron del padre… sin saber a quién iba a llamar" de @atriumstories_ (7702486655336320286, 231K, capos). Primera versión: `pieces/padre-veladoras`.
+- Se analizó por API "En el desierto no hay perdón" (7702121152491179294, 57K, el único P1 de capos sin pieza): `fuentes/atrium-vista/videos/7702121152491179294_analisis.md`. Se descartó: robo de dinero, amenazas a la familia y disparos.
+- Del original queda la historia y su ritmo: humillación a una persona de respeto, una sola llamada, burlas, en la camioneta el poderoso cuenta por qué le debe todo, convoy, cara a cara.
+
+## Qué se cambió
+- Región y oficio: plaza del oasis de San Ignacio, Baja California Sur; la humillada es una partera y hierbera de 76 años.
+- Injusticia y plazo en c01: el novio rico le tira los frascos para poner su boda, "antes de que llegue la novia". Se invierte: "Antes de que llegue, levantas cada frasco. Y le besas la mano a mi madrina."
+- Deuda moral: ella trajo al mundo a Belarmino y recibió a su hija caminando toda la noche por el desierto.
+- Giro nuevo: el novio que la humilló se casa hoy con la hija de Belarmino ("Mi suegro es don Belarmino Arciniega").
+- CTA: Tiburcia a cámara, "¿Ustedes lo dejarían casarse con su hija?"
+- Nombres nuevos y únicos en pieces/: Tiburcia Osuna (76), Bastián Talamantes (29), Iker Barajas (28), Belarmino Arciniega (63), Zacarías Magaña (41).
+
+## Marca
+**MAJESTIC STORIES**: edit.py, BRAND = "MAJESTIC" (kit pieces/_marcas/MAJESTIC, con su música). SPEED = 1.15.
+
+## Archivos
+guion.md, caption.txt, lines.json (fuente única, 371 palabras), clips.py (39 clips: 30 hablados c01-c30, 2 insertos i01-i02 y 7 reacciones/presentaciones r1-r7), make_sheets.py (5 personajes + LOC_PLAZASANIGN + LOC_DESIERTOBCS = 7 hojas), phr.py y edit.py (EDL vacía; música cálida de c15 a i01).
+- Copia de costal-cuyutlan con todas sus defensas: ots(), two(), MOUTH (+ GMOUTH para el grupo que habla), tuplas (prompt_nuevo, prompt_one), ONE_FROM=3 y --one; gaze + ONE + ALONE, PRES, NOSUB + CLEAN + END, NODOUBLE; SAFE/SOFT con las frases fuertes primero, variant, NOREF, TRIES=6; gatito como IMAGEN, duplicados md5, reload_flow, new_project y la parada "LIMITE DE CREDITOS" en gen(). make_sheets.py con "ordinary non-famous face", DUPLICADO por md5 y --reupload que salta las carpetas frascos-sanignacio*.
+- Encuadres: OTS 20 (51 %), single 10 (26 %), two-shot 5 (13 %), grupo 4 (10 %, con los 2 insertos amplios del convoy). Geografía: puesto a la IZQUIERDA (Tiburcia; Belarmino llega a su derecha), arco de flores a la DERECHA (Bastián; Iker un paso detrás). En la camioneta: Zacarías maneja a la IZQUIERDA y Belarmino va de copiloto a la DERECHA. Cada espalda con su @{ASSET} y su ropa vista desde atrás.
+- Comprobaciones: `python -m py_compile` OK en los 4 .py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); cada clip hablado llama a talk() con su propio ID y los mudos no; todos los @{ASSET} tienen hoja y no sobra ninguna; sin nombres indefinidos; las frases en español de SOFT coinciden con lines.json; sin cifras en las líneas; ninguna frase aparece en lines.json ni guion.md de otra pieza.
+
+## Avance
+- 2026-11-15: archivos escritos. No se generó nada en Flow.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no salga DUPLICADO, `md5sum chars/*.jpg` y hoja de contactos: caras comunes y distintas; Bastián e Iker claramente distintos.
+2. `python -I clips.py > clips_log.txt` y QA de cada clip: morphs y bordes; el atardecer coherente; el puesto a la izquierda y el arco a la derecha; Belarmino el único con sombrero; camionetas sin letras ni placas; que el OTS dentro de la camioneta (c15-c18) no meta un tercero; pronunciación de "Tiburcia", "Belarmino", "Arciniega", "hierbera".
+3. phr.py → EDL en edit.py → montaje → verificación (sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca) → copia a LucidLink (carpeta Majestic) con caption.txt.
+
+### `pieces\hamaca-comalcalco\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte1, remake-transformado, padre-hijos-herencia, justicia-familiar, tabasco, comalcalco, cacao]
+relatedTo: [baul-sanmiguel, sarape-saltillo, atrium-vista]
+---
+# hamaca-comalcalco (La Hamaca de Comalcalco · Parte 1): estado
+
+## Video base
+- Variante transformada de la saga de don Evaristo de @atriumstories_, desde su P3 "Lo trataron como un estorbo… sin saber que era millonario" (7706316327023119647, 121K; saga 1.06M; tipo padre-hijos-herencia, mediana 276K en `fuentes/atrium-vista/ranking2.md`). Analizado por API el 2026-11-15: `fuentes/atrium-vista/videos/7706316327023119647_analisis.md`.
+- baul-sanmiguel y sarape-saltillo rehicieron la P1 (la puerta cerrada); esta toma la reunión con el abogado: la prueba revelada, el hijo ingrato que recula, la insinuación contra el hijo humilde y la defensa del mayor.
+
+## Qué se cambió
+- Vínculo y región: una madre cacaotera y su nuera, en una finca de cacao de Comalcalco, Tabasco.
+- Injusticia y plazo en c01: la nuera, en su mecedora, la manda a colgar su hamaca en el asoleadero y le da hasta el domingo para irse a una casa de reposo. Se invierte: "Pues el domingo, ustedes me entregan esta casa."
+- Poder: la finca de cacao del río y el terreno de la casa del hijo son de ella (sin cifras).
+- Sacrificio de la hija humilde: vendió su molino de nixtamal; la madre ya mandó recogerlo.
+- Giro nuevo: el hijo ya había ido con el notario a preguntar cómo quitarle las tierras; la nuera lo entrega.
+- CTA: Fortunata a cámara, "¿Le darían otra oportunidad a un hijo así?"
+- Nombres nuevos y únicos en pieces/: Fortunata Landero (73), Norberto Landero (47), Isaura Garduza (43), Zenobia Landero (40), Olegario Ochoa (61).
+
+## Marca
+**VISTA STORIES**: edit.py, BRAND = "VISTA" (kit pieces/_marcas/VISTA, con su música). SPEED = 1.15.
+
+## Archivos
+guion.md, caption.txt, lines.json (fuente única, 390 palabras), clips.py (38 clips: 29 hablados c01-c29, 2 insertos i01-i02 y 7 reacciones/presentaciones r1-r7), make_sheets.py (5 personajes + LOC_CACAOCOMALC = 6 hojas), phr.py y edit.py (EDL vacía; música cálida de r5 a c17).
+- Copia de costal-cuyutlan con todas sus defensas: ots(), two(), MOUTH (+ GMOUTH para los grupos que hablan), tuplas (prompt_nuevo, prompt_one), ONE_FROM=3 y --one; gaze + ONE + ALONE, PRES, NOSUB + CLEAN + END, NODOUBLE; SAFE/SOFT con las frases fuertes primero, variant, NOREF, TRIES=6; gatito como IMAGEN, duplicados md5, reload_flow, new_project y la parada "LIMITE DE CREDITOS" en gen(). make_sheets.py con "ordinary non-famous face", DUPLICADO por md5 y --reupload que salta las carpetas hamaca-comalcalco*.
+- Encuadres: OTS 19 (50 %), single 9 (24 %), two-shot 5 (13 %), grupo 3 (8 %), insertos 2. Geografía: corredor y mecedora a la DERECHA (Isaura sentada, Norberto de pie), asoleadero a la IZQUIERDA (Fortunata con la hamaca, Zenobia a su izquierda, Olegario en el camino). Cada espalda con su @{ASSET} y su ropa vista desde atrás.
+- Comprobaciones: `python -m py_compile` OK en los 4 .py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); cada clip hablado llama a talk() con su propio ID y los mudos no; todos los @{ASSET} tienen hoja y no sobra ninguna; sin nombres indefinidos; las frases en español de SOFT coinciden con lines.json; sin cifras en las líneas; ninguna frase aparece en lines.json ni guion.md de otra pieza.
+
+## Avance
+- 2026-11-15: archivos escritos. No se generó nada en Flow.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no salga DUPLICADO, `md5sum chars/*.jpg` y hoja de contactos: caras comunes y distintas; Norberto y Zenobia se parecen como hermanos pero no son la misma cara.
+2. `python -I clips.py > clips_log.txt` y QA de cada clip: morphs y bordes; Fortunata con la hamaca en todos sus planos; Isaura siempre sentada en la mecedora a la derecha; ningún texto legible en la carpeta; pronunciación de "Comalcalco", "asoleadero", "Fortunata", "Zenobia", "quitárselas".
+3. phr.py → EDL en edit.py → montaje → verificación (sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca) → copia a LucidLink (carpeta Vista) con caption.txt.
+
+### `pieces\pulsera-mexcaltitan-p2\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte2, remake-transformado, capos, patrona, nayarit, mexcaltitan, pulsera]
+relatedTo: [pulsera-mexcaltitan, atrium-vista]
+---
+# pulsera-mexcaltitan-p2 (La Pulsera del Estero · Parte 2): estado
+
+## La historia
+Parte 2 de pieces/pulsera-mexcaltitan. Arranca donde terminó la P1 (Arsenio es el padre de Maura y Tamara lo sabía; la lancha de las seis espera).
+- Gancho con recordatorio: "Ya dieron las seis, Arsenio. Y tu lancha te está esperando."
+- Desenlace del giro: hace 24 años Herlinda vino al muelle a decírselo y Tamara la corrió: le dijo que Arsenio no quería saber nada y la subió a la lancha de las seis.
+- Castigo: Tamara se va en esa misma lancha ("Así corriste tú a Herlinda. Y no vuelvas a pisar mi isla"); Arsenio se queda pero ya no manda en el muelle (manda Maura) y remienda redes como Herlinda.
+- Reconocimiento: "Dime abuela"; Arsenio tiene que ganarse que le diga papá. Tamara voltea fría desde la lancha (gancho para el final). CTA de Maura: "¿Ustedes perdonarían a un papá que llegó veinticuatro años tarde?"
+
+Sin armas, sangre, cifras de dinero, deudas, uniformes, niños ni Navidad. Detalle en guion.md.
+
+## Marca
+**MAJESTIC STORIES**, la misma de la Parte 1 (no entra en la rotación): edit.py, BRAND = "MAJESTIC", SPEED = 1.15.
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 2, #parte2).
+- lines.json, fuente única: 366 palabras.
+- clips.py, 32 clips: c01-c28 hablados (c28 = CTA de 10 s), i01 inserto sin caras y r1-r3 mudos.
+  - Copia de pieces/costal-cuyutlan/clips.py: ots(), two(), MOUTH, tuplas (prompt_nuevo, prompt_one), ONE_FROM=3, --one, y todas las defensas (gatito en imagen, reload_flow, new_project, descarga corrupta, duplicados md5, TRIES=6, SAFE/SOFT con las frases fuertes primero, NOREF, parada "LIMITE DE CREDITOS"). Imprime "FIN P2".
+  - Reparto: 17 OTS (55 %), 7 single (23 %), 4 two-shot (13 %), 3 grupo (10 %) + 1 inserto. Geografía fija: Arsenio y Tamara derecha, Maura y Eustolia izquierda. c01 es Eustolia hablando.
+- make_sheets.py: reutiliza las 5 hojas de la P1 copiadas a chars/ (EUSTOLIA_LOMELI, ARSENIO_LOMELI, TAMARA_LOMELI, MAURA_GRACIANO, LOC_MUELLEMEXCAL). **Sin hojas nuevas.** `--reupload` salta las carpetas pulsera-mexcaltitan* en el control de duplicados.
+- phr.py y edit.py (copia del de costal-cuyutlan, EDL vacía, BRAND = "MAJESTIC", SPEED = 1.15; música cálida de c22 a c27).
+- Comprobaciones: py_compile OK en los 4 .py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); cada clip hablado llama a talk() con su propio ID y los mudos no; ningún nombre sin definir; todos los @{ASSET} tienen hoja; frases de SOFT = lines.json; sin cifras; ninguna frase repetida de otra pieza.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py --reupload > sheets_log.txt`: sube las 5 copias e imprime "FIN HOJAS".
+2. `python -I clips.py > clips_log.txt`, con Monitor sobre "^FIN P2", Traceback, "intento 6" y "LIMITE".
+3. QA: dobles en los OTS (regenerar con `--one`), ropa de la P1, pulsera en la muñeca izquierda, geografía izquierda/derecha, la lancha blanca con franja azul, pronunciación.
+4. `python -I phr.py`, armar la EDL y `python -I edit.py`. Verificar sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca MAJESTIC arriba a la izquierda.
+5. Copiar a LucidLink (Majestic/) con caption.txt.
+
+### `pieces\jipi-becal-p2\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte2, remake-transformado, madrastra-justicia, suegra-nuera, becal, campeche, sombrero-jipi]
+relatedTo: [jipi-becal, atrium-vista]
+---
+# jipi-becal-p2 (La Cueva de Bécal · Parte 2): estado
+
+## La historia
+Parte 2 de pieces/jipi-becal. Arranca desde el gancho de la P1 (Zoraida le llama a su hijo a escondidas).
+- Gancho con recordatorio: Zoraida, castigada en la cueva, le pide a Lisandro que venga a sacarla.
+- Lisandro (nuevo, 30) baja un día antes de la plataforma. Zoraida se hace la víctima; Nicté dice que nunca le escribió; la abuela le da el celular rosa.
+- Desenlace del giro: los mensajes de "ya no me busques" salían cada noche del celular de Nicté y luego Zoraida le llamaba a su hijo para consolarlo.
+- Castigo: Lisandro le quita el celular dorado "para que rindas"; la abuela le da el cuartito de la palma y el petate; los doce sombreros siguen; Nicté deja la escalera abajo: "Yo no soy como usted."
+- Gancho: Zoraida en la cueva, "ya van a ver quién teje a quién". CTA de Nicté: "¿Ustedes la dejarían salir de esa cueva?"
+
+Sin armas, sangre, cifras de dinero, deudas, uniformes, niños ni Navidad. Detalle en guion.md.
+
+## Marca
+**MEXI STORIES**, la misma de la Parte 1 (no entra en la rotación): edit.py, BRAND = "MEXI", SPEED = 1.15.
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 2, #parte2).
+- lines.json, fuente única: 375 palabras.
+- clips.py, 35 clips: c01-c28 hablados (c28 = CTA de 10 s), i01-i03 insertos sin caras y r1-r4 mudos.
+  - Copia de pieces/costal-cuyutlan/clips.py: ots(), two(), MOUTH, tuplas (prompt_nuevo, prompt_one), ONE_FROM=3, --one, y todas las defensas (gatito en imagen, reload_flow, new_project, descarga corrupta, duplicados md5, TRIES=6, SAFE/SOFT con las frases fuertes primero, NOREF con Lisandro, parada "LIMITE DE CREDITOS"). Imprime "FIN P2".
+  - Reparto: 18 OTS (56 %), 7 single (22 %), 4 two-shot (12 %), 3 grupo (9 %) + 3 insertos. Geografía fija: Zoraida izquierda, Lisandro en medio, Nicté y la abuela derecha. c01 es Zoraida hablando.
+- make_sheets.py: reutiliza las 5 hojas de la P1 copiadas a chars/ (APOLONIA_CHABLE, ZORAIDA_CANUL, NICTE_UCAN, LOC_CUEVABECAL, LOC_PATIOBECAL) y **1 hoja nueva: LISANDRO_PECH**. `--reupload` salta las carpetas jipi-becal* en el control de duplicados.
+- phr.py y edit.py (copia del de costal-cuyutlan, EDL vacía, BRAND = "MEXI", SPEED = 1.15; música cálida de c24 a c27).
+- Comprobaciones: py_compile OK en los 4 .py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); cada clip hablado llama a talk() con su propio ID y los mudos no; ningún nombre sin definir; todos los @{ASSET} tienen hoja (LISANDRO_PECH la genera make_sheets.py); frases de SOFT = lines.json; sin cifras; ninguna frase repetida de otra pieza.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py --reupload > sheets_log.txt`: sube las 5 copias, genera y sube LISANDRO_PECH, imprime "FIN HOJAS". Revisar md5 y que Lisandro no se parezca a nadie de otra pieza.
+2. `python -I clips.py > clips_log.txt`, con Monitor sobre "^FIN P2", Traceback, "intento 6" y "LIMITE".
+3. QA: dobles en los OTS (regenerar con `--one`), ropa de la P1, Lisandro sin uniforme, escalera en la boca de la cueva, geografía izquierda/derecha, pantallas sin texto, pronunciación.
+4. `python -I phr.py`, armar la EDL y `python -I edit.py`. Verificar sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca MEXI arriba a la derecha.
+5. Copiar a LucidLink (MexiTV/) con caption.txt.
+
+### `pieces\costal-cuyutlan\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte1, remake-transformado, capos, reten, colima, cuyutlan, salinas]
+relatedTo: [reten-sierra, cenote-campana, atrium-vista]
+---
+# costal-cuyutlan (La Sal de Cuyutlán · Parte 1): estado
+
+## Video base
+- Versión nueva y muy transformada de "Le pidió 200 mil en el retén… (El Retén)" de @atriumstories_ (7701749432621993246, **1.1M**, 2.º pico de capos en `fuentes/atrium-vista/ranking2.md`). Versiones anteriores: `pieces/reten-sierra` y `pieces/cenote-campana`.
+- Del original queda solo el esqueleto: humillación con plazo → llega la figura de poder → plazo invertido → giro familiar → castigo en la Parte 2.
+
+## Qué se cambió
+- Región y oficio: salinas de Cuyutlán, Colima; el protagonista es el salinero más viejo.
+- Bloqueo: una camioneta blanca atravesada en el bordo (sin retén, reja ni cadena) y un costal de sal reventado en el lodo.
+- Plazo: la lluvia que viene del mar. Se invierte: "Usted me dio hasta que lloviera, ¿no, señor? Ahora ese plazo es suyo."
+- Llamada: un chiflido; los salineros salen a pie de las charcas, con las manos vacías (sin radio, campana ni camionetas).
+- Giro: el que vendió la mitad del bordo es Evelio, el hermano de Atanasio (traidor), que baja de la camioneta del villano.
+- CTA: Atanasio a cámara con las primeras gotas, "¿Ustedes perdonarían a un hermano así?"
+- Nombres nuevos y únicos en pieces/: Atanasio Varela (69), Xóchitl Varela (31), Evelio Varela (62), Leónidas Pazos (52).
+(Tabla completa en guion.md, "Qué cambia respecto al original y a las versiones anteriores".)
+
+## Marca
+**MEXI STORIES**: edit.py, BRAND = "MEXI" (kit pieces/_marcas/MEXI, con su música).
+
+## Archivos
+guion.md, caption.txt, lines.json (fuente única, 368 palabras), clips.py (36 clips: 27 hablados c01-c27, 2 insertos i01-i02 y 7 reacciones/presentaciones r1-r7), make_sheets.py (4 personajes + LOC_SALINASCUYUT = 5 hojas), phr.py y edit.py (EDL vacía; música cálida de c16 a r5).
+- Copia de sarape-saltillo con todas sus defensas: gaze + ONE + ALONE, PRES, NOSUB + CLEAN + END, NODOUBLE; SAFE/SOFT con las frases fuertes primero, variant, NOREF, TRIES=6; gatito como IMAGEN, duplicados md5, reload_flow, new_project y la parada "LIMITE DE CREDITOS" en gen(). make_sheets.py con "ordinary non-famous face", DUPLICADO por md5 y --reupload que salta las carpetas costal-cuyutlan*.
+- Corrección del usuario aplicada: c01 es el primer clip y es Leónidas hablando en pleno conflicto (plano medio de presentación, habla desde el primer frame); ningún plano de objetos, manos o algo que cae al inicio; los insertos van solo en medio.
+- Comprobaciones: `python -m py_compile` OK en los 4 .py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); cada clip hablado llama a talk() con su propio ID y los mudos no; todos los @{ASSET} tienen hoja y no sobra ninguna; las frases en español de SOFT coinciden con lines.json; sin cifras en las líneas; ninguna frase aparece en lines.json ni guion.md de otra pieza.
+
+## Avance
+- 2026-11-14: archivos escritos. No se generó nada en Flow.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no salga DUPLICADO, `md5sum chars/*.jpg` y hoja de contactos: caras comunes y distintas; Atanasio y Evelio se parecen como hermanos pero no son la misma cara (Evelio bajito, calvo y con lentes).
+2. `python -I clips.py > clips_log.txt` y QA de cada clip: morphs y bordes; nubes negras sin lluvia hasta i02; la camioneta blanca a la derecha y la azul a la izquierda, sin letras ni placas; Leónidas el único con sombrero; los salineros sin herramientas; que el chiflido de r3 se vea natural; pronunciación de "Cuyutlán", "Xóchitl", "escampe", "rastrillar".
+3. phr.py → EDL en edit.py → montaje → verificación (sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca) → copia a LucidLink (carpeta MexiTV) con caption.txt.
+
+### `pieces\pulsera-mexcaltitan\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte1, remake-transformado, capos, patrona, nayarit, mexcaltitan, pulsera]
+relatedTo: [medalla-mezcal, sarape-saltillo, atrium-vista]
+---
+# pulsera-mexcaltitan (La Pulsera del Estero · Parte 1): estado
+
+## Video base
+- Versión nueva y muy transformada de "Llegó buscando a la patrona… secreto de 20 años" de @atriumstories_ (7702501478056971550, **1.6M**, el pico de capos en `fuentes/atrium-vista/ranking2.md`). La primera versión es `pieces/medalla-mezcal`.
+- Del original queda solo el esqueleto: humillación con plazo → llega la figura de poder → plazo invertido → giro familiar → castigo en la Parte 2.
+
+## Qué se cambió
+- Región y oficio: muelle de la isla de Mexcaltitán, Nayarit; la patrona es dueña de las lanchas del estero. La víctima vende tamales.
+- Objeto: pulsera de chaquira azul y amarilla con un venado blanco, tejida por la patrona para su hijo.
+- Plazo: la última lancha, a las seis. Se invierte: "¿En la de las seis? Qué bueno, porque en esa te vas tú."
+- Giro: el villano (hijo de la patrona) es el padre de la muchacha que humilló; la nuera (traidora) lo sabía.
+- CTA: Eustolia a cámara, "¿Qué harían ustedes con un hijo así?"
+- Nombres nuevos y únicos en pieces/: Eustolia Lomelí (72), Arsenio Lomelí (47), Tamara Lomelí (44), Maura Graciano (24). Herlinda Graciano solo se nombra.
+(Tabla completa en guion.md, "Qué cambia respecto al original y a medalla-mezcal".)
+
+## Marca
+**MAJESTIC STORIES**: edit.py, BRAND = "MAJESTIC" (kit pieces/_marcas/MAJESTIC, con su música).
+
+## Archivos
+guion.md, caption.txt, lines.json (fuente única, 375 palabras), clips.py (38 clips: 28 hablados c01-c28, 4 insertos i01-i04 y 6 reacciones/presentaciones r1-r6), make_sheets.py (4 personajes + LOC_MUELLEMEXCAL = 5 hojas), phr.py y edit.py (EDL vacía; música cálida de c18 a r5).
+- Copia de sarape-saltillo con todas sus defensas: gaze + ONE + ALONE, PRES, NOSUB + CLEAN + END, NODOUBLE; SAFE/SOFT con las frases fuertes primero, variant, NOREF, TRIES=6; gatito como IMAGEN, duplicados md5, reload_flow, new_project y la parada "LIMITE DE CREDITOS" en gen(). make_sheets.py con "ordinary non-famous face", DUPLICADO por md5 y --reupload que salta las carpetas pulsera-mexcaltitan*.
+- Corrección del usuario aplicada: c01 es el primer clip y es Arsenio hablando en pleno conflicto (plano medio de presentación, habla desde el primer frame); ningún plano de objetos, manos o algo que cae al inicio; los insertos van solo en medio.
+- Comprobaciones: `python -m py_compile` OK en los 4 .py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); cada clip hablado llama a talk() con su propio ID y los mudos no; todos los @{ASSET} tienen hoja y no sobra ninguna; las frases en español de SOFT coinciden con lines.json; sin cifras en las líneas; ninguna frase aparece en lines.json ni guion.md de otra pieza.
+
+## Avance
+- 2026-11-14: archivos escritos. No se generó nada en Flow.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no salga DUPLICADO, `md5sum chars/*.jpg` y hoja de contactos: caras comunes y distintas; Arsenio y Eustolia pueden parecerse como madre e hijo, Maura con algo de los dos pero no la misma cara.
+2. `python -I clips.py > clips_log.txt` y QA de cada clip: morphs y bordes; la pulsera azul y amarilla siempre en la muñeca IZQUIERDA de Maura; Arsenio barbado de camisa blanca; Tamara rubia de rosa con abanico; la flor roja de Eustolia; la lancha blanca con franja azul; pronunciación de "Herlinda Graciano", "Arsenio", "arrimada", "remendaba".
+3. phr.py → EDL en edit.py → montaje → verificación (sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca) → copia a LucidLink (carpeta Majestic) con caption.txt.
+
+### `pieces\sarape-saltillo\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte1, remake-transformado, padre-hijos-herencia, madre-hijos, saltillo, coahuila, sarape]
+relatedTo: [baul-sanmiguel, garrafon-bernal, jipi-becal, atrium-vista]
+---
+# sarape-saltillo (El Sarape de Saltillo · Parte 1): estado
+
+## Video base
+- Segunda versión, muy transformada, de la saga de **don Evaristo** de @atriumstories_ ("Su propio hijo le cerró la puerta", 7706224426399829279, 342K; P2 390K; la saga suma **1.06M**). La primera versión es `pieces/baul-sanmiguel`.
+- Por qué: padre-hijos es el 2.º tipo con mejor mediana de Atrium (276K) y el de más engagement, según `fuentes/atrium-vista/ranking2.md`.
+
+## Qué se cambió
+- Vínculo: madre, hija que se alinea (traidora) y yerno (villano); el hijo humilde es soltero y panadero.
+- Región y oficio: tejedora de sarapes retirada en Saltillo, Coahuila; casa moderna y panadería del centro.
+- Objeto: el sarape de Saltillo que el yerno tiró al escalón ("ese trapo de colores").
+- Excusa: a las nueve cena el jefe del yerno; "usted no combina con mi casa".
+- Sacrificio: Tereso le da su catre, duerme en los costales y le trabajará el domingo al patrón.
+- Giro: Clementina fue la nana del dueño de la fábrica y le pide que pase por ella antes de las nueve para llegar juntos a esa cena (plazo invertido).
+- CTA: "¿Qué cara creen que va a poner Fabián cuando me vea llegar?"
+- Nombres nuevos y únicos en pieces/: Clementina Ramos (74), Fabián Elizondo (46), Florinda Ramos (49), Tereso Ramos (41). Mauricio Arocha (el dueño) solo se nombra.
+(Detalle en guion.md, tabla "Qué cambia respecto al original y a baul-sanmiguel".)
+
+## Marca
+**VISTA STORIES**: edit.py, BRAND = "VISTA" (kit pieces/_marcas/VISTA, con su música).
+
+## Archivos
+guion.md, caption.txt, lines.json (fuente única, 381 palabras), clips.py (39 clips: 30 hablados c01-c30, 4 insertos i01-i04 y 5 reacciones r1-r5), make_sheets.py (4 personajes + LOC_CASASALTILLO + LOC_PANADERIASALT = 6 hojas), phr.py y edit.py (EDL vacía; música cálida de c16 a i03).
+- Copia de garrafon-bernal con todas sus defensas: gaze + ONE + ALONE, PRES, NOSUB + CLEAN + END, NODOUBLE; SAFE/SOFT con las frases fuertes primero, variant, NOREF, TRIES=6; gatito como IMAGEN, duplicados md5, reload_flow, new_project y la parada "LIMITE DE CREDITOS" en gen(). make_sheets.py con "ordinary non-famous face", DUPLICADO por md5 y --reupload que salta las carpetas sarape-saltillo*. Nuevo: vert() para la mirada al piso durante la llamada.
+- Comprobaciones: `python -m py_compile` OK en los 4 .py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); cada clip hablado llama a talk() con su propio ID; todos los @{ASSET} tienen hoja y no sobra ninguna; las frases en español de SOFT coinciden con lines.json; sin cifras en las líneas.
+
+## Avance
+- 2026-11-14: archivos escritos. No se generó nada en Flow.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no salga DUPLICADO, `md5sum chars/*.jpg` y hoja de contactos: caras comunes y distintas; Florinda y Clementina se parecen como madre e hija pero no son la misma cara.
+2. `python -I clips.py > clips_log.txt` y QA de cada clip: morphs y bordes; el sarape de franjas de colores igual en todos los planos (sobre el antebrazo izquierdo); Fabián rapado con candado y camisa blanca; Florinda con blusa verde esmeralda; Tereso con mandil blanco con harina; el celular viejo sin texto en pantalla; el carro negro sin logos ni placas; pronunciación de "Clementina", "Arocha", "Tereso" y "pan de pulque".
+3. phr.py → EDL en edit.py → montaje → verificación (sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca) → copia a LucidLink (carpeta Vista) con caption.txt.
+
+### `pieces\jipi-becal\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte1, remake-transformado, madrastra-justicia, suegra-nuera, becal, campeche, sombrero-jipi]
+relatedTo: [aserrin-huamantla, garrafon-bernal, sarape-saltillo, atrium-vista]
+---
+# jipi-becal (La Cueva de Bécal · Parte 1): estado
+
+## Video base
+- Segunda versión, muy transformada, de **"Llegó a casa y vio lo que su esposa le hacía a su hija (P1)"** de @atriumstories_ (7705076412604091678, **632K**; P2 336K). La primera versión es `pieces/aserrin-huamantla`.
+- Por qué: la madrastra es el tipo con mejor mediana de Atrium (336K) según `fuentes/atrium-vista/ranking2.md`, y casi todas las historias top ya tienen pieza.
+
+## Qué se cambió
+- Vínculo invertido: abuela (la autoridad) / suegra (villana) / nuera (víctima). La abusadora tiene su propia suegra.
+- Región y oficio: tejedoras de sombrero jipi en las cuevas de Bécal, Campeche.
+- Objeto: la escalera tirada arriba de la cueva; el celular confiscado.
+- Giro: Zoraida le dijo a su hijo que la nuera lo dejó por otro; ella también salió de esa cueva; plazo invertido (para el sábado los doce sombreros los teje ella).
+- Gancho de P2: Zoraida le marca a escondidas a su hijo ("tu abuela ya anda muy confundida").
+- CTA: "¿Ustedes creen que Lisandro le va a creer a su madre?"
+- Nombres nuevos y únicos en pieces/: Apolonia Chablé (81), Zoraida Canul (56), Nicté Ucán (27). Lisandro (el nieto) solo se nombra.
+(Detalle en guion.md, tabla "Qué cambia respecto al original y a aserrin-huamantla".)
+
+## Marca
+**MEXI STORIES**: edit.py, BRAND = "MEXI" (kit pieces/_marcas/MEXI, con su música).
+
+## Archivos
+guion.md, caption.txt, lines.json (fuente única, 387 palabras), clips.py (42 clips: 32 hablados c01-c32, 4 insertos i01-i04 y 6 reacciones r1-r6), make_sheets.py (3 personajes + LOC_CUEVABECAL + LOC_PATIOBECAL = 5 hojas), phr.py y edit.py (EDL vacía; música cálida de c30 a i04).
+- Copia de garrafon-bernal con todas sus defensas: gaze + ONE + ALONE, PRES, NOSUB + CLEAN + END, NODOUBLE; SAFE/SOFT con las frases fuertes primero, variant, NOREF, TRIES=6; gatito como IMAGEN, duplicados md5, reload_flow, new_project y la parada "LIMITE DE CREDITOS" en gen(). make_sheets.py con "ordinary non-famous face", DUPLICADO por md5 y --reupload que salta las carpetas jipi-becal*. Nuevo: vert() para las miradas arriba/abajo entre la boca de la cueva y el fondo.
+- Comprobaciones: `python -m py_compile` OK en los 4 .py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); cada clip hablado llama a talk() con su propio ID; todos los @{ASSET} tienen hoja y no sobra ninguna; las frases en español de SOFT coinciden con lines.json; sin cifras en las líneas.
+
+## Avance
+- 2026-11-14: archivos escritos. No se generó nada en Flow.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no salga DUPLICADO, `md5sum chars/*.jpg` y hoja de contactos: caras comunes y distintas.
+2. `python -I clips.py > clips_log.txt` y QA de cada clip: morphs y bordes; la escalera tirada en el suelo hasta c06 y metida en la boca de la cueva desde c07; Nicté con vestido azul cielo, mandil beige y dedos vendados, adulta; Zoraida con blusa de leopardo, pelo vino y abanico negro; Apolonia con huipil blanco bordado, rebozo negro y bastón en la mano derecha; celular rosa (Nicté) y dorado (Zoraida) sin texto en pantalla; pronunciación de "Nicté", "Zoraida", "Lisandro" y "plataforma".
+3. phr.py → EDL en edit.py → montaje → verificación (sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca) → copia a LucidLink (carpeta MexiTV) con caption.txt.
+
+### `pieces\cantera-huichapan-p2\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte2, remake-transformado, patron-injusticia, huichapan, hidalgo, cantera]
+relatedTo: [cantera-huichapan, atrium-vista]
+---
+# cantera-huichapan-p2 (La Cantera de Huichapan · Parte 2): estado
+
+## La historia
+Es la Parte 2 de pieces/cantera-huichapan y sigue el ritmo emocional de la P2 de Atrium "Su jefe les cobraba lo que era gratis" (7698054444662934815, 141K). Análisis: `fuentes/atrium-vista/videos/7698054444662934815_analisis.md`.
+- Gancho con recordatorio: el celular en llamada en la bolsa de Abdías; "Les cobraste a todos lo que era gratis, Sotero. Hoy se te acaba el turno."
+- Sotero alega un malentendido y culpa a Abdías; Rosalba saca su libreta negra (el nombre de cada cantero que le pagó). Orgullo herido: "¿y así me lo paga?"
+- Castigo: despedido, las llaves del almacén en el escritorio, devolver lo de cada uno en su mano y delante de todos antes de que acabe el turno (el plazo de la P1), o la ley.
+- Patio: "Esto te lo voy a cobrar" / "Ya cobró bastante. Ahora le toca devolver." Rosalba: "Yo le creo a Abdías."
+- Desenlace: Abdías encargado del patio, reparte guantes y lentes; don Bonifacio recibe los suyos. CTA: "¿Ustedes le habrían dado otra oportunidad a Sotero? … para más historias de la cantera."
+
+No hay armas, sangre, cifras de dinero, deudas, uniformes, niños ni Navidad. Detalle en guion.md.
+
+## Marca
+**MAJESTIC STORIES**, la misma de la Parte 1 (no entra en la rotación): edit.py, BRAND = "MAJESTIC".
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 2, #parte2).
+- lines.json es la fuente única: 376 palabras.
+- clips.py tiene 41 clips: c01-c30 hablados (c30 = CTA de 10 s), i01-i06 insertos sin caras y r1-r5 mudos (r4 = presentación de Bonifacio).
+  - Es copia del clips.py de la Parte 1 con todas sus defensas: gatito en imagen, reload_flow, new_project, descarga corrupta, duplicados md5, TRIES=6, SAFE/SOFT (frases fuertes de la P2 primero), NOREF (con Bonifacio) y la parada "LIMITE DE CREDITOS" en gen(). Imprime "FIN P2".
+  - Anclas ROS, ABD y SOT idénticas a la P1 (misma ropa).
+- make_sheets.py:
+  - Reutiliza las 5 hojas de la Parte 1: ROSALBA_MONROY, ABDIAS_CARBAJAL, SOTERO_VERASTEGUI, LOC_CANTERAHUICH y LOC_CASETACANT (lista REUSED: las copia de pieces/cantera-huichapan/chars a chars/; nunca las regenera).
+  - **Ojo: la Parte 1 todavía no tiene chars/ (sus hojas no se han generado).** Por eso chars/ de la P2 está vacía: al correr la P2 sin las hojas de la P1 imprime "FALTA <hoja>" y no la inventa.
+  - **1 hoja nueva: BONIFACIO_URIBE.**
+  - En `--reupload` las copias no cuentan como DUPLICADO: se saltan las carpetas cantera-huichapan*. El make_sheets.py de la P1 también salta esas carpetas ahora.
+- phr.py y edit.py (copias de la P1, EDL vacía, BRAND = "MAJESTIC"). Música: suspenso hasta c20, cálida de c20 a c30 (las gracias, el ascenso, el equipo, los lentes de Bonifacio), suspenso en el CTA.
+- Comprobaciones: `python -m py_compile` OK en los 4 .py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); todos los @{ASSET} tienen hoja.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. Parte 1: `python -I make_sheets.py > sheets_log.txt` en pieces/cantera-huichapan (si no se hizo ya).
+2. P2: `python -I make_sheets.py --reupload > sheets_log.txt`: copia y sube las 5 hojas de la P1, genera y sube BONIFACIO_URIBE e imprime "FIN HOJAS". Revisar que no diga FALTA, el md5 y que Bonifacio no se parezca a Sotero ni a Abdías.
+3. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P2", Traceback, "intento 6" y "LIMITE".
+4. QA: misma ropa que la P1 en todos los planos; el chaleco de Sotero sin letras; la libreta negra sin nada legible (i02); Bonifacio con sombrero y lentes nuevos en c29; pronunciación de "Bonifacio", "Sotero", "Abdías", "revoltoso".
+5. `python -I phr.py`, armar la EDL y correr `python -I edit.py`.
+6. Verificar sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, y la marca MAJESTIC arriba a la izquierda.
+7. Copiar a LucidLink (Majestic/) con caption.txt.
+
+### `pieces\garrafon-bernal-p2\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte2, remake-transformado, patron-injusticia, bernal, queretaro, vendimia]
+relatedTo: [garrafon-bernal, atrium-vista]
+---
+# garrafon-bernal-p2 (Los Garrafones de Bernal · Parte 2): estado
+
+## La historia
+Es la Parte 2 de pieces/garrafon-bernal y sigue el ritmo emocional de la P2 de Atrium "La siguió hasta una bodega abandonada" (7707034442048507166, 192K). Análisis: `fuentes/atrium-vista/videos/7707034442048507166_analisis.md`.
+- Gancho con recordatorio: la camioneta blanca en el portón; "Antes de que se meta el sol, la sigo."
+- Lorena le ordena a Ruperto cargar la mitad del mandado y los garrafones llenos, y le exige silencio. Ruperto, con miedo, no sabe a dónde va.
+- Bodega de adobe con puerta azul: "Abres tú, o abro yo." Adentro, el mandado y los garrafones: Lorena los vende en el tianguis.
+- Castigo: las llaves de la camioneta y del candado; "antes de que se meta el sol, te vas" (el plazo de la P1 al revés).
+- Desenlace: el candado se abre, Jovita toma agua limpia, Petronila manda en la cocina, cena de todos. CTA: "¿Ustedes habrían perdonado a Lorena? … para ver qué pasó con ella."
+
+No hay armas, sangre, cifras de dinero, deudas, uniformes, niños ni Navidad. Detalle en guion.md.
+
+## Marca
+**VISTA STORIES**, la misma de la Parte 1 (no entra en la rotación): edit.py, BRAND = "VISTA".
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 2, #parte2).
+- lines.json es la fuente única: 395 palabras.
+- clips.py tiene 46 clips: c01-c32 hablados (c32 = CTA de 10 s), i01-i09 insertos sin caras y r1-r5 mudos (r1 y r2 = presentaciones de Lorena y Ruperto).
+  - Es copia del clips.py de la Parte 1 con todas sus defensas: gatito en imagen, reload_flow, new_project, descarga corrupta, duplicados md5, TRIES=6, SAFE/SOFT (frases fuertes de la P2 primero), NOREF (con Lorena y Ruperto) y la parada "LIMITE DE CREDITOS" en gen(). Imprime "FIN P2".
+  - Anclas LEO, JOV y PET idénticas a la P1 (misma ropa).
+- make_sheets.py:
+  - Reutiliza las 5 hojas de la Parte 1 copiadas a chars/: LEONCIO_AVALOS, JOVITA_RESENDIZ, PETRONILA_OCADIZ, LOC_PATIOBERNAL y LOC_COCINABERNAL (lista REUSED: si falta una, la copia de la P1; nunca la regenera).
+  - **4 hojas nuevas: LORENA_ALDACO, RUPERTO_MENDIOLA, LOC_PORTONBERNAL y LOC_BODEGABERNAL.**
+  - En `--reupload` las copias no cuentan como DUPLICADO: se saltan las carpetas garrafon-bernal*. El make_sheets.py de la P1 también salta esas carpetas ahora, para que su --reupload no marque las copias de la P2.
+- phr.py y edit.py (copias de la P1, EDL vacía, BRAND = "VISTA"). Música: suspenso hasta i08, cálida de i08 a c32 (el candado, el agua, la cena), suspenso en el CTA.
+- Comprobaciones: `python -m py_compile` OK en los 4 .py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); todos los @{ASSET} tienen hoja.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py --reupload > sheets_log.txt`: sube las 5 copias, genera y sube las 4 nuevas e imprime "FIN HOJAS". Revisar md5 y que Lorena no se parezca a Jovita ni a Petronila, ni Ruperto a Leoncio.
+2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P2", Traceback, "intento 6" y "LIMITE".
+3. QA: misma ropa que la P1 en todos los planos; Lorena con blusa turquesa y moño bajo; camioneta y bodega sin letras ni placas; la cadena y el candado de i08 iguales a los de la P1; pronunciación de "Ruperto", "Lorena", "tianguis", "garrafones".
+4. `python -I phr.py`, armar la EDL y correr `python -I edit.py`.
+5. Verificar sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, y la marca VISTA arriba al centro.
+6. Copiar a LucidLink (Vista/) con caption.txt.
+
+### `pieces\baul-sanmiguel-p2\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte2, remake-transformado, padre-hijos-herencia, san-miguel-de-allende, guanajuato, cantera]
+relatedTo: [baul-sanmiguel, atrium-vista]
+---
+# baul-sanmiguel-p2 (El Baúl de San Miguel · Parte 2): estado
+
+## La historia
+Es la Parte 2 de pieces/baul-sanmiguel y sigue el ritmo emocional de la P2 de Atrium "Le dio otra oportunidad a su hijo… y lo volvió a humillar" (7706270980758441247, 390K). Análisis nuevo hecho por API: `fuentes/atrium-vista/videos/7706270980758441247_analisis.md`.
+- De noche, Hilario oyó todo: "La cortadora no se vende, mijo." Pide que Raymundo venga mañana a las nueve.
+- Reunión en el patio de la casita: Mirna lo trata de "una boca más", Raymundo propone una casa de reposo, Ciriaco le recuerda que él le labró la cantera de la casona. "Me recibieron, hijo. No me recogieron."
+- Hilario abre el baúl y llega el notario Villagómez: la casona siempre fue de Hilario.
+- Castigo (el gancho de la P1 al revés): "Sus cosas afuera antes de las ocho. Esa casa no es pensión."
+- Reconocimiento: Ciriaco firma; la casona y la cantera del abuelo son suyas; el llavero de latón pasa a su mano. CTA: "¿Ustedes creen que Raymundo merece otra oportunidad? … para ver el final."
+
+No hay armas, sangre, cifras de dinero, deudas, uniformes, niños ni Navidad. Detalle en guion.md.
+
+## Marca
+**MAJESTIC STORIES**, la misma de la Parte 1 (no entra en la rotación): edit.py, BRAND = "MAJESTIC".
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 2, #parte2).
+- lines.json es la fuente única: 457 palabras.
+- clips.py tiene 49 clips: c01-c41 hablados (c41 = CTA de 10 s), i01-i05 insertos sin caras y r1-r3 reacciones mudas.
+  - Es copia del clips.py de aserrin-huamantla-p2, con todas sus defensas: gatito en imagen, reload_flow, new_project, descarga corrupta, duplicados md5, TRIES=6, SAFE/SOFT (frases fuertes de la P2 primero), NOREF (con el notario) y la parada "LIMITE DE CREDITOS" en gen().
+  - Imprime "FIN P2". Presentación del notario en c26. Hilario lleva el sombrero en todos los planos (ancla HIL).
+- make_sheets.py:
+  - Reutiliza las 7 hojas de la Parte 1 copiadas a chars/: HILARIO_PENALOZA, RAYMUNDO_PENALOZA, MIRNA_OLGUIN, CIRIACO_PENALOZA, FELICITAS_CANCHOLA, LOC_CASONASM y LOC_CUARTOCANTERA (LOC_CASONASM no sale en ningún plano de la P2).
+  - **1 hoja nueva: ANSELMO_VILLAGOMEZ** (el notario).
+  - En `--reupload` las copias no cuentan como DUPLICADO: se saltan todas las carpetas baul-*.
+  - Ojo: el `--reupload` del make_sheets.py de la P1 no salta la carpeta p2 y ahora marcaría sus hojas como DUPLICADO.
+- phr.py.
+- edit.py: copia del de aserrin-huamantla-p2 con la EDL vacía y BRAND = "MAJESTIC". Música: suspenso hasta c35, cálida de c35 a c40 (el reconocimiento), suspenso en el CTA.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py --reupload > sheets_log.txt`: sube las 7 copias, genera y sube ANSELMO_VILLAGOMEZ e imprime "FIN HOJAS". Revisar md5 y que el notario no se parezca a Raymundo ni a Hilario.
+2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P2", Traceback, "intento 6" y "LIMITE".
+3. QA:
+   - Hilario con sombrero en todos los planos, también de noche (c01-c07);
+   - el baúl igual que en la P1 y el bastón en la mano izquierda;
+   - Mirna y Raymundo a la derecha, Ciriaco y Felícitas a la izquierda;
+   - el notario el único calvo con lentes de carey;
+   - papeles sin texto legible; pronunciación de "Villagómez", "arrimado", "labré".
+4. `python -I phr.py`, armar la EDL y correr `python -I edit.py`.
+5. Verificar sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, y la marca MAJESTIC arriba a la izquierda.
+6. Copiar a LucidLink (Majestic/) con caption.txt.
+
+### `pieces\aserrin-huamantla-p2\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte2, remake-transformado, madrastra-justicia, huamantla, tlaxcala, alfombras-de-aserrin]
+relatedTo: [aserrin-huamantla, atrium-vista]
+---
+# aserrin-huamantla-p2 (La Alfombra de Huamantla · Parte 2): estado
+
+## La historia
+Es la Parte 2 de pieces/aserrin-huamantla y sigue el ritmo emocional de la P2 de Atrium "¡La echó de la casa por cómo trataba a su hija!" (7705479449055169822, 336K). Análisis nuevo hecho por API: `fuentes/atrium-vista/videos/7705479449055169822_analisis.md`.
+- Delfino le pide perdón a Abigail y le quita la escobeta de la mano.
+- Cleotilde reclama su "autoridad" y dice que sus hijas "son de otra clase".
+- Kenia trae la carpeta azul: las escrituras dicen Abigail Cuapio. Kenia se pone del lado de Abigail y le pide perdón.
+- Castigo: Cleotilde tiene que irse con sus cosas y las de sus princesas antes de la procesión. Sale con su maleta por la orilla de la alfombra ("la alfombra de la Virgen no se pisa") y amenaza con volver.
+- Payoff: esta noche el colibrí lo pone Abigail. Moraleja y CTA "¿Ustedes creen que Cleotilde va a regresar? … para ver el final."
+
+No hay armas, sangre, cifras de dinero, deudas, uniformes, niños ni Navidad. Detalle en guion.md.
+
+## Marca
+**VISTA STORIES**, la misma de la Parte 1 (no entra en la rotación): edit.py, BRAND = "VISTA".
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 2, #parte2).
+- lines.json es la fuente única: 325 palabras.
+- clips.py tiene 39 clips: c01-c30 hablados (c30 = CTA de 10 s), i01-i06 insertos sin caras y r1-r3 reacciones mudas.
+  - Es copia del clips.py de la Parte 1, con todas sus defensas: gatito en imagen, reload_flow, new_project, descarga corrupta, duplicados md5, TRIES=6, SAFE/SOFT (con las frases fuertes de la P2 primero), NOREF con Kenia y la parada "LIMITE DE CREDITOS" en gen().
+  - Imprime "FIN P2".
+  - Presentación de Kenia en c14.
+- make_sheets.py:
+  - Reutiliza 4 hojas de la Parte 1 copiadas a chars/, las vigentes: DELFINO_CUAPIO, ABIGAIL_CUAPIO, CLEOTILDE_TENOPALA2 y LOC_PATIOHUAM2.
+  - **1 hoja nueva: KENIA_TENOPALA**.
+  - Las copias no cuentan como DUPLICADO porque se saltan aserrin-huamantla y aserrin-huamantla-p2.
+  - Ojo: el `--reupload` del make_sheets.py de la P1 no salta la carpeta p2 y ahora marcaría sus hojas como DUPLICADO.
+- phr.py.
+- edit.py: copia del de la P1 con la EDL vacía y BRAND = "VISTA". Música: suspenso hasta c02, cálida de c02 a c07 (el perdón) y suspenso hasta el final.
+- Comprobaciones:
+  - `python -m py_compile` OK en los 4 .py.
+  - Los IDs de CLIPS coinciden con las claves de lines.json, en el mismo orden (leído con ast, sin importar el módulo).
+  - Todos los @{ASSET} tienen hoja y no sobra ninguna.
+  - Las frases en español de SOFT están en lines.json.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py --reupload > sheets_log.txt`: sube las 4 copias, genera y sube KENIA_TENOPALA e imprime "FIN HOJAS". Revisar md5 y que Kenia no se parezca a Abigail ni a Cleotilde más allá de un aire de madre e hija.
+2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P2", Traceback, "intento 6" y "LIMITE".
+3. QA:
+   - Abigail con el mandil todo el video;
+   - Cleotilde con tubos y bata, también al salir;
+   - Kenia la única con cola y sudadera lila;
+   - la carpeta azul sin texto legible;
+   - en i05 la maleta no pisa la alfombra.
+4. `python -I phr.py`, armar la EDL y correr `python -I edit.py`.
+5. Verificar sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, y la marca VISTA arriba al centro.
+6. Copiar a LucidLink (Vista/) con caption.txt.
+
+### `pieces\cantera-huichapan\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte1, remake-transformado, patron-injusticia, huichapan, hidalgo, cantera]
+relatedTo: [aserrin-huamantla, garrafon-bernal, cantera-huichapan, atrium-vista]
+---
+# cantera-huichapan (La Cantera de Huichapan · Parte 1): estado
+
+## Video base
+- Remake transformado de **"Le cobraba el equipo de seguridad a los obreros… (P1)"** de @atriumstories_ (7697405703966838046, 128K, 102 s, 37 planos). Su P2, "Su jefe les cobraba lo que era gratis" (7698054444662934815), hizo 141K. Análisis nuevos (Whisper + API): `fuentes/atrium-vista/videos/7697405703966838046_analisis.md` y `7698054444662934815_analisis.md`.
+- Por qué este: es una de las 2 historias nuevas sin pieza que recomienda `fuentes/atrium-vista/ranking2.md`.
+- Pedido del usuario (2026-11-14): más cerca de las historias de Atrium, sin copiar. Se conservan la historia y su ritmo emocional (el honesto devuelve lo que "no ha pagado" → era gratis → el villano miente con el reglamento → a solas se delata y amenaza → la patrona lo oyó todo y lo cita con plazo). Cambian el escenario y la región, el oficio, los objetos clave, los nombres, todos los diálogos, el detalle del giro y el CTA.
+
+## Qué se cambió
+- Región y escenario: obra en construcción → cantera de piedra rosa cerca de Huichapan (Hidalgo).
+- Oficio y ropa: obrero con casco y chaleco → cantero con camisa rojo ladrillo y paliacate; capataz con casco y chaleco naranja → supervisor calvo con piocha, lentes redondos y chaleco verde liso sin letras. Sin cascos ni chalecos con letras.
+- Objetos: casco, botas y guantes con cifra → guantes de carnaza, lentes y cubrebocas, sin cifras; lentes viejos pegados con cinta (injusticia visible en el gancho).
+- Giro: las cámaras con audio → el celular de Abdías en llamada con Rosalba.
+- Plazo nuevo: "antes de que acabe el turno" (gancho y vuelta contra Sotero).
+- CTA: "¿Ustedes qué le harían a Sotero?"
+- Nombres nuevos y únicos en pieces/: Rosalba Monroy (52), Abdías Carbajal (31), Sotero Verástegui (56).
+(Detalle en guion.md, tabla "Qué cambia respecto al original".)
+
+## Marca
+**MAJESTIC STORIES**: edit.py, BRAND = "MAJESTIC" (kit pieces/_marcas/MAJESTIC: marca arriba a la izquierda y su música).
+
+## Archivos
+guion.md, caption.txt, lines.json (fuente única, 319 palabras), clips.py (35 clips: 30 hablados c01-c30, 3 insertos i01-i03 y 2 reacciones r1-r2), make_sheets.py (3 personajes + LOC_CANTERAHUICH + LOC_CASETACANT = 5 hojas), phr.py y edit.py (EDL vacía; música cálida de c11 a c12).
+- Copia de aserrin-huamantla con todas sus defensas: gaze + ONE + ALONE, PRES, NOSUB + CLEAN + END, NODOUBLE; SAFE/SOFT con las frases fuertes primero, variant, NOREF, TRIES=6; gatito como IMAGEN, duplicados md5, reload_flow, new_project y la parada "LIMITE DE CREDITOS" en gen(). make_sheets.py con "ordinary non-famous face", DUPLICADO por md5 y --reupload.
+- Comprobaciones: `python -m py_compile` OK en los 4 .py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); todos los @{ASSET} tienen hoja y no sobra ninguna; las frases en español de SOFT coinciden con lines.json; sin cifras en las líneas.
+
+## Avance
+- 2026-11-14: archivos escritos. No se generó nada en Flow.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no salga DUPLICADO, `md5sum chars/*.jpg` y hoja de contactos: caras comunes; Sotero y Abdías muy distintos.
+2. `python -I clips.py > clips_log.txt` y QA de cada clip: morphs y bordes; Abdías a la izquierda en la mesa de labrado; el chaleco de Sotero sin letras; los lentes pegados con cinta iguales en i01 e i02; el celular de Rosalba en la mano derecha; i03 sin texto legible en la pantalla; pronunciación de "Abdías", "Sotero", "Rosalba" y "cantera".
+3. phr.py → EDL en edit.py → montaje → verificación (sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca) → copia a LucidLink con caption.txt.
+
+### `pieces\garrafon-bernal\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte1, remake-transformado, patron-injusticia, bernal, queretaro, vendimia]
+relatedTo: [aserrin-huamantla, garrafon-bernal, cantera-huichapan, atrium-vista]
+---
+# garrafon-bernal (Los Garrafones de Bernal · Parte 1): estado
+
+## Video base
+- Remake transformado de **"Su esposa les prohibió el agua a los empleados… (P1)"** de @atriumstories_ (7706934829392203039, 71K, 178 s, 73 planos). Su P2, "La siguió hasta una bodega abandonada" (7707034442048507166), hizo **192K**. Análisis nuevos (Whisper + API): `fuentes/atrium-vista/videos/7706934829392203039_analisis.md` y `7707034442048507166_analisis.md`.
+- Por qué este: es una de las 2 historias nuevas sin pieza que recomienda `fuentes/atrium-vista/ranking2.md`.
+- Pedido del usuario (2026-11-14): más cerca de las historias de Atrium, sin copiar. Se conservan la historia y su ritmo emocional (capas del misterio: agua → comida → miedo → cocina → la mitad del mandado → el carro vuelve vacío). Cambian el escenario y la región, el oficio, los objetos clave, los nombres, todos los diálogos y el CTA.
+
+## Qué se cambió
+- Región y escenario: la hacienda con piscina pasa a ser un viñedo familiar cerca de Bernal (Querétaro), en vendimia, con la Peña de Bernal.
+- Oficios: empleada doméstica → vendimiadora; patrón de traje → viñatero con chaleco de gamuza.
+- Objetos: la manguera → la tina de lavar cajas de uva y los garrafones azules con cadena y candado; las compras → el mandado del jueves y la camioneta blanca por el portón de atrás.
+- Plazo nuevo: "antes de que se meta el sol" (gancho y promesa final).
+- CTA: "¿A dónde creen que se lleva Lorena el mandado?"
+- Nombres nuevos y únicos en pieces/: Leoncio Ávalos, Jovita Reséndiz (26), Petronila Ocádiz (64). Lorena (la esposa) solo se nombra.
+(Detalle en guion.md, tabla "Qué cambia respecto al original".)
+
+## Marca
+**VISTA STORIES**: edit.py, BRAND = "VISTA" (kit pieces/_marcas/VISTA, con su música).
+
+## Archivos
+guion.md, caption.txt, lines.json (fuente única, 352 palabras), clips.py (38 clips: 29 hablados c01-c29, 5 insertos i01-i05 y 4 reacciones r1-r4), make_sheets.py (3 personajes + LOC_PATIOBERNAL + LOC_COCINABERNAL = 5 hojas), phr.py y edit.py (EDL vacía; música cálida de c14 a c15).
+- Copia de aserrin-huamantla con todas sus defensas: gaze + ONE + ALONE, PRES, NOSUB + CLEAN + END, NODOUBLE; SAFE/SOFT con las frases fuertes primero, variant, NOREF, TRIES=6; gatito como IMAGEN, duplicados md5, reload_flow, new_project y la parada "LIMITE DE CREDITOS" en gen(). make_sheets.py con "ordinary non-famous face", DUPLICADO por md5 y --reupload.
+- Comprobaciones: `python -m py_compile` OK en los 4 .py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); todos los @{ASSET} tienen hoja y no sobra ninguna; las frases en español de SOFT coinciden con lines.json; sin cifras en las líneas.
+
+## Avance
+- 2026-11-14: archivos escritos. No se generó nada en Flow.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no salga DUPLICADO, `md5sum chars/*.jpg` y hoja de contactos: caras comunes y distintas.
+2. `python -I clips.py > clips_log.txt` y QA de cada clip: morphs y bordes; Jovita a la izquierda junto a la tina, con paliacate rojo y camisa verde olivo, adulta; Leoncio con barba blanca y chaleco de gamuza; los garrafones con cadena y candado iguales en i01, i02 y el patio; Petronila con mandil de cuadros rojos; pronunciación de "Jovita", "Petronila", "Lorena" y "garrafones".
+3. phr.py → EDL en edit.py → montaje → verificación (sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca) → copia a LucidLink con caption.txt.
+
+### `pieces\betun-zacatecas\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte1, remake-transformado, humillacion-revancha, herencia, zacatecas, bolero]
+relatedTo: [plata-taxco, aserrin-huamantla, baul-sanmiguel, betun-zacatecas, atrium-vista]
+---
+# betun-zacatecas (El Bolero de Zacatecas · Parte 1): estado
+
+## Video base
+- Remake transformado de **"Lo dejó por vender empanadas… sin saber que él heredaría todo"** de @atriumstories_ (7700349674628074783, **182K vistas**, 136 s, 53 planos). Análisis: `fuentes/atrium-vista/videos/7700349674628074783_analisis.md`.
+- Por qué este: es la P1 de humillación-revancha con más vistas que no tenía pieza. Ese tipo tiene el pico más alto de la cuenta. Ver `fuentes/atrium-vista/ranking2.md`.
+- Pedido del usuario (2026-11-14): más cerca de las historias de Atrium, pero sin copiar. Se conservan la historia y su ritmo emocional. Cambian el escenario y la región, el oficio, el objeto clave, los nombres, todos los diálogos, el detalle del giro y el CTA.
+
+## Qué se cambió
+- Región y escenario: la calle sin región pasa a ser la Plaza de Armas de Zacatecas, frente a la catedral de cantera rosa, más una notaría con vista al Cerro de la Bufa.
+- Oficio: el vendedor de empanadas pasa a ser Apolinar, bolero.
+- Objetos: el carrito de empanadas se cambia por la caja de bolear azul. Se suman la carpeta roja del divorcio y las botas vaqueras color vino de don Rosalío.
+- Plazo nuevo en el gancho: "Fírmalo antes de las doce campanadas". Al final vuelve invertido: "Ahora yo decido cuándo."
+- Herencia: no viene de un tío sino de un cliente viejo al que Apolinar le boleó las botas doce años. Son los Hoteles Bañuelos y no se dicen cifras.
+- Giro: la firma de la carpeta roja es de la gerente del hotel de la plaza, que trabaja para él. Además, el amante Fabricio quiso comprarle los hoteles a don Rosalío.
+- CTA: "¿Ustedes qué harían mañana con Noemí?"
+- Nombres nuevos y únicos en pieces/: Apolinar Escamilla, Noemí Monreal, Fabricio Urquidi, Teódulo Arizpe y don Rosalío Bañuelos (no sale en pantalla).
+(Detalle en guion.md, tabla "Qué cambia respecto al original".)
+
+## Marca
+**MEXI STORIES**: edit.py, BRAND = "MEXI" (kit pieces/_marcas/MEXI, con su música; la pieza no tiene carpeta music/ propia).
+
+## Archivos
+guion.md, caption.txt, lines.json (fuente única, unas 345 palabras), clips.py (39 clips: 34 hablados c01-c34, 3 insertos i01-i03 y 2 reacciones r1-r2), make_sheets.py (4 personajes + LOC_PLAZAZAC + LOC_NOTARIAZAC = 6 hojas), phr.py y edit.py (EDL vacía; música cálida de c24 a c28).
+- Es copia de la plantilla plata-taxco y conserva todas sus defensas:
+  - en los prompts: gaze + ONE + ALONE, PRES (un plano de presentación por personaje), NOSUB + CLEAN + END, NODOUBLE;
+  - en los reintentos: SAFE/SOFT con las frases fuertes primero, variant, NOREF, TRIES=6;
+  - contra fallos de Flow: gatito como IMAGEN, control de duplicados por md5, reload_flow, new_project y la parada "LIMITE DE CREDITOS" en gen().
+- make_sheets.py pide "ordinary non-famous face", controla duplicados por md5 (DUPLICADO) y acepta --reupload.
+- Comprobaciones:
+  - `python -m py_compile` OK en clips.py, make_sheets.py, edit.py y phr.py.
+  - Los IDs de CLIPS coinciden con las claves de lines.json, en el mismo orden (leído con ast, sin importar el módulo).
+  - Todos los @{ASSET} tienen hoja y no sobra ninguna hoja.
+  - Las frases en español de SOFT coinciden con lines.json.
+
+## Avance
+- 2026-11-14: archivos escritos. No se generó nada en Flow. Faltan las hojas, los clips, el QA, phr.py, la EDL y el montaje.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no salga DUPLICADO, correr `md5sum chars/*.jpg` y mirar la hoja de contactos: caras comunes y distintas entre sí.
+2. `python -I clips.py > clips_log.txt` y QA de cada clip. Revisar:
+   - morphs y bordes del cuadro;
+   - la caja azul con estribo de latón igual en todos los planos;
+   - la carpeta roja en la mano izquierda de Noemí y la verde en la mano izquierda de Teódulo;
+   - que Fabricio y Teódulo se distingan: traje gris claro y corbata vino contra pelo blanco y traje carbón;
+   - las botas color vino con puntas de plata;
+   - la pronunciación de "Apolinar", "Noemí", "Teódulo", "Bañuelos" y "Zacatecas".
+3. phr.py → EDL en edit.py → montaje → verificación (sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca) → copia a LucidLink con caption.txt.
+
+### `pieces\aserrin-huamantla\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte1, remake-transformado, madrastra-justicia, huamantla, tlaxcala, alfombras-de-aserrin]
+relatedTo: [plata-taxco, aserrin-huamantla, baul-sanmiguel, betun-zacatecas, atrium-vista]
+---
+# aserrin-huamantla (La Alfombra de Huamantla · Parte 1): estado
+
+## Video base
+- Remake transformado de **"Llegó a casa y vio lo que su esposa le hacía a su hija | PARTE 1"** de @atriumstories_ (7705076412604091678, **632K vistas**, 150 s, 54 planos). Análisis: `fuentes/atrium-vista/videos/7705076412604091678_analisis.md`.
+- Por qué este: es el video de Atrium con más vistas que no tenía pieza (el 4.º de la cuenta). Ver `fuentes/atrium-vista/ranking2.md`.
+- Pedido del usuario (2026-11-14): más cerca de las historias de Atrium, pero sin copiar. Se conservan la historia y su ritmo emocional. Cambian el escenario y la región, el oficio, el objeto clave, los nombres, todos los diálogos, el detalle del giro y el CTA.
+
+## Qué se cambió
+- Región y escenario: una sala sin región pasa a ser el patio de una casa de Huamantla (Tlaxcala) el día de las alfombras de aserrín, con La Malinche al fondo.
+- Oficio y objetos: el padre sin oficio definido pasa a ser Delfino, maestro alfombrista. El trapeador se cambia por la escobeta, el aserrín teñido y la plantilla del colibrí; se suma la carpeta azul con las escrituras.
+- Mentira: "yo hice la comida" pasa a "yo teñí el aserrín de tu alfombra".
+- Plazo nuevo en el gancho: la procesión de esta noche, que vuelve invertida al final.
+- Giro: la casa es de Abigail, porque su madre se la dejó escriturada. Cleotilde manda a su hija Kenia por la carpeta azul.
+- CTA: "¿Ustedes creen que Cleotilde se sale con la suya?"
+- Nombres nuevos y únicos en pieces/: Delfino Cuapio, Abigail Cuapio (21) y Cleotilde Tenopala. Kenia y Dayana solo se nombran.
+(Detalle en guion.md, tabla "Qué cambia respecto al original".)
+
+## Marca
+**VISTA STORIES**: edit.py, BRAND = "VISTA" (kit pieces/_marcas/VISTA, con su música; la pieza no tiene carpeta music/ propia).
+
+## Archivos
+guion.md, caption.txt, lines.json (fuente única, unas 340 palabras), clips.py (39 clips: 31 hablados c01-c31, 4 insertos i01-i04 y 4 reacciones r1-r4), make_sheets.py (3 personajes + LOC_PATIOHUAM = 4 hojas), phr.py y edit.py (EDL vacía; música cálida de c13 a c15).
+- Es copia de la plantilla plata-taxco y conserva todas sus defensas:
+  - en los prompts: gaze + ONE + ALONE, PRES (un plano de presentación por personaje), NOSUB + CLEAN + END, NODOUBLE;
+  - en los reintentos: SAFE/SOFT con las frases fuertes primero, variant, NOREF, TRIES=6;
+  - contra fallos de Flow: gatito como IMAGEN, control de duplicados por md5, reload_flow, new_project y la parada "LIMITE DE CREDITOS" en gen().
+- make_sheets.py pide "ordinary non-famous face", controla duplicados por md5 (DUPLICADO) y acepta --reupload.
+- Comprobaciones:
+  - `python -m py_compile` OK en clips.py, make_sheets.py, edit.py y phr.py.
+  - Los IDs de CLIPS coinciden con las claves de lines.json, en el mismo orden (leído con ast, sin importar el módulo).
+  - Todos los @{ASSET} tienen hoja y no sobra ninguna hoja.
+  - Las frases en español de SOFT coinciden con lines.json.
+
+## Avance
+- 2026-11-14: archivos escritos. No se generó nada en Flow. Faltan las hojas, los clips, el QA, phr.py, la EDL y el montaje.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no salga DUPLICADO, correr `md5sum chars/*.jpg` y mirar la hoja de contactos: caras comunes y distintas entre sí.
+2. `python -I clips.py > clips_log.txt` y QA de cada clip. Revisar:
+   - morphs y bordes del cuadro;
+   - Cleotilde siempre a la derecha en la hamaca (acostada hasta c14, sentada desde c15), con tubos rosas y bata fucsia;
+   - Abigail a la izquierda, con trenza, mandil de lunares y manos teñidas, y que se vea adulta;
+   - la plantilla del colibrí igual en i02 y r2, y el celular dorado en la mano derecha;
+   - la pronunciación de "Cleotilde", "Abigail", "Delfino" y "aserrín".
+3. phr.py → EDL en edit.py → montaje → verificación (sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca) → copia a LucidLink con caption.txt.
+
+### `pieces\baul-sanmiguel\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte1, remake-transformado, padre-hijos-herencia, san-miguel-de-allende, guanajuato, cantera]
+relatedTo: [plata-taxco, aserrin-huamantla, baul-sanmiguel, betun-zacatecas, atrium-vista]
+---
+# baul-sanmiguel (El Baúl de San Miguel · Parte 1): estado
+
+## Video base
+- Remake transformado de **"Su propio hijo le cerró la puerta · Parte 1"** de @atriumstories_ (7706224426399829279, **342K vistas**, 190 s, 88 planos). Su P2 tiene 390K y la saga suma 1.06M. Análisis: `fuentes/atrium-vista/videos/7706224426399829279_analisis.md`.
+- Por qué este: es la saga nueva con más vistas que no tenía pieza, y su P2 superó a la P1. Ver `fuentes/atrium-vista/ranking2.md`.
+- Pedido del usuario (2026-11-14): más cerca de las historias de Atrium, pero sin copiar. Se conservan la historia y su ritmo emocional. Cambian el escenario y la región, el oficio, el objeto clave, los nombres, todos los diálogos, el detalle del giro y el CTA.
+
+## Qué se cambió
+- Región y escenario: la mansión moderna sin región pasa a ser una casona colonial de San Miguel de Allende (Guanajuato), y la casa del hijo pobre, una casita de cantera.
+- Oficios: el hijo pobre deja de ser repartidor en moto y pasa a ser Ciriaco, cantero. El hijo rico es Raymundo, arquitecto.
+- Objeto: la maleta de cuero se cambia por un baúl de lámina verde pintado de flores. Dentro lleva papeles atados con cordón rojo y un llavero de latón.
+- Plazo nuevo en el gancho: "Su baúl afuera antes de las ocho", porque a esa hora llega la mamá de Mirna.
+- Complicación sin cifras ni deudas: el dueño quiere el cuartito para su sobrino, así que Ciriaco piensa vender su cortadora.
+- Giro: Hilario abre el baúl y llama al notario: "Ya sé cuál de mis hijos se va a quedar con todo."
+- CTA a cámara: "¿Ustedes a cuál de los dos le dejarían todo?"
+- Nombres nuevos y únicos en pieces/: Hilario, Raymundo y Ciriaco Peñaloza, Mirna Olguín, Felícitas Canchola y el licenciado Villagómez.
+(Detalle en guion.md, tabla "Qué cambia respecto al original".)
+
+## Marca
+**MAJESTIC STORIES**: edit.py, BRAND = "MAJESTIC" (kit pieces/_marcas/MAJESTIC, con su música; la pieza no tiene carpeta music/ propia).
+
+## Archivos
+guion.md, caption.txt, lines.json (fuente única, unas 380 palabras), clips.py (45 clips: 38 hablados c01-c38, 4 insertos i01-i04 y 3 reacciones r1-r3), make_sheets.py (5 personajes + LOC_CASONASM + LOC_CUARTOCANTERA = 7 hojas), phr.py y edit.py (EDL vacía; música cálida de c22 a c32). Es el más largo de la tanda: si el montaje pasa de unos 2:20, se recortan frases de c13 a c18.
+- Es copia de la plantilla plata-taxco y conserva todas sus defensas:
+  - en los prompts: gaze + ONE + ALONE, PRES (un plano de presentación por personaje), NOSUB + CLEAN + END, NODOUBLE;
+  - en los reintentos: SAFE/SOFT con las frases fuertes primero, variant, NOREF, TRIES=6;
+  - contra fallos de Flow: gatito como IMAGEN, control de duplicados por md5, reload_flow, new_project y la parada "LIMITE DE CREDITOS" en gen().
+- make_sheets.py pide "ordinary non-famous face", controla duplicados por md5 (DUPLICADO) y acepta --reupload.
+- Comprobaciones:
+  - `python -m py_compile` OK en clips.py, make_sheets.py, edit.py y phr.py.
+  - Los IDs de CLIPS coinciden con las claves de lines.json, en el mismo orden (leído con ast, sin importar el módulo).
+  - Todos los @{ASSET} tienen hoja y no sobra ninguna hoja.
+  - Las frases en español de SOFT coinciden con lines.json.
+
+## Avance
+- 2026-11-14: archivos escritos. No se generó nada en Flow. Faltan las hojas, los clips, el QA, phr.py, la EDL y el montaje.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no salga DUPLICADO, correr `md5sum chars/*.jpg` y mirar la hoja de contactos: caras comunes y distintas entre sí.
+2. `python -I clips.py > clips_log.txt` y QA de cada clip. Revisar:
+   - morphs y bordes del cuadro;
+   - el baúl verde con flores rojas igual en todos los planos y el bastón siempre en la mano izquierda;
+   - que solo Hilario lleve sombrero, y que de noche (c36, c37 y r3) no lo lleve;
+   - Mirna arriba a la derecha y Raymundo arriba a la izquierda;
+   - la cortina floreada en la escena de noche y el celular de tapa en la mano derecha;
+   - la pronunciación de "Hilario", "Ciriaco", "Felícitas" y "Villagómez".
+3. phr.py → EDL en edit.py → montaje → verificación (sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca) → copia a LucidLink con caption.txt.
+
+### `pieces\viuda-aguacate\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte1, historia-propia, capos, matriarca]
+relatedTo: [fonda-chela, monedas-carretera, reten-sierra, medalla-mezcal, atrium-vista]
+---
+# viuda-aguacate (La Viuda del Aguacate · Parte 1): estado
+
+## La historia
+- Historia propia tipo capos con protagonista matriarca, sobre la premisa n.º 2 de fuentes/atrium-vista/resumen.md. El notario Ponciano le pone candado a la huerta de doña Engracia: 72 horas para irse y cien mil por una huerta de ocho millones. Ella marca el único número del celular de su difunto Lauro y llega don Nicandro con ocho camionetas. Hay un plazo invertido (hasta que se meta el sol) y el maletín siempre cerrado. Gancho: el comprador es Arnulfo, el hijo de Nicandro. El castigo queda para la Parte 2. Sin Navidad.
+- Los nombres de la premisa se cambiaron porque ya existían: Esperanza (chocolate-rancho-p2) pasó a Engracia y Ramón (reten-sierra-p2, fierro-herradura) a Lauro.
+- Guion pasado por la skill humanizer: frases de 8 palabras como máximo (salvo el CTA), sin contrastes de relleno.
+
+## Marca
+**MEXI STORIES**: edit.py, BRAND = "MEXI". Música y marca de agua de pieces/_marcas/MEXI (brand, brand_wm), arriba a la derecha. Sin carpeta music/ propia.
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 1, #parte1).
+- lines.json: fuente única de clips.py (382 palabras).
+- clips.py, con 48 clips (c01–c36 hablados, i01–i07 insertos sin caras, r1–r5 reacciones mudas), 318 s de generación. Es la copia del clips.py de fonda-chela con todas sus defensas:
+  - Planos hablados de una persona: gaze(side) + ONE + ALONE; NOSUB + CLEAN + END en cada diálogo; NODOUBLE en los de riesgo.
+  - SAFE/SOFT (con las frases fuertes del diálogo), variant, NOREF (también quita las hojas de locación), TRIES=6, gatito de control, reload_flow(), new_project() tras dos caídas, comprobación de descarga corrupta con ffmpeg y 17 s entre clips.
+  - Acepta IDs, mueve la versión vieja a clips/old/ e imprime "FIN P1".
+- make_sheets.py: 7 hojas (5 personajes, 2 locaciones) con control md5 DUPLICADO y --reupload; imprime "FIN HOJAS".
+- phr.py.
+- edit.py: EDL en borrador por índices de línea (85 segmentos), mudos con ganancia 0, i01 de ~1 s y BLACK 0.4 s antes de c36. Música: suspenso hasta c27, cálida de c27 a c30 y suspenso hasta el final. Salida en renders/v1.mp4.
+
+## Hojas nuevas
+Aún no se generaron. Nombres verificados como únicos en pieces/*/clips.py y make_sheets.py (ni el nombre ni el apellido se repiten en otras piezas).
+- Personajes: ENGRACIA_MURGUIA, FITO_CUEVAS, PONCIANO_UGALDE, WENCES_PICHARDO y NICANDRO_SOLORZANO.
+- Locaciones: LOC_HUERTAGUACATE y LOC_COCINAENGRACIA. c16 (Nicandro en su camioneta) va sin hoja.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, correr `md5sum chars/*.jpg` y armar hoja de contactos: Engracia (gris corto, rebozo) contra Nicandro (sombrero de palma, bastón); Ponciano (calvo, lentes, lino beige) contra Wences (cola de caballo, guinda); Fito (gorra beige, verde olivo).
+2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P1", Traceback e "intento 6".
+3. QA con hoja de fotogramas, franja inferior y bordes. Regenerar con `python -I clips.py <ids> > clips_log2.txt`.
+4. `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y correr `python -I edit.py` (o `--remix`).
+5. Verificar sincronía en 5 puntos, ritmo de 2 s o menos de media, LUFS y pico, y la marca MEXI STORIES visible a tamaño real (arriba a la derecha).
+6. Telegram con caption.txt (3er arg = MEXI).
+
+## Revisar en el QA
+- Geografía: en el portón, Engracia y Fito a la IZQ., Ponciano y Wences a la DER., Nicandro al CENTRO; en la cocina, Engracia IZQ. junto al ropero y Fito DER. en la puerta.
+- Dobles: ningún segundo traje de lino beige, rebozo gris, sombrero de palma ni cola de caballo.
+- Utilería: un solo candado, una sola caja de aguacates, el celular siempre en la mano IZQUIERDA de Engracia, el maletín siempre CERRADO, el bastón en la mano derecha de Nicandro; camionetas sin logos ni placas.
+- Poder sin armas: los escoltas de i06 de manos cruzadas, nada en las manos.
+- Pantalla del celular (i04): solo brillo, sin texto ni cara dentro.
+- Fallos de Omni: subtítulos quemados, frases repetidas, 2.ª frase perdida y morphs.
+- Pronunciación de "Engracia", "Nicandro", "Solórzano", "Uruapan" y "Arnulfo".
+
+## Montaje v1 (2026-11-08)
+- c24 regenerado OK (large-v3: "Soy Nicandro Solórzano. Licenciado, usted me firmó unos papeles en Zamora."); lv3.json actualizado. Viejo en clips/old/c24_v1.mp4.
+- renders/share.mp4: 156.2 s, 104 planos, 1.50 s/plano, -14.2 LUFS, pico -1.8 dBTP; sincronía 0 ms en 5 puntos. Crops extra vistos en el render: c09 (rebozo ajeno abajo DER. hasta 1.5) y c25 (figura blanca IZQ. hasta 1.1). Revisión API: renders/share_revision.md.
+- Falta: Telegram (no enviado).
+
+### `pieces\viuda-aguacate-p2\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte2, historia-propia, capos, matriarca]
+relatedTo: [viuda-aguacate, fonda-chela-p2, atrium-vista]
+---
+# viuda-aguacate-p2 (La Viuda del Aguacate · Parte 2): estado
+
+## La historia
+Parte 2 de pieces/viuda-aguacate. Nicandro manda llamar a su hijo Arnulfo (el comprador) antes de que se meta el sol. Arnulfo llega solo en camioneta blanca; Ponciano confiesa que Arnulfo pidió hacerlo rápido y sin ruido. Momento cálido: Lauro era el padrino de Arnulfo. Castigos sin armas ni sangre: Ponciano rompe las escrituras, entrega su sello de notario y el maletín (cerrado) pasa a Fito para los 40 cortadores; Wences suelta el radio y se va a pie con el licenciado; Arnulfo entrega llaves de su camioneta y de sus tres huertas (pasan a Engracia) y queda una temporada de cortador bajo Fito, sin apellido. Cierre: "Mi palabra pesa más que mi apellido"; se mete el sol. CTA con dilema; historia cerrada (sin Parte 3). Sin Navidad. Guion pasado por la skill humanizer.
+
+## Marca
+**MEXI STORIES**, la misma de la Parte 1 (no entra en la rotación): edit.py, BRAND = "MEXI". Sin carpeta music/ propia.
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 2, #parte2, sin anunciar tercera parte).
+- lines.json: fuente única de clips.py (359 palabras, ≤7 por frase salvo el CTA).
+- clips.py: 47 clips (c01–c34 hablados, i01–i08 insertos sin caras, r1–r5 reacciones mudas), 294 s de generación. Copia del clips.py de viuda-aguacate con todas sus defensas (gaze+ONE+ALONE, NOSUB+CLEAN+END, NODOUBLE, SAFE/SOFT con las frases fuertes de este diálogo, variant, NOREF con Arnulfo, TRIES=6, gatito en imagen, reload_flow, new_project, descarga corrupta, 17 s). Acepta IDs, mueve la versión vieja a clips/old/ e imprime "FIN P2". `python -c "import clips"` OK.
+- make_sheets.py: 6 hojas de la Parte 1 copiadas en chars/ (ENGRACIA_MURGUIA, FITO_CUEVAS, PONCIANO_UGALDE, WENCES_PICHARDO, NICANDRO_SOLORZANO, LOC_HUERTAGUACATE) + 1 NUEVA a generar: ARNULFO_SOLORZANO. Las copias no cuentan como DUPLICADO (skip viuda-aguacate y viuda-aguacate-p2; también se ajustó viuda-aguacate/make_sheets.py para ignorar la copia de la P2). Imprime "FIN HOJAS".
+- phr.py.
+- edit.py: plantilla viuda-aguacate, EDL en BORRADOR por índices de frase (82 tramos), mudos con ganancia 0, BLACK 0.4 s antes de c34. Música: suspenso hasta c10, cálida c10–c13, suspenso hasta el final. Salida renders/share.mp4.
+
+## Hoja nueva
+ARNULFO_SOLORZANO (40, "ordinary non-famous face", quijada cuadrada, pelo negro corto de lado, lampiño, lunar en mejilla izquierda, saco azul marino, camisa azul clara, reloj de oro en la izquierda, mocasines café). Nombre verificado único en pieces/*/clips.py y make_sheets.py.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py --reupload > sheets_log.txt` (sube las 6 copias y genera + sube ARNULFO; imprime "FIN HOJAS"). Revisar DUPLICADO, `md5sum chars/*.jpg`, y que Arnulfo no se parezca a Ponciano ni a Wences.
+2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P2", Traceback e "intento 6".
+3. QA (qa_clips.md): hoja de fotogramas, franja inferior y bordes. Regenerar con `python -I clips.py <ids> > clips_log2.txt`.
+4. `python -I phr.py` / lv3, pasar la EDL a rangos y correr `python -I edit.py`.
+5. Verificar sincronía en 5 puntos, ritmo ≤2 s de media, LUFS y pico, marca MEXI STORIES visible arriba a la derecha.
+6. Telegram con caption.txt (3er arg = MEXI).
+
+## Revisar en el QA
+- Geografía: Engracia y Fito IZQ.; Ponciano, Wences y Arnulfo DER. (Arnulfo con la camioneta blanca detrás); Nicandro CENTRO.
+- Arnulfo: igual a su hoja en todos los clips; si sale en el intento 5 (sin hoja), compararlo cara a cara. Ningún doble de saco azul marino, rebozo gris, sombrero de palma, traje de lino ni cola de caballo.
+- Luz: atardecer bajo en todo; puesta de sol solo en i08, c33 y c34.
+- Utilería: maletín siempre CERRADO (i05, c19), escrituras rotas sin texto legible (i04), llavero en la mano IZQUIERDA de Engracia (c31, c34), smartphone de Ponciano en la oreja derecha (c02), bastón en la derecha de Nicandro; camionetas sin logos ni placas.
+- i06: los dos de espaldas deben ser Ponciano (calvo, lino beige) y Wences (cola de caballo, guinda), manos vacías.
+- Fallos de Omni: subtítulos quemados, frases repetidas, 2.ª frase perdida, morphs.
+- Pronunciación: "Arnulfo", "Nicandro", "Engracia", "Uruapan", "injertar".
+
+## Avance 2026-11-08
+- Clips 47/47 al primer intento, sin md5 duplicados. QA: c12 regenerado (Arnulfo sin saco → saco azul marino). c32 (dos bastones) tapado con crop 480x853; i02 solo desde 3.3 s (mujer ajena 0-3 s); bordes de c11/c16/c20/c24/c29/c30/c33 con arranque o crop (renders/edlcfg.json).
+- EDL generada desde renders/lv3.json (scratchpad mkedl_p2.py): frases por envolvente, pausas internas ≥0.5 s cortadas, ganancia -19.5-LUFS.
+- renders/share.mp4: 143.0 s, 83 tramos (1.74 s/tramo), -14.2 LUFS, -1.8 dBTP, sync 0 ms en 6 puntos. Revisión API: renders/share_revision.md. NO enviado a Telegram.
+
+### `pieces\velorio-patron\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte1, historia-propia, capos]
+relatedTo: [fonda-chela, reten-sierra, medalla-mezcal, atrium-vista]
+---
+# velorio-patron (El Velorio del Patrón · Parte 1): estado
+
+## La historia
+Historia propia tipo capos, premisa n.º 3 de fuentes/atrium-vista/resumen.md. En el velorio de don Eleuterio (rebautizado porque CIPRIANO_ROBLES ya existía), los hijos Leonel e Ivonne corren a Nati, la cocinera de 25 años: diez minutos y tres mil pesos. El licenciado Efrén lee la carta: el anillo es para Nati, y los doce de la escolta, con Nazario al frente, solo obedecen a quien lo trae. Sin el anillo no hay firma para la venta de ocho millones de mañana. Siguen el momento cálido (ella lo cuidó al final), la oferta de Leonel, el "¿qué ordena?", el portón que se cierra, la cita de mañana a las ocho y la carta sellada solo para ella. El castigo queda para la Parte 2. Sin Navidad. Guion pasado por la skill humanizer.
+
+## Marca
+**MAJESTIC STORIES**: edit.py, BRAND = "MAJESTIC" (arriba a la izquierda, música de pieces/_marcas/MAJESTIC). Sin carpeta music/ propia.
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 1, #parte1, anuncia la segunda parte).
+- lines.json: fuente única de clips.py (384 palabras).
+- clips.py: 47 clips (c01–c32 hablados, i01–i09 insertos sin caras, r1–r6 reacciones mudas), 292 s de generación. Copia del clips.py de fonda-chela con todas sus defensas: SAFE/SOFT (con las frases fuertes de este diálogo y "wake"), variant, NOREF (también quita las hojas de locación), TRIES=6, gatito de control, reload_flow(), new_project(), comprobación de descarga corrupta con ffmpeg y 17 s entre clips. Acepta IDs, mueve la versión vieja a clips/old/ e imprime "FIN P1".
+- make_sheets.py: 7 hojas (5 personajes, 2 locaciones) con control md5 DUPLICADO y --reupload; imprime "FIN HOJAS".
+- phr.py.
+- edit.py: EDL en borrador por índices de frase (80 tramos), mudos con ganancia 0, BLACK 0.4 s antes de c32. Música: suspenso hasta c22, cálida de c22 a c26 y suspenso hasta el final. Salida en renders/v1.mp4.
+
+## Hojas nuevas
+Aún no se generaron. Nombres verificados como únicos en pieces/*/clips.py y make_sheets.py (ni nombre ni apellido se repiten).
+- Personajes: NATI_CERVERA, LEONEL_GARIBAY, IVONNE_GARIBAY, EFREN_SOTOMAYOR, NAZARIO_QUEZADA.
+- Locaciones: LOC_PATIOVELORIO, LOC_COCINAGARIBAY.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, correr `md5sum chars/*.jpg` y armar hoja de contactos: Leonel (lentes, bigote, traje negro) contra Nazario (barba blanca, camisa negra); Ivonne (perlas, caoba) contra Nati (trenza, mandil); Efrén calvo y de café. Que ninguna cara se parezca a un actor conocido.
+2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P1", Traceback e "intento 6".
+3. QA con hoja de fotogramas, franja inferior y bordes (qa_clips.md). Regenerar con `python -I clips.py <ids> > clips_log2.txt`.
+4. `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y correr `python -I edit.py`.
+5. Verificar sincronía en 5 puntos, ritmo de 2 s o menos de media, LUFS y pico, y la marca MAJESTIC STORIES visible a tamaño real (arriba a la izquierda).
+6. Telegram con caption.txt (3er arg = MAJESTIC).
+
+## Revisar en el QA
+- Geografía: Nati IZQ. junto a la puerta de la cocina; Leonel e Ivonne DER.; Efrén junto a la caja; Nazario delante de los arcos.
+- Dobles: ningún segundo hombre con lentes, de barba blanca o de traje café; ninguna segunda mujer de mandil o de perlas. Los escoltas de lentes oscuros solo en los insertos.
+- Utilería: un solo anillo (en la palma hasta r3, en la mano DERECHA de Nati desde i05); la carta doblada en la carpeta; el sobre con lacre solo en c31/i09; la caja del patrón siempre cerrada, sin foto ni letras.
+- Poder sin armas: escoltas de manos cruzadas, nadie toca a nadie en i07.
+- Fallos de Omni: subtítulos quemados, frases repetidas, 2.ª frase perdida, morphs.
+- Pronunciación de "Eleuterio", "Nazario" y "ocho millones".
+
+## Hojas y clips (2026-11-08)
+- 7 hojas generadas (make_sheets.py, sheets_log.txt): ningún DUPLICADO, md5 distintos, revisadas a ojo: cada una coincide con su descripción, sin gatitos ni caras de actores conocidos (Nati aparenta algo más de 25, aviso). Ninguna rehecha.
+- `python -I clips.py >> clips_log.txt` en marcha (se pausó una vez tras c04 para regenerar c13 de fonda-chela-p2 y se relanzó; salta los clips ya hechos).
+- Revisar en el QA: **c04 salió en el intento 6** (prompt mínimo: solo la 1.ª línea de diálogo) y c03 en el 2; i01 en el 3.
+
+## Montaje v1 (2026-11-08) — renders/share.mp4, LISTO para revisión (NO enviado a Telegram)
+- **Flow devolvió el video anterior en 6 clips** (md5 idéntico: c06=r1, c07=r2, c09=c12, i04=c10, c25=c24, c31=r6). c05 era un mudo de Leonel. Regenerados c04 (2.ª frase), c05, c06, c07, c09, c25, c31, i04 e i06, todos OK. clips.py ahora descarta descargas con el md5 de otro clip ("DUPLICADO"). Detalle en qa_clips.md.
+- **i06**: v3 (trajes grises, sin velorio) pasó la política, pero quedó FUERA del montaje porque no coincide con la escolta de negro y gafas. **i05** fuera (mano envejecida con manga larga).
+- **edit.py** (plantilla viuda-aguacate, BRAND = "MAJESTIC", música suspenso / cálida c22–c26 / suspenso):
+  - 148.6 s, 75 cortes (1.98 s por corte), 98 planos contando punch-ins y crops (1.51 s por plano).
+  - −14.3 LUFS, −1.8 dBTP. Sincronía ±6 ms en 6 puntos.
+- **Revisión** (tools/revisar_render.py → renders/share_revision.md, veredicto CASI) y hojas de contacto. Los falsos positivos (desfase, voz sobre quien escucha) están descartados con medición. Quedan avisos para el usuario:
+  - CTA con anillos en las dos manos.
+  - c22 con el ataúd sin flores.
+  - c28 con un grade algo más frío.
+  - Posibles "alargarte" (c01) y "nada al licenciado" (c25).
+- Siguiente: decisión del usuario sobre los avisos y luego Telegram con caption.txt (3er arg = MAJESTIC).
+
+### `pieces\tiendita-justa\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte1, remake, referencias3, precio-justo]
+relatedTo: [pedida-mano, referencias3]
+---
+# tiendita-justa (La Tiendita del Precio Justo · Parte 1, video 25): estado
+- Remake de la premisa n.º 1 de fuentes/referencias3/resumen.md: ref ★ 7698839837180169504 (@solreflection, 9.8M). Mismos 11 beats que la ref (gancho, pérdida del villano, éxito, prueba social, flete/bodega, camioneta, envidia, cerca, queja, falsa calma, inspector). Otros nombres y diálogos; atuendos de la ref en otros colores.
+- Premisa: Chuy y su papá Aurelio abren una tiendita a precio justo y le vacían la clientela a don Evaristo, que cobraba de más por ser el único. Evaristo pone una queja en la presidencia municipal y un mes después llega el inspector a pedir permisos y amenazar con clausurar.
+- Política: sin cifras ni billetes ("precio justo" vago, libreta cerrada, "le adelanto los viajes"); el inspector es civil (traje café, sin gafete); "queja", no "denuncia"; sin niños ni palabras de edad; nadie con sombrero ni gorra; nadie señala; hojas sin letreros ni precios.
+- Marca: **MEXI STORIES** (pedida-mano=MAJESTIC → esta=MEXI → siguiente=SIN MARCA). Música y marca de agua desde pieces/_marcas/MEXI (edit.py, BRAND = "MEXI"; arriba a la derecha, margen 36, y=210). No hay carpeta music/ propia.
+- Archivos listos:
+  - guion.md y caption.txt (formato Parte 1).
+  - lines.json: fuente única de clips.py (491 palabras, unos 235–245 s).
+  - clips.py: 45 clips (c01–c42 y r1–r3), 326 s de generación.
+    - Planos de una persona con gaze(side) + ONE + ALONE; los de la fila lejana (c26, c30, c31, r3) usan far() (ONE sin ALONE, gente desenfocada al fondo).
+    - NOSUB + CLEAN + END en cada diálogo; NODOUBLE en los de riesgo.
+    - SAFE/SOFT (incluye frases fuertes del diálogo e "inspector" → "the man in the suit"), variant, NOREF (también quita las hojas de locación), TRIES=6, gatito de control, 17 s entre clips.
+    - Acepta IDs, mueve la versión vieja a clips/old/ e imprime "FIN P1".
+  - make_sheets.py: 14 hojas (8 personajes + 6 locaciones) con control md5 DUPLICADO y --reupload; imprime "FIN HOJAS". phr.py.
+  - edit.py: EDL en borrador por índices de línea (76 entradas), mudos r1–r3 con ganancia 0, BLACK 0.4 s antes de c42. Música: suspenso 0→c07, cálida c07→c24, suspenso c24→fin. --remix. Salida en renders/v1.mp4.
+- Hojas nuevas (aún no generadas; nombres verificados como únicos en pieces/*): CHUY_MEDINA, AURELIO_MEDINA, EVARISTO_LOZANO, CIPRIANO_ROBLES, TONA_ARELLANO, FIDEL_CARMONA, MARISOL_TREJO, LIC_ZAMARRIPA, LOC_TIENDAEVARISTO, LOC_TIENDITACHUY, LOC_BODEGAFLETE, LOC_CABINAFLETE, LOC_CERCATIENDITA, LOC_VENTANILLAMUNI.
+- Nada generado en Flow todavía.
+- Siguiente:
+  1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO y correr `md5sum chars/*.jpg`. Hoja de contactos:
+     - Chuy (camiseta guinda) y Evaristo (cuadros azul/blanco, mandil verde) que no se parezcan; Aurelio con paliacate LISO mostaza; Cipriano sin sombrero.
+     - Fidel sin gorra; el inspector sin gafete ni escudos; Marisol sin gafete.
+     - Locaciones sin letreros, precios, marcas ni billetes; la tiendita sin caja registradora.
+  2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P1", Traceback e "intento 6".
+  3. QA con hoja de fotogramas, tiras de la franja inferior y bordes.
+  4. Regenerar con `python -I clips.py <ids> > clips_log2.txt`.
+  5. `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y `python -I edit.py` (o `--remix`).
+  6. Verificar: sincronía en 5 puntos, ritmo ≤ 1.9 s, LUFS y pico, marca MEXI arriba a la derecha. Luego Telegram con caption.txt.
+- Revisar en el QA:
+  - Geografía: Evaristo IZQ. / Cipriano DER. (tienda vieja); Chuy IZQ. / Aurelio, Toña e inspector DER. (tiendita); Chuy IZQ. / Fidel DER. (bodega); Chuy volante IZQ. / Aurelio DER. (cabina); Marisol IZQ. / Evaristo DER. (ventanilla).
+  - Ningún doble: otra camiseta guinda, otra camisa a cuadros, otra camisa azul cielo, otro traje café, otra blusa lila.
+  - Nadie en los bordes ni entrando a cuadro; la fila siempre lejos y desenfocada.
+  - Utilería: libreta cerrada en la mano IZQ.; cero billetes, precios o cifras; una sola camioneta, la roja; portapapeles con la hoja de espaldas.
+  - Paliacate de Aurelio igual en todos los planos (en la ref cambiaba). Evaristo sin mandil solo en la ventanilla (c32, c34).
+  - Subtítulos quemados, frases repetidas, 2.ª frase perdida, morphs.
+- Riesgos:
+  - c18/c19: "adelanto los viajes" (que no aparezcan billetes en las manos).
+  - c37–c41: el inspector (que no salga con gafete, escudo o aspecto de policía).
+  - c32–c34: ventanilla (sin banderas, sellos ni letreros).
+  - Pronunciación: "Cipriano", "Evaristo", "mercancía", "mayoreo", "flete", "escarmiento", "presidencia municipal", "clausurar".
+
+### `pieces\tele-nueva\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories]
+relatedTo: [canasta, encendedor, padre-veladoras, chocolate-rancho, hacienda-sangre, reten-sierra, medalla-mezcal, agua-hacienda]
+---
+# tele-nueva (La Tele Nueva) — estado
+- Remake de 7694110464388730134 de @desdequediosamanece (la nuera le quita la pantalla nueva a su suegra de 86 años para dársela a su mamá; 2.5M vistas, 291 s). 11.º remake, marca VISTA STORIES (el 10.º fue SAGA FILMS). Archivos listos: guion.md, make_sheets.py, clips.py (32 clips hablados, 262 s brutos, 57 frases: guion compacto para 2:00-2:20), edit.py (copia de canasta, EDL vacía, marca VISTA STORIES, cálida entre c24 y c29), phr.py, music/ (copia de canasta), caption.txt. Nada generado en Flow todavía.
+- Assets nuevos (únicos frente a todas las pieces con make_sheets.py, sin subcadenas): GENARO, REMEDIOS, GRISELDA, CHABELA, LOC_CASITA, LOC_RESIDENCIA.
+- Atuendos: los de la ref (mosaico fps=1/12) con otros colores: camisa verde olivo en vez de vaquera azul, vestido verde oscuro y delantal blanco en vez de floreado oscuro y crema, blusa azul cobalto en vez de burdeos, blusa morada de flores blancas y pantalón crema en vez de flores rojas y beige.
+- Siguiente: `python -I make_sheets.py > sheets_log.txt`, revisar hojas (md5, etnia mestiza, que cada nombre tenga su imagen), `python -I clips.py > clips_log.txt` con Monitor, QA por agente (bordes, ropa, tele vieja/nueva según el bloque), regenerar malos, `python -I phr.py`, EDL por frases en edit.py (BLACK 0.4 antes de c32), `python -I edit.py`, verificación completa, Telegram con caption.txt.
+- Riesgos: c19/c22/c24/c26 (cargar la tele: manos y continuidad del aparato), c23 (Griselda con la mano en el hombro de Chabela: dos personajes), c26-c28 con la tele nueva en LOC_CASITA (la hoja trae la tele de caja), c06-c08 (solo Genaro con celular), c32 CTA mudo (el prompt pide labios desde el primer frame). Pronunciación: "Genaro", "Genarito", "Chabela", "ochenta y seis", "distinguen".
+- Política: sin policías, sin armas, sin contacto brusco, sin dedo acusador, sin dinero exigido ni bancos, sin niños, edades numéricas.
+
+## Entregado (2026-11-04)
+- renders/v1.mp4: 2:13, -14.7 LUFS, sync 0 frames. VISTA STORIES. c16/c19/c22 con crop (tele doble o deformada). Enviado a Telegram.
+
+### `pieces\suegra\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories]
+relatedTo: [recetario, buen-hijo, tele-nueva, canasta, encendedor, padre-veladoras, chocolate-rancho, hacienda-sangre, reten-sierra, medalla-mezcal, agua-hacienda]
+---
+# suegra (La Suegra) — estado
+- Remake de 7699640321801522463 de @asombrosasreflexiones ("Mi suegra se adueñó de nuestra casa"; 2.2M vistas, 134 s; allá es Parte 2, aquí Parte 1 autónoma). 14.º remake, marca VISTA STORIES (el 13.º, recetario, fue SAGA FILMS). Archivos listos: guion.md, make_sheets.py, clips.py (31 clips hablados, 230 s brutos, 53 frases), edit.py (copia de recetario, EDL vacía, marca VISTA STORIES, cama ligera entre c07 y c14), phr.py, music/ (copia de recetario), caption.txt. Nada generado en Flow todavía.
+- Assets nuevos (únicos frente a todas las pieces con make_sheets.py, sin subcadenas en ningún sentido): PALOMA, RODRIGO, SOCORRO, PANCHO, YADIRA, IRENE, LOC_DEPTO, LOC_AZOTEA, LOC_CORPORATIVO, PROP_CONTROL.
+- Atuendos: los de la ref (mosaico 24 cuadros) con otros colores: Paloma blusa de punto verde salvia y pantalón gris (en vez de crema y beige); Rodrigo camisa amarillo pálido (en vez de azul claro); Socorro vestido floral verde oscuro (en vez de azul marino con rosa); Pancho playera azul marino y shorts caqui (en vez de gris y negro); Yadira playera durazno y pijama azul claro (en vez de gris y rosa); Irene blazer azul marino (en vez de beige).
+- Siguiente: `python -I make_sheets.py > sheets_log.txt`, revisar hojas (md5, etnia mestiza, que cada nombre tenga su imagen), `python -I clips.py > clips_log.txt` con Monitor, QA por agente (bordes y ropa, bolsa en el hombro izquierdo de Paloma en c01-c06 y c14-c16, UNA sola blusa en la mano derecha de Paloma c11-c13, UN solo control en la mano derecha de Socorro en c30), regenerar malos, `python -I phr.py`, EDL por frases en edit.py (BLACK 0.4 entre c30 y c31), `python -I edit.py`, verificación completa, Telegram con caption.txt.
+- Riesgos: c01 sin plano abierto (Rodrigo habla de una), c07 refri vacío, c11-c13 blusa (que no se duplique), c17 sobre el hombro en la oficina (sin gafetes), c28 dos personajes de pie frente a frente, c30 control en la mano, c31 CTA mudo (el prompt pide labios desde el primer frame). Pronunciación: "Socorro", "Yadira", "Aguántame", "avergonzarme", "egoísta".
+- Política: sin policías, sin armas, sin contacto brusco, sin dedo acusador, sin dinero exigido ni tarjeta ni banco (el control de la cochera reemplaza a la tarjeta), sin bebé ni niños, edades numéricas.
+- 2026-11-04: renders/v1.mp4 (121.0 s, 53 planos, -14.3 LUFS, pico -1.8 dBFS). Regenerados OK: c09, c21, c27, c28; c29 lados OK pero camisa con bolsillo; c11 nuevo con blusa de manga corta -> se usa clips/old/c11 (blusa en la mano izquierda). Reacciones mudas para llegar a 2:00. Pendiente: revisión del usuario y Telegram.
+
+### `pieces\stimulus-03-hf\ESTADO.md`
+
+# stimulus-03 — estado
+Plantilla: ../stimulus-02-hf (aprobado). Música asignada: styles/stimulus/assets/bgm/presto.wav (sin bajo, loudnorm -14).
+Hecho: video 3 renderizado y enviado (renders/stimulus-03.mp4), pendiente de feedback.
+Falta: pausas globales (-50 dB ≥0.15 s, sin la final) → refine_words.py (copiar words.json a words_whisper.json antes) → make_edit.py → aplicar delta de inicios a words_edit.json →
+cutout.webm (hyperframes remove-background + firming) → plan nuevo en gen.py (hook, BLOCKS, CHECKS=4 preguntas numeradas, CTA "Want to compare? Link in bio.") → check → snapshots → render → revisar_render → Telegram.
+
+### `pieces\sazon-concha\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte1, historia-original, cocina]
+relatedTo: [fierro-herradura, nochebuena, posada]
+---
+# sazon-concha (El Sazón de Doña Concha · Parte 1, video 21): estado
+- Historia ORIGINAL (no navideña) inspirada en `7699705850595659030` ("La despidió después de 30 años, pero su sazón sería su ruina", 1.4M) y en el sabotaje de `7694502933370637590` ("Le saló la comida", 1.8M). Fórmula: humillación en la 1.ª línea ("Este mole huele a fonda de pueblo") → giro de poder (Victoria prueba el mole y Darío no sabe qué lleva) → payoff (Concha vuelve a su cocina y Darío lava cazuelas) → gancho (Maximiliano: "la sal la vas a poner tú").
+- Marca: **MAJESTIC STORIES**. Música y marca de agua de pieces/_marcas/MAJESTIC (edit.py, BRAND = "MAJESTIC"); no hay music/ propia.
+- Archivos listos:
+  - guion.md y caption.txt (formato Parte 1).
+  - lines.json: fuente única de clips.py (479 palabras).
+  - clips.py, con 36 clips: c01–c31, r1–r4 e i1. Son 240 s hablados en bruto, más 30 s de mudos.
+    - Todos los planos con diálogo son de una persona: `gaze(side)` + ONE + ALONE. Nunca "looking at X off-screen".
+    - NOSUB y END al final de cada diálogo; NODOUBLE en los planos de riesgo (c01, c03, c12, c17, c28).
+    - Una pieza de cada utilería: una cazuela (hoja PROP_CAZUELAMOLE), un plato, un mandil por persona y una cuchara de madera solo en el CTA. Nadie con sombrero ni lentes, sin filipinas ni gorros, sin cuchillos.
+    - SAFE/SOFT con \b (incluye las frases fuertes del diálogo: "que nadie la vea", "como si no valiera nada", "va a saber a pura sal"), variant, NOREF (también quita la hoja de la cazuela), TRIES=6, 17 s entre clips y gatito de control.
+    - Guarda en clips/, imprime "FIN P1", acepta IDs y mueve la versión vieja a clips/old/.
+  - make_sheets.py: 9 hojas nuevas (5 personajes, 3 locaciones y la cazuela) + control md5 DUPLICADO; --reupload. Imprime "FIN HOJAS".
+  - phr.py.
+  - edit.py: EDL en borrador por índices de línea, ganancia 0 en los mudos, BLACK 0,4 s antes del CTA (c31), cama cálida c25 → c28, loudnorm en dos pasadas, salida renders/v1.mp4.
+- Hojas nuevas (aún no generadas; nombres verificados como únicos en pieces/*/chars y en todos los make_sheets.py): CONCEPCION_MOLERA, MAXIMILIANO_GERENTE, DARIO_COCINERO, ANTONIO_LAVALOZA, VICTORIA_LAZCANO, LOC_COCINACASONA, LOC_CALLEJONCASONA, LOC_COMEDORCASONA, PROP_CAZUELAMOLE.
+- Nada generado en Flow todavía.
+- Siguiente:
+  1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, correr `md5sum chars/*.jpg` y armar una hoja de contactos. Cada nombre tiene que ser su persona o lugar y los personajes no se parecen entre sí (Maximiliano lampiño y Darío con barba). Nadie lleva sombrero, lentes, filipina ni gorro, y la cazuela es una sola.
+  2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P1", Traceback e "intento 6".
+  3. QA con hoja de fotogramas y tiras de la franja inferior.
+- Revisar en el QA:
+  - Geografía: cocina (Concha y la cazuela IZQ., Maximiliano y Darío DER., Toño CENTRO; en el payoff, Victoria DER.), callejón (de tarde Concha IZQ. y Toño DER.; de noche Maximiliano IZQ. y Darío DER.), comedor (Victoria sentada al CENTRO, Maximiliano y Darío DER., Concha y Toño IZQ.).
+  - Nadie en los bordes y ningún doble (otro saco vino, otra blusa bordada).
+  - Una sola cazuela y siempre la misma; un solo plato; ningún cuchillo; ni menús ni cuadros con letras.
+  - El mandil: Concha lo lleva puesto en c01–c06, lo dobla en c07, lo trae en la mano en c09, c11 y c17, y lo vuelve a llevar puesto en c25 y c31.
+  - Callejón de noche (c28–c30, r4) oscuro de verdad; el de la tarde (c08–c11), con luz.
+  - Subtítulos quemados, frases repetidas, morphs, personajes que entran caminando, manos o utilería que cambian de lado.
+- Regenerar con `python -I clips.py <ids> > clips_log2.txt`. Luego `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y `python -I edit.py`. Verificar (sincronía en 5 puntos, ritmo ≤ 1,9 s, LUFS y pico, marca) y mandar a Telegram con caption.txt.
+- Riesgos:
+  - c07: doblar el mandil junto a la cazuela (manos y utilería).
+  - i1: un solo plato y una sola cuchara.
+  - c13: probar con cuchara sin que aparezca un segundo plato.
+  - c31: el CTA con gestos y la cuchara de madera.
+  - Pronunciación de "Maximiliano", "metate", "aguacate", "comal", "Llévense" y "perdóneme".
+- 2026-11-06: c09/c16/i1 regenerados y aprobados en QA (c09 mandil verde en la mano, falda gris oscuro, figura del borde DER. solo hasta ~0.6 s y se arranca en 1.48; c16 sin subtítulos, crop en "Suegra," por una cabeza abajo a la IZQ. hasta ~0.9 s; i1 una sola cuchara). renders/v1.mp4 montado (157.7 s, 85 planos, media 1.9 s, -14.1 LUFS, -1.8 dBTP, sincronía +5 ms en 5 puntos, transcripción completa). Falta: revisión del usuario y Telegram.
+
+### `pieces\reten-sierra\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories]
+relatedTo: [medalla-mezcal]
+---
+# reten-sierra (El Retén) — estado
+- Hojas corregidas (bug de Flow corre imágenes un nombre): TEODORO→DONTEO, LOC_RETEN→LOC_GARITA, PROP_RELOJ→PROP_LEONTINA, sierra=LOC_MONTE, cabina=@{LOC_SIERRA} (archivo LOC_SIERRA.jpg ES la cabina), troca=PROP_CAMIONETA. LOC_CABINA.jpg/TEODORO… no usar.
+- Clips: `python -I clips.py > clips_log.txt` en curso. Luego: QA por agente (como medalla qa_clips.md), regenerar malos, edit.py, verificación completa, Telegram. Riesgo c32: Garza hace lipsync de la voz de la radio.
+- Siguiente: 7699644756812385567 (317K).
+
+## Entregado (2026-11-04)
+- `renders/v3.mp4`: 2:29, 98 planos, media 1.52 s, -14.8 LUFS, sincronía 0 frames en 5 puntos. Enviado a Telegram con caption.txt.
+- Garza en camuflaje (GARZAVERDE) en todos los planos. Marca VISTA STORIES alpha 80.
+- Pendientes menores: inserto del radio en c32 algo blando (ampliado 2.5x).
+- `renders/v4.mp4` (2026-11-04): 2:18, 72 planos (49 cambios de plano + 22 saltos dentro del mismo clip), media 1.91 s, -14.8 LUFS / -1.4 dBTP, sincronía 0 frames. Regla nueva: mismo personaje = mismo plano (sin caras mudas de relleno). 7 clips regenerados OK. c33 nuevo sin BLUR33 (no hay texto de patrulla). edit.py de v3 en scratchpad/r4/edit_v3.py.
+
+### `pieces\reten-sierra-p2\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte2]
+relatedTo: [reten-sierra]
+---
+# reten-sierra-p2 (El Retén · Parte 2): estado
+- Marca: **VISTA STORIES** (la misma de la Parte 1, no entra en la rotación).
+- Archivos listos: guion.md, lines.json (diálogos, fuente única de clips.py), clips.py (43 clips: c01–c39 + i1, r1, r2, r3; SAFE/SOFT con \b/variant/NOREF, TRIES=6, 17 s entre clips, gatito de control, salida clips/, imprime "FIN P2", acepta IDs por argumento), edit.py (plantilla reten-sierra v4, EDL en borrador con índices de línea, salida renders/v1.mp4), make_sheets.py, caption.txt, music/ (copia de la Parte 1).
+- chars/: 14 jpg copiados de la Parte 1. Usar SOLO: CANDELARIA, EMILIANO, GARZAVERDE (Garza, camuflaje), SOLDADOFLACO (Pineda), DONTEO (Teodoro), LOC_SIERRA (= cabina), LOC_MONTE (loma), PROP_CAMIONETA (troca roja), PROP_LEONTINA (reloj). NO: GARZA, PINEDA, LOC_CABINA, PROP_TROCA, LOC_GARITA.
+- Hoja nueva: **LOC_PUESTOVERDE** (retén con pickups verde olivo sin letreros y caseta). Ningún personaje nuevo.
+- Nada generado en Flow todavía.
+- Siguiente: `python -I make_sheets.py --reupload > sheets_log.txt` (sube las 9 hojas de la Parte 1 y genera LOC_PUESTOVERDE; imprime "FIN HOJAS P2"), revisar la hoja y `md5sum chars/*.jpg`, `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P2", Traceback e "intento 6"), QA de bordes (Candelaria IZQUIERDA / Garza DERECHA), ropa, camuflaje sin placas, morphs y pronunciación, regenerar, montar con edit.py (pasar el EDL a rangos, renders/phr.json), verificar, Telegram con caption.txt.
+
+### `pieces\regreso-chicago\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories]
+relatedTo: [encendedor, padre-veladoras, chocolate-rancho, hacienda-sangre, reten-sierra, medalla-mezcal, agua-hacienda]
+---
+# regreso-chicago (La Casa de Chicago) — estado
+- 9.º remake. Ref 7697473313475480864 de @viviendolapalabra1 ("Trabajó 8 años en Houston…", 2.7M). Marca MAJESTIC STORIES (el 8.º lleva VISTA). Archivos listos: guion.md, make_sheets.py, clips.py (35 clips: 31 hablados + i1, i2, i3, r1), edit.py (copia de encendedor, EDL vacía, marca MAJESTIC STORIES, cálida entre r1 y c31), phr.py, music/ (copia de encendedor), caption.txt. Nada generado en Flow todavía.
+- Assets nuevos (únicos frente a las 7 piezas anteriores y a NICANOR, MAYORAL, FAUSTO, MARISOL): ROGELIO, YESENIA, ULISES, REBECA, JOSEFINA, LOC_FACHADA, LOC_COCHERA, PROP_CARPETA.
+- Siguiente: `python -I make_sheets.py > sheets_log.txt`, revisar hojas (md5 y que cada nombre tenga su imagen), `python -I clips.py > clips_log.txt` con Monitor, QA por agente (bordes y ropa), regenerar malos, `python -I phr.py`, EDL por frases en edit.py, `python -I edit.py`, verificación completa, Telegram con caption.txt.
+- Riesgos: i1 (mano en la cintura: SOFT la pasa a "next to"), i2 (la llave no gira), i3/c23 (maleta: dejarla, no aventarla), r1 (solo dos personajes, sin duplicados), c27/c29 (carpeta igual a la hoja), c31 (CTA con movimiento orgánico), Ulises lampiño vs Rogelio con candado (que no se crucen), vecinos al fondo en c12/c24 sin que cambien de ropa los principales.
+- Política: sin patrulla ni policías ("mi licenciado"), sin armas, sin contacto brusco, sin banco ni dinero exigido (fotos en el celular), "a su nombre"/"papeles".
+
+## Entregado (2026-11-04)
+- renders/v1.mp4: 2:26, 67 planos, -14.7 LUFS, pico -1.7, sync 0/-1 frames. MAJESTIC STORIES. Enviado a Telegram.
+
+### `pieces\regreso-chicago-p2\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte2]
+relatedTo: [regreso-chicago]
+---
+# regreso-chicago-p2 (La Casa de Chicago · Parte 2): estado
+- Marca: **MAJESTIC STORIES** (la misma de la Parte 1, no entra en la rotación). Música y marca de agua salen de pieces/_marcas/MAJESTIC (edit.py, BRAND = "MAJESTIC"); no hay music/ propia.
+- Archivos listos: guion.md, lines.json (diálogos, fuente única de clips.py), clips.py (36 clips: c01–c29 + r1–r7; 234 s hablados en bruto; NOSUB al final de cada diálogo, SOLO en todos los planos, SAFE/SOFT con \b, variant, NOREF, TRIES=6, 17 s entre clips, gatito de control, salida clips/, imprime "FIN P2", acepta IDs y mueve la versión vieja a clips/old/), make_sheets.py (--reupload con control md5), phr.py (copia de canasta-p2), edit.py (método canasta-p2: EDL en borrador con índices de línea, ganancia 0 en los mudos, loudnorm en dos pasadas, salida renders/v1.mp4), caption.txt.
+- chars/: las 8 hojas de la Parte 1 (ROGELIO, YESENIA, ULISES, REBECA, JOSEFINA, LOC_FACHADA, LOC_COCHERA, PROP_CARPETA), revisadas en hoja de contactos: cada nombre es su persona/lugar, md5 distintos y sin coincidencias con otras piezas. **PROP_CARPETA no se usa ni se sube** (la hoja trae una etiqueta escrita "PROP REF 4C"); la carpeta va descrita en texto.
+- **Ninguna hoja nueva.** make_sheets.py compara por md5 cada hoja nueva contra todas las pieces/*/chars/**/*.jpg e imprime "DUPLICADO <nombre>" (la aparta en chars/dup/ y no la sube); con --reupload revisa también las reusadas contra las otras piezas.
+- Nada generado en Flow todavía.
+- Siguiente: `python -I make_sheets.py --reupload > sheets_log.txt` (sube las 7 hojas al proyecto Flow activo; imprime "FIN HOJAS P2"; revisar que no haya DUPLICADO), luego `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P2", Traceback e "intento 6"). Después, QA con hoja de fotogramas y tiras de la franja inferior. Revisar:
+  - Geografía: fachada (reja, Yesenia, Rebeca y Ulises IZQ.; Rogelio y Josefina DER.), cochera (camioneta y Ulises IZQ.; Yesenia y Rogelio DER.).
+  - Nadie en los bordes (todos los planos son primeros planos limpios), nadie de más en r2, r3 y r5.
+  - Ulises con pantalón beige (falló en P1 c03/c18/c23); Rebeca sin dedo acusador (falló en P1 c13).
+  - Una sola carpeta azul cerrada (sin sobre ni sello), una sola maleta negra (r5, c21), una sola camioneta.
+  - Subtítulos quemados, frases repetidas, morphs.
+- Regenerar con `python -I clips.py <ids> > clips_log2.txt`. Luego `python -I phr.py`, pasar la EDL a rangos y `python -I edit.py`. Verificar y mandar a Telegram con caption.txt.
+- 2026-11-05: QA v2 de c11 (punch-in en la frase 1 por un capó en primer plano; corte antes de que repita "y me la llevo") y c16 OK. renders/v1.mp4 montado y verificado (ver qa_clips.md). Falta: revisión del usuario y Telegram.
+- Riesgos:
+  - r3: la camioneta saliendo con Ulises al volante (que no salga otra persona ni otra camioneta).
+  - r5/c21: la maleta de Yesenia (una sola, negra, de rueditas; que no aparezca la maleta café de Rogelio).
+  - c26/c29: "me quitó" — si la política lo frena, SOFT lo cambia por "lo que pasó"; revisar que c29 (CTA) siga cuadrando con c26.
+  - c29 (CTA): en P1 salió bien con el mismo tipo de prompt (se ajusta la correa del bolso).
+  - Pronunciación de "Josefina", "Rebeca", "azotea", "techando", "treinta".
+
+### `pieces\regreso-20\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte1]
+relatedTo: [canasta-p2]
+---
+# regreso-20 (El Regreso · Parte 1, video 17): estado
+- Ref: `fuentes/referencias2/videos/7696394614240185623.mp4` (+ `_analisis.md`). Mismos beats, nombres y diálogos nuevos, comprimido a una Parte 1 que cierra en el motivo oculto de don Bernardo.
+- Marca: **VISTA STORIES** (edit.py, BRAND = "VISTA"; música y marca de agua de pieces/_marcas/VISTA, sin music/ propia).
+- Archivos listos: guion.md, lines.json (fuente única de diálogos), clips.py (37 clips: c01–c31 + r1–r5 + i1; 453 palabras ≈ 230 s de voz, 258 s de clips en bruto; NOSUB al final de cada diálogo, SOLO en todos los planos, nadie con sombrero, una carpeta / una maleta / un retrato, SAFE/SOFT con \b, variant, NOREF, TRIES=6, 17 s entre clips, gatito de control, acepta IDs y mueve la versión vieja a clips/old/, imprime "FIN P1"), make_sheets.py (6 hojas nuevas con control md5 DUPLICADO, imprime "FIN HOJAS"), phr.py, edit.py (EDL en borrador con índices de línea, salida renders/v1.mp4), caption.txt.
+- Hojas nuevas (nombres únicos en pieces/*/chars): CLEMENCIA, LEONOR, JOAQUIN, BERNARDO, LOC_ADOBE, LOC_TEJABAN.
+- Nada generado en Flow todavía.
+- Siguiente:
+  1. `python -I make_sheets.py > sheets_log.txt` (esperar "FIN HOJAS"; si hay DUPLICADO, borrar chars/dup/<nombre>.jpg y repetir). Revisar las hojas en hoja de contactos: mestizos, ropa correcta, que no se parezcan entre sí, retrato único en LOC_ADOBE.
+  2. `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P1", Traceback e "intento 6").
+  3. QA con hoja de fotogramas y tiras de la franja inferior. Revisar:
+     - Geografía: cocina (Clemencia/Joaquín IZQ., Leonor DER.), firma (Bernardo DER., familia IZQ.), portal aparte (Clemencia IZQ., Joaquín DER.), despedida (Leonor IZQ.; los demás DER.).
+     - Nadie en los bordes, nadie de más en r4, nadie aparece de golpe; sin sombreros.
+     - Un solo retrato, una sola carpeta sin sobre ni sello (i1, c13), una sola maleta (c23, r4).
+     - Subtítulos quemados, frases repetidas, morphs, sin dedo acusador.
+  4. Regenerar con `python -I clips.py <ids> > clips_log2.txt`. Luego `python -I phr.py`, pasar la EDL a rangos y `python -I edit.py`. Verificar (sincronía en 5 puntos, ritmo ≤ 1.9 s, LUFS/pico, marca) y mandar a Telegram con caption.txt.
+- Riesgos:
+  - c23: "solterona amargada" puede frenar a Flow (SOFT lo cambia desde el 2º intento).
+  - r4: dos personas caminando de espaldas con la maleta.
+  - r5/c30: que el retrato no cobre vida ni aparezca otra persona.
+  - c31 (CTA): que no salga mudo ni rígido.
+  - Pronunciación de "Joaquín", "Julián", "jefecita", "Ándele".
+
+### `pieces\regreso-20-p2\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte2]
+relatedTo: [regreso-20, camionero-p2]
+---
+# regreso-20-p2 (El Regreso · Parte 2): estado
+- Sigue en el mismo segundo del gancho de regreso-20 (Parte 1, entregada con VISTA STORIES): "Ahora sí, tu hija va a saber la verdad." Payoff: Bernardo era compadre de Julián y guarda la copia del testamento (el rancho era de Leonor; Clemencia escondió el original). Trampa: "faltaba una firma". Giro: Clemencia se delata ("Si yo lo quemé hace veinte años"). Castigo: Joaquín nomás vino por el rancho y la deja. Justicia: Leonor dueña, le da un cuarto a su mamá pero ahora manda ella. CTA de opinión, sin Parte 3.
+- Marca: **VISTA STORIES** (la de la Parte 1, fuera de la rotación). Música y marca de agua de pieces/_marcas/VISTA (edit.py, BRAND = "VISTA", arriba al centro).
+- Archivos listos:
+  - guion.md (pasado por humanizer).
+  - lines.json, fuente única de clips.py.
+  - clips.py: 32 clips (c01–c29 + i1, r1, r2 mudos), 379 palabras, 56 frases, 228 s brutos (~2:10 montado). Lleva gaze() + ONE + ALONE + NODOUBLE en todos los planos (shot()), NOSUB + CLEAN + END tras cada diálogo, nadie con sombrero, LETTER (c03, c15) y BAG (r1, c13, c22) con un solo objeto, NOPROP en el resto, SAFE/SOFT con \b, variant, NOREF, TRIES=6, 17 s entre clips y el gatito de control. Imprime "FIN P2", acepta IDs y mueve la versión vieja a clips/old/. Probado en seco (variantes 0–5 de los 32 prompts).
+  - make_sheets.py: 0 hojas nuevas; --reupload de las 6 de la Parte 1 (CLEMENCIA, LEONOR, JOAQUIN, BERNARDO, LOC_ADOBE, LOC_TEJABAN), control md5 DUPLICADO (comprobado: ninguna coincide con otra pieza). Imprime "FIN HOJAS P2".
+  - phr.py.
+  - edit.py: EDL en borrador con índices de línea (i1/r1/r2 ganancia 0), música suspenso 0→c09, cálida c09→c13, suspenso c13→c23, cálida c23→fin; BLACK 0.4 entre c28 y c29; salida renders/v1.mp4 (--remix -> v2.mp4).
+  - caption.txt.
+- chars/: copia de las 6 hojas de regreso-20.
+- Nada generado en Flow todavía.
+- Siguiente (una sesión de Flow a la vez):
+  1. `python -I make_sheets.py --reupload > sheets_log.txt` (Monitor sobre "^FIN HOJAS P2"); revisar que no haya DUPLICADO, FALTA ni FALLO.
+  2. `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P2", Traceback e "intento 6").
+  3. QA por agente (qa_clips.md). Revisar:
+     - nadie en los bordes ni en primer plano (tiras de bordes a 4 fps); nadie entra caminando (c01 Leonor y r1 Joaquín ya en cuadro);
+     - subtítulos quemados, 2.ª frase perdida, palabras repetidas;
+     - lados fijos (cocina: Leonor izq. en la puerta, Bernardo der. sentado; portal: Leonor/Bernardo izq., Clemencia/Joaquín der.); sin sombreros;
+     - una sola hoja (c03, i1, c15), sin sobre ni carpeta; una sola maleta (r1, c13, c22, r2); un solo retrato en la cocina, que no cobre vida;
+     - r2: Joaquín solo, de espaldas, nadie más en el camino ni en el portal;
+     - i1, r1, r2 mudos (ganancia 0);
+     - c29 CTA con voz desde el inicio y gestos.
+  4. Regenerar con `python -I clips.py <ids> > clips_log2.txt`. Luego `python -I phr.py`, EDL por rangos en edit.py y `python -I edit.py` -> renders/v1.mp4.
+  5. Verificación completa (sincronía en 5 puntos, ritmo ≤ 1.9 s, LUFS/pico, marca VISTA arriba al centro). Después, Telegram: `python tools/enviar_telegram.py pieces/regreso-20-p2/renders/v1.mp4` (lee caption.txt).
+- Riesgos: c16 (Clemencia se delata: tono "shocked" que SOFT suaviza), c22 (mano en la maleta, que no aparezca otra), r2 (caminata de espaldas), i1 (manos y hoja), c29 CTA.
+- Pronunciación: "Bernardo", "Julián", "Joaquín", "testamento", "entierro", "jefecita", "nomás", "Arréglense", "merecido".
+
+### `pieces\recetario\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, saga-films]
+relatedTo: [buen-hijo, tele-nueva, canasta, encendedor, padre-veladoras, chocolate-rancho, hacienda-sangre, reten-sierra, medalla-mezcal, agua-hacienda]
+---
+# recetario (El Recetario) — estado
+- Remake de 7693711393207405854 de @asombrosasreflexiones (la familia se aprovecha de la hija que hace postres y vende su libreta de recetas a la competencia; 3.1M vistas, 128 s; allá es Parte 5, aquí Parte 1 autónoma). 13.º remake, marca SAGA FILMS (el 12.º, buen-hijo, fue MAJESTIC). Archivos listos: guion.md, make_sheets.py, clips.py (31 clips hablados, 234 s brutos, 58 frases), edit.py (copia de buen-hijo, EDL vacía, marca SAGA FILMS, cálida entre c12 y c16), phr.py, music/ (copia de buen-hijo), caption.txt. Nada generado en Flow todavía.
+- Assets nuevos (únicos frente a todas las pieces con make_sheets.py, sin subcadenas en ningún sentido): MIREYA, CHENCHO, HORTENSIA, SAMANTA, LEOPOLDO, LOC_ALACENA, LOC_OFICINA, LOC_CAFETERIA, PROP_RECETARIO.
+- Atuendos: los de la ref (mosaico 24 cuadros) con otros colores: Mireya vestido de tirantes lila claro en vez de crema floral; Chencho playera verde menta manchada en vez de durazno; Hortensia vestido floral azul claro en vez de rosa; Samanta traje gris claro en vez de crema; Leopoldo camisa lavanda a rayitas en vez de blanca.
+- Siguiente: `python -I make_sheets.py > sheets_log.txt`, revisar hojas (md5, etnia mestiza, que cada nombre tenga su imagen), `python -I clips.py > clips_log.txt` con Monitor, QA por agente (bordes y ropa, UNA sola libreta y quién la tiene, tele c16 y celular c28 dentro de la pantalla), regenerar malos, `python -I phr.py`, EDL por frases en edit.py (BLACK 0.4 entre c30 y c31), `python -I edit.py`, verificación completa, Telegram con caption.txt.
+- Riesgos: c01/c08 (comer con cuchara, vasitos), c11 (libreta en el cajón sin que Mireya la toque), c16 (tele: Mireya dentro de la pantalla, sin duplicarse en la cocina), c18-c22 (una sola libreta), c25 (probar postre), c28 (contenido del celular dentro del marco), c31 CTA mudo (el prompt pide labios desde el primer frame). Pronunciación: "Hortensia", "Leopoldo", "batidora", "malagradecida".
+- Política: sin policías, sin armas, sin contacto brusco, sin dedo acusador, sin dinero exigido ni cifras ni bancos, sin niños, edades numéricas.
+
+## Entregado (2026-11-04)
+- renders/v1.mp4: 2:03, -14.6 LUFS, pico -1.6, sync 0 frames. MEXI STORIES. Enviado a Telegram.
+
+### `pieces\recetario-p2\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte2]
+relatedTo: [recetario, camionero, canasta-p2]
+---
+# recetario-p2 (El Recetario · Parte 2): estado
+- Sigue en el mismo segundo del cliffhanger de recetario (Parte 1, entregada con MEXI STORIES). Payoff: el toque final nunca estuvo en la libreta, el postre de Leopoldo fracasa, él le regresa la libreta a Mireya. Gancho nuevo: falta la página con la receta de su papá y la tiene Chencho.
+- Marca: **MEXI STORIES** (la de la Parte 1, fuera de la rotación). Música y marca de agua de pieces/_marcas/MEXI (edit.py, BRAND = "MEXI").
+- Archivos listos: guion.md, lines.json (fuente única de clips.py), clips.py (31 clips: c01–c30 + r1; 236 s hablados en bruto, 56 frases; gaze() + ONE + ALONE en todos los planos, NOSUB y END tras cada diálogo, una de cada utilería (libreta casi siempre cerrada, una página doblada, un vasito), SAFE/SOFT con \b, variant, NOREF, TRIES=6, 17 s entre clips, gatito de control, imprime "FIN P2", acepta IDs y mueve la versión vieja a clips/old/), make_sheets.py (--reupload de las 9 hojas de la Parte 1 + 1 hoja nueva LOC_OBRADOR con control md5 DUPLICADO y control de nombre único; imprime "FIN HOJAS P2"), phr.py, edit.py (EDL vacía, cálida de c20 a c26, BLACK 0.4 entre c29 y c30, salida renders/v1.mp4), caption.txt.
+- chars/: copia de la Parte 1 (MIREYA, CHENCHO, HORTENSIA, SAMANTA, LEOPOLDO, LOC_ALACENA, LOC_OFICINA, LOC_CAFETERIA, PROP_RECETARIO), revisadas en hoja de contactos: cada nombre es su persona/lugar, md5 distintos. Ojo: PROP_RECETARIO trae letra en inglés legible ("Dessert Recipes") -> en los prompts la libreta va cerrada o con letra diminuta ilegible.
+- Nada generado en Flow todavía.
+- Siguiente (una sesión de Flow a la vez):
+  1. `python -I make_sheets.py --reupload > sheets_log.txt` (Monitor sobre "^FIN HOJAS P2"); revisar que no haya DUPLICADO ni FALTA y mirar chars/LOC_OBRADOR.jpg (obrador sin gente ni letreros, distinto de LOC_ALACENA).
+  2. `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P2", Traceback e "intento 6").
+  3. QA por agente (qa_clips.md): nadie en los bordes ni en primer plano (tiras de bordes a 4 fps), subtítulos quemados, frases/palabras repetidas, segunda frase completa (c01 es larga), una sola libreta y quién la tiene (c17/c22 Leopoldo, c23/c26 Mireya), sin letras legibles en la libreta abierta (c26), una sola página doblada (c28), un solo vasito (c20), Mireya con su vestido lila (sin filipina) en el obrador, Leopoldo con barba y bigote, c30 CTA con voz desde el inicio y gestos.
+  4. Regenerar con `python -I clips.py <ids> > clips_log2.txt`; luego `python -I phr.py`, EDL por frases en edit.py y `python -I edit.py` -> renders/v1.mp4.
+  5. Verificación completa (sincronía en 5 puntos, ritmo ≤ 1.9 s, LUFS/pico, marca), Telegram: `python tools/enviar_telegram.py pieces/recetario-p2/renders/v1.mp4` (lee caption.txt).
+- Riesgos: c01 (frase larga de 10 s), c17/c22/c23 (paso de la libreta), c26 (libreta abierta), c28 (página doblada), c20 (probar el vasito), r1 mudo (Whisper puede alucinar: ganancia 0). Pronunciación: "Leopoldo", "incompleta", "puño y letra".
+- 2026-11-06: c01 y c20 regenerados y revisados (c01 "fue" claro en large-v3 p1.00 y medium p0.97; c20 abre con "Mireya"; hojas y tiras limpias). phr.py corrido (renders/phr.json), EDL por frases de la envolvente de voz confirmada con large-v3, setsar=1, arreglos de qa_clips.md. renders/v1.mp4: 136.5 s, 68 planos (~2.0 s), -14.1 LUFS, -1.6 dBTP, sincronía <= 1 fotograma en 5 puntos, transcripción completa en orden, marca MEXI arriba a la der., música audible (earshot). Falta: visto bueno del usuario y Telegram.
+
+### `pieces\rbx-followers\ESTADO.md`
+
+---
+type: plan
+status: complete
+tags: [roblox, rbx-followers, handoff]
+relatedTo: [styles/roblox/STYLE.md, pieces/rbx-rope, Ref roblox/tiktok/informe.md]
+---
+
+# rbx-followers: estado (2026-11-09)
+
+## Hecho y aprobado por el usuario
+- Premisa: n.º 1 de [informe.md](../../Ref%20roblox/tiktok/informe.md) (análisis de 6 cuentas TikTok), "Your Followers Actually Follow You 👣".
+- Guion APROBADO: [script.md](script.md) (481 palabras; empieza con "In this town", regla fija del estilo).
+- Voz APROBADA: `voice/voice_final.wav` (108.2 s → video ~108.7 s), "3D cartoon 2" d9b69bea, speed 1.25, +4 st, verificada con Whisper. Tiempos en `voice/words.json` ({word,start,end}) y `voice/words_raw.json`.
+- BGM: `styles/roblox/bgm/bgm.wav` (TEMPOREX Numbers, 9 LU bajo la voz).
+
+## Paso 2 (2026-11-09): pipeline copiado + look de prueba (ESPERANDO APROBACIÓN)
+- Copiado de rbx-rope: src/{engine,cast,gneef,props,kit,env,rope}.js, board/render .mjs/.html, board_sheet.py, qa_frames.py, check/thumb.mjs, sound/*.py. Flag de GPU según plataforma (metal en Mac, d3d11 en Windows).
+- Nuevo: src/followers.js (contador sobre la cabeza, multitud = clones + instanciados, mochila, zapato viejo), sets street/kitchen/subway/bridge, elenco nuevo en cast.js (hero azul, dad con chaleco + zapato viejo, popstar, teacher, date).
+- Look: `node look/look.mjs` + `python look/sheet.py` → look/look_sheet.jpg. Faltan shotlist.js/shots.js (paso 3).
+
+## Render v4 (2026-11-09): renders/final.mp4 (108.1 s), look aprobado con brillo de día bajado
+- 97 tomas en src/shots.js (SHOTLIST + STAGEI, filas pueden repetir palabras). Set nuevo classroom, props-fol.js.
+- Usuario pidió render directo (sin aprobar storyboard). Revisión API: CASI; corregidos papá 3 pasos atrás, contadores, teléfono en la mano, gato, letrero MALL, caras naranjas del atardecer.
+- Subtítulos verificados contra la voz (silencedetect + cuadros): coinciden; el revisor API se equivoca en eso.
+- Sonido pro HECHO: `sound/fs_fetch.py` (Freesound CC0) → `sound/sfx_mix.py` (89 SFX + ambientes por toma) → `sound/remix.py --own` → `sound/mux.sh`. earshot critique: launch-grade (20/21, bajos algo finos).
+- ENTREGADO: renders/final.mp4 (+share.mp4) enviado a Telegram; título "Your Followers Actually Follow You 👣"; miniatura renders/thumb.jpg.
+
+## Siguiente (receta de styles/roblox/STYLE.md)
+1. Copiar el pipeline EXACTO de `pieces/rbx-rope` (src/engine.js, cast.js, gneef.js, props.js, kit.js, env.js, words.js, sets, shots.js/shotlist.js, board.mjs + board_sheet.py, render.mjs/html, sound/), adaptado a esta historia. Referencias aprobadas en `Ref roblox/*.mp4`.
+2. Look: 4-6 fotogramas de prueba (calle llena de seguidores, héroe con el número "1" en el mundo, nota en la nevera, metro, puente con 3 millones, papá con chaleco nocturno y zapato viejo). Personajes Gneef (`fuentes/roblox-cartoon/gneef-looks.md`). Mostrar y esperar aprobación.
+3. Storyboard completo (1 toma por cláusula, ~1.3 s) → aprobación ANTES de renderizar.
+4. Render → QA cuadro a cuadro → `python tools/revisar_render.py --estilo roblox` → sonido pro (music.py/beds.py/remix.py de rope) → título + miniatura → Telegram.
+
+### `pieces\rbx-crossing\ESTADO.md`
+
+---
+type: plan
+status: active
+tags: [roblox, rbx-crossing, handoff]
+relatedTo: [styles/roblox/STYLE.md, pieces/rbx-followers, Ref roblox/tiktok/informe.md]
+---
+
+# rbx-crossing: estado (2026-11-10)
+
+- Premisa: n.º 8 de [informe.md](../../Ref%20roblox/tiktok/informe.md) ("Only The Crossing Guard Stops Cars 🛑"), elegida por el usuario.
+- Guion APROBADO: [script.md](script.md) (496 palabras, "In this town", humanizer).
+- Voz: `voice/voice_final.wav` (109.8 s → video ~110.3 s), "3D cartoon 2" d9b69bea, speed 1.25, +4 st; 11 trozos (c5 partido en c5/c5b); transcripción completa verificada (solo brake/break y close/closed, homófonos). Tiempos `voice/words.json`.
+- Pipeline copiado de rbx-followers + sets nuevos `src/set-road.js` (carretera infinita, autos sin conductor, mood fall/snow, carsAt/snowAt) y `src/set-hallway.js` (muro de fotos, photo(n)); props `src/props-cross.js` (STOP, catapulta, pizza, name tags, silbato); elenco nuevo en cast.js (rudy, rudyV con chaleco, wes, missdot, teacher, twins, bride/groom).
+- Look v3: look/look_sheet.jpg. Correcciones del usuario: escenarios planos → set-road con colinas/pinos, postes y cables, faroles, señales escolares, caseta de Miss Dot, cercas/buzones/arbustos, hojas, escuela con techo/reloj/bus/columpios, nieve real (techos, montículos, ventanas y faroles encendidos, grade 'snow'), nubes, SCHOOL pintado, vapor; pasillo con carteles/EXIT/ventana. Pelo H1: casquete nuevo `hairCap` (sin línea en la frente) + mechones suaves (también copiado a rbx-followers/src/gneef.js). Look APROBADO (2026-11-10).
+- Storyboard: 81 tomas en src/shots.js (SHOTLIST + STAGEI) → board/board_1..3.jpg. words.json corregido (números en letras, close/brake). ESPERANDO APROBACIÓN del storyboard antes del render.
+
+## Siguiente
+1. Voz (receta exacta de styles/roblox/STYLE.md, perfil "3d cartoon" 227af074, +4 st, verificación Whisper).
+2. Copiar pipeline de [rbx-followers](../rbx-followers/ESTADO.md) (Windows: d3d11, followers.js para multitudes, sound/fs_fetch.py + sfx_mix.py + remix.py --own).
+3. Look (fotogramas de prueba) → aprobación.
+4. Storyboard completo → aprobación ANTES del render (memoria storyboard-before-render).
+5. Render → QA → revisar_render (--reglas styles/roblox/STYLE.md) → sonido pro → título + miniatura → Telegram.
+
+### `pieces\posada\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte1, navidad]
+relatedTo: [regreso-20]
+---
+# posada (La Posada del Mercado · Parte 1, video 19): estado
+- Historia ORIGINAL navideña (fórmula de las ganadoras, sin ref). No se cruza con pieces/nochebuena (hijo avergonzado de su madre).
+- Marca: **MEXI STORIES** (edit.py, BRAND = "MEXI"; música y marca de agua de pieces/_marcas/MEXI, arriba a la derecha; sin music/ propia).
+- Archivos listos: guion.md, lines.json (fuente única de diálogos, 430 palabras ≈ 225 s de voz), clips.py (37 clips: c01–c25 + c13b, r1–r7, i1–i4; 256 s en bruto; NOSUB al final de cada diálogo, SOLO/ONE/ALONE en los primeros planos, gaze(side), nadie con sombrero, una carpeta / un jarrito / una clavija / una piñata, multitud solo en r3 y r5 (planos abiertos mudos), SAFE/SOFT con \b, variant, NOREF, TRIES=6, 17 s entre clips, gatito de control, acepta IDs y mueve la versión vieja a clips/old/, imprime "FIN P1"), make_sheets.py (6 hojas nuevas con control md5 DUPLICADO, imprime "FIN HOJAS"), phr.py, edit.py (EDL en borrador por índices de línea; salida renders/v1.mp4), caption.txt.
+- Hojas nuevas (nombres únicos en pieces/*/chars): CATALINA, IGNACIO, BRUNO, HERMINIA, LOC_ARCOS, LOC_PLAZUELA.
+- Nada generado en Flow todavía. Una sesión de Flow a la vez: si otra pieza está generando, esperar su "FIN".
+- Siguiente:
+  1. `python -I make_sheets.py > sheets_log.txt` (esperar "FIN HOJAS"; si hay DUPLICADO, borrar chars/dup/<nombre>.jpg y repetir). Revisar las hojas en hoja de contactos: mestizos, ropa correcta, que no se parezcan entre sí, LOC_ARCOS con pesebre vacío y una sola piñata.
+  2. `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P1", Traceback e "intento 6").
+  3. QA con hoja de fotogramas y tiras de la franja inferior. Revisar:
+     - Geografía: pleito (Cata/Nacho IZQ., Bruno DER.), procesión (todos IZQ., Bruno DER.), pidiendo posada (Nacho DER. afuera, Cata IZQ. adentro), aparte (Herminia IZQ., Cata DER.).
+     - Luces: encendidas c01–c07 e i1 (se apagan); apagadas r2–c18 e i2/i3 (se encienden en i3); encendidas desde r5.
+     - Nadie en los bordes, nadie aparece de golpe, sin sombreros; procesión solo de adultos, sin doble de Bruno (abrigo gris carbón) en r3/r5.
+     - Una sola carpeta negra sin sobre ni sello (c10–c18, i2), un solo jarrito (r1, i4, c22, r6), Herminia siempre con una sola vela, pesebre vacío.
+     - Subtítulos quemados, frases repetidas, morphs, sin dedo acusador.
+  4. Regenerar con `python -I clips.py <ids> > clips_log2.txt`. Luego `python -I phr.py`, pasar la EDL a rangos y `python -I edit.py`. Verificar (sincronía en 5 puntos, ritmo ≤ 1.9 s, LUFS/pico, marca MEXI a la derecha) y mandar a Telegram con caption.txt.
+- Riesgos:
+  - r3/r5: multitudes con velas (gente ajena, objetos de más, dobles); son planos abiertos mudos, se pueden recortar o cambiar por un plano medio.
+  - i1/i3: que las luces no se apaguen/enciendan de verdad; si falla, usar r2 como corte de "apagón".
+  - c19/c20: los versos de posada pueden salir cantados con música o repetidos; van "half sung", revisar.
+  - c24 (gancho): que no aparezca otra persona en el portal vacío.
+  - c25 (CTA): que no salga mudo ni rígido.
+  - Pronunciación de "Herminia", "borreguitos", "os pido posada".
+- 2026-11-05: regenerados c07 r2 c09 c16 c21 c23 revisados; montaje renders/v1.mp4 (155.7 s, 79 planos, -14.2 LUFS, pico -1.7 dBTP). Fallbacks: punch-in en la 1.ª frase de c07/c16/c21/c23 (figura oscura en el borde), r2 desde 2.0 s, "Y este pueblo también" sale de clips/old/c16_v1 (el c16 nuevo no la dice). Falta: revisión del usuario y Telegram.
+
+### `pieces\plata-taxco\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte1, remake-transformado, figura-de-poder, taxco, guerrero, plateria]
+relatedTo: [invernadero-atlixco, piloncillo-rio, cafe-neblina, cenote-campana, atrium-vista]
+---
+# plata-taxco (Los Faroles de Taxco · Parte 1): estado
+
+## Video base
+- Remake transformado de **"Lo corrieron por ayudar a un anciano… y la vida le regresó el favor | Parte 1"** de @atriumstories_ (7700994634381643039, **268K vistas**, 88 s, 40 planos). Análisis: `fuentes/atrium-vista/videos/7700994634381643039_analisis.md`.
+- Por qué este: todos los capos de más vistas ya tienen pieza (Leche 1.7M: agua-hacienda y chocolate-rancho; la patrona 1.5M: medalla-mezcal; El Retén 1.1M y su re-subida: reten-sierra y cenote-campana; 330K hacienda-sangre; 312K cafe-neblina; 298K piloncillo-rio; 275K invernadero-atlixco; 221K padre-veladoras). El siguiente sin pieza es este (268K). Está clasificado como bondad-recompensa, pero tiene figura de poder (el empresario que llega a defender al humilde).
+- Del original queda solo el esqueleto: humillación + plazo → llega la figura de poder → plazo invertido → giro familiar → castigo en la Parte 2.
+
+## Qué se cambió
+- Escenario y región: taller mecánico y banqueta de ciudad → callejón empedrado de Taxco, Guerrero (región no usada en pieces/), con las torres de Santa Prisca, y una mina de plata vieja en el cerro.
+- Oficio: mecánico que arregla gratis el coche de un anciano → maestro platero de 64 años con su aprendiz.
+- Humillación y plazo: el jefe lo corre por hacer caridad → el joyero de enfrente le tira al empedrado las piezas de la feria: "Antes que prendan los faroles, maestro." Quiere el local (sin cifras de dinero ni deudas).
+- Reloj: los faroles del callejón que se prenden uno por uno (i03).
+- Figura de poder: el hijo empresario en traje con un sobre → don Anastasio, 72, dueño de la mina, que baja del cerro con una fila de camionetas blancas y sus mineros con los brazos cruzados. Sin armas.
+- Lazo con el humilde: "reparaste el coche de mi padre" → "Tú hiciste nuestros anillos de bodas cuando yo no tenía nada."
+- Inversión: "Mira los faroles, Gumaro. Ya se te prendieron a ti. Te doy lo mismo que le diste. Antes que amanezca, te vas de Taxco."
+- Giro: "el anciano era mi padre" → quien le abrió la puerta a Gumaro y le dio el anillo de la abuela es Leocadia, la nieta de Anastasio, que mira desde el balcón de la joyería.
+- Objeto clave: coche beige, sobre, empleo → pulsera de plata con jaguar y obsidiana, y el anillo de plata con estrella (pareja del de Anastasio).
+- Nombres: todos nuevos y únicos en pieces/ (Remedios, Tapia y "Tacho" ya existían y se descartaron): Severiano Ocampo, Gumaro Lizardi, Eufrosina Bahena, Anastasio Bermejo, Leocadia Bermejo.
+- Villano y traidora distintos a simple vista: Gumaro hombre de 48, bajito, engominado, camisa vino; Leocadia mujer de 29, pelo largo suelto, vestido verde esmeralda.
+- Diálogo: las 68 frases son nuevas; se evitaron las formas de invernadero-atlixco ("¿Hasta las seis le diste?", "Ahora el plazo es tuyo", "Pregúntele a él", "¿oyes los motores?").
+- CTA: "Sigue la página para que veas la segunda parte" → Severiano a cámara, sonrisa pícara y pausa: "Si ustedes fueran don Anastasio… ¿la perdonan? Dale me gusta y sígueme, que la segunda parte se pone buena."
+- Sin Navidad.
+
+## Marca
+**MEXI STORIES**: edit.py, BRAND = "MEXI" (kit pieces/_marcas/MEXI: arriba a la derecha, margen 36, y=210, 22 px, alfa 80, música propia).
+
+## Archivos
+guion.md, caption.txt, lines.json (fuente única, 343 palabras), clips.py (45 clips: 34 hablados c01-c34, 7 insertos i01-i07, 4 reacciones r1-r4; copia de invernadero-atlixco con todas sus defensas: gaze + ONE + ALONE, NOSUB + CLEAN + END, NODOUBLE, SAFE/SOFT con las frases fuertes primero, variant, NOREF, TRIES=6, gatito como IMAGEN, md5 duplicados, reload_flow, new_project; imprime "FIN P1"), make_sheets.py (5 personajes + LOC_TALLERPLATA + LOC_MINA = 7 hojas, "ordinary non-famous face", control md5 DUPLICADO, --reupload), phr.py, edit.py (EDL vacía, se arma desde renders/phr.json; música cálida de c24 a c27).
+- `python -m py_compile` OK en clips.py, make_sheets.py, edit.py y phr.py. IDs de CLIPS = claves de lines.json, mismo orden (comprobado leyendo el texto, sin importar). Todos los @{ASSET} de clips.py tienen hoja en make_sheets.py. Las frases de SOFT coinciden con lines.json.
+
+## Avance
+- 2026-11-09: archivos escritos. NO se generó nada en Flow. Faltan: 7 hojas (make_sheets.py), clips, QA, phr.py, EDL y montaje.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, `md5sum chars/*.jpg` y hoja de contactos: caras comunes y distintas (Severiano flaco calvo con lentes, Gumaro bajito engominado, Eufrosina con paliacate rojo, Anastasio grandote con sombrero y bigote blanco, Leocadia con vestido verde).
+2. `python -I clips.py > clips_log.txt` y QA de cada clip (morphs, bordes, faroles apagados antes de i03 y prendidos después, la pulsera del jaguar y el anillo de estrella iguales, el reloj de Gumaro en la izquierda, taller a la izquierda y balcón a la derecha, camionetas sin letras; pronunciación de "Severiano", "Gumaro", "Eufrosina", "Anastasio", "Leocadia", "Taxco").
+3. phr.py → EDL en edit.py → montaje y verificación (sync en 5 puntos, ≤2 s por tramo, LUFS/pico, marca MEXI) → Telegram con caption.txt y 3.er arg MEXI.
+- 2026-11-09: clips.py importa OK (45 = lines.json). Hojas: Flow devolvió imágenes viejas (EUFROSINA = patio de invernadero, LEOCADIA y LOC_MINA = copias de GUMARO, ANASTASIO duplicado) → chars/mal, assets renombrados con sufijo 2 (EUFROSINA_BAHENA2, ANASTASIO_BERMEJO2, LEOCADIA_BERMEJO2, LOC_MINA2); 7 OK a ojo y subidas.
+- Clips: 12/45 hechos (c01–c11, i01, i02) cuando Flow se quedó SIN CRÉDITOS ("No tienes suficientes créditos", cada clip 10 créditos). Al reanudar: `python -I make_sheets.py --reupload` y `python -I clips.py >> clips_log.txt` (sigue desde r1).
+
+### `pieces\piloncillo-rio\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, sin-marca, parte1, remake-transformado, capos, huasteca, san-luis-potosi, piloncillo]
+relatedTo: [cafe-neblina, cenote-campana, atrium-vista]
+---
+# piloncillo-rio (El Paso del Río · Parte 1): estado
+
+## Video base
+- Remake transformado de **"Le dio 5 minutos… y no le creyó | Parte 1 (Aurelio, avioneta, comandante)"** de @atriumstories_ (7704831377383951647, **298K vistas**, 171 s, 90 planos). Análisis: `fuentes/atrium-vista/videos/7704831377383951647_analisis.md`.
+- Por qué este: los de más de 1M ya tienen remake (Leche: agua-hacienda y chocolate-rancho; la patrona: medalla-mezcal; El Retén: reten-sierra y cenote-campana). La re-subida de El Retén (334K) es el mismo video, "Lo corrió de la hacienda" (330K) es hacienda-sangre y "Me dejó la hacienda vacía" (312K) es cafe-neblina. Este (298K, capos) es el siguiente sin usar.
+- Del original queda el esqueleto: humillación + plazo → el humillado es la figura de poder y llega su gente → plazo invertido → giro familiar → castigo en la Parte 2.
+
+## Qué se cambió
+- Escenario y región: pista de tierra roja con avioneta y palmar → paso de balsa en un río turquesa de la Huasteca potosina (San Luis Potosí, región no usada en pieces/) y una molienda de piloncillo.
+- Oficio: capo con cargamento → dueño de una molienda de piloncillo que llega en troca vieja y huaraches; el abusador ya no es un comandante federal (sin uniformes) sino Rigoberto, un muchacho que encadenó el paso de la balsa.
+- Humillación y plazo: extorsión de un millón → le avienta un cono de piloncillo al río: "Diez minutos, viejito. O te regresas por donde viniste." Cobra con "la mitad de la carga" (sin cifras de dinero).
+- Plazo del poderoso: "cinco minutos" con reloj dorado → "Antes que espese el piloncillo" (el cazo de la molienda es el reloj, i03).
+- Gente que llega: sicarios armados en un palmar → Celerina, la encargada de la molienda, con cuatro camionetas azul marino y hombres con las manos cruzadas. Sin armas.
+- Inversión: "¿Diez minutos me diste, Rigoberto? Ahora son tuyos. Abre esa cadena. Y hoy mismo te vas del río."
+- Personaje nuevo sin equivalente: Crispín, el balsero al que le quitaron la balsa; Fortino se la devuelve (escena cálida).
+- Giro: no había giro familiar (el original acaba con "¿también vienen por allá?") → quien le rentó el paso a Rigoberto es Leobardo, el hijo de Fortino, que mira desde la otra orilla junto a su troca blanca.
+- Objeto clave: dólares, avioneta, reloj dorado → cono de piloncillo, cadena con candado, cazo de cobre, balsa de cable.
+- Nombres: todos nuevos y únicos en pieces/ (Ulises, Anselmo, Zamudio, Barragán, Olvera, Montiel, Ledesma, Quezada, Saldívar ya existían y se descartaron). Fortino Tavera, Rigoberto Urbina, Crispín Mireles, Celerina Pantoja, Leobardo Tavera.
+- Diálogo: las 68 frases son nuevas; ninguna viene del original ni de cafe-neblina.
+- CTA: moraleja + "¿Quieres saber qué le pasó al comandante?" → Fortino a cámara: "¿Ustedes qué harían con Leobardo? Dale me gusta y sígueme para la segunda parte."
+- Sin Navidad.
+
+## Marca
+**SIN MARCA**: edit.py, BRAND = "SINMARCA" (kit pieces/_marcas/SINMARCA: sin marca de agua, música propia de suspenso).
+
+## Archivos
+guion.md, caption.txt, lines.json (fuente única), clips.py (45 clips: 34 hablados c01-c34, 7 insertos i01-i07, 4 reacciones r1-r4; copia de cafe-neblina con todas sus defensas: gaze + ONE + ALONE, NOSUB + CLEAN + END, NODOUBLE, SAFE/SOFT con las frases fuertes, variant, NOREF, TRIES=6, gatito como IMAGEN, md5 duplicados, reload_flow, new_project; imprime "FIN P1"), make_sheets.py (5 personajes + LOC_PASORIO + LOC_TRAPICHE = 7 hojas, "ordinary non-famous face", control md5 DUPLICADO, --reupload), phr.py, edit.py (EDL vacía, se arma desde renders/phr.json; música cálida de c25 a c27).
+- `python -m py_compile` OK en clips.py, make_sheets.py, edit.py y phr.py. IDs de CLIPS = claves de lines.json (comprobado sin importar).
+
+## Avance
+- 2026-11-08: archivos escritos. NO se generó nada en Flow. Faltan: 7 hojas (make_sheets.py), clips, QA, phr.py, EDL y montaje.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, `md5sum chars/*.jpg` y hoja de contactos: caras comunes y distintas (Fortino bajito con bigote blanco, Rigoberto flaco engominado, Crispín correoso con gorra, Leobardo con lentes), solo Fortino con sombrero.
+2. `python -I clips.py > clips_log.txt` y QA de cada clip (morphs, bordes, la camisa de palmeritas igual, la troca roja a la izquierda y el río a la derecha, las camionetas sin letras, la pronunciación de "Fortino", "Rigoberto", "Crispín", "Leobardo", "piloncillo", "espese").
+3. phr.py → EDL en edit.py → montaje y verificación (sync en 5 puntos, ≤2 s por tramo, LUFS/pico, sin marca de agua) → Telegram con caption.txt (3er arg SIN MARCA).
+- 2026-11-09: hojas: Flow daba "actividad inusual" en imágenes → proyecto nuevo dadf6828 + recarga; 7 OK a ojo. Clips 45/45 (c08 tuvo que reupload de hojas a mitad). QA: regenerados c26 (gorra doble), i01 (nadador en el río), c08 (salía Rigoberto en la línea de Crispín; ahora Crispín, se salta un "mejor" repetido). c34 regenerado salió mudo → se usa el original (clips/old/c34_v2_mudo.mp4 aparte). c03 cortado a 3.75 s ("de la carga" repetido). Fuera i06 (botas sin dueño).
+- renders/share.mp4: 126.7 s, 82 tramos (1.56 s/tramo), -14.3 LUFS, -2.1 dBTP, sync 0 ms en 5 puntos, BLACK 120.6 s, sin marca. Revisión API v1: renders/share_revision.md. NO enviado a Telegram.
+- 2026-11-09 00:35: CTA c34 regenerado (variante 0 de cta_variants.py: primer plano, media sonrisa, ceja, pausa; línea completa con voz). Re-montado: 126.7 s, 82 tramos, -14.3 LUFS, -2.1 dBTP.
+
+### `pieces\pedida-mano\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte1, historia-original]
+relatedTo: [gardenia, canasta, nochebuena]
+---
+# pedida-mano (La Pedida de Mano · Parte 1, video 24): estado
+- Historia ORIGINAL, no navideña. Fórmula "humilló a alguien sencillo sin saber quién era", la de las más virales del ranking (chicles 3.4M, la dueña humilde 2.5M). Es la primera pieza con una pedida de mano; no hay dueño, empresa, dinero ni papeles.
+- Fórmula:
+  - Humillación en la 1.ª línea: Isabela al señor de la llanta ponchada: "¿esta carcacha es suya? … no quiero que mis suegros vean esta basura".
+  - Giro de poder: el señor es don Lorenzo, el papá del novio, que venía a pedir su mano.
+  - Payoff: Lorenzo le devuelve "me dijeron que mi lugar era en la cocina"; la pedida "se pospone… hasta que su hija aprenda a saludar"; Esteban se pone del lado de su papá.
+  - Gancho: Beatriz y Lorenzo se conocían: "¿Ya le contaste a tu hija por qué me fui del pueblo?"
+- Marca: **MAJESTIC STORIES** (rotación: gardenia=VISTA → esta=MAJESTIC → siguiente=MEXI). La música y la marca de agua salen de pieces/_marcas/MAJESTIC (edit.py, BRAND = "MAJESTIC"); no hay carpeta music/ propia.
+- Archivos listos:
+  - guion.md y caption.txt (formato Parte 1).
+  - lines.json: fuente única de clips.py (492 palabras, unos 235–245 s).
+  - clips.py, con 39 clips: c01–c35 y r1–r4. Suman 294 s de generación.
+    - Todos los planos con diálogo son de una persona: gaze(side) + ONE + ALONE.
+    - NOSUB + CLEAN + END en cada diálogo.
+    - NODOUBLE en los de riesgo: c01, c02, c05, c08, c14, c15, c19, c21, c23, c28, c30 y c33.
+    - SAFE/SOFT, incluidas las frases fuertes del diálogo.
+    - variant, NOREF (también quita las hojas de locación), TRIES=6, gatito de control y 17 s entre clips.
+    - Acepta IDs, mueve la versión vieja a clips/old/ e imprime "FIN P1".
+  - make_sheets.py: 6 hojas con control md5 DUPLICADO y --reupload; imprime "FIN HOJAS". phr.py.
+  - edit.py:
+    - EDL en borrador por índices de línea, con ganancia 0 en los mudos y BLACK 0.4 s antes de c35.
+    - Música: cama cálida de c19 a c33. Loudnorm en dos pasadas. Salida en renders/v1.mp4.
+- Hojas nuevas (aún no generadas; nombres verificados como únicos en pieces/*): ISABELA_VALDIVIA, BEATRIZ_VALDIVIA, LORENZO_CARRASCO, ESTEBAN_CARRASCO, LOC_PORTONPEDIDA, LOC_COMEDORPEDIDA.
+  - Las locaciones son simples: nada religioso, sin adornos, flores, cuadros ni letreros (lección de intercambio).
+- Nada generado en Flow todavía.
+- Siguiente:
+  1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO y correr `md5sum chars/*.jpg`. Armar una hoja de contactos y comprobar:
+     - Isabela de vestido rojo, pelo suelto; Beatriz rubia cenizo de verde (que no se parezcan).
+     - Lorenzo de guayabera blanca, pelo gris y bigote; Esteban de azul marino, barba negra (que no se parezcan).
+     - La camioneta verde con la llanta ponchada y sin placa con letras; el portón sin letreros.
+     - El comedor sin flores, cuadros ni adornos.
+  2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P1", Traceback e "intento 6".
+  3. QA con hoja de fotogramas, tiras de la franja inferior y bordes.
+  4. Regenerar con `python -I clips.py <ids> > clips_log2.txt`.
+  5. `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y `python -I edit.py`.
+  6. Verificar: sincronía en 5 puntos, ritmo ≤ 1.9 s, LUFS y pico, marca MAJESTIC arriba a la izquierda. Luego Telegram con caption.txt.
+- Revisar en el QA:
+  - Geografía:
+    - Estacionamiento de día: Lorenzo IZQ. junto a la camioneta; Isabela y Beatriz DER. en el portón.
+    - Comedor: Isabela y Beatriz IZQ., sentadas; Esteban y Lorenzo DER., de pie.
+    - Anochecer: Lorenzo IZQ.; Beatriz DER.
+  - Ningún doble: otro vestido rojo, otro vestido verde, otra guayabera blanca, otro saco azul.
+  - Nadie en los bordes; nadie que entre caminando; sin meseros ni gente al fondo del comedor.
+  - Utilería:
+    - Una sola camioneta, la verde, con la llanta ponchada; sin placas con letras.
+    - El celular en la mano DERECHA con la pantalla de espaldas (c11, c12).
+    - Ninguna herramienta, sobre, papel ni carpeta inventados.
+  - Sin sombreros ni lentes que aparezcan. Ropa igual en todos los planos (guayabera limpia, vestido rojo, bob rubio).
+  - Subtítulos quemados, frases repetidas, 2.ª frase perdida, morphs.
+- Riesgos:
+  - c02/c04: Lorenzo agachado junto a la llanta (que no aparezca una llave de cruz que parezca arma ni otra persona).
+  - c19–c32: Lorenzo en la puerta de arco (que no entre caminando y que no salgan meseros ni comensales).
+  - c33–c35: anochecer con un farol (que no aparezca gente en el portón).
+  - Pronunciación: "carcacha", "ponchó", "ponchada", "Quítela", "estacionamiento", "pospone", "Esteban".
+
+### `pieces\padre-veladoras\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories]
+relatedTo: [chocolate-rancho, hacienda-sangre, reten-sierra, medalla-mezcal, agua-hacienda]
+---
+# padre-veladoras (Las Veladoras) — estado
+- Remake de 7702486655336320286 ("Se burlaron del padre…", 200K): era el de más vistas sin rehacer. Cuenta MAJESTIC STORIES (la 5.ª, chocolate-rancho, fue VISTA). Archivos listos: guion.md, make_sheets.py, clips.py (36 clips), edit.py (copia de reten-sierra, EDL vacía, marca MAJESTIC STORIES, cálida entre c17 y c20), music/ (copia de reten-sierra), caption.txt. Nada generado en Flow todavía.
+- Assets nuevos (únicos frente a agua-hacienda, medalla-mezcal, reten-sierra, hacienda-sangre y chocolate-rancho): ANSELMO, RUFINO, CHATO, RAMIRO, MAURO, LOC_PARROQUIA, LOC_MIRADOR, LOC_ATRIO, PROP_VELADORAS.
+- Siguiente: `python -I make_sheets.py > sheets_log.txt`, revisar las hojas (md5 y que cada nombre tenga su imagen: bug de Flow que corre imágenes un nombre), luego `python -I clips.py > clips_log.txt`, QA por agente (bordes y ropa), regenerar malos, armar la EDL por frases en edit.py, `python -I edit.py`, verificación completa, Telegram.
+- Riesgos: hojas de RUFINO/CHATO (motociclistas tatuados; si Flow los frena, NOREF), c05 (soplar las veladoras), r1 (toma aérea de camionetas), r2 (prender veladoras con cerillo), c28 (tres "sí" muy cortos), c34 (CTA con movimiento orgánico). Pronunciación de "Anselmo", "Salcedo", "Víboras", "motociclistas", "repletas".
+- Política: sin empujones ni golpes (la ofensa es apagar las veladoras), sin armas, sin dinero; los hombres de Ramiro son rancheros en jeans y camisa blanca.
+
+## Entregado (2026-11-04)
+- renders/v1.mp4: 2:28, -15.0 LUFS, pico -1.6, sync 0 frames 5 puntos. MAJESTIC STORIES. Enviado a Telegram.
+
+### `pieces\padre-veladoras-p2\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte2]
+relatedTo: [padre-veladoras]
+---
+# padre-veladoras-p2 (Las Veladoras · Parte 2): estado
+- Marca: **MAJESTIC STORIES** (la misma de la Parte 1, no entra en la rotación).
+- Archivos listos: guion.md, lines.json (diálogos, fuente única de clips.py), clips.py (38 clips: c01–c31 + r1–r6 + i1; NOSUB al final de cada diálogo, SAFE/SOFT con \b, variant, NOREF, TRIES=6, 17 s entre clips, gatito de control, salida clips/, imprime "FIN P2", acepta IDs por argumento y mueve la versión vieja a clips/old/), make_sheets.py (solo --reupload), phr.py (copia de medalla-mezcal-p2), edit.py (método medalla-mezcal-p2: EDL en borrador con índices de línea, ganancia 0 en los mudos, loudnorm en dos pasadas, MAJESTIC STORIES 22 px alpha 80 y=135, salida renders/v1.mp4), caption.txt, music/ (copia de la Parte 1).
+- chars/: las 9 hojas buenas de la Parte 1 (ANSELMO, RUFINOVIBORA, CHATOBANDANA, RAMIRO, MAUROESCOLTA, LOC_TEMPLO, LOC_ATRIO, PROP_VELADORAS y LOC_TERRAZA, que no se usa), revisadas en hoja de contactos: todas correctas y con md5 distintos. Las corridas de la Parte 1 (chars/mal) no se copiaron.
+- **Ninguna hoja nueva.**
+- Nada generado en Flow todavía.
+- Siguiente: `python -I make_sheets.py --reupload > sheets_log.txt` (sube las 8 hojas al proyecto Flow activo; imprime "FIN HOJAS P2"), luego `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P2", Traceback e "intento 6"). Después, QA con la hoja de fotogramas y tiras de la franja inferior. Revisar:
+  - Bordes: en la nave, Anselmo y el candelero a la DERECHA; Ramiro a la IZQUIERDA en c04–c08 y a la DERECHA desde r1; Rufino y Chato a la IZQUIERDA.
+  - Un solo sombrero.
+  - Un solo San Judas de plata en Rufino y una sola medalla de oro en Ramiro, sin listón.
+  - Un solo cerillo.
+  - Subtítulos quemados y frases repetidas.
+  - Mauro sin armas, sin feligreses ni niños.
+  - Anselmo lampiño.
+- Regenerar con `python -I clips.py <ids> > clips_log2.txt`. Luego `python -I phr.py`, pasar la EDL a rangos y `python -I edit.py`. Verificar y mandar a Telegram con caption.txt.
+- Riesgos:
+  - r2: entrada de Rufino y Chato; que no entre nadie más y que no aparezcan de golpe.
+  - i1 y c26: el San Judas puede salir con listón o duplicado (medalla-mezcal-p2 tuvo medallas militares).
+  - c27 y r6: Ramiro con su medalla de oro, que no se convierta en dos.
+  - c04: el cerillo y la veladora.
+  - c09: Mauro en la puerta.
+  - Pronunciación de "sacristía", "Socorro", "albañiles" y "Efraín".
+
+### `pieces\nochebuena\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte1, navidad]
+relatedTo: [regreso-20]
+---
+# nochebuena (La Cena de Nochebuena · Parte 1, video 18): estado
+- Historia ORIGINAL navideña (sin ref): humillación (Gerardo presenta a su mamá como "la señora que nos ayuda") → giro (Herminia es la dueña de la hacienda) → payoff (Ignacio la sienta en la cabecera; Gerardo cena en la cocina) → gancho (Regina y Gerardo quieren que ella "firme lo que él le diga").
+- Marca: **MAJESTIC STORIES** (edit.py, BRAND = "MAJESTIC"; música y marca de agua de pieces/_marcas/MAJESTIC, sin music/ propia).
+- Archivos listos: guion.md, lines.json (fuente única de diálogos), clips.py (42 clips: c01–c33 + r1–r7 + i1–i2; 473 palabras ≈ 240 s de voz, 294 s de clips en bruto; todos los primeros planos con ONE + ALONE + SOLO, NOSUB al final de cada diálogo, "speaks from the first second and says both sentences completely", nadie con sombrero, una olla / un jarrito / una canasta / una piñata / un nacimiento, SAFE/SOFT con \b, variant, NOREF, TRIES=6, 17 s entre clips, gatito de control, acepta IDs y mueve la versión vieja a clips/old/, imprime "FIN P1"), make_sheets.py (7 hojas nuevas con control md5 DUPLICADO, imprime "FIN HOJAS"), phr.py, edit.py (EDL en borrador generada de lines.json con índices de línea; mudos 1.0–2.4 s a ganancia 0; BLACK 0.4 s antes de c33; salida renders/v1.mp4), caption.txt.
+- Hojas nuevas (nombres únicos en pieces/*): HERMINIA, GERARDO, REGINA, IGNACIO, LOC_PATIOPINATA, LOC_COMEDORLUCES, LOC_COCINAPONCHE.
+- Nada generado en Flow todavía.
+- Siguiente:
+  1. `python -I make_sheets.py > sheets_log.txt` (esperar "FIN HOJAS"; si hay DUPLICADO, borrar chars/dup/<nombre>.jpg y repetir). Revisar las hojas en hoja de contactos: mestizos, ropa correcta, que no se parezcan entre sí, un solo nacimiento / una sola piñata / una sola olla.
+  2. `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P1", Traceback e "intento 6").
+  3. QA (qa_clips.md) con hoja de fotogramas y tiras de la franja inferior. Revisar:
+     - Geografía: patio (Gerardo IZQ., Herminia DER.), comedor (Regina/Gerardo IZQ., Herminia DER.), cocina (Ignacio IZQ., Herminia DER.), cena (Gerardo/Regina sentados IZQ., Ignacio y Herminia DER.), gancho (Gerardo IZQ., Regina DER.).
+     - Nadie en los bordes ni de espaldas en primer plano, nadie entrando a cuadro, sin sombreros, sin niños (ni en el nacimiento animado ni de extras).
+     - Una sola piñata (que no se mueva sola), un solo nacimiento (i2: figuras estables, sin morph), una sola olla y un plato de buñuelos (i1), un solo jarrito (c21), una sola canasta (c02).
+     - Subtítulos quemados, 2ª frase perdida, palabras repetidas, morphs, sin dedo acusador.
+  4. Regenerar con `python -I clips.py <ids> > clips_log2.txt`. Si un clip de 2 frases vuelve a perder la 2ª, partirlo (cNN + cNNb) como c14/c14b de regreso-20.
+  5. `python -I phr.py`, pasar la EDL a rangos medidos (media ≤ 1.9 s) y `python -I edit.py`. Verificar (sincronía en 5 puntos, ritmo, LUFS/pico, marca MAJESTIC arriba a la izquierda) y mandar a Telegram con caption.txt.
+- Riesgos:
+  - c23 "Como usted diga, señor." es una sola frase de 6 s: puede salir con aire; recortar en el montaje.
+  - c32 (gancho) y c31: tono "calculador/frío" puede frenar a Flow; SOFT los suaviza desde el 2º intento.
+  - i2 (nacimiento): figuras que se muevan o cobren vida; usar solo 1–1.5 s o quitarlo.
+  - c21 brindis con jarrito: que no aparezcan otras manos brindando.
+  - c33 (CTA): que no salga mudo ni rígido.
+  - Pronunciación de "Herminia", "buñuelos", "Nochebuena", "guayaba", "Ándale".
+
+- 2026-11-05: c18 regenerado OK (sin letras). v1 montada y verificada: renders/v1.mp4, 165.2 s, 85 planos (media 1.94 s), -14.1 LUFS, -1.7 dBTP, sincronía ≤ 1 cuadro en 5 puntos, transcripción completa en orden. Pendiente: revisión del usuario y Telegram (no enviado).
+
+### `pieces\nochebuena-p2\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte2, navidad]
+relatedTo: [nochebuena, regreso-20-p2]
+---
+# nochebuena-p2 (La Cena de Nochebuena · Parte 2): estado
+- Sigue en el mismo segundo del gancho de nochebuena ("mi mamá va a firmar lo que yo le diga"): Herminia lo oyó desde la puerta. Pide el papel en la cocina. Giro: Gerardo ni lo leyó y el papel pone la hacienda a nombre de Regina. Justicia: Ignacio corre a su hija, Herminia rompe el papel, Gerardo pide perdón y ella lo perdona con condición; "vamos a romper la piñata". CTA de opinión, sin Parte 3.
+- Marca: **MAJESTIC STORIES** (la de la Parte 1, fuera de la rotación). Música y marca de agua de pieces/_marcas/MAJESTIC (edit.py, BRAND = "MAJESTIC", arriba a la izquierda).
+- Archivos listos:
+  - guion.md (pasado por humanizer).
+  - lines.json, fuente única de clips.py.
+  - clips.py: 31 clips (c01–c27 + i1, r1, r2, r3 mudos), 331 palabras, 51 frases, 228 s brutos (~2:05 montado). Copia de regreso-20-p2/clips.py con todas las defensas: gaze() + ONE + ALONE + NODOUBLE en todos los planos, NOSUB + CLEAN + END, nadie con sombrero, PAPER (c11, c12, c14, c21) con una sola hoja, una sola olla y una sola piñata quieta, "no nativity scene, no figurines" en patio y cocina, NOPROP en el resto, SAFE/SOFT con \b, variant, NOREF, TRIES=6, reload_flow() en fallos, 17 s entre clips, gatito de control. Imprime "FIN P2", acepta IDs y mueve la versión vieja a clips/old/. Probado en seco (variantes 0–5 de los 31 prompts).
+  - make_sheets.py: 0 hojas nuevas; --reupload de 6 hojas de la Parte 1 (HERMINIA, GERARDO, REGINA, IGNACIO, LOC_PATIOPINATA, LOC_COCINAPONCHE), control md5 DUPLICADO. LOC_COMEDORLUCES (nacimiento) no se usa. Imprime "FIN HOJAS P2".
+  - phr.py.
+  - edit.py: EDL en borrador con índices de línea (i1/r1/r2/r3 ganancia 0); música suspenso 0→i1, cálida i1→c11, suspenso c11→c22, cálida c22→fin; BLACK 0.4 entre c26 y c27; salida renders/v1.mp4 (--remix -> v2.mp4).
+  - caption.txt (#parte2).
+- chars/: copia de las 6 hojas de nochebuena.
+- Nada generado en Flow todavía.
+- Siguiente (una sesión de Flow a la vez):
+  1. `python -I make_sheets.py --reupload > sheets_log.txt` (Monitor sobre "^FIN HOJAS P2"); revisar que no haya DUPLICADO, FALTA ni FALLO.
+  2. `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P2", Traceback e "intento 6").
+  3. QA por agente (qa_clips.md). Revisar:
+     - nadie en los bordes ni en primer plano; nadie entra caminando (c01 Herminia y c11 Gerardo ya en cuadro);
+     - subtítulos quemados, 2.ª frase perdida, palabras repetidas;
+     - lados fijos (patio: Gerardo/Regina izq., Herminia der.; cocina: Ignacio izq. en c06–c10, luego Gerardo/Regina izq. e Ignacio der. junto a Herminia);
+     - una sola hoja (c11, c12, c14, c21), sin pluma ni carpeta; c21 la rompe en dos mitades de la misma hoja; una sola olla; una sola piñata quieta; sin nacimiento ni figuritas;
+     - sin sombreros; i1, r1, r2, r3 mudos; c27 CTA con voz desde el inicio y gestos.
+  4. Regenerar con `python -I clips.py <ids> > clips_log2.txt`. Luego `python -I phr.py`, EDL por rangos en edit.py y `python -I edit.py` -> renders/v1.mp4.
+  5. Verificación completa (sincronía en 5 puntos, ritmo ≤ 1.9 s, LUFS/pico, marca MAJESTIC arriba a la izquierda). Después, Telegram: `python tools/enviar_telegram.py pieces/nochebuena-p2/renders/v1.mp4 "$(cat pieces/nochebuena-p2/caption.txt)" MAJESTIC` (caption.txt con la marca al inicio).
+- Riesgos: c14 (leer y levantar la vista), c16 (tono frío de Regina, SOFT lo suaviza), c19 ("correr": que no salga gritado), c21 (romper el papel: segunda hoja), c22 (llanto: SAFE), c27 CTA.
+- Pronunciación: "Herminia", "Gerardo", "Regina", "Ignacio", "tantito", "completita", "nomás", "ahorita", "Perdóneme", "avergoncé", "piñata".
+
+### `pieces\monedas-carretera\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte1, historia-propia, capos]
+relatedTo: [reten-sierra, medalla-mezcal, foto-trucada, atrium-vista]
+---
+# monedas-carretera (La Gasolinera · Parte 1): estado
+
+## La historia
+- Historia propia tipo capos, sobre la premisa n.º 7 de fuentes/atrium-vista/resumen.md. La 4 ("El Valet") se descartó porque se parecía demasiado a pedida-mano. Kevin, el encargado, le tira al piso las monedas a don Amador (mil doscientos de diésel, "un minuto para quitar su troca"). Llegan siete camionetas: Amador es dueño de media carretera y del terreno. Le da diez minutos para recoger cada moneda; falta la de la crucecita y la tenía Memo. Gancho: el dueño es el papá de Kevin y Amador vino por él. El castigo queda para la Parte 2. Sin Navidad.
+- La carpeta se llama monedas-carretera porque pieces/gasolinera y pieces/monedas ya existen (son piezas bitstory, no novelas).
+- Guion pasado por la skill humanizer: frases de 8 palabras como máximo (salvo el CTA), sin contrastes de relleno.
+
+## Marca
+**MAJESTIC STORIES**: edit.py, BRAND = "MAJESTIC". Música y marca de agua de pieces/_marcas/MAJESTIC (brand, brand_wm). Sin carpeta music/ propia.
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 1, #parte1).
+- lines.json: fuente única de clips.py (382 palabras).
+- clips.py, con 47 clips (c01–c35 hablados, i01–i07 insertos sin caras, r1–r5 reacciones mudas), 300 s de generación.
+  - Planos hablados de una persona: gaze(side) + ONE + ALONE; NOSUB + CLEAN + END en cada diálogo; NODOUBLE en los de riesgo.
+  - SAFE/SOFT, incluidas las frases fuertes del diálogo; variant, NOREF (también quita las hojas de locación), TRIES=6, gatito de control, reload_flow() y 17 s entre clips.
+  - Acepta IDs, mueve la versión vieja a clips/old/ e imprime "FIN P1".
+- make_sheets.py: 6 hojas (4 personajes, 2 locaciones) con control md5 DUPLICADO y --reupload; imprime "FIN HOJAS".
+- phr.py.
+- edit.py: EDL en borrador por índices de línea (83 segmentos), mudos con ganancia 0, i01 de ~1 s y BLACK 0.4 s antes de c35. Música: suspenso hasta c08, cálida de c08 a i03 y suspenso hasta el final. Salida en renders/v1.mp4.
+
+## Hojas nuevas
+Aún no se generaron. Nombres verificados como únicos en pieces/*/clips.py y make_sheets.py (ni el nombre ni el apellido se repiten).
+- Personajes: AMADOR_QUINTANAR, KEVIN_BARRON, MEMO_RANGEL y BENIGNO_ARTEAGA.
+- Locaciones: LOC_GASCARRETERA y LOC_TRAMODESIERTO.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, correr `md5sum chars/*.jpg` y armar hoja de contactos: Amador (barba blanca, sombrero de paja crema) contra Benigno (bigote negro, sombrero negro); Kevin (rojo) contra Memo (azul marino).
+2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P1", Traceback e "intento 6".
+3. QA con hoja de fotogramas, franja inferior y bordes. Regenerar con `python -I clips.py <ids> > clips_log2.txt`.
+4. `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y correr `python -I edit.py` (o `--remix`).
+5. Verificar sincronía en 5 puntos, ritmo de 2 s o menos de media, LUFS y pico, y la marca MAJESTIC STORIES visible a tamaño real (arriba a la izquierda).
+6. Telegram con caption.txt (3er arg = MAJESTIC).
+
+## Revisar en el QA
+- Geografía: Amador IZQ. junto a su troca blanca; Kevin DER. junto a la bomba; Memo al centro; Benigno IZQ. frente a las camionetas.
+- Dobles: ningún segundo polo rojo, camisa azul marino, sombrero de paja crema ni sombrero negro.
+- Utilería: un solo monedero (mano IZQUIERDA de Amador), una sola moneda con cruz (i07), una sola troca blanca; gasolinera sin logos, precios ni números; camionetas sin placas.
+- Poder sin armas: los escoltas de i05 de manos cruzadas, nada en las manos.
+- Fallos de Omni: subtítulos quemados, frases repetidas, 2.ª frase perdida y morphs.
+- Pronunciación de "Quintanar", "Benigno", "diésel", "alcancía" y "crucecita".
+
+## Montaje v1 (2026-11-07)
+renders/v1.mp4: 153.3 s, 90 planos (1.70 s/plano), -14.3 LUFS. edit.py por frases desde renders/lv3.json; el 5.º campo acepta (clip, t, vf) = inserto encima de la voz (i02, i04, r3; J-cut de c33 sobre c32). Música: tensión 0-c08, cálida c08-c09, tensión desde c10. Falta: Telegram (no enviado).
+
+### `pieces\medalla-mezcal\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories]
+relatedTo: [agua-hacienda]
+---
+# Estado nocturno (2026-11-04) — el usuario duerme y autorizó seguir solo
+
+1. medalla-mezcal: clips generándose en segundo plano (`python -I clips.py > clips_log.txt`). Al terminar: revisar FALLOs/morphs/pronunciación (hija, juro) por clip, regenerar los malos, `python -I edit.py` → renders/v1.mp4, VERIFICACIÓN COMPLETA (memoria atrium-reglas), enviar a Telegram.
+2. Siguiente autorizado: "El Retén" (fuentes/atriumstories/videos/7701749432621993246, 1.1M). Mismo flujo: agente escribe guion/make_sheets/clips/edit (copiar edit.py de agua-hacienda, aprobado v4) cambiando personajes/diálogos; nombres de assets únicos; md5 de hojas; clips uno por uno; verificar; Telegram.
+3. Luego, por vistas: 7699644756812385567 (317K), 7697331061650476319 (260K).
+
+## Actualización (QA de clips, ver qa_clips.md)
+- 39/45 clips OK de generación. c31-c34, c36, c38 fallan con "page.waitForFunction Timeout 20000ms" (espera del chip de mención) también al reintentar (job btih2joho, log clips_log2.txt).
+- PROBLEMA GRAVE: en todos los clips FAUSTO sale con el look de Don Chuy de agua-hacienda (camisa verde a cuadros, paliacate rojo, sombrero grande), no el de chars/FAUSTO.jpg (camisa crema, perilla). El asset "FAUSTO" de Flow tiene la imagen equivocada (bug de renombrar tile).
+- ARREGLO: copiar FAUSTO.jpg recodificada (`ffmpeg -i chars/FAUSTO.jpg -q:v 3 chars/ARREOLA.jpg`), subirla como "ARREOLA" (flow_upload_file), comprobar la miniatura en Flow, `sed -i 's/{FAUSTO}/{ARREOLA}/g' clips.py`, mover a clips/old/ los 19 clips con FAUSTO + c20 y c28 (repiten frase inventada), regenerar con `python -I clips.py`. Investigar el timeout del chip (¿demasiados assets? ¿nombre parecido?) si sigue.
+- c29: recortar el último frame (salta de plano). c37: subtítulo quemado (aceptable).
+- HECHO: ARREOLA subido, clips.py usa @{ARREOLA}; c01 de prueba OK (look correcto). 21 clips viejos en clips/old/. Regeneración en curso (log clips_log3.txt). Después: QA de los clips nuevos (mismo agente/qa), editar EDL c29 (recortar último frame), montar, verificar, Telegram, y seguir con El Retén.
+- ENTREGADO v1 (208.6 s, 89 planos) por Telegram 2026-11-04; verificado sync 0-1 frame en 5 puntos, marca, golpe, negro+CTA. Más largo que refs (máx 178 s): si el usuario lo pide, recortar. SIGUIENTE: El Retén.
+- v2 (2026-11-04): 10 clips regenerados OK en QA; edit.py con método reten-sierra v4 (EDL por frases, renders/phr.json, CROP37, limiter 0.80); lines.json borrado. renders/v2.mp4 154.0 s, 95 segmentos/70 planos, -14.7 LUFS, -1.8 dBTP. c34 corta antes de su corte interno (1.5 s). Falta enviar a Telegram.
+
+### `pieces\medalla-mezcal-p2\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte2]
+relatedTo: [medalla-mezcal]
+---
+# medalla-mezcal-p2 (La media medalla · Parte 2): estado
+- Marca: **VISTA STORIES** (la misma de la Parte 1, no entra en la rotación).
+- Archivos listos: guion.md, lines.json (diálogos, fuente única de clips.py), clips.py (43 clips: c01–c39 + r1, r2, i1, i2; SAFE/SOFT/variant/NOREF, TRIES=6, 17 s entre clips, gatito de control, imprime "FIN P2"), edit.py (plantilla agua-hacienda-p2, EDL en borrador con índices de línea, salida renders/v1.mp4), make_sheets.py, caption.txt, music/ (copia de la Parte 1).
+- chars/: 13 jpg copiados de la Parte 1 (mismos personajes y ropa). Fausto va SIEMPRE como @{ARREOLA} (el asset FAUSTO tenía la imagen equivocada).
+- Hojas nuevas: ninguna.
+- Nada generado en Flow todavía.
+- Siguiente: `python -I make_sheets.py --reupload > sheets_log.txt` (sube ARREOLA, HEROINA, CAPORAL, SEVERO, TOBIAS, LOC_PORTON, LOC_MEZCALERA, PROP_MEDALLA, PROP_ANILLO al proyecto Flow activo; imprime "FIN HOJAS P2"), comprobar miniaturas en Flow, `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P2", Traceback e "intento 6"), QA de bordes (Fausto IZQUIERDA / Severo DERECHA), ropa, medalla en la mano derecha, morphs y pronunciación, regenerar, montar con edit.py (pasar el EDL a rangos, renders/phr.json), verificar, Telegram con caption.txt.
+- 2026-11-05: 10 clips regenerados pasan QA (c01 con arranque repetido "y hoy" quitado en el montaje; c15, i2, r2 mudos). Montado renders/v1.mp4 (170.3 s, 91 planos, -14.6 LUFS, TP -1.7, sync OK, transcripción completa). Falta: revisión del usuario y Telegram con caption.txt.
+
+### `pieces\mecanico\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories]
+relatedTo: [suegra, recetario, buen-hijo, tele-nueva, canasta, encendedor, padre-veladoras, chocolate-rancho, hacienda-sangre, reten-sierra, medalla-mezcal, agua-hacienda]
+---
+# mecanico (El Mecánico) — estado
+- Remake de 7694128114238033183 de @informativo0001 ("Reemplazaron al mejor mecánico para quitarle su bono"; 1.5M vistas, 246 s; allá es Parte 2, aquí Parte 1 autónoma). 15.º remake, marca MAJESTIC STORIES (el 14.º, suegra, fue VISTA; el siguiente es MEXI). Archivos listos: guion.md, make_sheets.py, clips.py (31 clips hablados, 236 s brutos, 56 frases), edit.py (copia de suegra, EDL vacía, marca MAJESTIC STORIES, cama cálida entre c22 y c28), phr.py, music/ (copia de suegra), caption.txt. Nada generado en Flow todavía.
+- Assets nuevos (únicos frente a todas las pieces con make_sheets.py, sin subcadenas en ningún sentido; tampoco NICANOR, MAYORAL, FAUSTO ni MARISOL): EVARISTO, FERMIN, OSVALDO, CELSO, LOC_PECERA, LOC_NAVE, LOC_SOLAR, PROP_CAJAROJA.
+- Atuendos: los de la ref (mosaico de 24 cuadros) con otros colores: Evaristo overol verde olivo y trapo azul y blanco (en vez de mono azul marino y trapo blanco y rojo); Fermín chamarra vino y camisa azul claro (en vez de chamarra azul marino y camisa blanca); Osvaldo overol gris claro nuevo (en vez de mono azul marino); Celso gorra beige, chaleco verde oscuro y camisa a cuadros roja y azul marino (en vez de gorra café, chaleco negro y cuadros gris y morado).
+- Siguiente: `python -I make_sheets.py > sheets_log.txt`, revisar hojas (md5, mestizos de piel morena, bigote y barba de cada uno, que cada nombre tenga su imagen), `python -I clips.py > clips_log.txt` con Monitor, QA por agente (bordes y ropa por escena, UNA caja roja en la mano derecha de Evaristo en c06-c09 y cerrada en el banco en c22-c25, UN cable en su mano derecha en c26-c27, Fermín y Osvaldo sin barba ni bigote), regenerar malos, `python -I phr.py`, EDL por frases en edit.py (BLACK 0.4 entre c30 y c31), `python -I edit.py`, verificación completa, Telegram con caption.txt.
+- Riesgos: c01 sin plano abierto (Fermín habla de una), caja roja que se duplique o cambie de mano, c14 y c26-c27 cofre abierto de la camioneta blanca, c16 Osvaldo mira a la oficina, c20 Celso se acomoda la gorra, c30 Fermín solo junto al ventanal, c31 CTA mudo (el prompt pide labios desde el primer frame). Pronunciación: "Evaristo", "Fermín", "Osvaldo", "sulfatado", "refacciones".
+- Política: sin policías, sin armas, sin contacto brusco, sin dedo acusador, sin cifras ni dinero exigido ni banco (solo "el bono" y "lo que me tocaba"), sin niños, edades numéricas.
+
+### `pieces\masa-honrada\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, sinmarca, parte1, remake, referencias3]
+relatedTo: [pedida-mano, sazon-concha, referencias3]
+---
+# masa-honrada (La Masa Honrada · Parte 1, video 26): estado
+
+## La historia
+- Remake de la premisa n.º 2 de fuentes/referencias3/resumen.md (ref 7682590215994690849 de @solreflection, 5.6M).
+  - Mismos beats que la ref; personajes, nombres y diálogo nuevos; atuendos de la ref con otros colores.
+  - La ref cierra en 100 s. Aquí se agrega un gancho: Yesenia entra a trabajar con Lupe para robarle el secreto, y Lupe ya lo sabe ("le di el nixtamal… y no la receta").
+- No se cruza con "precio justo" (premisa n.º 1, que escribe otro agente en paralelo): aquí no hay tienda, presidencia, inspección ni autoridad.
+
+## Marca
+**SIN MARCA**: va sin marca de agua. La música sale de pieces/_marcas/SINMARCA (edit.py, BRAND = "SINMARCA"; brand_wm da un png transparente). No hay carpeta music/ propia.
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 1).
+- lines.json: fuente única de clips.py (501 palabras, unos 235–245 s).
+- clips.py, con 39 clips: c01–c34 y r1–r5. Suman 288 s de generación.
+  - Todos los planos son de una persona: gaze(side) + ONE + ALONE.
+  - NOSUB + CLEAN + END en cada diálogo.
+  - NODOUBLE en c01, c02, c04, c06, c08, c13, c16, c17, c20, c23, c26, c27, c28, c31 y c32.
+  - SAFE/SOFT, incluidas las frases fuertes del diálogo.
+  - variant, NOREF (también quita las hojas de locación), TRIES=6, gatito de control y 17 s entre clips.
+  - Acepta IDs, mueve la versión vieja a clips/old/ e imprime "FIN P1".
+- make_sheets.py: 9 hojas con control md5 DUPLICADO y --reupload; imprime "FIN HOJAS".
+- phr.py.
+- edit.py:
+  - EDL en borrador por índices de línea, con ganancia 0 en los mudos y BLACK 0.4 s antes de c34.
+  - Música: suspenso hasta c22, cama cálida de c22 a c31 y suspenso de c31 al final.
+  - Loudnorm en dos pasadas. Admite --remix. Salida en renders/v1.mp4.
+
+## Hojas nuevas
+Aún no se generaron. Los nombres se verificaron como únicos en pieces/*.
+- Personajes: LUPE_OLVERA, YESENIA_BARRAGAN, RIGO_MOLINERO, CHAYO_ZAMUDIO, ABUNDIO_ZAMUDIO y TONA_ESPINO.
+- Locaciones: LOC_PUESTOYESE, LOC_COMALLUPE y LOC_PATIOZAMUDIO. Son simples: sin letreros, precios, marcas ni botellas con etiqueta.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS").
+   - Revisar que no haya DUPLICADO y correr `md5sum chars/*.jpg`.
+   - Armar una hoja de contactos y comprobar estas parejas, que no deben parecerse:
+     - Lupe (trenza gris, mandil granate, blusa amarilla) y Toña (pelo corto rizado, cárdigan mostaza).
+     - Yesenia (chongo vino, blusa turquesa) y Chayo (pelo suelto negro, blusa coral).
+     - Rigo (playera verde olivo, mandil azul) y Abundio (camisa a cuadros, pelo gris).
+2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P1", Traceback e "intento 6".
+3. QA con hoja de fotogramas, tiras de la franja inferior y bordes.
+4. Regenerar con `python -I clips.py <ids> > clips_log2.txt`.
+5. `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y correr `python -I edit.py` (o `--remix`).
+6. Verificar sincronía en 5 puntos, ritmo ≤ 1.9 s, LUFS y pico, y que NO haya marca de agua.
+7. Telegram con caption.txt.
+
+## Revisar en el QA
+- **Geografía:**
+  - Puesto de Yesenia: Yesenia DER.; Rigo, Chayo y Lupe IZQ.
+  - Carrito de Lupe: Lupe IZQ.; Toña, Chayo y Yesenia DER.
+  - Patio: Chayo IZQ., Abundio DER.
+- **Dobles:** ninguna segunda blusa turquesa, mandil granate, blusa coral, cárdigan mostaza ni mandil azul.
+- **Bordes:** nadie en los bordes, nadie que entre caminando y sin clientes de fondo.
+- **Utilería:**
+  - Un solo costal, blanco y sin letras.
+  - La tortilla rota en la mano DERECHA de Chayo.
+  - El celular en la mano DERECHA con la pantalla de espaldas (c21).
+  - El maíz en una tina azul (c31).
+  - Ningún precio, letrero ni botella con etiqueta.
+- **Ropa y accesorios:** sin sombreros, redes de pelo ni lentes que aparezcan. Ropa igual en todos los planos.
+- **Fallos de Omni:** subtítulos quemados, frases repetidas, 2.ª frase perdida y morphs.
+
+## Riesgos
+- c03/c04/r1: la masa y el costal. Que no salga texto en el costal ni otro ayudante.
+- c09: Yesenia llama "desde su puesto". Que no grite ni señale.
+- c13/c15/r3: tortillas que se rompen. Que no salgan migajas raras ni un tercer comensal.
+- c21: pantalla del celular a la vista.
+- c27: Rigo se desata el mandil. Si sale raro, SOFT lo cambia por las manos en la mesa.
+- Pronunciación: "nixtamal", "engrudo", "costal", "muélele", "recalentada", "Yesenia", "Abundio", "Toña".
+
+### `pieces\mariachi-patron\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte1, historia-propia, capos, mariachi]
+relatedTo: [viuda-aguacate, fonda-chela, monedas-carretera, reten-sierra, atrium-vista]
+---
+# mariachi-patron (El Mariachi del Patrón · Parte 1): estado
+
+## La historia
+- Historia propia tipo capos sobre la premisa n.º 8 de fuentes/atrium-vista/resumen.md. El ganadero Gildardo corre de su fiesta, sin los veinte mil, a don Higinio, el mariachi viejo (cinco minutos para irse). A medianoche llega don Rosendo Cabañas con ocho camionetas: Higinio nunca faltó a uno de sus cumpleaños. Plazo invertido: Gildardo le debe la cosecha y tiene hasta que amanezca. Gancho P2: "Gildardo es mi hijo". Sin Navidad.
+- Guion pasado por la skill humanizer.
+- Nombres únicos en pieces/ (Evaristo, Tadeo, Chencho, Cirilo, Alcántar ya existían).
+
+## Marca
+**VISTA STORIES**: edit.py, BRAND = "VISTA" (kit pieces/_marcas/VISTA).
+
+## Archivos
+guion.md, caption.txt, lines.json, clips.py (48 clips, copia de viuda-aguacate + control de duplicados md5 de clips), make_sheets.py (5 personajes + LOC_PATIOGANADERO, "ordinary non-famous face"), phr.py, edit.py (EDL por armar desde renders/phr.json).
+
+## Avance
+- (se actualiza abajo)
+- 2026-11-08: hojas OK (revisadas a ojo, md5 únicos, caras comunes). Proyecto Flow nuevo 8090b0be (el viejo daba "actividad inusual").
+- 48/48 clips (FIN P1). QA en qa_clips.md (método pedida-mano + qa.py): 0 regeneraciones; crops de borde en c03 c11 c20 c21 c23 c26 c30 c33; i05 trae 2.9 s de una mujer ajena al inicio (se usa 3.1-4.4).
+- Montaje v1: renders/share.mp4, 166.6 s, 73 tramos / 96 planos (1.73 s/plano), -14.2 LUFS, pico -1.7 dBTP, sincronía 0 ms en 5 puntos, transcripción completa = lines.json (renders/v1_transcript.txt), marca VISTA STORIES visible. Revisión API: renders/share_revision.md (se agregó r3 tras "Gildardo es mi hijo").
+- NO enviado a Telegram (pedido de la sesión coordinadora).
+- Dudas: manga gris en i02 (Eulogio lleva chamarra negra); el giro "es mi hijo" no tiene pista previa salvo r3.
+
+### `pieces\mariachi-patron-p2\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte2, historia-propia, capos, mariachi]
+relatedTo: [mariachi-patron, viuda-aguacate-p2, atrium-vista]
+---
+# mariachi-patron-p2 (El Mariachi del Patrón · Parte 2): estado
+
+## La historia
+Parte 2 de pieces/mariachi-patron. Los escoltas de Rosendo cierran los arcos; Gildardo niega a su padre y Rosendo lo sube a la tarima a confesar por el micrófono que el mariachi es su padre y que lo corrió sin pagarle. Eulogio deja el radio y se va a pie al pueblo. Al alba Rosendo se lleva el ganado por la cosecha. Momento cálido: Higinio lo esperó y le escribió cartas; la mamá le dijo que él los dejó. Higinio decide: le devuelven el ganado si toca un año con él en la plaza, por limosna. Amanece, mañanitas para Rosendo. CTA con dilema; historia cerrada. Sin armas, sin sangre, sin Navidad. Guion pasado por la skill humanizer.
+
+## Marca
+**VISTA STORIES**, la misma de la Parte 1 (no entra en la rotación): edit.py, BRAND = "VISTA". Sin carpeta music/ propia.
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 2, #parte2, sin anunciar tercera parte).
+- lines.json: fuente única de clips.py (323 palabras, 3 a 6 por frase salvo el CTA; primera línea sin cifras).
+- clips.py: 47 clips (c01–c34 hablados, i01–i08 insertos sin caras, r1–r5 reacciones mudas). Copia del clips.py de chofer-patrona (gatito en imagen, reload_flow, new_project, descarga corrupta, duplicados md5, TRIES=6). Imprime "FIN P2". `python -c "import clips"` OK.
+- make_sheets.py: las 6 hojas de la Parte 1 copiadas en chars/ (HIGINIO_LUMBRERAS, MACLOVIO_ZAVALETA, GILDARDO_MONTEMAYOR, EULOGIO_MANCERA, ROSENDO_CABANAS, LOC_PATIOGANADERO). Sin hojas nuevas. Las copias no cuentan como DUPLICADO (skip mariachi-patron y mariachi-patron-p2; también se ajustó mariachi-patron/make_sheets.py para ignorar la copia).
+- phr.py.
+- edit.py: plantilla mariachi-patron, EDL en BORRADOR por índices de frase (82 tramos), mudos con ganancia 0, BLACK 0.4 s antes de c34. Música: suspenso hasta c20, cálida c20–c24, suspenso hasta el final.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py --reupload > sheets_log.txt` (solo sube las 6 copias; imprime "FIN HOJAS").
+2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P2", Traceback e "intento 6".
+3. QA (qa_clips.md), regenerar con `python -I clips.py <ids> > clips_log2.txt`.
+4. `python -I phr.py`, pasar la EDL a rangos y correr `python -I edit.py`.
+5. Verificar sincronía en 5 puntos, ritmo ≤2 s, LUFS y pico, marca VISTA STORIES arriba al centro.
+6. Telegram con caption.txt (3er arg = VISTA).
+
+## Revisar en el QA
+- Geografía: Higinio y Maclovio IZQ.; Gildardo y Eulogio DER. (Gildardo en la tarima con micrófono en c07 y c09); Rosendo CENTRO.
+- Luz: noche hasta c14, azul del alba c15–c30, amanecer dorado i07–c34.
+- Utilería: sombrero en las manos de Higinio (no en la cabeza hasta el CTA); un solo micrófono; radio en la mano derecha de Eulogio hasta i03; el estuche pasa a Gildardo en i06; camiones ganaderos sin logos ni placas.
+- i04: el que se va de espaldas debe ser Eulogio (calvo, chamarra de cuero negra), manos vacías.
+- c07/c09: la voz por micrófono no debe salir con eco exagerado ni subtítulos.
+- Fallos de Omni: subtítulos quemados, frases repetidas, 2.ª frase perdida, morphs.
+- Pronunciación: "Higinio", "Rosendo", "Gildardo", "limosna", "mañanitas", "esperándote".
+- 2026-11-08 noche: clips 47/47 (FIN P2). Desde c12 Flow no veía las hojas (NOREF en c12/c13): pausa, --reupload, regenerados. QA (lv3 + hojas): Flow devolvió clips cruzados/mudos → regenerados c11 (subtítulo quemado), c13 ("don Iginio" en lines.json; aún suena "Eugenio"), c16, c19, c20, c23, c24, c26, c30, c32 (luz de amanecer), c33, c34, i03, i04 (Eulogio de espaldas), i05; tras la revisión API: c12 (noche cerrada) y r5 (cara de Gildardo).
+- renders/share.mp4: 133.6 s, 85 tramos (1.59 s/tramo), -14.2 LUFS, -1.7 dBTP, sync 0 ms en 8 puntos, BLACK 125.7 s, VISTA arriba al centro. Revisión API: renders/share_revision.md (v1). NO enviado a Telegram.
+
+### `pieces\madrina-central\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, sin-marca, parte1, historia-propia, capos, matriarca]
+relatedTo: [fonda-chela, monedas-carretera, reten-sierra, medalla-mezcal, atrium-vista]
+---
+# madrina-central (La Madrina de la Central · Parte 1): estado
+
+## La historia
+- Historia propia tipo capos con protagonista matriarca, sobre la premisa n.º 6 de fuentes/atrium-vista/resumen.md. El agiotista Gaspar le engancha la grúa al tráiler de Rubén el día que nace su hija: ochenta mil, hasta las seis. Rubén busca a doña Eva, que manda cerrar las puertas de la Central. Gaspar resulta ser su ahijado; ella le devuelve el mismo plazo (hasta las seis) para regresar el tráiler y los papeles de todos. Gancho: llega llorando Imelda, la mamá de Gaspar y comadre de Eva. El castigo queda para la Parte 2. Sin Navidad.
+- Los nombres de la premisa se cambiaron: Toño se parecía a Toña (TONA_ARELLANO) y pasó a Rubén. Doña Eva se conserva.
+- Guion pasado por la skill humanizer: frases de 8 palabras como máximo (salvo el CTA), sin contrastes de relleno.
+
+## Marca
+**SIN MARCA**: edit.py, BRAND = "SINMARCA". brand_wm da un png transparente y la música sale de pieces/_marcas/SINMARCA. Sin carpeta music/ propia.
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 1, #parte1).
+- lines.json: fuente única de clips.py (396 palabras).
+- clips.py, con 47 clips (c01–c36 hablados, i01–i06 insertos sin caras, r1–r5 reacciones mudas), 312 s de generación. Es la copia del clips.py de fonda-chela con todas sus defensas:
+  - Planos hablados de una persona: gaze(side) + ONE + ALONE; NOSUB + CLEAN + END en cada diálogo; NODOUBLE en los de riesgo.
+  - SAFE/SOFT (con las frases fuertes del diálogo), variant, NOREF (también quita las hojas de locación), TRIES=6, gatito de control, reload_flow(), new_project() tras dos caídas, comprobación de descarga corrupta con ffmpeg y 17 s entre clips.
+  - Acepta IDs, mueve la versión vieja a clips/old/ e imprime "FIN P1".
+- make_sheets.py: 6 hojas (4 personajes, 2 locaciones) con control md5 DUPLICADO y --reupload; imprime "FIN HOJAS".
+- phr.py.
+- edit.py: EDL en borrador por índices de línea (84 segmentos), mudos con ganancia 0, i01 de ~1 s y BLACK 0.4 s antes de c36. Música: suspenso hasta c33, cálida de c33 a c35 y suspenso hasta el final. Salida en renders/v1.mp4.
+
+## Hojas nuevas
+Aún no se generaron. Nombres verificados como únicos en pieces/*/clips.py y make_sheets.py (ni el nombre ni el apellido se repiten en otras piezas).
+- Personajes: EVA_SALDIVAR, RUBEN_GALINDO, GASPAR_LEYVA y PORFIRIO_TAPIA.
+- Locaciones: LOC_PATIOCENTRAL y LOC_BODEGAEVA.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, correr `md5sum chars/*.jpg` y armar hoja de contactos: Eva (chongo negro, arracadas, cárdigan negro); Gaspar (rapado, camisa crema bordada, cadena) contra Porfirio (boina negra, bigote gris, azul marino); Rubén (barba, mezclilla).
+2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P1", Traceback e "intento 6".
+3. QA con hoja de fotogramas, franja inferior y bordes. Regenerar con `python -I clips.py <ids> > clips_log2.txt`.
+4. `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y correr `python -I edit.py` (o `--remix`).
+5. Verificar sincronía en 5 puntos, ritmo de 2 s o menos de media, LUFS y pico, y que no quede ninguna marca de agua.
+6. Telegram con caption.txt (3er arg = SIN MARCA).
+
+## Revisar en el QA
+- Geografía: en el patio, Gaspar DER. junto a la grúa y Rubén IZQ. delante del tráiler; en la bodega, Eva sentada DER. tras el escritorio, Rubén y Gaspar IZQ., Porfirio en la cortina.
+- Dobles: ninguna segunda camisa crema bordada, boina negra, cárdigan negro ni camisa de mezclilla.
+- Utilería: un solo tráiler rojo sin logo, un solo llavero (mano DERECHA de Gaspar), una sola libreta negra sin texto legible, el radio al pecho de Porfirio; Central sin letreros, precios ni números.
+- Poder sin armas: los cargadores de i05 de manos cruzadas, nada en las manos.
+- Sin niños en cuadro: la hija de Rubén solo se nombra.
+- Fallos de Omni: subtítulos quemados, frases repetidas, 2.ª frase perdida y morphs.
+- Pronunciación de "Saldívar", "Melquiades", "tráiler", "redondees" e "Imelda".
+
+## Montaje v1 (2026-11-08)
+- c04 regenerado (Rubén bien) transcrito con lv3.py y metido en renders/lv3.json; tiene camisa de cuadros ajena en el borde DER. hasta ~2 s: crop 540:960:0:0 en la 1.ª frase.
+- edit.py por frases (plantilla viuda-aguacate) con todo el QA aplicado -> renders/share.mp4: 155.4 s, 101 planos, 1.53 s/plano, -14.1 LUFS, pico -1.8 dBTP. Sincronía 0 ms en 5 puntos. Revisión API en renders/share_revision.md.
+- Pendiente cuando Flow esté libre: c01 sale con una camisa de Gaspar sin el ribete negro ni las flechas de la hoja (regenerar c01 si el usuario lo pide). La blusa de Eva cambia de cuello en V a cuello de ojo de cerradura entre clips (r2, c13, c34, c36): no se corrigió.
+- No se envió a Telegram.
+
+### `pieces\invernadero-atlixco\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte1, remake-transformado, capos, matriarca, atlixco, puebla, nochebuenas]
+relatedTo: [piloncillo-rio, cafe-neblina, cenote-campana, atrium-vista]
+---
+# invernadero-atlixco (Las Nochebuenas de Atlixco · Parte 1): estado
+
+## Video base
+- Remake transformado de **"Veinte años a su lado… y lo vendieron | Parte 1 (Aurelio, federales, túnel)"** de @atriumstories_ (7704056500502793502, **275K vistas**, 116 s, 61 planos). Análisis: `fuentes/atrium-vista/videos/7704056500502793502_analisis.md`.
+- Por qué este: los de más de 1M ya tienen remake (Leche: agua-hacienda y chocolate-rancho; la patrona 1.5M: medalla-mezcal; El Retén: reten-sierra y cenote-campana). La re-subida de El Retén (334K) es el mismo video, "Lo corrió de la hacienda" (330K) es hacienda-sangre, "Me dejó la hacienda vacía" (312K) es cafe-neblina y "Le dio 5 minutos" (298K) es piloncillo-rio. Este (275K, capos) es el siguiente sin usar. ("Se burlaron del padre", 221K, es padre-veladoras.)
+- Del original queda el esqueleto: humillación + plazo → llega la figura de poder → plazo invertido → giro familiar → castigo en la Parte 2.
+
+## Qué se cambió
+- Escenario y región: rancho con ramada, casa de piedra, túnel y cauce seco → invernadero de nochebuenas en el valle de Atlixco, Puebla (región no usada en pieces/), con el Popocatépetl al fondo, y el patio de talavera de una casona.
+- Oficio: patrón con negocio ilícito y dinero en la mesa → dueña de un invernadero de nochebuenas; el abusador ya no es una comandante federal (sin uniformes) sino Nazario, un acaparador de flores.
+- Humillación y plazo: los federales rodean el rancho y el patrón acusa a su hombre de confianza → Nazario le rompe una maceta a Efrén, el encargado: "Hasta que den las seis, Efrén. O tu patrona se queda sin cosecha." (sin cifras de dinero).
+- Reloj: las campanas de la parroquia (i03). Gente que llega: los camiones de redilas del valle cargados de nochebuenas, productores con los brazos cruzados. Sin armas.
+- Inversión: "¿Hasta las seis le diste? Ya sonaron, Nazario. Ahora el plazo es tuyo. Antes que den las siete, te vas del valle."
+- Giro: el hijo traidor que espera al final del túnel por celos de la herencia → Ezequías, el esposo de Hermelinda, le dio las llaves y firmó el trato; viene en la camioneta del villano. El hombre de confianza acusado en falso no existe aquí: Hermelinda confía en Efrén desde el principio.
+- Objeto clave: fajos de dólares, maleta, celular con audio → maceta de nochebuena rota y un llavero de nochebuena tallado en madera.
+- Nombres: todos nuevos y únicos en pieces/ (Isauro ya existía y se descartó): Hermelinda Corona, Efrén Cuautle, Nazario Bretón, Rufina Tecuapetla, Ezequías Vilchis.
+- Villano y traidor distintos a simple vista: Nazario 52, rapado, panzón, candado negro, polo mostaza; Ezequías 74, flaco, pelo y barba blancos largos, boina gris.
+- Diálogo: las 68 frases son nuevas; ninguna viene del original ni de piloncillo-rio.
+- CTA: "¿Quieres ver qué hago con el que me vendió?" → Hermelinda a cámara, con sonrisa pícara y pausa: "¿Ustedes perdonarían a Ezequías? Dale me gusta y sígueme para la segunda parte."
+- Navidad ligera: temporada de nochebuenas (sin posada, cena ni aguinaldo).
+
+## Marca
+**VISTA STORIES**: edit.py, BRAND = "VISTA" (kit pieces/_marcas/VISTA: marca arriba al centro y=135, 22 px, alfa 80, música propia).
+
+## Archivos
+guion.md, caption.txt, lines.json (fuente única), clips.py (45 clips: 34 hablados c01-c34, 7 insertos i01-i07, 4 reacciones r1-r4; copia de piloncillo-rio con todas sus defensas: gaze + ONE + ALONE, NOSUB + CLEAN + END, NODOUBLE, SAFE/SOFT con las frases fuertes primero, variant, NOREF, TRIES=6, gatito como IMAGEN, md5 duplicados, reload_flow, new_project; imprime "FIN P1"), make_sheets.py (5 personajes + LOC_INVERNADERO + LOC_CASONA = 7 hojas, "ordinary non-famous face", control md5 DUPLICADO, --reupload), phr.py, edit.py (EDL vacía, se arma desde renders/phr.json; música cálida de c24 a c27).
+- `python -m py_compile` OK en clips.py, make_sheets.py, edit.py y phr.py. IDs de CLIPS = claves de lines.json, mismo orden (comprobado leyendo el texto, sin importar). Todos los @{ASSET} de clips.py tienen hoja en make_sheets.py.
+
+## Avance
+- 2026-11-09: archivos escritos. NO se generó nada en Flow. Faltan: 7 hojas (make_sheets.py), clips, QA, phr.py, EDL y montaje.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, `md5sum chars/*.jpg` y hoja de contactos: caras comunes y distintas (Hermelinda alta con chongo plata, Efrén fornido con bigote, Nazario rapado y panzón, Rufina bajita con trenza, Ezequías flaco con barba blanca larga y boina).
+2. `python -I clips.py > clips_log.txt` y QA de cada clip (morphs, bordes, el broche y el abrigo de Hermelinda, el polo mostaza, invernaderos a la izquierda y camioneta negra a la derecha, camiones sin letras, el llavero igual en c07, i02 y c31; pronunciación de "Hermelinda", "Efrén", "Nazario", "Rufina", "Ezequías", "nochebuena").
+3. phr.py → EDL en edit.py → montaje y verificación (sync en 5 puntos, ≤2 s por tramo, LUFS/pico, marca VISTA visible) → Telegram con caption.txt (3er arg VISTA).
+- 2026-11-09: 7 hojas OK a ojo. Clips 45/45 (FIN P1), sin md5 duplicados. QA: audio = lines.json (c14 "ni ni" dentro de la frase, sin hueco para cortar). CTA c34 con carisma (se toca el broche, sonríe). i04 0–3 s es una actriz ajena (solo 3.3–4.8). Crops de borde en renders/edlcfg.json.
+- renders/share.mp4: 133.5 s, 81 tramos (1.66 s/tramo), -14.4 LUFS, -2.2 dBTP, sync 0 ms en 5 puntos, BLACK 127.2 s, VISTA arriba al centro. Revisión API: renders/share_revision.md. NO enviado a Telegram.
+- PENDIENTE (sin créditos de Flow): regenerar c32 (Efrén con llaves plateadas modernas; el llavero clave es de hierro con nochebuena) → prompt ya corregido en clips.py: `python -I clips.py c32` y re-montar.
+
+### `pieces\intercambio\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte1, historia-original, navidad]
+relatedTo: [sazon-concha, nochebuena, posada]
+---
+# intercambio (La Virgen de los Villaseñor · Parte 1, video 22): estado
+- Historia ORIGINAL navideña (intercambio de regalos de Nochebuena en una familia acomodada), inspirada en "Se esforzaba por toda su familia pero nadie la valoraba" (3.1M) y "Mi suegra se adueñó de nuestra casa" (2.2M). Fórmula: humillación en la 1.ª línea (Constanza le regala un mandil a Fabiola: "para que no se te olvide cuál es tu lugar") → giro de poder (Fabiola le regala a Aurora la Virgen de Casimiro que Constanza tiró, pegada pieza por pieza) → payoff (Aurora le devuelve el mandil a Constanza y Fabiola pone la Virgen en el nacimiento) → gancho (Constanza: "la tiré por lo que mi papá escondió adentro de la base").
+- Distinta de nochebuena (hijo avergonzado, ponche, testamento) y de posada (mercado, hoja de escritura): sin papeles, herencias ni dueños escondidos.
+- Marca: **MEXI STORIES**. Música y marca de agua de pieces/_marcas/MEXI (edit.py, BRAND = "MEXI"); no hay music/ propia.
+- Archivos listos:
+  - guion.md y caption.txt (formato Parte 1, hashtags navideños).
+  - lines.json: fuente única de clips.py (465 palabras).
+  - clips.py, con 37 clips: c01–c32, r1–r4 e i1. Son 240 s hablados en bruto, más 30 s de mudos.
+    - Todos los planos con diálogo son de una persona: `gaze(side)` + ONE + ALONE. Nunca "looking at X off-screen".
+    - NOSUB + CLEAN (QA nochebuena c18) y END al final de cada diálogo; NODOUBLE en los planos de riesgo (c01, c02, c06, c14, c18, c29).
+    - Una pieza de cada utilería: una Virgen (hoja PROP_VIRGENCASIMIRO), un mandil, una caja de cartón, una cajita blanca. El nacimiento solo lleva a San José, buey y burro (nunca figura del niño). Nadie con sombrero, gorro navideño ni lentes.
+    - SAFE/SOFT con \b (incluye las frases fuertes del diálogo: "cuál es tu lugar en esta casa", "que nos da pena", "la tiró a la basura", "se nos acaba todo"), variant, NOREF (también quita la hoja de la Virgen), TRIES=6, 17 s entre clips y gatito de control.
+    - Guarda en clips/, imprime "FIN P1", acepta IDs y mueve la versión vieja a clips/old/.
+  - make_sheets.py: 8 hojas nuevas (5 personajes, 2 locaciones y la Virgen) + control md5 DUPLICADO; --reupload. Imprime "FIN HOJAS".
+  - phr.py.
+  - edit.py: EDL en borrador por índices de línea, ganancia 0 en los mudos, BLACK 0,4 s antes del CTA (c32), cama cálida c27 → c29, loudnorm en dos pasadas, salida renders/v1.mp4.
+- Hojas nuevas (aún no generadas; nombres verificados como únicos en pieces/*/chars y en todos los make_sheets.py): FABIOLA_OCHOA, CONSTANZA_VILLASENOR, GERMAN_ALTAMIRANO, EMILIO_VILLASENOR, AURORA_VILLASENOR, LOC_SALAVILLASENOR, LOC_PATIOVILLASENOR, PROP_VIRGENCASIMIRO.
+- Nada generado en Flow todavía.
+- Siguiente:
+  1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, correr `md5sum chars/*.jpg` y armar una hoja de contactos. Cada nombre tiene que ser su persona o lugar y los personajes no se parecen entre sí (Germán con barba gris, Emilio lampiño y rizado; Constanza de verde, Fabiola de vino). Nadie lleva sombrero ni lentes; el nacimiento sin figura del niño; la Virgen es una sola.
+  2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P1", Traceback e "intento 6".
+  3. QA con hoja de fotogramas y tiras de la franja inferior.
+- Revisar en el QA:
+  - Geografía: sala (Aurora sentada al CENTRO, Constanza y Germán DER. junto al árbol, Fabiola y Emilio IZQ.), patio (Fabiola IZQ., Emilio DER.; de noche Constanza IZQ., Germán DER.), payoff (Fabiola IZQ. junto al nacimiento, Emilio DER.).
+  - Nadie en los bordes y ningún doble (otro vestido verde, otro suéter vino).
+  - Una sola Virgen y siempre la misma (manto azul, grietas); el nacimiento con el hueco junto a José hasta c27; ninguna figura del niño; ninguna tarjeta ni letra.
+  - El mandil: Constanza (c01) → Fabiola (c02) → Aurora (c25) → Constanza (c26). La caja de cartón con Fabiola en c05, c10–c13; la cajita blanca solo en c06.
+  - Patio de noche (c29–c31) oscuro de verdad; el de c09–c13, con farolitos encendidos.
+  - Subtítulos quemados, frases repetidas, morphs, personajes que entran caminando, manos o utilería que cambian de lado.
+- Regenerar con `python -I clips.py <ids> > clips_log2.txt`. Luego `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y `python -I edit.py`. Verificar (sincronía en 5 puntos, ritmo ≤ 1,9 s, LUFS y pico, marca) y mandar a Telegram con caption.txt.
+- Riesgos:
+  - i1: manos que abren la caja y sacan la Virgen (una sola figura, sin manos extra).
+  - c15/c17/c21/c24: Aurora con la Virgen en las manos o en el regazo (deformación de la figura).
+  - c27: poner la Virgen junto a San José en el nacimiento (manos y figuras).
+  - r4: mirar la base de la Virgen sin letras ni tapitas inventadas con texto.
+  - Pronunciación de "Villaseñor", "Casimiro", "Fabi", "póntelo", "llorarla" y "regalito".
+- 2026-11-06: QA 2/3 hechos (c05, c15, c18, c25, c32 v4 OK; c07, c23 y c27 con crop de todo el clip por el pesebre de la hoja). renders/v1.mp4 montado: 159.4 s, 81 planos (media 1.99 s), -14.1 LUFS, -1.8 dBTP, sincronía ±1 fotograma, transcripción completa en orden. Falta: aprobación del usuario y Telegram (no enviado).
+
+### `pieces\huipil-robado\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte1, historia-propia, referencias3]
+relatedTo: [masa-honrada, tiendita-justa, referencias3]
+---
+# huipil-robado (El Huipil Robado · Parte 1): estado
+
+## La historia
+- Historia propia inspirada en la premisa n.º 4 de fuentes/referencias3/resumen.md (ref ★ 7701016469173292310 de @relatos.de.vida.9, 1.9M). Mismos beats de los virales, con personajes, nombres, diálogo y prueba final nuevos; atuendos de la ref en otros colores.
+- Doña Tomasa (bordadora de la sierra de Oaxaca) y su sobrina Yaretzi (29) descubren que Romina revende sus blusas como "diseño exclusivo". Romina cancela el pedido, pide de vuelta el hilo y con una queja falsa de copia les quitan la mesa de la feria. Gancho: cada blusa lleva un colibrí bordado dentro de la manga, la prueba que Tomasa enseñará en la presentación de Romina. Sin Navidad.
+- Guion pasado por la skill humanizer: frases cortas de telenovela, sin rayas ni contrastes de relleno.
+
+## Marca
+**VISTA STORIES**: edit.py, BRAND = "VISTA". La música y la marca de agua salen de pieces/_marcas/VISTA (brand, brand_wm). No hay carpeta music/ propia.
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 1, #parte1).
+- lines.json: fuente única de clips.py (511 palabras, unos 225–240 s en bruto; montaje objetivo 2:00–2:20).
+- clips.py, con 39 clips (c01–c35 y r1–r4). Suman 284 s de generación.
+  - Todos los planos son de una persona: gaze(side) + ONE + ALONE (el insert r4 son solo las manos de Tomasa, con SOLO).
+  - NOSUB + CLEAN + END en cada diálogo; NODOUBLE en los de riesgo.
+  - SAFE/SOFT, incluidas las frases fuertes del diálogo.
+  - variant, NOREF (también quita las hojas de locación), TRIES=6, gatito de control y 17 s entre clips.
+  - Acepta IDs, mueve la versión vieja a clips/old/ e imprime "FIN P1".
+- make_sheets.py: 9 hojas con control md5 DUPLICADO y --reupload; imprime "FIN HOJAS".
+- phr.py.
+- edit.py: EDL en borrador por índices de línea, ganancia 0 en los mudos y BLACK 0.4 s antes de c35. Música: suspenso hasta c10, cama cálida de c10 a c14 (deciden bajar a la feria) y suspenso de c14 al final. Loudnorm en dos pasadas y --remix. Salida en renders/v1.mp4.
+
+## Hojas nuevas
+Aún no se generaron. Los nombres se verificaron como únicos en pieces/*/clips.py y make_sheets.py.
+- Personajes: TOMASA_SANABRIA, YARETZI_SANABRIA, ROMINA_ARRIOLA, CRESCENCIA_LOPEZ y OFELIA_FERIANTE.
+- Locaciones: LOC_PATIOTOMASA, LOC_BOUTIQUEROM, LOC_FERIACARPA y LOC_CALLEFERIA. Simples: sin letreros, precios ni marcas, globos ni altar.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, correr `md5sum chars/*.jpg` y armar hoja de contactos: Tomasa (trenzas grises, rebozo vino) contra Crescencia (chongo gris, rebozo mostaza); Romina (blazer marfil) contra Ofelia (blusa verde azulado, cárdigan gris).
+2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P1", Traceback e "intento 6".
+3. QA con hoja de fotogramas, franja inferior y bordes. Regenerar con `python -I clips.py <ids> > clips_log2.txt`.
+4. `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y correr `python -I edit.py` (o `--remix`).
+5. Verificar sincronía en 5 puntos, ritmo ≤ 1.9 s, LUFS y pico, y la marca VISTA STORIES visible a tamaño real.
+6. Telegram con caption.txt (3er arg = VISTA).
+
+## Revisar en el QA
+- Geografía: patio escena 1, Romina DER. y Tomasa/Yaretzi IZQ.; patio escenas 2 a 5, Tomasa IZQ. y Yaretzi/Crescencia DER.; feria, Ofelia/Romina DER. y Tomasa/Yaretzi IZQ.; calle, Tomasa IZQ.
+- Dobles: ningún segundo rebozo vino, blazer marfil, cárdigan verde, rebozo mostaza ni blusa verde azulado. Sin otras bordadoras de fondo.
+- Utilería: celular con la pantalla de espaldas; la blusa de flores moradas y amarillas igual en todos los planos; colibrí morado en r4.
+- Sin lentes de sol en la cabeza de Romina, sin gafete en Ofelia, sin globos ni letreros en la feria.
+- Fallos de Omni: subtítulos quemados, frases repetidas, 2.ª frase perdida y morphs.
+- Riesgos: c14/c15 llamada (que no salga Ofelia en pantalla dividida); r4, insert de manos (que no salga texto ni otra mano); pronunciación de "Yaretzi", "Crescencia", "colibrí" y "desenmascarar".
+
+### `pieces\hacienda-sangre\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories]
+relatedTo: [reten-sierra, medalla-mezcal]
+---
+# hacienda-sangre (La Hacienda) — estado
+- Remake de 7699644756812385567 (317K). Archivos listos: guion.md, make_sheets.py, clips.py (36 clips), edit.py (plantilla medalla-mezcal), music/ (copia de medalla-mezcal). Nada generado en Flow todavía.
+- Assets nuevos (únicos frente a agua-hacienda, medalla-mezcal y reten-sierra): OCTAVIO, MATEO, TERESA, ARTURO, NICANOR, QUINTERO, LOC_ESTANCIA, LOC_BUFETE, LOC_RECAMARA, LOC_RANCHITO, LOC_BANCO, PROP_SANISIDRO.
+- Siguiente: `python -I make_sheets.py > sheets_log.txt`, revisar las hojas (md5 y que cada nombre tenga su imagen: bug de Flow que corre imágenes un nombre), luego `python -I clips.py > clips_log.txt`, QA por agente, regenerar malos, `python -I edit.py`, verificación completa, Telegram.
+- Riesgos: c01 (papel delante de Mateo de espaldas: que no se mezclen caras), c14 (manos con la figura), c28/c30 (Octavio dentro de la camioneta), pronunciación de "Cárdenas", "Isauro", "heredó".
+
+## Entregado (2026-11-04)
+- renders/v1.mp4: 2:26, 92 planos, media 1.59 s, -14.8 LUFS, sincronía 0 frames en 5 puntos. MAJESTIC STORIES. Enviado a Telegram con caption.txt.
+- renders/v2.mp4 (2026-11-04): c02 y c33 regenerados (QA OK), regla nueva de cortes (mismo personaje = se queda en su plano con salto; fuera 25 reacciones de relleno; quedan r1, r2, r3 y c32), recortes c06/c20/c23 con `*pre`, recuperadas 7 frases (c05·1, c11·1, c14 "Lo cargaba", c16 "El café", c19 "Qué bueno", c21·1, c27·1). 2:21, 43 planos (media 3.28 s), 73 segmentos (media 1.93 s), -14.5 LUFS, pico -0.8 dBTP, sincronía 0 frames. Sin enviar a Telegram.
+
+### `pieces\hacienda-sangre-p2\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte2]
+relatedTo: [hacienda-sangre]
+---
+# hacienda-sangre-p2 (La Hacienda · Parte 2): estado
+- Marca: **MAJESTIC STORIES** (la misma de la Parte 1, no entra en la rotación).
+- Archivos listos: guion.md, lines.json (diálogos, fuente única de clips.py), clips.py (39 clips: c01–c35 + r1, r2, r3, i1; SAFE/SOFT con \b, variant, NOREF, TRIES=6, 17 s entre clips, gatito de control, salida clips/, imprime "FIN P2"; con IDs regenera solo esos y la versión anterior pasa a clips/old/<id>_vN.mp4), edit.py (plantilla reten-sierra v4 / hacienda-sangre v2, EDL en borrador armado desde lines.json con índices de línea, salida renders/v1.mp4), make_sheets.py, caption.txt, music/ (copia de la Parte 1).
+- chars/: 12 jpg copiados de la Parte 1 y verificados en hoja de contactos (todos muestran a la persona/lugar correcto). Se usan: OCTAVIO, MATEO, TERESA, ARTURO, DONNICO (= Nicanor), LOC_RANCHITO, PROP_SANISIDRO. Sin uso: QUINTERO, LOC_BANCO, LOC_BUFETE, LOC_ESTANCIA, LOC_RECAMARA.
+- Hojas nuevas: **LOC_QUINQUE** (interior de adobe de noche con quinqué) y **PROP_SOBRELACRE** (sobre crema con lacre rojo).
+- Nada generado en Flow todavía.
+- Siguiente:
+  1. `python -I make_sheets.py --reupload > sheets_log.txt` (sube 7 hojas de la Parte 1 y genera las 2 nuevas; imprime "FIN HOJAS P2"). Revisar las 2 hojas y `md5sum chars/*.jpg`.
+  2. `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P2", Traceback e "intento 6").
+  3. QA: bordes (porche a la IZQUIERDA con Nicanor/Mateo/Teresa, Octavio a la DERECHA con la camioneta negra; de noche Mateo IZQUIERDA, Teresa DERECHA), ropa, morphs, pronunciación ("Isauro", "heredó", "crió", "soberbia", "regrésese"). Regenerar con `python -I clips.py c05 c09`.
+  4. Montar con `python -I edit.py` (pasar el EDL a rangos exactos, renders/phr.json), verificar (sincronía en 5 puntos, ritmo ≤ 1.9 s, LUFS/pico, marca), Telegram con caption.txt.
+- Riesgos: c04 (Octavio sube al porche y toca: que no se mezcle con Nicanor), c12 (Teresa llega caminando, que no aparezca de golpe), c26 (camioneta se va), i1 (manos y lacre), c33/c34 (SH de noche con poca luz).
+
+### `pieces\golondrina-muelle\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, sinmarca, parte1, historia-propia, capos, muelle, nochebuena]
+relatedTo: [chofer-patrona, cincha-cortada, mariachi-patron, madrina-central, atrium-vista]
+---
+# golondrina-muelle (La Golondrina · Parte 1): estado
+
+## La historia
+- Historia propia tipo capos en un muelle de pescadores de Sinaloa, la mañana del 24 de diciembre. Conflicto nuevo (las premisas 1-8 de fuentes/atrium-vista/resumen.md ya estaban hechas). El licenciado Ruelas, administrador nuevo del muelle, le riega el pescado a don Cheyo y le encadena la lancha: "Media hora, don Cheyo. Y esta lancha es mía." Cheyo pide el radio: "Vinieron por su lancha." Llega don Arcadio en tres lanchas: la Golondrina es suya y se la regaló a Cheyo el día que lo sacó del mar. Plazo invertido: Ruelas tiene hasta que suba la marea para decir quién lo mandó. Gancho P2: en el celular de Ruelas aparece Abelardo, el hermano de Arcadio.
+- Con Navidad (las tres anteriores no la tenían): pescado de la cena de Nochebuena y "esta Nochebuena cenas conmigo".
+- Indicios antes de revelar: golondrina en la proa (i02), "yo nomás la trabajo" (c04), "hoy mismo es suya" (c08, r1), "esa lancha no se toca" (c09), el radio (c13), el anillo con la golondrina (i05).
+- Guion pasado por la skill humanizer.
+- Nombres únicos en pieces/ (Anselmo, Clemente, Baltazar, Evaristo, Gerardo, Octavio, Rogelio y Fulgencio ya existían).
+
+## Marca
+**SIN MARCA**: edit.py, BRAND = "SINMARCA" (kit pieces/_marcas/SINMARCA, sin marca de agua).
+
+## Archivos
+guion.md, caption.txt, lines.json, clips.py (47 clips, copia de chofer-patrona con todas sus defensas: gatito en imagen y control de duplicados), make_sheets.py (5 personajes + LOC_MUELLEPESCA, "ordinary non-famous face"), phr.py, edit.py (EDL vacía, se arma desde renders/phr.json; música cálida de c24 a c27).
+
+## Avance
+- 2026-11-08: archivos escritos. `python -c "import clips"` OK (47 clips = lines.json). Faltan: 6 hojas (make_sheets.py), clips, QA, phr.py, EDL y montaje. NO se generó nada en Flow.
+- 2026-11-08 noche: 6 hojas OK a ojo. Clips 47/47 al 1.er intento, sin md5 duplicados. QA: sin regeneraciones. c03 dice "y le toca una multa" (sin cifra; los 40 mil quedan en c22); c06 traba la 2.ª frase → solo 1.ª; c15 omite "Apá". i03/i04/i02 tienen cortes internos (usados tramos limpios). Crops de borde en renders/edlcfg.json.
+- renders/share.mp4: 134.7 s, 84 tramos (1.62 s/tramo), -14.2 LUFS, -2.1 dBTP, sync 0 ms en 5 puntos, BLACK 126.3 s, sin marca. Revisión API: renders/share_revision.md. NO enviado a Telegram.
+
+### `pieces\gardenia\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte1, historia-original]
+relatedTo: [intercambio, sazon-concha, fierro-herradura]
+---
+# gardenia (La Boda de las Gardenias · Parte 1, video 23): estado
+- Historia ORIGINAL, no navideña, inspirada en `DfBf9XjxCJO` ("La quinceañera sin padrinos", 2.1M y 165K likes): es la única ★ del ranking que ninguna pieza había usado. Se toma el mundo, sin quinceañera ni hijos.
+- Fórmula:
+  - Humillación en la 1.ª línea: Leticia, la hermana rica, le dice a Rosaura: "Ya hablé con tus padrinos… Ninguno va a ir a tu boda".
+  - Giro de poder: don Gilberto, el viudo de la gardenia de los sábados, es el dueño del salón Las Gardenias.
+  - Payoff: a Leticia le cierran la puerta, y Rosaura le devuelve la frase "me faltan manos para servir las mesas".
+  - Gancho: Leticia le dice a Abel por teléfono "haz lo que acordamos".
+- Marca: **VISTA STORIES**. La música y la marca de agua salen de pieces/_marcas/VISTA (edit.py, BRAND = "VISTA"); no hay carpeta music/ propia.
+- Archivos listos:
+  - guion.md y caption.txt (formato Parte 1).
+  - lines.json: fuente única de clips.py (475 palabras ≈ 230–240 s).
+  - clips.py, con 39 clips: c01–c34 y r1–r5. Suman 280 s de generación.
+    - Todos los planos con diálogo son de una persona: gaze(side) + ONE + ALONE.
+    - NOSUB + CLEAN + END en cada diálogo.
+    - NODOUBLE en los de riesgo: c01, c02, c06, c11, c18, c26, c27 y c32.
+    - SAFE/SOFT, incluidas las frases fuertes del diálogo.
+    - variant, NOREF (también quita las hojas de locación), TRIES=6, gatito de control y 17 s entre clips.
+    - Acepta IDs, mueve la versión vieja a clips/old/ e imprime "FIN P1".
+  - make_sheets.py: 7 hojas con control md5 DUPLICADO y --reupload; imprime "FIN HOJAS". phr.py.
+  - edit.py:
+    - EDL en borrador por índices de línea, con ganancia 0 en los mudos y BLACK 0.4 s antes de c34.
+    - Música: cama cálida de c20 a c33. Loudnorm en dos pasadas. Salida en renders/v1.mp4.
+- Hojas nuevas (aún no generadas; nombres verificados como únicos en pieces/*/chars, make_sheets.py, clips.py y lines.json): ROSAURA_ALCANTARA, LETICIA_ALCANTARA, ABEL_SANDOVAL, CHONA_BECERRA, GILBERTO_ARRIAGA, LOC_PATIOALCANTARA, LOC_PUERTAGARDENIAS.
+  - Las locaciones son simples: nada religioso, sin adornos, letreros ni utilería suelta (lección de intercambio).
+- Nada generado en Flow todavía.
+- Siguiente:
+  1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO y correr `md5sum chars/*.jpg`. Armar una hoja de contactos y comprobar:
+     - Rosaura sin velo.
+     - Leticia de azul rey con perlas.
+     - Abel lampiño, para distinguirlo de Gilberto (pelo blanco, bigote, abrigo camello).
+     - La mesa del patio vacía.
+     - La puerta del salón sin letras.
+  2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P1", Traceback e "intento 6".
+  3. QA con hoja de fotogramas, tiras de la franja inferior y bordes.
+  4. Regenerar con `python -I clips.py <ids> > clips_log2.txt`.
+  5. `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y `python -I edit.py`.
+  6. Verificar: sincronía en 5 puntos, ritmo ≤ 1.9 s, LUFS y pico, marca. Luego Telegram con caption.txt.
+- Revisar en el QA:
+  - Geografía:
+    - Patio de tarde: Rosaura, Abel y Chona IZQ.; Leticia y Gilberto DER.
+    - Anochecer: Rosaura IZQ., Abel DER.
+    - Noche con un foco: Rosaura IZQ.; Gilberto y Chona DER.
+    - Puerta del salón: Leticia IZQ.; Gilberto y Rosaura DER.
+  - Ningún doble: otro vestido azul, otro vestido blanco, otra mujer de pelo gris.
+  - Nadie en los bordes; nadie que entre caminando.
+  - Utilería:
+    - El pastelito, uno solo y sin tocar (c09).
+    - Una sola gardenia (c14 → c15 → r2).
+    - Una sola olla (c26).
+    - El celular con la pantalla de espaldas (c33, r5).
+    - Ningún sobre, papel ni carpeta inventados.
+  - Sin sombreros, velos ni lentes que aparezcan.
+  - Subtítulos quemados, frases repetidas, 2.ª frase perdida, morphs.
+- Riesgos:
+  - c09: Leticia junto al pastel (que no lo toque ni salgan dos pasteles).
+  - c32/c34: Rosaura en la puerta abierta con luz de adentro (que no aparezca gente ni decoración de salón).
+  - r5: Abel con el celular (pantalla sin contenido, que no "salga" nada de la pantalla).
+  - Pronunciación: "Gardenias", "quítatelo", "pastelito", "lavaderos", "acordamos", "Gilberto".
+
+### `pieces\foto-trucada\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte1, historia-propia, referencias3]
+relatedTo: [huipil-robado, casera-recibos, referencias3]
+---
+# foto-trucada (La Foto que No Era · Parte 1): estado
+
+## La historia
+- Historia propia inspirada en la premisa n.º 3 de fuentes/referencias3/resumen.md (ref ★ 7691753795893710100 de @eltiomoet, 3.3M). Mismos beats del viral con personajes, diálogo y trampa nuevos; atuendos de la ref en otros colores.
+- A Norma la corren por chismosa y culpa a Rocío, la vecina costurera. Su hija Karla (25) le arregla una foto "para una broma"; la foto aparece en el grupo de la colonia, Hugo se va y la clientela de Rocío desaparece. Gancho: Karla reconoce su trabajo, se lo confiesa a Rocío y lo dirá en la junta de vecinos del domingo; Norma las ve juntas. Sin Navidad.
+- Guion pasado por la skill humanizer: frases cortas de telenovela, sin rayas ni contrastes de relleno.
+
+## Marca
+**MEXI STORIES**: edit.py, BRAND = "MEXI". Música y marca de agua de pieces/_marcas/MEXI (brand, brand_wm). Sin carpeta music/ propia.
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 1, #parte1).
+- lines.json: fuente única de clips.py (430 palabras, unos 190–200 s en bruto; montaje objetivo 2:20–2:40).
+- clips.py, con 33 clips (c01–c29 y r1–r4), 228 s de generación.
+  - Todos los planos son de una persona: gaze(side) + ONE + ALONE.
+  - NOSUB + CLEAN + END en cada diálogo; NODOUBLE en los de riesgo.
+  - SAFE/SOFT, incluidas las frases fuertes del diálogo.
+  - variant, NOREF (también quita las hojas de locación), TRIES=6, gatito de control, reload_flow() en fallos y 17 s entre clips.
+  - Acepta IDs, mueve la versión vieja a clips/old/ e imprime "FIN P1".
+- make_sheets.py: 9 hojas (6 personajes, 3 locaciones) con control md5 DUPLICADO y --reupload; imprime "FIN HOJAS".
+- phr.py.
+- edit.py: EDL en borrador por índices de línea, ganancia 0 en los mudos y BLACK 0.4 s antes de c29. Música: suspenso hasta c23, cama cálida de c23 a c28 (Karla busca a Rocío y confiesa) y suspenso de c28 al final. Loudnorm en dos pasadas y --remix. Salida en renders/v1.mp4.
+
+## Hojas nuevas
+Aún no se generaron. Nombres verificados como únicos en pieces/*/clips.py y make_sheets.py.
+- Personajes: NORMA_BECERRIL, ERNESTO_BECERRIL, ROCIO_MONTIEL, HUGO_MONTIEL, KARLA_BECERRIL y CLOTILDE_RAMOS.
+- Locaciones: LOC_CALLECOLONIA, LOC_DEPAKARLA y LOC_COSTURAROCIO.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, correr `md5sum chars/*.jpg` y armar hoja de contactos: Norma (permanente rojizo, fucsia) contra Clotilde (pelo gris, cárdigan rosa); Ernesto (bigote gris) contra Hugo (barba negra); Rocío (mostaza) contra Karla (mezclilla negra).
+2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P1", Traceback e "intento 6".
+3. QA con hoja de fotogramas, franja inferior y bordes. Regenerar con `python -I clips.py <ids> > clips_log2.txt`.
+4. `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y correr `python -I edit.py` (o `--remix`).
+5. Verificar sincronía en 5 puntos, ritmo ≤ 1.9 s, LUFS y pico, y la marca MEXI STORIES visible a tamaño real (arriba a la derecha).
+6. Telegram con caption.txt (3er arg = MEXI).
+
+## Revisar en el QA
+- Geografía: calle escena 1, Ernesto DER. y Norma IZQ.; calle escenas 2 y 6, Norma IZQ. y Rocío DER.; cocina, Karla IZQ. y Norma DER.; calle escena 4, Rocío IZQ. y Hugo DER.; costura, Rocío IZQ. y Clotilde DER.; calle de noche, Karla IZQ. y Rocío DER.
+- Dobles: ninguna segunda blusa fucsia, blusa mostaza, chamarra de mezclilla negra, franela a cuadros, polo azul marino ni cárdigan rosa.
+- Utilería: celular con la pantalla de espaldas (la foto nunca se ve); una sola maleta café; vestido azul de Clotilde; cinta métrica de Rocío en todos sus planos.
+- Calle: sin números de casa ni letreros; la casa verde y la durazno iguales en todos los planos; de noche, dos cajas de cartón junto a la cochera.
+- Fallos de Omni: subtítulos quemados, frases repetidas, 2.ª frase perdida y morphs.
+- Pronunciación de "Clotilde", "mustia", "pásemela" y "delatar".
+
+### `pieces\fonda-chela\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte1, historia-propia, capos]
+relatedTo: [reten-sierra, medalla-mezcal, foto-trucada, atrium-vista]
+---
+# fonda-chela (El Jefe Nuevo · Parte 1): estado
+
+## La historia
+- Historia propia tipo capos, sobre la premisa n.º 1 de fuentes/atrium-vista/resumen.md. Saúl, el jefe nuevo, le cobra a doña Chela 50 mil antes del domingo. Ella le manda el café a la mesa del fondo, donde desayuna don Macario, el que le dio el pueblo. Hay convoy de siete camionetas, el anillo, un plazo (lo que dura el café) y el maletín cerrado. Macario deja que Chela decida; el castigo queda para la Parte 2. Sin Navidad.
+- Guion pasado por la skill humanizer: frases de 8 palabras como máximo (salvo el CTA), sin contrastes de relleno.
+
+## Marca
+**VISTA STORIES**: edit.py, BRAND = "VISTA". Música y marca de agua de pieces/_marcas/VISTA (brand, brand_wm). Sin carpeta music/ propia.
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 1, #parte1).
+- lines.json: fuente única de clips.py (389 palabras).
+- clips.py, con 48 clips (c01–c36 hablados, i01–i07 insertos sin caras, r1–r5 reacciones mudas), 320 s de generación.
+  - Planos hablados de una persona: gaze(side) + ONE + ALONE; NOSUB + CLEAN + END en cada diálogo; NODOUBLE en los de riesgo.
+  - SAFE/SOFT, incluidas las frases fuertes del diálogo; variant, NOREF (también quita las hojas de locación), TRIES=6, gatito de control, reload_flow() y 17 s entre clips.
+  - Acepta IDs, mueve la versión vieja a clips/old/ e imprime "FIN P1".
+- make_sheets.py: 7 hojas (5 personajes, 2 locaciones) con control md5 DUPLICADO y --reupload; imprime "FIN HOJAS".
+- phr.py.
+- edit.py: EDL en borrador por índices de línea (85 segmentos), mudos con ganancia 0, i01 de ~1 s y BLACK 0.4 s antes de c36. Música: suspenso hasta c30, cálida de c30 a c33 y suspenso hasta el final. Salida en renders/v1.mp4.
+
+## Hojas nuevas
+Aún no se generaron. Nombres verificados como únicos en pieces/*/clips.py y make_sheets.py (ni el nombre ni el apellido se repiten).
+- Personajes: CHELA_VILLEGAS, TAVO_VILLEGAS, SAUL_BETANCOURT, ROLANDO_ALCOCER (el Güero) y MACARIO_LEDESMA.
+- Locaciones: LOC_FONDACHELA y LOC_CALLEFONDA.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, correr `md5sum chars/*.jpg` y armar hoja de contactos: Chela (gris, lila) contra Macario; Saúl (barba, traje gris) contra el Güero (rubio, chamarra de piel negra); Tavo (camisa blanca).
+2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P1", Traceback e "intento 6".
+3. QA con hoja de fotogramas, franja inferior y bordes. Regenerar con `python -I clips.py <ids> > clips_log2.txt`.
+4. `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y correr `python -I edit.py` (o `--remix`).
+5. Verificar sincronía en 5 puntos, ritmo de 2 s o menos de media, LUFS y pico, y la marca VISTA STORIES visible a tamaño real (arriba al centro).
+6. Telegram con caption.txt (3er arg = VISTA).
+
+## Revisar en el QA
+- Geografía: en el mostrador, Chela IZQ. y Saúl DER.; en la mesa del fondo, Saúl de pie IZQ. y Macario sentado DER.; el Güero en la puerta mira a la IZQ.
+- Dobles: ningún segundo traje gris, chamarra de piel negra, sombrero gris ni mandil blanco.
+- Utilería: un solo jarro de barro (Macario no tiene taza antes de c14); anillo en la mano DERECHA de Macario; maletín siempre CERRADO; camionetas sin logos ni placas.
+- Poder sin armas: los escoltas de i03 de manos cruzadas, nada en las manos.
+- Fallos de Omni: subtítulos quemados, frases repetidas, 2.ª frase perdida y morphs.
+- Pronunciación de "Macario", "Ledesma", "cafecito" y "fiado".
+
+### `pieces\fonda-chela-p2\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte2, historia-propia, capos]
+relatedTo: [fonda-chela, reten-sierra-p2, atrium-vista]
+---
+# fonda-chela-p2 (El Jefe Nuevo · Parte 2): estado
+
+## La historia
+Parte 2 de pieces/fonda-chela. Se acabó el café y decide Chela: Saúl devuelve los 200 mil casa por casa, a pie, antes de las doce (campanario y reloj como cuenta atrás). Sus camionetas y sus muchachos pasan a Macario; el Güero cambia de lealtad. Chela lo deja un año de mesero (callback a "Yo no soy su mesero"). Gancho a la Parte 3: la mitad de lo cobrado iba cada domingo al que se lo recomendó a Macario, alguien que come en su mesa. Sin armas ni sangre. Sin Navidad. Guion pasado por la skill humanizer.
+
+## Marca
+**VISTA STORIES**, la misma de la Parte 1 (no entra en la rotación): edit.py, BRAND = "VISTA". Sin carpeta music/ propia.
+
+## Archivos listos
+- guion.md, caption.txt ("· Parte 2", #parte2, anuncia la tercera parte).
+- lines.json: fuente única de clips.py (398 palabras).
+- clips.py: 48 clips (c01–c34 hablados, i01–i08 insertos sin caras, r1–r6 reacciones mudas), 298 s de generación. Copia del clips.py de fonda-chela con todas sus defensas: SAFE/SOFT (con las frases fuertes de este diálogo), variant, NOREF, TRIES=6, gatito de control, reload_flow(), new_project() (proyecto nuevo + make_sheets --reupload), comprobación de descarga corrupta con ffmpeg, 17 s entre clips. Acepta IDs, mueve la versión vieja a clips/old/ e imprime "FIN P2".
+- make_sheets.py: las 7 hojas de la Parte 1 ya copiadas en chars/; con --reupload las sube al proyecto activo (las copias de fonda-chela y fonda-chela-p2 no cuentan como DUPLICADO; también se ajustó fonda-chela/make_sheets.py para ignorar la copia de la P2). Imprime "FIN HOJAS".
+- phr.py.
+- edit.py: EDL en borrador por índices de frase (83 tramos), mudos con ganancia 0, BLACK 0.4 s antes de c34. Música: suspenso hasta c16, cálida de c16 a i07, suspenso hasta el final. Salida en renders/v1.mp4.
+
+## Hojas
+Ninguna nueva. CHELA_VILLEGAS, TAVO_VILLEGAS2, SAUL_BETANCOURT2, ROLANDO_GUERO2, MACARIO_LEDESMA2, LOC_FONDACHELA, LOC_CALLEFONDA (copias de pieces/fonda-chela/chars).
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py --reupload > sheets_log.txt` (proyecto Flow activo; imprime "FIN HOJAS").
+2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P2", Traceback e "intento 6".
+3. QA con hoja de fotogramas, franja inferior y bordes (qa_clips.md). Regenerar con `python -I clips.py <ids> > clips_log2.txt`.
+4. `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y correr `python -I edit.py`.
+5. Verificar sincronía en 5 puntos, ritmo de 2 s o menos de media, LUFS y pico, y la marca VISTA STORIES visible (arriba al centro).
+6. Telegram con caption.txt (3er arg = VISTA).
+
+## Revisar en el QA
+- Saúl: si un clip sale en el intento 5 (sin hoja), compararlo cara a cara con SAUL_BETANCOURT2 y con los demás clips de Saúl (canas en las sienes, barba unida al bigote, traje gris carbón oscuro, no azul ni beige).
+- El Güero: que sea el de la hoja ROLANDO_GUERO2 (rubio rapado, chivo, chamarra de piel), igual que c06/c22 de la Parte 1.
+- Geografía: mesa del fondo con Saúl de pie IZQ. y Macario sentado DER.; Chela en el mostrador mira a la DER.; en la calle Tavo IZQ. y Saúl DER.
+- Utilería: un solo jarro; el anillo en la mano DERECHA de Macario; el maletín cerrado hasta i08 (ahí vacío); sobres cerrados, sin billetes; tres llaves en i03; el mandil de Saúl solo desde c27/r6.
+- Campanario sin reloj ni letras; reloj de pulsera sin números legibles.
+- Fallos de Omni: subtítulos quemados, frases repetidas, 2.ª frase perdida, morphs, dobles en el borde.
+
+## Montaje v1 (2026-11-08)
+- QA en qa_clips.md (lv3.py large-v3 → renders/lv3.json, hojas de contacto, bordes cada 0.25 s). Todo se arregló en la edición salvo **c13** (Saúl con otra cara en el intento 5 sin hoja): regenerado con prompt nuevo; con hoja vuelve a dar "políticas" y salió de nuevo en el intento 5 sin hoja, ahora parecido (pelo, barba, traje). Viejo en clips/old/c13_v1.mp4. Un 3.er intento (diálogo suavizado) también salió sin hoja y con borde sucio (old/c13_v3.mp4): se quedó la v2. Si el usuario lo pide, la salida es quitar c13 del montaje (c12 → c14 se entiende).
+- edit.py = plantilla viuda-aguacate con BRAND = "VISTA" (borrador viejo en edit_borrador.py). Crops de borde c01 c03 c06 c11 c16 c18 c23 c26 c27 c30; c27 sale antes del "atiendo primero" repetido; i06 solo el reloj (1.55–2.90); i08 maletín abierto vacío; i07 campanas reales a −6 dB.
+- renders/share.mp4: 156.8 s, 81 tramos / 97 planos, 1.61 s/plano (58 cortes con scene>0.3), −14.2 LUFS, pico −1.7 dBFS, sincronía 0 ms en 5 puntos. Revisión API: renders/share_revision.md.
+- caption.txt en formato Parte 2. No enviado a Telegram.
+
+### `pieces\fierro-herradura\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte1, historia-original, feria-ganadera]
+relatedTo: [camionero, posada, nochebuena]
+---
+# fierro-herradura (El Fierro de Herradura · Parte 1, video 20): estado
+- Historia ORIGINAL (no navideña) inspirada en `DfIHLMYtKee` (feria ganadera, 6.7M vistas, n.º 1 de fuentes/referencias2/ranking.md). Fórmula: humillación en la 1.ª línea → giro de poder (el libro de fierros) → payoff (Lucero gana) → gancho (la firma de Mauricio).
+- Marca: **VISTA STORIES**. Música y marca de agua de pieces/_marcas/VISTA (edit.py, BRAND = "VISTA"); no hay music/ propia.
+- Archivos listos:
+  - guion.md y caption.txt (formato Parte 1).
+  - lines.json: fuente única de clips.py.
+  - clips.py, con 35 clips: c01–c30, r1–r3, i1 e i2. Son 244 s hablados en bruto.
+    - Todos los planos con diálogo son de una persona: `gaze(side)` + ONE + ALONE. Nunca "looking at X off-screen".
+    - NOSUB y END al final de cada diálogo; NODOUBLE en los planos de riesgo.
+    - Una pieza de cada utilería: un toro, un libro, un listón, un sombrero por personaje.
+    - SAFE/SOFT con \b, variant, NOREF (también quita la hoja del toro), TRIES=6, 17 s entre clips y gatito de control.
+    - Guarda en clips/, imprime "FIN P1", acepta IDs y mueve la versión vieja a clips/old/.
+  - make_sheets.py: 9 hojas nuevas (5 personajes, 3 locaciones y el toro) + control md5 DUPLICADO; --reupload.
+  - phr.py.
+  - edit.py: EDL en borrador por índices de línea, ganancia 0 en los mudos, BLACK 0,4 s antes del CTA, camas en c22 y c27, loudnorm en dos pasadas, salida renders/v1.mp4.
+- Hojas nuevas (aún no generadas): JACINTA_CORRAL, FULGENCIO_ARREDONDO, CRISTOBAL_ARREDONDO, LEOCADIO_JUEZ, ELOISA_REGISTRO, LOC_CORRALFERIA, LOC_OFICINAASOC, LOC_PISTAFERIA, PROP_TOROLUCERO.
+- Nada generado en Flow todavía.
+- Siguiente:
+  1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, correr `md5sum chars/*.jpg` y armar una hoja de contactos. Cada nombre tiene que ser su persona o lugar, los personajes no se parecen entre sí, cada uno lleva un solo sombrero (Cristóbal y Eloísa sin sombrero) y el toro tiene una sola estrella y un solo fierro.
+  2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P1", Traceback e "intento 6".
+  3. QA con hoja de fotogramas y tiras de la franja inferior.
+- Revisar en el QA:
+  - Geografía: corral (Jacinta y Lucero IZQ., Fulgencio y Cristóbal DER., Leocadio CENTRO), oficina (libro y Eloísa IZQ.), pista (Jacinta IZQ., Cristóbal y Eloísa DER.).
+  - Nadie en los bordes y ningún doble (sombrero flotando, segundo vaquero).
+  - Un solo toro, siempre el mismo (estrella blanca, fierro en la anca izquierda); un solo libro, ilegible; un solo listón sin letras.
+  - Leocadio sin insignias ni nada que parezca uniforme; nadie señala con el dedo.
+  - Subtítulos quemados, frases repetidas, morphs, personajes que entran caminando.
+- Regenerar con `python -I clips.py <ids> > clips_log2.txt`. Luego `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y `python -I edit.py`. Verificar (sincronía en 5 puntos, ritmo ≤ 1,9 s, LUFS y pico, marca) y mandar a Telegram con caption.txt.
+- Riesgos:
+  - c07, i2 y c30: el toro junto a una persona.
+  - i1: el libro sin texto legible.
+  - c30: el CTA con gestos y el sombrero liso.
+  - Pronunciación de "Fulgencio", "Leocadio", "Eloísa", "Arredondo", "acompáñenla" y "anca".
+- 2026-11-06: c17 e i2 regenerados y revisados (c17 vuelve a traer un sombrero crema en el borde DER. → crop=608:1081:0:0 en todo el clip; i2 sin letras, se usa 2.9-4.4). edit.py y phr.py copiados de nochebuena, renders/phr.json regenerado, EDL por frases (large-v3). renders/v1.mp4: 160.7 s, 81 planos, -14.1 LUFS, -1.8 dBTP, sincronía ≤ 1 fotograma en 5 puntos, transcripción completa en orden. Falta: visto bueno del usuario y Telegram.
+
+### `pieces\encendedor\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories]
+relatedTo: [padre-veladoras, chocolate-rancho, hacienda-sangre, reten-sierra, medalla-mezcal, agua-hacienda]
+---
+# encendedor (El Encendedor) — estado
+- Remake de 7702851598850018591 ("Parte 3 FINAL | 20 años esperando la verdad", 91K): era el de más vistas sin rehacer (queda solo la Parte 2, 47K). Cuenta VISTA STORIES (la 6.ª, padre-veladoras, fue MAJESTIC). Archivos listos: guion.md, make_sheets.py, clips.py (35 clips: 33 hablados + r1, r2), edit.py (copia de padre-veladoras, EDL vacía, marca VISTA STORIES, cálida entre c28 y c33), music/ (copia de padre-veladoras), caption.txt. Nada generado en Flow todavía.
+- Assets nuevos (únicos frente a agua-hacienda, medalla-mezcal, reten-sierra, hacienda-sangre, chocolate-rancho y padre-veladoras): CONSUELO, SANTIAGO, CIRILO, BALTASAR, ROQUE, LEANDRO, LOC_ESTUDIO, LOC_BODEGA, LOC_PATIO, LOC_ESTACION, LOC_CORREDOR, PROP_ENCENDEDOR.
+- Siguiente: `python -I make_sheets.py > sheets_log.txt`, revisar las hojas (md5 y que cada nombre tenga su imagen: bug de Flow que corre imágenes un nombre), luego `python -I clips.py > clips_log.txt`, QA por agente (bordes y ropa), regenerar malos, armar la EDL por frases en edit.py, `python -I edit.py`, verificación completa, Telegram.
+- Riesgos: c01 (Leandro hablando dentro de la pantalla de la laptop, lip sync), hoja de CIRILO (camuflaje; si Flow lo frena, NOREF), c08 (copa de tequila; SOFT la cambia por agua), c04-c07 (muchacho retenido: sin cuerdas ni golpes), r1 (estación con cuatro personajes), c19/c20 (el encendedor debe ser el mismo de la hoja), c33 (CTA con movimiento orgánico). Pronunciación de "Baltasar", "Cirilo", "Ordaz", "encendedor", "licenciada".
+- Política: sin policías, placas ni chalecos (la copia la tiene una abogada; Cirilo va a declarar), sin armas, sin contacto brusco (Baltasar no agarra a Roque), sin dinero, Santiago con edad numérica (25).
+
+## Entregado (2026-11-04)
+- renders/v1.mp4: 2:02, 76 planos media 1.61 s, -14.7 LUFS, pico -1.8, sync 0 frames. SAGA FILMS. Enviado a Telegram.
+- v2 (2026-11-04): c01 regenerado (Leandro dentro de la laptop). Enviado a Telegram.
+
+### `pieces\cincha-cortada\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte1, historia-propia, capos, caballos]
+relatedTo: [chofer-patrona, mariachi-patron, viuda-aguacate, reten-sierra, atrium-vista]
+---
+# cincha-cortada (La Cincha Cortada · Parte 1): estado
+
+## La historia
+- Historia propia tipo capos en las carreras de caballos de Sonora. Las premisas 1-8 de fuentes/atrium-vista/resumen.md ya estaban hechas, así que el conflicto es nuevo. El licenciado Arteaga tira la cubeta del agua de Centella: "Veinte minutos, viejo. Y tu caballo pierde." Apostó tres millones y presume los papeles del rancho de doña Teodora. Jacinto, el ayudante, le cortó la cincha a cambio de cien mil. Teodora llega con su gente: los papeles ya son suyos y Arteaga le debe tres millones antes de que acabe la carrera, en cinco minutos. Gancho P2: "el dinero salió de su casa". Sin Navidad.
+- Indicios antes de revelar: Jacinto quiere ensillar (c09), Arteaga sabe lo de la cincha nueva (c10, r1), "nomás tú y yo sabíamos" (c12), botas de avestruz nuevas (i03, c14), celular escondido (r2).
+- Guion pasado por la skill humanizer.
+- Nombres únicos en pieces/ (Cruz, Lalo, Lucero, Octavio, Leonel, Ofelia y Valdivia ya existían).
+
+## Marca
+**MEXI STORIES**: edit.py, BRAND = "MEXI" (kit pieces/_marcas/MEXI).
+
+## Archivos
+guion.md, caption.txt, lines.json, clips.py (47 clips, copia de chofer-patrona con todas sus defensas), make_sheets.py (5 personajes + LOC_CABALLERIZA + CABALLO_CENTELLA, "ordinary non-famous face"), phr.py, edit.py (EDL vacía, se arma desde renders/phr.json; música cálida de c23 a c27).
+
+## Avance
+- 2026-11-08: archivos escritos. `python -c "import clips"` OK (47 clips = lines.json). Faltan: 7 hojas (make_sheets.py), clips, QA, phr.py, EDL y montaje. NO se generó nada en Flow (había otra pieza generándose).
+- 2026-11-08 noche: 7 hojas OK a ojo (md5 únicos). Clips 47/47 (c36 en intento 2), sin md5 duplicados. QA: transcripción = lines.json en los 36 diálogos; sin regeneraciones. Crops de borde en c10/c18/c19/c23 (renders/edlcfg.json).
+- renders/share.mp4: 147.0 s, 86 tramos (1.73 s/tramo), -14.4 LUFS, -1.7 dBTP, sync 0 ms en 7 puntos, BLACK 139.7 s. Revisión API: renders/share_revision.md. NO enviado a Telegram.
+
+### `pieces\chofer-patrona\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte1, historia-propia, capos, chofer]
+relatedTo: [mariachi-patron, viuda-aguacate, fonda-chela, reten-sierra, atrium-vista]
+---
+# chofer-patrona (El Chofer de la Patrona · Parte 1): estado
+
+## La historia
+- Historia propia tipo capos sobre la premisa n.º 5 de fuentes/atrium-vista/resumen.md. Valente, hijo de la patrona, tiene de rodillas a Lencho, el chofer de veinte años: "Diez minutos, Lencho. O aparece el medio millón." Lencho pide la cámara de la camioneta. Llega doña Eusebia con su gente y la grabación muestra a Valente abriendo la cajuela con su llave. Plazo invertido: hasta mañana o no vuelve a la casa. Gancho P2: el maletín lo recibió Treviño, "el que se llevó a tu padre". Sin Navidad.
+- Se diferencia de camionero (también un chofer acusado, con cámaras): aquí no hay cuarto de monitores. La grabación sale en una tableta y la pista son las dos llaves y el "ya la revisé anoche".
+- Indicios antes de revelar: dos llaves (c05-c06), mano al bolsillo (r1), llamada de Treviño (c11), "ya la revisé anoche" (c14).
+- Guion pasado por la skill humanizer.
+- Nombres únicos en pieces/ (Rodrigo, Socorro, Isidro, Herminia, Mauricio, Fausto, Matilde y Leopoldo ya existían).
+
+## Marca
+**MAJESTIC STORIES**: edit.py, BRAND = "MAJESTIC" (kit pieces/_marcas/MAJESTIC).
+
+## Archivos
+guion.md, caption.txt, lines.json, clips.py (47 clips, copia de mariachi-patron con todas sus defensas), make_sheets.py (5 personajes + LOC_COCHERARANCHO, "ordinary non-famous face"), phr.py, edit.py (EDL vacía, se arma desde renders/phr.json; música cálida de c21 a c25).
+
+## Avance
+- 2026-11-08: archivos escritos. `python -c "import clips"` OK (47 clips = lines.json). Faltan: 6 hojas (make_sheets.py), clips, QA, phr.py, EDL y montaje. NO se generó nada en Flow (había otra pieza generándose).
+- 2026-11-08 tarde: hoja VALENTE_MONTALVO parecida a Adrien Brody → chars/mal; nueva VALENTE_MONTALVO2 (mestizo, bigote fino). Clips 47/47 (FIN P1; c01 salió en intento 5 = NOREF, otra cara).
+- QA: c01 regenerado con línea 2 cambiada en lines.json a "O aparece ese maletín." (con hoja, "el medio millón" daba bloqueo de políticas en 6 intentos; la cifra queda en c22). c08 subtítulos quemados → crop 480x853 arriba. c26 traba "su tierra, su tiempo" → solo 1.ª frase. Bordes/crops en renders/edlcfg.json. c18 morph de pelo ~5.2 s (fuera del tramo).
+- Revisión API v1 → v2: fuera i01 (hombre sin torso, artefacto), c35 regenerado con CTA "¿...la patrona debe perdonar a Valente?" (Eusebia nunca se nombra), c33 arranque 0.56 (cortaba "Pa-trona") con crop de borde, insertos i04/i05/r5 acortados, alimiter 0.76 (AAC pasaba de -1 dBTP).
+- renders/share.mp4: 131.2 s, 82 tramos (1.61 s/tramo), -14.3 LUFS, -2.2 dBTP, sync 0 ms en 5 puntos, BLACK 123.8 s. NO enviado a Telegram.
+
+### `pieces\chofer-patrona-p2\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte2, historia-propia, capos, chofer]
+relatedTo: [chofer-patrona, mariachi-patron-p2, viuda-aguacate-p2, atrium-vista]
+---
+# chofer-patrona-p2 (El Chofer de la Patrona · Parte 2): estado
+
+## La historia
+Es la Parte 2 de pieces/chofer-patrona. Valente confiesa que Treviño le cobró una supuesta deuda de su papá. Llega Treviño en la troca blanca con un pagaré "del doce de mayo", y Lencho recuerda que ese día el patrón estaba internado y él mismo lo llevó. Eusebia cierra el portón, recupera el maletín y le quita la troca blanca, que era de su marido. Treviño sale a pie por la puerta chica. Valente le pide perdón a "don Lencho". Lencho sabía que era él y no lo acusó porque el papá le pidió que lo cuidara. Castigo: Valente pasa a ser el chofer de Lencho. Chema se queda con la caballeriza y la troca es para Lencho. Cierre: "Al panteón, joven. Vamos a ver a su papá." CTA con dilema y la historia queda cerrada. No hay armas, sangre, cifras de dinero ni Navidad.
+
+## Marca
+**MAJESTIC STORIES**, la misma de la Parte 1 (no entra en la rotación): edit.py, BRAND = "MAJESTIC".
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 2, #parte2).
+- lines.json es la fuente única de clips.py: 373 palabras y la primera línea sin cifras.
+- clips.py tiene 46 clips: c01-c34 hablados, i01-i08 insertos sin caras y r1-r4 reacciones mudas. Es copia del clips.py de chofer-patrona, con gatito en imagen, reload_flow, new_project, control de descarga corrupta, duplicados md5, TRIES=6, SOFT con frases alternativas y NOREF con Treviño. Imprime "FIN P2". py_compile da OK y las claves coinciden con lines.json.
+- make_sheets.py usa las 6 hojas de la Parte 1 copiadas en chars/ (FLORENCIO_ARAMBULA, VALENTE_MONTALVO2, EUSEBIA_MONTALVO, BRIGIDO_TOSTADO, CHEMA_ARAMBULA, LOC_COCHERARANCHO) y **1 hoja nueva: LISANDRO_TREVINO**. Las copias no cuentan como DUPLICADO porque se saltan chofer-patrona y chofer-patrona-p2. Ojo: el `--reupload` de chofer-patrona/make_sheets.py (P1) no salta la carpeta p2 y ahora marcaría sus hojas como DUPLICADO. No hace falta porque la P1 está terminada.
+- phr.py.
+- edit.py: copia del edit.py de chofer-patrona con la EDL vacía (se arma desde renders/phr.json) y BLACK de 0,4 s antes de c34. Música: suspenso hasta c21, cálida de c21 a i08 y suspenso hasta el final.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py --reupload > sheets_log.txt`: sube las 6 copias, genera y sube LISANDRO_TREVINO e imprime "FIN HOJAS". Revisar md5 y que Treviño no se parezca a nadie famoso ni a otro personaje.
+2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P2", Traceback e "intento 6".
+3. QA (qa_clips.md): bordes y ropa, la tableta plana en i01, la troca blanca igual en todos los planos, Treviño con lentes y Brígido con sombrero. Regenerar con `python -I clips.py <ids> > clips_log2.txt`.
+4. `python -I phr.py`, armar la EDL y correr `python -I edit.py`.
+5. Verificar sincronía en 5 puntos, ritmo ≤2 s, LUFS y pico, y la marca MAJESTIC STORIES arriba a la izquierda.
+- 2026-11-09: hoja nueva LISANDRO_TREVINO OK a ojo (md5 único); 6 de la P1 resubidas. Clips 46/46. QA: regenerados c34 (CTA: primer plano, media sonrisa, ceja, pausa, levanta la llave) y c02 (con hoja Omni bloqueaba "Que si no pagaba, perdíamos el rancho" → lines.json "Y que el rancho estaba en juego, madre."; ahora con hoja de Valente). i01 (tableta) va después de c01 para abrir con Eusebia hablando; i02 acortado.
+- renders/share.mp4: 142.0 s, 82 tramos (1.75 s/tramo), -14.3 LUFS, -2.0 dBTP, sync 0 ms en 5 puntos, BLACK 134.0 s, MAJESTIC arriba a la izquierda. Revisión API v1: renders/share_revision.md. NO enviado a Telegram.
+
+### `pieces\chocolate-rancho\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories]
+relatedTo: [hacienda-sangre, reten-sierra, medalla-mezcal]
+---
+# chocolate-rancho (La Taza de Chocolate) — estado
+- Remake de 7697331061650476319 (Leche P2, 260K), contado como Parte 1 que se entiende sola. Cuenta VISTA STORIES (la 4.ª, hacienda-sangre, fue MAJESTIC). Archivos listos: guion.md, make_sheets.py, clips.py (36 clips), edit.py (plantilla hacienda-sangre, marca VISTA STORIES, 4 tramos de música), music/ (copia), caption.txt. Nada generado en Flow todavía.
+- Assets nuevos (únicos frente a agua-hacienda, medalla-mezcal, reten-sierra y hacienda-sangre): RENATA, PRUDENCIO, EULALIA, DAMIAN, BENAVIDES, LOC_HUERTO, PROP_TAZA.
+- Siguiente: `python -I make_sheets.py > sheets_log.txt`, revisar las hojas (md5 y que cada nombre tenga su imagen: bug de Flow que corre imágenes un nombre), luego `python -I clips.py > clips_log.txt`, QA por agente, regenerar malos, `python -I edit.py`, verificación completa, Telegram.
+- Riesgos: c01 (carpeta delante de Prudencio de espaldas: que no se mezclen caras), r1 (abrazo de tres), c25 (sobre en las manos), c32 (taza en primer plano), r3 (Renata junto a la camioneta). Pronunciación de "Prudencio", "Eulalia", "Benavides", "despacito".
+- Política: sin banco, deuda ni dinero. El conflicto es un plazo de escrituras no registradas; el héroe registra las escrituras y compra la empresa.
+
+## Entregado (2026-11-04)
+- renders/v1.mp4: 2:28, 71 planos, -14.6 LUFS, pico -1.6, sync 0 frames. VISTA STORIES. Enviado a Telegram.
+
+### `pieces\chocolate-rancho-p2\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte2]
+relatedTo: [chocolate-rancho]
+---
+# chocolate-rancho-p2 (La Taza de Chocolate · Parte 2): estado
+- Marca: **VISTA STORIES** (la misma de la Parte 1, no entra en la rotación).
+- Archivos listos: guion.md, lines.json (diálogos, fuente única de clips.py), clips.py (41 clips: c01–c35 + i1, i2, r1–r4; SAFE/SOFT con \b, variant, NOREF, TRIES=6, 17 s entre clips, gatito de control, salida clips/, imprime "FIN P2", acepta IDs por argumento y mueve la versión vieja a clips/old/), edit.py (plantilla reten-sierra v4, EDL en borrador con índices de línea, VISTA STORIES 22 px alpha 80 y=135, salida renders/v1.mp4), make_sheets.py, caption.txt, music/ (copia de la Parte 1).
+- chars/: las 7 hojas de la Parte 1 (RENATA, PRUDENCIO, EULALIA, DAMIAN, BENAVIDES, LOC_HUERTO, PROP_TAZA), revisadas en hoja de contactos: todas correctas, md5 distintos.
+- Hoja nueva: **LOC_DESPACHOROBLES** (oficina de Damián). Ningún personaje nuevo.
+- Nada generado en Flow todavía.
+- Siguiente: `python -I make_sheets.py --reupload > sheets_log.txt` (sube las 7 hojas de la Parte 1 y genera LOC_DESPACHOROBLES; imprime "FIN HOJAS P2"), revisar la hoja nueva y `md5sum chars/*.jpg`, `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P2", Traceback e "intento 6"), QA (bordes: Renata IZQUIERDA en la oficina / Prudencio-Eulalia IZQUIERDA en el rancho; un solo sombrero; una sola carpeta y una sola taza; subtítulos quemados; frases repetidas; Benavides sin carpeta), regenerar con `python -I clips.py <ids> > clips_log2.txt`, montar con edit.py (pasar el EDL a rangos, renders/phr.json), verificar, Telegram con caption.txt.
+- Riesgos: c04 (entrada por la puerta, Damián y Benavides en cuadro), c19 (SH con Prudencio de espaldas y Damián detrás), i2 (taza y concha: que no salgan dos tazas), r3/c31 (pronunciación de "Esperanza Robles").
+- 2026-11-05: QA de los 7 regenerados OK (qa_clips.md). Montaje renders/v1.mp4 (159.5 s, 86 tramos + 0.4 s de negro, kit _marcas/VISTA) verificado: -14.2 LUFS, -1.3 dBTP, sync +5 ms en 5 puntos, transcripción completa. Falta: revisión del usuario y Telegram con caption.txt.
+
+### `pieces\cenote-campana\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte1, remake-transformado, capos, yucatan, cenote]
+relatedTo: [reten-sierra, golondrina-muelle, chofer-patrona, atrium-vista]
+---
+# cenote-campana (La Campana del Cenote · Parte 1): estado
+
+## Video base
+- Remake transformado de **El Retén P1** de @atriumstories_: "Le pidió 200 mil en el retén… y terminó rodeado" (7701749432621993246, **1.1M vistas**, 113 s, 62 planos). Análisis: `fuentes/atriumstories/videos/7701749432621993246_analisis.md`.
+- Los tres videos de Atrium con más de 1M ya tenían remake: Leche 1.7M (agua-hacienda y chocolate-rancho), la patrona y el secreto de 20 años 1.5M (medalla-mezcal) y El Retén 1.1M (reten-sierra). Se eligió El Retén porque es el que encaja con el esqueleto pedido (precio y plazo → "¿tú crees que vine solo?" → llegan las camionetas → la cifra cambia de lado → la familia) y porque reten-sierra lo copió casi tal cual (otro retén). Esta versión no se le parece.
+- Del original queda solo el esqueleto: humillación + plazo → llega la figura de poder → plazo y precio invertidos → giro familiar → castigo en la Parte 2.
+
+## Qué se cambió
+- Escenario y región: retén militar en carretera del norte → entrada de un cenote en el monte de Yucatán, más la hacienda henequenera amarilla de la dueña.
+- Víctima y oficio: patrón con convoy (el original no tiene víctima humilde) → don Nicasio, 71, cuidador maya del cenote, con su nieta Citlali.
+- Abusador: mayor del ejército con soldados → el ingeniero Portilla, de una empresa hotelera, con su capataz Cosme. Sin uniformes.
+- Figura de poder: el propio patrón con revólver → doña Zenaida, 76, matriarca con bastón, que llega en cinco camionetas blancas. Sin armas.
+- Humillación y plazo: "200 mil dólares y aquí nunca pasó nada" → el zapato tumba el cántaro de la madre de Nicasio, "una hora, don Nicasio, y este cenote se cierra"; los cien mil salen después.
+- Cómo se pide ayuda: radio "adelántense, todos" → la campana de bronce que el padre de Zenaida colgó para que Nicasio la llamara (tres toques).
+- Objeto clave: revólver plateado → la llave vieja de hierro de la reja, que solo tiene la familia.
+- Inversión: 200 mil → 10 mil y ultimátum con arma → los cien mil los paga Portilla y la hora que dio ahora la tiene él.
+- Giro familiar: "¿tienes esposa?" (amenaza a la familia del mayor) → la señora que mandó a Portilla y le dio la llave es Maricruz, la hija de Zenaida (contesta el celular: "¿Maricruz? ¿Hija, eres tú?").
+- Nombres: todos nuevos y únicos en pieces/ (Leonor, Graciela, Eleuterio, Itzel, Abundio y Yazmín ya existían y se cambiaron).
+- Diálogo: las 70 frases son nuevas; ninguna viene del original ni de golondrina-muelle (se reescribieron las que repetían su forma: "¿Quién tiró tu pescado?", "Llama a quien quieras… te quedan X minutos", "Dame ese teléfono", "Cuarenta años se la cuidé").
+- CTA: voz en off "sigue la página…" → Nicasio a cámara: "¿Qué creen que hará doña Zenaida con su hija? Dejen su me gusta y compartan, que viene la segunda parte."
+- Sin Navidad (golondrina-muelle ya la tenía).
+
+## Marca
+**MAJESTIC STORIES**: edit.py, BRAND = "MAJESTIC" (kit pieces/_marcas/MAJESTIC: arriba a la izquierda x=36 y=210, 22 px, alfa 80, música propia de la marca).
+
+## Archivos
+guion.md, caption.txt, lines.json (fuente única, 333 palabras), clips.py (47 clips: 35 hablados c01-c35, 7 insertos i01-i07, 5 reacciones r1-r5; 286 s de generación; copia de golondrina-muelle con todas sus defensas: gaze + ONE + ALONE, NOSUB + CLEAN + END, NODOUBLE, SAFE/SOFT con las frases fuertes, variant, NOREF, TRIES=6, gatito en imagen, control de duplicados md5, reload_flow, new_project, descarga corrupta, 17 s entre clips; imprime "FIN P1"), make_sheets.py (6 personajes + LOC_CENOTEREJA + LOC_HACIENDAAMARILLA, "ordinary non-famous face", control md5 DUPLICADO, --reupload), phr.py, edit.py (EDL vacía, se arma desde renders/phr.json; música cálida de c25 a c27).
+- Guion pasado por la skill humanizer: frases de 3 a 6 palabras (salvo "¿Bueno?", "Hasta hoy." y el CTA), sin contrastes de relleno.
+
+## Avance
+- 2026-11-08: archivos escritos. `python -c "import clips"` OK (47 clips = lines.json, las 6 variantes de cada prompt se arman sin error). Faltan: 8 hojas (make_sheets.py), clips, QA, phr.py, EDL y montaje. NO se generó nada en Flow.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, `md5sum chars/*.jpg` y hoja de contactos: caras comunes y distintas (Portilla lampiño, Cosme barbón), solo Nicasio con sombrero, solo Zenaida con bastón.
+2. `python -I clips.py > clips_log.txt` y QA de cada clip (morphs, bordes, la llave y la campana siempre iguales, la pronunciación de "Nicasio", "Zenaida", "Citlali", "Maricruz").
+3. phr.py → EDL en edit.py → montaje y verificación (sync en 5 puntos, ≤2 s por tramo, LUFS/pico, marca MAJESTIC visible) → Telegram con caption.txt.
+- 2026-11-08 noche: hojas: Flow devolvió gatitos/copias en la 1.ª tanda → chars/mal, assets renombrados con sufijo 2 (OSIEL_PORTILLA2, CITLALI_CANCHE2, COSME_BALAM2, ZENAIDA_CAUICH2, FIDENCIO_TZUC2, LOC_CENOTEREJA2, LOC_HACIENDAAMARILLA2); 8 OK a ojo. Clips 47/47.
+- QA: regenerados c30 (chaleco con letras "SENC"), c19 (frase rota → lines.json "Tres veces. Es Nicasio." / "Prepárenme las camionetas.") y c26 (Nicasio sin sombrero). Fuera r1 (Zenaida en el cenote antes de llegar). Crops de borde en renders/edlcfg.json.
+- renders/share.mp4: 137.6 s, 83 tramos (1.67 s/tramo), -14.4 LUFS, -2.1 dBTP, sync 0 ms en 5 puntos, BLACK 131.2 s, MAJESTIC arriba a la izquierda. Revisión API v1: renders/share_revision.md. NO enviado a Telegram.
+
+### `pieces\casera-recibos\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte1, historia-propia, referencias3, navidad]
+relatedTo: [masa-honrada, tiendita-justa, referencias3]
+---
+# casera-recibos (La Casera de los Recibos · Parte 1): estado
+
+## La historia
+- Historia propia inspirada en la premisa n.º 5 de fuentes/referencias3/resumen.md (ref ★ 7702576886957755670 de @relatos.de.vida.9, 1.4M). Mismos beats de los virales, con personajes, nombres, diálogo y prueba final nuevos; atuendos de la ref en otros colores.
+- Maricela, enfermera de 31 años, descubre que doña Chelo cobra la misma luz nueve veces y nunca devuelve el depósito, y la echa a la calle a dos días de Nochebuena. Doña Pachita la recoge con ponche y le da la pista de la lista del hospital. Graciela, la jefa de enfermeras, se hará pasar por inquilina nueva la noche de la posada. Gancho: Chelo le renta el cuarto por teléfono sin saber quién es. Ambiente navideño (posada, piñata, ponche, Nochebuena), sin nacimiento ni dinero navideño.
+- Guion pasado por la skill humanizer: frases cortas de telenovela, sin rayas ni contrastes de relleno.
+
+## Marca
+**MAJESTIC STORIES**: edit.py, BRAND = "MAJESTIC". La música y la marca de agua salen de pieces/_marcas/MAJESTIC (brand, brand_wm). No hay carpeta music/ propia.
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 1, #parte1).
+- lines.json: fuente única de clips.py (519 palabras, unos 225–240 s en bruto; montaje objetivo 2:00–2:20).
+- clips.py, con 37 clips (c01–c33 y r1–r4). Suman 270 s de generación.
+  - Todos los planos son de una persona: gaze(side) + ONE + ALONE.
+  - NOSUB + CLEAN + END en cada diálogo; NODOUBLE en los de riesgo.
+  - SAFE/SOFT, incluidas las frases fuertes del diálogo.
+  - variant, NOREF (también quita las hojas de locación), TRIES=6, gatito de control y 17 s entre clips.
+  - Acepta IDs, mueve la versión vieja a clips/old/ e imprime "FIN P1".
+- make_sheets.py: 9 hojas con control md5 DUPLICADO y --reupload; imprime "FIN HOJAS".
+- phr.py.
+- edit.py: EDL en borrador por índices de línea, ganancia 0 en los mudos y BLACK 0.4 s antes de c33. Música: suspenso hasta c16, cama cálida de c16 a c30 (Pachita, el hospital y el plan) y suspenso de c30 al final. Loudnorm en dos pasadas y --remix. Salida en renders/v1.mp4.
+
+## Hojas nuevas
+Aún no se generaron. Los nombres se verificaron como únicos en pieces/*/clips.py y make_sheets.py.
+- Personajes: MARICELA_ORNELAS, CHELO_VALDIVIA, NANCY_GUILLEN, PACHITA_ROBLES y GRACIELA_MONDRAGON.
+- Locaciones: LOC_PATIOCHELO, LOC_COCINACHELO, LOC_SALAPACHITA y LOC_OFIHOSPITAL. Simples: sin letreros, precios ni marcas ni nacimiento; un solo adorno navideño por locación.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, correr `md5sum chars/*.jpg` y armar hoja de contactos: Maricela (suéter azul marino) contra Nancy (chamarra lila, pelo rizado); Chelo (pelo cobrizo, bata verde) contra Pachita (chongo blanco, chal rojo).
+2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P1", Traceback e "intento 6".
+3. QA con hoja de fotogramas, franja inferior y bordes. Regenerar con `python -I clips.py <ids> > clips_log2.txt`.
+4. `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y correr `python -I edit.py` (o `--remix`).
+5. Verificar sincronía en 5 puntos, ritmo ≤ 1.9 s, LUFS y pico, y la marca MAJESTIC STORIES visible a tamaño real.
+6. Telegram con caption.txt (3er arg = MAJESTIC).
+
+## Revisar en el QA
+- Geografía: patio, Chelo DER. y Maricela IZQ.; cocina, Maricela IZQ. y Nancy/Chelo DER.; banqueta, Maricela IZQ. y Nancy/Pachita DER.; sala, Maricela IZQ. y Pachita DER.; oficina, Maricela IZQ. y Graciela DER.
+- Dobles: ningún segundo suéter azul marino, bata verde esmeralda, chamarra lila, chal rojo ni blazer gris carbón. Sin otras inquilinas de fondo.
+- Navidad: solo las luces y la piñata de estrella en el patio, y las luces y el ponche en la sala. Ningún nacimiento, Niño ni imagen religiosa.
+- Utilería: papel doblado sin letras (c01, c03); libreta cerrada (c24); dos maletas azul oscuro; jarrito de ponche en las dos manos; celular al oído con la mano DERECHA.
+- Sin uniforme de enfermera ni gafete en Maricela ni en Graciela.
+- Fallos de Omni: subtítulos quemados, frases repetidas, 2.ª frase perdida y morphs.
+- Riesgos: c08, Chelo ya en la puerta (que no entre caminando); c14, Nancy en la puerta entreabierta (que no salga Maricela en el borde); c30 a c32, llamadas (sin pantalla dividida); pronunciación de "platicadita", "veinticuatro" y "Nochebuena".
+
+### `pieces\canasta\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories]
+relatedTo: [encendedor, padre-veladoras, chocolate-rancho, hacienda-sangre, reten-sierra, medalla-mezcal, agua-hacienda]
+---
+# canasta (La Canasta) — estado
+- Remake de 7697901687620635917 de @relatosinolvidables10 ("Humilló a una anciana que vendía chicles… jamás imaginó con quién regresaría", 3.4M vistas, 168 s). 8.º remake, marca VISTA STORIES (el 7.º, encendedor, fue SAGA FILMS). Archivos listos: guion.md, make_sheets.py, clips.py (36 clips: 34 hablados + r1, r2), edit.py (copia de encendedor, EDL vacía, marca VISTA STORIES, cálida entre c28 y r2), phr.py, music/ (copia de encendedor), caption.txt. Nada generado en Flow todavía.
+- Assets nuevos (únicos frente a agua-hacienda, medalla-mezcal, reten-sierra, hacienda-sangre, chocolate-rancho, padre-veladoras y encendedor, sin subcadenas): REFUGIO, HORACIO, MARIBEL, EUSEBIO, FEDERICO, LOC_VESTIBULO, LOC_GERENCIA, LOC_BANQUETA, LOC_SALITA.
+- Atuendos: los de la ref (mosaico fps=1/6) con otros colores: cárdigan mostaza en vez de verde olivo, traje negro y corbata azul rey en vez de gris y guinda, blusa rosa en vez de lila, camisa azul claro de portero en vez de uniforme gris, traje gris oxford en vez de azul marino.
+- Siguiente: `python -I make_sheets.py > sheets_log.txt`, revisar las hojas (md5 y que cada nombre tenga su imagen), luego `python -I clips.py > clips_log.txt`, QA por agente (bordes y ropa), regenerar malos, `python -I phr.py`, armar la EDL por frases en edit.py, `python -I edit.py`, verificación completa, Telegram con caption.txt.
+- Riesgos: hoja de EUSEBIO (si Flow la lee como guardia uniformado, NOREF), c03/c13 (paquetitos de chicles sin monedas), c19/c21 (brazo ofrecido: contacto suave), c24/c26 (vaso de agua), r2/c31-c33 (lluvia y paraguas, tres personajes), c33 (shock sin morph), c34 (CTA con movimiento orgánico). Pronunciación de "Refugio", "Eusebio", "Horacio", "paquetitos", "vergüenza".
+- Política: sin policías ni placas, sin dinero a cuadro, sin golpes ni dedo acusador (mano abierta), sin niños, edades numéricas.
+
+## Entregado (2026-11-04)
+- renders/v1.mp4: 2:28, -14.5 LUFS, pico -1.6, sync 0 frames. VISTA STORIES. Enviado a Telegram.
+
+### `pieces\canasta-p2\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte2]
+relatedTo: [canasta]
+---
+# canasta-p2 (La Canasta · Parte 2): estado
+- Marca: **VISTA STORIES** (la misma de la Parte 1, no entra en la rotación). Música y marca de agua salen de pieces/_marcas/VISTA (edit.py, BRAND = "VISTA"); no hay music/ propia.
+- Archivos listos: guion.md, lines.json (diálogos, fuente única de clips.py), clips.py (37 clips: c01–c30 + r1–r6 + i1; 236 s hablados en bruto; NOSUB al final de cada diálogo, SOLO en todos los planos, SAFE/SOFT con \b, variant, NOREF, TRIES=6, 17 s entre clips, gatito de control, salida clips/, imprime "FIN P2", acepta IDs y mueve la versión vieja a clips/old/), make_sheets.py (--reupload con control md5), phr.py (copia de padre-veladoras-p2), edit.py (método padre-veladoras-p2: EDL en borrador con índices de línea, ganancia 0 en los mudos, loudnorm en dos pasadas, salida renders/v1.mp4), caption.txt.
+- chars/: las 9 hojas de la Parte 1 (REFUGIO, HORACIO, MARIBEL, EUSEBIO, FEDERICO, LOC_VESTIBULO, LOC_GERENCIA, LOC_BANQUETA, LOC_SALITA), revisadas en hoja de contactos: cada nombre es su persona/lugar, md5 distintos y sin coincidencias con otras piezas.
+- **Ninguna hoja nueva.** make_sheets.py compara por md5 cada hoja nueva contra todas las pieces/*/chars/**/*.jpg e imprime "DUPLICADO <nombre>" (la aparta en chars/dup/ y no la sube); con --reupload revisa también las reusadas contra las otras piezas.
+- Nada generado en Flow todavía.
+- Siguiente: `python -I make_sheets.py --reupload > sheets_log.txt` (sube las 9 hojas al proyecto Flow activo; imprime "FIN HOJAS P2"; revisar que no haya DUPLICADO), luego `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P2", Traceback e "intento 6"). Después, QA con hoja de fotogramas y tiras de la franja inferior. Revisar:
+  - Geografía: banqueta (Federico/Refugio IZQ., Horacio DER.), recepción (Federico/Refugio IZQ.; mostrador, Maribel, Horacio, Eusebio DER.), gerencia (Federico DER., Refugio IZQ.).
+  - Nadie en los bordes (todos los planos son primeros planos limpios), nadie de más en r2 y r4.
+  - Refugio sin gafete (falló en P1 c28); Horacio sin dedo acusador (falló en P1 c18); gafetes lisos sin letras.
+  - Un solo paraguas (c01–c06, r2), una sola canasta, una sola carpeta sin sobre ni sello (i1, c26, c28, r6).
+  - Subtítulos quemados, frases repetidas, morphs.
+- Regenerar con `python -I clips.py <ids> > clips_log2.txt`. Luego `python -I phr.py`, pasar la EDL a rangos y `python -I edit.py`. Verificar y mandar a Telegram con caption.txt.
+- Riesgos:
+  - c01–c06: lluvia y paraguas en primer plano.
+  - r2 y r4: dos personas caminando; que no aparezca nadie de golpe.
+  - i1: que no salga texto legible ni "Dulces Montiel" escrito en la hoja.
+  - c30 (CTA): en P1 salió mudo y quieto la primera vez; el prompt ya es el corregido.
+  - Pronunciación de "Montiel", "malentendido", "Eusebio", "Refugio".
+
+### `pieces\camionetas\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, saga-films]
+relatedTo: [canasta, encendedor, padre-veladoras, chocolate-rancho, hacienda-sangre, reten-sierra, medalla-mezcal, agua-hacienda]
+---
+# camionetas (Las Tres Camionetas) — estado
+- Remake de DfFMbWkNdEc de @laotrahistoria29 ("La dueña se vistió humilde para probar a sus vendedores…", 2.5M vistas, 174 s). 10.º remake, marca SAGA FILMS (rotación VISTA → MAJESTIC → SAGA; el 9.º fue MAJESTIC). Archivos listos: guion.md, make_sheets.py, clips.py (36 clips: 35 hablados + r1, 310 s en bruto), edit.py (copia de canasta, EDL vacía, marca SAGA FILMS, cálida entre c24 y c34), phr.py, music/ (copia de canasta), caption.txt. Nada generado en Flow todavía.
+- Assets nuevos (únicos frente a todas las pieces anteriores, sin subcadenas, y distintos de NICANOR, MAYORAL, FAUSTO, MARISOL): AMPARO, PAMELA, GONZALO, ITZEL, LOC_VITRINA, LOC_EXHIBIDOR, LOC_AGENCIA, LOC_JARDINERA.
+- Atuendos: los de la ref (mosaico fps=1/6) con otros colores y ambiente mexicano: sombrero café oscuro en vez de negro, rebozo azul profundo en vez de mantón negro, flores rojas y amarillas, bolsa de palma en vez de cuero; vendedora 1 de traje rojo en vez de negro; jefe de ventas de traje azul marino y corbata verde oscuro en vez de negro y rojo; vendedora buena de beige en vez de azul marino. Cada agencia con camionetas de otro color (blancas, plateada, azul oscuro).
+- Siguiente: `python -I make_sheets.py > sheets_log.txt`, revisar las hojas (md5 y que cada nombre tenga su imagen), luego `python -I clips.py > clips_log.txt`, QA por agente (bordes y ropa), regenerar malos, `python -I phr.py`, armar la EDL por frases en edit.py, `python -I edit.py`, verificación completa, Telegram con caption.txt.
+- Riesgos: hoja de AMPARO (sombrero + rebozo + trenza: que no salga disfrazada ni caricatura), c04/c06/c19 (sobre el hombro: el borde tiene que ser Amparo con sombrero café y rebozo azul), c10 (dedo en el gafete), c11 (teléfono), c27/c28 (llave en la mano), r1 (de espaldas, sin morph), c35 (CTA con movimiento orgánico). Pronunciación de "Itzel", "doñita", "cotíceme", "seminuevos", "corporativo".
+- Política: sin policía ni guardias, sin dinero a cuadro ni créditos ("de contado" y el precio solo dichos), sin contacto brusco, sin niños, edades numéricas.
+
+## Entregado (2026-11-04)
+- renders/v2.mp4: 2:25, -14.3 LUFS, pico -1.8, sync 0 frames. SAGA FILMS. CTA con "el gerente". Enviado a Telegram.
+
+### `pieces\camionero\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte1]
+relatedTo: [canasta-p2, mecanico, recetario]
+---
+# camionero (El Camionero · Parte 1, video 16): estado
+- Remake de `fuentes/referencias2/videos/7697078993438182687.mp4` (1.4M vistas; análisis `7697078993438182687_analisis.md`). Mismos bloques; nombres, diálogos y colores cambiados; gancho nuevo para la Parte 2 ("alguien de su familia").
+- Marca: **MEXI STORIES** (rotación). Música y marca de agua de pieces/_marcas/MEXI (edit.py, BRAND = "MEXI"); no hay music/ propia.
+- Archivos listos: guion.md, lines.json (fuente única de clips.py), clips.py (37 clips: c01–c33 + r1–r3 + i1; 240 s hablados en bruto; NOSUB y END al final de cada diálogo, SOLO en todos los planos, una de cada utilería, SAFE/SOFT con \b, variant, NOREF, TRIES=6, 17 s entre clips, gatito de control, salida clips/, imprime "FIN P1", acepta IDs y mueve la versión vieja a clips/old/), make_sheets.py (10 hojas nuevas + control md5 DUPLICADO; --reupload), phr.py, edit.py (EDL en borrador con índices de línea, ganancia 0 en los mudos, loudnorm en dos pasadas, salida renders/v1.mp4), caption.txt.
+- Hojas nuevas (aún no generadas): TEOFILO_TRAILERO, LEONOR_DIRECTORA, CLEMENTE_BODEGUERO, NAYELI_MONITOREO, LALO_CHALECO, FIDEL_CARGADOR, LOC_ANDENCARGA, LOC_SALAMONITORES, LOC_PASILLORACKS, LOC_CUARTOCAJAS.
+- Nada generado en Flow todavía.
+- Siguiente: `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"; revisar que no haya DUPLICADO, `md5sum chars/*.jpg` y hoja de contactos: cada nombre es su persona/lugar, personajes distintos no se parecen), luego `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P1", Traceback e "intento 6"). Después, QA con hoja de fotogramas y tiras de la franja inferior. Revisar:
+  - Geografía: andén (Teófilo/Lalo IZQ., Clemente/Fidel DER., Leonor/Nayeli CENTRO), monitores (pantallas y Nayeli IZQ.), pasillo (puerta y Clemente/Fidel DER.), cuarto (cajas y Nayeli IZQ., Clemente DER.).
+  - Nadie en los bordes, nadie de más en r2; Clemente sin saco en todos los planos (falló en la ref); gafetes lisos sin letras; una sola gorra en Teófilo.
+  - Pantallas (c10–c12, i1): la imagen 2D DENTRO del marco, nada sale de la pantalla, sin texto legible ni etiquetas tipo "ESC04_…" (se colaron en la ref).
+  - Una sola llave, una sola tabla, una sola pila de cajas; nadie señala con el dedo.
+  - Subtítulos quemados, frases repetidas, morphs.
+- Regenerar con `python -I clips.py <ids> > clips_log2.txt`. Luego `python -I phr.py`, pasar la EDL a rangos y `python -I edit.py`. Verificar y mandar a Telegram con caption.txt.
+- 2026-11-05: QA v2 de c04 c05 c16 c25 c30 c33 OK (c05/c16/c30 con punch-in en la 1ª frase) y renders/v1.mp4 montado y verificado (ver qa_clips.md). Falta: revisión del usuario y Telegram.
+- Riesgos: c10/c11/c12/i1 (monitores), r2 (llave y puerta), c17 (pila de cajas y tabla), c33 (CTA con gestos), pronunciación de "Teófilo", "Nayeli", "tráiler", "malentendido".
+
+### `pieces\camionero-p2\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte2]
+relatedTo: [camionero, buen-hijo-p2]
+---
+# camionero-p2 (El Camionero · Parte 2): estado
+- Sigue en el mismo segundo del cliffhanger de camionero (Parte 1, entregada con MEXI STORIES): "El que recibía las cajas… es alguien de su familia". Payoff: era Iván, el sobrino de Leonor (camioneta gris por la puerta de atrás, cámara apagada con su usuario); confiesa que quería la dirección; Leonor lo saca y Teófilo queda de jefe de andén. Gancho nuevo: "Pregúntale a mi tío Arturo quién me dio la clave de las cámaras" (Arturo = esposo de Leonor).
+- Marca: **MEXI STORIES** (la de la Parte 1, fuera de la rotación). Música y marca de agua de pieces/_marcas/MEXI (edit.py, BRAND = "MEXI", arriba a la der.).
+- Archivos listos:
+  - guion.md.
+  - lines.json, fuente única de clips.py.
+  - clips.py: 31 clips (c01–c29 + r1 e i1 mudos), 222 s de voz en bruto, 57 frases. Lleva gaze() + ONE + ALONE en todos los planos (shot()), NOSUB y END tras cada diálogo, PLAINCAP en todos los planos de Teófilo (gorra lisa), NOPROP salvo la tabla de Nayeli (c07, c16), SAFE/SOFT con \b, variant, NOREF (incluye IVAN_SOBRINO), TRIES=6, 17 s entre clips y el gatito de control. Imprime "FIN P2", acepta IDs y mueve la versión vieja a clips/old/. Probado en seco (variantes 0–5 de los 31 prompts).
+  - make_sheets.py: 1 hoja nueva (IVAN_SOBRINO, nombre único comprobado) + --reupload de 7 hojas de la Parte 1 (TEOFILO_TRAILERO, LEONOR_DIRECTORA, NAYELI_MONITOREO, LALO_CHALECO, FIDEL_CARGADOR, LOC_ANDENCARGA, LOC_SALAMONITORES), control md5 DUPLICADO. Imprime "FIN HOJAS P2".
+  - phr.py.
+  - edit.py: EDL en borrador con índices de línea (r1/i1 ganancia 0), cálida de c21 a c27, BLACK 0.4 entre c28 y c29, salida renders/v1.mp4 (--remix -> renders/v2.mp4).
+  - caption.txt.
+- chars/: copia de las 10 hojas de la Parte 1 (sin chars/mal/), md5 distintos. CLEMENTE_BODEGUERO y las locaciones de pasillo/cuarto no se usan.
+- Nada generado en Flow todavía.
+- Siguiente (una sesión de Flow a la vez):
+  1. `python -I make_sheets.py --reupload > sheets_log.txt` (Monitor sobre "^FIN HOJAS P2"); revisar que no haya DUPLICADO, FALTA ni FALLO, y que IVAN_SOBRINO no se parezca a Clemente ni a Fidel (sin barba, camisa azul cielo, sin corbata ni gafete).
+  2. `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P2", Traceback e "intento 6").
+  3. QA por agente (qa_clips.md). Revisar:
+     - nadie en los bordes ni en primer plano (tiras de bordes a 4 fps); nadie entra caminando (r1 Iván ya en cuadro);
+     - subtítulos quemados, 2.ª frase perdida, palabras repetidas;
+     - gorra de Teófilo lisa, sin parche ni letras, una sola;
+     - lados fijos (andén: Teófilo/Lalo izq., Fidel/Iván der., Leonor/Nayeli centro; monitores: pantallas y Nayeli izq.);
+     - i1: camioneta gris DENTRO del monitor, sin placas ni texto; una sola camioneta;
+     - una sola tabla (Nayeli c07/c16), los demás con manos vacías; nadie señala;
+     - r1 e i1 mudos (ganancia 0);
+     - c29 CTA con voz desde el inicio y gestos.
+  4. Regenerar con `python -I clips.py <ids> > clips_log2.txt`. Luego `python -I phr.py`, EDL por rangos en edit.py y `python -I edit.py` -> renders/v1.mp4.
+  5. Verificación completa (sincronía en 5 puntos, ritmo ≤ 1.9 s, LUFS/pico, marca MEXI arriba a la der.). Después, Telegram: `python tools/enviar_telegram.py pieces/camionero-p2/renders/v1.mp4` (lee caption.txt).
+- Riesgos: c01 (frase larga de 10 s), c19 (motivo largo), i1 (pantalla y camioneta), r1 (Iván entrando), hoja nueva IVAN_SOBRINO.
+- Pronunciación: "Iván", "Arturo", "madrugadas", "proveedor", "usuario", "estacionamiento", "Teófilo".
+
+### `pieces\cafe-neblina\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte1, remake-transformado, capos, veracruz, cafe]
+relatedTo: [cenote-campana, hacienda-sangre, atrium-vista]
+---
+# cafe-neblina (La Neblina · Parte 1): estado
+
+## Video base
+- Remake transformado de **"Me dejó la hacienda vacía y una deuda escondida | Parte 1"** de @atriumstories_ (7704455244683480350, **312K vistas**, 142 s, 55 planos). Análisis: `fuentes/atrium-vista/videos/7704455244683480350_analisis.md`.
+- Por qué este: los tres de más de 1M ya tienen remake (Leche 1.7M: agua-hacienda y chocolate-rancho; la patrona 1.5M: medalla-mezcal; El Retén 1.1M: reten-sierra y cenote-campana). Siguiendo en vistas, la re-subida de El Retén (334K) es el mismo video y "Lo corrió de la hacienda" (330K) ya es hacienda-sangre. El siguiente sin remake es este (312K).
+- Del original quedan la deuda que deja el marido y el esqueleto pedido: humillación + plazo → llega la figura de poder → plazo invertido → giro familiar → castigo en la Parte 2.
+
+## Qué se cambió
+- Escenario y región: hacienda de ganado con presa seca y oficina de cristal (norte) → finca cafetalera chica en la sierra central de Veracruz (patio de secado con neblina) y un beneficio viejo en el valle. Veracruz no se usó en ninguna pieza.
+- Oficio: ganadera con abogada y capataz → cafeticultora; el abusador ya no es el marido sino Lamberto, un coyote que compra café.
+- Humillación y plazo: el marido se va en su sedán y le deja 15 días de deuda → el coyote le pisa el café tendido con las botas: "Mañana te vas, Brígida."
+- Figura de poder: no había (Regina pelea sola con sus trabajadores) → don Gaudencio, dueño del beneficio y padrino de bodas de Brígida, con tres camionetas verdes. Sin armas.
+- Cómo llega: el coyote mismo le marca a su "patrón" para presumir la finca, y el patrón es el padrino.
+- Objeto clave: préstamo de banco, tablet, reserva de agua → un pagaré doblado con la firma de Nemesio y fecha del martes, y el sombrero de palma con banda azul que Brígida tejió.
+- Inversión: "hasta mañana" que le dio el coyote → "Tú te vas hoy. Antes que baje la neblina. Y sin un solo costal."
+- Giro: el marido sabotea por teléfono desde su oficina → Nemesio, el marido que "se fue al norte hace dos años", estaba escondido en el asiento de atrás de la camioneta del coyote.
+- Nombres: todos nuevos y únicos en pieces/ (Abelardo, Mancera, Rufino, Clemente, Fermín, Wences, Ponciano, Evaristo, Heriberto, Melquiades, Cabañas y Ríos ya existían y se descartaron). Brígida, Lamberto, Toribio, Gaudencio, Silvano, Nemesio.
+- Diálogo: las 70 frases son nuevas; ninguna viene del original ni de cenote-campana.
+- CTA: Regina "Mauricio cree que ya perdí. Sígueme…" → Brígida a cámara: "¿Ustedes perdonarían a Nemesio? Dale me gusta y sígueme para la segunda parte."
+- Sin Navidad.
+
+## Marca
+**MEXI STORIES**: edit.py, BRAND = "MEXI" (kit pieces/_marcas/MEXI: arriba a la derecha, margen 36, y=210, 22 px, alfa 80, música propia de la marca).
+
+## Archivos
+guion.md, caption.txt, lines.json (fuente única), clips.py (47 clips: 35 hablados c01-c35, 7 insertos i01-i07, 5 reacciones r1-r5; copia de cenote-campana con todas sus defensas: gaze + ONE + ALONE, NOSUB + CLEAN + END, NODOUBLE, SAFE/SOFT con las frases fuertes, variant, NOREF, TRIES=6, gatito, md5, reload_flow, new_project; imprime "FIN P1"), make_sheets.py (6 personajes + LOC_PATIOCAFE + LOC_BENEFICIO, "ordinary non-famous face", control md5 DUPLICADO, --reupload), phr.py, edit.py (EDL vacía, se arma desde renders/phr.json; música cálida de c24 a c26).
+- Guion pasado por la skill humanizer: frases de 3 a 6 palabras (salvo "¿Nemesio?" y el CTA), sin contrastes de relleno.
+
+## Avance
+- 2026-11-08: archivos escritos. `python -c "import clips"` OK. Faltan: 8 hojas (make_sheets.py), clips, QA, phr.py, EDL y montaje. NO se generó nada en Flow.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, `md5sum chars/*.jpg` y hoja de contactos: caras comunes y distintas (Toribio calvo, Lamberto bigotón y panzón, Nemesio demacrado), solo Gaudencio con sombrero puesto, solo Brígida con trenza.
+2. `python -I clips.py > clips_log.txt` y QA de cada clip (morphs, bordes, el pagaré y el sombrero de banda azul siempre iguales, la pickup gris, la pronunciación de "Brígida", "Nemesio", "Gaudencio", "empeñó").
+3. phr.py → EDL en edit.py → montaje y verificación (sync en 5 puntos, ≤2 s por tramo, LUFS/pico, marca MEXI visible arriba a la derecha) → Telegram con caption.txt (3er arg MEXI).
+- 2026-11-08 noche: 8 hojas OK a ojo. Clips 47/47. QA: regenerados c12 (decía otra frase) y c15 (repetía "la de Brígida"); al crear proyecto Flow nuevo las hojas quedaron en el viejo → make_sheets --reupload y c12 otra vez con hoja. i04 0–3 s es una actriz ajena (solo 3.3–4.8). Crops de borde en renders/edlcfg.json.
+- renders/share.mp4: 130.5 s, 86 tramos (1.53 s/tramo), -14.3 LUFS, -1.2 dBTP (alimiter 0.74), BLACK 124.6 s, MEXI arriba a la derecha. Revisión API: renders/share_revision.md. NO enviado a Telegram.
+
+### `pieces\buen-hijo\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories]
+relatedTo: [tele-nueva, canasta, encendedor, padre-veladoras, chocolate-rancho, hacienda-sangre, reten-sierra, medalla-mezcal, agua-hacienda]
+---
+# buen-hijo (El Buen Hijo) — estado
+- Remake de 7700288645638425870 de @relatosinolvidables10 (el padre corre al hijo por llegar tarde tras ayudar a una anciana y le deja todo al hermano; 2.0M vistas, 173 s). 12.º remake, marca MAJESTIC STORIES (el 11.º, tele-nueva, fue VISTA). Archivos listos: guion.md, make_sheets.py, clips.py (32 clips hablados, 260 s brutos, 61 frases: guion compacto para 2:00-2:30), edit.py (copia de tele-nueva, EDL vacía, marca MAJESTIC STORIES, cálida entre c27 y c30), phr.py, music/ (copia de tele-nueva), caption.txt. Nada generado en Flow todavía.
+- Assets nuevos (únicos frente a todas las pieces con make_sheets.py, sin subcadenas en ningún sentido): ABUNDIO, TADEO, ROMAN, PETRA, AURELIA, LOC_SALON, LOC_AVENIDA, LOC_PERSIANA, LOC_ZAGUAN, LOC_FOGON.
+- Atuendos: los de la ref (mosaico fps=1/7) con otros colores: padre camisa beige y pantalón café en vez de blanca y gris; Tadeo camisa verde salvia y chinos gris claro en vez de azul claro y beige; Román azul marino en vez de granate; Petra blusa rosa bordada, falda café y rebozo gris en vez de lila y azul marino; nana delantal turquesa en vez de mostaza.
+- Siguiente: `python -I make_sheets.py > sheets_log.txt`, revisar hojas (md5, etnia mestiza, que cada nombre tenga su imagen), `python -I clips.py > clips_log.txt` con Monitor, QA por agente (bordes, ropa, bolsita de Petra, maleta/llaves de Tadeo, carpeta de Román, pantalla del celular en c26), regenerar malos, `python -I phr.py`, EDL por frases en edit.py (BLACK 0.4 antes de c32), `python -I edit.py`, verificación completa, Telegram con caption.txt.
+- Riesgos: c03/c06/c07 (dos personajes del brazo, la bolsita siempre en la izquierda de Petra), c19 (mano en el hombro de Román), c22 (llaves en la mesa: manos), c25/c26 (cartones de noche; SOFT los cambia por cobija), c26 (contenido del celular dentro de la pantalla), c29 (Aurelia sirve café), c32 CTA mudo (el prompt pide labios desde el primer frame). Pronunciación: "Abundio", "Tadeo", "Aurelia", "samaritano", "inventario".
+- Política: sin policías, sin armas, sin contacto brusco, sin dedo acusador, sin dinero exigido ni bancos (sin tarjeta ni monedas de la ref), sin niños, edades numéricas.
+
+## Entregado (2026-11-04)
+- renders/v1.mp4: 2:23, -14.9 LUFS, pico -1.6, sync 0/-1 frames. MAJESTIC STORIES. Enviado a Telegram.
+
+### `pieces\buen-hijo-p2\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte2]
+relatedTo: [buen-hijo, recetario-p2]
+---
+# buen-hijo-p2 (El Buen Hijo · Parte 2): estado
+- Sigue en el mismo segundo del cliffhanger de buen-hijo (Parte 1, entregada con MAJESTIC STORIES). Payoff: la fábrica era de Elena, la mamá de Tadeo; la carta escondida por la nana; Román confiesa lo del inventario y el padre cede. Gancho nuevo: doña Petra, la señora de la avenida, es la mamá de Elena, y Abundio le dijo durante años que Tadeo no quería conocerla.
+- Marca: **MAJESTIC STORIES** (la de la Parte 1, fuera de la rotación). Música y marca de agua de pieces/_marcas/MAJESTIC (edit.py, BRAND = "MAJESTIC").
+- Archivos listos:
+  - guion.md.
+  - lines.json, fuente única de clips.py.
+  - clips.py: 30 clips (c01–c29 + r1 mudo), 232 s de voz en bruto, 54 frases. Lleva gaze() + ONE + ALONE en todos los planos, NOSUB y END tras cada diálogo, sin sombreros, una sola carta (LET/NOLET, sin sobre ni sello), SAFE/SOFT con \b, variant, NOREF, TRIES=6, 17 s entre clips y el gatito de control. Imprime "FIN P2", acepta IDs y mueve la versión vieja a clips/old/. Probado en seco con un gen falso.
+  - make_sheets.py: --reupload de 6 hojas de la Parte 1 (ABUNDIO, TADEO, ROMAN, AURELIA, LOC_SALON, LOC_FOGON) con control md5 DUPLICADO y control de nombre único. Sin hojas nuevas. Imprime "FIN HOJAS P2".
+  - phr.py.
+  - edit.py: EDL vacía, cálida de c19 a c24, BLACK 0.4 entre c28 y c29, salida renders/v1.mp4.
+  - caption.txt.
+- chars/: copia de la Parte 1 (las 10 hojas), revisadas en hoja de contactos: cada nombre es su persona/lugar y los md5 son distintos. Ojo: LOC_PERSIANA trae grafiti con letras (no se usa en la Parte 2).
+- Nada generado en Flow todavía.
+- Siguiente (una sesión de Flow a la vez):
+  1. `python -I make_sheets.py --reupload > sheets_log.txt` (Monitor sobre "^FIN HOJAS P2"); revisar que no haya DUPLICADO ni FALTA.
+  2. `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P2", Traceback e "intento 6").
+  3. QA por agente (qa_clips.md). Revisar:
+     - nadie en los bordes ni en primer plano (tiras de bordes a 4 fps);
+     - subtítulos quemados y frases o palabras repetidas;
+     - una sola carta, en la mano correcta y sin sobre (c04 Aurelia; Tadeo desde c05; abierta e ilegible en c13);
+     - sin sombreros;
+     - lados fijos (cocina: Tadeo izq., Aurelia der.; salón: Tadeo/Aurelia izq., Abundio/Román der.);
+     - Román sin barba y con reloj, Abundio con bigote;
+     - r1 mudo (ganancia 0);
+     - c29 CTA con voz desde el inicio y gestos.
+  4. Regenerar con `python -I clips.py <ids> > clips_log2.txt`. Luego `python -I phr.py`, EDL por frases en edit.py y `python -I edit.py` -> renders/v1.mp4.
+  5. Verificación completa (sincronía en 5 puntos, ritmo ≤ 1.9 s, LUFS/pico, marca MAJESTIC arriba a la izq.). Después, Telegram: `python tools/enviar_telegram.py pieces/buen-hijo-p2/renders/v1.mp4` (lee caption.txt).
+- Riesgos:
+  - c01 (frase larga de 10 s);
+  - c04/c05 (paso de la carta);
+  - c13 (carta abierta: letras legibles);
+  - c18/c26/c27 (caras que cambian de tono);
+  - r1 mudo (Whisper alucina).
+- Pronunciación: "Elena", "Aurelia", "inventario", "igualito", "orgullosa".
+
+### `pieces\bascula-limon\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, sin-marca, parte1, historia-propia, referencias3]
+relatedTo: [huipil-robado, tiendita-justa, referencias3]
+---
+# bascula-limon (La Báscula Arreglada · Parte 1): estado
+
+## La historia
+- Historia propia inspirada en la premisa n.º 10 de fuentes/referencias3/resumen.md (ref 7702205802534194435 de @relatos.de.vida.9, 245K). Mismos beats con personajes, diálogo y prueba nuevos.
+- Bulmaro, el único acopiador del pueblo, le roba a don Fermín uno de cada cinco kilos con la báscula. Daniela (31, contadora) lo prueba con un bulto de cemento de 50 kg que marca 40. Bulmaro los veta por teléfono. Gancho: Daniela grabó la prueba y mañana todos los productores pesarán en otra báscula delante de Bulmaro; don Chalo les avisó. Sin Navidad.
+- Guion pasado por la skill humanizer: frases cortas de telenovela, sin rayas ni contrastes de relleno.
+
+## Marca
+**SIN MARCA**: edit.py, BRAND = "SINMARCA". brand_wm() da un png transparente (sin marca de agua) y la música sale de pieces/_marcas/SINMARCA. Sin carpeta music/ propia.
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 1, #parte1).
+- lines.json: fuente única de clips.py (430 palabras, unos 190–200 s en bruto; montaje objetivo 2:20–2:40).
+- clips.py, con 35 clips (c01–c31 y r1–r4), 234 s de generación.
+  - Todos los planos son de una persona: gaze(side) + ONE + ALONE (el insert r2 es solo la báscula y el bulto, con SOLO).
+  - NOSUB + CLEAN + END en cada diálogo; NODOUBLE en los de riesgo.
+  - SAFE/SOFT, incluidas las frases fuertes del diálogo.
+  - variant, NOREF (también quita las hojas de locación), TRIES=6, gatito de control, reload_flow() en fallos y 17 s entre clips.
+  - Acepta IDs, mueve la versión vieja a clips/old/ e imprime "FIN P1".
+- make_sheets.py: 7 hojas (4 personajes, 3 locaciones) con control md5 DUPLICADO y --reupload; imprime "FIN HOJAS".
+- phr.py.
+- edit.py: EDL en borrador por índices de línea, ganancia 0 en los mudos y BLACK 0.4 s antes de c31. Música: suspenso hasta c10, cama cálida de c10 a c13 (deciden probar la báscula) y suspenso de c13 al final. Loudnorm en dos pasadas y --remix. Salida en renders/v1.mp4.
+
+## Hojas nuevas
+Aún no se generaron. Nombres verificados como únicos en pieces/*/clips.py y make_sheets.py (se evitaron ABUNDIO_* y ROGELIO_*, que ya existen).
+- Personajes: FERMIN_ZAVALA, DANIELA_ZAVALA, BULMARO_PADILLA y CHALO_MORENO.
+- Locaciones: LOC_ACOPIOLIMON, LOC_HUERTALIMON y LOC_PORCHEZAVALA.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, correr `md5sum chars/*.jpg` y armar hoja de contactos: Fermín (sombrero, bigote blanco) contra Chalo (calvo, camisa verde olivo).
+2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P1", Traceback e "intento 6".
+3. QA con hoja de fotogramas, franja inferior y bordes. Regenerar con `python -I clips.py <ids> > clips_log2.txt`.
+4. `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y correr `python -I edit.py` (o `--remix`).
+5. Verificar sincronía en 5 puntos, ritmo ≤ 1.9 s, LUFS y pico, y que NO haya marca de agua.
+6. Telegram con caption.txt (3er arg = SIN MARCA).
+
+## Revisar en el QA
+- Geografía: acopio, Bulmaro DER. y Fermín/Daniela IZQ.; huerta, Fermín IZQ. sentado y Daniela/Chalo DER.; porche, Fermín IZQ. y Daniela DER.
+- Dobles: ningún segundo sombrero de palma, guayabera crema, blusa terracota ni camisa verde olivo. Sin trabajadores de fondo en el acopio.
+- Utilería: báscula mecánica sin pantalla ni números; bulto de cemento sin letras; libreta en la mano izquierda; celular con la pantalla de espaldas.
+- r2 (insert de la báscula): que no aparezcan números, manos ni texto.
+- Fallos de Omni: subtítulos quemados, frases repetidas, 2.ª frase perdida y morphs.
+- Pronunciación de "Bulmaro", "mermado", "seiscientos cuarenta" y "pésenos".
+
+### `pieces\agua-hacienda-p2\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte2]
+relatedTo: [agua-hacienda]
+---
+# agua-hacienda-p2 (Agua en la hacienda · Parte 2): estado
+- Marca: **VISTA STORIES** (la misma de la Parte 1, no entra en la rotación).
+- Archivos listos: guion.md, lines.json (diálogos, fuente única de clips.py), clips.py (40 clips: c01–c38 + r1, r2; SAFE/SOFT/variant/NOREF, TRIES=6, 17 s entre clips, gatito de control, imprime "FIN P2"), edit.py (plantilla hacienda-sangre v2, EDL en borrador con índices de línea), make_sheets.py, caption.txt, music/ (copia de hacienda-sangre).
+- chars/: 18 jpg copiados de la Parte 1 (mismos personajes y ropa).
+- Hoja nueva: **LOC_COMPUERTA** (canal de piedra con compuerta oxidada). No hay personajes nuevos.
+- Nada generado en Flow todavía.
+- Siguiente: `python -I make_sheets.py --reupload > sheets_log.txt` (sube las 8 hojas de la Parte 1 al proyecto Flow activo y genera LOC_COMPUERTA), revisar la hoja, `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P2", Traceback y "intento 6"), QA de bordes y ropa, regenerar, montar con edit.py (pasar el EDL a rangos), verificar, Telegram con caption.txt.
+
 ### `pieces\STIMULUS_BROLL_CORRECCIONES.md`
 
 # Stimulus — correcciones del cliente (ronda b-roll, 2026-11-10)
@@ -5921,66 +10523,6 @@ Puntos marcados: V2 00:39, 00:52 · V3 00:35–36, 00:45 · V4 00:25 (extender b
 - V1 v12 / V3 v5 (cortes extra marcados por el usuario): picture_cuts confundía un gesto (varios frames con mucho movimiento) con el corte real. V1: corte real 7.59 s (frame 182), detectado 187 → el zoom-in caía 5 frames después del corte. V3: cortes reales 8.09 s (194) y 9.59 s (230), detectados 198 y 234 → zoom 4 frames tarde. Arreglo en hfkit: el corte se puntúa como pico de UN frame (d[n] − max de los vecinos), no por diferencia bruta. V1 además min_shot=1.5 (la toma de 1.58 s 6.00–7.59 recibe su cambio de encuadre) y en V1/V3 el bloque de subtítulo que termina a ≤3 frames de un corte termina EN el corte. Pendiente de revisar con la detección nueva (difieren de su cuts.json en caché): V4 frames 214/1442 vs 216/1437, V8 106/290 vs 111/295.
 - V1 v13 (cliente): se quitó "Families see the regular price, while the fundraising markup stays private." = el segmento entero 22.65–26.57 s (frames 543–636, 94 frames, 3.92 s). Ambos bordes eran cortes de segmento en silencio (antes de "Families" / después de "private."). Nuevo assets/edit_v.mp4 (anterior en edit_v_v12.mp4), words_edit.json remapeado (anterior words_edit_v12.json), bloques de caption de esa frase (con su ícono "eye") eliminados, b-roll "goes directly" ahora entra justo en el nuevo corte (22.65) y el de "freedom" pasa a 34.68. Duración 52.34 → 48.42 s. La música no se cortó: su crescendo sigue en 19.8–31 s, así que la bajada de -6 dB de music_v2 se queda ahí para taparlo.
 
-### `pieces\rbx-crossing\ESTADO.md`
-
----
-type: plan
-status: active
-tags: [roblox, rbx-crossing, handoff]
-relatedTo: [styles/roblox/STYLE.md, pieces/rbx-followers, Ref roblox/tiktok/informe.md]
----
-
-# rbx-crossing: estado (2026-11-10)
-
-- Premisa: n.º 8 de [informe.md](../../Ref%20roblox/tiktok/informe.md) ("Only The Crossing Guard Stops Cars 🛑"), elegida por el usuario.
-- Guion APROBADO: [script.md](script.md) (496 palabras, "In this town", humanizer).
-- Voz: `voice/voice_final.wav` (109.8 s → video ~110.3 s), "3D cartoon 2" d9b69bea, speed 1.25, +4 st; 11 trozos (c5 partido en c5/c5b); transcripción completa verificada (solo brake/break y close/closed, homófonos). Tiempos `voice/words.json`.
-- Pipeline copiado de rbx-followers + sets nuevos `src/set-road.js` (carretera infinita, autos sin conductor, mood fall/snow, carsAt/snowAt) y `src/set-hallway.js` (muro de fotos, photo(n)); props `src/props-cross.js` (STOP, catapulta, pizza, name tags, silbato); elenco nuevo en cast.js (rudy, rudyV con chaleco, wes, missdot, teacher, twins, bride/groom).
-- Look v3: look/look_sheet.jpg. Correcciones del usuario: escenarios planos → set-road con colinas/pinos, postes y cables, faroles, señales escolares, caseta de Miss Dot, cercas/buzones/arbustos, hojas, escuela con techo/reloj/bus/columpios, nieve real (techos, montículos, ventanas y faroles encendidos, grade 'snow'), nubes, SCHOOL pintado, vapor; pasillo con carteles/EXIT/ventana. Pelo H1: casquete nuevo `hairCap` (sin línea en la frente) + mechones suaves (también copiado a rbx-followers/src/gneef.js). Look APROBADO (2026-11-10).
-- Storyboard: 81 tomas en src/shots.js (SHOTLIST + STAGEI) → board/board_1..3.jpg. words.json corregido (números en letras, close/brake). ESPERANDO APROBACIÓN del storyboard antes del render.
-
-## Siguiente
-1. Voz (receta exacta de styles/roblox/STYLE.md, perfil "3d cartoon" 227af074, +4 st, verificación Whisper).
-2. Copiar pipeline de [rbx-followers](../rbx-followers/ESTADO.md) (Windows: d3d11, followers.js para multitudes, sound/fs_fetch.py + sfx_mix.py + remix.py --own).
-3. Look (fotogramas de prueba) → aprobación.
-4. Storyboard completo → aprobación ANTES del render (memoria storyboard-before-render).
-5. Render → QA → revisar_render (--reglas styles/roblox/STYLE.md) → sonido pro → título + miniatura → Telegram.
-
-### `pieces\rbx-followers\ESTADO.md`
-
----
-type: plan
-status: complete
-tags: [roblox, rbx-followers, handoff]
-relatedTo: [styles/roblox/STYLE.md, pieces/rbx-rope, Ref roblox/tiktok/informe.md]
----
-
-# rbx-followers: estado (2026-11-09)
-
-## Hecho y aprobado por el usuario
-- Premisa: n.º 1 de [informe.md](../../Ref%20roblox/tiktok/informe.md) (análisis de 6 cuentas TikTok), "Your Followers Actually Follow You 👣".
-- Guion APROBADO: [script.md](script.md) (481 palabras; empieza con "In this town", regla fija del estilo).
-- Voz APROBADA: `voice/voice_final.wav` (108.2 s → video ~108.7 s), "3D cartoon 2" d9b69bea, speed 1.25, +4 st, verificada con Whisper. Tiempos en `voice/words.json` ({word,start,end}) y `voice/words_raw.json`.
-- BGM: `styles/roblox/bgm/bgm.wav` (TEMPOREX Numbers, 9 LU bajo la voz).
-
-## Paso 2 (2026-11-09): pipeline copiado + look de prueba (ESPERANDO APROBACIÓN)
-- Copiado de rbx-rope: src/{engine,cast,gneef,props,kit,env,rope}.js, board/render .mjs/.html, board_sheet.py, qa_frames.py, check/thumb.mjs, sound/*.py. Flag de GPU según plataforma (metal en Mac, d3d11 en Windows).
-- Nuevo: src/followers.js (contador sobre la cabeza, multitud = clones + instanciados, mochila, zapato viejo), sets street/kitchen/subway/bridge, elenco nuevo en cast.js (hero azul, dad con chaleco + zapato viejo, popstar, teacher, date).
-- Look: `node look/look.mjs` + `python look/sheet.py` → look/look_sheet.jpg. Faltan shotlist.js/shots.js (paso 3).
-
-## Render v4 (2026-11-09): renders/final.mp4 (108.1 s), look aprobado con brillo de día bajado
-- 97 tomas en src/shots.js (SHOTLIST + STAGEI, filas pueden repetir palabras). Set nuevo classroom, props-fol.js.
-- Usuario pidió render directo (sin aprobar storyboard). Revisión API: CASI; corregidos papá 3 pasos atrás, contadores, teléfono en la mano, gato, letrero MALL, caras naranjas del atardecer.
-- Subtítulos verificados contra la voz (silencedetect + cuadros): coinciden; el revisor API se equivoca en eso.
-- Sonido pro HECHO: `sound/fs_fetch.py` (Freesound CC0) → `sound/sfx_mix.py` (89 SFX + ambientes por toma) → `sound/remix.py --own` → `sound/mux.sh`. earshot critique: launch-grade (20/21, bajos algo finos).
-- ENTREGADO: renders/final.mp4 (+share.mp4) enviado a Telegram; título "Your Followers Actually Follow You 👣"; miniatura renders/thumb.jpg.
-
-## Siguiente (receta de styles/roblox/STYLE.md)
-1. Copiar el pipeline EXACTO de `pieces/rbx-rope` (src/engine.js, cast.js, gneef.js, props.js, kit.js, env.js, words.js, sets, shots.js/shotlist.js, board.mjs + board_sheet.py, render.mjs/html, sound/), adaptado a esta historia. Referencias aprobadas en `Ref roblox/*.mp4`.
-2. Look: 4-6 fotogramas de prueba (calle llena de seguidores, héroe con el número "1" en el mundo, nota en la nevera, metro, puente con 3 millones, papá con chaleco nocturno y zapato viejo). Personajes Gneef (`fuentes/roblox-cartoon/gneef-looks.md`). Mostrar y esperar aprobación.
-3. Storyboard completo (1 toma por cláusula, ~1.3 s) → aprobación ANTES de renderizar.
-4. Render → QA cuadro a cuadro → `python tools/revisar_render.py --estilo roblox` → sonido pro (music.py/beds.py/remix.py de rope) → título + miniatura → Telegram.
-
 ### `pieces\_cola_flow.md`
 
 # Cola de Flow (pausada 2026-11-09 ~01:20: SIN CRÉDITOS de Flow, cuenta tiktokeeuu691)
@@ -5996,2179 +10538,6 @@ Al reanudar, antes de cada pieza: `python -I make_sheets.py --reupload` (el proy
 3. fonda-chela-p2 (VISTA) — hojas = las de fonda-chela, 0/48 clips (FIN P2)
 4. velorio-patron (MAJESTIC) — 7 hojas nuevas por generar y revisar a ojo, luego 47 clips
 Después de cada FIN: QA (método pedida-mano) → regens primero → edit (plantilla monedas-carretera/fonda-chela, ≤2 s/plano) → Telegram con marca.
-
-### `pieces\plata-taxco\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, mexi-stories, parte1, remake-transformado, figura-de-poder, taxco, guerrero, plateria]
-relatedTo: [invernadero-atlixco, piloncillo-rio, cafe-neblina, cenote-campana, atrium-vista]
----
-# plata-taxco (Los Faroles de Taxco · Parte 1): estado
-
-## Video base
-- Remake transformado de **"Lo corrieron por ayudar a un anciano… y la vida le regresó el favor | Parte 1"** de @atriumstories_ (7700994634381643039, **268K vistas**, 88 s, 40 planos). Análisis: `fuentes/atrium-vista/videos/7700994634381643039_analisis.md`.
-- Por qué este: todos los capos de más vistas ya tienen pieza (Leche 1.7M: agua-hacienda y chocolate-rancho; la patrona 1.5M: medalla-mezcal; El Retén 1.1M y su re-subida: reten-sierra y cenote-campana; 330K hacienda-sangre; 312K cafe-neblina; 298K piloncillo-rio; 275K invernadero-atlixco; 221K padre-veladoras). El siguiente sin pieza es este (268K). Está clasificado como bondad-recompensa, pero tiene figura de poder (el empresario que llega a defender al humilde).
-- Del original queda solo el esqueleto: humillación + plazo → llega la figura de poder → plazo invertido → giro familiar → castigo en la Parte 2.
-
-## Qué se cambió
-- Escenario y región: taller mecánico y banqueta de ciudad → callejón empedrado de Taxco, Guerrero (región no usada en pieces/), con las torres de Santa Prisca, y una mina de plata vieja en el cerro.
-- Oficio: mecánico que arregla gratis el coche de un anciano → maestro platero de 64 años con su aprendiz.
-- Humillación y plazo: el jefe lo corre por hacer caridad → el joyero de enfrente le tira al empedrado las piezas de la feria: "Antes que prendan los faroles, maestro." Quiere el local (sin cifras de dinero ni deudas).
-- Reloj: los faroles del callejón que se prenden uno por uno (i03).
-- Figura de poder: el hijo empresario en traje con un sobre → don Anastasio, 72, dueño de la mina, que baja del cerro con una fila de camionetas blancas y sus mineros con los brazos cruzados. Sin armas.
-- Lazo con el humilde: "reparaste el coche de mi padre" → "Tú hiciste nuestros anillos de bodas cuando yo no tenía nada."
-- Inversión: "Mira los faroles, Gumaro. Ya se te prendieron a ti. Te doy lo mismo que le diste. Antes que amanezca, te vas de Taxco."
-- Giro: "el anciano era mi padre" → quien le abrió la puerta a Gumaro y le dio el anillo de la abuela es Leocadia, la nieta de Anastasio, que mira desde el balcón de la joyería.
-- Objeto clave: coche beige, sobre, empleo → pulsera de plata con jaguar y obsidiana, y el anillo de plata con estrella (pareja del de Anastasio).
-- Nombres: todos nuevos y únicos en pieces/ (Remedios, Tapia y "Tacho" ya existían y se descartaron): Severiano Ocampo, Gumaro Lizardi, Eufrosina Bahena, Anastasio Bermejo, Leocadia Bermejo.
-- Villano y traidora distintos a simple vista: Gumaro hombre de 48, bajito, engominado, camisa vino; Leocadia mujer de 29, pelo largo suelto, vestido verde esmeralda.
-- Diálogo: las 68 frases son nuevas; se evitaron las formas de invernadero-atlixco ("¿Hasta las seis le diste?", "Ahora el plazo es tuyo", "Pregúntele a él", "¿oyes los motores?").
-- CTA: "Sigue la página para que veas la segunda parte" → Severiano a cámara, sonrisa pícara y pausa: "Si ustedes fueran don Anastasio… ¿la perdonan? Dale me gusta y sígueme, que la segunda parte se pone buena."
-- Sin Navidad.
-
-## Marca
-**MEXI STORIES**: edit.py, BRAND = "MEXI" (kit pieces/_marcas/MEXI: arriba a la derecha, margen 36, y=210, 22 px, alfa 80, música propia).
-
-## Archivos
-guion.md, caption.txt, lines.json (fuente única, 343 palabras), clips.py (45 clips: 34 hablados c01-c34, 7 insertos i01-i07, 4 reacciones r1-r4; copia de invernadero-atlixco con todas sus defensas: gaze + ONE + ALONE, NOSUB + CLEAN + END, NODOUBLE, SAFE/SOFT con las frases fuertes primero, variant, NOREF, TRIES=6, gatito como IMAGEN, md5 duplicados, reload_flow, new_project; imprime "FIN P1"), make_sheets.py (5 personajes + LOC_TALLERPLATA + LOC_MINA = 7 hojas, "ordinary non-famous face", control md5 DUPLICADO, --reupload), phr.py, edit.py (EDL vacía, se arma desde renders/phr.json; música cálida de c24 a c27).
-- `python -m py_compile` OK en clips.py, make_sheets.py, edit.py y phr.py. IDs de CLIPS = claves de lines.json, mismo orden (comprobado leyendo el texto, sin importar). Todos los @{ASSET} de clips.py tienen hoja en make_sheets.py. Las frases de SOFT coinciden con lines.json.
-
-## Avance
-- 2026-11-09: archivos escritos. NO se generó nada en Flow. Faltan: 7 hojas (make_sheets.py), clips, QA, phr.py, EDL y montaje.
-
-## Siguiente
-1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, `md5sum chars/*.jpg` y hoja de contactos: caras comunes y distintas (Severiano flaco calvo con lentes, Gumaro bajito engominado, Eufrosina con paliacate rojo, Anastasio grandote con sombrero y bigote blanco, Leocadia con vestido verde).
-2. `python -I clips.py > clips_log.txt` y QA de cada clip (morphs, bordes, faroles apagados antes de i03 y prendidos después, la pulsera del jaguar y el anillo de estrella iguales, el reloj de Gumaro en la izquierda, taller a la izquierda y balcón a la derecha, camionetas sin letras; pronunciación de "Severiano", "Gumaro", "Eufrosina", "Anastasio", "Leocadia", "Taxco").
-3. phr.py → EDL en edit.py → montaje y verificación (sync en 5 puntos, ≤2 s por tramo, LUFS/pico, marca MEXI) → Telegram con caption.txt y 3.er arg MEXI.
-- 2026-11-09: clips.py importa OK (45 = lines.json). Hojas: Flow devolvió imágenes viejas (EUFROSINA = patio de invernadero, LEOCADIA y LOC_MINA = copias de GUMARO, ANASTASIO duplicado) → chars/mal, assets renombrados con sufijo 2 (EUFROSINA_BAHENA2, ANASTASIO_BERMEJO2, LEOCADIA_BERMEJO2, LOC_MINA2); 7 OK a ojo y subidas.
-- Clips: 12/45 hechos (c01–c11, i01, i02) cuando Flow se quedó SIN CRÉDITOS ("No tienes suficientes créditos", cada clip 10 créditos). Al reanudar: `python -I make_sheets.py --reupload` y `python -I clips.py >> clips_log.txt` (sigue desde r1).
-
-### `pieces\invernadero-atlixco\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, vista-stories, parte1, remake-transformado, capos, matriarca, atlixco, puebla, nochebuenas]
-relatedTo: [piloncillo-rio, cafe-neblina, cenote-campana, atrium-vista]
----
-# invernadero-atlixco (Las Nochebuenas de Atlixco · Parte 1): estado
-
-## Video base
-- Remake transformado de **"Veinte años a su lado… y lo vendieron | Parte 1 (Aurelio, federales, túnel)"** de @atriumstories_ (7704056500502793502, **275K vistas**, 116 s, 61 planos). Análisis: `fuentes/atrium-vista/videos/7704056500502793502_analisis.md`.
-- Por qué este: los de más de 1M ya tienen remake (Leche: agua-hacienda y chocolate-rancho; la patrona 1.5M: medalla-mezcal; El Retén: reten-sierra y cenote-campana). La re-subida de El Retén (334K) es el mismo video, "Lo corrió de la hacienda" (330K) es hacienda-sangre, "Me dejó la hacienda vacía" (312K) es cafe-neblina y "Le dio 5 minutos" (298K) es piloncillo-rio. Este (275K, capos) es el siguiente sin usar. ("Se burlaron del padre", 221K, es padre-veladoras.)
-- Del original queda el esqueleto: humillación + plazo → llega la figura de poder → plazo invertido → giro familiar → castigo en la Parte 2.
-
-## Qué se cambió
-- Escenario y región: rancho con ramada, casa de piedra, túnel y cauce seco → invernadero de nochebuenas en el valle de Atlixco, Puebla (región no usada en pieces/), con el Popocatépetl al fondo, y el patio de talavera de una casona.
-- Oficio: patrón con negocio ilícito y dinero en la mesa → dueña de un invernadero de nochebuenas; el abusador ya no es una comandante federal (sin uniformes) sino Nazario, un acaparador de flores.
-- Humillación y plazo: los federales rodean el rancho y el patrón acusa a su hombre de confianza → Nazario le rompe una maceta a Efrén, el encargado: "Hasta que den las seis, Efrén. O tu patrona se queda sin cosecha." (sin cifras de dinero).
-- Reloj: las campanas de la parroquia (i03). Gente que llega: los camiones de redilas del valle cargados de nochebuenas, productores con los brazos cruzados. Sin armas.
-- Inversión: "¿Hasta las seis le diste? Ya sonaron, Nazario. Ahora el plazo es tuyo. Antes que den las siete, te vas del valle."
-- Giro: el hijo traidor que espera al final del túnel por celos de la herencia → Ezequías, el esposo de Hermelinda, le dio las llaves y firmó el trato; viene en la camioneta del villano. El hombre de confianza acusado en falso no existe aquí: Hermelinda confía en Efrén desde el principio.
-- Objeto clave: fajos de dólares, maleta, celular con audio → maceta de nochebuena rota y un llavero de nochebuena tallado en madera.
-- Nombres: todos nuevos y únicos en pieces/ (Isauro ya existía y se descartó): Hermelinda Corona, Efrén Cuautle, Nazario Bretón, Rufina Tecuapetla, Ezequías Vilchis.
-- Villano y traidor distintos a simple vista: Nazario 52, rapado, panzón, candado negro, polo mostaza; Ezequías 74, flaco, pelo y barba blancos largos, boina gris.
-- Diálogo: las 68 frases son nuevas; ninguna viene del original ni de piloncillo-rio.
-- CTA: "¿Quieres ver qué hago con el que me vendió?" → Hermelinda a cámara, con sonrisa pícara y pausa: "¿Ustedes perdonarían a Ezequías? Dale me gusta y sígueme para la segunda parte."
-- Navidad ligera: temporada de nochebuenas (sin posada, cena ni aguinaldo).
-
-## Marca
-**VISTA STORIES**: edit.py, BRAND = "VISTA" (kit pieces/_marcas/VISTA: marca arriba al centro y=135, 22 px, alfa 80, música propia).
-
-## Archivos
-guion.md, caption.txt, lines.json (fuente única), clips.py (45 clips: 34 hablados c01-c34, 7 insertos i01-i07, 4 reacciones r1-r4; copia de piloncillo-rio con todas sus defensas: gaze + ONE + ALONE, NOSUB + CLEAN + END, NODOUBLE, SAFE/SOFT con las frases fuertes primero, variant, NOREF, TRIES=6, gatito como IMAGEN, md5 duplicados, reload_flow, new_project; imprime "FIN P1"), make_sheets.py (5 personajes + LOC_INVERNADERO + LOC_CASONA = 7 hojas, "ordinary non-famous face", control md5 DUPLICADO, --reupload), phr.py, edit.py (EDL vacía, se arma desde renders/phr.json; música cálida de c24 a c27).
-- `python -m py_compile` OK en clips.py, make_sheets.py, edit.py y phr.py. IDs de CLIPS = claves de lines.json, mismo orden (comprobado leyendo el texto, sin importar). Todos los @{ASSET} de clips.py tienen hoja en make_sheets.py.
-
-## Avance
-- 2026-11-09: archivos escritos. NO se generó nada en Flow. Faltan: 7 hojas (make_sheets.py), clips, QA, phr.py, EDL y montaje.
-
-## Siguiente
-1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, `md5sum chars/*.jpg` y hoja de contactos: caras comunes y distintas (Hermelinda alta con chongo plata, Efrén fornido con bigote, Nazario rapado y panzón, Rufina bajita con trenza, Ezequías flaco con barba blanca larga y boina).
-2. `python -I clips.py > clips_log.txt` y QA de cada clip (morphs, bordes, el broche y el abrigo de Hermelinda, el polo mostaza, invernaderos a la izquierda y camioneta negra a la derecha, camiones sin letras, el llavero igual en c07, i02 y c31; pronunciación de "Hermelinda", "Efrén", "Nazario", "Rufina", "Ezequías", "nochebuena").
-3. phr.py → EDL en edit.py → montaje y verificación (sync en 5 puntos, ≤2 s por tramo, LUFS/pico, marca VISTA visible) → Telegram con caption.txt (3er arg VISTA).
-- 2026-11-09: 7 hojas OK a ojo. Clips 45/45 (FIN P1), sin md5 duplicados. QA: audio = lines.json (c14 "ni ni" dentro de la frase, sin hueco para cortar). CTA c34 con carisma (se toca el broche, sonríe). i04 0–3 s es una actriz ajena (solo 3.3–4.8). Crops de borde en renders/edlcfg.json.
-- renders/share.mp4: 133.5 s, 81 tramos (1.66 s/tramo), -14.4 LUFS, -2.2 dBTP, sync 0 ms en 5 puntos, BLACK 127.2 s, VISTA arriba al centro. Revisión API: renders/share_revision.md. NO enviado a Telegram.
-- PENDIENTE (sin créditos de Flow): regenerar c32 (Efrén con llaves plateadas modernas; el llavero clave es de hierro con nochebuena) → prompt ya corregido en clips.py: `python -I clips.py c32` y re-montar.
-
-### `pieces\chofer-patrona-p2\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, majestic-stories, parte2, historia-propia, capos, chofer]
-relatedTo: [chofer-patrona, mariachi-patron-p2, viuda-aguacate-p2, atrium-vista]
----
-# chofer-patrona-p2 (El Chofer de la Patrona · Parte 2): estado
-
-## La historia
-Es la Parte 2 de pieces/chofer-patrona. Valente confiesa que Treviño le cobró una supuesta deuda de su papá. Llega Treviño en la troca blanca con un pagaré "del doce de mayo", y Lencho recuerda que ese día el patrón estaba internado y él mismo lo llevó. Eusebia cierra el portón, recupera el maletín y le quita la troca blanca, que era de su marido. Treviño sale a pie por la puerta chica. Valente le pide perdón a "don Lencho". Lencho sabía que era él y no lo acusó porque el papá le pidió que lo cuidara. Castigo: Valente pasa a ser el chofer de Lencho. Chema se queda con la caballeriza y la troca es para Lencho. Cierre: "Al panteón, joven. Vamos a ver a su papá." CTA con dilema y la historia queda cerrada. No hay armas, sangre, cifras de dinero ni Navidad.
-
-## Marca
-**MAJESTIC STORIES**, la misma de la Parte 1 (no entra en la rotación): edit.py, BRAND = "MAJESTIC".
-
-## Archivos listos
-- guion.md y caption.txt (formato Parte 2, #parte2).
-- lines.json es la fuente única de clips.py: 373 palabras y la primera línea sin cifras.
-- clips.py tiene 46 clips: c01-c34 hablados, i01-i08 insertos sin caras y r1-r4 reacciones mudas. Es copia del clips.py de chofer-patrona, con gatito en imagen, reload_flow, new_project, control de descarga corrupta, duplicados md5, TRIES=6, SOFT con frases alternativas y NOREF con Treviño. Imprime "FIN P2". py_compile da OK y las claves coinciden con lines.json.
-- make_sheets.py usa las 6 hojas de la Parte 1 copiadas en chars/ (FLORENCIO_ARAMBULA, VALENTE_MONTALVO2, EUSEBIA_MONTALVO, BRIGIDO_TOSTADO, CHEMA_ARAMBULA, LOC_COCHERARANCHO) y **1 hoja nueva: LISANDRO_TREVINO**. Las copias no cuentan como DUPLICADO porque se saltan chofer-patrona y chofer-patrona-p2. Ojo: el `--reupload` de chofer-patrona/make_sheets.py (P1) no salta la carpeta p2 y ahora marcaría sus hojas como DUPLICADO. No hace falta porque la P1 está terminada.
-- phr.py.
-- edit.py: copia del edit.py de chofer-patrona con la EDL vacía (se arma desde renders/phr.json) y BLACK de 0,4 s antes de c34. Música: suspenso hasta c21, cálida de c21 a i08 y suspenso hasta el final.
-
-Nada generado en Flow todavía.
-
-## Siguiente
-1. `python -I make_sheets.py --reupload > sheets_log.txt`: sube las 6 copias, genera y sube LISANDRO_TREVINO e imprime "FIN HOJAS". Revisar md5 y que Treviño no se parezca a nadie famoso ni a otro personaje.
-2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P2", Traceback e "intento 6".
-3. QA (qa_clips.md): bordes y ropa, la tableta plana en i01, la troca blanca igual en todos los planos, Treviño con lentes y Brígido con sombrero. Regenerar con `python -I clips.py <ids> > clips_log2.txt`.
-4. `python -I phr.py`, armar la EDL y correr `python -I edit.py`.
-5. Verificar sincronía en 5 puntos, ritmo ≤2 s, LUFS y pico, y la marca MAJESTIC STORIES arriba a la izquierda.
-- 2026-11-09: hoja nueva LISANDRO_TREVINO OK a ojo (md5 único); 6 de la P1 resubidas. Clips 46/46. QA: regenerados c34 (CTA: primer plano, media sonrisa, ceja, pausa, levanta la llave) y c02 (con hoja Omni bloqueaba "Que si no pagaba, perdíamos el rancho" → lines.json "Y que el rancho estaba en juego, madre."; ahora con hoja de Valente). i01 (tableta) va después de c01 para abrir con Eusebia hablando; i02 acortado.
-- renders/share.mp4: 142.0 s, 82 tramos (1.75 s/tramo), -14.3 LUFS, -2.0 dBTP, sync 0 ms en 5 puntos, BLACK 134.0 s, MAJESTIC arriba a la izquierda. Revisión API v1: renders/share_revision.md. NO enviado a Telegram.
-
-### `pieces\piloncillo-rio\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, sin-marca, parte1, remake-transformado, capos, huasteca, san-luis-potosi, piloncillo]
-relatedTo: [cafe-neblina, cenote-campana, atrium-vista]
----
-# piloncillo-rio (El Paso del Río · Parte 1): estado
-
-## Video base
-- Remake transformado de **"Le dio 5 minutos… y no le creyó | Parte 1 (Aurelio, avioneta, comandante)"** de @atriumstories_ (7704831377383951647, **298K vistas**, 171 s, 90 planos). Análisis: `fuentes/atrium-vista/videos/7704831377383951647_analisis.md`.
-- Por qué este: los de más de 1M ya tienen remake (Leche: agua-hacienda y chocolate-rancho; la patrona: medalla-mezcal; El Retén: reten-sierra y cenote-campana). La re-subida de El Retén (334K) es el mismo video, "Lo corrió de la hacienda" (330K) es hacienda-sangre y "Me dejó la hacienda vacía" (312K) es cafe-neblina. Este (298K, capos) es el siguiente sin usar.
-- Del original queda el esqueleto: humillación + plazo → el humillado es la figura de poder y llega su gente → plazo invertido → giro familiar → castigo en la Parte 2.
-
-## Qué se cambió
-- Escenario y región: pista de tierra roja con avioneta y palmar → paso de balsa en un río turquesa de la Huasteca potosina (San Luis Potosí, región no usada en pieces/) y una molienda de piloncillo.
-- Oficio: capo con cargamento → dueño de una molienda de piloncillo que llega en troca vieja y huaraches; el abusador ya no es un comandante federal (sin uniformes) sino Rigoberto, un muchacho que encadenó el paso de la balsa.
-- Humillación y plazo: extorsión de un millón → le avienta un cono de piloncillo al río: "Diez minutos, viejito. O te regresas por donde viniste." Cobra con "la mitad de la carga" (sin cifras de dinero).
-- Plazo del poderoso: "cinco minutos" con reloj dorado → "Antes que espese el piloncillo" (el cazo de la molienda es el reloj, i03).
-- Gente que llega: sicarios armados en un palmar → Celerina, la encargada de la molienda, con cuatro camionetas azul marino y hombres con las manos cruzadas. Sin armas.
-- Inversión: "¿Diez minutos me diste, Rigoberto? Ahora son tuyos. Abre esa cadena. Y hoy mismo te vas del río."
-- Personaje nuevo sin equivalente: Crispín, el balsero al que le quitaron la balsa; Fortino se la devuelve (escena cálida).
-- Giro: no había giro familiar (el original acaba con "¿también vienen por allá?") → quien le rentó el paso a Rigoberto es Leobardo, el hijo de Fortino, que mira desde la otra orilla junto a su troca blanca.
-- Objeto clave: dólares, avioneta, reloj dorado → cono de piloncillo, cadena con candado, cazo de cobre, balsa de cable.
-- Nombres: todos nuevos y únicos en pieces/ (Ulises, Anselmo, Zamudio, Barragán, Olvera, Montiel, Ledesma, Quezada, Saldívar ya existían y se descartaron). Fortino Tavera, Rigoberto Urbina, Crispín Mireles, Celerina Pantoja, Leobardo Tavera.
-- Diálogo: las 68 frases son nuevas; ninguna viene del original ni de cafe-neblina.
-- CTA: moraleja + "¿Quieres saber qué le pasó al comandante?" → Fortino a cámara: "¿Ustedes qué harían con Leobardo? Dale me gusta y sígueme para la segunda parte."
-- Sin Navidad.
-
-## Marca
-**SIN MARCA**: edit.py, BRAND = "SINMARCA" (kit pieces/_marcas/SINMARCA: sin marca de agua, música propia de suspenso).
-
-## Archivos
-guion.md, caption.txt, lines.json (fuente única), clips.py (45 clips: 34 hablados c01-c34, 7 insertos i01-i07, 4 reacciones r1-r4; copia de cafe-neblina con todas sus defensas: gaze + ONE + ALONE, NOSUB + CLEAN + END, NODOUBLE, SAFE/SOFT con las frases fuertes, variant, NOREF, TRIES=6, gatito como IMAGEN, md5 duplicados, reload_flow, new_project; imprime "FIN P1"), make_sheets.py (5 personajes + LOC_PASORIO + LOC_TRAPICHE = 7 hojas, "ordinary non-famous face", control md5 DUPLICADO, --reupload), phr.py, edit.py (EDL vacía, se arma desde renders/phr.json; música cálida de c25 a c27).
-- `python -m py_compile` OK en clips.py, make_sheets.py, edit.py y phr.py. IDs de CLIPS = claves de lines.json (comprobado sin importar).
-
-## Avance
-- 2026-11-08: archivos escritos. NO se generó nada en Flow. Faltan: 7 hojas (make_sheets.py), clips, QA, phr.py, EDL y montaje.
-
-## Siguiente
-1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, `md5sum chars/*.jpg` y hoja de contactos: caras comunes y distintas (Fortino bajito con bigote blanco, Rigoberto flaco engominado, Crispín correoso con gorra, Leobardo con lentes), solo Fortino con sombrero.
-2. `python -I clips.py > clips_log.txt` y QA de cada clip (morphs, bordes, la camisa de palmeritas igual, la troca roja a la izquierda y el río a la derecha, las camionetas sin letras, la pronunciación de "Fortino", "Rigoberto", "Crispín", "Leobardo", "piloncillo", "espese").
-3. phr.py → EDL en edit.py → montaje y verificación (sync en 5 puntos, ≤2 s por tramo, LUFS/pico, sin marca de agua) → Telegram con caption.txt (3er arg SIN MARCA).
-- 2026-11-09: hojas: Flow daba "actividad inusual" en imágenes → proyecto nuevo dadf6828 + recarga; 7 OK a ojo. Clips 45/45 (c08 tuvo que reupload de hojas a mitad). QA: regenerados c26 (gorra doble), i01 (nadador en el río), c08 (salía Rigoberto en la línea de Crispín; ahora Crispín, se salta un "mejor" repetido). c34 regenerado salió mudo → se usa el original (clips/old/c34_v2_mudo.mp4 aparte). c03 cortado a 3.75 s ("de la carga" repetido). Fuera i06 (botas sin dueño).
-- renders/share.mp4: 126.7 s, 82 tramos (1.56 s/tramo), -14.3 LUFS, -2.1 dBTP, sync 0 ms en 5 puntos, BLACK 120.6 s, sin marca. Revisión API v1: renders/share_revision.md. NO enviado a Telegram.
-- 2026-11-09 00:35: CTA c34 regenerado (variante 0 de cta_variants.py: primer plano, media sonrisa, ceja, pausa; línea completa con voz). Re-montado: 126.7 s, 82 tramos, -14.3 LUFS, -2.1 dBTP.
-
-### `pieces\cafe-neblina\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, mexi-stories, parte1, remake-transformado, capos, veracruz, cafe]
-relatedTo: [cenote-campana, hacienda-sangre, atrium-vista]
----
-# cafe-neblina (La Neblina · Parte 1): estado
-
-## Video base
-- Remake transformado de **"Me dejó la hacienda vacía y una deuda escondida | Parte 1"** de @atriumstories_ (7704455244683480350, **312K vistas**, 142 s, 55 planos). Análisis: `fuentes/atrium-vista/videos/7704455244683480350_analisis.md`.
-- Por qué este: los tres de más de 1M ya tienen remake (Leche 1.7M: agua-hacienda y chocolate-rancho; la patrona 1.5M: medalla-mezcal; El Retén 1.1M: reten-sierra y cenote-campana). Siguiendo en vistas, la re-subida de El Retén (334K) es el mismo video y "Lo corrió de la hacienda" (330K) ya es hacienda-sangre. El siguiente sin remake es este (312K).
-- Del original quedan la deuda que deja el marido y el esqueleto pedido: humillación + plazo → llega la figura de poder → plazo invertido → giro familiar → castigo en la Parte 2.
-
-## Qué se cambió
-- Escenario y región: hacienda de ganado con presa seca y oficina de cristal (norte) → finca cafetalera chica en la sierra central de Veracruz (patio de secado con neblina) y un beneficio viejo en el valle. Veracruz no se usó en ninguna pieza.
-- Oficio: ganadera con abogada y capataz → cafeticultora; el abusador ya no es el marido sino Lamberto, un coyote que compra café.
-- Humillación y plazo: el marido se va en su sedán y le deja 15 días de deuda → el coyote le pisa el café tendido con las botas: "Mañana te vas, Brígida."
-- Figura de poder: no había (Regina pelea sola con sus trabajadores) → don Gaudencio, dueño del beneficio y padrino de bodas de Brígida, con tres camionetas verdes. Sin armas.
-- Cómo llega: el coyote mismo le marca a su "patrón" para presumir la finca, y el patrón es el padrino.
-- Objeto clave: préstamo de banco, tablet, reserva de agua → un pagaré doblado con la firma de Nemesio y fecha del martes, y el sombrero de palma con banda azul que Brígida tejió.
-- Inversión: "hasta mañana" que le dio el coyote → "Tú te vas hoy. Antes que baje la neblina. Y sin un solo costal."
-- Giro: el marido sabotea por teléfono desde su oficina → Nemesio, el marido que "se fue al norte hace dos años", estaba escondido en el asiento de atrás de la camioneta del coyote.
-- Nombres: todos nuevos y únicos en pieces/ (Abelardo, Mancera, Rufino, Clemente, Fermín, Wences, Ponciano, Evaristo, Heriberto, Melquiades, Cabañas y Ríos ya existían y se descartaron). Brígida, Lamberto, Toribio, Gaudencio, Silvano, Nemesio.
-- Diálogo: las 70 frases son nuevas; ninguna viene del original ni de cenote-campana.
-- CTA: Regina "Mauricio cree que ya perdí. Sígueme…" → Brígida a cámara: "¿Ustedes perdonarían a Nemesio? Dale me gusta y sígueme para la segunda parte."
-- Sin Navidad.
-
-## Marca
-**MEXI STORIES**: edit.py, BRAND = "MEXI" (kit pieces/_marcas/MEXI: arriba a la derecha, margen 36, y=210, 22 px, alfa 80, música propia de la marca).
-
-## Archivos
-guion.md, caption.txt, lines.json (fuente única), clips.py (47 clips: 35 hablados c01-c35, 7 insertos i01-i07, 5 reacciones r1-r5; copia de cenote-campana con todas sus defensas: gaze + ONE + ALONE, NOSUB + CLEAN + END, NODOUBLE, SAFE/SOFT con las frases fuertes, variant, NOREF, TRIES=6, gatito, md5, reload_flow, new_project; imprime "FIN P1"), make_sheets.py (6 personajes + LOC_PATIOCAFE + LOC_BENEFICIO, "ordinary non-famous face", control md5 DUPLICADO, --reupload), phr.py, edit.py (EDL vacía, se arma desde renders/phr.json; música cálida de c24 a c26).
-- Guion pasado por la skill humanizer: frases de 3 a 6 palabras (salvo "¿Nemesio?" y el CTA), sin contrastes de relleno.
-
-## Avance
-- 2026-11-08: archivos escritos. `python -c "import clips"` OK. Faltan: 8 hojas (make_sheets.py), clips, QA, phr.py, EDL y montaje. NO se generó nada en Flow.
-
-## Siguiente
-1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, `md5sum chars/*.jpg` y hoja de contactos: caras comunes y distintas (Toribio calvo, Lamberto bigotón y panzón, Nemesio demacrado), solo Gaudencio con sombrero puesto, solo Brígida con trenza.
-2. `python -I clips.py > clips_log.txt` y QA de cada clip (morphs, bordes, el pagaré y el sombrero de banda azul siempre iguales, la pickup gris, la pronunciación de "Brígida", "Nemesio", "Gaudencio", "empeñó").
-3. phr.py → EDL en edit.py → montaje y verificación (sync en 5 puntos, ≤2 s por tramo, LUFS/pico, marca MEXI visible arriba a la derecha) → Telegram con caption.txt (3er arg MEXI).
-- 2026-11-08 noche: 8 hojas OK a ojo. Clips 47/47. QA: regenerados c12 (decía otra frase) y c15 (repetía "la de Brígida"); al crear proyecto Flow nuevo las hojas quedaron en el viejo → make_sheets --reupload y c12 otra vez con hoja. i04 0–3 s es una actriz ajena (solo 3.3–4.8). Crops de borde en renders/edlcfg.json.
-- renders/share.mp4: 130.5 s, 86 tramos (1.53 s/tramo), -14.3 LUFS, -1.2 dBTP (alimiter 0.74), BLACK 124.6 s, MEXI arriba a la derecha. Revisión API: renders/share_revision.md. NO enviado a Telegram.
-
-### `pieces\cenote-campana\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, majestic-stories, parte1, remake-transformado, capos, yucatan, cenote]
-relatedTo: [reten-sierra, golondrina-muelle, chofer-patrona, atrium-vista]
----
-# cenote-campana (La Campana del Cenote · Parte 1): estado
-
-## Video base
-- Remake transformado de **El Retén P1** de @atriumstories_: "Le pidió 200 mil en el retén… y terminó rodeado" (7701749432621993246, **1.1M vistas**, 113 s, 62 planos). Análisis: `fuentes/atriumstories/videos/7701749432621993246_analisis.md`.
-- Los tres videos de Atrium con más de 1M ya tenían remake: Leche 1.7M (agua-hacienda y chocolate-rancho), la patrona y el secreto de 20 años 1.5M (medalla-mezcal) y El Retén 1.1M (reten-sierra). Se eligió El Retén porque es el que encaja con el esqueleto pedido (precio y plazo → "¿tú crees que vine solo?" → llegan las camionetas → la cifra cambia de lado → la familia) y porque reten-sierra lo copió casi tal cual (otro retén). Esta versión no se le parece.
-- Del original queda solo el esqueleto: humillación + plazo → llega la figura de poder → plazo y precio invertidos → giro familiar → castigo en la Parte 2.
-
-## Qué se cambió
-- Escenario y región: retén militar en carretera del norte → entrada de un cenote en el monte de Yucatán, más la hacienda henequenera amarilla de la dueña.
-- Víctima y oficio: patrón con convoy (el original no tiene víctima humilde) → don Nicasio, 71, cuidador maya del cenote, con su nieta Citlali.
-- Abusador: mayor del ejército con soldados → el ingeniero Portilla, de una empresa hotelera, con su capataz Cosme. Sin uniformes.
-- Figura de poder: el propio patrón con revólver → doña Zenaida, 76, matriarca con bastón, que llega en cinco camionetas blancas. Sin armas.
-- Humillación y plazo: "200 mil dólares y aquí nunca pasó nada" → el zapato tumba el cántaro de la madre de Nicasio, "una hora, don Nicasio, y este cenote se cierra"; los cien mil salen después.
-- Cómo se pide ayuda: radio "adelántense, todos" → la campana de bronce que el padre de Zenaida colgó para que Nicasio la llamara (tres toques).
-- Objeto clave: revólver plateado → la llave vieja de hierro de la reja, que solo tiene la familia.
-- Inversión: 200 mil → 10 mil y ultimátum con arma → los cien mil los paga Portilla y la hora que dio ahora la tiene él.
-- Giro familiar: "¿tienes esposa?" (amenaza a la familia del mayor) → la señora que mandó a Portilla y le dio la llave es Maricruz, la hija de Zenaida (contesta el celular: "¿Maricruz? ¿Hija, eres tú?").
-- Nombres: todos nuevos y únicos en pieces/ (Leonor, Graciela, Eleuterio, Itzel, Abundio y Yazmín ya existían y se cambiaron).
-- Diálogo: las 70 frases son nuevas; ninguna viene del original ni de golondrina-muelle (se reescribieron las que repetían su forma: "¿Quién tiró tu pescado?", "Llama a quien quieras… te quedan X minutos", "Dame ese teléfono", "Cuarenta años se la cuidé").
-- CTA: voz en off "sigue la página…" → Nicasio a cámara: "¿Qué creen que hará doña Zenaida con su hija? Dejen su me gusta y compartan, que viene la segunda parte."
-- Sin Navidad (golondrina-muelle ya la tenía).
-
-## Marca
-**MAJESTIC STORIES**: edit.py, BRAND = "MAJESTIC" (kit pieces/_marcas/MAJESTIC: arriba a la izquierda x=36 y=210, 22 px, alfa 80, música propia de la marca).
-
-## Archivos
-guion.md, caption.txt, lines.json (fuente única, 333 palabras), clips.py (47 clips: 35 hablados c01-c35, 7 insertos i01-i07, 5 reacciones r1-r5; 286 s de generación; copia de golondrina-muelle con todas sus defensas: gaze + ONE + ALONE, NOSUB + CLEAN + END, NODOUBLE, SAFE/SOFT con las frases fuertes, variant, NOREF, TRIES=6, gatito en imagen, control de duplicados md5, reload_flow, new_project, descarga corrupta, 17 s entre clips; imprime "FIN P1"), make_sheets.py (6 personajes + LOC_CENOTEREJA + LOC_HACIENDAAMARILLA, "ordinary non-famous face", control md5 DUPLICADO, --reupload), phr.py, edit.py (EDL vacía, se arma desde renders/phr.json; música cálida de c25 a c27).
-- Guion pasado por la skill humanizer: frases de 3 a 6 palabras (salvo "¿Bueno?", "Hasta hoy." y el CTA), sin contrastes de relleno.
-
-## Avance
-- 2026-11-08: archivos escritos. `python -c "import clips"` OK (47 clips = lines.json, las 6 variantes de cada prompt se arman sin error). Faltan: 8 hojas (make_sheets.py), clips, QA, phr.py, EDL y montaje. NO se generó nada en Flow.
-
-## Siguiente
-1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, `md5sum chars/*.jpg` y hoja de contactos: caras comunes y distintas (Portilla lampiño, Cosme barbón), solo Nicasio con sombrero, solo Zenaida con bastón.
-2. `python -I clips.py > clips_log.txt` y QA de cada clip (morphs, bordes, la llave y la campana siempre iguales, la pronunciación de "Nicasio", "Zenaida", "Citlali", "Maricruz").
-3. phr.py → EDL en edit.py → montaje y verificación (sync en 5 puntos, ≤2 s por tramo, LUFS/pico, marca MAJESTIC visible) → Telegram con caption.txt.
-- 2026-11-08 noche: hojas: Flow devolvió gatitos/copias en la 1.ª tanda → chars/mal, assets renombrados con sufijo 2 (OSIEL_PORTILLA2, CITLALI_CANCHE2, COSME_BALAM2, ZENAIDA_CAUICH2, FIDENCIO_TZUC2, LOC_CENOTEREJA2, LOC_HACIENDAAMARILLA2); 8 OK a ojo. Clips 47/47.
-- QA: regenerados c30 (chaleco con letras "SENC"), c19 (frase rota → lines.json "Tres veces. Es Nicasio." / "Prepárenme las camionetas.") y c26 (Nicasio sin sombrero). Fuera r1 (Zenaida en el cenote antes de llegar). Crops de borde en renders/edlcfg.json.
-- renders/share.mp4: 137.6 s, 83 tramos (1.67 s/tramo), -14.4 LUFS, -2.1 dBTP, sync 0 ms en 5 puntos, BLACK 131.2 s, MAJESTIC arriba a la izquierda. Revisión API v1: renders/share_revision.md. NO enviado a Telegram.
-
-### `pieces\mariachi-patron-p2\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, vista-stories, parte2, historia-propia, capos, mariachi]
-relatedTo: [mariachi-patron, viuda-aguacate-p2, atrium-vista]
----
-# mariachi-patron-p2 (El Mariachi del Patrón · Parte 2): estado
-
-## La historia
-Parte 2 de pieces/mariachi-patron. Los escoltas de Rosendo cierran los arcos; Gildardo niega a su padre y Rosendo lo sube a la tarima a confesar por el micrófono que el mariachi es su padre y que lo corrió sin pagarle. Eulogio deja el radio y se va a pie al pueblo. Al alba Rosendo se lleva el ganado por la cosecha. Momento cálido: Higinio lo esperó y le escribió cartas; la mamá le dijo que él los dejó. Higinio decide: le devuelven el ganado si toca un año con él en la plaza, por limosna. Amanece, mañanitas para Rosendo. CTA con dilema; historia cerrada. Sin armas, sin sangre, sin Navidad. Guion pasado por la skill humanizer.
-
-## Marca
-**VISTA STORIES**, la misma de la Parte 1 (no entra en la rotación): edit.py, BRAND = "VISTA". Sin carpeta music/ propia.
-
-## Archivos listos
-- guion.md y caption.txt (formato Parte 2, #parte2, sin anunciar tercera parte).
-- lines.json: fuente única de clips.py (323 palabras, 3 a 6 por frase salvo el CTA; primera línea sin cifras).
-- clips.py: 47 clips (c01–c34 hablados, i01–i08 insertos sin caras, r1–r5 reacciones mudas). Copia del clips.py de chofer-patrona (gatito en imagen, reload_flow, new_project, descarga corrupta, duplicados md5, TRIES=6). Imprime "FIN P2". `python -c "import clips"` OK.
-- make_sheets.py: las 6 hojas de la Parte 1 copiadas en chars/ (HIGINIO_LUMBRERAS, MACLOVIO_ZAVALETA, GILDARDO_MONTEMAYOR, EULOGIO_MANCERA, ROSENDO_CABANAS, LOC_PATIOGANADERO). Sin hojas nuevas. Las copias no cuentan como DUPLICADO (skip mariachi-patron y mariachi-patron-p2; también se ajustó mariachi-patron/make_sheets.py para ignorar la copia).
-- phr.py.
-- edit.py: plantilla mariachi-patron, EDL en BORRADOR por índices de frase (82 tramos), mudos con ganancia 0, BLACK 0.4 s antes de c34. Música: suspenso hasta c20, cálida c20–c24, suspenso hasta el final.
-
-Nada generado en Flow todavía.
-
-## Siguiente
-1. `python -I make_sheets.py --reupload > sheets_log.txt` (solo sube las 6 copias; imprime "FIN HOJAS").
-2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P2", Traceback e "intento 6".
-3. QA (qa_clips.md), regenerar con `python -I clips.py <ids> > clips_log2.txt`.
-4. `python -I phr.py`, pasar la EDL a rangos y correr `python -I edit.py`.
-5. Verificar sincronía en 5 puntos, ritmo ≤2 s, LUFS y pico, marca VISTA STORIES arriba al centro.
-6. Telegram con caption.txt (3er arg = VISTA).
-
-## Revisar en el QA
-- Geografía: Higinio y Maclovio IZQ.; Gildardo y Eulogio DER. (Gildardo en la tarima con micrófono en c07 y c09); Rosendo CENTRO.
-- Luz: noche hasta c14, azul del alba c15–c30, amanecer dorado i07–c34.
-- Utilería: sombrero en las manos de Higinio (no en la cabeza hasta el CTA); un solo micrófono; radio en la mano derecha de Eulogio hasta i03; el estuche pasa a Gildardo en i06; camiones ganaderos sin logos ni placas.
-- i04: el que se va de espaldas debe ser Eulogio (calvo, chamarra de cuero negra), manos vacías.
-- c07/c09: la voz por micrófono no debe salir con eco exagerado ni subtítulos.
-- Fallos de Omni: subtítulos quemados, frases repetidas, 2.ª frase perdida, morphs.
-- Pronunciación: "Higinio", "Rosendo", "Gildardo", "limosna", "mañanitas", "esperándote".
-- 2026-11-08 noche: clips 47/47 (FIN P2). Desde c12 Flow no veía las hojas (NOREF en c12/c13): pausa, --reupload, regenerados. QA (lv3 + hojas): Flow devolvió clips cruzados/mudos → regenerados c11 (subtítulo quemado), c13 ("don Iginio" en lines.json; aún suena "Eugenio"), c16, c19, c20, c23, c24, c26, c30, c32 (luz de amanecer), c33, c34, i03, i04 (Eulogio de espaldas), i05; tras la revisión API: c12 (noche cerrada) y r5 (cara de Gildardo).
-- renders/share.mp4: 133.6 s, 85 tramos (1.59 s/tramo), -14.2 LUFS, -1.7 dBTP, sync 0 ms en 8 puntos, BLACK 125.7 s, VISTA arriba al centro. Revisión API: renders/share_revision.md (v1). NO enviado a Telegram.
-
-### `pieces\golondrina-muelle\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, sinmarca, parte1, historia-propia, capos, muelle, nochebuena]
-relatedTo: [chofer-patrona, cincha-cortada, mariachi-patron, madrina-central, atrium-vista]
----
-# golondrina-muelle (La Golondrina · Parte 1): estado
-
-## La historia
-- Historia propia tipo capos en un muelle de pescadores de Sinaloa, la mañana del 24 de diciembre. Conflicto nuevo (las premisas 1-8 de fuentes/atrium-vista/resumen.md ya estaban hechas). El licenciado Ruelas, administrador nuevo del muelle, le riega el pescado a don Cheyo y le encadena la lancha: "Media hora, don Cheyo. Y esta lancha es mía." Cheyo pide el radio: "Vinieron por su lancha." Llega don Arcadio en tres lanchas: la Golondrina es suya y se la regaló a Cheyo el día que lo sacó del mar. Plazo invertido: Ruelas tiene hasta que suba la marea para decir quién lo mandó. Gancho P2: en el celular de Ruelas aparece Abelardo, el hermano de Arcadio.
-- Con Navidad (las tres anteriores no la tenían): pescado de la cena de Nochebuena y "esta Nochebuena cenas conmigo".
-- Indicios antes de revelar: golondrina en la proa (i02), "yo nomás la trabajo" (c04), "hoy mismo es suya" (c08, r1), "esa lancha no se toca" (c09), el radio (c13), el anillo con la golondrina (i05).
-- Guion pasado por la skill humanizer.
-- Nombres únicos en pieces/ (Anselmo, Clemente, Baltazar, Evaristo, Gerardo, Octavio, Rogelio y Fulgencio ya existían).
-
-## Marca
-**SIN MARCA**: edit.py, BRAND = "SINMARCA" (kit pieces/_marcas/SINMARCA, sin marca de agua).
-
-## Archivos
-guion.md, caption.txt, lines.json, clips.py (47 clips, copia de chofer-patrona con todas sus defensas: gatito en imagen y control de duplicados), make_sheets.py (5 personajes + LOC_MUELLEPESCA, "ordinary non-famous face"), phr.py, edit.py (EDL vacía, se arma desde renders/phr.json; música cálida de c24 a c27).
-
-## Avance
-- 2026-11-08: archivos escritos. `python -c "import clips"` OK (47 clips = lines.json). Faltan: 6 hojas (make_sheets.py), clips, QA, phr.py, EDL y montaje. NO se generó nada en Flow.
-- 2026-11-08 noche: 6 hojas OK a ojo. Clips 47/47 al 1.er intento, sin md5 duplicados. QA: sin regeneraciones. c03 dice "y le toca una multa" (sin cifra; los 40 mil quedan en c22); c06 traba la 2.ª frase → solo 1.ª; c15 omite "Apá". i03/i04/i02 tienen cortes internos (usados tramos limpios). Crops de borde en renders/edlcfg.json.
-- renders/share.mp4: 134.7 s, 84 tramos (1.62 s/tramo), -14.2 LUFS, -2.1 dBTP, sync 0 ms en 5 puntos, BLACK 126.3 s, sin marca. Revisión API: renders/share_revision.md. NO enviado a Telegram.
-
-### `pieces\cincha-cortada\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, mexi-stories, parte1, historia-propia, capos, caballos]
-relatedTo: [chofer-patrona, mariachi-patron, viuda-aguacate, reten-sierra, atrium-vista]
----
-# cincha-cortada (La Cincha Cortada · Parte 1): estado
-
-## La historia
-- Historia propia tipo capos en las carreras de caballos de Sonora. Las premisas 1-8 de fuentes/atrium-vista/resumen.md ya estaban hechas, así que el conflicto es nuevo. El licenciado Arteaga tira la cubeta del agua de Centella: "Veinte minutos, viejo. Y tu caballo pierde." Apostó tres millones y presume los papeles del rancho de doña Teodora. Jacinto, el ayudante, le cortó la cincha a cambio de cien mil. Teodora llega con su gente: los papeles ya son suyos y Arteaga le debe tres millones antes de que acabe la carrera, en cinco minutos. Gancho P2: "el dinero salió de su casa". Sin Navidad.
-- Indicios antes de revelar: Jacinto quiere ensillar (c09), Arteaga sabe lo de la cincha nueva (c10, r1), "nomás tú y yo sabíamos" (c12), botas de avestruz nuevas (i03, c14), celular escondido (r2).
-- Guion pasado por la skill humanizer.
-- Nombres únicos en pieces/ (Cruz, Lalo, Lucero, Octavio, Leonel, Ofelia y Valdivia ya existían).
-
-## Marca
-**MEXI STORIES**: edit.py, BRAND = "MEXI" (kit pieces/_marcas/MEXI).
-
-## Archivos
-guion.md, caption.txt, lines.json, clips.py (47 clips, copia de chofer-patrona con todas sus defensas), make_sheets.py (5 personajes + LOC_CABALLERIZA + CABALLO_CENTELLA, "ordinary non-famous face"), phr.py, edit.py (EDL vacía, se arma desde renders/phr.json; música cálida de c23 a c27).
-
-## Avance
-- 2026-11-08: archivos escritos. `python -c "import clips"` OK (47 clips = lines.json). Faltan: 7 hojas (make_sheets.py), clips, QA, phr.py, EDL y montaje. NO se generó nada en Flow (había otra pieza generándose).
-- 2026-11-08 noche: 7 hojas OK a ojo (md5 únicos). Clips 47/47 (c36 en intento 2), sin md5 duplicados. QA: transcripción = lines.json en los 36 diálogos; sin regeneraciones. Crops de borde en c10/c18/c19/c23 (renders/edlcfg.json).
-- renders/share.mp4: 147.0 s, 86 tramos (1.73 s/tramo), -14.4 LUFS, -1.7 dBTP, sync 0 ms en 7 puntos, BLACK 139.7 s. Revisión API: renders/share_revision.md. NO enviado a Telegram.
-
-### `pieces\chofer-patrona\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, majestic-stories, parte1, historia-propia, capos, chofer]
-relatedTo: [mariachi-patron, viuda-aguacate, fonda-chela, reten-sierra, atrium-vista]
----
-# chofer-patrona (El Chofer de la Patrona · Parte 1): estado
-
-## La historia
-- Historia propia tipo capos sobre la premisa n.º 5 de fuentes/atrium-vista/resumen.md. Valente, hijo de la patrona, tiene de rodillas a Lencho, el chofer de veinte años: "Diez minutos, Lencho. O aparece el medio millón." Lencho pide la cámara de la camioneta. Llega doña Eusebia con su gente y la grabación muestra a Valente abriendo la cajuela con su llave. Plazo invertido: hasta mañana o no vuelve a la casa. Gancho P2: el maletín lo recibió Treviño, "el que se llevó a tu padre". Sin Navidad.
-- Se diferencia de camionero (también un chofer acusado, con cámaras): aquí no hay cuarto de monitores. La grabación sale en una tableta y la pista son las dos llaves y el "ya la revisé anoche".
-- Indicios antes de revelar: dos llaves (c05-c06), mano al bolsillo (r1), llamada de Treviño (c11), "ya la revisé anoche" (c14).
-- Guion pasado por la skill humanizer.
-- Nombres únicos en pieces/ (Rodrigo, Socorro, Isidro, Herminia, Mauricio, Fausto, Matilde y Leopoldo ya existían).
-
-## Marca
-**MAJESTIC STORIES**: edit.py, BRAND = "MAJESTIC" (kit pieces/_marcas/MAJESTIC).
-
-## Archivos
-guion.md, caption.txt, lines.json, clips.py (47 clips, copia de mariachi-patron con todas sus defensas), make_sheets.py (5 personajes + LOC_COCHERARANCHO, "ordinary non-famous face"), phr.py, edit.py (EDL vacía, se arma desde renders/phr.json; música cálida de c21 a c25).
-
-## Avance
-- 2026-11-08: archivos escritos. `python -c "import clips"` OK (47 clips = lines.json). Faltan: 6 hojas (make_sheets.py), clips, QA, phr.py, EDL y montaje. NO se generó nada en Flow (había otra pieza generándose).
-- 2026-11-08 tarde: hoja VALENTE_MONTALVO parecida a Adrien Brody → chars/mal; nueva VALENTE_MONTALVO2 (mestizo, bigote fino). Clips 47/47 (FIN P1; c01 salió en intento 5 = NOREF, otra cara).
-- QA: c01 regenerado con línea 2 cambiada en lines.json a "O aparece ese maletín." (con hoja, "el medio millón" daba bloqueo de políticas en 6 intentos; la cifra queda en c22). c08 subtítulos quemados → crop 480x853 arriba. c26 traba "su tierra, su tiempo" → solo 1.ª frase. Bordes/crops en renders/edlcfg.json. c18 morph de pelo ~5.2 s (fuera del tramo).
-- Revisión API v1 → v2: fuera i01 (hombre sin torso, artefacto), c35 regenerado con CTA "¿...la patrona debe perdonar a Valente?" (Eusebia nunca se nombra), c33 arranque 0.56 (cortaba "Pa-trona") con crop de borde, insertos i04/i05/r5 acortados, alimiter 0.76 (AAC pasaba de -1 dBTP).
-- renders/share.mp4: 131.2 s, 82 tramos (1.61 s/tramo), -14.3 LUFS, -2.2 dBTP, sync 0 ms en 5 puntos, BLACK 123.8 s. NO enviado a Telegram.
-
-### `pieces\viuda-aguacate-p2\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, mexi-stories, parte2, historia-propia, capos, matriarca]
-relatedTo: [viuda-aguacate, fonda-chela-p2, atrium-vista]
----
-# viuda-aguacate-p2 (La Viuda del Aguacate · Parte 2): estado
-
-## La historia
-Parte 2 de pieces/viuda-aguacate. Nicandro manda llamar a su hijo Arnulfo (el comprador) antes de que se meta el sol. Arnulfo llega solo en camioneta blanca; Ponciano confiesa que Arnulfo pidió hacerlo rápido y sin ruido. Momento cálido: Lauro era el padrino de Arnulfo. Castigos sin armas ni sangre: Ponciano rompe las escrituras, entrega su sello de notario y el maletín (cerrado) pasa a Fito para los 40 cortadores; Wences suelta el radio y se va a pie con el licenciado; Arnulfo entrega llaves de su camioneta y de sus tres huertas (pasan a Engracia) y queda una temporada de cortador bajo Fito, sin apellido. Cierre: "Mi palabra pesa más que mi apellido"; se mete el sol. CTA con dilema; historia cerrada (sin Parte 3). Sin Navidad. Guion pasado por la skill humanizer.
-
-## Marca
-**MEXI STORIES**, la misma de la Parte 1 (no entra en la rotación): edit.py, BRAND = "MEXI". Sin carpeta music/ propia.
-
-## Archivos listos
-- guion.md y caption.txt (formato Parte 2, #parte2, sin anunciar tercera parte).
-- lines.json: fuente única de clips.py (359 palabras, ≤7 por frase salvo el CTA).
-- clips.py: 47 clips (c01–c34 hablados, i01–i08 insertos sin caras, r1–r5 reacciones mudas), 294 s de generación. Copia del clips.py de viuda-aguacate con todas sus defensas (gaze+ONE+ALONE, NOSUB+CLEAN+END, NODOUBLE, SAFE/SOFT con las frases fuertes de este diálogo, variant, NOREF con Arnulfo, TRIES=6, gatito en imagen, reload_flow, new_project, descarga corrupta, 17 s). Acepta IDs, mueve la versión vieja a clips/old/ e imprime "FIN P2". `python -c "import clips"` OK.
-- make_sheets.py: 6 hojas de la Parte 1 copiadas en chars/ (ENGRACIA_MURGUIA, FITO_CUEVAS, PONCIANO_UGALDE, WENCES_PICHARDO, NICANDRO_SOLORZANO, LOC_HUERTAGUACATE) + 1 NUEVA a generar: ARNULFO_SOLORZANO. Las copias no cuentan como DUPLICADO (skip viuda-aguacate y viuda-aguacate-p2; también se ajustó viuda-aguacate/make_sheets.py para ignorar la copia de la P2). Imprime "FIN HOJAS".
-- phr.py.
-- edit.py: plantilla viuda-aguacate, EDL en BORRADOR por índices de frase (82 tramos), mudos con ganancia 0, BLACK 0.4 s antes de c34. Música: suspenso hasta c10, cálida c10–c13, suspenso hasta el final. Salida renders/share.mp4.
-
-## Hoja nueva
-ARNULFO_SOLORZANO (40, "ordinary non-famous face", quijada cuadrada, pelo negro corto de lado, lampiño, lunar en mejilla izquierda, saco azul marino, camisa azul clara, reloj de oro en la izquierda, mocasines café). Nombre verificado único en pieces/*/clips.py y make_sheets.py.
-
-Nada generado en Flow todavía.
-
-## Siguiente
-1. `python -I make_sheets.py --reupload > sheets_log.txt` (sube las 6 copias y genera + sube ARNULFO; imprime "FIN HOJAS"). Revisar DUPLICADO, `md5sum chars/*.jpg`, y que Arnulfo no se parezca a Ponciano ni a Wences.
-2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P2", Traceback e "intento 6".
-3. QA (qa_clips.md): hoja de fotogramas, franja inferior y bordes. Regenerar con `python -I clips.py <ids> > clips_log2.txt`.
-4. `python -I phr.py` / lv3, pasar la EDL a rangos y correr `python -I edit.py`.
-5. Verificar sincronía en 5 puntos, ritmo ≤2 s de media, LUFS y pico, marca MEXI STORIES visible arriba a la derecha.
-6. Telegram con caption.txt (3er arg = MEXI).
-
-## Revisar en el QA
-- Geografía: Engracia y Fito IZQ.; Ponciano, Wences y Arnulfo DER. (Arnulfo con la camioneta blanca detrás); Nicandro CENTRO.
-- Arnulfo: igual a su hoja en todos los clips; si sale en el intento 5 (sin hoja), compararlo cara a cara. Ningún doble de saco azul marino, rebozo gris, sombrero de palma, traje de lino ni cola de caballo.
-- Luz: atardecer bajo en todo; puesta de sol solo en i08, c33 y c34.
-- Utilería: maletín siempre CERRADO (i05, c19), escrituras rotas sin texto legible (i04), llavero en la mano IZQUIERDA de Engracia (c31, c34), smartphone de Ponciano en la oreja derecha (c02), bastón en la derecha de Nicandro; camionetas sin logos ni placas.
-- i06: los dos de espaldas deben ser Ponciano (calvo, lino beige) y Wences (cola de caballo, guinda), manos vacías.
-- Fallos de Omni: subtítulos quemados, frases repetidas, 2.ª frase perdida, morphs.
-- Pronunciación: "Arnulfo", "Nicandro", "Engracia", "Uruapan", "injertar".
-
-## Avance 2026-11-08
-- Clips 47/47 al primer intento, sin md5 duplicados. QA: c12 regenerado (Arnulfo sin saco → saco azul marino). c32 (dos bastones) tapado con crop 480x853; i02 solo desde 3.3 s (mujer ajena 0-3 s); bordes de c11/c16/c20/c24/c29/c30/c33 con arranque o crop (renders/edlcfg.json).
-- EDL generada desde renders/lv3.json (scratchpad mkedl_p2.py): frases por envolvente, pausas internas ≥0.5 s cortadas, ganancia -19.5-LUFS.
-- renders/share.mp4: 143.0 s, 83 tramos (1.74 s/tramo), -14.2 LUFS, -1.8 dBTP, sync 0 ms en 6 puntos. Revisión API: renders/share_revision.md. NO enviado a Telegram.
-
-### `pieces\mariachi-patron\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, vista-stories, parte1, historia-propia, capos, mariachi]
-relatedTo: [viuda-aguacate, fonda-chela, monedas-carretera, reten-sierra, atrium-vista]
----
-# mariachi-patron (El Mariachi del Patrón · Parte 1): estado
-
-## La historia
-- Historia propia tipo capos sobre la premisa n.º 8 de fuentes/atrium-vista/resumen.md. El ganadero Gildardo corre de su fiesta, sin los veinte mil, a don Higinio, el mariachi viejo (cinco minutos para irse). A medianoche llega don Rosendo Cabañas con ocho camionetas: Higinio nunca faltó a uno de sus cumpleaños. Plazo invertido: Gildardo le debe la cosecha y tiene hasta que amanezca. Gancho P2: "Gildardo es mi hijo". Sin Navidad.
-- Guion pasado por la skill humanizer.
-- Nombres únicos en pieces/ (Evaristo, Tadeo, Chencho, Cirilo, Alcántar ya existían).
-
-## Marca
-**VISTA STORIES**: edit.py, BRAND = "VISTA" (kit pieces/_marcas/VISTA).
-
-## Archivos
-guion.md, caption.txt, lines.json, clips.py (48 clips, copia de viuda-aguacate + control de duplicados md5 de clips), make_sheets.py (5 personajes + LOC_PATIOGANADERO, "ordinary non-famous face"), phr.py, edit.py (EDL por armar desde renders/phr.json).
-
-## Avance
-- (se actualiza abajo)
-- 2026-11-08: hojas OK (revisadas a ojo, md5 únicos, caras comunes). Proyecto Flow nuevo 8090b0be (el viejo daba "actividad inusual").
-- 48/48 clips (FIN P1). QA en qa_clips.md (método pedida-mano + qa.py): 0 regeneraciones; crops de borde en c03 c11 c20 c21 c23 c26 c30 c33; i05 trae 2.9 s de una mujer ajena al inicio (se usa 3.1-4.4).
-- Montaje v1: renders/share.mp4, 166.6 s, 73 tramos / 96 planos (1.73 s/plano), -14.2 LUFS, pico -1.7 dBTP, sincronía 0 ms en 5 puntos, transcripción completa = lines.json (renders/v1_transcript.txt), marca VISTA STORIES visible. Revisión API: renders/share_revision.md (se agregó r3 tras "Gildardo es mi hijo").
-- NO enviado a Telegram (pedido de la sesión coordinadora).
-- Dudas: manga gris en i02 (Eulogio lleva chamarra negra); el giro "es mi hijo" no tiene pista previa salvo r3.
-
-### `pieces\velorio-patron\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, majestic-stories, parte1, historia-propia, capos]
-relatedTo: [fonda-chela, reten-sierra, medalla-mezcal, atrium-vista]
----
-# velorio-patron (El Velorio del Patrón · Parte 1): estado
-
-## La historia
-Historia propia tipo capos, premisa n.º 3 de fuentes/atrium-vista/resumen.md. En el velorio de don Eleuterio (rebautizado porque CIPRIANO_ROBLES ya existía), los hijos Leonel e Ivonne corren a Nati, la cocinera de 25 años: diez minutos y tres mil pesos. El licenciado Efrén lee la carta: el anillo es para Nati, y los doce de la escolta, con Nazario al frente, solo obedecen a quien lo trae. Sin el anillo no hay firma para la venta de ocho millones de mañana. Siguen el momento cálido (ella lo cuidó al final), la oferta de Leonel, el "¿qué ordena?", el portón que se cierra, la cita de mañana a las ocho y la carta sellada solo para ella. El castigo queda para la Parte 2. Sin Navidad. Guion pasado por la skill humanizer.
-
-## Marca
-**MAJESTIC STORIES**: edit.py, BRAND = "MAJESTIC" (arriba a la izquierda, música de pieces/_marcas/MAJESTIC). Sin carpeta music/ propia.
-
-## Archivos listos
-- guion.md y caption.txt (formato Parte 1, #parte1, anuncia la segunda parte).
-- lines.json: fuente única de clips.py (384 palabras).
-- clips.py: 47 clips (c01–c32 hablados, i01–i09 insertos sin caras, r1–r6 reacciones mudas), 292 s de generación. Copia del clips.py de fonda-chela con todas sus defensas: SAFE/SOFT (con las frases fuertes de este diálogo y "wake"), variant, NOREF (también quita las hojas de locación), TRIES=6, gatito de control, reload_flow(), new_project(), comprobación de descarga corrupta con ffmpeg y 17 s entre clips. Acepta IDs, mueve la versión vieja a clips/old/ e imprime "FIN P1".
-- make_sheets.py: 7 hojas (5 personajes, 2 locaciones) con control md5 DUPLICADO y --reupload; imprime "FIN HOJAS".
-- phr.py.
-- edit.py: EDL en borrador por índices de frase (80 tramos), mudos con ganancia 0, BLACK 0.4 s antes de c32. Música: suspenso hasta c22, cálida de c22 a c26 y suspenso hasta el final. Salida en renders/v1.mp4.
-
-## Hojas nuevas
-Aún no se generaron. Nombres verificados como únicos en pieces/*/clips.py y make_sheets.py (ni nombre ni apellido se repiten).
-- Personajes: NATI_CERVERA, LEONEL_GARIBAY, IVONNE_GARIBAY, EFREN_SOTOMAYOR, NAZARIO_QUEZADA.
-- Locaciones: LOC_PATIOVELORIO, LOC_COCINAGARIBAY.
-
-Nada generado en Flow todavía.
-
-## Siguiente
-1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, correr `md5sum chars/*.jpg` y armar hoja de contactos: Leonel (lentes, bigote, traje negro) contra Nazario (barba blanca, camisa negra); Ivonne (perlas, caoba) contra Nati (trenza, mandil); Efrén calvo y de café. Que ninguna cara se parezca a un actor conocido.
-2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P1", Traceback e "intento 6".
-3. QA con hoja de fotogramas, franja inferior y bordes (qa_clips.md). Regenerar con `python -I clips.py <ids> > clips_log2.txt`.
-4. `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y correr `python -I edit.py`.
-5. Verificar sincronía en 5 puntos, ritmo de 2 s o menos de media, LUFS y pico, y la marca MAJESTIC STORIES visible a tamaño real (arriba a la izquierda).
-6. Telegram con caption.txt (3er arg = MAJESTIC).
-
-## Revisar en el QA
-- Geografía: Nati IZQ. junto a la puerta de la cocina; Leonel e Ivonne DER.; Efrén junto a la caja; Nazario delante de los arcos.
-- Dobles: ningún segundo hombre con lentes, de barba blanca o de traje café; ninguna segunda mujer de mandil o de perlas. Los escoltas de lentes oscuros solo en los insertos.
-- Utilería: un solo anillo (en la palma hasta r3, en la mano DERECHA de Nati desde i05); la carta doblada en la carpeta; el sobre con lacre solo en c31/i09; la caja del patrón siempre cerrada, sin foto ni letras.
-- Poder sin armas: escoltas de manos cruzadas, nadie toca a nadie en i07.
-- Fallos de Omni: subtítulos quemados, frases repetidas, 2.ª frase perdida, morphs.
-- Pronunciación de "Eleuterio", "Nazario" y "ocho millones".
-
-## Hojas y clips (2026-11-08)
-- 7 hojas generadas (make_sheets.py, sheets_log.txt): ningún DUPLICADO, md5 distintos, revisadas a ojo: cada una coincide con su descripción, sin gatitos ni caras de actores conocidos (Nati aparenta algo más de 25, aviso). Ninguna rehecha.
-- `python -I clips.py >> clips_log.txt` en marcha (se pausó una vez tras c04 para regenerar c13 de fonda-chela-p2 y se relanzó; salta los clips ya hechos).
-- Revisar en el QA: **c04 salió en el intento 6** (prompt mínimo: solo la 1.ª línea de diálogo) y c03 en el 2; i01 en el 3.
-
-## Montaje v1 (2026-11-08) — renders/share.mp4, LISTO para revisión (NO enviado a Telegram)
-- **Flow devolvió el video anterior en 6 clips** (md5 idéntico: c06=r1, c07=r2, c09=c12, i04=c10, c25=c24, c31=r6). c05 era un mudo de Leonel. Regenerados c04 (2.ª frase), c05, c06, c07, c09, c25, c31, i04 e i06, todos OK. clips.py ahora descarta descargas con el md5 de otro clip ("DUPLICADO"). Detalle en qa_clips.md.
-- **i06**: v3 (trajes grises, sin velorio) pasó la política, pero quedó FUERA del montaje porque no coincide con la escolta de negro y gafas. **i05** fuera (mano envejecida con manga larga).
-- **edit.py** (plantilla viuda-aguacate, BRAND = "MAJESTIC", música suspenso / cálida c22–c26 / suspenso):
-  - 148.6 s, 75 cortes (1.98 s por corte), 98 planos contando punch-ins y crops (1.51 s por plano).
-  - −14.3 LUFS, −1.8 dBTP. Sincronía ±6 ms en 6 puntos.
-- **Revisión** (tools/revisar_render.py → renders/share_revision.md, veredicto CASI) y hojas de contacto. Los falsos positivos (desfase, voz sobre quien escucha) están descartados con medición. Quedan avisos para el usuario:
-  - CTA con anillos en las dos manos.
-  - c22 con el ataúd sin flores.
-  - c28 con un grade algo más frío.
-  - Posibles "alargarte" (c01) y "nada al licenciado" (c25).
-- Siguiente: decisión del usuario sobre los avisos y luego Telegram con caption.txt (3er arg = MAJESTIC).
-
-### `pieces\fonda-chela-p2\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, vista-stories, parte2, historia-propia, capos]
-relatedTo: [fonda-chela, reten-sierra-p2, atrium-vista]
----
-# fonda-chela-p2 (El Jefe Nuevo · Parte 2): estado
-
-## La historia
-Parte 2 de pieces/fonda-chela. Se acabó el café y decide Chela: Saúl devuelve los 200 mil casa por casa, a pie, antes de las doce (campanario y reloj como cuenta atrás). Sus camionetas y sus muchachos pasan a Macario; el Güero cambia de lealtad. Chela lo deja un año de mesero (callback a "Yo no soy su mesero"). Gancho a la Parte 3: la mitad de lo cobrado iba cada domingo al que se lo recomendó a Macario, alguien que come en su mesa. Sin armas ni sangre. Sin Navidad. Guion pasado por la skill humanizer.
-
-## Marca
-**VISTA STORIES**, la misma de la Parte 1 (no entra en la rotación): edit.py, BRAND = "VISTA". Sin carpeta music/ propia.
-
-## Archivos listos
-- guion.md, caption.txt ("· Parte 2", #parte2, anuncia la tercera parte).
-- lines.json: fuente única de clips.py (398 palabras).
-- clips.py: 48 clips (c01–c34 hablados, i01–i08 insertos sin caras, r1–r6 reacciones mudas), 298 s de generación. Copia del clips.py de fonda-chela con todas sus defensas: SAFE/SOFT (con las frases fuertes de este diálogo), variant, NOREF, TRIES=6, gatito de control, reload_flow(), new_project() (proyecto nuevo + make_sheets --reupload), comprobación de descarga corrupta con ffmpeg, 17 s entre clips. Acepta IDs, mueve la versión vieja a clips/old/ e imprime "FIN P2".
-- make_sheets.py: las 7 hojas de la Parte 1 ya copiadas en chars/; con --reupload las sube al proyecto activo (las copias de fonda-chela y fonda-chela-p2 no cuentan como DUPLICADO; también se ajustó fonda-chela/make_sheets.py para ignorar la copia de la P2). Imprime "FIN HOJAS".
-- phr.py.
-- edit.py: EDL en borrador por índices de frase (83 tramos), mudos con ganancia 0, BLACK 0.4 s antes de c34. Música: suspenso hasta c16, cálida de c16 a i07, suspenso hasta el final. Salida en renders/v1.mp4.
-
-## Hojas
-Ninguna nueva. CHELA_VILLEGAS, TAVO_VILLEGAS2, SAUL_BETANCOURT2, ROLANDO_GUERO2, MACARIO_LEDESMA2, LOC_FONDACHELA, LOC_CALLEFONDA (copias de pieces/fonda-chela/chars).
-
-Nada generado en Flow todavía.
-
-## Siguiente
-1. `python -I make_sheets.py --reupload > sheets_log.txt` (proyecto Flow activo; imprime "FIN HOJAS").
-2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P2", Traceback e "intento 6".
-3. QA con hoja de fotogramas, franja inferior y bordes (qa_clips.md). Regenerar con `python -I clips.py <ids> > clips_log2.txt`.
-4. `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y correr `python -I edit.py`.
-5. Verificar sincronía en 5 puntos, ritmo de 2 s o menos de media, LUFS y pico, y la marca VISTA STORIES visible (arriba al centro).
-6. Telegram con caption.txt (3er arg = VISTA).
-
-## Revisar en el QA
-- Saúl: si un clip sale en el intento 5 (sin hoja), compararlo cara a cara con SAUL_BETANCOURT2 y con los demás clips de Saúl (canas en las sienes, barba unida al bigote, traje gris carbón oscuro, no azul ni beige).
-- El Güero: que sea el de la hoja ROLANDO_GUERO2 (rubio rapado, chivo, chamarra de piel), igual que c06/c22 de la Parte 1.
-- Geografía: mesa del fondo con Saúl de pie IZQ. y Macario sentado DER.; Chela en el mostrador mira a la DER.; en la calle Tavo IZQ. y Saúl DER.
-- Utilería: un solo jarro; el anillo en la mano DERECHA de Macario; el maletín cerrado hasta i08 (ahí vacío); sobres cerrados, sin billetes; tres llaves en i03; el mandil de Saúl solo desde c27/r6.
-- Campanario sin reloj ni letras; reloj de pulsera sin números legibles.
-- Fallos de Omni: subtítulos quemados, frases repetidas, 2.ª frase perdida, morphs, dobles en el borde.
-
-## Montaje v1 (2026-11-08)
-- QA en qa_clips.md (lv3.py large-v3 → renders/lv3.json, hojas de contacto, bordes cada 0.25 s). Todo se arregló en la edición salvo **c13** (Saúl con otra cara en el intento 5 sin hoja): regenerado con prompt nuevo; con hoja vuelve a dar "políticas" y salió de nuevo en el intento 5 sin hoja, ahora parecido (pelo, barba, traje). Viejo en clips/old/c13_v1.mp4. Un 3.er intento (diálogo suavizado) también salió sin hoja y con borde sucio (old/c13_v3.mp4): se quedó la v2. Si el usuario lo pide, la salida es quitar c13 del montaje (c12 → c14 se entiende).
-- edit.py = plantilla viuda-aguacate con BRAND = "VISTA" (borrador viejo en edit_borrador.py). Crops de borde c01 c03 c06 c11 c16 c18 c23 c26 c27 c30; c27 sale antes del "atiendo primero" repetido; i06 solo el reloj (1.55–2.90); i08 maletín abierto vacío; i07 campanas reales a −6 dB.
-- renders/share.mp4: 156.8 s, 81 tramos / 97 planos, 1.61 s/plano (58 cortes con scene>0.3), −14.2 LUFS, pico −1.7 dBFS, sincronía 0 ms en 5 puntos. Revisión API: renders/share_revision.md.
-- caption.txt en formato Parte 2. No enviado a Telegram.
-
-### `pieces\madrina-central\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, sin-marca, parte1, historia-propia, capos, matriarca]
-relatedTo: [fonda-chela, monedas-carretera, reten-sierra, medalla-mezcal, atrium-vista]
----
-# madrina-central (La Madrina de la Central · Parte 1): estado
-
-## La historia
-- Historia propia tipo capos con protagonista matriarca, sobre la premisa n.º 6 de fuentes/atrium-vista/resumen.md. El agiotista Gaspar le engancha la grúa al tráiler de Rubén el día que nace su hija: ochenta mil, hasta las seis. Rubén busca a doña Eva, que manda cerrar las puertas de la Central. Gaspar resulta ser su ahijado; ella le devuelve el mismo plazo (hasta las seis) para regresar el tráiler y los papeles de todos. Gancho: llega llorando Imelda, la mamá de Gaspar y comadre de Eva. El castigo queda para la Parte 2. Sin Navidad.
-- Los nombres de la premisa se cambiaron: Toño se parecía a Toña (TONA_ARELLANO) y pasó a Rubén. Doña Eva se conserva.
-- Guion pasado por la skill humanizer: frases de 8 palabras como máximo (salvo el CTA), sin contrastes de relleno.
-
-## Marca
-**SIN MARCA**: edit.py, BRAND = "SINMARCA". brand_wm da un png transparente y la música sale de pieces/_marcas/SINMARCA. Sin carpeta music/ propia.
-
-## Archivos listos
-- guion.md y caption.txt (formato Parte 1, #parte1).
-- lines.json: fuente única de clips.py (396 palabras).
-- clips.py, con 47 clips (c01–c36 hablados, i01–i06 insertos sin caras, r1–r5 reacciones mudas), 312 s de generación. Es la copia del clips.py de fonda-chela con todas sus defensas:
-  - Planos hablados de una persona: gaze(side) + ONE + ALONE; NOSUB + CLEAN + END en cada diálogo; NODOUBLE en los de riesgo.
-  - SAFE/SOFT (con las frases fuertes del diálogo), variant, NOREF (también quita las hojas de locación), TRIES=6, gatito de control, reload_flow(), new_project() tras dos caídas, comprobación de descarga corrupta con ffmpeg y 17 s entre clips.
-  - Acepta IDs, mueve la versión vieja a clips/old/ e imprime "FIN P1".
-- make_sheets.py: 6 hojas (4 personajes, 2 locaciones) con control md5 DUPLICADO y --reupload; imprime "FIN HOJAS".
-- phr.py.
-- edit.py: EDL en borrador por índices de línea (84 segmentos), mudos con ganancia 0, i01 de ~1 s y BLACK 0.4 s antes de c36. Música: suspenso hasta c33, cálida de c33 a c35 y suspenso hasta el final. Salida en renders/v1.mp4.
-
-## Hojas nuevas
-Aún no se generaron. Nombres verificados como únicos en pieces/*/clips.py y make_sheets.py (ni el nombre ni el apellido se repiten en otras piezas).
-- Personajes: EVA_SALDIVAR, RUBEN_GALINDO, GASPAR_LEYVA y PORFIRIO_TAPIA.
-- Locaciones: LOC_PATIOCENTRAL y LOC_BODEGAEVA.
-
-Nada generado en Flow todavía.
-
-## Siguiente
-1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, correr `md5sum chars/*.jpg` y armar hoja de contactos: Eva (chongo negro, arracadas, cárdigan negro); Gaspar (rapado, camisa crema bordada, cadena) contra Porfirio (boina negra, bigote gris, azul marino); Rubén (barba, mezclilla).
-2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P1", Traceback e "intento 6".
-3. QA con hoja de fotogramas, franja inferior y bordes. Regenerar con `python -I clips.py <ids> > clips_log2.txt`.
-4. `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y correr `python -I edit.py` (o `--remix`).
-5. Verificar sincronía en 5 puntos, ritmo de 2 s o menos de media, LUFS y pico, y que no quede ninguna marca de agua.
-6. Telegram con caption.txt (3er arg = SIN MARCA).
-
-## Revisar en el QA
-- Geografía: en el patio, Gaspar DER. junto a la grúa y Rubén IZQ. delante del tráiler; en la bodega, Eva sentada DER. tras el escritorio, Rubén y Gaspar IZQ., Porfirio en la cortina.
-- Dobles: ninguna segunda camisa crema bordada, boina negra, cárdigan negro ni camisa de mezclilla.
-- Utilería: un solo tráiler rojo sin logo, un solo llavero (mano DERECHA de Gaspar), una sola libreta negra sin texto legible, el radio al pecho de Porfirio; Central sin letreros, precios ni números.
-- Poder sin armas: los cargadores de i05 de manos cruzadas, nada en las manos.
-- Sin niños en cuadro: la hija de Rubén solo se nombra.
-- Fallos de Omni: subtítulos quemados, frases repetidas, 2.ª frase perdida y morphs.
-- Pronunciación de "Saldívar", "Melquiades", "tráiler", "redondees" e "Imelda".
-
-## Montaje v1 (2026-11-08)
-- c04 regenerado (Rubén bien) transcrito con lv3.py y metido en renders/lv3.json; tiene camisa de cuadros ajena en el borde DER. hasta ~2 s: crop 540:960:0:0 en la 1.ª frase.
-- edit.py por frases (plantilla viuda-aguacate) con todo el QA aplicado -> renders/share.mp4: 155.4 s, 101 planos, 1.53 s/plano, -14.1 LUFS, pico -1.8 dBTP. Sincronía 0 ms en 5 puntos. Revisión API en renders/share_revision.md.
-- Pendiente cuando Flow esté libre: c01 sale con una camisa de Gaspar sin el ribete negro ni las flechas de la hoja (regenerar c01 si el usuario lo pide). La blusa de Eva cambia de cuello en V a cuello de ojo de cerradura entre clips (r2, c13, c34, c36): no se corrigió.
-- No se envió a Telegram.
-
-### `pieces\viuda-aguacate\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, mexi-stories, parte1, historia-propia, capos, matriarca]
-relatedTo: [fonda-chela, monedas-carretera, reten-sierra, medalla-mezcal, atrium-vista]
----
-# viuda-aguacate (La Viuda del Aguacate · Parte 1): estado
-
-## La historia
-- Historia propia tipo capos con protagonista matriarca, sobre la premisa n.º 2 de fuentes/atrium-vista/resumen.md. El notario Ponciano le pone candado a la huerta de doña Engracia: 72 horas para irse y cien mil por una huerta de ocho millones. Ella marca el único número del celular de su difunto Lauro y llega don Nicandro con ocho camionetas. Hay un plazo invertido (hasta que se meta el sol) y el maletín siempre cerrado. Gancho: el comprador es Arnulfo, el hijo de Nicandro. El castigo queda para la Parte 2. Sin Navidad.
-- Los nombres de la premisa se cambiaron porque ya existían: Esperanza (chocolate-rancho-p2) pasó a Engracia y Ramón (reten-sierra-p2, fierro-herradura) a Lauro.
-- Guion pasado por la skill humanizer: frases de 8 palabras como máximo (salvo el CTA), sin contrastes de relleno.
-
-## Marca
-**MEXI STORIES**: edit.py, BRAND = "MEXI". Música y marca de agua de pieces/_marcas/MEXI (brand, brand_wm), arriba a la derecha. Sin carpeta music/ propia.
-
-## Archivos listos
-- guion.md y caption.txt (formato Parte 1, #parte1).
-- lines.json: fuente única de clips.py (382 palabras).
-- clips.py, con 48 clips (c01–c36 hablados, i01–i07 insertos sin caras, r1–r5 reacciones mudas), 318 s de generación. Es la copia del clips.py de fonda-chela con todas sus defensas:
-  - Planos hablados de una persona: gaze(side) + ONE + ALONE; NOSUB + CLEAN + END en cada diálogo; NODOUBLE en los de riesgo.
-  - SAFE/SOFT (con las frases fuertes del diálogo), variant, NOREF (también quita las hojas de locación), TRIES=6, gatito de control, reload_flow(), new_project() tras dos caídas, comprobación de descarga corrupta con ffmpeg y 17 s entre clips.
-  - Acepta IDs, mueve la versión vieja a clips/old/ e imprime "FIN P1".
-- make_sheets.py: 7 hojas (5 personajes, 2 locaciones) con control md5 DUPLICADO y --reupload; imprime "FIN HOJAS".
-- phr.py.
-- edit.py: EDL en borrador por índices de línea (85 segmentos), mudos con ganancia 0, i01 de ~1 s y BLACK 0.4 s antes de c36. Música: suspenso hasta c27, cálida de c27 a c30 y suspenso hasta el final. Salida en renders/v1.mp4.
-
-## Hojas nuevas
-Aún no se generaron. Nombres verificados como únicos en pieces/*/clips.py y make_sheets.py (ni el nombre ni el apellido se repiten en otras piezas).
-- Personajes: ENGRACIA_MURGUIA, FITO_CUEVAS, PONCIANO_UGALDE, WENCES_PICHARDO y NICANDRO_SOLORZANO.
-- Locaciones: LOC_HUERTAGUACATE y LOC_COCINAENGRACIA. c16 (Nicandro en su camioneta) va sin hoja.
-
-Nada generado en Flow todavía.
-
-## Siguiente
-1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, correr `md5sum chars/*.jpg` y armar hoja de contactos: Engracia (gris corto, rebozo) contra Nicandro (sombrero de palma, bastón); Ponciano (calvo, lentes, lino beige) contra Wences (cola de caballo, guinda); Fito (gorra beige, verde olivo).
-2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P1", Traceback e "intento 6".
-3. QA con hoja de fotogramas, franja inferior y bordes. Regenerar con `python -I clips.py <ids> > clips_log2.txt`.
-4. `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y correr `python -I edit.py` (o `--remix`).
-5. Verificar sincronía en 5 puntos, ritmo de 2 s o menos de media, LUFS y pico, y la marca MEXI STORIES visible a tamaño real (arriba a la derecha).
-6. Telegram con caption.txt (3er arg = MEXI).
-
-## Revisar en el QA
-- Geografía: en el portón, Engracia y Fito a la IZQ., Ponciano y Wences a la DER., Nicandro al CENTRO; en la cocina, Engracia IZQ. junto al ropero y Fito DER. en la puerta.
-- Dobles: ningún segundo traje de lino beige, rebozo gris, sombrero de palma ni cola de caballo.
-- Utilería: un solo candado, una sola caja de aguacates, el celular siempre en la mano IZQUIERDA de Engracia, el maletín siempre CERRADO, el bastón en la mano derecha de Nicandro; camionetas sin logos ni placas.
-- Poder sin armas: los escoltas de i06 de manos cruzadas, nada en las manos.
-- Pantalla del celular (i04): solo brillo, sin texto ni cara dentro.
-- Fallos de Omni: subtítulos quemados, frases repetidas, 2.ª frase perdida y morphs.
-- Pronunciación de "Engracia", "Nicandro", "Solórzano", "Uruapan" y "Arnulfo".
-
-## Montaje v1 (2026-11-08)
-- c24 regenerado OK (large-v3: "Soy Nicandro Solórzano. Licenciado, usted me firmó unos papeles en Zamora."); lv3.json actualizado. Viejo en clips/old/c24_v1.mp4.
-- renders/share.mp4: 156.2 s, 104 planos, 1.50 s/plano, -14.2 LUFS, pico -1.8 dBTP; sincronía 0 ms en 5 puntos. Crops extra vistos en el render: c09 (rebozo ajeno abajo DER. hasta 1.5) y c25 (figura blanca IZQ. hasta 1.1). Revisión API: renders/share_revision.md.
-- Falta: Telegram (no enviado).
-
-### `pieces\monedas-carretera\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, majestic-stories, parte1, historia-propia, capos]
-relatedTo: [reten-sierra, medalla-mezcal, foto-trucada, atrium-vista]
----
-# monedas-carretera (La Gasolinera · Parte 1): estado
-
-## La historia
-- Historia propia tipo capos, sobre la premisa n.º 7 de fuentes/atrium-vista/resumen.md. La 4 ("El Valet") se descartó porque se parecía demasiado a pedida-mano. Kevin, el encargado, le tira al piso las monedas a don Amador (mil doscientos de diésel, "un minuto para quitar su troca"). Llegan siete camionetas: Amador es dueño de media carretera y del terreno. Le da diez minutos para recoger cada moneda; falta la de la crucecita y la tenía Memo. Gancho: el dueño es el papá de Kevin y Amador vino por él. El castigo queda para la Parte 2. Sin Navidad.
-- La carpeta se llama monedas-carretera porque pieces/gasolinera y pieces/monedas ya existen (son piezas bitstory, no novelas).
-- Guion pasado por la skill humanizer: frases de 8 palabras como máximo (salvo el CTA), sin contrastes de relleno.
-
-## Marca
-**MAJESTIC STORIES**: edit.py, BRAND = "MAJESTIC". Música y marca de agua de pieces/_marcas/MAJESTIC (brand, brand_wm). Sin carpeta music/ propia.
-
-## Archivos listos
-- guion.md y caption.txt (formato Parte 1, #parte1).
-- lines.json: fuente única de clips.py (382 palabras).
-- clips.py, con 47 clips (c01–c35 hablados, i01–i07 insertos sin caras, r1–r5 reacciones mudas), 300 s de generación.
-  - Planos hablados de una persona: gaze(side) + ONE + ALONE; NOSUB + CLEAN + END en cada diálogo; NODOUBLE en los de riesgo.
-  - SAFE/SOFT, incluidas las frases fuertes del diálogo; variant, NOREF (también quita las hojas de locación), TRIES=6, gatito de control, reload_flow() y 17 s entre clips.
-  - Acepta IDs, mueve la versión vieja a clips/old/ e imprime "FIN P1".
-- make_sheets.py: 6 hojas (4 personajes, 2 locaciones) con control md5 DUPLICADO y --reupload; imprime "FIN HOJAS".
-- phr.py.
-- edit.py: EDL en borrador por índices de línea (83 segmentos), mudos con ganancia 0, i01 de ~1 s y BLACK 0.4 s antes de c35. Música: suspenso hasta c08, cálida de c08 a i03 y suspenso hasta el final. Salida en renders/v1.mp4.
-
-## Hojas nuevas
-Aún no se generaron. Nombres verificados como únicos en pieces/*/clips.py y make_sheets.py (ni el nombre ni el apellido se repiten).
-- Personajes: AMADOR_QUINTANAR, KEVIN_BARRON, MEMO_RANGEL y BENIGNO_ARTEAGA.
-- Locaciones: LOC_GASCARRETERA y LOC_TRAMODESIERTO.
-
-Nada generado en Flow todavía.
-
-## Siguiente
-1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, correr `md5sum chars/*.jpg` y armar hoja de contactos: Amador (barba blanca, sombrero de paja crema) contra Benigno (bigote negro, sombrero negro); Kevin (rojo) contra Memo (azul marino).
-2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P1", Traceback e "intento 6".
-3. QA con hoja de fotogramas, franja inferior y bordes. Regenerar con `python -I clips.py <ids> > clips_log2.txt`.
-4. `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y correr `python -I edit.py` (o `--remix`).
-5. Verificar sincronía en 5 puntos, ritmo de 2 s o menos de media, LUFS y pico, y la marca MAJESTIC STORIES visible a tamaño real (arriba a la izquierda).
-6. Telegram con caption.txt (3er arg = MAJESTIC).
-
-## Revisar en el QA
-- Geografía: Amador IZQ. junto a su troca blanca; Kevin DER. junto a la bomba; Memo al centro; Benigno IZQ. frente a las camionetas.
-- Dobles: ningún segundo polo rojo, camisa azul marino, sombrero de paja crema ni sombrero negro.
-- Utilería: un solo monedero (mano IZQUIERDA de Amador), una sola moneda con cruz (i07), una sola troca blanca; gasolinera sin logos, precios ni números; camionetas sin placas.
-- Poder sin armas: los escoltas de i05 de manos cruzadas, nada en las manos.
-- Fallos de Omni: subtítulos quemados, frases repetidas, 2.ª frase perdida y morphs.
-- Pronunciación de "Quintanar", "Benigno", "diésel", "alcancía" y "crucecita".
-
-## Montaje v1 (2026-11-07)
-renders/v1.mp4: 153.3 s, 90 planos (1.70 s/plano), -14.3 LUFS. edit.py por frases desde renders/lv3.json; el 5.º campo acepta (clip, t, vf) = inserto encima de la voz (i02, i04, r3; J-cut de c33 sobre c32). Música: tensión 0-c08, cálida c08-c09, tensión desde c10. Falta: Telegram (no enviado).
-
-### `pieces\fonda-chela\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, vista-stories, parte1, historia-propia, capos]
-relatedTo: [reten-sierra, medalla-mezcal, foto-trucada, atrium-vista]
----
-# fonda-chela (El Jefe Nuevo · Parte 1): estado
-
-## La historia
-- Historia propia tipo capos, sobre la premisa n.º 1 de fuentes/atrium-vista/resumen.md. Saúl, el jefe nuevo, le cobra a doña Chela 50 mil antes del domingo. Ella le manda el café a la mesa del fondo, donde desayuna don Macario, el que le dio el pueblo. Hay convoy de siete camionetas, el anillo, un plazo (lo que dura el café) y el maletín cerrado. Macario deja que Chela decida; el castigo queda para la Parte 2. Sin Navidad.
-- Guion pasado por la skill humanizer: frases de 8 palabras como máximo (salvo el CTA), sin contrastes de relleno.
-
-## Marca
-**VISTA STORIES**: edit.py, BRAND = "VISTA". Música y marca de agua de pieces/_marcas/VISTA (brand, brand_wm). Sin carpeta music/ propia.
-
-## Archivos listos
-- guion.md y caption.txt (formato Parte 1, #parte1).
-- lines.json: fuente única de clips.py (389 palabras).
-- clips.py, con 48 clips (c01–c36 hablados, i01–i07 insertos sin caras, r1–r5 reacciones mudas), 320 s de generación.
-  - Planos hablados de una persona: gaze(side) + ONE + ALONE; NOSUB + CLEAN + END en cada diálogo; NODOUBLE en los de riesgo.
-  - SAFE/SOFT, incluidas las frases fuertes del diálogo; variant, NOREF (también quita las hojas de locación), TRIES=6, gatito de control, reload_flow() y 17 s entre clips.
-  - Acepta IDs, mueve la versión vieja a clips/old/ e imprime "FIN P1".
-- make_sheets.py: 7 hojas (5 personajes, 2 locaciones) con control md5 DUPLICADO y --reupload; imprime "FIN HOJAS".
-- phr.py.
-- edit.py: EDL en borrador por índices de línea (85 segmentos), mudos con ganancia 0, i01 de ~1 s y BLACK 0.4 s antes de c36. Música: suspenso hasta c30, cálida de c30 a c33 y suspenso hasta el final. Salida en renders/v1.mp4.
-
-## Hojas nuevas
-Aún no se generaron. Nombres verificados como únicos en pieces/*/clips.py y make_sheets.py (ni el nombre ni el apellido se repiten).
-- Personajes: CHELA_VILLEGAS, TAVO_VILLEGAS, SAUL_BETANCOURT, ROLANDO_ALCOCER (el Güero) y MACARIO_LEDESMA.
-- Locaciones: LOC_FONDACHELA y LOC_CALLEFONDA.
-
-Nada generado en Flow todavía.
-
-## Siguiente
-1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, correr `md5sum chars/*.jpg` y armar hoja de contactos: Chela (gris, lila) contra Macario; Saúl (barba, traje gris) contra el Güero (rubio, chamarra de piel negra); Tavo (camisa blanca).
-2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P1", Traceback e "intento 6".
-3. QA con hoja de fotogramas, franja inferior y bordes. Regenerar con `python -I clips.py <ids> > clips_log2.txt`.
-4. `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y correr `python -I edit.py` (o `--remix`).
-5. Verificar sincronía en 5 puntos, ritmo de 2 s o menos de media, LUFS y pico, y la marca VISTA STORIES visible a tamaño real (arriba al centro).
-6. Telegram con caption.txt (3er arg = VISTA).
-
-## Revisar en el QA
-- Geografía: en el mostrador, Chela IZQ. y Saúl DER.; en la mesa del fondo, Saúl de pie IZQ. y Macario sentado DER.; el Güero en la puerta mira a la IZQ.
-- Dobles: ningún segundo traje gris, chamarra de piel negra, sombrero gris ni mandil blanco.
-- Utilería: un solo jarro de barro (Macario no tiene taza antes de c14); anillo en la mano DERECHA de Macario; maletín siempre CERRADO; camionetas sin logos ni placas.
-- Poder sin armas: los escoltas de i03 de manos cruzadas, nada en las manos.
-- Fallos de Omni: subtítulos quemados, frases repetidas, 2.ª frase perdida y morphs.
-- Pronunciación de "Macario", "Ledesma", "cafecito" y "fiado".
-
-### `pieces\bascula-limon\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, sin-marca, parte1, historia-propia, referencias3]
-relatedTo: [huipil-robado, tiendita-justa, referencias3]
----
-# bascula-limon (La Báscula Arreglada · Parte 1): estado
-
-## La historia
-- Historia propia inspirada en la premisa n.º 10 de fuentes/referencias3/resumen.md (ref 7702205802534194435 de @relatos.de.vida.9, 245K). Mismos beats con personajes, diálogo y prueba nuevos.
-- Bulmaro, el único acopiador del pueblo, le roba a don Fermín uno de cada cinco kilos con la báscula. Daniela (31, contadora) lo prueba con un bulto de cemento de 50 kg que marca 40. Bulmaro los veta por teléfono. Gancho: Daniela grabó la prueba y mañana todos los productores pesarán en otra báscula delante de Bulmaro; don Chalo les avisó. Sin Navidad.
-- Guion pasado por la skill humanizer: frases cortas de telenovela, sin rayas ni contrastes de relleno.
-
-## Marca
-**SIN MARCA**: edit.py, BRAND = "SINMARCA". brand_wm() da un png transparente (sin marca de agua) y la música sale de pieces/_marcas/SINMARCA. Sin carpeta music/ propia.
-
-## Archivos listos
-- guion.md y caption.txt (formato Parte 1, #parte1).
-- lines.json: fuente única de clips.py (430 palabras, unos 190–200 s en bruto; montaje objetivo 2:20–2:40).
-- clips.py, con 35 clips (c01–c31 y r1–r4), 234 s de generación.
-  - Todos los planos son de una persona: gaze(side) + ONE + ALONE (el insert r2 es solo la báscula y el bulto, con SOLO).
-  - NOSUB + CLEAN + END en cada diálogo; NODOUBLE en los de riesgo.
-  - SAFE/SOFT, incluidas las frases fuertes del diálogo.
-  - variant, NOREF (también quita las hojas de locación), TRIES=6, gatito de control, reload_flow() en fallos y 17 s entre clips.
-  - Acepta IDs, mueve la versión vieja a clips/old/ e imprime "FIN P1".
-- make_sheets.py: 7 hojas (4 personajes, 3 locaciones) con control md5 DUPLICADO y --reupload; imprime "FIN HOJAS".
-- phr.py.
-- edit.py: EDL en borrador por índices de línea, ganancia 0 en los mudos y BLACK 0.4 s antes de c31. Música: suspenso hasta c10, cama cálida de c10 a c13 (deciden probar la báscula) y suspenso de c13 al final. Loudnorm en dos pasadas y --remix. Salida en renders/v1.mp4.
-
-## Hojas nuevas
-Aún no se generaron. Nombres verificados como únicos en pieces/*/clips.py y make_sheets.py (se evitaron ABUNDIO_* y ROGELIO_*, que ya existen).
-- Personajes: FERMIN_ZAVALA, DANIELA_ZAVALA, BULMARO_PADILLA y CHALO_MORENO.
-- Locaciones: LOC_ACOPIOLIMON, LOC_HUERTALIMON y LOC_PORCHEZAVALA.
-
-Nada generado en Flow todavía.
-
-## Siguiente
-1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, correr `md5sum chars/*.jpg` y armar hoja de contactos: Fermín (sombrero, bigote blanco) contra Chalo (calvo, camisa verde olivo).
-2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P1", Traceback e "intento 6".
-3. QA con hoja de fotogramas, franja inferior y bordes. Regenerar con `python -I clips.py <ids> > clips_log2.txt`.
-4. `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y correr `python -I edit.py` (o `--remix`).
-5. Verificar sincronía en 5 puntos, ritmo ≤ 1.9 s, LUFS y pico, y que NO haya marca de agua.
-6. Telegram con caption.txt (3er arg = SIN MARCA).
-
-## Revisar en el QA
-- Geografía: acopio, Bulmaro DER. y Fermín/Daniela IZQ.; huerta, Fermín IZQ. sentado y Daniela/Chalo DER.; porche, Fermín IZQ. y Daniela DER.
-- Dobles: ningún segundo sombrero de palma, guayabera crema, blusa terracota ni camisa verde olivo. Sin trabajadores de fondo en el acopio.
-- Utilería: báscula mecánica sin pantalla ni números; bulto de cemento sin letras; libreta en la mano izquierda; celular con la pantalla de espaldas.
-- r2 (insert de la báscula): que no aparezcan números, manos ni texto.
-- Fallos de Omni: subtítulos quemados, frases repetidas, 2.ª frase perdida y morphs.
-- Pronunciación de "Bulmaro", "mermado", "seiscientos cuarenta" y "pésenos".
-
-### `pieces\foto-trucada\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, mexi-stories, parte1, historia-propia, referencias3]
-relatedTo: [huipil-robado, casera-recibos, referencias3]
----
-# foto-trucada (La Foto que No Era · Parte 1): estado
-
-## La historia
-- Historia propia inspirada en la premisa n.º 3 de fuentes/referencias3/resumen.md (ref ★ 7691753795893710100 de @eltiomoet, 3.3M). Mismos beats del viral con personajes, diálogo y trampa nuevos; atuendos de la ref en otros colores.
-- A Norma la corren por chismosa y culpa a Rocío, la vecina costurera. Su hija Karla (25) le arregla una foto "para una broma"; la foto aparece en el grupo de la colonia, Hugo se va y la clientela de Rocío desaparece. Gancho: Karla reconoce su trabajo, se lo confiesa a Rocío y lo dirá en la junta de vecinos del domingo; Norma las ve juntas. Sin Navidad.
-- Guion pasado por la skill humanizer: frases cortas de telenovela, sin rayas ni contrastes de relleno.
-
-## Marca
-**MEXI STORIES**: edit.py, BRAND = "MEXI". Música y marca de agua de pieces/_marcas/MEXI (brand, brand_wm). Sin carpeta music/ propia.
-
-## Archivos listos
-- guion.md y caption.txt (formato Parte 1, #parte1).
-- lines.json: fuente única de clips.py (430 palabras, unos 190–200 s en bruto; montaje objetivo 2:20–2:40).
-- clips.py, con 33 clips (c01–c29 y r1–r4), 228 s de generación.
-  - Todos los planos son de una persona: gaze(side) + ONE + ALONE.
-  - NOSUB + CLEAN + END en cada diálogo; NODOUBLE en los de riesgo.
-  - SAFE/SOFT, incluidas las frases fuertes del diálogo.
-  - variant, NOREF (también quita las hojas de locación), TRIES=6, gatito de control, reload_flow() en fallos y 17 s entre clips.
-  - Acepta IDs, mueve la versión vieja a clips/old/ e imprime "FIN P1".
-- make_sheets.py: 9 hojas (6 personajes, 3 locaciones) con control md5 DUPLICADO y --reupload; imprime "FIN HOJAS".
-- phr.py.
-- edit.py: EDL en borrador por índices de línea, ganancia 0 en los mudos y BLACK 0.4 s antes de c29. Música: suspenso hasta c23, cama cálida de c23 a c28 (Karla busca a Rocío y confiesa) y suspenso de c28 al final. Loudnorm en dos pasadas y --remix. Salida en renders/v1.mp4.
-
-## Hojas nuevas
-Aún no se generaron. Nombres verificados como únicos en pieces/*/clips.py y make_sheets.py.
-- Personajes: NORMA_BECERRIL, ERNESTO_BECERRIL, ROCIO_MONTIEL, HUGO_MONTIEL, KARLA_BECERRIL y CLOTILDE_RAMOS.
-- Locaciones: LOC_CALLECOLONIA, LOC_DEPAKARLA y LOC_COSTURAROCIO.
-
-Nada generado en Flow todavía.
-
-## Siguiente
-1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, correr `md5sum chars/*.jpg` y armar hoja de contactos: Norma (permanente rojizo, fucsia) contra Clotilde (pelo gris, cárdigan rosa); Ernesto (bigote gris) contra Hugo (barba negra); Rocío (mostaza) contra Karla (mezclilla negra).
-2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P1", Traceback e "intento 6".
-3. QA con hoja de fotogramas, franja inferior y bordes. Regenerar con `python -I clips.py <ids> > clips_log2.txt`.
-4. `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y correr `python -I edit.py` (o `--remix`).
-5. Verificar sincronía en 5 puntos, ritmo ≤ 1.9 s, LUFS y pico, y la marca MEXI STORIES visible a tamaño real (arriba a la derecha).
-6. Telegram con caption.txt (3er arg = MEXI).
-
-## Revisar en el QA
-- Geografía: calle escena 1, Ernesto DER. y Norma IZQ.; calle escenas 2 y 6, Norma IZQ. y Rocío DER.; cocina, Karla IZQ. y Norma DER.; calle escena 4, Rocío IZQ. y Hugo DER.; costura, Rocío IZQ. y Clotilde DER.; calle de noche, Karla IZQ. y Rocío DER.
-- Dobles: ninguna segunda blusa fucsia, blusa mostaza, chamarra de mezclilla negra, franela a cuadros, polo azul marino ni cárdigan rosa.
-- Utilería: celular con la pantalla de espaldas (la foto nunca se ve); una sola maleta café; vestido azul de Clotilde; cinta métrica de Rocío en todos sus planos.
-- Calle: sin números de casa ni letreros; la casa verde y la durazno iguales en todos los planos; de noche, dos cajas de cartón junto a la cochera.
-- Fallos de Omni: subtítulos quemados, frases repetidas, 2.ª frase perdida y morphs.
-- Pronunciación de "Clotilde", "mustia", "pásemela" y "delatar".
-
-### `pieces\nochebuena-p2\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, majestic-stories, parte2, navidad]
-relatedTo: [nochebuena, regreso-20-p2]
----
-# nochebuena-p2 (La Cena de Nochebuena · Parte 2): estado
-- Sigue en el mismo segundo del gancho de nochebuena ("mi mamá va a firmar lo que yo le diga"): Herminia lo oyó desde la puerta. Pide el papel en la cocina. Giro: Gerardo ni lo leyó y el papel pone la hacienda a nombre de Regina. Justicia: Ignacio corre a su hija, Herminia rompe el papel, Gerardo pide perdón y ella lo perdona con condición; "vamos a romper la piñata". CTA de opinión, sin Parte 3.
-- Marca: **MAJESTIC STORIES** (la de la Parte 1, fuera de la rotación). Música y marca de agua de pieces/_marcas/MAJESTIC (edit.py, BRAND = "MAJESTIC", arriba a la izquierda).
-- Archivos listos:
-  - guion.md (pasado por humanizer).
-  - lines.json, fuente única de clips.py.
-  - clips.py: 31 clips (c01–c27 + i1, r1, r2, r3 mudos), 331 palabras, 51 frases, 228 s brutos (~2:05 montado). Copia de regreso-20-p2/clips.py con todas las defensas: gaze() + ONE + ALONE + NODOUBLE en todos los planos, NOSUB + CLEAN + END, nadie con sombrero, PAPER (c11, c12, c14, c21) con una sola hoja, una sola olla y una sola piñata quieta, "no nativity scene, no figurines" en patio y cocina, NOPROP en el resto, SAFE/SOFT con \b, variant, NOREF, TRIES=6, reload_flow() en fallos, 17 s entre clips, gatito de control. Imprime "FIN P2", acepta IDs y mueve la versión vieja a clips/old/. Probado en seco (variantes 0–5 de los 31 prompts).
-  - make_sheets.py: 0 hojas nuevas; --reupload de 6 hojas de la Parte 1 (HERMINIA, GERARDO, REGINA, IGNACIO, LOC_PATIOPINATA, LOC_COCINAPONCHE), control md5 DUPLICADO. LOC_COMEDORLUCES (nacimiento) no se usa. Imprime "FIN HOJAS P2".
-  - phr.py.
-  - edit.py: EDL en borrador con índices de línea (i1/r1/r2/r3 ganancia 0); música suspenso 0→i1, cálida i1→c11, suspenso c11→c22, cálida c22→fin; BLACK 0.4 entre c26 y c27; salida renders/v1.mp4 (--remix -> v2.mp4).
-  - caption.txt (#parte2).
-- chars/: copia de las 6 hojas de nochebuena.
-- Nada generado en Flow todavía.
-- Siguiente (una sesión de Flow a la vez):
-  1. `python -I make_sheets.py --reupload > sheets_log.txt` (Monitor sobre "^FIN HOJAS P2"); revisar que no haya DUPLICADO, FALTA ni FALLO.
-  2. `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P2", Traceback e "intento 6").
-  3. QA por agente (qa_clips.md). Revisar:
-     - nadie en los bordes ni en primer plano; nadie entra caminando (c01 Herminia y c11 Gerardo ya en cuadro);
-     - subtítulos quemados, 2.ª frase perdida, palabras repetidas;
-     - lados fijos (patio: Gerardo/Regina izq., Herminia der.; cocina: Ignacio izq. en c06–c10, luego Gerardo/Regina izq. e Ignacio der. junto a Herminia);
-     - una sola hoja (c11, c12, c14, c21), sin pluma ni carpeta; c21 la rompe en dos mitades de la misma hoja; una sola olla; una sola piñata quieta; sin nacimiento ni figuritas;
-     - sin sombreros; i1, r1, r2, r3 mudos; c27 CTA con voz desde el inicio y gestos.
-  4. Regenerar con `python -I clips.py <ids> > clips_log2.txt`. Luego `python -I phr.py`, EDL por rangos en edit.py y `python -I edit.py` -> renders/v1.mp4.
-  5. Verificación completa (sincronía en 5 puntos, ritmo ≤ 1.9 s, LUFS/pico, marca MAJESTIC arriba a la izquierda). Después, Telegram: `python tools/enviar_telegram.py pieces/nochebuena-p2/renders/v1.mp4 "$(cat pieces/nochebuena-p2/caption.txt)" MAJESTIC` (caption.txt con la marca al inicio).
-- Riesgos: c14 (leer y levantar la vista), c16 (tono frío de Regina, SOFT lo suaviza), c19 ("correr": que no salga gritado), c21 (romper el papel: segunda hoja), c22 (llanto: SAFE), c27 CTA.
-- Pronunciación: "Herminia", "Gerardo", "Regina", "Ignacio", "tantito", "completita", "nomás", "ahorita", "Perdóneme", "avergoncé", "piñata".
-
-### `pieces\casera-recibos\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, majestic-stories, parte1, historia-propia, referencias3, navidad]
-relatedTo: [masa-honrada, tiendita-justa, referencias3]
----
-# casera-recibos (La Casera de los Recibos · Parte 1): estado
-
-## La historia
-- Historia propia inspirada en la premisa n.º 5 de fuentes/referencias3/resumen.md (ref ★ 7702576886957755670 de @relatos.de.vida.9, 1.4M). Mismos beats de los virales, con personajes, nombres, diálogo y prueba final nuevos; atuendos de la ref en otros colores.
-- Maricela, enfermera de 31 años, descubre que doña Chelo cobra la misma luz nueve veces y nunca devuelve el depósito, y la echa a la calle a dos días de Nochebuena. Doña Pachita la recoge con ponche y le da la pista de la lista del hospital. Graciela, la jefa de enfermeras, se hará pasar por inquilina nueva la noche de la posada. Gancho: Chelo le renta el cuarto por teléfono sin saber quién es. Ambiente navideño (posada, piñata, ponche, Nochebuena), sin nacimiento ni dinero navideño.
-- Guion pasado por la skill humanizer: frases cortas de telenovela, sin rayas ni contrastes de relleno.
-
-## Marca
-**MAJESTIC STORIES**: edit.py, BRAND = "MAJESTIC". La música y la marca de agua salen de pieces/_marcas/MAJESTIC (brand, brand_wm). No hay carpeta music/ propia.
-
-## Archivos listos
-- guion.md y caption.txt (formato Parte 1, #parte1).
-- lines.json: fuente única de clips.py (519 palabras, unos 225–240 s en bruto; montaje objetivo 2:00–2:20).
-- clips.py, con 37 clips (c01–c33 y r1–r4). Suman 270 s de generación.
-  - Todos los planos son de una persona: gaze(side) + ONE + ALONE.
-  - NOSUB + CLEAN + END en cada diálogo; NODOUBLE en los de riesgo.
-  - SAFE/SOFT, incluidas las frases fuertes del diálogo.
-  - variant, NOREF (también quita las hojas de locación), TRIES=6, gatito de control y 17 s entre clips.
-  - Acepta IDs, mueve la versión vieja a clips/old/ e imprime "FIN P1".
-- make_sheets.py: 9 hojas con control md5 DUPLICADO y --reupload; imprime "FIN HOJAS".
-- phr.py.
-- edit.py: EDL en borrador por índices de línea, ganancia 0 en los mudos y BLACK 0.4 s antes de c33. Música: suspenso hasta c16, cama cálida de c16 a c30 (Pachita, el hospital y el plan) y suspenso de c30 al final. Loudnorm en dos pasadas y --remix. Salida en renders/v1.mp4.
-
-## Hojas nuevas
-Aún no se generaron. Los nombres se verificaron como únicos en pieces/*/clips.py y make_sheets.py.
-- Personajes: MARICELA_ORNELAS, CHELO_VALDIVIA, NANCY_GUILLEN, PACHITA_ROBLES y GRACIELA_MONDRAGON.
-- Locaciones: LOC_PATIOCHELO, LOC_COCINACHELO, LOC_SALAPACHITA y LOC_OFIHOSPITAL. Simples: sin letreros, precios ni marcas ni nacimiento; un solo adorno navideño por locación.
-
-Nada generado en Flow todavía.
-
-## Siguiente
-1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, correr `md5sum chars/*.jpg` y armar hoja de contactos: Maricela (suéter azul marino) contra Nancy (chamarra lila, pelo rizado); Chelo (pelo cobrizo, bata verde) contra Pachita (chongo blanco, chal rojo).
-2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P1", Traceback e "intento 6".
-3. QA con hoja de fotogramas, franja inferior y bordes. Regenerar con `python -I clips.py <ids> > clips_log2.txt`.
-4. `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y correr `python -I edit.py` (o `--remix`).
-5. Verificar sincronía en 5 puntos, ritmo ≤ 1.9 s, LUFS y pico, y la marca MAJESTIC STORIES visible a tamaño real.
-6. Telegram con caption.txt (3er arg = MAJESTIC).
-
-## Revisar en el QA
-- Geografía: patio, Chelo DER. y Maricela IZQ.; cocina, Maricela IZQ. y Nancy/Chelo DER.; banqueta, Maricela IZQ. y Nancy/Pachita DER.; sala, Maricela IZQ. y Pachita DER.; oficina, Maricela IZQ. y Graciela DER.
-- Dobles: ningún segundo suéter azul marino, bata verde esmeralda, chamarra lila, chal rojo ni blazer gris carbón. Sin otras inquilinas de fondo.
-- Navidad: solo las luces y la piñata de estrella en el patio, y las luces y el ponche en la sala. Ningún nacimiento, Niño ni imagen religiosa.
-- Utilería: papel doblado sin letras (c01, c03); libreta cerrada (c24); dos maletas azul oscuro; jarrito de ponche en las dos manos; celular al oído con la mano DERECHA.
-- Sin uniforme de enfermera ni gafete en Maricela ni en Graciela.
-- Fallos de Omni: subtítulos quemados, frases repetidas, 2.ª frase perdida y morphs.
-- Riesgos: c08, Chelo ya en la puerta (que no entre caminando); c14, Nancy en la puerta entreabierta (que no salga Maricela en el borde); c30 a c32, llamadas (sin pantalla dividida); pronunciación de "platicadita", "veinticuatro" y "Nochebuena".
-
-### `pieces\huipil-robado\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, vista-stories, parte1, historia-propia, referencias3]
-relatedTo: [masa-honrada, tiendita-justa, referencias3]
----
-# huipil-robado (El Huipil Robado · Parte 1): estado
-
-## La historia
-- Historia propia inspirada en la premisa n.º 4 de fuentes/referencias3/resumen.md (ref ★ 7701016469173292310 de @relatos.de.vida.9, 1.9M). Mismos beats de los virales, con personajes, nombres, diálogo y prueba final nuevos; atuendos de la ref en otros colores.
-- Doña Tomasa (bordadora de la sierra de Oaxaca) y su sobrina Yaretzi (29) descubren que Romina revende sus blusas como "diseño exclusivo". Romina cancela el pedido, pide de vuelta el hilo y con una queja falsa de copia les quitan la mesa de la feria. Gancho: cada blusa lleva un colibrí bordado dentro de la manga, la prueba que Tomasa enseñará en la presentación de Romina. Sin Navidad.
-- Guion pasado por la skill humanizer: frases cortas de telenovela, sin rayas ni contrastes de relleno.
-
-## Marca
-**VISTA STORIES**: edit.py, BRAND = "VISTA". La música y la marca de agua salen de pieces/_marcas/VISTA (brand, brand_wm). No hay carpeta music/ propia.
-
-## Archivos listos
-- guion.md y caption.txt (formato Parte 1, #parte1).
-- lines.json: fuente única de clips.py (511 palabras, unos 225–240 s en bruto; montaje objetivo 2:00–2:20).
-- clips.py, con 39 clips (c01–c35 y r1–r4). Suman 284 s de generación.
-  - Todos los planos son de una persona: gaze(side) + ONE + ALONE (el insert r4 son solo las manos de Tomasa, con SOLO).
-  - NOSUB + CLEAN + END en cada diálogo; NODOUBLE en los de riesgo.
-  - SAFE/SOFT, incluidas las frases fuertes del diálogo.
-  - variant, NOREF (también quita las hojas de locación), TRIES=6, gatito de control y 17 s entre clips.
-  - Acepta IDs, mueve la versión vieja a clips/old/ e imprime "FIN P1".
-- make_sheets.py: 9 hojas con control md5 DUPLICADO y --reupload; imprime "FIN HOJAS".
-- phr.py.
-- edit.py: EDL en borrador por índices de línea, ganancia 0 en los mudos y BLACK 0.4 s antes de c35. Música: suspenso hasta c10, cama cálida de c10 a c14 (deciden bajar a la feria) y suspenso de c14 al final. Loudnorm en dos pasadas y --remix. Salida en renders/v1.mp4.
-
-## Hojas nuevas
-Aún no se generaron. Los nombres se verificaron como únicos en pieces/*/clips.py y make_sheets.py.
-- Personajes: TOMASA_SANABRIA, YARETZI_SANABRIA, ROMINA_ARRIOLA, CRESCENCIA_LOPEZ y OFELIA_FERIANTE.
-- Locaciones: LOC_PATIOTOMASA, LOC_BOUTIQUEROM, LOC_FERIACARPA y LOC_CALLEFERIA. Simples: sin letreros, precios ni marcas, globos ni altar.
-
-Nada generado en Flow todavía.
-
-## Siguiente
-1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, correr `md5sum chars/*.jpg` y armar hoja de contactos: Tomasa (trenzas grises, rebozo vino) contra Crescencia (chongo gris, rebozo mostaza); Romina (blazer marfil) contra Ofelia (blusa verde azulado, cárdigan gris).
-2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P1", Traceback e "intento 6".
-3. QA con hoja de fotogramas, franja inferior y bordes. Regenerar con `python -I clips.py <ids> > clips_log2.txt`.
-4. `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y correr `python -I edit.py` (o `--remix`).
-5. Verificar sincronía en 5 puntos, ritmo ≤ 1.9 s, LUFS y pico, y la marca VISTA STORIES visible a tamaño real.
-6. Telegram con caption.txt (3er arg = VISTA).
-
-## Revisar en el QA
-- Geografía: patio escena 1, Romina DER. y Tomasa/Yaretzi IZQ.; patio escenas 2 a 5, Tomasa IZQ. y Yaretzi/Crescencia DER.; feria, Ofelia/Romina DER. y Tomasa/Yaretzi IZQ.; calle, Tomasa IZQ.
-- Dobles: ningún segundo rebozo vino, blazer marfil, cárdigan verde, rebozo mostaza ni blusa verde azulado. Sin otras bordadoras de fondo.
-- Utilería: celular con la pantalla de espaldas; la blusa de flores moradas y amarillas igual en todos los planos; colibrí morado en r4.
-- Sin lentes de sol en la cabeza de Romina, sin gafete en Ofelia, sin globos ni letreros en la feria.
-- Fallos de Omni: subtítulos quemados, frases repetidas, 2.ª frase perdida y morphs.
-- Riesgos: c14/c15 llamada (que no salga Ofelia en pantalla dividida); r4, insert de manos (que no salga texto ni otra mano); pronunciación de "Yaretzi", "Crescencia", "colibrí" y "desenmascarar".
-
-### `pieces\regreso-20-p2\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, vista-stories, parte2]
-relatedTo: [regreso-20, camionero-p2]
----
-# regreso-20-p2 (El Regreso · Parte 2): estado
-- Sigue en el mismo segundo del gancho de regreso-20 (Parte 1, entregada con VISTA STORIES): "Ahora sí, tu hija va a saber la verdad." Payoff: Bernardo era compadre de Julián y guarda la copia del testamento (el rancho era de Leonor; Clemencia escondió el original). Trampa: "faltaba una firma". Giro: Clemencia se delata ("Si yo lo quemé hace veinte años"). Castigo: Joaquín nomás vino por el rancho y la deja. Justicia: Leonor dueña, le da un cuarto a su mamá pero ahora manda ella. CTA de opinión, sin Parte 3.
-- Marca: **VISTA STORIES** (la de la Parte 1, fuera de la rotación). Música y marca de agua de pieces/_marcas/VISTA (edit.py, BRAND = "VISTA", arriba al centro).
-- Archivos listos:
-  - guion.md (pasado por humanizer).
-  - lines.json, fuente única de clips.py.
-  - clips.py: 32 clips (c01–c29 + i1, r1, r2 mudos), 379 palabras, 56 frases, 228 s brutos (~2:10 montado). Lleva gaze() + ONE + ALONE + NODOUBLE en todos los planos (shot()), NOSUB + CLEAN + END tras cada diálogo, nadie con sombrero, LETTER (c03, c15) y BAG (r1, c13, c22) con un solo objeto, NOPROP en el resto, SAFE/SOFT con \b, variant, NOREF, TRIES=6, 17 s entre clips y el gatito de control. Imprime "FIN P2", acepta IDs y mueve la versión vieja a clips/old/. Probado en seco (variantes 0–5 de los 32 prompts).
-  - make_sheets.py: 0 hojas nuevas; --reupload de las 6 de la Parte 1 (CLEMENCIA, LEONOR, JOAQUIN, BERNARDO, LOC_ADOBE, LOC_TEJABAN), control md5 DUPLICADO (comprobado: ninguna coincide con otra pieza). Imprime "FIN HOJAS P2".
-  - phr.py.
-  - edit.py: EDL en borrador con índices de línea (i1/r1/r2 ganancia 0), música suspenso 0→c09, cálida c09→c13, suspenso c13→c23, cálida c23→fin; BLACK 0.4 entre c28 y c29; salida renders/v1.mp4 (--remix -> v2.mp4).
-  - caption.txt.
-- chars/: copia de las 6 hojas de regreso-20.
-- Nada generado en Flow todavía.
-- Siguiente (una sesión de Flow a la vez):
-  1. `python -I make_sheets.py --reupload > sheets_log.txt` (Monitor sobre "^FIN HOJAS P2"); revisar que no haya DUPLICADO, FALTA ni FALLO.
-  2. `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P2", Traceback e "intento 6").
-  3. QA por agente (qa_clips.md). Revisar:
-     - nadie en los bordes ni en primer plano (tiras de bordes a 4 fps); nadie entra caminando (c01 Leonor y r1 Joaquín ya en cuadro);
-     - subtítulos quemados, 2.ª frase perdida, palabras repetidas;
-     - lados fijos (cocina: Leonor izq. en la puerta, Bernardo der. sentado; portal: Leonor/Bernardo izq., Clemencia/Joaquín der.); sin sombreros;
-     - una sola hoja (c03, i1, c15), sin sobre ni carpeta; una sola maleta (r1, c13, c22, r2); un solo retrato en la cocina, que no cobre vida;
-     - r2: Joaquín solo, de espaldas, nadie más en el camino ni en el portal;
-     - i1, r1, r2 mudos (ganancia 0);
-     - c29 CTA con voz desde el inicio y gestos.
-  4. Regenerar con `python -I clips.py <ids> > clips_log2.txt`. Luego `python -I phr.py`, EDL por rangos en edit.py y `python -I edit.py` -> renders/v1.mp4.
-  5. Verificación completa (sincronía en 5 puntos, ritmo ≤ 1.9 s, LUFS/pico, marca VISTA arriba al centro). Después, Telegram: `python tools/enviar_telegram.py pieces/regreso-20-p2/renders/v1.mp4` (lee caption.txt).
-- Riesgos: c16 (Clemencia se delata: tono "shocked" que SOFT suaviza), c22 (mano en la maleta, que no aparezca otra), r2 (caminata de espaldas), i1 (manos y hoja), c29 CTA.
-- Pronunciación: "Bernardo", "Julián", "Joaquín", "testamento", "entierro", "jefecita", "nomás", "Arréglense", "merecido".
-
-### `pieces\masa-honrada\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, sinmarca, parte1, remake, referencias3]
-relatedTo: [pedida-mano, sazon-concha, referencias3]
----
-# masa-honrada (La Masa Honrada · Parte 1, video 26): estado
-
-## La historia
-- Remake de la premisa n.º 2 de fuentes/referencias3/resumen.md (ref 7682590215994690849 de @solreflection, 5.6M).
-  - Mismos beats que la ref; personajes, nombres y diálogo nuevos; atuendos de la ref con otros colores.
-  - La ref cierra en 100 s. Aquí se agrega un gancho: Yesenia entra a trabajar con Lupe para robarle el secreto, y Lupe ya lo sabe ("le di el nixtamal… y no la receta").
-- No se cruza con "precio justo" (premisa n.º 1, que escribe otro agente en paralelo): aquí no hay tienda, presidencia, inspección ni autoridad.
-
-## Marca
-**SIN MARCA**: va sin marca de agua. La música sale de pieces/_marcas/SINMARCA (edit.py, BRAND = "SINMARCA"; brand_wm da un png transparente). No hay carpeta music/ propia.
-
-## Archivos listos
-- guion.md y caption.txt (formato Parte 1).
-- lines.json: fuente única de clips.py (501 palabras, unos 235–245 s).
-- clips.py, con 39 clips: c01–c34 y r1–r5. Suman 288 s de generación.
-  - Todos los planos son de una persona: gaze(side) + ONE + ALONE.
-  - NOSUB + CLEAN + END en cada diálogo.
-  - NODOUBLE en c01, c02, c04, c06, c08, c13, c16, c17, c20, c23, c26, c27, c28, c31 y c32.
-  - SAFE/SOFT, incluidas las frases fuertes del diálogo.
-  - variant, NOREF (también quita las hojas de locación), TRIES=6, gatito de control y 17 s entre clips.
-  - Acepta IDs, mueve la versión vieja a clips/old/ e imprime "FIN P1".
-- make_sheets.py: 9 hojas con control md5 DUPLICADO y --reupload; imprime "FIN HOJAS".
-- phr.py.
-- edit.py:
-  - EDL en borrador por índices de línea, con ganancia 0 en los mudos y BLACK 0.4 s antes de c34.
-  - Música: suspenso hasta c22, cama cálida de c22 a c31 y suspenso de c31 al final.
-  - Loudnorm en dos pasadas. Admite --remix. Salida en renders/v1.mp4.
-
-## Hojas nuevas
-Aún no se generaron. Los nombres se verificaron como únicos en pieces/*.
-- Personajes: LUPE_OLVERA, YESENIA_BARRAGAN, RIGO_MOLINERO, CHAYO_ZAMUDIO, ABUNDIO_ZAMUDIO y TONA_ESPINO.
-- Locaciones: LOC_PUESTOYESE, LOC_COMALLUPE y LOC_PATIOZAMUDIO. Son simples: sin letreros, precios, marcas ni botellas con etiqueta.
-
-Nada generado en Flow todavía.
-
-## Siguiente
-1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS").
-   - Revisar que no haya DUPLICADO y correr `md5sum chars/*.jpg`.
-   - Armar una hoja de contactos y comprobar estas parejas, que no deben parecerse:
-     - Lupe (trenza gris, mandil granate, blusa amarilla) y Toña (pelo corto rizado, cárdigan mostaza).
-     - Yesenia (chongo vino, blusa turquesa) y Chayo (pelo suelto negro, blusa coral).
-     - Rigo (playera verde olivo, mandil azul) y Abundio (camisa a cuadros, pelo gris).
-2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P1", Traceback e "intento 6".
-3. QA con hoja de fotogramas, tiras de la franja inferior y bordes.
-4. Regenerar con `python -I clips.py <ids> > clips_log2.txt`.
-5. `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y correr `python -I edit.py` (o `--remix`).
-6. Verificar sincronía en 5 puntos, ritmo ≤ 1.9 s, LUFS y pico, y que NO haya marca de agua.
-7. Telegram con caption.txt.
-
-## Revisar en el QA
-- **Geografía:**
-  - Puesto de Yesenia: Yesenia DER.; Rigo, Chayo y Lupe IZQ.
-  - Carrito de Lupe: Lupe IZQ.; Toña, Chayo y Yesenia DER.
-  - Patio: Chayo IZQ., Abundio DER.
-- **Dobles:** ninguna segunda blusa turquesa, mandil granate, blusa coral, cárdigan mostaza ni mandil azul.
-- **Bordes:** nadie en los bordes, nadie que entre caminando y sin clientes de fondo.
-- **Utilería:**
-  - Un solo costal, blanco y sin letras.
-  - La tortilla rota en la mano DERECHA de Chayo.
-  - El celular en la mano DERECHA con la pantalla de espaldas (c21).
-  - El maíz en una tina azul (c31).
-  - Ningún precio, letrero ni botella con etiqueta.
-- **Ropa y accesorios:** sin sombreros, redes de pelo ni lentes que aparezcan. Ropa igual en todos los planos.
-- **Fallos de Omni:** subtítulos quemados, frases repetidas, 2.ª frase perdida y morphs.
-
-## Riesgos
-- c03/c04/r1: la masa y el costal. Que no salga texto en el costal ni otro ayudante.
-- c09: Yesenia llama "desde su puesto". Que no grite ni señale.
-- c13/c15/r3: tortillas que se rompen. Que no salgan migajas raras ni un tercer comensal.
-- c21: pantalla del celular a la vista.
-- c27: Rigo se desata el mandil. Si sale raro, SOFT lo cambia por las manos en la mesa.
-- Pronunciación: "nixtamal", "engrudo", "costal", "muélele", "recalentada", "Yesenia", "Abundio", "Toña".
-
-### `pieces\tiendita-justa\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, mexi-stories, parte1, remake, referencias3, precio-justo]
-relatedTo: [pedida-mano, referencias3]
----
-# tiendita-justa (La Tiendita del Precio Justo · Parte 1, video 25): estado
-- Remake de la premisa n.º 1 de fuentes/referencias3/resumen.md: ref ★ 7698839837180169504 (@solreflection, 9.8M). Mismos 11 beats que la ref (gancho, pérdida del villano, éxito, prueba social, flete/bodega, camioneta, envidia, cerca, queja, falsa calma, inspector). Otros nombres y diálogos; atuendos de la ref en otros colores.
-- Premisa: Chuy y su papá Aurelio abren una tiendita a precio justo y le vacían la clientela a don Evaristo, que cobraba de más por ser el único. Evaristo pone una queja en la presidencia municipal y un mes después llega el inspector a pedir permisos y amenazar con clausurar.
-- Política: sin cifras ni billetes ("precio justo" vago, libreta cerrada, "le adelanto los viajes"); el inspector es civil (traje café, sin gafete); "queja", no "denuncia"; sin niños ni palabras de edad; nadie con sombrero ni gorra; nadie señala; hojas sin letreros ni precios.
-- Marca: **MEXI STORIES** (pedida-mano=MAJESTIC → esta=MEXI → siguiente=SIN MARCA). Música y marca de agua desde pieces/_marcas/MEXI (edit.py, BRAND = "MEXI"; arriba a la derecha, margen 36, y=210). No hay carpeta music/ propia.
-- Archivos listos:
-  - guion.md y caption.txt (formato Parte 1).
-  - lines.json: fuente única de clips.py (491 palabras, unos 235–245 s).
-  - clips.py: 45 clips (c01–c42 y r1–r3), 326 s de generación.
-    - Planos de una persona con gaze(side) + ONE + ALONE; los de la fila lejana (c26, c30, c31, r3) usan far() (ONE sin ALONE, gente desenfocada al fondo).
-    - NOSUB + CLEAN + END en cada diálogo; NODOUBLE en los de riesgo.
-    - SAFE/SOFT (incluye frases fuertes del diálogo e "inspector" → "the man in the suit"), variant, NOREF (también quita las hojas de locación), TRIES=6, gatito de control, 17 s entre clips.
-    - Acepta IDs, mueve la versión vieja a clips/old/ e imprime "FIN P1".
-  - make_sheets.py: 14 hojas (8 personajes + 6 locaciones) con control md5 DUPLICADO y --reupload; imprime "FIN HOJAS". phr.py.
-  - edit.py: EDL en borrador por índices de línea (76 entradas), mudos r1–r3 con ganancia 0, BLACK 0.4 s antes de c42. Música: suspenso 0→c07, cálida c07→c24, suspenso c24→fin. --remix. Salida en renders/v1.mp4.
-- Hojas nuevas (aún no generadas; nombres verificados como únicos en pieces/*): CHUY_MEDINA, AURELIO_MEDINA, EVARISTO_LOZANO, CIPRIANO_ROBLES, TONA_ARELLANO, FIDEL_CARMONA, MARISOL_TREJO, LIC_ZAMARRIPA, LOC_TIENDAEVARISTO, LOC_TIENDITACHUY, LOC_BODEGAFLETE, LOC_CABINAFLETE, LOC_CERCATIENDITA, LOC_VENTANILLAMUNI.
-- Nada generado en Flow todavía.
-- Siguiente:
-  1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO y correr `md5sum chars/*.jpg`. Hoja de contactos:
-     - Chuy (camiseta guinda) y Evaristo (cuadros azul/blanco, mandil verde) que no se parezcan; Aurelio con paliacate LISO mostaza; Cipriano sin sombrero.
-     - Fidel sin gorra; el inspector sin gafete ni escudos; Marisol sin gafete.
-     - Locaciones sin letreros, precios, marcas ni billetes; la tiendita sin caja registradora.
-  2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P1", Traceback e "intento 6".
-  3. QA con hoja de fotogramas, tiras de la franja inferior y bordes.
-  4. Regenerar con `python -I clips.py <ids> > clips_log2.txt`.
-  5. `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y `python -I edit.py` (o `--remix`).
-  6. Verificar: sincronía en 5 puntos, ritmo ≤ 1.9 s, LUFS y pico, marca MEXI arriba a la derecha. Luego Telegram con caption.txt.
-- Revisar en el QA:
-  - Geografía: Evaristo IZQ. / Cipriano DER. (tienda vieja); Chuy IZQ. / Aurelio, Toña e inspector DER. (tiendita); Chuy IZQ. / Fidel DER. (bodega); Chuy volante IZQ. / Aurelio DER. (cabina); Marisol IZQ. / Evaristo DER. (ventanilla).
-  - Ningún doble: otra camiseta guinda, otra camisa a cuadros, otra camisa azul cielo, otro traje café, otra blusa lila.
-  - Nadie en los bordes ni entrando a cuadro; la fila siempre lejos y desenfocada.
-  - Utilería: libreta cerrada en la mano IZQ.; cero billetes, precios o cifras; una sola camioneta, la roja; portapapeles con la hoja de espaldas.
-  - Paliacate de Aurelio igual en todos los planos (en la ref cambiaba). Evaristo sin mandil solo en la ventanilla (c32, c34).
-  - Subtítulos quemados, frases repetidas, 2.ª frase perdida, morphs.
-- Riesgos:
-  - c18/c19: "adelanto los viajes" (que no aparezcan billetes en las manos).
-  - c37–c41: el inspector (que no salga con gafete, escudo o aspecto de policía).
-  - c32–c34: ventanilla (sin banderas, sellos ni letreros).
-  - Pronunciación: "Cipriano", "Evaristo", "mercancía", "mayoreo", "flete", "escarmiento", "presidencia municipal", "clausurar".
-
-### `pieces\camionero-p2\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, mexi-stories, parte2]
-relatedTo: [camionero, buen-hijo-p2]
----
-# camionero-p2 (El Camionero · Parte 2): estado
-- Sigue en el mismo segundo del cliffhanger de camionero (Parte 1, entregada con MEXI STORIES): "El que recibía las cajas… es alguien de su familia". Payoff: era Iván, el sobrino de Leonor (camioneta gris por la puerta de atrás, cámara apagada con su usuario); confiesa que quería la dirección; Leonor lo saca y Teófilo queda de jefe de andén. Gancho nuevo: "Pregúntale a mi tío Arturo quién me dio la clave de las cámaras" (Arturo = esposo de Leonor).
-- Marca: **MEXI STORIES** (la de la Parte 1, fuera de la rotación). Música y marca de agua de pieces/_marcas/MEXI (edit.py, BRAND = "MEXI", arriba a la der.).
-- Archivos listos:
-  - guion.md.
-  - lines.json, fuente única de clips.py.
-  - clips.py: 31 clips (c01–c29 + r1 e i1 mudos), 222 s de voz en bruto, 57 frases. Lleva gaze() + ONE + ALONE en todos los planos (shot()), NOSUB y END tras cada diálogo, PLAINCAP en todos los planos de Teófilo (gorra lisa), NOPROP salvo la tabla de Nayeli (c07, c16), SAFE/SOFT con \b, variant, NOREF (incluye IVAN_SOBRINO), TRIES=6, 17 s entre clips y el gatito de control. Imprime "FIN P2", acepta IDs y mueve la versión vieja a clips/old/. Probado en seco (variantes 0–5 de los 31 prompts).
-  - make_sheets.py: 1 hoja nueva (IVAN_SOBRINO, nombre único comprobado) + --reupload de 7 hojas de la Parte 1 (TEOFILO_TRAILERO, LEONOR_DIRECTORA, NAYELI_MONITOREO, LALO_CHALECO, FIDEL_CARGADOR, LOC_ANDENCARGA, LOC_SALAMONITORES), control md5 DUPLICADO. Imprime "FIN HOJAS P2".
-  - phr.py.
-  - edit.py: EDL en borrador con índices de línea (r1/i1 ganancia 0), cálida de c21 a c27, BLACK 0.4 entre c28 y c29, salida renders/v1.mp4 (--remix -> renders/v2.mp4).
-  - caption.txt.
-- chars/: copia de las 10 hojas de la Parte 1 (sin chars/mal/), md5 distintos. CLEMENTE_BODEGUERO y las locaciones de pasillo/cuarto no se usan.
-- Nada generado en Flow todavía.
-- Siguiente (una sesión de Flow a la vez):
-  1. `python -I make_sheets.py --reupload > sheets_log.txt` (Monitor sobre "^FIN HOJAS P2"); revisar que no haya DUPLICADO, FALTA ni FALLO, y que IVAN_SOBRINO no se parezca a Clemente ni a Fidel (sin barba, camisa azul cielo, sin corbata ni gafete).
-  2. `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P2", Traceback e "intento 6").
-  3. QA por agente (qa_clips.md). Revisar:
-     - nadie en los bordes ni en primer plano (tiras de bordes a 4 fps); nadie entra caminando (r1 Iván ya en cuadro);
-     - subtítulos quemados, 2.ª frase perdida, palabras repetidas;
-     - gorra de Teófilo lisa, sin parche ni letras, una sola;
-     - lados fijos (andén: Teófilo/Lalo izq., Fidel/Iván der., Leonor/Nayeli centro; monitores: pantallas y Nayeli izq.);
-     - i1: camioneta gris DENTRO del monitor, sin placas ni texto; una sola camioneta;
-     - una sola tabla (Nayeli c07/c16), los demás con manos vacías; nadie señala;
-     - r1 e i1 mudos (ganancia 0);
-     - c29 CTA con voz desde el inicio y gestos.
-  4. Regenerar con `python -I clips.py <ids> > clips_log2.txt`. Luego `python -I phr.py`, EDL por rangos en edit.py y `python -I edit.py` -> renders/v1.mp4.
-  5. Verificación completa (sincronía en 5 puntos, ritmo ≤ 1.9 s, LUFS/pico, marca MEXI arriba a la der.). Después, Telegram: `python tools/enviar_telegram.py pieces/camionero-p2/renders/v1.mp4` (lee caption.txt).
-- Riesgos: c01 (frase larga de 10 s), c19 (motivo largo), i1 (pantalla y camioneta), r1 (Iván entrando), hoja nueva IVAN_SOBRINO.
-- Pronunciación: "Iván", "Arturo", "madrugadas", "proveedor", "usuario", "estacionamiento", "Teófilo".
-
-### `pieces\stimulus-03-hf\ESTADO.md`
-
-# stimulus-03 — estado
-Plantilla: ../stimulus-02-hf (aprobado). Música asignada: styles/stimulus/assets/bgm/presto.wav (sin bajo, loudnorm -14).
-Hecho: video 3 renderizado y enviado (renders/stimulus-03.mp4), pendiente de feedback.
-Falta: pausas globales (-50 dB ≥0.15 s, sin la final) → refine_words.py (copiar words.json a words_whisper.json antes) → make_edit.py → aplicar delta de inicios a words_edit.json →
-cutout.webm (hyperframes remove-background + firming) → plan nuevo en gen.py (hook, BLOCKS, CHECKS=4 preguntas numeradas, CTA "Want to compare? Link in bio.") → check → snapshots → render → revisar_render → Telegram.
-
-### `pieces\pedida-mano\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, majestic-stories, parte1, historia-original]
-relatedTo: [gardenia, canasta, nochebuena]
----
-# pedida-mano (La Pedida de Mano · Parte 1, video 24): estado
-- Historia ORIGINAL, no navideña. Fórmula "humilló a alguien sencillo sin saber quién era", la de las más virales del ranking (chicles 3.4M, la dueña humilde 2.5M). Es la primera pieza con una pedida de mano; no hay dueño, empresa, dinero ni papeles.
-- Fórmula:
-  - Humillación en la 1.ª línea: Isabela al señor de la llanta ponchada: "¿esta carcacha es suya? … no quiero que mis suegros vean esta basura".
-  - Giro de poder: el señor es don Lorenzo, el papá del novio, que venía a pedir su mano.
-  - Payoff: Lorenzo le devuelve "me dijeron que mi lugar era en la cocina"; la pedida "se pospone… hasta que su hija aprenda a saludar"; Esteban se pone del lado de su papá.
-  - Gancho: Beatriz y Lorenzo se conocían: "¿Ya le contaste a tu hija por qué me fui del pueblo?"
-- Marca: **MAJESTIC STORIES** (rotación: gardenia=VISTA → esta=MAJESTIC → siguiente=MEXI). La música y la marca de agua salen de pieces/_marcas/MAJESTIC (edit.py, BRAND = "MAJESTIC"); no hay carpeta music/ propia.
-- Archivos listos:
-  - guion.md y caption.txt (formato Parte 1).
-  - lines.json: fuente única de clips.py (492 palabras, unos 235–245 s).
-  - clips.py, con 39 clips: c01–c35 y r1–r4. Suman 294 s de generación.
-    - Todos los planos con diálogo son de una persona: gaze(side) + ONE + ALONE.
-    - NOSUB + CLEAN + END en cada diálogo.
-    - NODOUBLE en los de riesgo: c01, c02, c05, c08, c14, c15, c19, c21, c23, c28, c30 y c33.
-    - SAFE/SOFT, incluidas las frases fuertes del diálogo.
-    - variant, NOREF (también quita las hojas de locación), TRIES=6, gatito de control y 17 s entre clips.
-    - Acepta IDs, mueve la versión vieja a clips/old/ e imprime "FIN P1".
-  - make_sheets.py: 6 hojas con control md5 DUPLICADO y --reupload; imprime "FIN HOJAS". phr.py.
-  - edit.py:
-    - EDL en borrador por índices de línea, con ganancia 0 en los mudos y BLACK 0.4 s antes de c35.
-    - Música: cama cálida de c19 a c33. Loudnorm en dos pasadas. Salida en renders/v1.mp4.
-- Hojas nuevas (aún no generadas; nombres verificados como únicos en pieces/*): ISABELA_VALDIVIA, BEATRIZ_VALDIVIA, LORENZO_CARRASCO, ESTEBAN_CARRASCO, LOC_PORTONPEDIDA, LOC_COMEDORPEDIDA.
-  - Las locaciones son simples: nada religioso, sin adornos, flores, cuadros ni letreros (lección de intercambio).
-- Nada generado en Flow todavía.
-- Siguiente:
-  1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO y correr `md5sum chars/*.jpg`. Armar una hoja de contactos y comprobar:
-     - Isabela de vestido rojo, pelo suelto; Beatriz rubia cenizo de verde (que no se parezcan).
-     - Lorenzo de guayabera blanca, pelo gris y bigote; Esteban de azul marino, barba negra (que no se parezcan).
-     - La camioneta verde con la llanta ponchada y sin placa con letras; el portón sin letreros.
-     - El comedor sin flores, cuadros ni adornos.
-  2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P1", Traceback e "intento 6".
-  3. QA con hoja de fotogramas, tiras de la franja inferior y bordes.
-  4. Regenerar con `python -I clips.py <ids> > clips_log2.txt`.
-  5. `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y `python -I edit.py`.
-  6. Verificar: sincronía en 5 puntos, ritmo ≤ 1.9 s, LUFS y pico, marca MAJESTIC arriba a la izquierda. Luego Telegram con caption.txt.
-- Revisar en el QA:
-  - Geografía:
-    - Estacionamiento de día: Lorenzo IZQ. junto a la camioneta; Isabela y Beatriz DER. en el portón.
-    - Comedor: Isabela y Beatriz IZQ., sentadas; Esteban y Lorenzo DER., de pie.
-    - Anochecer: Lorenzo IZQ.; Beatriz DER.
-  - Ningún doble: otro vestido rojo, otro vestido verde, otra guayabera blanca, otro saco azul.
-  - Nadie en los bordes; nadie que entre caminando; sin meseros ni gente al fondo del comedor.
-  - Utilería:
-    - Una sola camioneta, la verde, con la llanta ponchada; sin placas con letras.
-    - El celular en la mano DERECHA con la pantalla de espaldas (c11, c12).
-    - Ninguna herramienta, sobre, papel ni carpeta inventados.
-  - Sin sombreros ni lentes que aparezcan. Ropa igual en todos los planos (guayabera limpia, vestido rojo, bob rubio).
-  - Subtítulos quemados, frases repetidas, 2.ª frase perdida, morphs.
-- Riesgos:
-  - c02/c04: Lorenzo agachado junto a la llanta (que no aparezca una llave de cruz que parezca arma ni otra persona).
-  - c19–c32: Lorenzo en la puerta de arco (que no entre caminando y que no salgan meseros ni comensales).
-  - c33–c35: anochecer con un farol (que no aparezca gente en el portón).
-  - Pronunciación: "carcacha", "ponchó", "ponchada", "Quítela", "estacionamiento", "pospone", "Esteban".
-
-### `pieces\gardenia\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, vista-stories, parte1, historia-original]
-relatedTo: [intercambio, sazon-concha, fierro-herradura]
----
-# gardenia (La Boda de las Gardenias · Parte 1, video 23): estado
-- Historia ORIGINAL, no navideña, inspirada en `DfBf9XjxCJO` ("La quinceañera sin padrinos", 2.1M y 165K likes): es la única ★ del ranking que ninguna pieza había usado. Se toma el mundo, sin quinceañera ni hijos.
-- Fórmula:
-  - Humillación en la 1.ª línea: Leticia, la hermana rica, le dice a Rosaura: "Ya hablé con tus padrinos… Ninguno va a ir a tu boda".
-  - Giro de poder: don Gilberto, el viudo de la gardenia de los sábados, es el dueño del salón Las Gardenias.
-  - Payoff: a Leticia le cierran la puerta, y Rosaura le devuelve la frase "me faltan manos para servir las mesas".
-  - Gancho: Leticia le dice a Abel por teléfono "haz lo que acordamos".
-- Marca: **VISTA STORIES**. La música y la marca de agua salen de pieces/_marcas/VISTA (edit.py, BRAND = "VISTA"); no hay carpeta music/ propia.
-- Archivos listos:
-  - guion.md y caption.txt (formato Parte 1).
-  - lines.json: fuente única de clips.py (475 palabras ≈ 230–240 s).
-  - clips.py, con 39 clips: c01–c34 y r1–r5. Suman 280 s de generación.
-    - Todos los planos con diálogo son de una persona: gaze(side) + ONE + ALONE.
-    - NOSUB + CLEAN + END en cada diálogo.
-    - NODOUBLE en los de riesgo: c01, c02, c06, c11, c18, c26, c27 y c32.
-    - SAFE/SOFT, incluidas las frases fuertes del diálogo.
-    - variant, NOREF (también quita las hojas de locación), TRIES=6, gatito de control y 17 s entre clips.
-    - Acepta IDs, mueve la versión vieja a clips/old/ e imprime "FIN P1".
-  - make_sheets.py: 7 hojas con control md5 DUPLICADO y --reupload; imprime "FIN HOJAS". phr.py.
-  - edit.py:
-    - EDL en borrador por índices de línea, con ganancia 0 en los mudos y BLACK 0.4 s antes de c34.
-    - Música: cama cálida de c20 a c33. Loudnorm en dos pasadas. Salida en renders/v1.mp4.
-- Hojas nuevas (aún no generadas; nombres verificados como únicos en pieces/*/chars, make_sheets.py, clips.py y lines.json): ROSAURA_ALCANTARA, LETICIA_ALCANTARA, ABEL_SANDOVAL, CHONA_BECERRA, GILBERTO_ARRIAGA, LOC_PATIOALCANTARA, LOC_PUERTAGARDENIAS.
-  - Las locaciones son simples: nada religioso, sin adornos, letreros ni utilería suelta (lección de intercambio).
-- Nada generado en Flow todavía.
-- Siguiente:
-  1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO y correr `md5sum chars/*.jpg`. Armar una hoja de contactos y comprobar:
-     - Rosaura sin velo.
-     - Leticia de azul rey con perlas.
-     - Abel lampiño, para distinguirlo de Gilberto (pelo blanco, bigote, abrigo camello).
-     - La mesa del patio vacía.
-     - La puerta del salón sin letras.
-  2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P1", Traceback e "intento 6".
-  3. QA con hoja de fotogramas, tiras de la franja inferior y bordes.
-  4. Regenerar con `python -I clips.py <ids> > clips_log2.txt`.
-  5. `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y `python -I edit.py`.
-  6. Verificar: sincronía en 5 puntos, ritmo ≤ 1.9 s, LUFS y pico, marca. Luego Telegram con caption.txt.
-- Revisar en el QA:
-  - Geografía:
-    - Patio de tarde: Rosaura, Abel y Chona IZQ.; Leticia y Gilberto DER.
-    - Anochecer: Rosaura IZQ., Abel DER.
-    - Noche con un foco: Rosaura IZQ.; Gilberto y Chona DER.
-    - Puerta del salón: Leticia IZQ.; Gilberto y Rosaura DER.
-  - Ningún doble: otro vestido azul, otro vestido blanco, otra mujer de pelo gris.
-  - Nadie en los bordes; nadie que entre caminando.
-  - Utilería:
-    - El pastelito, uno solo y sin tocar (c09).
-    - Una sola gardenia (c14 → c15 → r2).
-    - Una sola olla (c26).
-    - El celular con la pantalla de espaldas (c33, r5).
-    - Ningún sobre, papel ni carpeta inventados.
-  - Sin sombreros, velos ni lentes que aparezcan.
-  - Subtítulos quemados, frases repetidas, 2.ª frase perdida, morphs.
-- Riesgos:
-  - c09: Leticia junto al pastel (que no lo toque ni salgan dos pasteles).
-  - c32/c34: Rosaura en la puerta abierta con luz de adentro (que no aparezca gente ni decoración de salón).
-  - r5: Abel con el celular (pantalla sin contenido, que no "salga" nada de la pantalla).
-  - Pronunciación: "Gardenias", "quítatelo", "pastelito", "lavaderos", "acordamos", "Gilberto".
-
-### `pieces\intercambio\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, mexi-stories, parte1, historia-original, navidad]
-relatedTo: [sazon-concha, nochebuena, posada]
----
-# intercambio (La Virgen de los Villaseñor · Parte 1, video 22): estado
-- Historia ORIGINAL navideña (intercambio de regalos de Nochebuena en una familia acomodada), inspirada en "Se esforzaba por toda su familia pero nadie la valoraba" (3.1M) y "Mi suegra se adueñó de nuestra casa" (2.2M). Fórmula: humillación en la 1.ª línea (Constanza le regala un mandil a Fabiola: "para que no se te olvide cuál es tu lugar") → giro de poder (Fabiola le regala a Aurora la Virgen de Casimiro que Constanza tiró, pegada pieza por pieza) → payoff (Aurora le devuelve el mandil a Constanza y Fabiola pone la Virgen en el nacimiento) → gancho (Constanza: "la tiré por lo que mi papá escondió adentro de la base").
-- Distinta de nochebuena (hijo avergonzado, ponche, testamento) y de posada (mercado, hoja de escritura): sin papeles, herencias ni dueños escondidos.
-- Marca: **MEXI STORIES**. Música y marca de agua de pieces/_marcas/MEXI (edit.py, BRAND = "MEXI"); no hay music/ propia.
-- Archivos listos:
-  - guion.md y caption.txt (formato Parte 1, hashtags navideños).
-  - lines.json: fuente única de clips.py (465 palabras).
-  - clips.py, con 37 clips: c01–c32, r1–r4 e i1. Son 240 s hablados en bruto, más 30 s de mudos.
-    - Todos los planos con diálogo son de una persona: `gaze(side)` + ONE + ALONE. Nunca "looking at X off-screen".
-    - NOSUB + CLEAN (QA nochebuena c18) y END al final de cada diálogo; NODOUBLE en los planos de riesgo (c01, c02, c06, c14, c18, c29).
-    - Una pieza de cada utilería: una Virgen (hoja PROP_VIRGENCASIMIRO), un mandil, una caja de cartón, una cajita blanca. El nacimiento solo lleva a San José, buey y burro (nunca figura del niño). Nadie con sombrero, gorro navideño ni lentes.
-    - SAFE/SOFT con \b (incluye las frases fuertes del diálogo: "cuál es tu lugar en esta casa", "que nos da pena", "la tiró a la basura", "se nos acaba todo"), variant, NOREF (también quita la hoja de la Virgen), TRIES=6, 17 s entre clips y gatito de control.
-    - Guarda en clips/, imprime "FIN P1", acepta IDs y mueve la versión vieja a clips/old/.
-  - make_sheets.py: 8 hojas nuevas (5 personajes, 2 locaciones y la Virgen) + control md5 DUPLICADO; --reupload. Imprime "FIN HOJAS".
-  - phr.py.
-  - edit.py: EDL en borrador por índices de línea, ganancia 0 en los mudos, BLACK 0,4 s antes del CTA (c32), cama cálida c27 → c29, loudnorm en dos pasadas, salida renders/v1.mp4.
-- Hojas nuevas (aún no generadas; nombres verificados como únicos en pieces/*/chars y en todos los make_sheets.py): FABIOLA_OCHOA, CONSTANZA_VILLASENOR, GERMAN_ALTAMIRANO, EMILIO_VILLASENOR, AURORA_VILLASENOR, LOC_SALAVILLASENOR, LOC_PATIOVILLASENOR, PROP_VIRGENCASIMIRO.
-- Nada generado en Flow todavía.
-- Siguiente:
-  1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, correr `md5sum chars/*.jpg` y armar una hoja de contactos. Cada nombre tiene que ser su persona o lugar y los personajes no se parecen entre sí (Germán con barba gris, Emilio lampiño y rizado; Constanza de verde, Fabiola de vino). Nadie lleva sombrero ni lentes; el nacimiento sin figura del niño; la Virgen es una sola.
-  2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P1", Traceback e "intento 6".
-  3. QA con hoja de fotogramas y tiras de la franja inferior.
-- Revisar en el QA:
-  - Geografía: sala (Aurora sentada al CENTRO, Constanza y Germán DER. junto al árbol, Fabiola y Emilio IZQ.), patio (Fabiola IZQ., Emilio DER.; de noche Constanza IZQ., Germán DER.), payoff (Fabiola IZQ. junto al nacimiento, Emilio DER.).
-  - Nadie en los bordes y ningún doble (otro vestido verde, otro suéter vino).
-  - Una sola Virgen y siempre la misma (manto azul, grietas); el nacimiento con el hueco junto a José hasta c27; ninguna figura del niño; ninguna tarjeta ni letra.
-  - El mandil: Constanza (c01) → Fabiola (c02) → Aurora (c25) → Constanza (c26). La caja de cartón con Fabiola en c05, c10–c13; la cajita blanca solo en c06.
-  - Patio de noche (c29–c31) oscuro de verdad; el de c09–c13, con farolitos encendidos.
-  - Subtítulos quemados, frases repetidas, morphs, personajes que entran caminando, manos o utilería que cambian de lado.
-- Regenerar con `python -I clips.py <ids> > clips_log2.txt`. Luego `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y `python -I edit.py`. Verificar (sincronía en 5 puntos, ritmo ≤ 1,9 s, LUFS y pico, marca) y mandar a Telegram con caption.txt.
-- Riesgos:
-  - i1: manos que abren la caja y sacan la Virgen (una sola figura, sin manos extra).
-  - c15/c17/c21/c24: Aurora con la Virgen en las manos o en el regazo (deformación de la figura).
-  - c27: poner la Virgen junto a San José en el nacimiento (manos y figuras).
-  - r4: mirar la base de la Virgen sin letras ni tapitas inventadas con texto.
-  - Pronunciación de "Villaseñor", "Casimiro", "Fabi", "póntelo", "llorarla" y "regalito".
-- 2026-11-06: QA 2/3 hechos (c05, c15, c18, c25, c32 v4 OK; c07, c23 y c27 con crop de todo el clip por el pesebre de la hoja). renders/v1.mp4 montado: 159.4 s, 81 planos (media 1.99 s), -14.1 LUFS, -1.8 dBTP, sincronía ±1 fotograma, transcripción completa en orden. Falta: aprobación del usuario y Telegram (no enviado).
-
-### `pieces\buen-hijo-p2\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, majestic-stories, parte2]
-relatedTo: [buen-hijo, recetario-p2]
----
-# buen-hijo-p2 (El Buen Hijo · Parte 2): estado
-- Sigue en el mismo segundo del cliffhanger de buen-hijo (Parte 1, entregada con MAJESTIC STORIES). Payoff: la fábrica era de Elena, la mamá de Tadeo; la carta escondida por la nana; Román confiesa lo del inventario y el padre cede. Gancho nuevo: doña Petra, la señora de la avenida, es la mamá de Elena, y Abundio le dijo durante años que Tadeo no quería conocerla.
-- Marca: **MAJESTIC STORIES** (la de la Parte 1, fuera de la rotación). Música y marca de agua de pieces/_marcas/MAJESTIC (edit.py, BRAND = "MAJESTIC").
-- Archivos listos:
-  - guion.md.
-  - lines.json, fuente única de clips.py.
-  - clips.py: 30 clips (c01–c29 + r1 mudo), 232 s de voz en bruto, 54 frases. Lleva gaze() + ONE + ALONE en todos los planos, NOSUB y END tras cada diálogo, sin sombreros, una sola carta (LET/NOLET, sin sobre ni sello), SAFE/SOFT con \b, variant, NOREF, TRIES=6, 17 s entre clips y el gatito de control. Imprime "FIN P2", acepta IDs y mueve la versión vieja a clips/old/. Probado en seco con un gen falso.
-  - make_sheets.py: --reupload de 6 hojas de la Parte 1 (ABUNDIO, TADEO, ROMAN, AURELIA, LOC_SALON, LOC_FOGON) con control md5 DUPLICADO y control de nombre único. Sin hojas nuevas. Imprime "FIN HOJAS P2".
-  - phr.py.
-  - edit.py: EDL vacía, cálida de c19 a c24, BLACK 0.4 entre c28 y c29, salida renders/v1.mp4.
-  - caption.txt.
-- chars/: copia de la Parte 1 (las 10 hojas), revisadas en hoja de contactos: cada nombre es su persona/lugar y los md5 son distintos. Ojo: LOC_PERSIANA trae grafiti con letras (no se usa en la Parte 2).
-- Nada generado en Flow todavía.
-- Siguiente (una sesión de Flow a la vez):
-  1. `python -I make_sheets.py --reupload > sheets_log.txt` (Monitor sobre "^FIN HOJAS P2"); revisar que no haya DUPLICADO ni FALTA.
-  2. `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P2", Traceback e "intento 6").
-  3. QA por agente (qa_clips.md). Revisar:
-     - nadie en los bordes ni en primer plano (tiras de bordes a 4 fps);
-     - subtítulos quemados y frases o palabras repetidas;
-     - una sola carta, en la mano correcta y sin sobre (c04 Aurelia; Tadeo desde c05; abierta e ilegible en c13);
-     - sin sombreros;
-     - lados fijos (cocina: Tadeo izq., Aurelia der.; salón: Tadeo/Aurelia izq., Abundio/Román der.);
-     - Román sin barba y con reloj, Abundio con bigote;
-     - r1 mudo (ganancia 0);
-     - c29 CTA con voz desde el inicio y gestos.
-  4. Regenerar con `python -I clips.py <ids> > clips_log2.txt`. Luego `python -I phr.py`, EDL por frases en edit.py y `python -I edit.py` -> renders/v1.mp4.
-  5. Verificación completa (sincronía en 5 puntos, ritmo ≤ 1.9 s, LUFS/pico, marca MAJESTIC arriba a la izq.). Después, Telegram: `python tools/enviar_telegram.py pieces/buen-hijo-p2/renders/v1.mp4` (lee caption.txt).
-- Riesgos:
-  - c01 (frase larga de 10 s);
-  - c04/c05 (paso de la carta);
-  - c13 (carta abierta: letras legibles);
-  - c18/c26/c27 (caras que cambian de tono);
-  - r1 mudo (Whisper alucina).
-- Pronunciación: "Elena", "Aurelia", "inventario", "igualito", "orgullosa".
-
-### `pieces\sazon-concha\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, majestic-stories, parte1, historia-original, cocina]
-relatedTo: [fierro-herradura, nochebuena, posada]
----
-# sazon-concha (El Sazón de Doña Concha · Parte 1, video 21): estado
-- Historia ORIGINAL (no navideña) inspirada en `7699705850595659030` ("La despidió después de 30 años, pero su sazón sería su ruina", 1.4M) y en el sabotaje de `7694502933370637590` ("Le saló la comida", 1.8M). Fórmula: humillación en la 1.ª línea ("Este mole huele a fonda de pueblo") → giro de poder (Victoria prueba el mole y Darío no sabe qué lleva) → payoff (Concha vuelve a su cocina y Darío lava cazuelas) → gancho (Maximiliano: "la sal la vas a poner tú").
-- Marca: **MAJESTIC STORIES**. Música y marca de agua de pieces/_marcas/MAJESTIC (edit.py, BRAND = "MAJESTIC"); no hay music/ propia.
-- Archivos listos:
-  - guion.md y caption.txt (formato Parte 1).
-  - lines.json: fuente única de clips.py (479 palabras).
-  - clips.py, con 36 clips: c01–c31, r1–r4 e i1. Son 240 s hablados en bruto, más 30 s de mudos.
-    - Todos los planos con diálogo son de una persona: `gaze(side)` + ONE + ALONE. Nunca "looking at X off-screen".
-    - NOSUB y END al final de cada diálogo; NODOUBLE en los planos de riesgo (c01, c03, c12, c17, c28).
-    - Una pieza de cada utilería: una cazuela (hoja PROP_CAZUELAMOLE), un plato, un mandil por persona y una cuchara de madera solo en el CTA. Nadie con sombrero ni lentes, sin filipinas ni gorros, sin cuchillos.
-    - SAFE/SOFT con \b (incluye las frases fuertes del diálogo: "que nadie la vea", "como si no valiera nada", "va a saber a pura sal"), variant, NOREF (también quita la hoja de la cazuela), TRIES=6, 17 s entre clips y gatito de control.
-    - Guarda en clips/, imprime "FIN P1", acepta IDs y mueve la versión vieja a clips/old/.
-  - make_sheets.py: 9 hojas nuevas (5 personajes, 3 locaciones y la cazuela) + control md5 DUPLICADO; --reupload. Imprime "FIN HOJAS".
-  - phr.py.
-  - edit.py: EDL en borrador por índices de línea, ganancia 0 en los mudos, BLACK 0,4 s antes del CTA (c31), cama cálida c25 → c28, loudnorm en dos pasadas, salida renders/v1.mp4.
-- Hojas nuevas (aún no generadas; nombres verificados como únicos en pieces/*/chars y en todos los make_sheets.py): CONCEPCION_MOLERA, MAXIMILIANO_GERENTE, DARIO_COCINERO, ANTONIO_LAVALOZA, VICTORIA_LAZCANO, LOC_COCINACASONA, LOC_CALLEJONCASONA, LOC_COMEDORCASONA, PROP_CAZUELAMOLE.
-- Nada generado en Flow todavía.
-- Siguiente:
-  1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, correr `md5sum chars/*.jpg` y armar una hoja de contactos. Cada nombre tiene que ser su persona o lugar y los personajes no se parecen entre sí (Maximiliano lampiño y Darío con barba). Nadie lleva sombrero, lentes, filipina ni gorro, y la cazuela es una sola.
-  2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P1", Traceback e "intento 6".
-  3. QA con hoja de fotogramas y tiras de la franja inferior.
-- Revisar en el QA:
-  - Geografía: cocina (Concha y la cazuela IZQ., Maximiliano y Darío DER., Toño CENTRO; en el payoff, Victoria DER.), callejón (de tarde Concha IZQ. y Toño DER.; de noche Maximiliano IZQ. y Darío DER.), comedor (Victoria sentada al CENTRO, Maximiliano y Darío DER., Concha y Toño IZQ.).
-  - Nadie en los bordes y ningún doble (otro saco vino, otra blusa bordada).
-  - Una sola cazuela y siempre la misma; un solo plato; ningún cuchillo; ni menús ni cuadros con letras.
-  - El mandil: Concha lo lleva puesto en c01–c06, lo dobla en c07, lo trae en la mano en c09, c11 y c17, y lo vuelve a llevar puesto en c25 y c31.
-  - Callejón de noche (c28–c30, r4) oscuro de verdad; el de la tarde (c08–c11), con luz.
-  - Subtítulos quemados, frases repetidas, morphs, personajes que entran caminando, manos o utilería que cambian de lado.
-- Regenerar con `python -I clips.py <ids> > clips_log2.txt`. Luego `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y `python -I edit.py`. Verificar (sincronía en 5 puntos, ritmo ≤ 1,9 s, LUFS y pico, marca) y mandar a Telegram con caption.txt.
-- Riesgos:
-  - c07: doblar el mandil junto a la cazuela (manos y utilería).
-  - i1: un solo plato y una sola cuchara.
-  - c13: probar con cuchara sin que aparezca un segundo plato.
-  - c31: el CTA con gestos y la cuchara de madera.
-  - Pronunciación de "Maximiliano", "metate", "aguacate", "comal", "Llévense" y "perdóneme".
-- 2026-11-06: c09/c16/i1 regenerados y aprobados en QA (c09 mandil verde en la mano, falda gris oscuro, figura del borde DER. solo hasta ~0.6 s y se arranca en 1.48; c16 sin subtítulos, crop en "Suegra," por una cabeza abajo a la IZQ. hasta ~0.9 s; i1 una sola cuchara). renders/v1.mp4 montado (157.7 s, 85 planos, media 1.9 s, -14.1 LUFS, -1.8 dBTP, sincronía +5 ms en 5 puntos, transcripción completa). Falta: revisión del usuario y Telegram.
-
-### `pieces\recetario-p2\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, mexi-stories, parte2]
-relatedTo: [recetario, camionero, canasta-p2]
----
-# recetario-p2 (El Recetario · Parte 2): estado
-- Sigue en el mismo segundo del cliffhanger de recetario (Parte 1, entregada con MEXI STORIES). Payoff: el toque final nunca estuvo en la libreta, el postre de Leopoldo fracasa, él le regresa la libreta a Mireya. Gancho nuevo: falta la página con la receta de su papá y la tiene Chencho.
-- Marca: **MEXI STORIES** (la de la Parte 1, fuera de la rotación). Música y marca de agua de pieces/_marcas/MEXI (edit.py, BRAND = "MEXI").
-- Archivos listos: guion.md, lines.json (fuente única de clips.py), clips.py (31 clips: c01–c30 + r1; 236 s hablados en bruto, 56 frases; gaze() + ONE + ALONE en todos los planos, NOSUB y END tras cada diálogo, una de cada utilería (libreta casi siempre cerrada, una página doblada, un vasito), SAFE/SOFT con \b, variant, NOREF, TRIES=6, 17 s entre clips, gatito de control, imprime "FIN P2", acepta IDs y mueve la versión vieja a clips/old/), make_sheets.py (--reupload de las 9 hojas de la Parte 1 + 1 hoja nueva LOC_OBRADOR con control md5 DUPLICADO y control de nombre único; imprime "FIN HOJAS P2"), phr.py, edit.py (EDL vacía, cálida de c20 a c26, BLACK 0.4 entre c29 y c30, salida renders/v1.mp4), caption.txt.
-- chars/: copia de la Parte 1 (MIREYA, CHENCHO, HORTENSIA, SAMANTA, LEOPOLDO, LOC_ALACENA, LOC_OFICINA, LOC_CAFETERIA, PROP_RECETARIO), revisadas en hoja de contactos: cada nombre es su persona/lugar, md5 distintos. Ojo: PROP_RECETARIO trae letra en inglés legible ("Dessert Recipes") -> en los prompts la libreta va cerrada o con letra diminuta ilegible.
-- Nada generado en Flow todavía.
-- Siguiente (una sesión de Flow a la vez):
-  1. `python -I make_sheets.py --reupload > sheets_log.txt` (Monitor sobre "^FIN HOJAS P2"); revisar que no haya DUPLICADO ni FALTA y mirar chars/LOC_OBRADOR.jpg (obrador sin gente ni letreros, distinto de LOC_ALACENA).
-  2. `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P2", Traceback e "intento 6").
-  3. QA por agente (qa_clips.md): nadie en los bordes ni en primer plano (tiras de bordes a 4 fps), subtítulos quemados, frases/palabras repetidas, segunda frase completa (c01 es larga), una sola libreta y quién la tiene (c17/c22 Leopoldo, c23/c26 Mireya), sin letras legibles en la libreta abierta (c26), una sola página doblada (c28), un solo vasito (c20), Mireya con su vestido lila (sin filipina) en el obrador, Leopoldo con barba y bigote, c30 CTA con voz desde el inicio y gestos.
-  4. Regenerar con `python -I clips.py <ids> > clips_log2.txt`; luego `python -I phr.py`, EDL por frases en edit.py y `python -I edit.py` -> renders/v1.mp4.
-  5. Verificación completa (sincronía en 5 puntos, ritmo ≤ 1.9 s, LUFS/pico, marca), Telegram: `python tools/enviar_telegram.py pieces/recetario-p2/renders/v1.mp4` (lee caption.txt).
-- Riesgos: c01 (frase larga de 10 s), c17/c22/c23 (paso de la libreta), c26 (libreta abierta), c28 (página doblada), c20 (probar el vasito), r1 mudo (Whisper puede alucinar: ganancia 0). Pronunciación: "Leopoldo", "incompleta", "puño y letra".
-- 2026-11-06: c01 y c20 regenerados y revisados (c01 "fue" claro en large-v3 p1.00 y medium p0.97; c20 abre con "Mireya"; hojas y tiras limpias). phr.py corrido (renders/phr.json), EDL por frases de la envolvente de voz confirmada con large-v3, setsar=1, arreglos de qa_clips.md. renders/v1.mp4: 136.5 s, 68 planos (~2.0 s), -14.1 LUFS, -1.6 dBTP, sincronía <= 1 fotograma en 5 puntos, transcripción completa en orden, marca MEXI arriba a la der., música audible (earshot). Falta: visto bueno del usuario y Telegram.
-
-### `pieces\fierro-herradura\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, vista-stories, parte1, historia-original, feria-ganadera]
-relatedTo: [camionero, posada, nochebuena]
----
-# fierro-herradura (El Fierro de Herradura · Parte 1, video 20): estado
-- Historia ORIGINAL (no navideña) inspirada en `DfIHLMYtKee` (feria ganadera, 6.7M vistas, n.º 1 de fuentes/referencias2/ranking.md). Fórmula: humillación en la 1.ª línea → giro de poder (el libro de fierros) → payoff (Lucero gana) → gancho (la firma de Mauricio).
-- Marca: **VISTA STORIES**. Música y marca de agua de pieces/_marcas/VISTA (edit.py, BRAND = "VISTA"); no hay music/ propia.
-- Archivos listos:
-  - guion.md y caption.txt (formato Parte 1).
-  - lines.json: fuente única de clips.py.
-  - clips.py, con 35 clips: c01–c30, r1–r3, i1 e i2. Son 244 s hablados en bruto.
-    - Todos los planos con diálogo son de una persona: `gaze(side)` + ONE + ALONE. Nunca "looking at X off-screen".
-    - NOSUB y END al final de cada diálogo; NODOUBLE en los planos de riesgo.
-    - Una pieza de cada utilería: un toro, un libro, un listón, un sombrero por personaje.
-    - SAFE/SOFT con \b, variant, NOREF (también quita la hoja del toro), TRIES=6, 17 s entre clips y gatito de control.
-    - Guarda en clips/, imprime "FIN P1", acepta IDs y mueve la versión vieja a clips/old/.
-  - make_sheets.py: 9 hojas nuevas (5 personajes, 3 locaciones y el toro) + control md5 DUPLICADO; --reupload.
-  - phr.py.
-  - edit.py: EDL en borrador por índices de línea, ganancia 0 en los mudos, BLACK 0,4 s antes del CTA, camas en c22 y c27, loudnorm en dos pasadas, salida renders/v1.mp4.
-- Hojas nuevas (aún no generadas): JACINTA_CORRAL, FULGENCIO_ARREDONDO, CRISTOBAL_ARREDONDO, LEOCADIO_JUEZ, ELOISA_REGISTRO, LOC_CORRALFERIA, LOC_OFICINAASOC, LOC_PISTAFERIA, PROP_TOROLUCERO.
-- Nada generado en Flow todavía.
-- Siguiente:
-  1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no haya DUPLICADO, correr `md5sum chars/*.jpg` y armar una hoja de contactos. Cada nombre tiene que ser su persona o lugar, los personajes no se parecen entre sí, cada uno lleva un solo sombrero (Cristóbal y Eloísa sin sombrero) y el toro tiene una sola estrella y un solo fierro.
-  2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P1", Traceback e "intento 6".
-  3. QA con hoja de fotogramas y tiras de la franja inferior.
-- Revisar en el QA:
-  - Geografía: corral (Jacinta y Lucero IZQ., Fulgencio y Cristóbal DER., Leocadio CENTRO), oficina (libro y Eloísa IZQ.), pista (Jacinta IZQ., Cristóbal y Eloísa DER.).
-  - Nadie en los bordes y ningún doble (sombrero flotando, segundo vaquero).
-  - Un solo toro, siempre el mismo (estrella blanca, fierro en la anca izquierda); un solo libro, ilegible; un solo listón sin letras.
-  - Leocadio sin insignias ni nada que parezca uniforme; nadie señala con el dedo.
-  - Subtítulos quemados, frases repetidas, morphs, personajes que entran caminando.
-- Regenerar con `python -I clips.py <ids> > clips_log2.txt`. Luego `python -I phr.py`, pasar la EDL a rangos (renders/phr.json) y `python -I edit.py`. Verificar (sincronía en 5 puntos, ritmo ≤ 1,9 s, LUFS y pico, marca) y mandar a Telegram con caption.txt.
-- Riesgos:
-  - c07, i2 y c30: el toro junto a una persona.
-  - i1: el libro sin texto legible.
-  - c30: el CTA con gestos y el sombrero liso.
-  - Pronunciación de "Fulgencio", "Leocadio", "Eloísa", "Arredondo", "acompáñenla" y "anca".
-- 2026-11-06: c17 e i2 regenerados y revisados (c17 vuelve a traer un sombrero crema en el borde DER. → crop=608:1081:0:0 en todo el clip; i2 sin letras, se usa 2.9-4.4). edit.py y phr.py copiados de nochebuena, renders/phr.json regenerado, EDL por frases (large-v3). renders/v1.mp4: 160.7 s, 81 planos, -14.1 LUFS, -1.8 dBTP, sincronía ≤ 1 fotograma en 5 puntos, transcripción completa en orden. Falta: visto bueno del usuario y Telegram.
-
-### `pieces\nochebuena\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, majestic-stories, parte1, navidad]
-relatedTo: [regreso-20]
----
-# nochebuena (La Cena de Nochebuena · Parte 1, video 18): estado
-- Historia ORIGINAL navideña (sin ref): humillación (Gerardo presenta a su mamá como "la señora que nos ayuda") → giro (Herminia es la dueña de la hacienda) → payoff (Ignacio la sienta en la cabecera; Gerardo cena en la cocina) → gancho (Regina y Gerardo quieren que ella "firme lo que él le diga").
-- Marca: **MAJESTIC STORIES** (edit.py, BRAND = "MAJESTIC"; música y marca de agua de pieces/_marcas/MAJESTIC, sin music/ propia).
-- Archivos listos: guion.md, lines.json (fuente única de diálogos), clips.py (42 clips: c01–c33 + r1–r7 + i1–i2; 473 palabras ≈ 240 s de voz, 294 s de clips en bruto; todos los primeros planos con ONE + ALONE + SOLO, NOSUB al final de cada diálogo, "speaks from the first second and says both sentences completely", nadie con sombrero, una olla / un jarrito / una canasta / una piñata / un nacimiento, SAFE/SOFT con \b, variant, NOREF, TRIES=6, 17 s entre clips, gatito de control, acepta IDs y mueve la versión vieja a clips/old/, imprime "FIN P1"), make_sheets.py (7 hojas nuevas con control md5 DUPLICADO, imprime "FIN HOJAS"), phr.py, edit.py (EDL en borrador generada de lines.json con índices de línea; mudos 1.0–2.4 s a ganancia 0; BLACK 0.4 s antes de c33; salida renders/v1.mp4), caption.txt.
-- Hojas nuevas (nombres únicos en pieces/*): HERMINIA, GERARDO, REGINA, IGNACIO, LOC_PATIOPINATA, LOC_COMEDORLUCES, LOC_COCINAPONCHE.
-- Nada generado en Flow todavía.
-- Siguiente:
-  1. `python -I make_sheets.py > sheets_log.txt` (esperar "FIN HOJAS"; si hay DUPLICADO, borrar chars/dup/<nombre>.jpg y repetir). Revisar las hojas en hoja de contactos: mestizos, ropa correcta, que no se parezcan entre sí, un solo nacimiento / una sola piñata / una sola olla.
-  2. `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P1", Traceback e "intento 6").
-  3. QA (qa_clips.md) con hoja de fotogramas y tiras de la franja inferior. Revisar:
-     - Geografía: patio (Gerardo IZQ., Herminia DER.), comedor (Regina/Gerardo IZQ., Herminia DER.), cocina (Ignacio IZQ., Herminia DER.), cena (Gerardo/Regina sentados IZQ., Ignacio y Herminia DER.), gancho (Gerardo IZQ., Regina DER.).
-     - Nadie en los bordes ni de espaldas en primer plano, nadie entrando a cuadro, sin sombreros, sin niños (ni en el nacimiento animado ni de extras).
-     - Una sola piñata (que no se mueva sola), un solo nacimiento (i2: figuras estables, sin morph), una sola olla y un plato de buñuelos (i1), un solo jarrito (c21), una sola canasta (c02).
-     - Subtítulos quemados, 2ª frase perdida, palabras repetidas, morphs, sin dedo acusador.
-  4. Regenerar con `python -I clips.py <ids> > clips_log2.txt`. Si un clip de 2 frases vuelve a perder la 2ª, partirlo (cNN + cNNb) como c14/c14b de regreso-20.
-  5. `python -I phr.py`, pasar la EDL a rangos medidos (media ≤ 1.9 s) y `python -I edit.py`. Verificar (sincronía en 5 puntos, ritmo, LUFS/pico, marca MAJESTIC arriba a la izquierda) y mandar a Telegram con caption.txt.
-- Riesgos:
-  - c23 "Como usted diga, señor." es una sola frase de 6 s: puede salir con aire; recortar en el montaje.
-  - c32 (gancho) y c31: tono "calculador/frío" puede frenar a Flow; SOFT los suaviza desde el 2º intento.
-  - i2 (nacimiento): figuras que se muevan o cobren vida; usar solo 1–1.5 s o quitarlo.
-  - c21 brindis con jarrito: que no aparezcan otras manos brindando.
-  - c33 (CTA): que no salga mudo ni rígido.
-  - Pronunciación de "Herminia", "buñuelos", "Nochebuena", "guayaba", "Ándale".
-
-- 2026-11-05: c18 regenerado OK (sin letras). v1 montada y verificada: renders/v1.mp4, 165.2 s, 85 planos (media 1.94 s), -14.1 LUFS, -1.7 dBTP, sincronía ≤ 1 cuadro en 5 puntos, transcripción completa en orden. Pendiente: revisión del usuario y Telegram (no enviado).
-
-### `pieces\regreso-chicago-p2\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, majestic-stories, parte2]
-relatedTo: [regreso-chicago]
----
-# regreso-chicago-p2 (La Casa de Chicago · Parte 2): estado
-- Marca: **MAJESTIC STORIES** (la misma de la Parte 1, no entra en la rotación). Música y marca de agua salen de pieces/_marcas/MAJESTIC (edit.py, BRAND = "MAJESTIC"); no hay music/ propia.
-- Archivos listos: guion.md, lines.json (diálogos, fuente única de clips.py), clips.py (36 clips: c01–c29 + r1–r7; 234 s hablados en bruto; NOSUB al final de cada diálogo, SOLO en todos los planos, SAFE/SOFT con \b, variant, NOREF, TRIES=6, 17 s entre clips, gatito de control, salida clips/, imprime "FIN P2", acepta IDs y mueve la versión vieja a clips/old/), make_sheets.py (--reupload con control md5), phr.py (copia de canasta-p2), edit.py (método canasta-p2: EDL en borrador con índices de línea, ganancia 0 en los mudos, loudnorm en dos pasadas, salida renders/v1.mp4), caption.txt.
-- chars/: las 8 hojas de la Parte 1 (ROGELIO, YESENIA, ULISES, REBECA, JOSEFINA, LOC_FACHADA, LOC_COCHERA, PROP_CARPETA), revisadas en hoja de contactos: cada nombre es su persona/lugar, md5 distintos y sin coincidencias con otras piezas. **PROP_CARPETA no se usa ni se sube** (la hoja trae una etiqueta escrita "PROP REF 4C"); la carpeta va descrita en texto.
-- **Ninguna hoja nueva.** make_sheets.py compara por md5 cada hoja nueva contra todas las pieces/*/chars/**/*.jpg e imprime "DUPLICADO <nombre>" (la aparta en chars/dup/ y no la sube); con --reupload revisa también las reusadas contra las otras piezas.
-- Nada generado en Flow todavía.
-- Siguiente: `python -I make_sheets.py --reupload > sheets_log.txt` (sube las 7 hojas al proyecto Flow activo; imprime "FIN HOJAS P2"; revisar que no haya DUPLICADO), luego `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P2", Traceback e "intento 6"). Después, QA con hoja de fotogramas y tiras de la franja inferior. Revisar:
-  - Geografía: fachada (reja, Yesenia, Rebeca y Ulises IZQ.; Rogelio y Josefina DER.), cochera (camioneta y Ulises IZQ.; Yesenia y Rogelio DER.).
-  - Nadie en los bordes (todos los planos son primeros planos limpios), nadie de más en r2, r3 y r5.
-  - Ulises con pantalón beige (falló en P1 c03/c18/c23); Rebeca sin dedo acusador (falló en P1 c13).
-  - Una sola carpeta azul cerrada (sin sobre ni sello), una sola maleta negra (r5, c21), una sola camioneta.
-  - Subtítulos quemados, frases repetidas, morphs.
-- Regenerar con `python -I clips.py <ids> > clips_log2.txt`. Luego `python -I phr.py`, pasar la EDL a rangos y `python -I edit.py`. Verificar y mandar a Telegram con caption.txt.
-- 2026-11-05: QA v2 de c11 (punch-in en la frase 1 por un capó en primer plano; corte antes de que repita "y me la llevo") y c16 OK. renders/v1.mp4 montado y verificado (ver qa_clips.md). Falta: revisión del usuario y Telegram.
-- Riesgos:
-  - r3: la camioneta saliendo con Ulises al volante (que no salga otra persona ni otra camioneta).
-  - r5/c21: la maleta de Yesenia (una sola, negra, de rueditas; que no aparezca la maleta café de Rogelio).
-  - c26/c29: "me quitó" — si la política lo frena, SOFT lo cambia por "lo que pasó"; revisar que c29 (CTA) siga cuadrando con c26.
-  - c29 (CTA): en P1 salió bien con el mismo tipo de prompt (se ajusta la correa del bolso).
-  - Pronunciación de "Josefina", "Rebeca", "azotea", "techando", "treinta".
-
-### `pieces\camionero\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, mexi-stories, parte1]
-relatedTo: [canasta-p2, mecanico, recetario]
----
-# camionero (El Camionero · Parte 1, video 16): estado
-- Remake de `fuentes/referencias2/videos/7697078993438182687.mp4` (1.4M vistas; análisis `7697078993438182687_analisis.md`). Mismos bloques; nombres, diálogos y colores cambiados; gancho nuevo para la Parte 2 ("alguien de su familia").
-- Marca: **MEXI STORIES** (rotación). Música y marca de agua de pieces/_marcas/MEXI (edit.py, BRAND = "MEXI"); no hay music/ propia.
-- Archivos listos: guion.md, lines.json (fuente única de clips.py), clips.py (37 clips: c01–c33 + r1–r3 + i1; 240 s hablados en bruto; NOSUB y END al final de cada diálogo, SOLO en todos los planos, una de cada utilería, SAFE/SOFT con \b, variant, NOREF, TRIES=6, 17 s entre clips, gatito de control, salida clips/, imprime "FIN P1", acepta IDs y mueve la versión vieja a clips/old/), make_sheets.py (10 hojas nuevas + control md5 DUPLICADO; --reupload), phr.py, edit.py (EDL en borrador con índices de línea, ganancia 0 en los mudos, loudnorm en dos pasadas, salida renders/v1.mp4), caption.txt.
-- Hojas nuevas (aún no generadas): TEOFILO_TRAILERO, LEONOR_DIRECTORA, CLEMENTE_BODEGUERO, NAYELI_MONITOREO, LALO_CHALECO, FIDEL_CARGADOR, LOC_ANDENCARGA, LOC_SALAMONITORES, LOC_PASILLORACKS, LOC_CUARTOCAJAS.
-- Nada generado en Flow todavía.
-- Siguiente: `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"; revisar que no haya DUPLICADO, `md5sum chars/*.jpg` y hoja de contactos: cada nombre es su persona/lugar, personajes distintos no se parecen), luego `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P1", Traceback e "intento 6"). Después, QA con hoja de fotogramas y tiras de la franja inferior. Revisar:
-  - Geografía: andén (Teófilo/Lalo IZQ., Clemente/Fidel DER., Leonor/Nayeli CENTRO), monitores (pantallas y Nayeli IZQ.), pasillo (puerta y Clemente/Fidel DER.), cuarto (cajas y Nayeli IZQ., Clemente DER.).
-  - Nadie en los bordes, nadie de más en r2; Clemente sin saco en todos los planos (falló en la ref); gafetes lisos sin letras; una sola gorra en Teófilo.
-  - Pantallas (c10–c12, i1): la imagen 2D DENTRO del marco, nada sale de la pantalla, sin texto legible ni etiquetas tipo "ESC04_…" (se colaron en la ref).
-  - Una sola llave, una sola tabla, una sola pila de cajas; nadie señala con el dedo.
-  - Subtítulos quemados, frases repetidas, morphs.
-- Regenerar con `python -I clips.py <ids> > clips_log2.txt`. Luego `python -I phr.py`, pasar la EDL a rangos y `python -I edit.py`. Verificar y mandar a Telegram con caption.txt.
-- 2026-11-05: QA v2 de c04 c05 c16 c25 c30 c33 OK (c05/c16/c30 con punch-in en la 1ª frase) y renders/v1.mp4 montado y verificado (ver qa_clips.md). Falta: revisión del usuario y Telegram.
-- Riesgos: c10/c11/c12/i1 (monitores), r2 (llave y puerta), c17 (pila de cajas y tabla), c33 (CTA con gestos), pronunciación de "Teófilo", "Nayeli", "tráiler", "malentendido".
-
-### `pieces\posada\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, mexi-stories, parte1, navidad]
-relatedTo: [regreso-20]
----
-# posada (La Posada del Mercado · Parte 1, video 19): estado
-- Historia ORIGINAL navideña (fórmula de las ganadoras, sin ref). No se cruza con pieces/nochebuena (hijo avergonzado de su madre).
-- Marca: **MEXI STORIES** (edit.py, BRAND = "MEXI"; música y marca de agua de pieces/_marcas/MEXI, arriba a la derecha; sin music/ propia).
-- Archivos listos: guion.md, lines.json (fuente única de diálogos, 430 palabras ≈ 225 s de voz), clips.py (37 clips: c01–c25 + c13b, r1–r7, i1–i4; 256 s en bruto; NOSUB al final de cada diálogo, SOLO/ONE/ALONE en los primeros planos, gaze(side), nadie con sombrero, una carpeta / un jarrito / una clavija / una piñata, multitud solo en r3 y r5 (planos abiertos mudos), SAFE/SOFT con \b, variant, NOREF, TRIES=6, 17 s entre clips, gatito de control, acepta IDs y mueve la versión vieja a clips/old/, imprime "FIN P1"), make_sheets.py (6 hojas nuevas con control md5 DUPLICADO, imprime "FIN HOJAS"), phr.py, edit.py (EDL en borrador por índices de línea; salida renders/v1.mp4), caption.txt.
-- Hojas nuevas (nombres únicos en pieces/*/chars): CATALINA, IGNACIO, BRUNO, HERMINIA, LOC_ARCOS, LOC_PLAZUELA.
-- Nada generado en Flow todavía. Una sesión de Flow a la vez: si otra pieza está generando, esperar su "FIN".
-- Siguiente:
-  1. `python -I make_sheets.py > sheets_log.txt` (esperar "FIN HOJAS"; si hay DUPLICADO, borrar chars/dup/<nombre>.jpg y repetir). Revisar las hojas en hoja de contactos: mestizos, ropa correcta, que no se parezcan entre sí, LOC_ARCOS con pesebre vacío y una sola piñata.
-  2. `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P1", Traceback e "intento 6").
-  3. QA con hoja de fotogramas y tiras de la franja inferior. Revisar:
-     - Geografía: pleito (Cata/Nacho IZQ., Bruno DER.), procesión (todos IZQ., Bruno DER.), pidiendo posada (Nacho DER. afuera, Cata IZQ. adentro), aparte (Herminia IZQ., Cata DER.).
-     - Luces: encendidas c01–c07 e i1 (se apagan); apagadas r2–c18 e i2/i3 (se encienden en i3); encendidas desde r5.
-     - Nadie en los bordes, nadie aparece de golpe, sin sombreros; procesión solo de adultos, sin doble de Bruno (abrigo gris carbón) en r3/r5.
-     - Una sola carpeta negra sin sobre ni sello (c10–c18, i2), un solo jarrito (r1, i4, c22, r6), Herminia siempre con una sola vela, pesebre vacío.
-     - Subtítulos quemados, frases repetidas, morphs, sin dedo acusador.
-  4. Regenerar con `python -I clips.py <ids> > clips_log2.txt`. Luego `python -I phr.py`, pasar la EDL a rangos y `python -I edit.py`. Verificar (sincronía en 5 puntos, ritmo ≤ 1.9 s, LUFS/pico, marca MEXI a la derecha) y mandar a Telegram con caption.txt.
-- Riesgos:
-  - r3/r5: multitudes con velas (gente ajena, objetos de más, dobles); son planos abiertos mudos, se pueden recortar o cambiar por un plano medio.
-  - i1/i3: que las luces no se apaguen/enciendan de verdad; si falla, usar r2 como corte de "apagón".
-  - c19/c20: los versos de posada pueden salir cantados con música o repetidos; van "half sung", revisar.
-  - c24 (gancho): que no aparezca otra persona en el portal vacío.
-  - c25 (CTA): que no salga mudo ni rígido.
-  - Pronunciación de "Herminia", "borreguitos", "os pido posada".
-- 2026-11-05: regenerados c07 r2 c09 c16 c21 c23 revisados; montaje renders/v1.mp4 (155.7 s, 79 planos, -14.2 LUFS, pico -1.7 dBTP). Fallbacks: punch-in en la 1.ª frase de c07/c16/c21/c23 (figura oscura en el borde), r2 desde 2.0 s, "Y este pueblo también" sale de clips/old/c16_v1 (el c16 nuevo no la dice). Falta: revisión del usuario y Telegram.
-
-### `pieces\regreso-20\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, vista-stories, parte1]
-relatedTo: [canasta-p2]
----
-# regreso-20 (El Regreso · Parte 1, video 17): estado
-- Ref: `fuentes/referencias2/videos/7696394614240185623.mp4` (+ `_analisis.md`). Mismos beats, nombres y diálogos nuevos, comprimido a una Parte 1 que cierra en el motivo oculto de don Bernardo.
-- Marca: **VISTA STORIES** (edit.py, BRAND = "VISTA"; música y marca de agua de pieces/_marcas/VISTA, sin music/ propia).
-- Archivos listos: guion.md, lines.json (fuente única de diálogos), clips.py (37 clips: c01–c31 + r1–r5 + i1; 453 palabras ≈ 230 s de voz, 258 s de clips en bruto; NOSUB al final de cada diálogo, SOLO en todos los planos, nadie con sombrero, una carpeta / una maleta / un retrato, SAFE/SOFT con \b, variant, NOREF, TRIES=6, 17 s entre clips, gatito de control, acepta IDs y mueve la versión vieja a clips/old/, imprime "FIN P1"), make_sheets.py (6 hojas nuevas con control md5 DUPLICADO, imprime "FIN HOJAS"), phr.py, edit.py (EDL en borrador con índices de línea, salida renders/v1.mp4), caption.txt.
-- Hojas nuevas (nombres únicos en pieces/*/chars): CLEMENCIA, LEONOR, JOAQUIN, BERNARDO, LOC_ADOBE, LOC_TEJABAN.
-- Nada generado en Flow todavía.
-- Siguiente:
-  1. `python -I make_sheets.py > sheets_log.txt` (esperar "FIN HOJAS"; si hay DUPLICADO, borrar chars/dup/<nombre>.jpg y repetir). Revisar las hojas en hoja de contactos: mestizos, ropa correcta, que no se parezcan entre sí, retrato único en LOC_ADOBE.
-  2. `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P1", Traceback e "intento 6").
-  3. QA con hoja de fotogramas y tiras de la franja inferior. Revisar:
-     - Geografía: cocina (Clemencia/Joaquín IZQ., Leonor DER.), firma (Bernardo DER., familia IZQ.), portal aparte (Clemencia IZQ., Joaquín DER.), despedida (Leonor IZQ.; los demás DER.).
-     - Nadie en los bordes, nadie de más en r4, nadie aparece de golpe; sin sombreros.
-     - Un solo retrato, una sola carpeta sin sobre ni sello (i1, c13), una sola maleta (c23, r4).
-     - Subtítulos quemados, frases repetidas, morphs, sin dedo acusador.
-  4. Regenerar con `python -I clips.py <ids> > clips_log2.txt`. Luego `python -I phr.py`, pasar la EDL a rangos y `python -I edit.py`. Verificar (sincronía en 5 puntos, ritmo ≤ 1.9 s, LUFS/pico, marca) y mandar a Telegram con caption.txt.
-- Riesgos:
-  - c23: "solterona amargada" puede frenar a Flow (SOFT lo cambia desde el 2º intento).
-  - r4: dos personas caminando de espaldas con la maleta.
-  - r5/c30: que el retrato no cobre vida ni aparezca otra persona.
-  - c31 (CTA): que no salga mudo ni rígido.
-  - Pronunciación de "Joaquín", "Julián", "jefecita", "Ándele".
-
-### `pieces\chocolate-rancho-p2\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, vista-stories, parte2]
-relatedTo: [chocolate-rancho]
----
-# chocolate-rancho-p2 (La Taza de Chocolate · Parte 2): estado
-- Marca: **VISTA STORIES** (la misma de la Parte 1, no entra en la rotación).
-- Archivos listos: guion.md, lines.json (diálogos, fuente única de clips.py), clips.py (41 clips: c01–c35 + i1, i2, r1–r4; SAFE/SOFT con \b, variant, NOREF, TRIES=6, 17 s entre clips, gatito de control, salida clips/, imprime "FIN P2", acepta IDs por argumento y mueve la versión vieja a clips/old/), edit.py (plantilla reten-sierra v4, EDL en borrador con índices de línea, VISTA STORIES 22 px alpha 80 y=135, salida renders/v1.mp4), make_sheets.py, caption.txt, music/ (copia de la Parte 1).
-- chars/: las 7 hojas de la Parte 1 (RENATA, PRUDENCIO, EULALIA, DAMIAN, BENAVIDES, LOC_HUERTO, PROP_TAZA), revisadas en hoja de contactos: todas correctas, md5 distintos.
-- Hoja nueva: **LOC_DESPACHOROBLES** (oficina de Damián). Ningún personaje nuevo.
-- Nada generado en Flow todavía.
-- Siguiente: `python -I make_sheets.py --reupload > sheets_log.txt` (sube las 7 hojas de la Parte 1 y genera LOC_DESPACHOROBLES; imprime "FIN HOJAS P2"), revisar la hoja nueva y `md5sum chars/*.jpg`, `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P2", Traceback e "intento 6"), QA (bordes: Renata IZQUIERDA en la oficina / Prudencio-Eulalia IZQUIERDA en el rancho; un solo sombrero; una sola carpeta y una sola taza; subtítulos quemados; frases repetidas; Benavides sin carpeta), regenerar con `python -I clips.py <ids> > clips_log2.txt`, montar con edit.py (pasar el EDL a rangos, renders/phr.json), verificar, Telegram con caption.txt.
-- Riesgos: c04 (entrada por la puerta, Damián y Benavides en cuadro), c19 (SH con Prudencio de espaldas y Damián detrás), i2 (taza y concha: que no salgan dos tazas), r3/c31 (pronunciación de "Esperanza Robles").
-- 2026-11-05: QA de los 7 regenerados OK (qa_clips.md). Montaje renders/v1.mp4 (159.5 s, 86 tramos + 0.4 s de negro, kit _marcas/VISTA) verificado: -14.2 LUFS, -1.3 dBTP, sync +5 ms en 5 puntos, transcripción completa. Falta: revisión del usuario y Telegram con caption.txt.
-
-### `pieces\canasta-p2\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, vista-stories, parte2]
-relatedTo: [canasta]
----
-# canasta-p2 (La Canasta · Parte 2): estado
-- Marca: **VISTA STORIES** (la misma de la Parte 1, no entra en la rotación). Música y marca de agua salen de pieces/_marcas/VISTA (edit.py, BRAND = "VISTA"); no hay music/ propia.
-- Archivos listos: guion.md, lines.json (diálogos, fuente única de clips.py), clips.py (37 clips: c01–c30 + r1–r6 + i1; 236 s hablados en bruto; NOSUB al final de cada diálogo, SOLO en todos los planos, SAFE/SOFT con \b, variant, NOREF, TRIES=6, 17 s entre clips, gatito de control, salida clips/, imprime "FIN P2", acepta IDs y mueve la versión vieja a clips/old/), make_sheets.py (--reupload con control md5), phr.py (copia de padre-veladoras-p2), edit.py (método padre-veladoras-p2: EDL en borrador con índices de línea, ganancia 0 en los mudos, loudnorm en dos pasadas, salida renders/v1.mp4), caption.txt.
-- chars/: las 9 hojas de la Parte 1 (REFUGIO, HORACIO, MARIBEL, EUSEBIO, FEDERICO, LOC_VESTIBULO, LOC_GERENCIA, LOC_BANQUETA, LOC_SALITA), revisadas en hoja de contactos: cada nombre es su persona/lugar, md5 distintos y sin coincidencias con otras piezas.
-- **Ninguna hoja nueva.** make_sheets.py compara por md5 cada hoja nueva contra todas las pieces/*/chars/**/*.jpg e imprime "DUPLICADO <nombre>" (la aparta en chars/dup/ y no la sube); con --reupload revisa también las reusadas contra las otras piezas.
-- Nada generado en Flow todavía.
-- Siguiente: `python -I make_sheets.py --reupload > sheets_log.txt` (sube las 9 hojas al proyecto Flow activo; imprime "FIN HOJAS P2"; revisar que no haya DUPLICADO), luego `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P2", Traceback e "intento 6"). Después, QA con hoja de fotogramas y tiras de la franja inferior. Revisar:
-  - Geografía: banqueta (Federico/Refugio IZQ., Horacio DER.), recepción (Federico/Refugio IZQ.; mostrador, Maribel, Horacio, Eusebio DER.), gerencia (Federico DER., Refugio IZQ.).
-  - Nadie en los bordes (todos los planos son primeros planos limpios), nadie de más en r2 y r4.
-  - Refugio sin gafete (falló en P1 c28); Horacio sin dedo acusador (falló en P1 c18); gafetes lisos sin letras.
-  - Un solo paraguas (c01–c06, r2), una sola canasta, una sola carpeta sin sobre ni sello (i1, c26, c28, r6).
-  - Subtítulos quemados, frases repetidas, morphs.
-- Regenerar con `python -I clips.py <ids> > clips_log2.txt`. Luego `python -I phr.py`, pasar la EDL a rangos y `python -I edit.py`. Verificar y mandar a Telegram con caption.txt.
-- Riesgos:
-  - c01–c06: lluvia y paraguas en primer plano.
-  - r2 y r4: dos personas caminando; que no aparezca nadie de golpe.
-  - i1: que no salga texto legible ni "Dulces Montiel" escrito en la hoja.
-  - c30 (CTA): en P1 salió mudo y quieto la primera vez; el prompt ya es el corregido.
-  - Pronunciación de "Montiel", "malentendido", "Eusebio", "Refugio".
-
-### `pieces\padre-veladoras-p2\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, majestic-stories, parte2]
-relatedTo: [padre-veladoras]
----
-# padre-veladoras-p2 (Las Veladoras · Parte 2): estado
-- Marca: **MAJESTIC STORIES** (la misma de la Parte 1, no entra en la rotación).
-- Archivos listos: guion.md, lines.json (diálogos, fuente única de clips.py), clips.py (38 clips: c01–c31 + r1–r6 + i1; NOSUB al final de cada diálogo, SAFE/SOFT con \b, variant, NOREF, TRIES=6, 17 s entre clips, gatito de control, salida clips/, imprime "FIN P2", acepta IDs por argumento y mueve la versión vieja a clips/old/), make_sheets.py (solo --reupload), phr.py (copia de medalla-mezcal-p2), edit.py (método medalla-mezcal-p2: EDL en borrador con índices de línea, ganancia 0 en los mudos, loudnorm en dos pasadas, MAJESTIC STORIES 22 px alpha 80 y=135, salida renders/v1.mp4), caption.txt, music/ (copia de la Parte 1).
-- chars/: las 9 hojas buenas de la Parte 1 (ANSELMO, RUFINOVIBORA, CHATOBANDANA, RAMIRO, MAUROESCOLTA, LOC_TEMPLO, LOC_ATRIO, PROP_VELADORAS y LOC_TERRAZA, que no se usa), revisadas en hoja de contactos: todas correctas y con md5 distintos. Las corridas de la Parte 1 (chars/mal) no se copiaron.
-- **Ninguna hoja nueva.**
-- Nada generado en Flow todavía.
-- Siguiente: `python -I make_sheets.py --reupload > sheets_log.txt` (sube las 8 hojas al proyecto Flow activo; imprime "FIN HOJAS P2"), luego `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P2", Traceback e "intento 6"). Después, QA con la hoja de fotogramas y tiras de la franja inferior. Revisar:
-  - Bordes: en la nave, Anselmo y el candelero a la DERECHA; Ramiro a la IZQUIERDA en c04–c08 y a la DERECHA desde r1; Rufino y Chato a la IZQUIERDA.
-  - Un solo sombrero.
-  - Un solo San Judas de plata en Rufino y una sola medalla de oro en Ramiro, sin listón.
-  - Un solo cerillo.
-  - Subtítulos quemados y frases repetidas.
-  - Mauro sin armas, sin feligreses ni niños.
-  - Anselmo lampiño.
-- Regenerar con `python -I clips.py <ids> > clips_log2.txt`. Luego `python -I phr.py`, pasar la EDL a rangos y `python -I edit.py`. Verificar y mandar a Telegram con caption.txt.
-- Riesgos:
-  - r2: entrada de Rufino y Chato; que no entre nadie más y que no aparezcan de golpe.
-  - i1 y c26: el San Judas puede salir con listón o duplicado (medalla-mezcal-p2 tuvo medallas militares).
-  - c27 y r6: Ramiro con su medalla de oro, que no se convierta en dos.
-  - c04: el cerillo y la veladora.
-  - c09: Mauro en la puerta.
-  - Pronunciación de "sacristía", "Socorro", "albañiles" y "Efraín".
-
-### `pieces\medalla-mezcal-p2\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, vista-stories, parte2]
-relatedTo: [medalla-mezcal]
----
-# medalla-mezcal-p2 (La media medalla · Parte 2): estado
-- Marca: **VISTA STORIES** (la misma de la Parte 1, no entra en la rotación).
-- Archivos listos: guion.md, lines.json (diálogos, fuente única de clips.py), clips.py (43 clips: c01–c39 + r1, r2, i1, i2; SAFE/SOFT/variant/NOREF, TRIES=6, 17 s entre clips, gatito de control, imprime "FIN P2"), edit.py (plantilla agua-hacienda-p2, EDL en borrador con índices de línea, salida renders/v1.mp4), make_sheets.py, caption.txt, music/ (copia de la Parte 1).
-- chars/: 13 jpg copiados de la Parte 1 (mismos personajes y ropa). Fausto va SIEMPRE como @{ARREOLA} (el asset FAUSTO tenía la imagen equivocada).
-- Hojas nuevas: ninguna.
-- Nada generado en Flow todavía.
-- Siguiente: `python -I make_sheets.py --reupload > sheets_log.txt` (sube ARREOLA, HEROINA, CAPORAL, SEVERO, TOBIAS, LOC_PORTON, LOC_MEZCALERA, PROP_MEDALLA, PROP_ANILLO al proyecto Flow activo; imprime "FIN HOJAS P2"), comprobar miniaturas en Flow, `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P2", Traceback e "intento 6"), QA de bordes (Fausto IZQUIERDA / Severo DERECHA), ropa, medalla en la mano derecha, morphs y pronunciación, regenerar, montar con edit.py (pasar el EDL a rangos, renders/phr.json), verificar, Telegram con caption.txt.
-- 2026-11-05: 10 clips regenerados pasan QA (c01 con arranque repetido "y hoy" quitado en el montaje; c15, i2, r2 mudos). Montado renders/v1.mp4 (170.3 s, 91 planos, -14.6 LUFS, TP -1.7, sync OK, transcripción completa). Falta: revisión del usuario y Telegram con caption.txt.
-
-### `pieces\hacienda-sangre-p2\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, majestic-stories, parte2]
-relatedTo: [hacienda-sangre]
----
-# hacienda-sangre-p2 (La Hacienda · Parte 2): estado
-- Marca: **MAJESTIC STORIES** (la misma de la Parte 1, no entra en la rotación).
-- Archivos listos: guion.md, lines.json (diálogos, fuente única de clips.py), clips.py (39 clips: c01–c35 + r1, r2, r3, i1; SAFE/SOFT con \b, variant, NOREF, TRIES=6, 17 s entre clips, gatito de control, salida clips/, imprime "FIN P2"; con IDs regenera solo esos y la versión anterior pasa a clips/old/<id>_vN.mp4), edit.py (plantilla reten-sierra v4 / hacienda-sangre v2, EDL en borrador armado desde lines.json con índices de línea, salida renders/v1.mp4), make_sheets.py, caption.txt, music/ (copia de la Parte 1).
-- chars/: 12 jpg copiados de la Parte 1 y verificados en hoja de contactos (todos muestran a la persona/lugar correcto). Se usan: OCTAVIO, MATEO, TERESA, ARTURO, DONNICO (= Nicanor), LOC_RANCHITO, PROP_SANISIDRO. Sin uso: QUINTERO, LOC_BANCO, LOC_BUFETE, LOC_ESTANCIA, LOC_RECAMARA.
-- Hojas nuevas: **LOC_QUINQUE** (interior de adobe de noche con quinqué) y **PROP_SOBRELACRE** (sobre crema con lacre rojo).
-- Nada generado en Flow todavía.
-- Siguiente:
-  1. `python -I make_sheets.py --reupload > sheets_log.txt` (sube 7 hojas de la Parte 1 y genera las 2 nuevas; imprime "FIN HOJAS P2"). Revisar las 2 hojas y `md5sum chars/*.jpg`.
-  2. `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P2", Traceback e "intento 6").
-  3. QA: bordes (porche a la IZQUIERDA con Nicanor/Mateo/Teresa, Octavio a la DERECHA con la camioneta negra; de noche Mateo IZQUIERDA, Teresa DERECHA), ropa, morphs, pronunciación ("Isauro", "heredó", "crió", "soberbia", "regrésese"). Regenerar con `python -I clips.py c05 c09`.
-  4. Montar con `python -I edit.py` (pasar el EDL a rangos exactos, renders/phr.json), verificar (sincronía en 5 puntos, ritmo ≤ 1.9 s, LUFS/pico, marca), Telegram con caption.txt.
-- Riesgos: c04 (Octavio sube al porche y toca: que no se mezcle con Nicanor), c12 (Teresa llega caminando, que no aparezca de golpe), c26 (camioneta se va), i1 (manos y lacre), c33/c34 (SH de noche con poca luz).
-
-### `pieces\reten-sierra-p2\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, vista-stories, parte2]
-relatedTo: [reten-sierra]
----
-# reten-sierra-p2 (El Retén · Parte 2): estado
-- Marca: **VISTA STORIES** (la misma de la Parte 1, no entra en la rotación).
-- Archivos listos: guion.md, lines.json (diálogos, fuente única de clips.py), clips.py (43 clips: c01–c39 + i1, r1, r2, r3; SAFE/SOFT con \b/variant/NOREF, TRIES=6, 17 s entre clips, gatito de control, salida clips/, imprime "FIN P2", acepta IDs por argumento), edit.py (plantilla reten-sierra v4, EDL en borrador con índices de línea, salida renders/v1.mp4), make_sheets.py, caption.txt, music/ (copia de la Parte 1).
-- chars/: 14 jpg copiados de la Parte 1. Usar SOLO: CANDELARIA, EMILIANO, GARZAVERDE (Garza, camuflaje), SOLDADOFLACO (Pineda), DONTEO (Teodoro), LOC_SIERRA (= cabina), LOC_MONTE (loma), PROP_CAMIONETA (troca roja), PROP_LEONTINA (reloj). NO: GARZA, PINEDA, LOC_CABINA, PROP_TROCA, LOC_GARITA.
-- Hoja nueva: **LOC_PUESTOVERDE** (retén con pickups verde olivo sin letreros y caseta). Ningún personaje nuevo.
-- Nada generado en Flow todavía.
-- Siguiente: `python -I make_sheets.py --reupload > sheets_log.txt` (sube las 9 hojas de la Parte 1 y genera LOC_PUESTOVERDE; imprime "FIN HOJAS P2"), revisar la hoja y `md5sum chars/*.jpg`, `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P2", Traceback e "intento 6"), QA de bordes (Candelaria IZQUIERDA / Garza DERECHA), ropa, camuflaje sin placas, morphs y pronunciación, regenerar, montar con edit.py (pasar el EDL a rangos, renders/phr.json), verificar, Telegram con caption.txt.
-
-### `pieces\agua-hacienda-p2\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, vista-stories, parte2]
-relatedTo: [agua-hacienda]
----
-# agua-hacienda-p2 (Agua en la hacienda · Parte 2): estado
-- Marca: **VISTA STORIES** (la misma de la Parte 1, no entra en la rotación).
-- Archivos listos: guion.md, lines.json (diálogos, fuente única de clips.py), clips.py (40 clips: c01–c38 + r1, r2; SAFE/SOFT/variant/NOREF, TRIES=6, 17 s entre clips, gatito de control, imprime "FIN P2"), edit.py (plantilla hacienda-sangre v2, EDL en borrador con índices de línea), make_sheets.py, caption.txt, music/ (copia de hacienda-sangre).
-- chars/: 18 jpg copiados de la Parte 1 (mismos personajes y ropa).
-- Hoja nueva: **LOC_COMPUERTA** (canal de piedra con compuerta oxidada). No hay personajes nuevos.
-- Nada generado en Flow todavía.
-- Siguiente: `python -I make_sheets.py --reupload > sheets_log.txt` (sube las 8 hojas de la Parte 1 al proyecto Flow activo y genera LOC_COMPUERTA), revisar la hoja, `python -I clips.py > clips_log.txt` (Monitor sobre "^FIN P2", Traceback y "intento 6"), QA de bordes y ropa, regenerar, montar con edit.py (pasar el EDL a rangos), verificar, Telegram con caption.txt.
-
-### `pieces\suegra\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, vista-stories]
-relatedTo: [recetario, buen-hijo, tele-nueva, canasta, encendedor, padre-veladoras, chocolate-rancho, hacienda-sangre, reten-sierra, medalla-mezcal, agua-hacienda]
----
-# suegra (La Suegra) — estado
-- Remake de 7699640321801522463 de @asombrosasreflexiones ("Mi suegra se adueñó de nuestra casa"; 2.2M vistas, 134 s; allá es Parte 2, aquí Parte 1 autónoma). 14.º remake, marca VISTA STORIES (el 13.º, recetario, fue SAGA FILMS). Archivos listos: guion.md, make_sheets.py, clips.py (31 clips hablados, 230 s brutos, 53 frases), edit.py (copia de recetario, EDL vacía, marca VISTA STORIES, cama ligera entre c07 y c14), phr.py, music/ (copia de recetario), caption.txt. Nada generado en Flow todavía.
-- Assets nuevos (únicos frente a todas las pieces con make_sheets.py, sin subcadenas en ningún sentido): PALOMA, RODRIGO, SOCORRO, PANCHO, YADIRA, IRENE, LOC_DEPTO, LOC_AZOTEA, LOC_CORPORATIVO, PROP_CONTROL.
-- Atuendos: los de la ref (mosaico 24 cuadros) con otros colores: Paloma blusa de punto verde salvia y pantalón gris (en vez de crema y beige); Rodrigo camisa amarillo pálido (en vez de azul claro); Socorro vestido floral verde oscuro (en vez de azul marino con rosa); Pancho playera azul marino y shorts caqui (en vez de gris y negro); Yadira playera durazno y pijama azul claro (en vez de gris y rosa); Irene blazer azul marino (en vez de beige).
-- Siguiente: `python -I make_sheets.py > sheets_log.txt`, revisar hojas (md5, etnia mestiza, que cada nombre tenga su imagen), `python -I clips.py > clips_log.txt` con Monitor, QA por agente (bordes y ropa, bolsa en el hombro izquierdo de Paloma en c01-c06 y c14-c16, UNA sola blusa en la mano derecha de Paloma c11-c13, UN solo control en la mano derecha de Socorro en c30), regenerar malos, `python -I phr.py`, EDL por frases en edit.py (BLACK 0.4 entre c30 y c31), `python -I edit.py`, verificación completa, Telegram con caption.txt.
-- Riesgos: c01 sin plano abierto (Rodrigo habla de una), c07 refri vacío, c11-c13 blusa (que no se duplique), c17 sobre el hombro en la oficina (sin gafetes), c28 dos personajes de pie frente a frente, c30 control en la mano, c31 CTA mudo (el prompt pide labios desde el primer frame). Pronunciación: "Socorro", "Yadira", "Aguántame", "avergonzarme", "egoísta".
-- Política: sin policías, sin armas, sin contacto brusco, sin dedo acusador, sin dinero exigido ni tarjeta ni banco (el control de la cochera reemplaza a la tarjeta), sin bebé ni niños, edades numéricas.
-- 2026-11-04: renders/v1.mp4 (121.0 s, 53 planos, -14.3 LUFS, pico -1.8 dBFS). Regenerados OK: c09, c21, c27, c28; c29 lados OK pero camisa con bolsillo; c11 nuevo con blusa de manga corta -> se usa clips/old/c11 (blusa en la mano izquierda). Reacciones mudas para llegar a 2:00. Pendiente: revisión del usuario y Telegram.
-
-### `pieces\recetario\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, saga-films]
-relatedTo: [buen-hijo, tele-nueva, canasta, encendedor, padre-veladoras, chocolate-rancho, hacienda-sangre, reten-sierra, medalla-mezcal, agua-hacienda]
----
-# recetario (El Recetario) — estado
-- Remake de 7693711393207405854 de @asombrosasreflexiones (la familia se aprovecha de la hija que hace postres y vende su libreta de recetas a la competencia; 3.1M vistas, 128 s; allá es Parte 5, aquí Parte 1 autónoma). 13.º remake, marca SAGA FILMS (el 12.º, buen-hijo, fue MAJESTIC). Archivos listos: guion.md, make_sheets.py, clips.py (31 clips hablados, 234 s brutos, 58 frases), edit.py (copia de buen-hijo, EDL vacía, marca SAGA FILMS, cálida entre c12 y c16), phr.py, music/ (copia de buen-hijo), caption.txt. Nada generado en Flow todavía.
-- Assets nuevos (únicos frente a todas las pieces con make_sheets.py, sin subcadenas en ningún sentido): MIREYA, CHENCHO, HORTENSIA, SAMANTA, LEOPOLDO, LOC_ALACENA, LOC_OFICINA, LOC_CAFETERIA, PROP_RECETARIO.
-- Atuendos: los de la ref (mosaico 24 cuadros) con otros colores: Mireya vestido de tirantes lila claro en vez de crema floral; Chencho playera verde menta manchada en vez de durazno; Hortensia vestido floral azul claro en vez de rosa; Samanta traje gris claro en vez de crema; Leopoldo camisa lavanda a rayitas en vez de blanca.
-- Siguiente: `python -I make_sheets.py > sheets_log.txt`, revisar hojas (md5, etnia mestiza, que cada nombre tenga su imagen), `python -I clips.py > clips_log.txt` con Monitor, QA por agente (bordes y ropa, UNA sola libreta y quién la tiene, tele c16 y celular c28 dentro de la pantalla), regenerar malos, `python -I phr.py`, EDL por frases en edit.py (BLACK 0.4 entre c30 y c31), `python -I edit.py`, verificación completa, Telegram con caption.txt.
-- Riesgos: c01/c08 (comer con cuchara, vasitos), c11 (libreta en el cajón sin que Mireya la toque), c16 (tele: Mireya dentro de la pantalla, sin duplicarse en la cocina), c18-c22 (una sola libreta), c25 (probar postre), c28 (contenido del celular dentro del marco), c31 CTA mudo (el prompt pide labios desde el primer frame). Pronunciación: "Hortensia", "Leopoldo", "batidora", "malagradecida".
-- Política: sin policías, sin armas, sin contacto brusco, sin dedo acusador, sin dinero exigido ni cifras ni bancos, sin niños, edades numéricas.
-
-## Entregado (2026-11-04)
-- renders/v1.mp4: 2:03, -14.6 LUFS, pico -1.6, sync 0 frames. MEXI STORIES. Enviado a Telegram.
-
-### `pieces\mecanico\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, majestic-stories]
-relatedTo: [suegra, recetario, buen-hijo, tele-nueva, canasta, encendedor, padre-veladoras, chocolate-rancho, hacienda-sangre, reten-sierra, medalla-mezcal, agua-hacienda]
----
-# mecanico (El Mecánico) — estado
-- Remake de 7694128114238033183 de @informativo0001 ("Reemplazaron al mejor mecánico para quitarle su bono"; 1.5M vistas, 246 s; allá es Parte 2, aquí Parte 1 autónoma). 15.º remake, marca MAJESTIC STORIES (el 14.º, suegra, fue VISTA; el siguiente es MEXI). Archivos listos: guion.md, make_sheets.py, clips.py (31 clips hablados, 236 s brutos, 56 frases), edit.py (copia de suegra, EDL vacía, marca MAJESTIC STORIES, cama cálida entre c22 y c28), phr.py, music/ (copia de suegra), caption.txt. Nada generado en Flow todavía.
-- Assets nuevos (únicos frente a todas las pieces con make_sheets.py, sin subcadenas en ningún sentido; tampoco NICANOR, MAYORAL, FAUSTO ni MARISOL): EVARISTO, FERMIN, OSVALDO, CELSO, LOC_PECERA, LOC_NAVE, LOC_SOLAR, PROP_CAJAROJA.
-- Atuendos: los de la ref (mosaico de 24 cuadros) con otros colores: Evaristo overol verde olivo y trapo azul y blanco (en vez de mono azul marino y trapo blanco y rojo); Fermín chamarra vino y camisa azul claro (en vez de chamarra azul marino y camisa blanca); Osvaldo overol gris claro nuevo (en vez de mono azul marino); Celso gorra beige, chaleco verde oscuro y camisa a cuadros roja y azul marino (en vez de gorra café, chaleco negro y cuadros gris y morado).
-- Siguiente: `python -I make_sheets.py > sheets_log.txt`, revisar hojas (md5, mestizos de piel morena, bigote y barba de cada uno, que cada nombre tenga su imagen), `python -I clips.py > clips_log.txt` con Monitor, QA por agente (bordes y ropa por escena, UNA caja roja en la mano derecha de Evaristo en c06-c09 y cerrada en el banco en c22-c25, UN cable en su mano derecha en c26-c27, Fermín y Osvaldo sin barba ni bigote), regenerar malos, `python -I phr.py`, EDL por frases en edit.py (BLACK 0.4 entre c30 y c31), `python -I edit.py`, verificación completa, Telegram con caption.txt.
-- Riesgos: c01 sin plano abierto (Fermín habla de una), caja roja que se duplique o cambie de mano, c14 y c26-c27 cofre abierto de la camioneta blanca, c16 Osvaldo mira a la oficina, c20 Celso se acomoda la gorra, c30 Fermín solo junto al ventanal, c31 CTA mudo (el prompt pide labios desde el primer frame). Pronunciación: "Evaristo", "Fermín", "Osvaldo", "sulfatado", "refacciones".
-- Política: sin policías, sin armas, sin contacto brusco, sin dedo acusador, sin cifras ni dinero exigido ni banco (solo "el bono" y "lo que me tocaba"), sin niños, edades numéricas.
-
-### `pieces\buen-hijo\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, majestic-stories]
-relatedTo: [tele-nueva, canasta, encendedor, padre-veladoras, chocolate-rancho, hacienda-sangre, reten-sierra, medalla-mezcal, agua-hacienda]
----
-# buen-hijo (El Buen Hijo) — estado
-- Remake de 7700288645638425870 de @relatosinolvidables10 (el padre corre al hijo por llegar tarde tras ayudar a una anciana y le deja todo al hermano; 2.0M vistas, 173 s). 12.º remake, marca MAJESTIC STORIES (el 11.º, tele-nueva, fue VISTA). Archivos listos: guion.md, make_sheets.py, clips.py (32 clips hablados, 260 s brutos, 61 frases: guion compacto para 2:00-2:30), edit.py (copia de tele-nueva, EDL vacía, marca MAJESTIC STORIES, cálida entre c27 y c30), phr.py, music/ (copia de tele-nueva), caption.txt. Nada generado en Flow todavía.
-- Assets nuevos (únicos frente a todas las pieces con make_sheets.py, sin subcadenas en ningún sentido): ABUNDIO, TADEO, ROMAN, PETRA, AURELIA, LOC_SALON, LOC_AVENIDA, LOC_PERSIANA, LOC_ZAGUAN, LOC_FOGON.
-- Atuendos: los de la ref (mosaico fps=1/7) con otros colores: padre camisa beige y pantalón café en vez de blanca y gris; Tadeo camisa verde salvia y chinos gris claro en vez de azul claro y beige; Román azul marino en vez de granate; Petra blusa rosa bordada, falda café y rebozo gris en vez de lila y azul marino; nana delantal turquesa en vez de mostaza.
-- Siguiente: `python -I make_sheets.py > sheets_log.txt`, revisar hojas (md5, etnia mestiza, que cada nombre tenga su imagen), `python -I clips.py > clips_log.txt` con Monitor, QA por agente (bordes, ropa, bolsita de Petra, maleta/llaves de Tadeo, carpeta de Román, pantalla del celular en c26), regenerar malos, `python -I phr.py`, EDL por frases en edit.py (BLACK 0.4 antes de c32), `python -I edit.py`, verificación completa, Telegram con caption.txt.
-- Riesgos: c03/c06/c07 (dos personajes del brazo, la bolsita siempre en la izquierda de Petra), c19 (mano en el hombro de Román), c22 (llaves en la mesa: manos), c25/c26 (cartones de noche; SOFT los cambia por cobija), c26 (contenido del celular dentro de la pantalla), c29 (Aurelia sirve café), c32 CTA mudo (el prompt pide labios desde el primer frame). Pronunciación: "Abundio", "Tadeo", "Aurelia", "samaritano", "inventario".
-- Política: sin policías, sin armas, sin contacto brusco, sin dedo acusador, sin dinero exigido ni bancos (sin tarjeta ni monedas de la ref), sin niños, edades numéricas.
-
-## Entregado (2026-11-04)
-- renders/v1.mp4: 2:23, -14.9 LUFS, pico -1.6, sync 0/-1 frames. MAJESTIC STORIES. Enviado a Telegram.
-
-### `pieces\camionetas\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, saga-films]
-relatedTo: [canasta, encendedor, padre-veladoras, chocolate-rancho, hacienda-sangre, reten-sierra, medalla-mezcal, agua-hacienda]
----
-# camionetas (Las Tres Camionetas) — estado
-- Remake de DfFMbWkNdEc de @laotrahistoria29 ("La dueña se vistió humilde para probar a sus vendedores…", 2.5M vistas, 174 s). 10.º remake, marca SAGA FILMS (rotación VISTA → MAJESTIC → SAGA; el 9.º fue MAJESTIC). Archivos listos: guion.md, make_sheets.py, clips.py (36 clips: 35 hablados + r1, 310 s en bruto), edit.py (copia de canasta, EDL vacía, marca SAGA FILMS, cálida entre c24 y c34), phr.py, music/ (copia de canasta), caption.txt. Nada generado en Flow todavía.
-- Assets nuevos (únicos frente a todas las pieces anteriores, sin subcadenas, y distintos de NICANOR, MAYORAL, FAUSTO, MARISOL): AMPARO, PAMELA, GONZALO, ITZEL, LOC_VITRINA, LOC_EXHIBIDOR, LOC_AGENCIA, LOC_JARDINERA.
-- Atuendos: los de la ref (mosaico fps=1/6) con otros colores y ambiente mexicano: sombrero café oscuro en vez de negro, rebozo azul profundo en vez de mantón negro, flores rojas y amarillas, bolsa de palma en vez de cuero; vendedora 1 de traje rojo en vez de negro; jefe de ventas de traje azul marino y corbata verde oscuro en vez de negro y rojo; vendedora buena de beige en vez de azul marino. Cada agencia con camionetas de otro color (blancas, plateada, azul oscuro).
-- Siguiente: `python -I make_sheets.py > sheets_log.txt`, revisar las hojas (md5 y que cada nombre tenga su imagen), luego `python -I clips.py > clips_log.txt`, QA por agente (bordes y ropa), regenerar malos, `python -I phr.py`, armar la EDL por frases en edit.py, `python -I edit.py`, verificación completa, Telegram con caption.txt.
-- Riesgos: hoja de AMPARO (sombrero + rebozo + trenza: que no salga disfrazada ni caricatura), c04/c06/c19 (sobre el hombro: el borde tiene que ser Amparo con sombrero café y rebozo azul), c10 (dedo en el gafete), c11 (teléfono), c27/c28 (llave en la mano), r1 (de espaldas, sin morph), c35 (CTA con movimiento orgánico). Pronunciación de "Itzel", "doñita", "cotíceme", "seminuevos", "corporativo".
-- Política: sin policía ni guardias, sin dinero a cuadro ni créditos ("de contado" y el precio solo dichos), sin contacto brusco, sin niños, edades numéricas.
-
-## Entregado (2026-11-04)
-- renders/v2.mp4: 2:25, -14.3 LUFS, pico -1.8, sync 0 frames. SAGA FILMS. CTA con "el gerente". Enviado a Telegram.
-
-### `pieces\tele-nueva\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, vista-stories]
-relatedTo: [canasta, encendedor, padre-veladoras, chocolate-rancho, hacienda-sangre, reten-sierra, medalla-mezcal, agua-hacienda]
----
-# tele-nueva (La Tele Nueva) — estado
-- Remake de 7694110464388730134 de @desdequediosamanece (la nuera le quita la pantalla nueva a su suegra de 86 años para dársela a su mamá; 2.5M vistas, 291 s). 11.º remake, marca VISTA STORIES (el 10.º fue SAGA FILMS). Archivos listos: guion.md, make_sheets.py, clips.py (32 clips hablados, 262 s brutos, 57 frases: guion compacto para 2:00-2:20), edit.py (copia de canasta, EDL vacía, marca VISTA STORIES, cálida entre c24 y c29), phr.py, music/ (copia de canasta), caption.txt. Nada generado en Flow todavía.
-- Assets nuevos (únicos frente a todas las pieces con make_sheets.py, sin subcadenas): GENARO, REMEDIOS, GRISELDA, CHABELA, LOC_CASITA, LOC_RESIDENCIA.
-- Atuendos: los de la ref (mosaico fps=1/12) con otros colores: camisa verde olivo en vez de vaquera azul, vestido verde oscuro y delantal blanco en vez de floreado oscuro y crema, blusa azul cobalto en vez de burdeos, blusa morada de flores blancas y pantalón crema en vez de flores rojas y beige.
-- Siguiente: `python -I make_sheets.py > sheets_log.txt`, revisar hojas (md5, etnia mestiza, que cada nombre tenga su imagen), `python -I clips.py > clips_log.txt` con Monitor, QA por agente (bordes, ropa, tele vieja/nueva según el bloque), regenerar malos, `python -I phr.py`, EDL por frases en edit.py (BLACK 0.4 antes de c32), `python -I edit.py`, verificación completa, Telegram con caption.txt.
-- Riesgos: c19/c22/c24/c26 (cargar la tele: manos y continuidad del aparato), c23 (Griselda con la mano en el hombro de Chabela: dos personajes), c26-c28 con la tele nueva en LOC_CASITA (la hoja trae la tele de caja), c06-c08 (solo Genaro con celular), c32 CTA mudo (el prompt pide labios desde el primer frame). Pronunciación: "Genaro", "Genarito", "Chabela", "ochenta y seis", "distinguen".
-- Política: sin policías, sin armas, sin contacto brusco, sin dedo acusador, sin dinero exigido ni bancos, sin niños, edades numéricas.
-
-## Entregado (2026-11-04)
-- renders/v1.mp4: 2:13, -14.7 LUFS, sync 0 frames. VISTA STORIES. c16/c19/c22 con crop (tele doble o deformada). Enviado a Telegram.
-
-### `pieces\encendedor\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, vista-stories]
-relatedTo: [padre-veladoras, chocolate-rancho, hacienda-sangre, reten-sierra, medalla-mezcal, agua-hacienda]
----
-# encendedor (El Encendedor) — estado
-- Remake de 7702851598850018591 ("Parte 3 FINAL | 20 años esperando la verdad", 91K): era el de más vistas sin rehacer (queda solo la Parte 2, 47K). Cuenta VISTA STORIES (la 6.ª, padre-veladoras, fue MAJESTIC). Archivos listos: guion.md, make_sheets.py, clips.py (35 clips: 33 hablados + r1, r2), edit.py (copia de padre-veladoras, EDL vacía, marca VISTA STORIES, cálida entre c28 y c33), music/ (copia de padre-veladoras), caption.txt. Nada generado en Flow todavía.
-- Assets nuevos (únicos frente a agua-hacienda, medalla-mezcal, reten-sierra, hacienda-sangre, chocolate-rancho y padre-veladoras): CONSUELO, SANTIAGO, CIRILO, BALTASAR, ROQUE, LEANDRO, LOC_ESTUDIO, LOC_BODEGA, LOC_PATIO, LOC_ESTACION, LOC_CORREDOR, PROP_ENCENDEDOR.
-- Siguiente: `python -I make_sheets.py > sheets_log.txt`, revisar las hojas (md5 y que cada nombre tenga su imagen: bug de Flow que corre imágenes un nombre), luego `python -I clips.py > clips_log.txt`, QA por agente (bordes y ropa), regenerar malos, armar la EDL por frases en edit.py, `python -I edit.py`, verificación completa, Telegram.
-- Riesgos: c01 (Leandro hablando dentro de la pantalla de la laptop, lip sync), hoja de CIRILO (camuflaje; si Flow lo frena, NOREF), c08 (copa de tequila; SOFT la cambia por agua), c04-c07 (muchacho retenido: sin cuerdas ni golpes), r1 (estación con cuatro personajes), c19/c20 (el encendedor debe ser el mismo de la hoja), c33 (CTA con movimiento orgánico). Pronunciación de "Baltasar", "Cirilo", "Ordaz", "encendedor", "licenciada".
-- Política: sin policías, placas ni chalecos (la copia la tiene una abogada; Cirilo va a declarar), sin armas, sin contacto brusco (Baltasar no agarra a Roque), sin dinero, Santiago con edad numérica (25).
-
-## Entregado (2026-11-04)
-- renders/v1.mp4: 2:02, 76 planos media 1.61 s, -14.7 LUFS, pico -1.8, sync 0 frames. SAGA FILMS. Enviado a Telegram.
-- v2 (2026-11-04): c01 regenerado (Leandro dentro de la laptop). Enviado a Telegram.
-
-### `pieces\canasta\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, vista-stories]
-relatedTo: [encendedor, padre-veladoras, chocolate-rancho, hacienda-sangre, reten-sierra, medalla-mezcal, agua-hacienda]
----
-# canasta (La Canasta) — estado
-- Remake de 7697901687620635917 de @relatosinolvidables10 ("Humilló a una anciana que vendía chicles… jamás imaginó con quién regresaría", 3.4M vistas, 168 s). 8.º remake, marca VISTA STORIES (el 7.º, encendedor, fue SAGA FILMS). Archivos listos: guion.md, make_sheets.py, clips.py (36 clips: 34 hablados + r1, r2), edit.py (copia de encendedor, EDL vacía, marca VISTA STORIES, cálida entre c28 y r2), phr.py, music/ (copia de encendedor), caption.txt. Nada generado en Flow todavía.
-- Assets nuevos (únicos frente a agua-hacienda, medalla-mezcal, reten-sierra, hacienda-sangre, chocolate-rancho, padre-veladoras y encendedor, sin subcadenas): REFUGIO, HORACIO, MARIBEL, EUSEBIO, FEDERICO, LOC_VESTIBULO, LOC_GERENCIA, LOC_BANQUETA, LOC_SALITA.
-- Atuendos: los de la ref (mosaico fps=1/6) con otros colores: cárdigan mostaza en vez de verde olivo, traje negro y corbata azul rey en vez de gris y guinda, blusa rosa en vez de lila, camisa azul claro de portero en vez de uniforme gris, traje gris oxford en vez de azul marino.
-- Siguiente: `python -I make_sheets.py > sheets_log.txt`, revisar las hojas (md5 y que cada nombre tenga su imagen), luego `python -I clips.py > clips_log.txt`, QA por agente (bordes y ropa), regenerar malos, `python -I phr.py`, armar la EDL por frases en edit.py, `python -I edit.py`, verificación completa, Telegram con caption.txt.
-- Riesgos: hoja de EUSEBIO (si Flow la lee como guardia uniformado, NOREF), c03/c13 (paquetitos de chicles sin monedas), c19/c21 (brazo ofrecido: contacto suave), c24/c26 (vaso de agua), r2/c31-c33 (lluvia y paraguas, tres personajes), c33 (shock sin morph), c34 (CTA con movimiento orgánico). Pronunciación de "Refugio", "Eusebio", "Horacio", "paquetitos", "vergüenza".
-- Política: sin policías ni placas, sin dinero a cuadro, sin golpes ni dedo acusador (mano abierta), sin niños, edades numéricas.
-
-## Entregado (2026-11-04)
-- renders/v1.mp4: 2:28, -14.5 LUFS, pico -1.6, sync 0 frames. VISTA STORIES. Enviado a Telegram.
-
-### `pieces\regreso-chicago\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, majestic-stories]
-relatedTo: [encendedor, padre-veladoras, chocolate-rancho, hacienda-sangre, reten-sierra, medalla-mezcal, agua-hacienda]
----
-# regreso-chicago (La Casa de Chicago) — estado
-- 9.º remake. Ref 7697473313475480864 de @viviendolapalabra1 ("Trabajó 8 años en Houston…", 2.7M). Marca MAJESTIC STORIES (el 8.º lleva VISTA). Archivos listos: guion.md, make_sheets.py, clips.py (35 clips: 31 hablados + i1, i2, i3, r1), edit.py (copia de encendedor, EDL vacía, marca MAJESTIC STORIES, cálida entre r1 y c31), phr.py, music/ (copia de encendedor), caption.txt. Nada generado en Flow todavía.
-- Assets nuevos (únicos frente a las 7 piezas anteriores y a NICANOR, MAYORAL, FAUSTO, MARISOL): ROGELIO, YESENIA, ULISES, REBECA, JOSEFINA, LOC_FACHADA, LOC_COCHERA, PROP_CARPETA.
-- Siguiente: `python -I make_sheets.py > sheets_log.txt`, revisar hojas (md5 y que cada nombre tenga su imagen), `python -I clips.py > clips_log.txt` con Monitor, QA por agente (bordes y ropa), regenerar malos, `python -I phr.py`, EDL por frases en edit.py, `python -I edit.py`, verificación completa, Telegram con caption.txt.
-- Riesgos: i1 (mano en la cintura: SOFT la pasa a "next to"), i2 (la llave no gira), i3/c23 (maleta: dejarla, no aventarla), r1 (solo dos personajes, sin duplicados), c27/c29 (carpeta igual a la hoja), c31 (CTA con movimiento orgánico), Ulises lampiño vs Rogelio con candado (que no se crucen), vecinos al fondo en c12/c24 sin que cambien de ropa los principales.
-- Política: sin patrulla ni policías ("mi licenciado"), sin armas, sin contacto brusco, sin banco ni dinero exigido (fotos en el celular), "a su nombre"/"papeles".
-
-## Entregado (2026-11-04)
-- renders/v1.mp4: 2:26, 67 planos, -14.7 LUFS, pico -1.7, sync 0/-1 frames. MAJESTIC STORIES. Enviado a Telegram.
-
-### `pieces\padre-veladoras\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, majestic-stories]
-relatedTo: [chocolate-rancho, hacienda-sangre, reten-sierra, medalla-mezcal, agua-hacienda]
----
-# padre-veladoras (Las Veladoras) — estado
-- Remake de 7702486655336320286 ("Se burlaron del padre…", 200K): era el de más vistas sin rehacer. Cuenta MAJESTIC STORIES (la 5.ª, chocolate-rancho, fue VISTA). Archivos listos: guion.md, make_sheets.py, clips.py (36 clips), edit.py (copia de reten-sierra, EDL vacía, marca MAJESTIC STORIES, cálida entre c17 y c20), music/ (copia de reten-sierra), caption.txt. Nada generado en Flow todavía.
-- Assets nuevos (únicos frente a agua-hacienda, medalla-mezcal, reten-sierra, hacienda-sangre y chocolate-rancho): ANSELMO, RUFINO, CHATO, RAMIRO, MAURO, LOC_PARROQUIA, LOC_MIRADOR, LOC_ATRIO, PROP_VELADORAS.
-- Siguiente: `python -I make_sheets.py > sheets_log.txt`, revisar las hojas (md5 y que cada nombre tenga su imagen: bug de Flow que corre imágenes un nombre), luego `python -I clips.py > clips_log.txt`, QA por agente (bordes y ropa), regenerar malos, armar la EDL por frases en edit.py, `python -I edit.py`, verificación completa, Telegram.
-- Riesgos: hojas de RUFINO/CHATO (motociclistas tatuados; si Flow los frena, NOREF), c05 (soplar las veladoras), r1 (toma aérea de camionetas), r2 (prender veladoras con cerillo), c28 (tres "sí" muy cortos), c34 (CTA con movimiento orgánico). Pronunciación de "Anselmo", "Salcedo", "Víboras", "motociclistas", "repletas".
-- Política: sin empujones ni golpes (la ofensa es apagar las veladoras), sin armas, sin dinero; los hombres de Ramiro son rancheros en jeans y camisa blanca.
-
-## Entregado (2026-11-04)
-- renders/v1.mp4: 2:28, -15.0 LUFS, pico -1.6, sync 0 frames 5 puntos. MAJESTIC STORIES. Enviado a Telegram.
-
-### `pieces\chocolate-rancho\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, vista-stories]
-relatedTo: [hacienda-sangre, reten-sierra, medalla-mezcal]
----
-# chocolate-rancho (La Taza de Chocolate) — estado
-- Remake de 7697331061650476319 (Leche P2, 260K), contado como Parte 1 que se entiende sola. Cuenta VISTA STORIES (la 4.ª, hacienda-sangre, fue MAJESTIC). Archivos listos: guion.md, make_sheets.py, clips.py (36 clips), edit.py (plantilla hacienda-sangre, marca VISTA STORIES, 4 tramos de música), music/ (copia), caption.txt. Nada generado en Flow todavía.
-- Assets nuevos (únicos frente a agua-hacienda, medalla-mezcal, reten-sierra y hacienda-sangre): RENATA, PRUDENCIO, EULALIA, DAMIAN, BENAVIDES, LOC_HUERTO, PROP_TAZA.
-- Siguiente: `python -I make_sheets.py > sheets_log.txt`, revisar las hojas (md5 y que cada nombre tenga su imagen: bug de Flow que corre imágenes un nombre), luego `python -I clips.py > clips_log.txt`, QA por agente, regenerar malos, `python -I edit.py`, verificación completa, Telegram.
-- Riesgos: c01 (carpeta delante de Prudencio de espaldas: que no se mezclen caras), r1 (abrazo de tres), c25 (sobre en las manos), c32 (taza en primer plano), r3 (Renata junto a la camioneta). Pronunciación de "Prudencio", "Eulalia", "Benavides", "despacito".
-- Política: sin banco, deuda ni dinero. El conflicto es un plazo de escrituras no registradas; el héroe registra las escrituras y compra la empresa.
-
-## Entregado (2026-11-04)
-- renders/v1.mp4: 2:28, 71 planos, -14.6 LUFS, pico -1.6, sync 0 frames. VISTA STORIES. Enviado a Telegram.
-
-### `pieces\medalla-mezcal\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, vista-stories]
-relatedTo: [agua-hacienda]
----
-# Estado nocturno (2026-11-04) — el usuario duerme y autorizó seguir solo
-
-1. medalla-mezcal: clips generándose en segundo plano (`python -I clips.py > clips_log.txt`). Al terminar: revisar FALLOs/morphs/pronunciación (hija, juro) por clip, regenerar los malos, `python -I edit.py` → renders/v1.mp4, VERIFICACIÓN COMPLETA (memoria atrium-reglas), enviar a Telegram.
-2. Siguiente autorizado: "El Retén" (fuentes/atriumstories/videos/7701749432621993246, 1.1M). Mismo flujo: agente escribe guion/make_sheets/clips/edit (copiar edit.py de agua-hacienda, aprobado v4) cambiando personajes/diálogos; nombres de assets únicos; md5 de hojas; clips uno por uno; verificar; Telegram.
-3. Luego, por vistas: 7699644756812385567 (317K), 7697331061650476319 (260K).
-
-## Actualización (QA de clips, ver qa_clips.md)
-- 39/45 clips OK de generación. c31-c34, c36, c38 fallan con "page.waitForFunction Timeout 20000ms" (espera del chip de mención) también al reintentar (job btih2joho, log clips_log2.txt).
-- PROBLEMA GRAVE: en todos los clips FAUSTO sale con el look de Don Chuy de agua-hacienda (camisa verde a cuadros, paliacate rojo, sombrero grande), no el de chars/FAUSTO.jpg (camisa crema, perilla). El asset "FAUSTO" de Flow tiene la imagen equivocada (bug de renombrar tile).
-- ARREGLO: copiar FAUSTO.jpg recodificada (`ffmpeg -i chars/FAUSTO.jpg -q:v 3 chars/ARREOLA.jpg`), subirla como "ARREOLA" (flow_upload_file), comprobar la miniatura en Flow, `sed -i 's/{FAUSTO}/{ARREOLA}/g' clips.py`, mover a clips/old/ los 19 clips con FAUSTO + c20 y c28 (repiten frase inventada), regenerar con `python -I clips.py`. Investigar el timeout del chip (¿demasiados assets? ¿nombre parecido?) si sigue.
-- c29: recortar el último frame (salta de plano). c37: subtítulo quemado (aceptable).
-- HECHO: ARREOLA subido, clips.py usa @{ARREOLA}; c01 de prueba OK (look correcto). 21 clips viejos en clips/old/. Regeneración en curso (log clips_log3.txt). Después: QA de los clips nuevos (mismo agente/qa), editar EDL c29 (recortar último frame), montar, verificar, Telegram, y seguir con El Retén.
-- ENTREGADO v1 (208.6 s, 89 planos) por Telegram 2026-11-04; verificado sync 0-1 frame en 5 puntos, marca, golpe, negro+CTA. Más largo que refs (máx 178 s): si el usuario lo pide, recortar. SIGUIENTE: El Retén.
-- v2 (2026-11-04): 10 clips regenerados OK en QA; edit.py con método reten-sierra v4 (EDL por frases, renders/phr.json, CROP37, limiter 0.80); lines.json borrado. renders/v2.mp4 154.0 s, 95 segmentos/70 planos, -14.7 LUFS, -1.8 dBTP. c34 corta antes de su corte interno (1.5 s). Falta enviar a Telegram.
-
-### `pieces\hacienda-sangre\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, vista-stories]
-relatedTo: [reten-sierra, medalla-mezcal]
----
-# hacienda-sangre (La Hacienda) — estado
-- Remake de 7699644756812385567 (317K). Archivos listos: guion.md, make_sheets.py, clips.py (36 clips), edit.py (plantilla medalla-mezcal), music/ (copia de medalla-mezcal). Nada generado en Flow todavía.
-- Assets nuevos (únicos frente a agua-hacienda, medalla-mezcal y reten-sierra): OCTAVIO, MATEO, TERESA, ARTURO, NICANOR, QUINTERO, LOC_ESTANCIA, LOC_BUFETE, LOC_RECAMARA, LOC_RANCHITO, LOC_BANCO, PROP_SANISIDRO.
-- Siguiente: `python -I make_sheets.py > sheets_log.txt`, revisar las hojas (md5 y que cada nombre tenga su imagen: bug de Flow que corre imágenes un nombre), luego `python -I clips.py > clips_log.txt`, QA por agente, regenerar malos, `python -I edit.py`, verificación completa, Telegram.
-- Riesgos: c01 (papel delante de Mateo de espaldas: que no se mezclen caras), c14 (manos con la figura), c28/c30 (Octavio dentro de la camioneta), pronunciación de "Cárdenas", "Isauro", "heredó".
-
-## Entregado (2026-11-04)
-- renders/v1.mp4: 2:26, 92 planos, media 1.59 s, -14.8 LUFS, sincronía 0 frames en 5 puntos. MAJESTIC STORIES. Enviado a Telegram con caption.txt.
-- renders/v2.mp4 (2026-11-04): c02 y c33 regenerados (QA OK), regla nueva de cortes (mismo personaje = se queda en su plano con salto; fuera 25 reacciones de relleno; quedan r1, r2, r3 y c32), recortes c06/c20/c23 con `*pre`, recuperadas 7 frases (c05·1, c11·1, c14 "Lo cargaba", c16 "El café", c19 "Qué bueno", c21·1, c27·1). 2:21, 43 planos (media 3.28 s), 73 segmentos (media 1.93 s), -14.5 LUFS, pico -0.8 dBTP, sincronía 0 frames. Sin enviar a Telegram.
-
-### `pieces\reten-sierra\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, vista-stories]
-relatedTo: [medalla-mezcal]
----
-# reten-sierra (El Retén) — estado
-- Hojas corregidas (bug de Flow corre imágenes un nombre): TEODORO→DONTEO, LOC_RETEN→LOC_GARITA, PROP_RELOJ→PROP_LEONTINA, sierra=LOC_MONTE, cabina=@{LOC_SIERRA} (archivo LOC_SIERRA.jpg ES la cabina), troca=PROP_CAMIONETA. LOC_CABINA.jpg/TEODORO… no usar.
-- Clips: `python -I clips.py > clips_log.txt` en curso. Luego: QA por agente (como medalla qa_clips.md), regenerar malos, edit.py, verificación completa, Telegram. Riesgo c32: Garza hace lipsync de la voz de la radio.
-- Siguiente: 7699644756812385567 (317K).
-
-## Entregado (2026-11-04)
-- `renders/v3.mp4`: 2:29, 98 planos, media 1.52 s, -14.8 LUFS, sincronía 0 frames en 5 puntos. Enviado a Telegram con caption.txt.
-- Garza en camuflaje (GARZAVERDE) en todos los planos. Marca VISTA STORIES alpha 80.
-- Pendientes menores: inserto del radio en c32 algo blando (ampliado 2.5x).
-- `renders/v4.mp4` (2026-11-04): 2:18, 72 planos (49 cambios de plano + 22 saltos dentro del mismo clip), media 1.91 s, -14.8 LUFS / -1.4 dBTP, sincronía 0 frames. Regla nueva: mismo personaje = mismo plano (sin caras mudas de relleno). 7 clips regenerados OK. c33 nuevo sin BLUR33 (no hay texto de patrulla). edit.py de v3 en scratchpad/r4/edit_v3.py.
 
 
 ---
@@ -8627,6 +10996,7 @@ Todos los mensajes que el usuario escribió en 41 sesiones de Claude Code en est
 - **2026-11-09 02:31** — ok antes de eso, puedes verificar estos pricing de dream video para saber si esto me sirve para que hagas tu mismo los videos avatar de los audios que me generas aqui? Osea esta es la que yo utilizo pero quiero que tu mismo comiences a hacer este paso de pasarle la voz al dreamface para que haga el lipsinc con mi avatar, eso lo hace dreamface pero no se si es con api o mcp y tal, o si es gratis o si se necesita esto de este link: https://api.newportai.com/pricing
   investigame eso en esa plataforma por favor
 - **2026-11-09 02:37** — naj pero entonces me sale mas economico seguirla generando yo mismo alla y te paso luego el video raw como veniamos haciendo... pense que era pagando una mensualidad y ya
+- **2026-11-16 19:38** — que alternativas tenemos a dreamface? que podamos usar su mcp asi y tal? investiga
 
 ## Sesión 2026-10-17 — `f--Claude-Proyectos`
 
@@ -9331,6 +11701,72 @@ Todos los mensajes que el usuario escribió en 41 sesiones de Claude Code en est
 - **2026-11-05 12:25** — Ok, a partir de ahora vamos a volver a el formato pasado en el que ella encontraba artefactos, y las locaciones eran más variadas, porque estos último formato que hemos estado trabajando no ha funcionado muy bien.
 - **2026-11-05 14:41** — Vale vamos con ese del cepillo
 - **2026-11-08 03:02** — Si, arregla eso y adelante procede
+- **2026-11-14 17:49** — ok, necesito que hagas un git o un archivo o lo que sea para poder trabajar este estilo tambien en la mac. que lleve absolutamente todas las instrucciones y mis preferencias sobre como trabajarlo, las propuestas de video y todo. Recuerda que cualquier asset pesado o lo que sea que se necesite pasar alla, lo puedes pasar por lucidlink en la respectiva carpeta de Mechayuki
+- **2026-11-14 17:56** — ok pero que escribo exactamente en la mac para llevar todo eso alla?
+- **2026-11-15 01:13** — ok. Quisiera que comenzaramos a aplicarle otro estilo de videos a mechayuki, porque no me estan agarrando vistas los que estamos haciendo
+- **2026-11-16 01:47** — mmm, es que me gustaria intentar cambiando de formato... osea ya salir un poco de eso de es una androide y tal, por ejemplo mira encontre esta cuenta que hace videos asi tambien parecidos a los nuestros pero con un enfoque distinto. analiza este video y los videos de mas vistas de su cuenta, a ver si podemos hacer algo asi: https://www.instagram.com/reel/DeDhBizhWi3/
+- **2026-11-16 02:23** — te dejo sus reels mas vistos: https://www.instagram.com/reel/DenXjPdN-UE/
+  https://www.instagram.com/reel/DeDhBizhWi3/
+  https://www.instagram.com/reel/Dd-HI3yMHw7/
+  https://www.instagram.com/reel/Dd5E78EgnK-/
+  https://www.instagram.com/reel/Dd2YemoPJ9-/
+  https://www.instagram.com/reel/DeIZRr9MvU_/
+  https://www.instagram.com/reel/DeqIHpYPZie/
+  
+  Podemos hacer lo mismo replicando los mismos planos y todo pero parafraseando lo que dice... porque en tiktok no estan sus videos. Puedes agregarle subtitulos asi y todo.
+- **2026-11-16 03:00** — Si exacto, para estos videos cambiemos de personaje, vamos a intentar con otra chica del mismo estilo, y ya encontre como quiero que la hagas exactamente. Analiza este video a fondo https://www.youtube.com/watch?v=DqntXa7dOO8      , y crea al personaje que el crea alli, es basicamente el mismo estilo de megaman legends 2 pero con otro personaje que el crea alli. Analizalo todo y hazla asi igual con todo y las poses que el le crea al final, y luego le añadimos las expresiones y poses que nosotros ya tenemos. lo malo es que en este el no dejo el modelo para descargarlo, por eso hay que crearlo. Puedes leer tambien la descripcion e instalar lo que haya que instalar si el lo hace para hacer el modelo.
+  
+  y para el personaje gnomo puedes usar este modelo "F:\Claude Proyectos\assets\PlayStation - Mega Man Legends - Non-Playable Characters - Servbot.zip" y le cambias los colores, le haces expresiones nuevas y le pones un cono de gnomo en la cabeza. Puedes poner agentes en high para lo que consideres que se necesite en esta tarea
+- **2026-11-16 03:49** — Ok si dale una segunda pasada pero necesito que la hagas identica a la de el, que hagas la misma literal, osea con esas mismas expresiones que el tiene, las caras que colocaste alli que son las de el, usa esas!, porque la nuestra esta aun muuy diferente a la de el. Y al gnomo me gusta, pero le pusiste como la textura diferente, osea yo queria la misma textura con sombras que tiene el cuerpo de servibot porque tiene el estilo de megaman legends que buscamos, tambien podemos probar que los ojos quizas sean parecidos a los de servibot a ver que tal le quedan, si no me gustan volvemos a estas expresiones que le hiciste
+- **2026-11-16 04:25** — Me gusta el gnomo nuevo usemos ese. Y la chica aun no es identica... necesito que sea identica a la del tutorial por favor. sigue hazta que sea identica, hazla como la hace el paso por paso en el tutorial, sigue su tutorial, si tienes que crear otro esqueleto hazlo, o haz lo que sea necesario, recuerda que el no usa codigo. Recuerda tambien el tutorial de crashune para hacer estos modelos, tambien puedes guiarte de alli https://www.youtube.com/watch?v=Use9T2IX1XE&list=PLcaQc6eQjXCzYski4EEr-iRfdkXkX-P3g  , pero necesito que quede identico al del tutorial
+- **2026-11-16 11:12** — Es que todavía no se parece. O sea, no estás haciendo el modelo tal cual como él lo está haciendo en el tutorial. No estás siguiendo los pasos que él está siguiendo. O sea, entiendo que él habla rápido, pero es que debes seguir el tutorial que él hace. O sea, tu cara en el modelo que tú estás haciendo está completamente plana. La cara que él hace no está plana. Solo basta con ver cuando él dice que hace algo para hacerlo igual a él. Solo basta con tomarle captura o comparar el modelo que tú tienes con el modelo en gris que él tiene para hacerlo igual a él, para hacer cada lado, cada polígono, no sé realmente porque yo no sé mucho de Blender, pero cada polígono de la cara, cada polígono del cuerpo, igual al de él. Entonces, nuestra cabeza no es igual a la de él, el cuerpo no es igual a la de él, los pies no son iguales a los de él. Las caras que estás usando, las expresiones que les estás poniendo, no son las que él usa. O sea, tú estás poniéndole las caras de la protagonista de Mega Man Legends, que es Roll. Esas caras él las usa como referencia en el video. Él les pone sus caras. De hecho, él se las pone a partir del segundo 9:19, y ahi el muestra las expresiones que el usa. No uses las que tienen el flequillo amarillo en el medio porque esas no son las que el usa, esas el las pone como referencia. Allí te deje capturas de todo lo que te estoy comentando, del modelado, de como se debe ver cada parte de poligonos de su cuerpo en gris, de su cara, de sus expresiones, guiate de eso de los segundos en donde hace eso. Otra cosa que él hace también es que él pone de referencia al lado Los modelos de roll y del otro personaje de Mega Man Legends 2 para ir guiandose en altura y todo lo demas, ya te descargue el modelo para que hagas lo mismo, esta aqui "F:\Claude Proyectos\assets\PlayStation - Mega Man Legends - Non-Playable Characters - Roll Caskett.zip"
+  De nuevo, pon los agentes en high que necesites para hacerlo IDENTICO y no me entregues el modelo hasta que no este identico.
+- **2026-11-16 14:29** — nada, aun no se parece, aun le falta mucho.  es que el no vende el modelo, tampoco lo comparte, osea esa opcion no la tenemos. Y las partes del video osea, tu ves lo mismo que yo, en el video esta todo osea no entiendo por que no puedes hacerlo... pero bueno, tengo otro modelo que quiero intentar a ver si puedes replicarlo, es igual el mismo personaje pero con otro estilo parecido a este, de este ni siquiera hay tutorial asi que debes guiarte por el modelo, dime si puedes hacerlo es este: https://www.tiktok.com/@.rashiyx/video/7634232804288564513
+- **2026-11-16 14:33** — tu decide que es mejor, si ponerle nuestro esqueleto o si hay que hacerle uno nuevo, pero necesito que quede IDENTICO al que el muestra. Por favor eso es lo importante. Primero enfocate en replicarlo TAL CUAL, luego que ya lo tengas listo identico vemos si le cambiamos algun color lo que sea. Pon un agente en extra high para esto si lo necesitas, pero por favor de nuevo, necesito que sea IDENTICA
+- **2026-11-16 17:04** — Dame detalles, como va el proceso?
+- **2026-11-16 18:44** — cuentame, que tal va?
+- **2026-11-16 18:51** — genial va bien. Luego de completar eso, hazme dos versiones mas, asi iguales pero una sin pantimedias y con el busto mas grande y el trasero mas grande, y la otra igual con el busto mas grande y el trasero mas grande pero con las pantimedias. En total serian 3 versiones, esta, y las 2 que te digo
+- **2026-11-16 19:35** — genial. Nos quedamos con las versiones 2 y 3 las que tienen busto y trasero mas grande, son y sin pantimedias. usaremos las dos y las alternaremos en videos. Lo que si necesito es que les aumentes mas el trasero a ambas, ya el busto lo tienen bien. y si haz eso de la ultima pasada rehacer encima de esta malla una versión low poly de verdad, faceta por faceta como la de él... y todo eso que mencionas a ver que tal queda
+- **2026-11-16 20:43** — Oye pero esas animaciones en la imagen de variants anims estan malisimas todas. osea a ver, primero por lo que veo no le van las animaciones de mechayuki, y segundo tienes que hacer un trabajo en las piernas para separarselas ligeramente creo porque vamos a necesitar que camine a veces y que haga diferentes movmientos. Y osea esta pose en la que esta esta muy bien, osea te quedo muy bie, pero hay que hacerle las animaciones desde 0, porque vamos a necesitar que tenga animaciones muy femeninas, como por ejemplo en este video https://www.youtube.com/watch?v=DqntXa7dOO8     a partir del minuto 12:14 en adelante se ven varias animaciones, necesitamos esas asi, tambien timida como la que ya tiene.. tambien por ejemplo puedes verificar los movimientos y animaciones mas recurrentes que tiene el hombre del gnomo pero adaptarlas a ser super femenina. Tambien fijarte en las animaciones que tienen los perfiles que te pase anteiormente de sinaboto y los que son parecidos a sinaboto que son todas chicas low poly, todas esas las puedes usar como guia y referencia
+- **2026-11-16 21:12** — ah y tambien por supuesto las expresiones de su cara, agregale varias, que se adapten a su cara y que sean femeninas, que se vea sexy es lo que quiero
+- **2026-11-16 21:13** — Vale, usa agentes en high o extra high que necesites para todas estas tareas
+- **2026-11-16 22:13** — Ah ya veo que lo que te voy a comentar del ojo mas cercano a la camara me lo estas diciendo tu, excelente. Me gustan solo es ese detalle del ojo
+- **2026-11-16 23:14** — Oye las animaciones estan buenisimas, me gustaron mucho, pero hay detalles que mejorar. los antebrazos estan separados de los brazos, se nota bastante en los codos que estan separados, y los puños igual, y ella tiene unas lineas raras en sus muñecas que no se creo que puedes mejorarlo poniendole unas pulseras, o un reloj, o quitandole eso, como creas que se ve mejor.. pero los brazos son la mejora mas importante que necesita. En su busto cuando ella se quita la mano se borra una raya de su sueter y se ve un poco desfigurado. Me gusta mucho la animacion que le diste a la falda, podrias agregarle una animacion muy ligera asi pero a su busto? que sea sutil. Otra cosa, mejora sus pies, no sus piernas, sus pies porque parecen unas planchas, dales forma de bota. A las manos les puedes añadir rayas de dedos, sin necesidad de separar sus dedos ni nada, unas rayitas sutiles y ya. pendiente que cuando levante sus brazos no se les vea separados sus brazos de su torso. la animacion sit chait pendiente que no se le levante la falda, igual la de sit down y sit slumped. Pendiente con sus pies en sit floow, no le veo forma a sus piernas. pendiente con las botas en lie side que no traspasen su otra pierna o algo, igual su mano. Debajo de su codo tambien hay unas sombras raras, mejora eso. Pon agentes en extra high para estos cambios si lo necesitas
+- **2026-11-16 23:31** — genial, una pregunta, mientras tanto puedes ir trabajando en otro modelo que tengo? o eso ralentizara el trabajo en este?
+- **2026-11-16 23:34** — ok tengo otro modelo que quiero que lo usemos, pero necesito que le hagas modificaciones. es "F:\Claude Proyectos\assets\PlayStation - Mega Man Legends 2 - Friendly Characters - Waitress.zip"
+  
+  pero quiero que le quites esa falda larga y le pongas algo que combine mejor, y sea mas actual, y tambien quitale esa cuestion que esta cargando con el brazo derecho y ponle el brazo normal como el otro
+- **2026-11-16 23:35** — bien, puedes usar un agente en high para eso tambien si deseas o los que necesites
+- **2026-11-17 00:49** — ok la mesera me gusta bastante, usemos el B y C, descarta el A. Lo que quiero que mejores es: los zapatos estan bien pero disminuye su tamaño un poco porque estan muy grandes. Si puedes tambien disminuye un poco el tamaño de las manos, estan bien pero estan un poco grandes. y hazle el trasero mas grande y mejora la union entre el torso y la parte inferior de ambas. luego de eso procede con sus animaciones y expresiones, podemos probar las mismas que la de ashley.
+  
+  Ok y con respecto a Ashley, me gusta mejoro bastante, pero debes mejorar esto: las piernas las veo muy rectas, la intencion es que sean gruesas arriba y vayan adelgazando hacia abajo, como las mujeres con curvas pues. quitale mejor las rayas de las manos, dejalas como antes se veian mejor (OJO me refiero a la de las manos, no la de las muñecas). aumentale el movimiento del busto cuando se mueve, quiero que se vea mas. pendiente de lo que te dije del busto que donde se pone la mano se cortan las rayas del sueter, arregla eso. Otra cosa importante es que el cuello y la parte inferior de la cabeza se ven como despegados y hay unas sombras raras, arregla eso y arrelgalo que le falta del cuello de tortuga del sueter alli. La proxima animacion cuando me muestres todo esto corregido en movimiento muestramela que haga las animaciones de frente, para verla de frente y darte mas feedback.
+  
+  coloca agentes en high o extra high en lo que necesites
+- **2026-11-17 00:51** — deten un momento todo, te aviso cuando puedas reanudar
+- **2026-11-17 01:32** — ok listo reanudalos
+- **2026-11-17 02:08** — algo pasa con los hombros, creo que los hiciste mas altos y ahora le llegan al cuello de tortuga, cuando deben estar mas abajo, donde empiezan los brazos, comparalo con la referencia para que veas. Creo que debes hacer la falda un poco mas larga hacia los lados, no hacia abajo sino hacia los lados, porque como las piernas estan mas gruesas se estan saliendo de la falda. Mejora esos brazos como te dije. Y la animacion de cuando camina walk y walk shy les falta trabajo, osea camina como un hombre, debe ser femenina... porque pareciera que las piernas van primero y luego el torso al caminar. Entonces debe ser mas como aparece en el video https://www.youtube.com/watch?v=DqntXa7dOO8    en el min 12:38. En algunas poses de cuando esta sentada sus botas traspasan sus piernas, pendiente con eso.
+- **2026-11-17 02:12** — genial. de la de ashley me das dos videos, una de la version con las pantimedias y una de la de sin ellas
+- **2026-11-17 02:22** — ok en el de la mesera tienes que quitarle vientre, mirada de side osea tiene una pansa en el vientre, y no eso no lo debe tener, y con respecto al trasero, osea tiene es una ondulacion alli toda fea, eso tiene que unirse la pierna con el trasero, para que no se vea feo, y en el pantalon no me gustan esas lineas naranjas, ponlas negras como en la version de shorts. Con respecto a las expresiones estan excelentes, y las animaciones le quedan muy bien, solo que en el video de prueba se ve que sus brazos a veces le tiemblan al hacer algunas poses, verifica y corrije esto y todo por favor
+- **2026-11-17 03:43** — Ok la de Ashley esta bien. Podemos trabajar el primer video para ver como se ve en movimiento. Prueba con una voz de prueba cualquiera de voice studio.
+- **2026-11-17 03:46** — Ok ya esta abierto voice studio
+- **2026-11-17 11:02** — corrije eso que ves flojo y tambien lo que veo es que en todos los planos tiene como un glitch en la cara que le pone sombras a ella en su cara, que no tenia antes, verifica eso. En el plano 11 pendiente que su brzo derecho no traspase su pecho. en el plano 4 mejora la cama, parece un blque. otra cosa, yo le veo como un sutil bloom o glow al video de referencia, puedes agregar eso?
+- **2026-11-17 11:14** — ok. con respecto a las animaciones de la mesera, estan bien solo que: en la animacion del seg 24 la pierna izquierda se le dobla rara en el muslo, corrige eso. Tambien hay veces que ella esta normal con una animacion idle y se le mueve el hombro de un brazo, osea gira como si nada, por ejemplo como en el seg 33, 40, 44 y mas. el proximo video que me des para ver sus animaciones arregladas damelo que se vea una vuelta 360 para ver sus animaciones y como esta todo su cuerpo bien ydarte mejor feedback
+- **2026-11-17 14:59** — mmm me gusta bastante el board de la del gnomo ahora, esta buena. Tengo una pregunta que es una idea a la vez... que pasaria si le damos una vuelta de tuerca y cambiaramos al gnomo por un modelo que tengo, este "F:\Claude Proyectos\assets\Grego modelos 3d low poly ps1 blender\MetalShadow.zip"     ? Le quitaria sentido a las tramas de esos videos? o el gnomo puede ser cualquier otro personaje sin problema? Pienso en agregar ese y cambiarle expresiones en sus ojos y tal. tambien me acabo de dar cuenta que sus videos tienen un ligero toque de ojo de pez en la camara, y tambien parece que fuesen a menos fps, no se si van a 12 fps pero si van a menos de lo normal. y con respecto a la voz de ashley ya esta en voice studio y se llama Ashley, y la del gnomo o si es que ponemos este otro personaje tambien esta en voice studio se llama Gnomo personaje apoyo., si ves que tienen un poco de ruido se las quitas.
+  
+  Con respecto a la mesera, ya quedo! esta excelente, ahora tenemos que comenzar a hacer videos con ella tambien. He estado buscando y podemos hacer videos mas o menos asi con ella mira, analiza esta cuenta a fondo los videos de mas vistas: https://www.tiktok.com/@missmedannypsx?_r=1&_t=ZS-9BTzHryNYl0
+  El hombre que quiero colocar como su pretendiente sera este "F:\Claude Proyectos\assets\PlayStation - Mega Man Legends - Non-Playable Characters - Artillery.zip"       Lo que haras sera ponerle la piel de color carne osea normal, quitale el bolso, y quitale la pistola, y le cambias el color de su pantalon a negro y su sueter a otro color, y le pones varias expresiones y creo que a este si le cabe el esqueleto de mechayuki solo que le quitas las poses femeninas.. ah y modificarle los brazos para que no los tenga pegados a los pantalones, igual que como hiciste con la mesera. 
+  
+  Pon agentes en extra high o high para lo que consideres que necesites de esto
+- **2026-11-17 15:07** — genial, para las animaciones masculinas del hombre puedes fijarte de las que tenga el hombre que sale como pretendiente en los videos de @missmedannypsx . te dejare los videos de ese perfil aqui porque me dices que no pudiste analizar el perfil. son estos:
+  https://www.tiktok.com/@missmedannypsx/video/7705812724365806870?_r=1&_t=ZS-9BTzHryNYl0
+  https://www.tiktok.com/@missmedannypsx/video/7706199662880935190?_r=1&_t=ZS-9BTzHryNYl0
+  https://www.tiktok.com/@missmedannypsx/video/7707302378944466198?_r=1&_t=ZS-9BTzHryNYl0
+  https://www.tiktok.com/@missmedannypsx/video/7708414498654129430?_r=1&_t=ZS-9BTzHryNYl0
+  https://www.tiktok.com/@missmedannypsx/video/7706931737108040982?_r=1&_t=ZS-9BTzHryNYl0
+  https://www.tiktok.com/@missmedannypsx/video/7705212103157648662?_r=1&_t=ZS-9BTzHryNYl0
+  https://www.tiktok.com/@missmedannypsx/video/7705212283139411222?_r=1&_t=ZS-9BTzHryNYl0
+  https://www.tiktok.com/@missmedannypsx/video/7704420833954909462?_r=1&_t=ZS-9BTzHryNYl0
+- **2026-11-17 15:11** — genial, y tambien toma nota de las expresiones coquetas y sexys de la mujer de @missmedannypsx para agregarselas a nuestra mesera y adaptarlas a nuestro estilo
 
 ## Sesión 2026-10-25 — `f--Claude-Proyectos`
 
@@ -9704,6 +12140,29 @@ Todos los mensajes que el usuario escribió en 41 sesiones de Claude Code en est
 - **2026-11-12 18:10** — ok hay varias cosas que corregir: Primero creo que inicia muy brusco con el You said no, osea puedes mejorar un poco eso extendiendolo a algo quiza como I had to choose between ... and I choose not too open the door... o algo asi corrigelo y hazlo mejor tu. Hay cabezas de los zombies que estan temblando todo el tiempo no se por que. hay cosas que ella dice como muy lenta, pero extrañamente lentas, como por ejemplo en el seg 21 cuando dice threeee, seeeeven, hay que corregir eso y tambien suena como bugueado ahi el sonido de la seleccion de dino crisis alli en ese momento. seg 31 a partir de ahora cuando salgan esas pantallas negras donde pones las horas que van, quita el recuadro que se ve debajo de las letras, es un recuadro como gris. seg 1:29 la hay cosas que parpadean en la entrada en la calle. 1:44 ese click remuevelo, no quiero que ella diga click a partir de ahora. 2:06 mejora todo lo visual en esta explicacion porque esta muy feita y muy plana toda la visualizacion. 3:01 hay un sonido de llaves aqui que pones y esta muuuy duro quitalo, lo pusiste 2 veces. 5:52 aqui no puede quedar todo asi quieto de pronto, osea cambia planos alli. 6:20 cuando ella dice no no no no tienes que mejorarlo suena muy robotico. 7:40 ponlos a ellos que se muestren en 3d osea como son, no como muñequitos. 8:40 agregale que ribbon este gruñendo hasta el final del video, tampoco lo pongas tan alto.
 - **2026-11-12 19:57** — genial quedo excelente. Actualice el metodo de enviar los renders a telegram a lo de lucidlink, eso lo hice en la sesion de VMOS Cloud para PC.. puedes aplicar eso desde ya con los videos de Ava? osea envialo a su respectiva carpeta, envia el share. y ya deja de estar creando tantas copias o duplicados
 - **2026-11-13 20:00** — ok y enviaste tambien la miniatura a la carpeta esa de ava? crea una carpeta de Miniaturas para todos los estilos que trabajemos dentro de cada una de sus carpetas
+- **2026-11-14 17:47** — ok, necesito que hagas un git o un archivo o lo que sea para poder trabajar este estilo tambien en la mac. que lleve absolutamente todas las instrucciones y mis preferencias sobre como trabajarlo, las propuestas de video y todo. Recuerda que cualquier asset pesado o lo que sea que se necesite pasar alla, lo puedes pasar por lucidlink en la respectiva carpeta de Ava restfield
+- **2026-11-14 18:23** — ok dame lo que le debo escribir alla en el chat a la mac para comenzar todo alla y llevarlo todo
+- **2026-11-14 22:01** — Ok listo, cual seria el siguiente video? Podemos hacer el siguiente largo
+- **2026-11-15 01:24** — me gusta todo menos lo de cerrar con Cierra con la pregunta "Go back for Dutch?"... osea quiero que sea algo mas de la mansion ya, tipo un licker que se encuentre o un nemesis algo asi.. quisiera que sean decisiones como las de residente evil 3 que nemesis persigue a Jill y cuando la encuentra uno tiene que decidir si huir o combatir con el
+- **2026-11-15 01:30** — genial asi si. Me gustaria que el diseño del gigante fuera asi mira https://www.instagram.com/reels/DVMGtmtjYOS/
+  Es uno inspirado en Nemesis tambien, pero no es nemesis, y esta bastante bueno
+- **2026-11-15 01:35** — genial adelante, lo unico que no me gusta es que tenga un hacha, el puede ir caminando de manera amenazante sin ningun arma como hacia nemesis
+- **2026-11-15 02:07** — ! uvx mcp-for-blender install-addon
+- **2026-11-15 02:10** — y cual es la clave de prueba gratis de ese hyper3d rodin?
+- **2026-11-15 02:11** — pues creo que ya, verifica a ver
+- **2026-11-15 02:41** — me gusta como va quedando. la cabeza me gusta, tiene esa textura low poly. y los tubos no los veo mal. las manos no las quiero con dedos separados, en ps1 ningun personaje tenia dedos separados. mejora otras cosas que veas flojas y lo que si veo que debes mejorar es quiza las manchas rosas del abrigo que hay debajo de los brazos, y el abrigo darle un poco mas de textura low poly, pero en general se ve bien
+- **2026-11-15 02:48** — si adelante esta bien
+- **2026-11-15 21:22** — ok corrije lo que dices que esta flojo y tambien: dale un poco mas de detalle a marla. dale mas detalle al panel 51. dale mas detalle al bosque, aprovecha para poner mas arboles y eso, y pendiente de las hierbas verdes que salen de la tierra que parece que stuvieran alrevez. panel 90 tambien dale mas detalle.  panel 106, pon arboles a los lados de la mansion para darle mas profundidad y que se vea mas grande la mansion. panel 114, cambia esa foto que se ve en ese cuadro, puedes usar flow para poner una que se vea mejor y que coloque lo que quieras plasmar alli. panel 118 mejora lo que tiene puesto ava encima , osea la traspasa todo su cuerpo. Dale mas detalle a los pasillos y al interior de la mansion en general. Panel 138, no entiendo eso, mejora eso que se ve, se ve todo cortado. panel 146 me gustaria que el enemigo grande rompiera la ventana de un salto al entrar. Y mira el encuentro entre jill y nemesis de resident evil https://www.youtube.com/watch?v=0BfrhItFTwA     y replica todo osea la camara lenta cuando hay que decidir que hacer, la musica en ese momento, lo amenazante de la criatura... para mejorar nuestra escena
+- **2026-11-15 22:49** — Genial adelante. Corrije lo que consideres que hace falta y procede con. Ya abrí el voice studio. Recuerda que lo de la imagen en negativo casi al final debe durar lo que dura en el video de resident evil qué te pase, osea tampoco tanto
+- **2026-11-16 17:03** — los numeros que te dire son los segundos del video en los cuales hay errores y cosas que arreglar, igual los veras en las capturas. 44 hay una pared detras de la puerta del garaje. 54 esta la luz apagada, y luego en el 55 la luz vuelve a estar prendida. 2:15 marla tiene una animacion que se repite. 2:18 ese no no no no tienes que regenerarlo porque se escucha muy feo y robotico. 2:29 por favor hazles una animacion de bajar las escaleras, bajan horrible como flotando, y la salida de arriba esta tapada, osea como estan bajando por una salida tapada?. 3:33 las animaciones de marla osea, esta horrible, temblando todo el tiempo, y tampoco entiendo por que susurra todo el tiempo. 4:09 La linterna que Ava lleva no produce ninguna luz. 4:27 locura, todo tiembla. 5:44 regenera ese ribbon stay porque se escucha robotico, y que diga stay solo una vez. 6:32 mejora ese lobby de la mansion porque todo parpadea. 7:29 la linterna no produce luz y dale un poco mas de oscuridad a ese atico. 7:51 que no repita static, que lo diga una vez solamente. la parte del final me gusta mucho, la de que entra el gigante y eso, todo esta bien alli, lo unico que no me gusta es eso de que no hace ningun sonido, tiene que hacer un sonido de un monstruo algo feo, y por supuesto que Ava no diga eso de que no hace ningun ruido"
+- **2026-11-16 17:12** — que raro, yo tengo el voice studio aqui abierto
+- **2026-11-16 17:47** — ok, puedes hacer un commit y push con todas las intrucciones nuevas que te he dado de este estilo para enviarlo a la mac y envía también el modelo del gigante, que se parece a Némesis. Recuerda que lo que no puedas enviar por Git lo puedes enviar por Lucid Link. Y obviamente en las instrucciones especifica en dónde están los assets. Para que él sepa de dónde agarrarlos. Envía todo, o sea, lo que ya estás haciendo incluso en este video de el gruñido del gigante, todo eso. Porque quiero ponerlo a él para que sea como un enemigo que la persigue a ella durante muchos videos.
+- **2026-11-16 22:27** — ok antes de pasar al siguiente video quiero que comiences a mejorar las miniaturas, de todos los estilos, comencemos por la de este ultimo video. quiero una asi como la que te adjunto de resident evil requiem pero en formato horizontal obviamente, cambia a los personajes que se ven por Ava en vez de grace, y la cabeza del gigante en grande en vez de la de Leon, osea en las mismas posiciones, y las otras siluetas de abajo pon zombies y tal. Dame varias versiones. varias hechas con codigo y varias hechas en flow. que queden bien por favor, unas con texto y otras sin texto, y no uses mas esa fuente fea, usa fuentes que utiliza el canal de wendigoon https://www.youtube.com/@Wendigoon/videos    que sea una que se adapte a esta miniatura claro.
+- **2026-11-16 22:57** — Me gusta la B3 pero tienes que mejorar la pistola en su mano que se le vea bien, y necesito que la cara del gigante la cambies por la low poly que tenemos pero que no solo se le vea la cabeza sino asi como este osea los tubos tambien. Igual dame varias versiones (todas sin texto) y otras tambien con este gigante que pusiste en esta B3 pero que se parezca mas al nuestro, porque no me desagrada del todo
+- **2026-11-16 23:04** — estos estan mejor, pero te dije que me des algunos en donde pongas la version low poly nuestra del gigante
+- **2026-11-16 23:16** — quiero que se vea un poco mas grande el gigante y que no se desvanescan tan pronto sus bordes, que se vean mas
+- **2026-11-16 23:23** — usemos la g1a y reemplazale la cabeza en flow por la de nuestro gigante low poly, o haz algo para que se parezca mas a la cabeza del nuestro y pon las letras HUNTER detras de su cabeza
+- **2026-11-16 23:31** — genial, nos quedamos con la v6A, asi si
 
 ## Sesión 2026-10-29 — `f--Claude-Proyectos`
 
@@ -10166,6 +12625,70 @@ Todos los mensajes que el usuario escribió en 41 sesiones de Claude Code en est
 - **2026-11-09 01:07** — genial, sigue dandole
 - **2026-11-09 11:05** — ok deten todo mientras busco mas creditos
 - **2026-11-14 03:16** — Claude, una pregunta. Si de ahora en adelante necesito que lleves la cuenta de cada video que generas, o sea, cada clip, y cuánto cuántos créditos vas gastando, en el flow con el OmniFlash, tú puedes llevarla cierto? Y también si te pido, por ejemplo, que gastes hasta un límite de créditos, tú puedes hacerlo, ¿verdad? O sea, tú puedes parar en ese límite.
+- **2026-11-14 17:07** — ok si, a partir de ahora lleva la cuenta y el limite de gastos esta vez sera de 11mil creditos. Abreme el chrome para iniciar sesion en otra cuenta que ahora usaras otra cuenta. Ojo con esto de llevar la cuenta tampoco quiero que gastes muchos tokens, solo lleva la cuenta normal
+- **2026-11-14 17:12** — Listo, ya esta logueada la cuenta, es correoderecuperacion496@gmail.com
+  El limite de creditos que usaras es de 11.400. Otra cosa, verifica de nuevo los videos de Atrium stories, ahora quiero que hagas mas videos asi enfocados en sus historias, porque esas funcionan mejor por lo que veo. Y en esta tanda haras solo videos de VISTA, MEXI y MAJESTIC
+- **2026-11-15 00:48** — ok varios detalles que estoy viendo y necesito: Primero, necesito que envies todos los videos que has hecho al telegram tal y como hacias antes (solo los de estas novelas mexicanas, con su pie de foto y su marca como antes) pero igual tambien envialos a su carpeta en trabajo como estas haciendo. Tambien con respecto a los videos, analizando los ultimos videos de atrium stories me doy cuenta que el esta acelerando los videos un poco, para que no sea tan lento todo, analiza cuanto los esta acelerando. y tambien hay algunos en donde estas iniciando siempre con un plano en donde no se ve nadie y se bota algo o akguien rompe algo o algo asi... verifique los videos de Atrium y en ninguno vi eso, asi que no lo hagas, inicia de una vez con lo que es, como sus videos
+- **2026-11-15 02:44** — tambien verifica la parte de que en los videos de atrium el tambien usa planos un poco mas abiertos en donde se ven mas de 1 personaje, osea no solo siempre uno como tu siempre colocas. verifica eso
+- **2026-11-15 02:47** — ok la velocidad me gusta solo si puedes bajarle un poquitito, osea si esta en x1.20 ponla en x1.15
+- **2026-11-15 20:13** — Ok cuantos creditos van gfastados?
+- **2026-11-15 20:17** — Ok nueva regla, a partir de ahora vas a generar solo partes 1 de todas las historias, y las segundas partes las vas a generar unicamente en flow cuando veas que el video funciono bien en las cuentas de tiktok, es decir que tuvo mas de 10mil vistas. Te dejo las cuentas de tiktok:
+  https://www.tiktok.com/@vistastoriestv     
+  https://www.tiktok.com/@wepsychologic      (MAJESTIC)
+  https://www.tiktok.com/@mexistories
+- **2026-11-16 14:16** — Ok otras instrucciones: en la cuenta del google pixel 10 pro de vmos publica el video que el titulo es "MAJESTIC
+  Le dio el maletín al hombre que arruinó a su padre… y el chofer tenía la prueba de que todo era mentira 😳 | El Chofer de la Patrona · Parte 2"
+  
+  Y tambien genera videos para esa cuenta de ese google pixel tambien, con las mismas instrucciones y agrega la cuenta a las 3 marcas que ya tenemos, es MEXI TV: @mexitve
+- **2026-11-16 14:52** — ok, por cierto vamos a comenzar a poner los horarios de publicacion. primero en esta cuenta de google pixell de mexitv. las horas en las que publicaras sera: primeros 3 dias 1 solo video diario a las 6 pm, y los siguientes dias 2 videos diarios, 1 a las 8 am y el otro a las 6 pm.
+- **2026-11-16 15:04** — si pero ya hoy no publiques mas videos alli, comienza eso a partir de mañana
+- **2026-11-16 15:29** — Edita la marca en el titulo que le pusiste en telegram, y ponle MEXITV, para que no se confundan con los de MEXI (recuerda que MEXI es una marca y MEXITV es otra marca nueva)
+- **2026-11-16 17:11** — si claro, los videos de esta cuenta tienen que tener la marca de MEXI TV asi
+- **2026-11-16 17:20** — Si, busca musica distinta para MEXI TV, que sea parecida asi de suspenso como la de VISTA. En telegram borra las versiones viejas y manda las de la marca nueva. Otra cosa, añadi una cuenta nueva en la que puedes gastar todos los creditos que hay, se llama monetizadotiktok18@gmail.com     ahi si puedes darle con todo, asi que sigamos de una. Y no incluyas estos creditos gastados en esta cuenta en la cuenta que llevas de creditos gastados de la de correoderecuperacion496.... esa mantenle la cuenta aparte. Esta es aparte. Y la de correoderecuperacion496 no la uses si no hasta gastar todos los creditos en esta. Entendiste?
+- **2026-11-16 17:34** — genial. recuerda que tambien puedes incluir historias de capos y eso, como esta https://www.tiktok.com/@atriumstories_/video/7704056500502793502?_r=1&_t=ZP-9B1Vs304Xnz
+  
+  si es que aun no lo has hecho
+- **2026-11-16 18:43** — genial, sigue generando en flow, recuerda que debes generar para las 4 marcas
+- **2026-11-16 20:02** — descalificaron el video: VISTA
+  
+  Llegó antes de la procesión y encontró a su hija tallando el patio… mientras su esposa se pintaba las uñas en la hamaca 😳 | La Alfombra de Huamantla · Parte 1
+  
+  Dame los elementos necesarios que me diste la ultima vez para el otro video que ese si me lo devolvieron. ponlo en la respectiva carpeta en donde esta el video en trabajo
+- **2026-11-16 22:24** — deten un momento al generacion en flow. te aviso cuando puedas reanudar
+- **2026-11-16 23:35** — sigue con la generacion
+- **2026-11-17 00:51** — deten un momento todo te aviso cuando puedas reanudar
+- **2026-11-17 01:33** — ahora si continua. Pon un vigilante como antes que verifique que siempre este generando bien flow. Tambien aqui te dejo mas videos de referencia que estan funcionando bien: https://vm.tiktok.com/ZN8adPLvq/
+- **2026-11-17 01:47** — a partir de ahora ponles captions a los videos tambien
+- **2026-11-17 02:24** — los subtitulos estan excelentes, muy bien, solo bajales ligeramente el tamaño y ya, pero ligeramente
+- **2026-11-17 10:58** — deten el vigilante ya. que siga como antes, cuentame cuantos creditos van gastados
+- **2026-11-17 12:32** — ok, varias cosas: estas aplicandole a todas el aumento de velocidad que te dije anteriormente? y tambien, estoy verificando  y en todas estas haciendo lo mismo, osea alguien que estan desalojando y que le dicen "antes de que suenen las campanas te vas" o "antes de que pase tal cosa te vas"... por favor tienen que ser originales y diferentes las historias, osea como de novelas, no puedes hacer todo el tiempo lo mismo. Busca referencias en tiktok, en youtube de novelas mexicanas con muchas vistas, osea hay muuuucho mas que puedes hacer y estas haciendo solo eso
+- **2026-11-17 13:25** — si, y tambien agrega a eso novelas exitosas de patronas y haciendas. Estos fueron lso resultados que me dio gemini asi que analizalos y agrega historias asi:
+  
+  <pasted_content id="a053">
+  Las telenovelas de haciendas y patronas son de los subgéneros más exitosos y recordados en la televisión hispana. Se caracterizan por mujeres de carácter fuerte, paisajes rurales, conflictos por tierras y pasiones intensas.
+  
+  Telenovelas Mexicanas (Televisa y TV Azteca)
+  
+  Las producciones mexicanas han dominado este formato, destacando tanto historias contemporáneas como de época:
+  Soy tu dueña (2010). Protagonizada por Lucero y Fernando Colunga, sigue a Valentina Villalba, una heredera que tras ser plantada en el altar se refugia en su hacienda y se convierte en una patrona fría y temida. Es una exitosa adaptación de La Dueña (1995) con Angélica Rivera.
+  Destilando Amor (2007). Ambientada en las haciendas agaveras de Tequila, Jalisco, cuenta el romance entre una recolectora de agave (Angélica Rivera) y el heredero de una familia tequilera (Eduardo Yáñez).
+  Amor Real (2003). Ambientada en el México del siglo XIX, narra los conflictos de poder y amor en una hacienda entre Matilde (Adela Noriega) y Manuel Fuentes Guerra (Fernando Colunga).
+  Fuego en la sangre (2008). Tres hermanos llegan a trabajar como obreros a la hacienda de la poderosa familia Elizondo para vengar la muerte de su hermana, enfrentándose a la estricta matriarca Gabriela (Diana Bracho) y enamorándose de sus tres hijas.
+  La Desalmada (2021). Fernanda Linares (Livia Brito) busca venganza contra el poderoso hacendado Octavio Toscano (Eduardo Santamarina), pero termina enamorándose de su hijo (José Ron) en medio de conflictos ganaderos.
+  Cuando me enamoro (2010). Gran parte de la trama se desarrolla en la hacienda vitivinícola "La Bonita", donde Jerónimo (Juan Soler) y Renata (Silvia Navarro) viven una historia marcada por la intriga y el manejo de los viñedos.
+  La Patrona (2013). Aunque es una coproducción de Telemundo grabada en México, su esencia es totalmente mexicana. Aracely Arámbula interpreta a Gabriela Suárez, una mujer que trabaja en una mina y regresa convertida en una poderosa y temida "Patrona" para vengarse de Antonia Guerra (Christian Bach).
+  
+  Telenovelas de Miami (Telemundo y Venevisión Internacional)
+  
+  Las producciones realizadas en Miami o en alianza con productoras estadounidenses solían mezclar el ambiente de fincas, ranchos y haciendas de Florida con el melodrama clásico:
+  Tierra de Pasiones (2006). Producida por Telemundo en Miami y protagonizada por Gabriela Spanic y Saúl Lisazo. Gira en torno a Valeria San Román, una mujer de carácter indomable y capataz de unos viñedos que lucha contra su propio padre y los conflictos de tierras.
+  Doña Bárbara (2008). Aunque fue grabada en Colombia por Telemundo, es el máximo referente de la "patrona". Edith González dio vida a la temida cacique de la hacienda "El Miedo", quien se enfrenta a Santos Luzardo (Christian Meier).
+  Gata Salvaje (2002). Un fenómeno internacional grabado en Miami por Venevisión y Fonovideo. Aunque la protagonista (Marlene Favela) comienza en la humildad, gran parte de los conflictos de poder ocurren en la hacienda de la poderosa y villana familia Arismendi.
+  Alma Indomable (2009). Grabada en los alrededores de Miami por Venevisión Internacional y protagonizada por Scarlett Ortiz y José Ángel Llamas. Trata sobre una joven salvaje que hereda una gran hacienda y debe aprender a ser la patrona mientras lucha contra ambiciosos familiares.
+  El Cuerpo del Deseo (2005). Producida por Telemundo en Miami. Trata sobre Pedro José Donoso (Andrés García), un hombre muy rico dueño de una gran finca/hacienda que muere y reencarna en el cuerpo de un campesino (Mario Cimarro) para descubrir las traiciones de su joven esposa (Lorena Rojas).
+  Tierra de Reyes (2014). Grabada en Miami y Houston por Telemundo (adaptación de Pasión de Gavilanes). Tres hermanos humildes se infiltran como trabajadores en el rancho de la familia Del Junco par […recortado]
+- **2026-11-17 14:29** — ok. que paso con la subida que agendaste en el Mexi tv? a que hora te dije que publicaras hoy que no me acuerdo?
+- **2026-11-17 14:29** — muy bien cierto
 
 ## Sesión 2026-11-05 — `f--Claude-Proyectos`
 
@@ -10519,6 +13042,46 @@ Todos los mensajes que el usuario escribió en 41 sesiones de Claude Code en est
 - **2026-11-14 05:25** — genial. Por que la ventana de chrome se le abre y cierra de inmediato una pestade pronto? lo hace cada ratito. lo de la lista de creadores no lo hagas. otra pregunta, y podemos beneficiarnos de hotmart con esto? he escuchado de gente que saca buenas ganancias de alli. Otra cosa, si descargo la aplicacion de tiktok estudio para aca para la pc, y pongo la cuenta del Agente, tu la podrias manejar?
 - **2026-11-14 05:32** — Ok, ya yo tengo cuenta de hotmart. una pregunta puedes hacer todo esto con haiku 5.5? es suficiente? Lo que quiero es que hagas un buen trabajo en todo igual. Otra pregunta, con lo que me dices de manejar tiktok como lo haces con gumroad, podrias hacerlo asi como lo haces con el vmos cloud? osea que lo haces parecer organico y humano todo, y responder mensajes privados y todo?
 - **2026-11-14 05:38** — ok vale, puedes mezclalo como dices igual puedes usar este opus para lo que necesites. con respecto a lo de VMOS no me referia a eso, me referia a que si al manejarlo como dijiste por tiktok studio por el navegador vas a poder hacer lo mismo que como haces con VMOS que lo haces todo super organico, puedes responder comentario, dar click en lugares diferentes, responder mensajes privados, todo eso? ah y publicar los videos.
+- **2026-11-14 17:51** — ok pero entonces te parece mejor que compre otro telefono para trabajar alli la cuenta del agente?
+- **2026-11-14 17:52** — no, me refiero a comprar otro telefono, para tener ahi la cuenta de patrick solamente... y funciona mejor realmente, porque la verdad si recibo muchos mensajes de la gente en el tiktok
+- **2026-11-15 02:49** — ya esta el telefono nuevo en vmos con lucidlink y la cuenta de tiktok del agente logueada ya en tiktok. el telefono es el V06, verifica todo
+- **2026-11-15 02:58** — Si adelante, haz lo que tu consideres mejor y lo que mejorara todo. Verifica los mensajes privados, hay muchos que me enviaron hace tiempo y nunca les respondi porque no tuve tiempo porque eran muchos. y tambien verifica los ultimos videos que hice para que veas la estrategia que tenia para promocionar la tarjeta roja que era el producto que vendia por tiktok shop, pero ahora quiero hacer algo asi pero con las guias que tengamos y eso
+- **2026-11-15 20:30** — ok mira: El objetivo aqui es siempre mandarles el enlace para que obtengan o compren las guias, no resolverles los problemas. Osea esas conversaciones que tuviste con Maribel por ejemplo, no es necesario hacerlas, la intencion es que cualquier problema que ellos manifiesten aprovecharla para redirigirlos a la compra de una guia, y si no tenemos pues la creas, una guia o algun documento o algo que le ofrezca alguna minima solucion a su problema, no importa cuan pequeña sea, o incluso si no le ofrece solucion, la intencion es aprovechar la demanda para crear una oferta siempre.. pero no que te pongas a seguirles la corriente a los problemas que te cuenten y eso, osea si debes hablar con ellos, pero la intencion como te digo es siempre que entren a comprar el producto o que entren al link que les envies. Pero me gusta la educaion y la manera en como les respondes, esta bien eso.
+  Con respecto a los mensajes que responder, hay muuuucha gente que quiere que le enviemos algun producto (ellos desean lo que sea para poder intentar defenderse de alguna manera de ICE), pero la mayoria estan en los comentarios de mis videos, si lees los comentarios de mis videos te daras cuenta que muchos dicen DOCUMENTO o TARJETA o algo asi para que les enviemos algo.. la intencion es aprovechar cada uno de esos comentarios y enviarles algo, osea convertirlos. Y si, me gusta la idea que propones de la API, pero recuerda que no hay casos urgentes, lo que debes hacer es lo que te dije arriba.
+- **2026-11-15 21:01** — ok, si, apaga la respuesta automática de TikTok
+- **2026-11-15 22:51** — Que tal como va Eso? Dame detalles
+- **2026-11-15 23:53** — Ok si, me parece bien, haz como lo veas consideres mejor. Para los clips de arriba generados por IA de alterados con ICE en general yo los sacaba de este Instagram: https://www.instagram.com/mikewaynedotcom/reels/
+- **2026-11-15 23:55** — Puedes usar los reels de su cuenta, no te preocupes que Patrick no tiene Instagram y el no usa tiktok, así que si puedes usarlos, osea sus videos no están en tiktok, por lo que no va a haber reclamación de contenido
+- **2026-11-16 00:47** — ok como vas cuentame. con respecto al instagram con sesion iniciada, en donde la necesitas o como? yo puedo iniciar sesion donde lo necesites
+- **2026-11-16 01:24** — ok ya esta iniciada la sesion en instagram en el chrome. otra cosa, para los videos del agente, te deje: el video de Agente reaccion para cuando sale el mirando el video que colocas en la parte de arriba, y agente imagen hd para que de esa saques los videos con lo que debe decir. ambos estan en en ref youtube agente. Analiza los ultimos videos que son asi en donde reacciona  al video primero y luego habla y luego recomienda para que veas que asi es que se ve, y tambien para que veas como es la estructura de los videos y todo
+- **2026-11-16 01:32** — ok pero tengo que hacer algo? por lo de la conversacion
+- **2026-11-16 01:48** — pero es qe no te veo que estas haciendo nada... osea entonces??
+- **2026-11-16 02:10** — pero hiciste los clips de Patrick hablando en vertical, tienen que ser en horizontal con el mismo tamaño que trae la imagen, para que los puedas poner abajo del mismo tamaño que tiene en los videos de la cuenta cuando sale hablando (no te guies del ultimo sino de los de antes del ultimo). Otra cosa, veo que no puedes abrir el instagram porque sale un codigo captcha alli antibots, dejame hacerlo yo y te aviso, deja de recargar la pagina
+- **2026-11-16 02:31** — Pero ya tienen el audio de voice studio con la voz de patrick diciendo eso? porque los acabo de escuchar y habla ingles con una voz random de flow
+- **2026-11-16 02:34** — pero como vas a hacer el lipsync? eso era lo que te estaba diciendo desde un inicio, pense que desde que lo generabas en flow podias hacerlo con su voz de voice studio....
+  
+  bueno intenta de las dos maneras, porque tenemos que encontrarle la solucion
+- **2026-11-16 03:28** — oye pues salio bastante bien, solo tienes que mejorar la sincronia porque cuando dice el Si no hay una orden firmada por un juez, la puerta se queda cerrada." falla un poco la sincronia, lo que tienes es que verificar que eso este bien siempre, pero esta bueno!
+  Y ese instagram no lo vamos a poder usar para que busques los videos, intenta si puedes buscarlos en su facebook: https://www.facebook.com/mikewaynedotcom/reels/
+- **2026-11-16 04:10** — No se que pasa con ese sync3.mp4 pero no puedo reproducirlo bien ni escucharlo, se para en el reproductor de windows media y en otros reproductores no se escucha. Mientras que inicio sesion en facebook, aqui te dejo algunos clips de los que puedes sacar los videos, algunos videos traen varios clips asi que usa uno por uno. 
+  https://www.instagram.com/reel/DdaSeMgwhIT/
+  https://www.instagram.com/reel/DdaRzNPMLdZ/
+  https://www.instagram.com/reel/DZeKw6yiaQj/
+  https://www.instagram.com/reel/DZRWpJtjOBP/
+  https://www.instagram.com/reel/DZRWnhnj6ZZ/
+  https://www.instagram.com/reel/DWaYZJVjPCj/
+  Puedes usar este para el de la maestra: https://www.instagram.com/reel/DWOzPiZk55B/
+  O este tambien para de la maestra: https://www.instagram.com/reel/DWOyorrkoUF/
+  https://www.instagram.com/reel/DWOzMk4ABGU/
+  https://www.instagram.com/reel/DWNlJUpCT5S/
+  
+  Verifica cada reel o clip y luego crea el guion en base a ese reel obviamente. Usa todos esos mientras te paso los demas luego
+- **2026-11-16 04:28** — ok continua. recuerda que los titulos tienen que ser tal cual como yo los pongo en los ultimos videos de el tiktok de patrick, con texto en montserrat y fondo asi tal cual negro
+- **2026-11-16 04:33** — y esta es la musica de fondo para estos videos "F:\Claude Proyectos\Ref youtube agente\Hiraoka-Kotaro-musica agente.m4a"
+  igual tengo abierto premiere con la secuencia donde trabajo estos reels abierta, por si te sirve cualquier cosa o asset de lo que hay alli. Y las voces estas repitelas, la e cta se corta alfinal.. y si ves que la voz va muy rapida porque el habla muy rapido, puedes hacer un poco mas lento el video, para que la voz no se sienta que va volando, porque en ese op.,p4 va volando la voz, asi que pendiente de eso siempre
+- **2026-11-16 11:14** — necesitas que inicie esta conversacion en otra sesion?? por eso de que esta conversacion esta llena y se va a resumir que lo sigues diciendo
+- **2026-11-16 11:16** — ok pero es que el audio de patrick_cta esta bastante feo, mejoralo, y tambien se corta al final
+- **2026-11-16 11:20** — no es que en la de patrick_cta la sincronia esta desfasada
 
 ## Sesión 2026-11-14 — `f--Claude-Proyectos`
 
@@ -10531,6 +13094,9 @@ Todos los mensajes que el usuario escribió en 41 sesiones de Claude Code en est
 
 - **2026-11-14 16:24** — Quiero que me des un archivo que contenga absolutamente toda la informacion y data de lo que hemos hecho aqui para migrarlo a Antigravity. Con todo me refiero a mis gustos, exigencias, instrucciones a traves del tiempo, preferencias, estilos de videos que trabajo y de todas las sesiones que trabajamos incluido lo que esta en git y en la mac. Que solo con darselo a Antigravity pueda continuar el trabajo alla con normalidad
 - **2026-11-14 16:33** — ok si haz commit y push de todo lo que falte. y tambien quiero que ese archivo lo vayas actualizando a medida que sigamos trabajando aqui en las sesiones, porque aun no voy a migrar pero lo voy a hacer pronto y es para tenerlo preparado. Dame los pasos exactos de que hacer en la mac, que escribir donde y como
+- **2026-11-14 16:47** — esto es lo que dice la terminal con el primer comando.
+  y con respecto a la mac, dame las instrucciones para hacerlo ya, osea no quiero esperar a cuando vaya a migrar. y esto que me dices de agrega en VSCode el permiso Bash(git push:*) con /permissions y avísame." lo revise y eso ya esta, de hecho dice es remove
+- **2026-11-14 17:02** — ya hice lo de los comandos en la terminal. lo de ese mensaje que debo pegar en la mac, donde es? osea donde esta eso en VS code? con eso te refieres al chat asi como este?
 
 
 ---
@@ -10562,6 +13128,12 @@ Todos los mensajes que el usuario escribió en 41 sesiones de Claude Code en est
 - `tools/flow_reload.js` — Recarga las pestañas de Google Flow en la Chrome por CDP que usa srz-google-flow-mcp.
 - `tools/flow_snapshot.js` — Captura real de un proyecto de Google Flow (la misma Chrome por CDP que usa srz-google-flow-mcp).
 - `tools/flow_tabs.js` — 
+- `tools/mexitv_publicar.py` — Publica en TikTok (@mexitve, Pixel VMOS) el siguiente video de la cola, segun el horario.
+- `tools/patrick.py` — Control a mano del V06 (TikTok de Patrick). Uso:
+- `tools/patrick_ai_inbox.py` — Lee los chats del V06 con capturas + Claude (créditos API) y responde llevando al link.
+- `tools/patrick_dm.py` — Responde un chat de la bandeja de Mensajes del V06 (TikTok de Patrick).
+- `tools/patrick_inbox.py` — Lee todas las conversaciones de la pestaña de Mensajes abierta en el V06.
+- `tools/patrick_sync.py` — Alinea la voz de VoiceStudio a un clip de Omni frase por frase (lipsync aproximado).
 - `tools/prores_to_cutout.py` — ProRes 4444 alpha (Premiere object mask) -> VP9 alpha webm, keeping only the largest alpha blob per frame (drops neon leaks).
 - `tools/revisar_render.py` — Revisa un render contra las reglas de su estilo con Claude (API, créditos del plan Max).
 - `tools/stimulus_cut_check.py` — Stimulus cut check: python tools/stimulus_cut_check.py <piece>/index.html <piece>/prep/cuts.json
@@ -11993,6 +14565,8 @@ Las mezclas usan `ffmpeg` y el `.venv` del paso 4. Lo que el PC genere (`.wav`, 
 
 | type | text | context | plan/date |
 |------|------|---------|----------|
+| insight | upnext-girl2 (rashiyx Ashley turntable): turntable rotation direction is ambiguous from silhouettes (mirror solution nearly as consistent) - check with class labels / a side frame. Eased (smoothstep) turntable: refine per-frame angles. Best geometry fit = contour ICP (hard z-buffer, move occluding-contour verts onto his class-map SDF, average over views, diffuse), not SoftRas (soft union of many small tris has a halo bias that shrinks the mesh). Texture = projection bake from his frames (flat unlit => exact). Head must be hair shell + separate face mesh. | - | 2026-11-16T12:54:09-04:00 |
+| insight | upnext-girl v5: copiar un modelo de un video con turntable = calibrar la camara por consistencia del visual hull (periodo por correlacion de mascaras, 50 frames), luego pose-fit + ringfit + barridos de vertices contra siluetas; IoU >=0.85 por zona. Restaurar cabeza/torso/brazos v4 si el hull los deforma (hull es gordo en concavidades). | - | 2026-11-16T02:05:25-04:00 |
 | insight | 9:16 pov3d "one thing evolves" piece from a ref (umbrella→car, @ruthmork1); start the next such piece from pieces/paraguas-auto
 
 pieces/paraguas-auto (2026-11-02): Spanish version of a TikTok ref where an umbrella is improved step by step into a car. 61 s, 9:16, three.js, voice "scroll 2 buena español" (VoiceStudio 44a50a60), scratch-clock remap so motion is authored once and the voice decides timing.
@@ -12124,6 +14698,16 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 ## Historial de commits
 
 ```
+2026-11-16 cff4b270 Ava Day 3 long video v3: user fixes + Stalker docs for the Mac
+2026-11-14 56738481 Ava Restfield: style guide, proposals and asset list for the Mac
+2026-11-14 b135f8aa mechayuki: full style guide, user rules (memory copy) and video proposals for working on the Mac
+2026-11-14 fe571270 MIGRACION_MAC.md: exported Mac context for the Antigravity migration
+2026-11-14 3b9f1aa1 Pending pieces work, batch 3/3
+2026-11-14 e0b65806 Pending pieces work, batch 2/3
+2026-11-14 e94e3e88 Pending pieces work, batch 1/3
+2026-11-14 b16b674b Migration context export (MIGRACION_ANTIGRAVITY.md + generator) and pending work outside pieces/
+2026-11-13 5d1237f2 CLAUDE.md: thumbnails to <channel>/Miniaturas; shared drive = PC<->Mac file channel
+2026-11-13 bc094d6c cartoon3d: nvidia-huang (famous-people format) + delivery rule for final renders
 2026-11-13 e86d7115 zawdog video 7 + Zaw framing rules: 14-short shot measurement, ENCUADRE.md, set scale, 15-20 s structure
 2026-11-13 e915297e zawdog video 6 + kit v6 humans: Flow-photo garments, rebuilt cast of 4, z6 bakes
 2026-11-12 35cc165e cartoon3d: trash-library = new quality bar (Ricks sequential camera, Ricks grade, stable shadows, living cards, sound)
@@ -12201,310 +14785,210 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
  M .base-ast/.tree-size
  M .base/graph.nq
  M .gitignore
- M Tools/revisar_render.py
- M agente-davis/gen_voice.py
- M agente-davis/ideas.md
- M pieces/mistaken-orders/index.html
- M pieces/zombie-06-floor30/audio/scripts/mix6.py
- M pieces/zombie-06-floor30/engine/cues.json
- M pieces/zombie-06-floor30/engine/film.js
- M pieces/zombie-06-floor30/engine/sets/floor30.js
- M pieces/zombie-06-floor30/engine/timeline.json
- M pieces/zombie-06-floor30/voz/build_cues.py
- M pieces/zombie-06-floor30/voz/gen.py
- M pieces/zombie-06-floor30/voz/gen_report.txt
- M pieces/zombie-06-floor30/voz/guion.md
- M pieces/zombie-06-floor30/voz/lines.json
- M pieces/zombie-06-floor30/voz/pick.json
- M pieces/zombie-06-floor30/voz/pick.txt
- M pieces/zombie-06-floor30/voz/prep.py
- M styles/cartoon3d/STYLE.md
- M styles/roblox/STYLE.md
- M styles/yokai/RULES.md
- M styles/yokai/kit.js
+ M MIGRACION_ANTIGRAVITY.md
+ M Tools/flow_snapshot.js
+ M Tools/tiktok_upload.py
+ M Tools/tiktok_warmup.py
+ M Tools/vmos.py
+ M pieces/_marcas/marcas.json
+ M pieces/digger-09-toothbrush/engine/shots.js
+ M pieces/invernadero-atlixco/clips.py
+ M pieces/invernadero-atlixco/edit.py
+ M pieces/plata-taxco/clips.py
+ M pieces/plata-taxco/clips_log.txt
+ M pieces/plata-taxco/edit.py
+ M pieces/zombie-03-station/largo3/miniatura_1280x720.png
+ M styles/ava-restfield/GUIA.md
  M tools/srzGoogleFlowMCP/srzGoogleFlowMCP/src/chrome.js
  M tools/srzGoogleFlowMCP/srzGoogleFlowMCP/src/cli.js
  M tools/srzGoogleFlowMCP/srzGoogleFlowMCP/src/flow.js
- M tools/srzGoogleFlowMCP/srzGoogleFlowMCP/src/mcp.js
  M tools/srzGoogleFlowMCP/srzGoogleFlowMCP/state.json
-?? MIGRACION_ANTIGRAVITY.md
-?? "Tiktok cuentas/"
-?? agente-davis/guiones/05-puerta.md
-?? agente-davis/guiones/06-congreso-ice.md
-?? agente-davis/productos/
-?? agente-davis/voz/05/
-?? agente-davis/voz/06/
-?? agente-davis/voz/gen05.log
-?? agente-davis/voz/gen06.log
-?? agente-davis/voz/gen06b.log
-?? "fonts/DIN Next LT Arabic Bold.ttf"
-?? "fonts/Gloucester MT Extra Condensed.ttf"
-?? fuentes/ali-abdaal-2/
-?? fuentes/atrium-vista/
-?? fuentes/atriumstories/
-?? fuentes/docucollage/
-?? fuentes/edicion-tecnicas/
-?? fuentes/f1motion/
-?? fuentes/positpixel/
-?? fuentes/referencias2/
-?? fuentes/referencias3/
-?? fuentes/zombie-nicho/part-1-stickocalypse-movie-chapter-1-the-last-farm-eps-1.md
-?? fuentes/zombie-nicho/survive-with-alya-the-first-weeks-chapters-14-full-length-special.md
-?? opuscar/
-?? pieces/STIMULUS_BROLL_CORRECCIONES.md
-?? pieces/_cola_flow.md
-?? pieces/_cola_run.log
-?? pieces/_cola_run.sh
-?? pieces/_cola_run2.sh
-?? pieces/_cut_check.py
-?? pieces/_descartes/
-?? pieces/_gen_head.txt
-?? pieces/_gen_tail.txt
-?? pieces/_hookcrops.sh
-?? pieces/_marcas/
-?? pieces/_mkgen.sh
-?? pieces/_regen_cta.log
-?? pieces/_regen_cta_piloncillo.sh
-?? pieces/_regen_insert.sh
-?? pieces/_roto_align.py
-?? pieces/_sheet.py
-?? pieces/_stim_prep.log
-?? pieces/_stim_prep.sh
-?? pieces/_stim_render.log
-?? pieces/_stim_render.sh
-?? pieces/_stim_render2.log
-?? pieces/_stim_render2.sh
-?? pieces/_stim_render3.log
-?? pieces/_stim_render4.log
-?? pieces/_stim_render5.log
-?? pieces/_stim_render6.log
-?? pieces/_stim_render7.log
-?? pieces/_stim_render8.log
-?? pieces/_stim_render9.log
-?? pieces/_stim_review.log
-?? pieces/_stim_review.sh
-?? pieces/_stim_roto.log
-?? pieces/_stim_roto.sh
-?? pieces/agua-hacienda-p2/
-?? pieces/agua-hacienda/
-?? pieces/ali-abdaal-2-test/
-?? pieces/bascula-limon/
-?? pieces/buen-hijo-p2/
-?? pieces/buen-hijo/
-?? pieces/cafe-neblina/
-?? pieces/camionero-p2/
-?? pieces/camionero/
-?? pieces/camionetas/
-?? pieces/canasta-p2/
-?? pieces/canasta/
-?? pieces/casera-recibos/
-?? pieces/cast-pack/renders_pc/
-?? pieces/cenote-campana/
-?? pieces/cheese-bank/index.html
-?? pieces/cheese-bank/storyboard.png
-?? pieces/chocolate-rancho-p2/
-?? pieces/chocolate-rancho/
-?? pieces/chofer-patrona-p2/
-?? pieces/chofer-patrona/
-?? pieces/cincha-cortada/
-?? pieces/digger-08-music/
-?? pieces/digger-09-toothbrush/
-?? pieces/docucollage-test/
-?? pieces/encendedor/
-?? pieces/f1motion-test/
-?? pieces/fierro-herradura/
-?? pieces/fix_log.txt
-?? pieces/flow_log6.txt
-?? pieces/flow_log89.txt
-?? pieces/flow_log_q.txt
-?? pieces/flow_log_q10.txt
-?? pieces/flow_log_q11.txt
-?? pieces/flow_log_q12.txt
-?? pieces/flow_log_q13.txt
-?? pieces/flow_log_q14.txt
-?? pieces/flow_log_q15.txt
-?? pieces/flow_log_q16.txt
-?? pieces/flow_log_q17.txt
-?? pieces/flow_log_q18.txt
-?? pieces/flow_log_q19.txt
-?? pieces/flow_log_q2.txt
-?? pieces/flow_log_q3.txt
-?? pieces/flow_log_q4.txt
-?? pieces/flow_log_q5.txt
-?? pieces/flow_log_q6.txt
-?? pieces/flow_log_q7.txt
-?? pieces/flow_log_q8.txt
-?? pieces/flow_log_q9.txt
-?? pieces/fonda-chela-p2/
-?? pieces/fonda-chela/
-?? pieces/foto-trucada/
-?? pieces/gardenia/
-?? pieces/golondrina-muelle/
-?? pieces/guinea-rent/storyboard.png
-?? pieces/guinea-rent/storyboard_v1.png
-?? pieces/guinea-rent/storyboard_v2.png
-?? pieces/guinea-rent/storyboard_v3.png
-?? pieces/hacienda-sangre-p2/
-?? pieces/hacienda-sangre/
-?? pieces/huipil-robado/
-?? pieces/intercambio/
-?? pieces/invernadero-atlixco/
-?? pieces/lost-luggage/cmp_sets_ricks_vs_v3.jpg
-?? pieces/lost-luggage/flow_src/
-?? pieces/lost-luggage/qa/
-?? pieces/lost-luggage/sound/fetch.log
-?? pieces/lost-luggage/storyboard.png
-?? pieces/lost-luggage/storyboard_v1.png
-?? pieces/lost-luggage/storyboard_v2.png
-?? pieces/lost-luggage/storyboard_v3.png
-?? pieces/madrina-central/
-?? pieces/mariachi-patron-p2/
-?? pieces/mariachi-patron/
-?? pieces/masa-honrada/
-?? pieces/mecanico/
-?? pieces/medalla-mezcal-p2/
-?? pieces/medalla-mezcal/
-?? pieces/monedas-carretera/
-?? pieces/nochebuena-p2/
-?? pieces/nochebuena/
-?? pieces/noppera-bo/
-?? pieces/padre-veladoras-p2/
-?? pieces/padre-veladoras/
-?? pieces/pedida-mano/
-?? pieces/piloncillo-rio/
-?? pieces/plata-taxco/
-?? pieces/posada/
-?? pieces/pp-chihuahua/
-?? pieces/rbx-crossing/
-?? pieces/rbx-followers/
-?? pieces/recetario-p2/
-?? pieces/recetario/
-?? pieces/regen2_log.txt
-?? pieces/regreso-20-p2/
-?? pieces/regreso-20/
-?? pieces/regreso-chicago-p2/
-?? pieces/regreso-chicago/
-?? pieces/reten-sierra-p2/
-?? pieces/reten-sierra/
-?? pieces/rocket-speedup/
-?? pieces/sazon-concha/
-?? pieces/single-cinnamon/
-?? pieces/stimulus-01-hf/
-?? pieces/stimulus-01/
-?? pieces/stimulus-02-hf/
-?? pieces/stimulus-03-hf/
-?? pieces/stimulus-04-hf/
-?? pieces/stimulus-05-hf/
-?? pieces/stimulus-06-hf/
-?? pieces/stimulus-07-hf/
-?? pieces/stimulus-08-hf/
-?? pieces/stimulus-09-hf/
-?? pieces/stimulus-10-hf/
-?? pieces/stimulus-11-hf/
-?? pieces/suegra/
-?? pieces/tele-nueva/
-?? pieces/tiendita-justa/
-?? pieces/velorio-patron/
-?? pieces/viuda-aguacate-p2/
-?? pieces/viuda-aguacate/
-?? pieces/zaw-dog-08/
-?? pieces/zombie-03-station/largo2/
-?? pieces/zombie-06-floor30/voz/fix_words.py
-?? pieces/zombie-06-floor30/voz/pick_v6.json
-?? pieces/zombie-07-saferoom/
-?? pieces/zombie-08-farm/
-?? pieces/zombie-09-subway2/
-?? pieces/zombie-10-stairs/
-?? pieces/zombie-11-xvirus/
-?? pieces/zombie-12-radio/
-?? pieces/zombie-13-gasstation/
-?? styles/ali-abdaal-2/
-?? styles/docucollage/
-?? styles/f1motion/
-?? styles/stimulus/
-?? styles/zawdog/humans/barista/src/neutral_c1.jpg
-?? styles/zawdog/humans/barista/src/neutral_c2.jpg
-?? styles/zawdog/humans/barista/src/sheet_c1.jpg
-?? styles/zawdog/humans/barista/src/sheet_c2.jpg
-?? styles/zawdog/humans/driver/src/neutral_c1.jpg
-?? styles/zawdog/humans/driver/src/neutral_c2.jpg
-?? styles/zawdog/humans/driver/src/sheet_c1.jpg
-?? styles/zawdog/humans/driver/src/sheet_c2.jpg
-?? styles/zawdog/humans/firefighter/src/neutral_c1.jpg
-?? styles/zawdog/humans/firefighter/src/neutral_c2.jpg
-?? styles/zawdog/humans/firefighter/src/sheet_c1.jpg
-?? styles/zawdog/humans/firefighter/src/sheet_c2.jpg
-?? styles/zawdog/humans/fisherman/src/neutral_c1.jpg
-?? styles/zawdog/humans/fisherman/src/neutral_c2.jpg
-?? styles/zawdog/humans/fisherman/src/sheet_c1.jpg
-?? styles/zawdog/humans/fisherman/src/sheet_c2.jpg
-?? styles/zawdog/humans/gardener/src/neutral_c1.jpg
-?? styles/zawdog/humans/gardener/src/neutral_c2.jpg
-?? styles/zawdog/humans/gardener/src/sheet_c1.jpg
-?? styles/zawdog/humans/gardener/src/sheet_c2.jpg
-?? styles/zawdog/humans/guard/src/neutral_c1.jpg
-?? styles/zawdog/humans/guard/src/neutral_c2.jpg
-?? styles/zawdog/humans/guard/src/sheet_c1.jpg
-?? styles/zawdog/humans/guard/src/sheet_c2.jpg
-?? styles/zawdog/humans/librarian/src/neutral_c1.jpg
-?? styles/zawdog/humans/librarian/src/neutral_c2.jpg
-?? styles/zawdog/humans/librarian/src/sheet_c1.jpg
-?? styles/zawdog/humans/librarian/src/sheet_c2.jpg
-?? styles/zawdog/humans/mechanic/src/neutral_c1.jpg
-?? styles/zawdog/humans/mechanic/src/neutral_c2.jpg
-?? styles/zawdog/humans/mechanic/src/sheet_c1.jpg
-?? styles/zawdog/humans/mechanic/src/sheet_c2.jpg
-?? styles/zawdog/humans/nurse/src/neutral_c1.jpg
-?? styles/zawdog/humans/nurse/src/neutral_c2.jpg
-?? styles/zawdog/humans/nurse/src/sheet_c1.jpg
-?? styles/zawdog/humans/nurse/src/sheet_c2.jpg
-?? styles/zawdog/humans/painter/src/neutral_c1.jpg
-?? styles/zawdog/humans/painter/src/neutral_c2.jpg
-?? styles/zawdog/humans/painter/src/sheet_c1.jpg
-?? styles/zawdog/humans/painter/src/sheet_c2.jpg
-?? styles/zawdog/humans/skater/src/neutral_c1.jpg
-?? styles/zawdog/humans/skater/src/neutral_c2.jpg
-?? styles/zawdog/humans/skater/src/sheet_c1.jpg
-?? styles/zawdog/humans/skater/src/sheet_c2.jpg
-?? styles/zawdog/humans/teacher/src/neutral_c1.jpg
-?? styles/zawdog/humans/teacher/src/neutral_c2.jpg
-?? styles/zawdog/humans/teacher/src/sheet_c1.jpg
-?? styles/zawdog/humans/teacher/src/sheet_c2.jpg
-?? styles/zawdog/humans/tourist/src/neutral_c1.jpg
-?? styles/zawdog/humans/tourist/src/neutral_c2.jpg
-?? styles/zawdog/humans/tourist/src/sheet_c1.jpg
-?? styles/zawdog/humans/tourist/src/sheet_c2.jpg
-?? styles/zawdog/humans/vendor/src/neutral_c1.jpg
-?? styles/zawdog/humans/vendor/src/neutral_c2.jpg
-?? styles/zawdog/humans/vendor/src/sheet_c1.jpg
-?? styles/zawdog/humans/vendor/src/sheet_c2.jpg
-?? styles/zawdog/humans/yogi/src/neutral_c1.jpg
-?? styles/zawdog/humans/yogi/src/neutral_c2.jpg
-?? styles/zawdog/humans/yogi/src/sheet_c1.jpg
-?? styles/zawdog/humans/yogi/src/sheet_c2.jpg
-?? tools/analizar_camara.py
-?? tools/analizar_estilo_edicion.py
-?? tools/analizar_novela.py
-?? tools/catalogar_broll.py
-?? tools/exportar_contexto.py
-?? tools/exportar_contexto_intro.md
-?? tools/face_eyes.py
-?? tools/flow_chips.js
-?? tools/flow_chips2.js
-?? tools/flow_reload.js
-?? tools/flow_snapshot.js
-?? tools/flow_tabs.js
-?? tools/logs/
-?? tools/models/
-?? tools/prores_to_cutout.py
-?? tools/srzGoogleFlowMCP/srzGoogleFlowMCP/dl_tmp.mjs
-?? tools/stimulus_cut_check.py
-?? tools/tiktok_upload.py
-?? tools/tiktok_warmup.py
-?? tools/timeline_img.py
-?? tools/vmos.py
-?? tools/vmos_adb.py
-?? yt-editor/v06/
+?? agente-davis/tiktok/
+?? fuentes/atrium-vista/encuadres.md
+?? fuentes/atrium-vista/encuadres/
+?? fuentes/atrium-vista/ranking2.md
+?? fuentes/atrium-vista/run2.log
+?? fuentes/atrium-vista/velocidad.md
+?? fuentes/atrium-vista/velocidad/
+?? fuentes/atrium-vista/videos/7697405703966838046_analisis.md
+?? fuentes/atrium-vista/videos/7698054444662934815_analisis.md
+?? fuentes/atrium-vista/videos/7700349674628074783_analisis.md
+?? fuentes/atrium-vista/videos/7702121152491179294_analisis.md
+?? fuentes/atrium-vista/videos/7705076412604091678_analisis.md
+?? fuentes/atrium-vista/videos/7705479449055169822_analisis.md
+?? fuentes/atrium-vista/videos/7705499092683590942_analisis.md
+?? fuentes/atrium-vista/videos/7706224426399829279_analisis.md
+?? fuentes/atrium-vista/videos/7706249552289860896_analisis.md
+?? fuentes/atrium-vista/videos/7706270980758441247_analisis.md
+?? fuentes/atrium-vista/videos/7706316327023119647_analisis.md
+?? fuentes/atrium-vista/videos/7706344565933985054_analisis.md
+?? fuentes/atrium-vista/videos/7706934829392203039_analisis.md
+?? fuentes/atrium-vista/videos/7707034442048507166_analisis.md
+?? fuentes/atrium-vista/videos/alisorxomrb/
+?? fuentes/jongmin-design/
+?? fuentes/mechayuki-nuevo-formato/
+?? fuentes/mikewayne/
+?? fuentes/missmedannypsx/
+?? fuentes/mml-crashsune-modelado-low-poly/
+?? fuentes/mml2-girl-tutorial/
+?? fuentes/novelas-variedad/
+?? fuentes/re3-encuentro/
+?? pieces/_cola_monetizado.log
+?? pieces/_cola_monetizado.txt
+?? pieces/_cola_monetizado_pendiente.txt
+?? pieces/_creditos.json
+?? pieces/_creditos_monetizadotiktok18.json
+?? pieces/_encuadres_snippet.py
+?? pieces/_marcas/MEXITV/
+?? pieces/_subs.py
+?? pieces/_watchdog.log
+?? pieces/agave-amatitan/
+?? pieces/alebrije-tilcajete/
+?? pieces/ambar-simojovel/
+?? pieces/arbol-metepec/
+?? pieces/aserrin-huamantla-p2/
+?? pieces/aserrin-huamantla/
+?? pieces/ate-calvillo-p2/
+?? pieces/ate-calvillo/
+?? pieces/barrica-valle/
+?? pieces/barro-coyotepec/
+?? pieces/baul-sanmiguel-p2/
+?? pieces/baul-sanmiguel/
+?? pieces/betun-zacatecas/
+?? pieces/bota-leon/
+?? pieces/brindis-orizaba/
+?? pieces/cacao-comalcalco/
+?? pieces/cafe-pluma/
+?? pieces/cajeta-celaya/
+?? pieces/camaron-escuinapa/
+?? pieces/cantaro-tonala/
+?? pieces/cantera-huichapan-p2/
+?? pieces/cantera-huichapan/
+?? pieces/carta-durango/
+?? pieces/cobre-santaclara/
+?? pieces/copita-matatlan/
+?? pieces/costal-cuyutlan-p2/
+?? pieces/costal-cuyutlan/
+?? pieces/domino-jerez/
+?? pieces/frascos-sanignacio-p2/
+?? pieces/frascos-sanignacio/
+?? pieces/garrafon-bernal-p2/
+?? pieces/garrafon-bernal/
+?? pieces/gaviota-bacalar-p2/
+?? pieces/gaviota-bacalar/
+?? pieces/gloria-linares/
+?? pieces/guitarra-paracho/
+?? pieces/hamaca-comalcalco-p2/
+?? pieces/hamaca-comalcalco/
+?? pieces/jaiba-lagunamadre/
+?? pieces/jarana-tlacotalpan/
+?? pieces/jipi-becal-p2/
+?? pieces/jipi-becal/
+?? pieces/junta-guadalajara/
+?? pieces/laca-olinala/
+?? pieces/ladrillo-tecate/
+?? pieces/lucero-parral/
+?? pieces/mango-rosario/
+?? pieces/manteles-apan/
+?? pieces/manzana-cuauhtemoc/
+?? pieces/mole-atocpan/
+?? pieces/nieve-tepoztlan/
+?? pieces/nuez-parras/
+?? pieces/obsidiana-teotihuacan/
+?? pieces/palofierro-kino/
+?? pieces/pan-comala/
+?? pieces/paste-realdelmonte/
+?? pieces/pinata-acolman/
+?? pieces/pipian-tlaxcala/
+?? pieces/ponche-zitacuaro/
+?? pieces/pulsera-mexcaltitan-p2/
+?? pieces/pulsera-mexcaltitan/
+?? pieces/queso-tequisquiapan/
+?? pieces/rebozo-santamaria/
+?? pieces/red-janitzio/
+?? pieces/reloj-zacatlan/
+?? pieces/sarape-saltillo-p2/
+?? pieces/sarape-saltillo/
+?? pieces/silla-izamal/
+?? pieces/sobre-alamos/
+?? pieces/sombrero-sahuayo/
+?? pieces/talavera-cholula/
+?? pieces/trajinera-xochimilco/
+?? pieces/upnext-01/
+?? pieces/upnext-girl/
+?? pieces/upnext-girl2/
+?? pieces/upnext-gnome/
+?? pieces/upnext-metalshadow/
+?? pieces/upnext-suitor/
+?? pieces/upnext-waitress/
+?? pieces/vainilla-papantla/
+?? pieces/yegua-jerez/
+?? pieces/zombie-03-station/largo3/engine/thumb.html
+?? pieces/zombie-03-station/largo3/engine/thumb.js
+?? pieces/zombie-03-station/largo3/engine/thumb_shoot.mjs
+?? pieces/zombie-03-station/largo3/miniaturas_v2/
+?? pieces/zombie-03-station/largo3/miniaturas_v3/
+?? pieces/zombie-03-station/largo3/miniaturas_v4/
+?? pieces/zombie-03-station/largo3/miniaturas_v5/
+?? pieces/zombie-03-station/largo3/miniaturas_v6/
+?? pieces/zombie-03-station/largo3/review/
+?? pieces/zombie-03-station/largo3/stalker/compare.png
+?? pieces/zombie-03-station/largo3/stalker/compare_v2.png
+?? pieces/zombie-03-station/largo3/stalker/compare_v3.png
+?? pieces/zombie-03-station/largo3/stalker/concept/
+?? pieces/zombie-03-station/largo3/stalker/renders/
+?? pieces/zombie-03-station/largo3/stalker/src/
+?? pieces/zombie-03-station/largo3/stalker/tex/
+?? pieces/zombie-03-station/largo3/stalker/v3/mesh_back.png
+?? pieces/zombie-03-station/largo3/stalker/v3/mesh_cmp.png
+?? pieces/zombie-03-station/largo3/stalker/v3/mesh_front.png
+?? pieces/zombie-03-station/largo3/stalker/v3/mesh_side.png
+?? pieces/zombie-03-station/largo3/stalker/v3/sheet.jpg
+?? pieces/zombie-03-station/largo3/stalker/v3/tex/
+?? pieces/zombie-03-station/largo3/stalker/v3/tex_back.png
+?? pieces/zombie-03-station/largo3/stalker/v3/tex_cmp.png
+?? pieces/zombie-03-station/largo3/stalker/v3/tex_front.png
+?? pieces/zombie-03-station/largo3/stalker/v3/tex_side.png
+?? pieces/zombie-03-station/largo3/storyboard_v1_1.png
+?? pieces/zombie-03-station/largo3/storyboard_v1_2.png
+?? pieces/zombie-03-station/largo3/storyboard_v1_3.png
+?? pieces/zombie-03-station/largo3/storyboard_v1_4.png
+?? pieces/zombie-03-station/largo3/storyboard_v1_5.png
+?? pieces/zombie-03-station/largo3/storyboard_v1_6.png
+?? pieces/zombie-03-station/largo3/storyboard_v1_7.png
+?? pieces/zombie-03-station/largo3/storyboard_v1_8.png
+?? pieces/zombie-03-station/largo3/storyboard_v1_9.png
+?? pieces/zombie-03-station/largo3/storyboard_v2_1.png
+?? pieces/zombie-03-station/largo3/storyboard_v2_2.png
+?? pieces/zombie-03-station/largo3/storyboard_v2_3.png
+?? pieces/zombie-03-station/largo3/storyboard_v2_4.png
+?? pieces/zombie-03-station/largo3/storyboard_v2_5.png
+?? pieces/zombie-03-station/largo3/storyboard_v2_6.png
+?? pieces/zombie-03-station/largo3/storyboard_v2_7.png
+?? pieces/zombie-03-station/largo3/storyboard_v2_8.png
+?? pieces/zombie-03-station/largo3/storyboard_v2_9.png
+?? pieces/zombie-03-station/largo3/voz/assemble_log.txt
+?? pieces/zombie-03-station/largo3/voz/fix_report.txt
+?? pieces/zombie-03-station/largo3/voz/gen_fix_log.txt
+?? pieces/zombie-03-station/largo3/voz/gen_log.txt
+?? pieces/zombie-03-station/largo3/voz/gen_log2.txt
+?? pieces/zombie-03-station/largo3/voz/gen_report.txt
+?? pieces/zombie-03-station/largo3/voz/pick.txt
+?? styles/ava-restfield/fonts/
+?? tools/mexitv_cola.json
+?? tools/mexitv_publicar.log
+?? tools/mexitv_publicar.py
+?? tools/patrick.py
+?? tools/patrick_ai_inbox.py
+?? tools/patrick_dm.py
+?? tools/patrick_inbox.py
+?? tools/patrick_sync.py
+?? tools/srzGoogleFlowMCP/srzGoogleFlowMCP/MEMORY.md
+?? tools/srzGoogleFlowMCP/srzGoogleFlowMCP/fb_reels.mjs
+?? tools/srzGoogleFlowMCP/srzGoogleFlowMCP/flow-mcp-only.md
+?? tools/srzGoogleFlowMCP/srzGoogleFlowMCP/ig_caps.mjs
+?? tools/srzGoogleFlowMCP/srzGoogleFlowMCP/ig_cookies.mjs
+?? tools/srzGoogleFlowMCP/srzGoogleFlowMCP/ig_reels.mjs
 ```
 
 ## Estructura de primer nivel
@@ -12522,6 +15006,7 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 - `Claude`
 - `Imagenes google flow`
 - `MIGRACION_ANTIGRAVITY.md`
+- `MIGRACION_MAC.md`
 - `Ref 1 bit monochrome pixelated Junji ito Style`
 - `Ref 3D cartoon animations`
 - `Ref Lunar Animation`

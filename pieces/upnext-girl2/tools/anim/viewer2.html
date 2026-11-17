@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>girl2 viewer</title>
+<style>html,body{margin:0;background:#111}canvas{display:block}</style>
+<script type="importmap">{ "imports": { "three": "../../../sina-test/node_modules/three/build/three.module.js", "three/addons/": "../../../sina-test/node_modules/three/examples/jsm/" } }</script>
+</head>
+<body>
+<script type="module">
+// girl2_anim.glb as the engine draws it (MeshBasicMaterial, Nearest textures, DoubleSide).
+// hisView(k): his calibrated turntable camera for his frame k (0-based), model turned by alpha_k, cream background.
+// setAction(name, view) + renderFrame(f30): animation preview like the zero_fem viewer.
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+const q = new URLSearchParams(location.search);
+const W = +(q.get('w') || 1080), H = +(q.get('h') || 1920);
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1); renderer.setSize(W, H); renderer.outputColorSpace = THREE.SRGBColorSpace;
+document.body.appendChild(renderer.domElement);
+const scene = new THREE.Scene(); scene.background = new THREE.Color().setRGB(235 / 255, 221 / 255, 199 / 255, THREE.SRGBColorSpace);
+const cam = new THREE.PerspectiveCamera(30, W / H, 0.5, 400);
+const gltf = await new GLTFLoader().loadAsync('../../out/' + (q.get('glb') || 'girl2_anim.glb'));
+const char = gltf.scene;
+char.traverse((o) => {
+  if (!o.isMesh) return;
+  const s = o.material;
+  if (s.map) { s.map.minFilter = s.map.magFilter = THREE.NearestFilter; s.map.generateMipmaps = false; s.map.needsUpdate = true; }
+  const m = new THREE.MeshBasicMaterial({ map: s.map || null, color: s.map ? 0xffffff : s.color, alphaTest: 0.5, side: THREE.DoubleSide });
+  m.name = s.name; o.material = m; o.frustumCulled = false;
+});
+const pivot = new THREE.Group(); pivot.add(char); scene.add(pivot);
+const faces = await (await fetch('../../out/face_tracks.json')).json();
+const TT = await (await fetch('../../out/turntable_cam.json')).json();
+const FACE = {
+  face_eyes: ['open', 'half', 'blink', 'happy', 'surprised', 'angry', 'sad', 'wink', 'hearts', 'shocked', 'dizzy', 'relaxed', 'disgust', 'smirk', 'soft', 'sparkle'],
+  face_mouth: ['neutral', 'smile', 'smileOpen', 'talkA', 'talkO', 'surprised', 'frown', 'shout', 'blep', 'cat', 'gasp', 'bigShock', 'disgust', 'smirk', 'blushSmile', 'blushGasp'],
+};
+// face atlas grid + names from face_tracks.json "_meta" (cols x rows, default 16 x 1 with the names above); the GLB face
+// UVs span one cell at the top-left, so a cell is just an offset (no repeat). "+blush" names: use on eyes AND mouth.
+const FM = faces._meta || {};
+window.setFace = (eyes, mouth) => {
+  const cols = FM.cols || FM.cells || 16, rows = FM.rows || 1;
+  char.traverse((o) => {
+    if (!o.isMesh) return;
+    const cells = FM[o.material.name] || FACE[o.material.name]; if (!cells) return;
+    const k = cells.indexOf(o.material.name === 'face_eyes' ? eyes : mouth);
+    if (k >= 0) o.material.map.offset.set((k % cols) / cols, Math.floor(k / cols) / rows);
+  });
+};
+const faceAt = (name, f) => { const tr = faces[name] || [[1, 'open', 'neutral']]; let c = tr[0]; for (const k of tr) if (k[0] <= f) c = k; return c; };
+const mixer = new THREE.AnimationMixer(char);
+let action = null, name = null;
+window.ACTIONS = gltf.animations.map((c) => ({ name: c.name, frames: Math.round(c.duration * 30) }));
+const toThree = (p) => new THREE.Vector3(p[0] * TT.S, (p[2] - TT.zmin) * TT.S - 9.0, -p[1] * TT.S);
+window.hisView = (k, eyes = 'open', mouth = 'neutral') => {
+  mixer.stopAllAction(); action = mixer.clipAction(THREE.AnimationClip.findByName(gltf.animations, 'his_idle')); action.play();
+  action.time = 0; mixer.update(0);
+  pivot.rotation.y = TT.alphas[k] * Math.PI / 180;
+  const C = toThree(TT.C), F = toThree([TT.C[0] + TT.F[0], TT.C[1] + TT.F[1], TT.C[2] + TT.F[2]]);
+  const Uv = new THREE.Vector3(TT.U[0], TT.U[2], -TT.U[1]);
+  cam.fov = 2 * Math.atan(18 / TT.f) * 180 / Math.PI; cam.aspect = W / H; cam.updateProjectionMatrix();
+  cam.position.copy(C); cam.up.copy(Uv); cam.lookAt(F);
+  window.setFace(eyes, mouth); renderer.render(scene, cam);
+};
+const VIEWS = { '3q': 0.6, front: 0, side: Math.PI / 2, back: Math.PI, '3qL': -0.6 };
+window.setAction = (n, view = '3q') => {
+  mixer.stopAllAction(); name = n; pivot.rotation.y = (window.CAMOV && window.CAMOV[2]) || 0;
+  action = mixer.clipAction(THREE.AnimationClip.findByName(gltf.animations, n)); action.play();
+  const a = VIEWS[view] ?? 0.6, r = (window.CAMOV && window.CAMOV[0]) || +(q.get('r') || 25), h = (window.CAMOV && window.CAMOV[1]) || +(q.get('ch') || -2.6);
+  cam.fov = 36; cam.up.set(0, 1, 0); cam.updateProjectionMatrix();
+  const el = (window.CAMOV && window.CAMOV[3]) || 1.5; cam.position.set(Math.sin(a) * r, h + el, Math.cos(a) * r); cam.lookAt(0, h, 0);
+};
+window.renderFrame = (f) => { action.time = f / 30; mixer.update(0); const k = faceAt(name, f + 1); window.setFace(k[1], k[2]); renderer.render(scene, cam); };
+// close-up on a bone at frame f: yaw deg around the character, dist (units), elev (units up)
+window.focusShot = (n, f, bone, dist, yaw, elev) => {
+  window.CAMOV = null; window.setAction(n, 'front'); action.time = f / 30; mixer.update(0); char.updateMatrixWorld(true);
+  const b = char.getObjectByName(bone) || char.getObjectByName(bone.replace('.', '')) || char.getObjectByName(bone.replace('.', '_')); const p = new THREE.Vector3(); b.getWorldPosition(p);
+  const a = yaw * Math.PI / 180; cam.fov = 30; cam.up.set(0, 1, 0); cam.updateProjectionMatrix();
+  cam.position.set(p.x + Math.sin(a) * dist, p.y + elev, p.z + Math.cos(a) * dist); cam.lookAt(p);
+  const k = faceAt(n, f + 1); window.setFace(k[1], k[2]); renderer.render(scene, cam);
+};
+window.READY = true;
+</script>
+</body>
+</html>

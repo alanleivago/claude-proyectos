@@ -22,12 +22,13 @@ from PIL import Image
 sys.path.insert(0, os.path.dirname(__file__))
 from vmos import ROOT, call, env  # noqa: E402
 
-PAD = env().get('VMOS_PAD') or 'APP6958QPXXF8LD7'
+PAD = os.environ.get('VMOS_PAD') or env().get('VMOS_PAD') or 'APP6958QPXXF8LD7'
 PKG = 'com.zhiliaoapp.musically'
 W, H = 1080, 2410
 CHECK_EVERY = 8
-MINUTES = float(sys.argv[1]) if len(sys.argv) > 1 else 20
-P_LIKE = float(sys.argv[2]) if len(sys.argv) > 2 else 0.06
+_cli = __name__ == "__main__"  # al importarlo desde tiktok_upload.py, sys.argv no es suyo
+MINUTES = float(sys.argv[1]) if _cli and len(sys.argv) > 1 else 20
+P_LIKE = float(sys.argv[2]) if _cli and len(sys.argv) > 2 else 0.06
 
 os.makedirs(os.path.join(ROOT, 'tools', 'logs'), exist_ok=True)
 LOG = os.path.join(ROOT, 'tools', 'logs', f'warmup_{datetime.now():%Y%m%d_%H%M}.log')

@@ -1,0 +1,15 @@
+{
+  "_doc": "MetalShadow as the mentor (pieces/upnext-metalshadow). Same schema as mentor.json; no face_lists -> the face_tracks _meta (8 x 5 eye cells) is used. No mouth: talk mouths add talk_suffix to the eyes (pupils pulse).",
+  "name": "MetalShadow",
+  "glb": "models/upnext/metalshadow_anim.glb",
+  "face_tracks": "models/upnext/metalshadow_face_tracks.json",
+  "height_m": 0.72,
+  "head_bone": "Head",
+  "eyes_material": "ms_eyes",
+  "mouth_material": null,
+  "talk_suffix": "+talk",
+  "clip_map": { "idle": "idle", "talk": "talk", "point": "point", "shrug": "shrug", "arms_crossed": "arms_crossed", "walk": "walk", "nod": "nod", "shake_head": "shake_head", "sit": "sit", "lie_flop": "lie_flop", "arms_up": "arms_up", "hover": "hover" },
+  "eyes_map": { "deadpan": "deadpan", "unimpressed": "unimpressed", "skeptical": "smug", "sleepy": "sleepy", "happy": "happy", "blink": "blink", "lookside": "lookL" },
+  "shadow_r": 0.22,
+  "unit_note": "height_m scales the bind-pose bounding box (7.17 units incl. the top quill); origin = feet"
+}

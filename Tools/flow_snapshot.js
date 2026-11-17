@@ -8,7 +8,7 @@ const MCP = path.join(__dirname, 'srzGoogleFlowMCP', 'srzGoogleFlowMCP');
 const { chromium } = require(path.join(MCP, 'node_modules', 'playwright-core'));
 
 const PORT = Number(process.env.FLOW_CDP_PORT || 9333);
-const ACCOUNT = process.env.FLOW_ACCOUNT || 'tiktokeeuu691@gmail.com';
+const ACCOUNT = process.env.FLOW_ACCOUNT || 'correoderecuperacion496@gmail.com';
 const FLOW = 'https://flow.google.com/';
 
 const args = process.argv.slice(2);

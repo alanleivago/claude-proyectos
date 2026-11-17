@@ -58,8 +58,22 @@ try {
   } else if (cmd === 'video') {
     // node src/cli.js video --prompt-file p.txt [--aspect 9:16] [--duration 8] [--model omni] [--mode ingredients|frames] [--out DIR]
     const prompt = values['prompt-file'] ? fs.readFileSync(values['prompt-file'], 'utf8') : positionals.slice(1).join(' ');
-    const r = await generateVideo({ prompt, aspect: values.aspect === '1:1' ? '9:16' : values.aspect, duration: Number(values.duration),
-      model: values.model === '2' ? 'omni' : values.model, mode: values.mode, count: Number(values.count), outDir: values.out });
+    // Cuenta de créditos (Omni Flash = 10 por clip). Archivo: pieces/_creditos.json {limite, costo, gastado, clips, fallidos}
+    // Una cuenta = un archivo: correoderecuperacion496 -> _creditos.json; las demás -> _creditos_<usuario>.json
+    const { FLOW_ACCOUNT } = await import('./chrome.js');
+    const acct = FLOW_ACCOUNT.split('@')[0];
+    const LEDGER = new URL(acct === 'correoderecuperacion496' ? '../../../../pieces/_creditos.json' : `../../../../pieces/_creditos_${acct}.json`, import.meta.url);
+    const led = fs.existsSync(LEDGER) ? JSON.parse(fs.readFileSync(LEDGER, 'utf8')) : { cuenta: FLOW_ACCOUNT, limite: 0, costo: 10, gastado: 0, clips: 0, fallidos: 0 };
+    if (led.limite && led.gastado + led.costo > led.limite) { console.log(`LIMITE DE CREDITOS: gastado ${led.gastado} de ${led.limite}`); process.exit(3); }
+    const saveLed = () => fs.writeFileSync(LEDGER, JSON.stringify(led, null, 2));
+    let r;
+    try {
+      r = await generateVideo({ prompt, aspect: values.aspect === '1:1' ? '9:16' : values.aspect, duration: Number(values.duration),
+        model: values.model === '2' ? 'omni' : values.model, mode: values.mode, count: Number(values.count), outDir: values.out });
+    } catch (e) { led.fallidos++; saveLed(); throw e; }
+    if (r.files.length) { led.gastado += led.costo; led.clips++; } else led.fallidos++;
+    saveLed();
+    console.log(`creditos: ${led.gastado}/${led.limite}`);
     console.log(`✓ ${r.files.length} video(s) in ${r.seconds}s (${r.model}, ${r.aspect}, ${r.duration}s)`); r.files.forEach((f) => console.log(f));
   } else if (cmd === 'assets') {
     (await listAssets()).forEach((a) => console.log(a.name));

@@ -79,7 +79,7 @@ def push(pad, src, dst, chunk=4000):  # asyncCmd admite máx 4096 caracteres
 if __name__ == '__main__':
     if len(sys.argv) < 2:
         sys.exit(__doc__)
-    pad = env().get('VMOS_PAD') or 'APP6958QPXXF8LD7'
+    pad = os.environ.get('VMOS_PAD') or env().get('VMOS_PAD') or 'APP6958QPXXF8LD7'
     if sys.argv[1] == 'shot':  # shot [salida.jpg] -> captura actual (432 px de ancho)
         url = call('getLongGenerateUrl', {'padCodes': [pad]})['data'][0]['url']
         out = sys.argv[2] if len(sys.argv) > 2 else os.path.join(ROOT, 'vmos_shot.jpg')

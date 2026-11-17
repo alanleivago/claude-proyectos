@@ -1,4 +1,4 @@
-// Finds and launches a dedicated Chrome (separate user-data-dir, remote debugging on
+﻿// Finds and launches a dedicated Chrome (separate user-data-dir, remote debugging on
 // localhost) that stays signed in to Flow. Chrome is started normally and detached, so it
 // keeps running after this process exits; Playwright only attaches to it over CDP.
 import fs from 'node:fs';
@@ -8,7 +8,7 @@ import { spawn } from 'node:child_process';
 
 export const CDP_PORT = Number(process.env.FLOW_CDP_PORT || 9333);
 export const FLOW_URL = 'https://flow.google.com/';
-export const FLOW_ACCOUNT = process.env.FLOW_ACCOUNT || 'tiktokeeuu691@gmail.com';
+export const FLOW_ACCOUNT = process.env.FLOW_ACCOUNT || 'monetizadotiktok18@gmail.com';
 
 const isWin = process.platform === 'win32';
 const isMac = process.platform === 'darwin';

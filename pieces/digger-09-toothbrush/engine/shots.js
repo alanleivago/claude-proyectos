@@ -335,18 +335,22 @@ const FACE = {
   face_eyes: ['open', 'half', 'blink', 'happy', 'surprised', 'angry', 'sad', 'wink', 'hearts', 'shocked', 'dizzy', 'relaxed', 'disgust', 'smirk', 'soft', 'sparkle'],   // 13-15: 2026-10-28
   face_mouth: ['neutral', 'smile', 'smileOpen', 'talkA', 'talkO', 'surprised', 'frown', 'shout', 'blep', 'cat', 'gasp', 'bigShock', 'disgust', 'smirk', 'blushSmile', 'blushGasp'],
 };
-function setFace(root, { eyes, mouth } = {}) {
+// face atlas: names + grid from the character's face_tracks.json "_meta" (cols x rows, e.g. upnext-girl2 16 x 4 with
+// "+blush" cells); without it: FACE names, CELLS x 1 (zero_fem). Mesh face UVs span one cell at the top-left, so a cell
+// is only an offset (no repeat): ((k % cols) / cols, floor(k / cols) / rows).
+function setFace(root, { eyes, mouth } = {}, meta = FACES && FACES._meta) {
+  const cols = (meta && (meta.cols || meta.cells)) || CELLS, rows = (meta && meta.rows) || 1;
   root.traverse((o) => {
     if (!o.isMesh) return;
     const list = Array.isArray(o.material) ? o.material : [o.material];
     list.forEach((m, i) => {
-      const cells = FACE[m.name]; if (!cells) return;
+      const cells = (meta && meta[m.name]) || FACE[m.name]; if (!cells) return;
       if (!m.userData.faceOwn) {
         m = m.clone(); m.map = m.map.clone();
         m.map.magFilter = m.map.minFilter = THREE.NearestFilter; m.map.generateMipmaps = false; m.map.flipY = false; m.map.needsUpdate = true;
         m.userData.faceOwn = true; if (Array.isArray(o.material)) o.material[i] = m; else o.material = m;
       }
-      const k = cells.indexOf(m.name === 'face_eyes' ? eyes : mouth); if (k >= 0) m.map.offset.x = k / CELLS;
+      const k = cells.indexOf(m.name === 'face_eyes' ? eyes : mouth); if (k >= 0) m.map.offset.set((k % cols) / cols, Math.floor(k / cols) / rows);
     });
   });
 }

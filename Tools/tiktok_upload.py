@@ -17,7 +17,7 @@ import time
 sys.path.insert(0, os.path.dirname(__file__))
 from vmos import call, env, run  # noqa: E402
 
-PAD = env().get('VMOS_PAD') or 'APP6958QPXXF8LD7'
+PAD = os.environ.get('VMOS_PAD') or env().get('VMOS_PAD') or 'APP6958QPXXF8LD7'
 TT, LL = 'com.zhiliaoapp.musically', 'com.lucidlink.android.files'
 LUCID = r'C:\Volumes\alanwork\trabajo\Renders finales claude'
 
@@ -156,7 +156,8 @@ def post_tiktok(caption, dry):
     tap_text(r'Siguiente.*', wait=8)
     tap_text(r'Siguiente', wait=6)
     tap_text(r'Añade una descripci.*|Add a description.*')
-    call('inputText', {'padCodes': [PAD], 'text': caption})
+    # espacio final: si el texto acaba en #hashtag, TikTok deja abierta la lista de sugerencias y tapa "Publicar"
+    call('inputText', {'padCodes': [PAD], 'text': caption + ' '})
     time.sleep(3)
     sh('input keyevent 4')
     time.sleep(2)

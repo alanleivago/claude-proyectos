@@ -1,4 +1,4 @@
-"""Genera los clips de plata-taxco PARTE 1 (Los Faroles de Taxco, remake transformado de "Lo corrieron por ayudar a un anciano…" de @atriumstories_, Taxco, Guerrero, MEXI STORIES) con Omni Flash por el Flow MCP (CLI), uno por uno. Salta los que ya existen.
+﻿"""Genera los clips de plata-taxco PARTE 1 (Los Faroles de Taxco, remake transformado de "Lo corrieron por ayudar a un anciano…" de @atriumstories_, Taxco, Guerrero, MEXI STORIES) con Omni Flash por el Flow MCP (CLI), uno por uno. Salta los que ya existen.
 Copia del clips.py de invernadero-atlixco (todas sus defensas: gatito en imagen, reload_flow, new_project, control de duplicados md5, TRIES=6, SAFE/SOFT, NOREF). Diálogos en lines.json (fuente única). Uso: python -I clips.py [ID ...]   -> imprime "FIN P1" al terminar la tanda.
 Con IDs: regenera solo esos (la versión anterior pasa a clips/old/<id>_vN.mp4)."""
 import json, re, subprocess, sys, os, tempfile, time
@@ -81,7 +81,7 @@ CLIPS = [
      NODOUBLE("man in a wine-red shirt")), "relaxed, mocking, unhurried, like he owns the street")),
  ("c02", 6, talk("c02", "Severiano", one(f"Close-up of {SEV} {TAL}{OFF}, {SC}, calm, he glances down at his silver pieces on the cobblestones", "RIGHT",
      NODOUBLE("man in a leather apron")), "calm, quiet, firm")),
- ("c03", 6, talk("c03", "Gumaro", one(f"Close-up of {GUM} {TAL}{OFF}, {GR}, he looks the workshop up and down, cold", "LEFT"),
+ ("c03", 6, talk("c03", "Gumaro", one(f"Close-up of {GUM} {TAL}{OFF}, {GR}, he looks the workshop up and down, cold, he is the stocky slicked-back man in the wine-red shirt, alone in the frame", "LEFT"),
      "cold, sure")),
  ("c04", 6, talk("c04", "Severiano", one(f"Close-up of {SEV} {TAL}{OFF}, {SC}, he looks at the scattered pieces for a moment, then back, sad but steady", "RIGHT"),
      "sad, slow, low")),
@@ -132,7 +132,7 @@ CLIPS = [
  ("r2", 6, one(f"Close-up of {GUM} {TAL}{ON}, {GR}, in silence, his smile fades slowly and he turns his head toward the bottom of the alley", "LEFT") + " Slow push-in. No dialogue."),
  ("i05", 6, f"Wide shot {TAL0}{ON}: a line of white pickup trucks with no logos stops on the cobblestones at the bottom of the alley; men and women in dusty plain work clothes, "
             f"no hats, step down and stand still in a row, arms crossed in front of them; their hands are empty. No dialogue."),
- ("i06", 6, f"Close-up insert {TAL0}{ON}: on the cobblestones among scattered silver jewelry lies {CUFF}; a large weathered man's hand with a tan suede sleeve and one wide silver ring "
+ ("i06", 6, f"Close-up insert {TAL0}{ON}: on the cobblestones among scattered silver jewelry lies {CUFF}; a large weathered man's hand with a plain smooth tan suede jacket sleeve (no fringe, no tassels) and one wide silver ring "
             f"engraved with a small star reaches down and gently picks up the bracelet. Only the hand, the sleeve and the jewelry, no faces. No dialogue."),
  ("c22", 6, talk("c22", "Anastasio", one(f"Close-up of {ANA} {TAL}{ON}, {AC}, holding {CUFF} in his hand against his chest, very calm, cold eyes toward the man on his right", "RIGHT",
      NODOUBLE("man in a straw sombrero")), "very calm, quiet, cold")),
@@ -162,7 +162,7 @@ CLIPS = [
             f"pulls one shutter from inside, warm lamplight behind it. Only the shutters and the hand, no face. No dialogue."),
  ("r4", 6, one(f"Medium close-up of {LEO} standing alone on a wooden balcony of a white house in a cobbled alley of Taxco at blue-hour dusk, half behind an open wooden shutter, "
                f"warm lamplight behind her, already standing still from the first frame, in silence, she lowers her eyes and steps back a little, ashamed", "LEFT") + " Slow push-in. No dialogue."),
- ("c32", 6, talk("c32", "Severiano", one(f"Close-up of {SEV} {TAL}{ON}, {SC}, he looks up at the balcony, then lowers his eyes, sad", "RIGHT"),
+ ("c32", 6, talk("c32", "Severiano", one(f"Close-up of {SEV} {TAL}{ON}, {SC}, he looks up at the balcony and speaks the whole time with clearly moving lips, then lowers his eyes, sad", "RIGHT"),
      "sad, very low")),
  ("c33", 6, talk("c33", "Anastasio", one(f"Close-up of {ANA} {TAL}{ON}, {AC}, very still, his eyes up on the balcony, then his face slowly breaks, hurt", "RIGHT"),
      "shocked, hurt, very low")),
@@ -223,6 +223,7 @@ def gen(text, dur, out):
                            cwd=MCP, env=dict(os.environ), capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=600)
     except subprocess.TimeoutExpired:
         return [], "timeout del CLI (600 s)"
+    if "LIMITE DE CREDITOS" in r.stdout: print(r.stdout.strip(), flush=True); sys.exit("FIN por limite de creditos")
     return [l for l in r.stdout.splitlines() if l.endswith(".mp4")], r.stdout + r.stderr
 
 def flow_ok():
