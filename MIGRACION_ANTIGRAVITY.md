@@ -6,7 +6,7 @@ relatedTo: [CLAUDE.md, CLAUDE.local.md, tools/exportar_contexto.py]
 ---
 # Contexto completo para continuar el trabajo en Antigravity
 
-Generado el 2026-11-17 en la máquina Windows con `tools/exportar_contexto.py`, a partir de todo lo trabajado con Claude Code: instrucciones, memoria, estilos, estado de piezas, el historial completo de mensajes del usuario, herramientas y git. Solo incluye texto: los videos, audios y modelos 3D están en el repo y en los discos.
+Generado el 2026-11-18 en la máquina Windows con `tools/exportar_contexto.py`, a partir de todo lo trabajado con Claude Code: instrucciones, memoria, estilos, estado de piezas, el historial completo de mensajes del usuario, herramientas y git. Solo incluye texto: los videos, audios y modelos 3D están en el repo y en los discos.
 
 ## 0. Léeme primero (instrucciones para el agente de Antigravity)
 
@@ -1941,7 +1941,7 @@ metadata:
   node_type: memory
   type: project
   originSessionId: b19cd1d9-332a-4ffd-91ff-b618e0ca55df
-  modified: 2026-11-17T15:01:01.584Z
+  modified: 2026-11-18T01:25:24.924Z
 ---
 
 Los shorts de artefacto y los de cat.explains.it no consiguieron vistas, así que el usuario (2026-11-15) quiere dejar el enfoque androide/artefactos. Desde ahora se rehacen los reels de @jongmin.design (Instagram, serie UpNext, autoayuda en diálogo con un gnomo mentor, low poly PS1): MISMOS planos, encuadres y ritmo, diálogo PARAFRASEADO en inglés y subtítulos iguales a los suyos. En TikTok esos videos no existen.
@@ -1954,6 +1954,7 @@ Chica, v7 rechazada (2026-11-16): la cara era plana y la de él tiene volumen; l
 Chica del tutorial ABANDONADA (2026-11-16): no se logró idéntica. La reemplaza la réplica del modelo de TikTok @.rashiyx (Ashley RE4, vuelta de 360°): pieces/upnext-girl2. El usuario eligió V2 (curvy, piernas desnudas) y V3 (curvy, pantimedias) para alternarlas en los videos. Low poly de 3,6k tris, con el trasero agrandado a pedido.
 Al 2026-11-17: Ashley APROBADA (v5, pieces/upnext-girl2). Voces en VoiceStudio: "Ashley" y "Gnomo personaje apoyo" (quitarles el ruido). Las refs tienen un ojo de pez leve y animación a pocos fps. El usuario evalúa cambiar a Pip por MetalShadow (assets/Grego..., en prueba en pieces/upnext-metalshadow). Primer video en pieces/upnext-01, storyboard v2 gustó.
 Mesera APROBADA (pieces/upnext-waitress, shorts + jeans) para un formato nuevo estilo TikTok @missmedannypsx (análisis en fuentes/missmedannypsx/). Su pretendiente es Artillery de MML modificado (pieces/upnext-suitor). El usuario revisa las animaciones en video de 360°.
+Al 2026-11-17: Ashley ahora se llama "Airy" (banner v4 con "Subscribe!" en thatthatnewpixelfamilytest-square, pieces/upnext-girl2/branding/v4). Mesera = "Vera" (cuenta @askforvera, banner C black neon, pfp bored con fondo de un solo color). Pretendiente = "Theo". Voces en VoiceStudio: Vera "Voz mesera clean", Theo **"Voz theo pretendiente clean"** (usarla desde 2026-11-17), Pip "Voz gnomo pip", Airy "Ashley 2 clean". Modelos ripeados/comprados → LucidLink, nunca a git (el repo es público).
 
 ## memoria: `mexitv-horario.md`
 
@@ -5827,18 +5828,45 @@ The `kimodo/` folder was made by another session and is not part of this library
 
 ## Todas las piezas (más reciente primero)
 
-- 2026-11-17 `pieces/junta-guadalajara` — docs: ESTADO.md
-- 2026-11-17 `pieces/brindis-orizaba`
-- 2026-11-17 `pieces/upnext-metalshadow`
+- 2026-11-17 `pieces/llavero-saltillo` — docs: ESTADO.md
+- 2026-11-17 `pieces/trapiche-cuautla` — docs: ESTADO.md
+- 2026-11-17 `pieces/luto-tacambaro` — docs: ESTADO.md
+- 2026-11-17 `pieces/tienda-mineral` — docs: ESTADO.md
+- 2026-11-17 `pieces/barrica-mascota` — docs: ESTADO.md
+- 2026-11-17 `pieces/moro-sabinas` — docs: ESTADO.md
+- 2026-11-17 `pieces/puro-tuxtla` — docs: ESTADO.md
+- 2026-11-17 `pieces/danzon-cordoba` — docs: ESTADO.md
+- 2026-11-17 `pieces/hotel-mazamitla` — docs: ESTADO.md
+- 2026-11-17 `pieces/ojo-cienegas` — docs: ESTADO.md
+- 2026-11-17 `pieces/compromiso-lagunillas` — docs: ESTADO.md
+- 2026-11-17 `pieces/aretes-jojutla` — docs: ESTADO.md
+- 2026-11-17 `pieces/foto-cosala` — docs: ESTADO.md
+- 2026-11-17 `pieces/panuelo-jalpan` — docs: ESTADO.md
+- 2026-11-17 `pieces/prueba-penjamo` — docs: ESTADO.md
+- 2026-11-17 `pieces/upnext-waitress`
+- 2026-11-17 `pieces/vera-01` — docs: SCRIPT.md
+- 2026-11-17 `pieces/upnext-girl2`
+- 2026-11-17 `pieces/dama-lagos` — docs: ESTADO.md
+- 2026-11-17 `pieces/viajante-sombrerete` — docs: ESTADO.md
+- 2026-11-17 `pieces/relevo-ures` — docs: ESTADO.md
+- 2026-11-17 `pieces/vendimia-ensenada` — docs: ESTADO.md
+- 2026-11-17 `pieces/cafetal-coatepec` — docs: ESTADO.md
+- 2026-11-17 `pieces/traje-zamora` — docs: ESTADO.md
+- 2026-11-17 `pieces/jima-arandas` — docs: ESTADO.md
+- 2026-11-17 `pieces/carta-durango` — docs: ESTADO.md
+- 2026-11-17 `pieces/flores-tapalpa` — docs: ESTADO.md
 - 2026-11-17 `pieces/upnext-suitor`
+- 2026-11-17 `pieces/copita-matatlan` — docs: ESTADO.md
+- 2026-11-17 `pieces/cacao-comalcalco` — docs: ESTADO.md
+- 2026-11-17 `pieces/upnext-01` — docs: SCRIPT.md
+- 2026-11-17 `pieces/lucero-parral` — docs: ESTADO.md
+- 2026-11-17 `pieces/manteles-apan` — docs: ESTADO.md
+- 2026-11-17 `pieces/brindis-orizaba` — docs: ESTADO.md
+- 2026-11-17 `pieces/junta-guadalajara` — docs: ESTADO.md
+- 2026-11-17 `pieces/upnext-metalshadow`
 - 2026-11-17 `pieces/sobre-alamos` — docs: ESTADO.md
 - 2026-11-17 `pieces/pipian-tlaxcala` — docs: ESTADO.md
-- 2026-11-17 `pieces/cacao-comalcalco` — docs: ESTADO.md
-- 2026-11-17 `pieces/lucero-parral` — docs: ESTADO.md
-- 2026-11-17 `pieces/copita-matatlan` — docs: ESTADO.md
 - 2026-11-17 `pieces/domino-jerez` — docs: ESTADO.md
-- 2026-11-17 `pieces/carta-durango` — docs: ESTADO.md
-- 2026-11-17 `pieces/manteles-apan` — docs: ESTADO.md
 - 2026-11-17 `pieces/silla-izamal` — docs: ESTADO.md
 - 2026-11-17 `pieces/barro-coyotepec` — docs: ESTADO.md
 - 2026-11-17 `pieces/cajeta-celaya` — docs: ESTADO.md
@@ -5863,11 +5891,9 @@ The `kimodo/` folder was made by another session and is not part of this library
 - 2026-11-17 `pieces/palofierro-kino` — docs: ESTADO.md
 - 2026-11-17 `pieces/nuez-parras` — docs: ESTADO.md
 - 2026-11-17 `pieces/reloj-zacatlan` — docs: ESTADO.md
-- 2026-11-17 `pieces/upnext-01` — docs: SCRIPT.md
 - 2026-11-16 `pieces/agave-amatitan` — docs: ESTADO.md
 - 2026-11-16 `pieces/queso-tequisquiapan` — docs: ESTADO.md
 - 2026-11-16 `pieces/laca-olinala` — docs: ESTADO.md
-- 2026-11-16 `pieces/upnext-waitress`
 - 2026-11-16 `pieces/alebrije-tilcajete` — docs: ESTADO.md
 - 2026-11-16 `pieces/bota-leon` — docs: ESTADO.md
 - 2026-11-16 `pieces/cobre-santaclara` — docs: ESTADO.md
@@ -5877,7 +5903,6 @@ The `kimodo/` folder was made by another session and is not part of this library
 - 2026-11-16 `pieces/vainilla-papantla` — docs: ESTADO.md
 - 2026-11-16 `pieces/gloria-linares` — docs: ESTADO.md
 - 2026-11-16 `pieces/manzana-cuauhtemoc` — docs: ESTADO.md
-- 2026-11-16 `pieces/upnext-girl2`
 - 2026-11-16 `pieces/ambar-simojovel` — docs: ESTADO.md
 - 2026-11-16 `pieces/jaiba-lagunamadre` — docs: ESTADO.md
 - 2026-11-16 `pieces/nieve-tepoztlan` — docs: ESTADO.md
@@ -6252,6 +6277,387 @@ The `kimodo/` folder was made by another session and is not part of this library
 
 ## Archivos de estado / notas de piezas
 
+### `pieces\_HANDOFF_novelas.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, flow, monetizadotiktok18, cola]
+---
+# Handoff novelas (monetizadotiktok18), 2026-11-17
+
+## Estado de la cola
+- Runner: `nohup bash <scratchpad>/nov_q/queue.sh >/dev/null 2>&1 &` (scratchpad = C:/Users/ALANLE~1/AppData/Local/Temp/claude/c026b2981c42eeb2/50c3c1ee-af27-4bdd-ab17-c508335a8f8f/scratchpad). Cola viva: pieces/_cola_monetizado.txt; pendiente guardada: pieces/_cola_monetizado_pendiente.txt. Log: pieces/_cola_monetizado.log.
+- Ledger: pieces/_creditos_monetizadotiktok18.json (gastado 8600 al entregar junta).
+
+## AL RETOMAR (runner DETENIDO 15:30 por PAUSA del usuario; esperar el OK de main)
+1. `cp pieces/_cola_monetizado_pendiente.txt pieces/_cola_monetizado.txt` y arrancar el runner. Cola: `REGEN vendimia-ensenada` (GEN cortado: hechos c01-c06, faltan c07 r1 c08 i01 c09 r2 r3 c10; su proyecto Flow es el activo), `REGEN relevo-ures c02` (c02 traía subtítulos quemados), `GEN viajante-sombrerete`.
+2. Después de cada una: qa_clips → hoja → post.py → strip → ESTADO → SendMessage. relevo-ures ya tiene QA hecho (solo falta c02).
+3. **Créditos de la API de Anthropic agotados**: revisión en sesión con qa/strip.jpg + qa/render_report.txt (+ hoja de clips con stack.py). Ojo: Omni a veces quema subtítulos propios (jima c02, relevo c02) → regenerar; y a veces corta la última frase de un clip de 6 s (carta c10) → acortar la línea en lines.json y regenerar.
+4. gastado Flow al detener: 10460.
+5. Procesos: matar queue.sh/gen.sh (kill por PID en `ps -ef`), y en Windows python clips.py / make_sheets.py / node cli.js (Get-CimInstance Win32_Process por CommandLine). No tocar los bash de vera-01 (otra sesión).
+
+## Entregadas a main en esta sesión (renders listos, NO entregados a LucidLink/Telegram)
+| pieza | marca | # | cierre |
+|---|---|---|---|
+| domino-jerez | MEXI | 31 | 3 |
+| pipian-tlaxcala | MAJESTIC | 25 | 7 |
+| sobre-alamos | MEXITV | 7 | 2 |
+| junta-guadalajara | VISTA | 26 | 1 |
+| brindis-orizaba | MAJESTIC | 19 | 5 | (EDL c01 arreglada a mano: re-render solo con post.py --noedl)
+| manteles-apan | MEXI | 48 | 2 |
+| lucero-parral | MEXITV | 22 | 7 | (PUNCH de c06 quitado a mano: re-render solo con --noedl)
+| cacao-comalcalco | VISTA | 53 | 3 |
+| copita-matatlan | MAJESTIC | 1 | 1 |
+| flores-tapalpa | MEXITV | 16 | 1 |
+| carta-durango | MEXI | 49 | 4 | (c10 regenerada con línea acortada)
+| jima-arandas | VISTA | 46 | 3 |
+| traje-zamora | MAJESTIC | 5 | 1 |
+| cafetal-coatepec | MEXI | 45 | 7 |
+Pendientes de cerrar: relevo-ures MEXITV #24 (5), vendimia-ensenada VISTA #55 (6), viajante-sombrerete MAJESTIC #12 (1).
+
+## Escritas después (en cola, orden de rotación): flores-tapalpa MEXITV #16 cierre 1 (Bodas) · jima-arandas VISTA #46 cierre 3 (Patronas) · traje-zamora MAJESTIC #5 cierre 1 (Identidad) · cafetal-coatepec MEXI #45 cierre 7 (Patronas). Después: relevo-ures MEXITV #24 cierre 5 (Traición). Después: vendimia-ensenada VISTA #55 cierre 6 (Patronas). Después: viajante-sombrerete MAJESTIC #12 cierre 1 (Doble vida). Siguiente nueva: MEXI, Patronas, cierre ≠1. Usados además: #5,12,16,24,45,46,55. Nombres: Aurelio, Remigio, Baltasar; Nombres: Gustavo, Lisardo, Natividad, Silvestre, Fernanda, Luca. Nombres nuevos usados: Hortensia, Valentina, Gael, Patricio, Graciela, Santiago, Marisol, Eugenia, Rodrigo, Fulgencio, Abundio, Amparo, Griselda, Celestino, Felipa. OJO: lucero-parral ya es caballo+fierro (no repetir esa premisa).
+
+## Escritas (manteles con clips listos; el resto en la cola pendiente), en este orden
+| pieza | marca | # | familia | cierre |
+|---|---|---|---|---|
+| manteles-apan | MEXI | 48 | Patronas | 2 |
+| lucero-parral | MEXITV | 22 | Traición familiar | 7 |
+| cacao-comalcalco | VISTA | 53 | Patronas | 3 |
+| copita-matatlan | MAJESTIC | 1 | Identidad oculta | 1 |
+| carta-durango | MEXI | 49 | Patronas | 4 |
+Todas tienen sheets_spec.json, make_sheets.py, clips.src.py → clips.py, lines.json, edit.py (mkedit, SPEED 1.15, subtítulos), phr.py, mk_edl.py, caption.txt y ESTADO.md inicial.
+
+## Siguiente pieza nueva
+- Marca: MEXITV. Debe ser NO-patronas (la anterior, carta-durango, es patronas), cierre ≠ 4, familia ≠ Patronas. Usados hoy: #1,7,14,19,22,25,26,31,48,49,53. Saltar #44.
+- Nombres ya usados hoy (no repetir): Nicanor, Valeria, Mercedes, Arriaga, Clemencia, Renata, Bernardo, Tomasa, Rufino, Ismael, Ximena, Anselmo, Rosario, Arturo, Leonor, Eusebio, Julián, Candelaria, Teófilo, Iker, Daniela, Brígida, Fausto, Inés, Joaquín, Pilar.
+
+## Cómo escribir una pieza nueva (5 min)
+1. mkdir pieces/<p>; copiar phr.py y mk_edl.py de silla-izamal.
+2. sheets_spec.json → `python -I <sc>/nov_q/mksheets.py "F:/Claude Proyectos/pieces/<p>"` (ruta absoluta, no ".").
+3. lines.json + clips.src.py (copiar el de carta-durango o manteles-apan) → `python -I <sc>/nov_q/build.py <p>/clips.src.py <p>/clips.py` + py_compile.
+4. `python -I <sc>/nov_q/mkedit.py "F:/.../pieces/<p>" <BRAND> "<Título>" <t1cid> <t2cid>`.
+5. caption.txt, ESTADO.md, `echo "GEN <p>" >> pieces/_cola_monetizado.txt`.
+
+## Cerrar una pieza
+1. `python -I <sc>/nov_q/qa_clips.py "F:/.../pieces/<p>"` → REVISAR en clips mudos (r*, i*) suelen ser alucinaciones del ASR ("¡Suscríbete!"). Hoja: `python <sc>/stack.py <dir> c01,c02,... out.jpg 560` (ver subtítulos quemados, sobre todo en el CTA).
+2. Regens: insertar `REGEN <p> <ids>` al principio de la cola (`sed -i '1i ...'`).
+3. `python <sc>/nov_q/post.py <p>`; `bash <sc>/strip.sh <p>` → qa/strip.jpg; revisar_render.py (el "watermark" de MEXITV es falso positivo). Tiempos→clip: `python <sc>/tmap.py "F:/.../pieces/<p>"`.
+4. ESTADO.md + SendMessage a main con la línea estándar (leer gastado del ledger antes).
+
+## Sesión 17:30 (retomada)
+- Entregadas: vendimia-ensenada (VISTA #55, 6), relevo-ures (MEXITV #24, 5). viajante-sombrerete: falta REGEN c02 (cortó la 1ª frase) → post → entregar.
+- Escritas y en cola, en orden: dama-lagos MEXI #52 cierre 3 (Patronas) · prueba-penjamo MEXITV #43 cierre 5 (Chantajes) · panuelo-jalpan VISTA #56 cierre 6 (Patronas, época) · foto-cosala MAJESTIC #41 cierre 4 (Chantajes) · aretes-jojutla MEXI #47 cierre 7 (Patronas).
+- compromiso-lagunillas MEXITV #34 cierre 3 (Capos) también en cola. ojo-cienegas VISTA #51 cierre 2 (Patronas) en cola. danzon-cordoba MAJESTIC #39 cierre 6 en cola. moro-sabinas MEXI #54 cierre 4 en cola. tienda-mineral MEXITV #30 cierre 1 en cola (24 clips). Siguiente nueva: VISTA, Patronas (solo queda #50; si no, premisa nueva tipo patrona), cierre ≠1. DESDE AHORA 22-26 clips, 65-85 s.
+- Nombres nuevos: Benigna/Paulina Altamirano, Macrina Leal, Ventura; Evodio/Saúl/Gerónimo Salcedo; Anastasio/Mariana Echeverría, Matías Robledo, Rafael Garduño; Benito Quiroga, Fabián Rosas, Cipriano, Horacio Lugo; Leonarda/Isadora Montoya, Abel/Lucía Cortés.
+- barrica-mascota VISTA #50 cierre 7 (Patronas, 24 clips) en cola. Patronas del catálogo AGOTADAS (#45-#56 usados): inventar premisas nuevas tipo patrona/hacienda. Siguiente: MAJESTIC, no patronas, cierre ≠7.
+- hotel-mazamitla MAJESTIC #28 cierre 3 (25 clips) en cola. Siguiente: MEXI, patrona NUEVA (inventada), cierre ≠3.
+- puro-tuxtla MEXI (patrona nueva) cierre 5 (24 clips) en cola. Siguiente: MEXITV, no patronas, cierre ≠5.
+
+## AL RETOMAR (runner DETENIDO 21:40 por contexto del agente; gastado 12330)
+1. `cp pieces/_cola_monetizado_pendiente.txt pieces/_cola_monetizado.txt` + arrancar runner. Cola: REGEN tienda-mineral (hechos c01-c05; el proyecto Flow activo 4cf25b82 está vacío y es para ella) · GEN barrica-mascota · GEN hotel-mazamitla · GEN puro-tuxtla.
+2. Entregadas en esta tanda (main): vendimia-ensenada, relevo-ures, viajante-sombrerete, dama-lagos, prueba-penjamo, panuelo-jalpan, foto-cosala, aretes-jojutla, compromiso-lagunillas, ojo-cienegas, danzon-cordoba, moro-sabinas.
+3. Rotación: después de puro-tuxtla (MEXI, cierre 5) va MEXITV, no patronas, cierre ≠5, 22-26 clips. Catálogo [CAPO] libre: #3 (viñedo, evitar), #9 (medios hermanos, evitar tras barrica), #33, #35; o premisas nuevas.
+4. Kill de procesos: en ps -ef el usuario tiene espacio ("Alan Lei"), así que el PID es la columna 3 de awk, no la 2. Matar primero queue.sh y gen.sh, DESPUÉS los python/node (si no, el runner sigue con la pieza siguiente).
+5. Revisión ahorrando tokens: qa_clips.py → grep "r=0.[0-8]" del report; hoja stack.py a 360 px; post.py; tira de 6 fotogramas 3x2 a 120 px.
+
+## Sesión 21:36 (retomada por subagente)
+- Runner arrancado 21:36 con la cola pendiente. Escritas y en cola: luto-tacambaro MEXITV #33 cierre 2 (Capos) · trapiche-cuautla VISTA #58 cierre 3 (Patronas nueva, época) · llavero-saltillo MAJESTIC #8 cierre 1 (Herencia). puro-tuxtla agregada al catálogo como #57.
+- Siguiente nueva: MEXI, patrona NUEVA (#59), cierre ≠1.
+- Nombres nuevos: Altagracia/Prisciliano/Aniceto Sotelo, Moisés Rangel, Areli Campos; Fidelina Villaseñor, Adalberto Larrea, Elías Cervera, Dominga; Itzayana Cordero, Zulema/Reinaldo/Gregorio Montemayor, Olegario Zertuche.
+
+## AL RETOMAR (runner DETENIDO 21:47 por PAUSA del usuario; esperar el OK de main; gastado 12400)
+1. `cp pieces/_cola_monetizado_pendiente.txt pieces/_cola_monetizado.txt` + arrancar runner. Cola: REGEN tienda-mineral (hechos 12/24: c01-c10 r1 r2; proyecto Flow activo 4cf25b82 es el suyo) · GEN barrica-mascota · hotel-mazamitla · puro-tuxtla · luto-tacambaro · trapiche-cuautla · llavero-saltillo.
+2. Ninguna pieza entregada aún en esta tanda. Siguiente nueva: MEXI, patrona NUEVA (#59), cierre ≠1.
+
+### `pieces\tienda-mineral\ESTADO.md`
+
+# tienda-mineral (La Tienda de Mineral del Chico · Parte 1): estado
+
+- **CATALOGO.md #30 "La ahijada del cacique" [CAPO] adaptada (sobrina, sin niños). Familia: Capos, caciques y patrones. Cierre tipo 1: entra el cacique con flores.**
+- MEXITV. 24 clips (formato largo pedido 2026-11-17). Proyecto Flow propio. En cola (GEN). Música cálida c05-c06.
+- Personajes: Itzel Ibáñez (28), Eutimio Soto (73), el Güero Valdés (35), Maximino Ugarte (66); tía Cuca (Refugio Ibáñez), difunta.
+- 2026-11-17 21:40: runner detenido a mitad del GEN: hechos c01-c05. Proyecto Flow nuevo vacío 4cf25b82 creado para retomar con REGEN (sube hojas y genera lo que falta).
+- 21:47 PAUSA del usuario: runner detenido. Hechos c01-c10 + r1 r2 (12/24). Faltan: c11 c12 c13 i01 c14 c15 r3 r4 c16 c17 r5 c18. El proyecto Flow activo 4cf25b82 ya tiene sus hojas; retomar con REGEN tienda-mineral (genera solo lo que falta).
+
+### `pieces\llavero-saltillo\ESTADO.md`
+
+# llavero-saltillo (El Llavero de Saltillo · Parte 1): estado
+
+- **CATALOGO.md #8 "Las llaves de la bodega" (con figura de poder: don Gregorio, patrón de los camiones). Familia: Herencia y testamento. Cierre tipo 1: en la bodega la espera una señora desconocida.**
+- MAJESTIC. 24 clips (two-shots r1, r2, c13). Proyecto Flow propio. En cola (GEN). Música cálida c09-c10. Dos locaciones (despacho + bodega).
+- Personajes: Itzayana Cordero (32, nuera viuda), Zulema Montemayor (41), Reinaldo Montemayor (46), licenciado Olegario Zertuche (66, notario), la señora de la bodega (63, sin nombre); don Gregorio Montemayor, difunto.
+
+### `pieces\trapiche-cuautla\ESTADO.md`
+
+# trapiche-cuautla (El Trapiche de Cuautla · Parte 1): estado
+
+- **CATALOGO.md #58 "La viuda del trapiche" [CAPO] (premisa nueva tipo patrona, época ~1910). Familia: Patronas y haciendas. Cierre tipo 3: palabra reveladora ("Hijo…").**
+- VISTA. 25 clips (two-shots c07, c10). Proyecto Flow propio. En cola (GEN). Música cálida c10-c11.
+- Personajes: Fidelina Villaseñor (48, viuda patrona), Adalberto Larrea (62, hacendado vecino), Elías Cervera (34, administrador); Dominga, madre de Elías, difunta (solo nombrada).
+
+### `pieces\luto-tacambaro\ESTADO.md`
+
+# luto-tacambaro (El Luto de Tacámbaro · Parte 1): estado
+
+- **CATALOGO.md #33 "La viuda del capo" [CAPO] adaptada (hacendado, sin armas). Familia: Capos, caciques y patrones. Cierre tipo 2: lee la libreta y se corta antes del nombre.**
+- MEXITV. 25 clips (3 two-shots: r1, c11, r4). Proyecto Flow propio. En cola (GEN). Música cálida c10-c11.
+- Personajes: Altagracia Sotelo (54, viuda), Prisciliano Sotelo (60, cuñado), Moisés Rangel (42, hombre de confianza), Areli Campos (31, la amante); don Aniceto, difunto (ataúd cerrado).
+
+### `pieces\barrica-mascota\ESTADO.md`
+
+# barrica-mascota (La Barrica de Mascota · Parte 1): estado
+
+- **CATALOGO.md #50 "La viña de la discordia" [CAPO] trasladada a destilería de raicilla (foto en vez de cartas). Familia: Patronas y haciendas. Cierre tipo 7: objeto que delata (la foto de las dos madres).**
+- VISTA. 24 clips. Proyecto Flow propio. En cola (GEN). Música cálida c10-c12.
+- Personajes: Julio Montalvo (38), Héctor Montalvo (34), Conchita Ruelas (52).
+- 2026-11-17 21:40: GEN cortado en las hojas (proyecto ee739ba1 a medias, abandonado). Retomar con GEN normal (proyecto nuevo).
+
+### `pieces\moro-sabinas\ESTADO.md`
+
+# moro-sabinas (El Moro de Sabinas · Parte 1): estado
+
+- **CATALOGO.md #54 "El patrón en otro cuerpo" [CAPO]. Familia: Patronas y haciendas. Cierre tipo 4: el villano descubre que lo oyeron.**
+- MEXI. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN). 22 clips (ampliado). Música cálida c11-c14.
+- Personajes: Marlene Salinas (viuda, 36), Darío Lozano (administrador, 41), Tobías Guerra (caballerango, 58); difunto don Rigoberto.
+- 2026-11-17 21:25: GEN 22 clips sin regens (r1: el caballo no se niega, plano usable). share.mp4 72.7 s, 1.61 s/plano, LUFS -14.4. Transcripción y subtítulos revisados. Entregado a main.
+
+### `pieces\puro-tuxtla\ESTADO.md`
+
+# puro-tuxtla (El Puro de San Andrés · Parte 1): estado
+
+- **Premisa nueva tipo patrona [CAPO] (catálogo de patronas agotado). Familia: Patronas y haciendas. Cierre tipo 5: la acusación se vuelve contra quien acusa (el capataz Anacleto).**
+- MEXI. 24 clips. Proyecto Flow propio. En cola (GEN). Música cálida c08-c10.
+- Personajes: Elvira Santamaría (60), Azucena Mora (30), Anacleto Barrera (52), Iván Santamaría (33); rivales: los Rivadeneira.
+
+### `pieces\danzon-cordoba\ESTADO.md`
+
+# danzon-cordoba (El Danzón de Córdoba · Parte 1): estado
+
+- **CATALOGO.md #39 "La maestra de baile" [CAPO]. Familia: Regreso, amnesia y pasado. Cierre tipo 6: mirada muda (Hermelinda y Esperanza).**
+- MAJESTIC. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN). 26 clips (ampliado). Música cálida c11-c16.
+- Personajes: Feliciano Carranza (63), Esperanza Lara (58), Hermelinda Carranza (67).
+- 2026-11-17 20:56: GEN 26 clips sin regens. share.mp4 75.9 s, 1.61 s/plano, LUFS -14.3. Transcripción (solo cifras/ASR) y subtítulos revisados. Entregado a main.
+
+### `pieces\hotel-mazamitla\ESTADO.md`
+
+# hotel-mazamitla (El Hotel de Mazamitla · Parte 1): estado
+
+- **CATALOGO.md #28 "La recepcionista del hotel" [CAPO]. Familia: Revancha del empleado humillado. Cierre tipo 3: palabra reveladora ("hermana").**
+- MAJESTIC. 25 clips. Proyecto Flow propio. En cola (GEN). Música cálida c14-c16.
+- Personajes: Sebastián Lozada (29), Liliana Cruz (27), Alfonso Lozada (62).
+
+### `pieces\ojo-cienegas\ESTADO.md`
+
+# ojo-cienegas (El Ojo de Agua · Parte 1): estado
+
+- **CATALOGO.md #51 "La cacica del Miedo" [CAPO]. Familia: Patronas y haciendas. Cierre tipo 2: documento leído, corte antes del dato (el ojo de agua).**
+- VISTA. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN). 22 clips (ampliado). Música cálida c04-c06.
+- Personajes: Tránsito Elizondo (58), Andrés Villarreal (35), Rosendo Ayala (54); se menciona a don Cosme Villarreal.
+- 2026-11-17 20:24: GEN 22 clips sin regens. share.mp4 70.1 s, 1.48 s/plano, LUFS -14.4. Transcripción y subtítulos revisados. Entregado a main.
+
+### `pieces\compromiso-lagunillas\ESTADO.md`
+
+# compromiso-lagunillas (El Compromiso de Lagunillas · Parte 1): estado
+
+- **CATALOGO.md #34 "El hijo del hacendado y la hija del rival" [CAPO]. Familia: Capos, caciques y patrones. Cierre tipo 3: confesión ("Yo estuve comprometida con su padre").**
+- MEXITV. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN). Música cálida c09-c11.
+- Personajes: Lázaro Ugalde (66), Estela Ugalde (61), Marcelo Ugalde (30), Carolina Benavides (27).
+- 2026-11-17 19:58: GEN sin regens. share.mp4 46.8 s, 1.36 s/plano, LUFS -14.3. Transcripción y subtítulos revisados (c11 sin "Yo" en lines.json, como se dijo). Entregado a main.
+
+### `pieces\aretes-jojutla\ESTADO.md`
+
+# aretes-jojutla (Los Aretes de Jojutla · Parte 1): estado
+
+- **CATALOGO.md #47 "La matriarca y los tres capataces" [CAPO]. Familia: Patronas y haciendas. Cierre tipo 7: objeto que delata (los aretes de Lucía en la hija de la patrona).**
+- MEXI. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN). Música cálida c04-c06.
+- Personajes: Leonarda Montoya (matriarca, 67), Isadora Montoya (hija, 28), Abel Cortés (33; sus dos hermanos solo se mencionan). Lucía = la hermana (no aparece).
+- 2026-11-17 19:35: GEN sin regens. share.mp4 43.6 s, 1.54 s/plano, LUFS -14.3. Transcripción y subtítulos revisados. Entregado a main.
+
+### `pieces\foto-cosala\ESTADO.md`
+
+# foto-cosala (La Foto del Cumpleaños · Parte 1): estado
+
+- **CATALOGO.md #41 "La foto del cumpleaños" [CAPO]. Familia: Chantajes y pruebas. Cierre tipo 4: el villano descubre que lo oyeron (Fabián lo grabó con el celular).**
+- MAJESTIC. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN). Música cálida c06-c07.
+- Personajes: Benito Quiroga (socio, 52), Fabián Rosas (ayudante de banquetes, 24, ropa de diario). Se mencionan don Cipriano (patrón) y don Horacio Lugo (rival).
+- 2026-11-17 19:38: REGEN c07 (cortaba "hasta su firma"; línea acortada). share.mp4 37.6 s, 1.33 s/plano, LUFS -14.7. Transcripción y subtítulos revisados. Entregado a main.
+
+### `pieces\panuelo-jalpan\ESTADO.md`
+
+# panuelo-jalpan (El Pañuelo de Jalpan · Parte 1): estado
+
+- **CATALOGO.md #56 "La señora de la hacienda y el administrador" [CAPO], época 1890s. Familia: Patronas y haciendas. Cierre tipo 6: mirada muda (Anastasio voltea y ve a Matías con el pañuelo).**
+- VISTA. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN). Música cálida c04-c09.
+- Personajes: Anastasio Echeverría (hacendado, 60), Mariana Echeverría (hija, 22), Matías Robledo (administrador, 30); se menciona a don Rafael Garduño (prometido, no aparece).
+- 2026-11-17 19:00: GEN sin regens. share.mp4 45.7 s, 1.51 s/plano, LUFS -14.2. Transcripción y subtítulos revisados. Entregado a main.
+
+### `pieces\prueba-penjamo\ESTADO.md`
+
+# prueba-penjamo (La Prueba de la Sobremesa · Parte 1): estado
+
+- **CATALOGO.md #43 "La prueba de ADN en la sobremesa" [CAPO]. Familia: Chantajes y pruebas. Cierre tipo 5: la acusación se vuelve contra quien acusa.**
+- MEXITV. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN). Música cálida c07-c09.
+- Personajes: Evodio Salcedo (patrón, 68), Saúl Salcedo (hijo mayor, 41), Gerónimo Salcedo (hijo menor, 32). Portal de rancho en Pénjamo.
+- 2026-11-17 19:02: REGEN c04 (cortaba "a mis espaldas"; 1ª frase acortada). share.mp4 42.2 s, 1.55 s/plano, LUFS -14.4. Transcripción y subtítulos revisados. Entregado a main.
+
+### `pieces\dama-lagos\ESTADO.md`
+
+# dama-lagos (La Dama de Compañía · Parte 1): estado
+
+- **CATALOGO.md #52 "La gata del rancho" [CAPO]. Familia: Patronas y haciendas. Cierre tipo 3: palabra reveladora (el nombre "Ventura Altamirano").**
+- MEXI. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN). Música cálida c04-c08.
+- Personajes: Benigna Altamirano (matriarca, 76), Paulina Altamirano (nieta, 26), Macrina Leal (dama de compañía, 23). Comedor de hacienda en Lagos de Moreno.
+- 2026-11-17 18:22: GEN sin regens. share.mp4 47.8 s, 1.44 s/plano, LUFS -14.3. Transcripción y subtítulos revisados. Entregado a main.
+
+### `pieces\viajante-sombrerete\ESTADO.md`
+
+# viajante-sombrerete (El Viajante de Sombrerete · Parte 1): estado
+
+- **CATALOGO.md #12 "El viajante" [CAPO]. Familia: Doble vida y secretos. Cierre tipo 1: entra un personaje inesperado (Baltasar entra al despacho y encuentra al viajante en la silla del patrón).**
+- MAJESTIC. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN). Música cálida c03-c05. Dos locaciones (tienda + despacho).
+- 2026-11-17: escrita, en cola pendiente (GEN), sin clips aún.
+- 2026-11-17 18:24: REGEN c02 (cortaba la 1ª frase). share.mp4 45.0 s, 1.54 s/plano, LUFS -14.3. Transcripción y subtítulos revisados. Entregado a main.
+
+### `pieces\relevo-ures\ESTADO.md`
+
+# relevo-ures (El Relevo de Ures · Parte 1): estado
+
+- **CATALOGO.md #24 "El hermano que volvió" [CAPO]. Familia: Traición familiar. Cierre tipo 5: la acusación se vuelve contra quien acusa (la carta del padre).**
+- MEXITV. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN). Música cálida c03-c05.
+- 2026-11-17 15:30: clips completos (15), QA hecho: falta REGEN c02 (subtítulos quemados), luego post.py → strip → SendMessage. Pausado por el usuario.
+- 2026-11-17 17:45: REGEN c02 limpio (sin subtítulos quemados). 15 clips + 1 regen. share.mp4 49.1 s, 1.57 s/plano, LUFS -14.5, pico -2.2. Transcripción (solo Lisardo/Lizardo del ASR) y subtítulos revisados. Entregado a main.
+
+### `pieces\vendimia-ensenada\ESTADO.md`
+
+# vendimia-ensenada (La Vendimia de Ensenada · Parte 1): estado
+
+- **CATALOGO.md #55 "La capataz contra su padre" [CAPO]. Familia: Patronas y haciendas. Cierre tipo 6: mirada muda (Fernanda y Luca).**
+- VISTA. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN). Música cálida c05-c07.
+- 2026-11-17 15:30: PAUSA del usuario a mitad del GEN. Hechos c01-c06; FALTAN c07, r1, c08, i01, c09, r2, r3, c10. Al retomar: `REGEN vendimia-ensenada` (sin ids genera lo que falta; el proyecto Flow activo es el suyo).
+- 2026-11-17 17:42: REGEN completó c07-c10. 14 clips + 0 regens. share.mp4 47.0 s, 1.46 s/plano, LUFS -14.2, pico -2.2. Transcripción (0 frases bajas) y subtítulos revisados. Entregado a main.
+
+### `pieces\cafetal-coatepec\ESTADO.md`
+
+# cafetal-coatepec (La Patrona del Cafetal · Parte 1): estado
+
+- **CATALOGO.md #45 "La patrona que dejaron en el altar" [CAPO]. Familia: Patronas y haciendas. Cierre tipo 7: objeto que delata (la foto de novia en la cartera).**
+- MEXI. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN). Música cálida c07-c09.
+- 2026-11-17: 15 clips + 1 regen (c12 CTA con sombrero duplicado). share.mp4 51.5 s, 1.55 s/plano, LUFS -14.3, pico -2.2. Transcripción y subtítulos revisados. Entregado a main.
+
+### `pieces\traje-zamora\ESTADO.md`
+
+# traje-zamora (El Sastre de Zamora · Parte 1): estado
+
+- **CATALOGO.md #5 "El sastre del pueblo" [CAPO]. Familia: Identidad oculta. Cierre tipo 1: entra un personaje inesperado (la novia Amparo).**
+- MAJESTIC. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN). Música cálida c07-c10.
+- 2026-11-17: 16 clips + 1 regen (i01 sin cicatriz visible). share.mp4 53.9 s, 1.73 s/plano, LUFS -14.2, pico -2.1. Transcripción y subtítulos revisados. Entregado a main.
+
+### `pieces\jima-arandas\ESTADO.md`
+
+# jima-arandas (La Jimadora de Arandas · Parte 1): estado
+
+- **CATALOGO.md #46 "La recolectora y el heredero" [CAPO]. Familia: Patronas y haciendas. Cierre tipo 3: palabra reveladora (el apellido "Olmos").**
+- VISTA. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN). Música cálida c07-c09.
+- 2026-11-17: 16 clips + 2 regens (c02 traía subtítulos quemados, c04 se comía una frase). share.mp4 49.5 s, 1.33 s/plano, LUFS -14.2, pico -2.2. Transcripción y subtítulos revisados. Entregado a main.
+
+### `pieces\carta-durango\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi, parte1, patronas, durango, catalogo]
+relatedTo: [atrium-vista, novelas-variedad]
+---
+# carta-durango (La Carta de Durango · Parte 1): estado
+
+- **CATALOGO.md #49 "El hacendado y la hija del enemigo" [CAPO]. Familia: Patronas y haciendas. Cierre tipo 4: la descubren (Joaquín la encuentra abriendo el cajón).**
+- MEXI. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN).
+- 2026-11-17: 17 clips + 1 regen (c10 cortaba la frase; línea acortada a "Ya no confía en nadie."). share.mp4 51.7 s, 1.60 s/plano, LUFS -14.2, pico -2.2. Transcripción y subtítulos revisados. Entregado a main.
+
+### `pieces\flores-tapalpa\ESTADO.md`
+
+# flores-tapalpa (Las Flores de Tapalpa · Parte 1): estado
+
+- **CATALOGO.md #16 "El pretendiente del mercado" [CAPO]. Familia: Bodas, compromisos y pretendientes. Cierre tipo 1: entra un personaje inesperado (don Patricio, padre de Gael).**
+- MEXITV. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17 (reemplaza a fierro-lagos, descartada por parecerse a lucero-parral); en cola (GEN). Música cálida c07-c09.
+- 2026-11-17: 16 clips a la primera, 0 regens. share.mp4 54.2 s, 1.50 s/plano, LUFS -14.2, pico -2.2. Transcripción y subtítulos revisados. Entregado a main.
+
+### `pieces\copita-matatlan\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic, parte1, capos, oaxaca, matatlan, catalogo]
+relatedTo: [atrium-vista, novelas-variedad]
+---
+# copita-matatlan (El Catador de Matatlán · Parte 1): estado
+
+- **CATALOGO.md #1 "El catador" [CAPO]. Familia: Identidad oculta. Cierre tipo 1: entra un personaje inesperado (la compradora saluda a don Teófilo).**
+- MAJESTIC. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN).
+- 2026-11-17: 14 clips a la primera, 0 regens. share.mp4 55.9 s, 1.59 s/plano, LUFS -14.4, pico -2.2. Transcripción y subtítulos revisados. Entregado a main.
+
+### `pieces\cacao-comalcalco\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista, parte1, patronas, tabasco, comalcalco, catalogo]
+relatedTo: [atrium-vista, novelas-variedad]
+---
+# cacao-comalcalco (La Heredera de Comalcalco · Parte 1): estado
+
+- **CATALOGO.md #53 "La heredera salvaje" [CAPO]. Familia: Patronas y haciendas. Cierre tipo 3: una palabra reveladora ("…y de Candelaria").**
+- VISTA. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN).
+- 2026-11-17: 15 clips a la primera, 0 regens. share.mp4 50.8 s, 1.48 s/plano, LUFS -14.2, pico -2.3. Transcripción y subtítulos revisados (strip). Entregado a main.
+
+### `pieces\lucero-parral\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexitv, parte1, capos, chihuahua, parral, catalogo]
+relatedTo: [atrium-vista, novelas-variedad]
+---
+# lucero-parral (El Caballo de Parral · Parte 1): estado
+
+- **CATALOGO.md #22 "El compadre" [CAPO]. Familia: Traición familiar. Cierre tipo 7: objeto que delata (el sombrero del compadre).**
+- MEXITV. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN).
+- 2026-11-17: GEN cortado + REGEN completó los 17 clips (0 regens de QA). Quitado el PUNCH de c06 (post.py --noedl si se re-renderiza). share.mp4 57.4 s, 1.73 s/plano, LUFS -14.3, pico -2.2. Transcripción OK ("con papel, con papel" del ASR del render es alucinación: partes y clip limpios). Entregado a main.
+
+### `pieces\manteles-apan\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi, parte1, patronas, hidalgo, apan, catalogo]
+relatedTo: [atrium-vista, novelas-variedad]
+---
+# manteles-apan (La Patrona de Apan · Parte 1): estado
+
+- **CATALOGO.md #48 "La que regresó convertida en patrona" [CAPO]. Familia: Patronas y haciendas. Cierre tipo 2: se lee un documento y se corta antes del dato clave.**
+- MEXI. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN).
+- 2026-11-17: clips OK a la primera (17 clips, 0 regens; i01/r2 "Suscríbete/Amara" = alucinación ASR en mudos). Render renders/share.mp4 59.8 s, 1.56 s/plano, LUFS -14.2, pico -2.3 dBTP, transcripción = lines.json, subtítulos revisados en qa/strip.jpg. Entregado a main (sin LucidLink/Telegram).
+
+### `pieces\brindis-orizaba\ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic, parte1, capos, veracruz, orizaba, catalogo]
+relatedTo: [atrium-vista, novelas-variedad]
+---
+# brindis-orizaba (Parte 1): estado
+
+## Hecho (2026-11-17)
+- **CATALOGO.md #19 "El brindis" [CAPO]. Familia: Bodas, compromisos y pretendientes. Cierre tipo 5: se vuelve la acusación contra quien acusa ("Pregúntele a su esposa, don Clemente").**
+- MAJESTIC. Cuenta monetizadotiktok18, proyecto Flow propio. 18 clips + 1 regen (c01: el ASR no oía "Brindo por la novia"; tras regenerar se comprobó con audio acolchado que sí lo dice y se forzó el tramo c01 desde 0.0 s en la EDL y en renders/phr.json).
+- Render renders/share.mp4: 49.8 s, SPEED 1.15, subtítulos tamaño 38 revisados en qa/strip.jpg y renders/subs/*.json. LUFS -14.1, pico -2.1 dBTP.
+- QA: qa/report.txt, qa/render_report.txt (c03 "mija"→ASR "mi hija"). revisar_render.py NO corrió: la API se quedó sin créditos (400 credit balance too low); revisión visual hecha en sesión con qa/strip.jpg.
+
+## Pendiente
+- No entregado (main entrega). caption.txt listo. Si se re-renderiza con post.py SIN --noedl, se pierde el arreglo de c01.
+
 ### `pieces\junta-guadalajara\ESTADO.md`
 
 ---
@@ -6309,19 +6715,6 @@ relatedTo: [atrium-vista, novelas-variedad]
 ## Pendiente
 - No entregado (main entrega). caption.txt listo.
 
-### `pieces\copita-matatlan\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, majestic, parte1, capos, oaxaca, matatlan, catalogo]
-relatedTo: [atrium-vista, novelas-variedad]
----
-# copita-matatlan (El Catador de Matatlán · Parte 1): estado
-
-- **CATALOGO.md #1 "El catador" [CAPO]. Familia: Identidad oculta. Cierre tipo 1: entra un personaje inesperado (la compradora saluda a don Teófilo).**
-- MAJESTIC. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN).
-
 ### `pieces\domino-jerez\ESTADO.md`
 
 ---
@@ -6340,58 +6733,6 @@ relatedTo: [atrium-vista, novelas-variedad]
 
 ## Pendiente
 - No entregado (main entrega). caption.txt listo.
-
-### `pieces\carta-durango\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, mexi, parte1, patronas, durango, catalogo]
-relatedTo: [atrium-vista, novelas-variedad]
----
-# carta-durango (La Carta de Durango · Parte 1): estado
-
-- **CATALOGO.md #49 "El hacendado y la hija del enemigo" [CAPO]. Familia: Patronas y haciendas. Cierre tipo 4: la descubren (Joaquín la encuentra abriendo el cajón).**
-- MEXI. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN).
-
-### `pieces\cacao-comalcalco\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, vista, parte1, patronas, tabasco, comalcalco, catalogo]
-relatedTo: [atrium-vista, novelas-variedad]
----
-# cacao-comalcalco (La Heredera de Comalcalco · Parte 1): estado
-
-- **CATALOGO.md #53 "La heredera salvaje" [CAPO]. Familia: Patronas y haciendas. Cierre tipo 3: una palabra reveladora ("…y de Candelaria").**
-- VISTA. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN).
-
-### `pieces\lucero-parral\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, mexitv, parte1, capos, chihuahua, parral, catalogo]
-relatedTo: [atrium-vista, novelas-variedad]
----
-# lucero-parral (El Caballo de Parral · Parte 1): estado
-
-- **CATALOGO.md #22 "El compadre" [CAPO]. Familia: Traición familiar. Cierre tipo 7: objeto que delata (el sombrero del compadre).**
-- MEXITV. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN).
-
-### `pieces\manteles-apan\ESTADO.md`
-
----
-type: handoff
-status: active
-tags: [atrium, novelas, mexi, parte1, patronas, hidalgo, apan, catalogo]
-relatedTo: [atrium-vista, novelas-variedad]
----
-# manteles-apan (La Patrona de Apan · Parte 1): estado
-
-- **CATALOGO.md #48 "La que regresó convertida en patrona" [CAPO]. Familia: Patronas y haciendas. Cierre tipo 2: se lee un documento y se corta antes del dato clave.**
-- MEXI. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN).
 
 ### `pieces\silla-izamal\ESTADO.md`
 
@@ -11767,6 +12108,40 @@ Todos los mensajes que el usuario escribió en 41 sesiones de Claude Code en est
   https://www.tiktok.com/@missmedannypsx/video/7705212283139411222?_r=1&_t=ZS-9BTzHryNYl0
   https://www.tiktok.com/@missmedannypsx/video/7704420833954909462?_r=1&_t=ZS-9BTzHryNYl0
 - **2026-11-17 15:11** — genial, y tambien toma nota de las expresiones coquetas y sexys de la mujer de @missmedannypsx para agregarselas a nuestra mesera y adaptarlas a nuestro estilo
+- **2026-11-17 15:30** — Genial. me puedes dar una version con pip y la otra con metalshadow?
+- **2026-11-17 16:09** — Me parece excelente todo. con respecto a las expresiones de la cara de la mesera, estan bien, solo que necesito que a sus ojos les agregues esas pestañas de personaje femenina de anime sexy, porque ese es su rol en esas historias osea ser sexy. y la animacion de cuando camina osea el flirt walk esta bien, pero si puedes hacerla como la de este video https://www.youtube.com/watch?v=DqntXa7dOO8 en el seg 12:38 y añadirle ese detalle de que sus manos las saca un poco hacia afuera como bastante femenina... sin romper nada de las otras animaciones que estan perfectas. tambien me gustaria ver mas en algunas expresiones sus labios como los tiene de gruesos en su expresion original, que es super coqueto eso.
+- **2026-11-17 16:41** — genial quedo excelente. ok con respecto a los videos de Ashely y pip pues vamos a quedarnos con pip, pero hay varias correcciones: Primero que todo cambia los colores de la ropa y cono de pip para que sea un poco diferente. Tambien regenera las voces en voice studio porque actualice las voces y ahora si estan limpias, la de ella es Ashley 2 clean y la de pip es Voz gnomo pip. y tambien si es posible intenta que la voz de ella suene calmada, un poco desanimada y con suspiros porque la voz de el en el video original tiene todo eso y es bastaaaante humana. Tambien, los subtitulos en su video tienen un glow sutil agregales eso. Otra cosa pendiente de que cuando ella este acostada en el seg 10 este bien arropada y su cuerpo o pies no traspasen la cama (y tambien los otros momentos que este acostada). seg 31 mejora el plano y la posicion de pip porque se montado como encima de ella. En el seg 54 tenemos que mejorar esa animacion, no me gusta, esta toda rigida con los brazos estirados, necesito una animacion relajada y femenina alli, ponle sus manos hacia afuera como lo hiciste con la mesera o la mano en el pecho como su animacion original. tambien creo que tenemos que mejorar un poco las manos de ella, se ven como unas espatulas. y en el minuto 1:01 tienes que mejorar esa animacion de caminar porque ella camina con su torso para atras y piernas adelante, hazla coqueta y femenina. tambien pendiente que la computadora no parpadee. y la musica de fondo no me gusta, puedes hacerla un poco mas elaborada? creo que es mejor una real un poco emotiva como en este video mira https://www.instagram.com/reel/DenXjPdN-UE/
+  y tambien en ese video verifica de nuevo lo que te dije del sutil bloom y lo de los fps a menos a ver
+- **2026-11-17 16:51** — con respecto al pretendiente hay varias cosas: Primero que todo, no entiendo por qué le rediseñaste la parte del coxis. O sea, con el pantalón, él tiene el pantalón y la correa más arriba en el original. No te pedí que le rediseñaras o modificaras la posición de la correa ni nada de eso. De hecho, en este nuestro, toda la parte del coxis está bastante raro, bastante raro. O sea, tienes que abrirle o dejarla abierta las piernas, mejor dicho, tal cual como las tiene en el original, que las tiene abiertas hasta más arriba. Me gusta cómo le pusiste el color de piel en la cara pero no se lo pusiste en las manos. En los puños tienes que ponérselo también. En la barriga déjale igual la sombra que tiene en el diseño original también. Entonces todo eso que hiciste en el Coxis, afecta en muchas animaciones de, por ejemplo, las de sentarse, se ve sumamente raro. O sea, ese cúmulo pegado que tienen el coxis no va. Ok, creo que le quedaría mejor el color verde a su suéter. Pero algo muy importante a tener en cuenta es que para estos videos, ella es la que es más alta que él. Porque ella es la dominante aquí. ten en cuenta eso.
+- **2026-11-17 17:21** — la mano de ashley no me gusta la que hiciste que esta abierta con 3 dedos, parece la mano de un alien, no tienen que estar separados los dedos, y haz un poco mas pequeñas las manos porque en esa imagen de los 3 dedos se ve super grandes y gruesos
+- **2026-11-17 17:27** — el pretendiente esta mejor, pero tienes que hacerlo mas alto, osea tampoco asi de pequeño parece que fuese su hijo. ponlo ligeramente mas pequeño que ella. Otra cosa las expresiones de el en donde se le ponen los ojos en shock o con miedo o sorprendido pendiente de los ojos porque les aparece una raya extraña en el medio. y de una corrije lo que dices que queda
+- **2026-11-17 17:28** — las manos de ashley siguen mal, parecen unas pinzas, guiate de las manos del hombre de los videos de el gnomo, ahi estan bien porque no tiene separados los dedos pero igual se ve low poly
+- **2026-11-17 17:41** — sabes que, las manos de ashley dejalas como estaban al inicio pero ponles algunas rayitas como dedos pixeladas, y tambien hazlas un poco mas pequeñas y ya
+- **2026-11-17 17:49** — genial ahora si procede
+- **2026-11-17 17:57** — Excelente, ahora procede con el primer video de "la mesera y el pretendiente", si ya hiciste el analisis a sus videos, dame propuestas quiero hacer algo asi y dame propuestas para el nombre de la cuenta y el nombre de ellos, inspirados obviamente en su cuenta. Analiza tambien los escenarios que usan, y para estos quiero subtitullos asi como los que les estas poniendo al video de ashley y el gnomo. La voz de ella ya esta en voice studio se llama Voz mesera clean y la de el aun la estoy haciendo, asi que puedes ponerle cualquiera mientras tanto a el. Enfocate tu sabes en el coqueteo, y tal
+- **2026-11-17 18:05** — el video de ahsley con pip esta excelente, todo bien, y me gusta el atuendo de pip, solo que la hojita en su gorro debe ser naranja quiza porque ya el gorro es amarillo y no se distingue. dale un poco mas de glow a los subtitulos. solo eso, lo demas esta perfecto
+- **2026-11-17 18:11** — genial me parece excelente lo de los videos que propones para la mesera y el pretendiente. vamos con el 1 primero . El nombre de ella quiero que sea Vera, y el de el Theo. Pero esos nombres de cuenta no me convencen, quiero que sean mas enfocados en ella, que es literalmente la imagen de la cuenta. Y tambien para este anima a los personajes a 15 fps con la cámara a 30 como hiciste con el de Ashley
+- **2026-11-17 19:00** — Genial me parece excelente todo, lo unico que veo es que ambos tienen a veces en la cara unas rayas raras, en el panel 5 ella, panel 15 el, panel 23 ella.. y hay mas pero esos son unos ejemplos... eso es lo unico raro que veo, lo demas esta excelente. la voz de el esta en voice studio usa la de Voz theo pretendiente
+- **2026-11-17 21:02** — ok lo vi esta genial!, solo algunos detalles a corregir: Esos silencios que colocastes en esos segundos no me gustan, quiero que la bgm este siempre. Las transiciones pixeladas me gustan pero hazlas mas rapidas, osea que no se tarde mucho el pixelado. Al inicio me gustaria otro plano quizas, que se vea ella limpiando la mesa y vea cuando entre el, osea cuando abra la puerta y ahi continue... porque no me gusta que esten los dos sin moverse al inicio. otra cosa, puedes ponerla a ella con el pantalon?. otra cosa, en la expresion de ella del seg 56 (captura 1) esta perfecta, pero puedes bajar un poco las rayitas sonrijadas que tiene? porque estan pegadas a los ojos y no se distinguen mucho... y en las expresiones de el que tiene sonrojada tambien. 1:08 regenera esa parte que dice the usual, theo? porque no me gusta como la dice. y en el seg 35 (captura 2) pendiente en como a el se le ve la parte de la axila que casi se le despega del torso y se le ve muy delgada esa parte. Y por ultimo cambia la fuente del "THE LAST SLICE" por esta "F:\Claude Proyectos\fonts\thatthatnewpixelfamilytest-square.otf"      pero pega bastante las letras para que se vea bien. Lo demas esta perfecto
+- **2026-11-17 21:05** — y pendiente de los parpadeos feos que hay en el scenario, como el del seg 42 y en el min 1:10
+- **2026-11-17 21:10** — ok pero no quiero que cambies nada en la cara de ella, lo unico que quiero es que le movieses el sonrojado rojo hacia abajo y ya
+- **2026-11-17 21:57** — mmm pero no queria que apagaras el temblor ps1 del escenario, y tampoco el leve movimiento de camara a mano, eso dejalo, deja todo eso tal cual como estaba antes, solo queria que tuvieras cuidado en las zonas que te mencione. Los sonrojos estan bien, solo difumina sus bordes y bajales un poco la opacidad. Pon el titulo The last slice mas grande, y no todo en mayusculas sino asi: The Last Slice. Tambien mejor volvamos a la version de ella en shorts.. y si es posible hazle mas grande el trasero y los muslos. Otra cosa, sigue sin gustarme el plano del inicio, en comparacion a este me gustaba mas el de la version anterior, si tal puedes colocar ese pero que tengan los movimientos que tienen en esta, que ella este limpiando la barra (pendinte de que el paño no este flotando lejos de su mano) y que el entre por la puerta como en esta version.
+- **2026-11-17 22:04** — Genial, ese sonrojo de Theo si me gusto
+- **2026-11-17 22:23** — Ahora esta todo perfecto, todo bien, solo necesito que mejores en el inicio como ella limpia la mesa, porque cada vez que mueve el brazo lo mete mucho y le traspasa su cuerpo, arregla eso, si tal no se haz que limpie con el trapo mas a la izquierda y que no mueva tanto el brazo para que no lo meta al cuerpo, o nose corrijelo como tu consideres, porque la verdad si se ve raro eso, pero todo lo demas esta excelente
+- **2026-11-17 22:29** — si, crea una carpeta nueva llamada Vera y lo pones alli. Por cierto con respecto al video de Ashley, quiero que me des un nombre para ponerle a ella parecido a Ashley, y que me des una foto de perfil sacada directamente de su cara en su pose del video que tomamos como referencia para hacerla, y un banner tambien, en el banner se creativo, hazlo parecido al de Mechayuki pero sin nada de lo de digger o artefactos y eso, y sin taaantas cosas, y no pongas al gnomo
+- **2026-11-17 22:31** — mmm me gusta Hayley, pero que nombre parecido a Ashley o Hayley pero que sea japones me recomiendas colocarle?
+- **2026-11-17 22:32** — Y que te parece Airy?
+- **2026-11-17 22:54** — Me quedare con Airy. pero quisiera otra expresion mas cute en su foto de perfil, y en el banner quisiera algo mas trabajado, olvida lo de mechayuki y ponle una pose a ella como la de la foto que te adjunto con una expresion parecida y me imagino que a lo que señale sea el boton de Subscribe, con un fondo unicolor quizas nose,, pero algo muy creativo.. y en la foto de perfil centrala a ella y dame mas variaciones del color del fondo
+- **2026-11-17 23:00** — ok y para Vera que nombre de cuenta me recomendaste? tambien puedes ponerle expresiones asi como las de las fotos que te adjunto osea tipo sexy y coqueta, y el banner algo creativo tambien
+- **2026-11-18 01:03** — no me gusta el banner de Airy, muy feo y muy fea la pose tambien. Haz quiza algo el de la imagen que te adjunto pero con una pose de ella y solo con el subscribe! y el fondo unicolor quiza, algo sencillo. Y el banner que me gusto de Vera fue el bannner C black neon, pero la foto de perfil que me gusto de ella fue la bored pero necesito que la centres a ella y su cabeza porque no esta centrada
+- **2026-11-18 01:12** — ok y al subscribe quitale ese recuadro, osea quiero que tenga la fuente thatthatnewpixelfamilytest-square  y la pegas las letras y ya
+- **2026-11-18 01:15** — las fotos de perfil de vera dame las mismas bored de antes osea las primeras pero quitales esa silueta circular de atras, que el fondo sea unicolor y ya
+- **2026-11-18 01:19** — en el banner de Airy damelos en mas colores y tambien la palabra Subscribe que no sea todo en mayusculas sino asi Subscribe! y quitale esa sombra gruesa que tiene debajo
+- **2026-11-18 01:25** — Vale, ahora tambien haz push y commit de todos estos dos nuevos estilos de Airy y Vera con absolutamente todo, assets y demas para poder hacerlo en la mac, recuerda que lo que no puedas enviar por git puedes enviarlo por lucidlink. Por cierto a partir de ahora para la voz de theo usa la voz Voz theo pretendiente clean en voicestudio, es la misma pero ya limpia.
+- **2026-11-18 01:34** — ok que escribo en el chat de la mac para tener todo eso alla?
+- **2026-11-18 16:41** — genial listo, me dijo que te pegara esto:
+  Copia a la carpeta de LucidLink "Renders finales claude/_mac_sync/fuentes/" las carpetas "Newsreader" y "Montserrat-ExtraBold" de "D:\Alan\Fiverr Upwork trabajo fotos y videos\Fuentes", con la misma estructura (Newsreader/static/... y Montserrat-ExtraBold/montserrat/...). Si pieces/upnext-waitress/tools/branding.py u otro script de Airy/Vera usa otras fuentes de esa carpeta D:\, cópialas también. Nada de esto va a git. Avísame la ruta cuando termines.
+- **2026-11-18 16:46** — dime lo que le digo a la mac en el chat
 
 ## Sesión 2026-10-25 — `f--Claude-Proyectos`
 
@@ -12689,6 +13064,13 @@ Todos los mensajes que el usuario escribió en 41 sesiones de Claude Code en est
   Tierra de Reyes (2014). Grabada en Miami y Houston por Telemundo (adaptación de Pasión de Gavilanes). Tres hermanos humildes se infiltran como trabajadores en el rancho de la familia Del Junco par […recortado]
 - **2026-11-17 14:29** — ok. que paso con la subida que agendaste en el Mexi tv? a que hora te dije que publicaras hoy que no me acuerdo?
 - **2026-11-17 14:29** — muy bien cierto
+- **2026-11-17 18:40** — descalificaron otro video, este: "VISTA 
+  Su madrastra mandó traer la carpeta azul para quitarle la casa… y las escrituras tenían otro nombre 😳 | La Alfombra de Huamantla · Parte 2"
+- **2026-11-17 19:29** — deten todo. te aviso cuando puedas continuar
+- **2026-11-17 21:31** — procede a continuar
+- **2026-11-17 22:01** — haz que el agente no consuma mucho tokens
+- **2026-11-17 22:03** — osea que use menos tokens pero que salgan todos los videos con la calidad que vienes trabajandolos, y con los planes e estructura que traiamos
+- **2026-11-18 01:47** — deten un momento la generacion. te aviso
 
 ## Sesión 2026-11-05 — `f--Claude-Proyectos`
 
@@ -13018,6 +13400,7 @@ Todos los mensajes que el usuario escribió en 41 sesiones de Claude Code en est
 - **2026-11-12 19:45** — ok genial. probemos con un video que hiciste para majestic (es solo por esta vez porque para este mexitv aun no hemos generado videos) el video tiene titulo de "MAJESTIC Lo hincaron por un maletín que no tocó… y la cámara de la camioneta delató al hijo de la patrona 😳 | El Chofer de la Patrona · Parte 1"
   te doy eso porque la verdad no se donde esta ubicado
 - **2026-11-12 19:58** — ok exxcelente buenisimo. bueno pues como tu consideres que funciona mejor, si consideras que funciona mejor con ese script que dices excelente, lo que quiero es que haga el trabajo asi de excelente y que no consuma muchos tokens como lo hicsite
+- **2026-11-17 15:21** — ok tambien haz un commit y push de absolutamente toda la configuracion que hiciste aqui con vmos cloud, con cada telefono, de todo lo nuevo que hemos hecho aqui, con las novelas, las nuevas tramas los temas todo eso, de las instrucciones y scripts para publicaciones, de lo que estamos haciendo con todo.. para que la mac lo pueda hacer tambien, y recuerda que lo que no puedas pasar por ser muy pesado puedes pasarlo por lucidlink
 
 ## Sesión 2026-11-13 — `f--Claude-Proyectos`
 
@@ -13082,6 +13465,35 @@ Todos los mensajes que el usuario escribió en 41 sesiones de Claude Code en est
 - **2026-11-16 11:14** — necesitas que inicie esta conversacion en otra sesion?? por eso de que esta conversacion esta llena y se va a resumir que lo sigues diciendo
 - **2026-11-16 11:16** — ok pero es que el audio de patrick_cta esta bastante feo, mejoralo, y tambien se corta al final
 - **2026-11-16 11:20** — no es que en la de patrick_cta la sincronia esta desfasada
+- **2026-11-18 01:52** — Sigue desfasado. Mira, haz algo, acabo de averiguar con gemini si puedes darle el audio a omniflash y el hace el video del avatar hablando con ese lipsync... y me dijo que si se puede, me dijo esto mira: 
+  Sí, puedes hacerlo utilizando Omni Flash (u OmniFlow / Google Flow con la tecnología Omni Flash). La herramienta permite tomar la imagen de tu avatar y sincronizarla con el audio que tú proporciones para que los movimientos de la boca coincidan con tu voz.
+  
+  Cómo funciona el proceso básico:
+  
+  1. Sube tu imagen o avatar en la plataforma (como Google Flow o la interfaz de Omni Flash).
+  2. Proporciona el archivo de audio con tu propia voz. (En algunos trucos o métodos específicos, se utiliza una referencia de video con fondo negro y audio claro para guiar el tono y el ritmo).
+  3. Configura el modelo Omni Flash en los ajustes de video de la herramienta.
+  4. Escribe el prompt o instrucción (por ejemplo, indicando que el avatar hable a la cámara) y genera el video.
+  Aquí tienes un video tutorial que muestra cómo realizar la sincronización de labios y usar audio personalizado con Omni Flash en Flow (A partir del seg 1:50):
+  https://www.youtube.com/watch?v=vypcfn7ae-s&t=110s
+  
+  Aparentemente hay varias formas pero la cuestion es que creo que si puedes hacerlo, adelante a ver
+- **2026-11-18 13:32** — dame la ubicacion del audio y tambien de la pantalla negra con audio para probar yo
+- **2026-11-18 14:18** — ok, creo que no esta dejando subir el mp4 con pantalla negra es porque no tiene nada de video y es solo una pantalla negra. haz algo, dame el mismo mp4 pero en vez de la pantalla negra ponle cualquier otro video del agente, no importa que no coincidan los labios, lo que importa es el audio... y dame otro mp4 con el audio tambien pero solo con la imagen puesta del agente a ver para probar
+- **2026-11-18 14:23** — nada no permite subirlos, no se por que, no permite subir videos por lo que veo. En fin hazlos con la alternativa que queda: osea hazlos que su voz quede con la voz que le dio el mismo flow en este video "F:\Claude Proyectos\agente-davis\tiktok\piloto01\maestra\2026-11-16T04-22-09-agente_hd-el-mismo-hombre-el-mismo-lugar-1.mp4"     imagino que esa voz se la dio flow
+- **2026-11-18 14:25** — Si estan bien, adelante funcionan, suenan igual
+- **2026-11-18 14:46** — Esta muy bien solo varios detalles: El titulo en caja negra debe estar justo en la union de las 2 partes con una raya negra un poco gruesa que separe lo de arriba con lo de abajo. y el titulo en caja negra hazlo ligeramente mas grande, osea no solo las letras si no todo el recuadro en conjunto, como se ve en la captura que te adjunto. Tambien, estos videos que se ponen arriba generalmente tienen unas franjas negras a los lados, agrandalos muy ligeramente para que no se le vean esas franjas o bordes negros. y por ultimo en el ultimo panel cuando muestras la imagen de la lista y la flecha roja, haz la lista un poco mas pequeña, ponle los bordes un poco redondos y ponle una sombra, y tambien que aparezca con un fade, y centrala, y  la flecha quitala mejor, porque eso era para llevar a la gente a que comprara en tiktok shop pero ya con esto no es para comprar en tiktok shop sino para que comenten y me lleguen al dm
+- **2026-11-18 16:37** — esta excelente, solo algunos arreglos: Quitale los silencios osea cortaselos, osea por ejemplo el del seg 13, seg 20, y en el seg 30 hacia el final. Y con respecto al guion de lo que el dice, recuerda que el luego de ver el video debe dar una pequeña opinion organica basada en el video osea en lo que vio, y siempre estar del lado de la gente y ciudadano, no del lado de los agentes, y luego si pasar al producto que esta ofreciendo, por ejemplo en estos videos mira: 
+  https://www.tiktok.com/@agentedavis/video/7681468975875640590
+  https://www.tiktok.com/@agentedavis/video/7680357450041576717
+  https://www.tiktok.com/@agentedavis/video/7684398826014166285
+  
+  Ahi veras los cortes osea que nunca dejo silencios y eso que te digo arriba. y tambien en la parte final ponlo asi: "Tengo una lista gratis con 15 cosas que tu familia debe tener listas, que se que te salvaran si vives una situacion como esta, escribeme lista en los comentarios y te la enviare"
+  
+  Tambien dale un poco mas de saturacion a el. y subele ligeramente a la musica tambien, un poco.
+  Tambien pendiente de que no parpadee el titulo con fondo negro porque en el seg 15 parpadea rapidamente
+- **2026-11-18 16:53** — Esta excelente me gusta, solo bajale un poco la saturacion al video de cuando esta viendo el telefono solamente, y subele un poco de volumen a su voz y a la musica tambien
+- **2026-11-18 16:59** — Excelente listo, asi deben ser. graba las instrucciones para estos videos, y bueno ya lo que queda es publicarlos y seguir haciendo mas con los videos IA que te he proporcionado (te ire pasando mas)... Creo que podemo publicar 4 videos al dia, cada 4 horas desde las 7 am, es decir uno a las 7 am, otro a las 11 am, otro a las 3 pm y otro a las 7 pm. ya tienes el telefono en vmos listo para publicarlos, y las descripcion que les debes poner a los videos deben ser como las que les puse a los ultmos alla en el perfil del agente
 
 ## Sesión 2026-11-14 — `f--Claude-Proyectos`
 
@@ -13097,6 +13509,15 @@ Todos los mensajes que el usuario escribió en 41 sesiones de Claude Code en est
 - **2026-11-14 16:47** — esto es lo que dice la terminal con el primer comando.
   y con respecto a la mac, dame las instrucciones para hacerlo ya, osea no quiero esperar a cuando vaya a migrar. y esto que me dices de agrega en VSCode el permiso Bash(git push:*) con /permissions y avísame." lo revise y eso ya esta, de hecho dice es remove
 - **2026-11-14 17:02** — ya hice lo de los comandos en la terminal. lo de ese mensaje que debo pegar en la mac, donde es? osea donde esta eso en VS code? con eso te refieres al chat asi como este?
+- **2026-11-18 17:13** — Necesito pasarle a la Mac todo lo que trabajamos desde el dia que hicimos esto. Haz esto:
+  
+  1. Corre python tools/exportar_contexto.py MIGRACION_ANTIGRAVITY.md para regenerar el export con todo lo último.
+  2. Copia todos los archivos .md de tu carpeta de memoria de Claude Code (la de este proyecto, incluido MEMORY.md) a una carpeta memoria_pc/ en la raíz del repo, tal cual, sin editarlos. Revisa que no tengan claves, tokens ni contraseñas; si alguno tiene, tápalas con <redactado>.
+  3. Haz commit de MIGRACION_ANTIGRAVITY.md, memoria_pc/ y todo lo demás que esté pendiente de commitear (guiones, estrategias, productos, scripts, docs de agente-davis, novelas, estilos, etc.) y haz push.
+  4. Las imágenes, videos o archivos pesados nuevos que no van a git cópialos a /Volumes/alanwork/trabajo/para_mac/sync-<fecha de hoy>/ (en la PC, la misma carpeta del disco compartido), con las mismas rutas del proyecto y un LEEME.txt con el rsync, como hiciste con sync-imagenes-2026-11-17.
+  5. Si agregaste claves nuevas al .env (además de ANTHROPIC_API_KEY, VMOS_AK y VMOS_SK), dime solo los nombres de las variables, no los valores.
+  
+  Al final dime el hash del commit, el nombre de la carpeta de sync y si hay claves nuevas.
 
 
 ---
@@ -14698,6 +15119,8 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 ## Historial de commits
 
 ```
+2026-11-17 c954b97a Airy + Vera styles: character pipelines, episode 1 engines and analysis docs
+2026-11-17 29d6f417 VMOS Cloud + TikTok publishing, novelas (MEXITV/VISTA/MAJESTIC), new plots/styles, tools and docs
 2026-11-16 cff4b270 Ava Day 3 long video v3: user fixes + Stalker docs for the Mac
 2026-11-14 56738481 Ava Restfield: style guide, proposals and asset list for the Mac
 2026-11-14 b135f8aa mechayuki: full style guide, user rules (memory copy) and video proposals for working on the Mac
@@ -14786,158 +15209,1692 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
  M .base/graph.nq
  M .gitignore
  M MIGRACION_ANTIGRAVITY.md
- M Tools/flow_snapshot.js
+ M Tools/mexitv_cola.json
  M Tools/tiktok_upload.py
- M Tools/tiktok_warmup.py
- M Tools/vmos.py
- M pieces/_marcas/marcas.json
- M pieces/digger-09-toothbrush/engine/shots.js
- M pieces/invernadero-atlixco/clips.py
- M pieces/invernadero-atlixco/edit.py
- M pieces/plata-taxco/clips.py
- M pieces/plata-taxco/clips_log.txt
- M pieces/plata-taxco/edit.py
+ M agente-davis/tiktok/piloto-01.md
+ M fuentes/novelas-variedad/CATALOGO.md
+ M pieces/_HANDOFF_novelas.md
+ M pieces/_cola_monetizado.txt
+ M pieces/_cola_monetizado_pendiente.txt
+ M pieces/_creditos_monetizadotiktok18.json
+ M pieces/brindis-orizaba/clips_log.txt
+ M pieces/brindis-orizaba/edit.py
+ M pieces/brindis-orizaba/gen_log.txt
+ M pieces/cacao-comalcalco/ESTADO.md
+ M pieces/cacao-comalcalco/edit.py
+ M pieces/carta-durango/ESTADO.md
+ M pieces/carta-durango/edit.py
+ M pieces/carta-durango/lines.json
+ M pieces/copita-matatlan/ESTADO.md
+ M pieces/copita-matatlan/edit.py
+ M pieces/lucero-parral/ESTADO.md
+ M pieces/lucero-parral/edit.py
+ M pieces/manteles-apan/ESTADO.md
+ M pieces/manteles-apan/edit.py
  M pieces/zombie-03-station/largo3/miniatura_1280x720.png
- M styles/ava-restfield/GUIA.md
- M tools/srzGoogleFlowMCP/srzGoogleFlowMCP/src/chrome.js
- M tools/srzGoogleFlowMCP/srzGoogleFlowMCP/src/cli.js
  M tools/srzGoogleFlowMCP/srzGoogleFlowMCP/src/flow.js
  M tools/srzGoogleFlowMCP/srzGoogleFlowMCP/state.json
-?? agente-davis/tiktok/
-?? fuentes/atrium-vista/encuadres.md
-?? fuentes/atrium-vista/encuadres/
-?? fuentes/atrium-vista/ranking2.md
+?? agente-davis/tiktok/piloto01/
+?? agente-davis/tiktok/run_principal.log
+?? agente-davis/tiktok/run_solicitudes.log
 ?? fuentes/atrium-vista/run2.log
-?? fuentes/atrium-vista/velocidad.md
-?? fuentes/atrium-vista/velocidad/
-?? fuentes/atrium-vista/videos/7697405703966838046_analisis.md
-?? fuentes/atrium-vista/videos/7698054444662934815_analisis.md
-?? fuentes/atrium-vista/videos/7700349674628074783_analisis.md
-?? fuentes/atrium-vista/videos/7702121152491179294_analisis.md
-?? fuentes/atrium-vista/videos/7705076412604091678_analisis.md
-?? fuentes/atrium-vista/videos/7705479449055169822_analisis.md
-?? fuentes/atrium-vista/videos/7705499092683590942_analisis.md
-?? fuentes/atrium-vista/videos/7706224426399829279_analisis.md
-?? fuentes/atrium-vista/videos/7706249552289860896_analisis.md
-?? fuentes/atrium-vista/videos/7706270980758441247_analisis.md
-?? fuentes/atrium-vista/videos/7706316327023119647_analisis.md
-?? fuentes/atrium-vista/videos/7706344565933985054_analisis.md
-?? fuentes/atrium-vista/videos/7706934829392203039_analisis.md
-?? fuentes/atrium-vista/videos/7707034442048507166_analisis.md
-?? fuentes/atrium-vista/videos/alisorxomrb/
-?? fuentes/jongmin-design/
-?? fuentes/mechayuki-nuevo-formato/
-?? fuentes/mikewayne/
-?? fuentes/missmedannypsx/
-?? fuentes/mml-crashsune-modelado-low-poly/
-?? fuentes/mml2-girl-tutorial/
-?? fuentes/novelas-variedad/
-?? fuentes/re3-encuentro/
+?? fuentes/flow-omni-lipsync/
 ?? pieces/_cola_monetizado.log
-?? pieces/_cola_monetizado.txt
-?? pieces/_cola_monetizado_pendiente.txt
-?? pieces/_creditos.json
-?? pieces/_creditos_monetizadotiktok18.json
-?? pieces/_encuadres_snippet.py
-?? pieces/_marcas/MEXITV/
-?? pieces/_subs.py
 ?? pieces/_watchdog.log
-?? pieces/agave-amatitan/
-?? pieces/alebrije-tilcajete/
-?? pieces/ambar-simojovel/
-?? pieces/arbol-metepec/
-?? pieces/aserrin-huamantla-p2/
-?? pieces/aserrin-huamantla/
-?? pieces/ate-calvillo-p2/
-?? pieces/ate-calvillo/
-?? pieces/barrica-valle/
-?? pieces/barro-coyotepec/
-?? pieces/baul-sanmiguel-p2/
-?? pieces/baul-sanmiguel/
-?? pieces/betun-zacatecas/
-?? pieces/bota-leon/
-?? pieces/brindis-orizaba/
-?? pieces/cacao-comalcalco/
-?? pieces/cafe-pluma/
-?? pieces/cajeta-celaya/
-?? pieces/camaron-escuinapa/
-?? pieces/cantaro-tonala/
-?? pieces/cantera-huichapan-p2/
-?? pieces/cantera-huichapan/
-?? pieces/carta-durango/
-?? pieces/cobre-santaclara/
-?? pieces/copita-matatlan/
-?? pieces/costal-cuyutlan-p2/
-?? pieces/costal-cuyutlan/
-?? pieces/domino-jerez/
-?? pieces/frascos-sanignacio-p2/
-?? pieces/frascos-sanignacio/
-?? pieces/garrafon-bernal-p2/
-?? pieces/garrafon-bernal/
-?? pieces/gaviota-bacalar-p2/
-?? pieces/gaviota-bacalar/
-?? pieces/gloria-linares/
-?? pieces/guitarra-paracho/
-?? pieces/hamaca-comalcalco-p2/
-?? pieces/hamaca-comalcalco/
-?? pieces/jaiba-lagunamadre/
-?? pieces/jarana-tlacotalpan/
-?? pieces/jipi-becal-p2/
-?? pieces/jipi-becal/
-?? pieces/junta-guadalajara/
-?? pieces/laca-olinala/
-?? pieces/ladrillo-tecate/
-?? pieces/lucero-parral/
-?? pieces/mango-rosario/
-?? pieces/manteles-apan/
-?? pieces/manzana-cuauhtemoc/
-?? pieces/mole-atocpan/
-?? pieces/nieve-tepoztlan/
-?? pieces/nuez-parras/
-?? pieces/obsidiana-teotihuacan/
-?? pieces/palofierro-kino/
-?? pieces/pan-comala/
-?? pieces/paste-realdelmonte/
-?? pieces/pinata-acolman/
-?? pieces/pipian-tlaxcala/
-?? pieces/ponche-zitacuaro/
-?? pieces/pulsera-mexcaltitan-p2/
-?? pieces/pulsera-mexcaltitan/
-?? pieces/queso-tequisquiapan/
-?? pieces/rebozo-santamaria/
-?? pieces/red-janitzio/
-?? pieces/reloj-zacatlan/
-?? pieces/sarape-saltillo-p2/
-?? pieces/sarape-saltillo/
-?? pieces/silla-izamal/
-?? pieces/sobre-alamos/
-?? pieces/sombrero-sahuayo/
-?? pieces/talavera-cholula/
-?? pieces/trajinera-xochimilco/
-?? pieces/upnext-01/
-?? pieces/upnext-girl/
-?? pieces/upnext-girl2/
-?? pieces/upnext-gnome/
-?? pieces/upnext-metalshadow/
-?? pieces/upnext-suitor/
-?? pieces/upnext-waitress/
-?? pieces/vainilla-papantla/
-?? pieces/yegua-jerez/
-?? pieces/zombie-03-station/largo3/engine/thumb.html
-?? pieces/zombie-03-station/largo3/engine/thumb.js
-?? pieces/zombie-03-station/largo3/engine/thumb_shoot.mjs
-?? pieces/zombie-03-station/largo3/miniaturas_v2/
-?? pieces/zombie-03-station/largo3/miniaturas_v3/
-?? pieces/zombie-03-station/largo3/miniaturas_v4/
-?? pieces/zombie-03-station/largo3/miniaturas_v5/
-?? pieces/zombie-03-station/largo3/miniaturas_v6/
-?? pieces/zombie-03-station/largo3/review/
+?? pieces/agave-amatitan/chars/
+?? pieces/agave-amatitan/qa/c01.jpg
+?? pieces/agave-amatitan/qa/c02.jpg
+?? pieces/agave-amatitan/qa/c03.jpg
+?? pieces/agave-amatitan/qa/c04.jpg
+?? pieces/agave-amatitan/qa/c05.jpg
+?? pieces/agave-amatitan/qa/c06.jpg
+?? pieces/agave-amatitan/qa/c07.jpg
+?? pieces/agave-amatitan/qa/c08.jpg
+?? pieces/agave-amatitan/qa/c09.jpg
+?? pieces/agave-amatitan/qa/c10.jpg
+?? pieces/agave-amatitan/qa/c11.jpg
+?? pieces/agave-amatitan/qa/c12.jpg
+?? pieces/agave-amatitan/qa/c13.jpg
+?? pieces/agave-amatitan/qa/c14.jpg
+?? pieces/agave-amatitan/qa/c15.jpg
+?? pieces/agave-amatitan/qa/c16.jpg
+?? pieces/agave-amatitan/qa/c17.jpg
+?? pieces/agave-amatitan/qa/c18.jpg
+?? pieces/agave-amatitan/qa/c18chk.jpg
+?? pieces/agave-amatitan/qa/c18s.jpg
+?? pieces/agave-amatitan/qa/c19.jpg
+?? pieces/agave-amatitan/qa/i01.jpg
+?? pieces/agave-amatitan/qa/i02.jpg
+?? pieces/agave-amatitan/qa/mouth0.jpg
+?? pieces/agave-amatitan/qa/mouth1.jpg
+?? pieces/agave-amatitan/qa/mouth2.jpg
+?? pieces/agave-amatitan/qa/mouth3.jpg
+?? pieces/agave-amatitan/qa/mouth4.jpg
+?? pieces/agave-amatitan/qa/mouth5.jpg
+?? pieces/agave-amatitan/qa/r1.jpg
+?? pieces/agave-amatitan/qa/r2.jpg
+?? pieces/agave-amatitan/qa/r3.jpg
+?? pieces/agave-amatitan/qa/r4.jpg
+?? pieces/agave-amatitan/qa/s1.jpg
+?? pieces/agave-amatitan/qa/s2.jpg
+?? pieces/agave-amatitan/qa/s3.jpg
+?? pieces/agave-amatitan/qa/s4.jpg
+?? pieces/agave-amatitan/qa/sub0.jpg
+?? pieces/agave-amatitan/qa/sub1.jpg
+?? pieces/agave-amatitan/qa/sub2.jpg
+?? pieces/agave-amatitan/qa/sub3.jpg
+?? pieces/agave-amatitan/qa/sub4.jpg
+?? pieces/agave-amatitan/qa/sub5.jpg
+?? pieces/agave-amatitan/qa/sub6.jpg
+?? pieces/agave-amatitan/qa/sub7.jpg
+?? pieces/agave-amatitan/qa/subs_check.jpg
+?? pieces/alebrije-tilcajete/chars/
+?? pieces/alebrije-tilcajete/qa/c01.jpg
+?? pieces/alebrije-tilcajete/qa/c02.jpg
+?? pieces/alebrije-tilcajete/qa/c03.jpg
+?? pieces/alebrije-tilcajete/qa/c04.jpg
+?? pieces/alebrije-tilcajete/qa/c05.jpg
+?? pieces/alebrije-tilcajete/qa/c06.jpg
+?? pieces/alebrije-tilcajete/qa/c07.jpg
+?? pieces/alebrije-tilcajete/qa/c08.jpg
+?? pieces/alebrije-tilcajete/qa/c09.jpg
+?? pieces/alebrije-tilcajete/qa/c10.jpg
+?? pieces/alebrije-tilcajete/qa/c11.jpg
+?? pieces/alebrije-tilcajete/qa/c12.jpg
+?? pieces/alebrije-tilcajete/qa/c13.jpg
+?? pieces/alebrije-tilcajete/qa/c14.jpg
+?? pieces/alebrije-tilcajete/qa/c15.jpg
+?? pieces/alebrije-tilcajete/qa/c16.jpg
+?? pieces/alebrije-tilcajete/qa/c17.jpg
+?? pieces/alebrije-tilcajete/qa/c18.jpg
+?? pieces/alebrije-tilcajete/qa/c19.jpg
+?? pieces/alebrije-tilcajete/qa/i01.jpg
+?? pieces/alebrije-tilcajete/qa/i02.jpg
+?? pieces/alebrije-tilcajete/qa/mouth0.jpg
+?? pieces/alebrije-tilcajete/qa/mouth1.jpg
+?? pieces/alebrije-tilcajete/qa/mouth2.jpg
+?? pieces/alebrije-tilcajete/qa/mouth3.jpg
+?? pieces/alebrije-tilcajete/qa/mouth4.jpg
+?? pieces/alebrije-tilcajete/qa/mouth5.jpg
+?? pieces/alebrije-tilcajete/qa/r1.jpg
+?? pieces/alebrije-tilcajete/qa/r2.jpg
+?? pieces/alebrije-tilcajete/qa/r3.jpg
+?? pieces/alebrije-tilcajete/qa/s1.jpg
+?? pieces/alebrije-tilcajete/qa/s2.jpg
+?? pieces/alebrije-tilcajete/qa/s3.jpg
+?? pieces/alebrije-tilcajete/qa/sl0.jpg
+?? pieces/alebrije-tilcajete/qa/sl1.jpg
+?? pieces/alebrije-tilcajete/qa/sl2.jpg
+?? pieces/alebrije-tilcajete/qa/sl3.jpg
+?? pieces/alebrije-tilcajete/qa/sl4.jpg
+?? pieces/alebrije-tilcajete/qa/sl5.jpg
+?? pieces/alebrije-tilcajete/qa/sub0.jpg
+?? pieces/alebrije-tilcajete/qa/sub1.jpg
+?? pieces/alebrije-tilcajete/qa/sub2.jpg
+?? pieces/alebrije-tilcajete/qa/sub3.jpg
+?? pieces/alebrije-tilcajete/qa/sub4.jpg
+?? pieces/alebrije-tilcajete/qa/sub5.jpg
+?? pieces/alebrije-tilcajete/qa/sub6.jpg
+?? pieces/alebrije-tilcajete/qa/sub7.jpg
+?? pieces/alebrije-tilcajete/qa/subs_check.jpg
+?? pieces/alebrije-tilcajete/qa/subs_long.jpg
+?? pieces/alebrije-tilcajete/qa/subs_strip.jpg
+?? pieces/ambar-simojovel/chars/
+?? pieces/ambar-simojovel/qa/c01.jpg
+?? pieces/ambar-simojovel/qa/c02.jpg
+?? pieces/ambar-simojovel/qa/c03.jpg
+?? pieces/ambar-simojovel/qa/c04.jpg
+?? pieces/ambar-simojovel/qa/c05.jpg
+?? pieces/ambar-simojovel/qa/c06.jpg
+?? pieces/ambar-simojovel/qa/c07.jpg
+?? pieces/ambar-simojovel/qa/c08.jpg
+?? pieces/ambar-simojovel/qa/c09.jpg
+?? pieces/ambar-simojovel/qa/c10.jpg
+?? pieces/ambar-simojovel/qa/c11.jpg
+?? pieces/ambar-simojovel/qa/c12.jpg
+?? pieces/ambar-simojovel/qa/c13.jpg
+?? pieces/ambar-simojovel/qa/c14.jpg
+?? pieces/ambar-simojovel/qa/c15.jpg
+?? pieces/ambar-simojovel/qa/c16.jpg
+?? pieces/ambar-simojovel/qa/c17.jpg
+?? pieces/ambar-simojovel/qa/c18.jpg
+?? pieces/ambar-simojovel/qa/c19.jpg
+?? pieces/ambar-simojovel/qa/c20.jpg
+?? pieces/ambar-simojovel/qa/c21.jpg
+?? pieces/ambar-simojovel/qa/c22.jpg
+?? pieces/ambar-simojovel/qa/c23.jpg
+?? pieces/ambar-simojovel/qa/c24.jpg
+?? pieces/ambar-simojovel/qa/i01.jpg
+?? pieces/ambar-simojovel/qa/mouth0.jpg
+?? pieces/ambar-simojovel/qa/mouth1.jpg
+?? pieces/ambar-simojovel/qa/mouth2.jpg
+?? pieces/ambar-simojovel/qa/mouth3.jpg
+?? pieces/ambar-simojovel/qa/mouth4.jpg
+?? pieces/ambar-simojovel/qa/mouth5.jpg
+?? pieces/ambar-simojovel/qa/mouths.jpg
+?? pieces/ambar-simojovel/qa/r1.jpg
+?? pieces/ambar-simojovel/qa/r2.jpg
+?? pieces/ambar-simojovel/qa/r3.jpg
+?? pieces/ambar-simojovel/qa/r4.jpg
+?? pieces/ambar-simojovel/qa/s1.jpg
+?? pieces/ambar-simojovel/qa/s2.jpg
+?? pieces/ambar-simojovel/qa/s3.jpg
+?? pieces/ambar-simojovel/qa/s4.jpg
+?? pieces/ambar-simojovel/qa/sheets.jpg
+?? pieces/ambar-simojovel/qa/wm.jpg
+?? pieces/arbol-metepec/chars/
+?? pieces/arbol-metepec/qa/c01.jpg
+?? pieces/arbol-metepec/qa/c02.jpg
+?? pieces/arbol-metepec/qa/c03.jpg
+?? pieces/arbol-metepec/qa/c04.jpg
+?? pieces/arbol-metepec/qa/c05.jpg
+?? pieces/arbol-metepec/qa/c06.jpg
+?? pieces/arbol-metepec/qa/c07.jpg
+?? pieces/arbol-metepec/qa/c08.jpg
+?? pieces/arbol-metepec/qa/c09.jpg
+?? pieces/arbol-metepec/qa/c10.jpg
+?? pieces/arbol-metepec/qa/c11.jpg
+?? pieces/arbol-metepec/qa/c12.jpg
+?? pieces/arbol-metepec/qa/c13.jpg
+?? pieces/arbol-metepec/qa/c14.jpg
+?? pieces/arbol-metepec/qa/c15.jpg
+?? pieces/arbol-metepec/qa/c16.jpg
+?? pieces/arbol-metepec/qa/c17.jpg
+?? pieces/arbol-metepec/qa/c18.jpg
+?? pieces/arbol-metepec/qa/c19.jpg
+?? pieces/arbol-metepec/qa/c20.jpg
+?? pieces/arbol-metepec/qa/c21.jpg
+?? pieces/arbol-metepec/qa/i01.jpg
+?? pieces/arbol-metepec/qa/mouth0.jpg
+?? pieces/arbol-metepec/qa/mouth1.jpg
+?? pieces/arbol-metepec/qa/mouth2.jpg
+?? pieces/arbol-metepec/qa/mouth3.jpg
+?? pieces/arbol-metepec/qa/mouth4.jpg
+?? pieces/arbol-metepec/qa/mouth5.jpg
+?? pieces/arbol-metepec/qa/r1.jpg
+?? pieces/arbol-metepec/qa/r2.jpg
+?? pieces/arbol-metepec/qa/r3.jpg
+?? pieces/arbol-metepec/qa/r4.jpg
+?? pieces/arbol-metepec/qa/s1.jpg
+?? pieces/arbol-metepec/qa/s2.jpg
+?? pieces/arbol-metepec/qa/s3.jpg
+?? pieces/aretes-jojutla/
+?? pieces/aserrin-huamantla-p2/chars/
+?? pieces/aserrin-huamantla/chars/
+?? pieces/ate-calvillo-p2/chars/
+?? pieces/ate-calvillo/chars/
+?? pieces/barrica-mascota/
+?? pieces/barro-coyotepec/chars/
+?? pieces/barro-coyotepec/qa/c01.jpg
+?? pieces/barro-coyotepec/qa/c02.jpg
+?? pieces/barro-coyotepec/qa/c03.jpg
+?? pieces/barro-coyotepec/qa/c04.jpg
+?? pieces/barro-coyotepec/qa/c05.jpg
+?? pieces/barro-coyotepec/qa/c06.jpg
+?? pieces/barro-coyotepec/qa/c07.jpg
+?? pieces/barro-coyotepec/qa/c08.jpg
+?? pieces/barro-coyotepec/qa/c09.jpg
+?? pieces/barro-coyotepec/qa/c10.jpg
+?? pieces/barro-coyotepec/qa/c11.jpg
+?? pieces/barro-coyotepec/qa/c12.jpg
+?? pieces/barro-coyotepec/qa/c13.jpg
+?? pieces/barro-coyotepec/qa/c14.jpg
+?? pieces/barro-coyotepec/qa/c15.jpg
+?? pieces/barro-coyotepec/qa/c16.jpg
+?? pieces/barro-coyotepec/qa/c17.jpg
+?? pieces/barro-coyotepec/qa/c18.jpg
+?? pieces/barro-coyotepec/qa/hook_mouth.jpg
+?? pieces/barro-coyotepec/qa/i01.jpg
+?? pieces/barro-coyotepec/qa/i02.jpg
+?? pieces/barro-coyotepec/qa/mouth0.jpg
+?? pieces/barro-coyotepec/qa/mouth1.jpg
+?? pieces/barro-coyotepec/qa/mouth2.jpg
+?? pieces/barro-coyotepec/qa/mouth3.jpg
+?? pieces/barro-coyotepec/qa/mouth4.jpg
+?? pieces/barro-coyotepec/qa/mouth5.jpg
+?? pieces/barro-coyotepec/qa/r1.jpg
+?? pieces/barro-coyotepec/qa/r2.jpg
+?? pieces/barro-coyotepec/qa/r3.jpg
+?? pieces/barro-coyotepec/qa/r4.jpg
+?? pieces/barro-coyotepec/qa/s1.jpg
+?? pieces/barro-coyotepec/qa/s2.jpg
+?? pieces/barro-coyotepec/qa/subs_check.jpg
+?? pieces/baul-sanmiguel-p2/chars/
+?? pieces/baul-sanmiguel/chars/
+?? pieces/betun-zacatecas/chars/
+?? pieces/bota-leon/chars/
+?? pieces/bota-leon/qa/c01.jpg
+?? pieces/bota-leon/qa/c02.jpg
+?? pieces/bota-leon/qa/c03.jpg
+?? pieces/bota-leon/qa/c04.jpg
+?? pieces/bota-leon/qa/c05.jpg
+?? pieces/bota-leon/qa/c05end.jpg
+?? pieces/bota-leon/qa/c06.jpg
+?? pieces/bota-leon/qa/c07.jpg
+?? pieces/bota-leon/qa/c08.jpg
+?? pieces/bota-leon/qa/c09.jpg
+?? pieces/bota-leon/qa/c10.jpg
+?? pieces/bota-leon/qa/c11.jpg
+?? pieces/bota-leon/qa/c12.jpg
+?? pieces/bota-leon/qa/c13.jpg
+?? pieces/bota-leon/qa/c14.jpg
+?? pieces/bota-leon/qa/c15.jpg
+?? pieces/bota-leon/qa/c16.jpg
+?? pieces/bota-leon/qa/c17.jpg
+?? pieces/bota-leon/qa/c18.jpg
+?? pieces/bota-leon/qa/c19.jpg
+?? pieces/bota-leon/qa/c20.jpg
+?? pieces/bota-leon/qa/i01.jpg
+?? pieces/bota-leon/qa/i02.jpg
+?? pieces/bota-leon/qa/mouth0.jpg
+?? pieces/bota-leon/qa/mouth1.jpg
+?? pieces/bota-leon/qa/mouth2.jpg
+?? pieces/bota-leon/qa/mouth3.jpg
+?? pieces/bota-leon/qa/mouth4.jpg
+?? pieces/bota-leon/qa/mouth5.jpg
+?? pieces/bota-leon/qa/r1.jpg
+?? pieces/bota-leon/qa/r2.jpg
+?? pieces/bota-leon/qa/r3.jpg
+?? pieces/bota-leon/qa/r4.jpg
+?? pieces/bota-leon/qa/s1.jpg
+?? pieces/bota-leon/qa/s2.jpg
+?? pieces/bota-leon/qa/s3.jpg
+?? pieces/brindis-orizaba/ESTADO.md
+?? pieces/brindis-orizaba/chars/
+?? pieces/brindis-orizaba/qa/
+?? pieces/brindis-orizaba/regen_log.txt
+?? pieces/cacao-comalcalco/chars/
+?? pieces/cacao-comalcalco/clips_log.txt
+?? pieces/cacao-comalcalco/gen_log.txt
+?? pieces/cacao-comalcalco/qa/
+?? pieces/cacao-comalcalco/sheets_log.txt
+?? pieces/cafetal-coatepec/
+?? pieces/cajeta-celaya/chars/
+?? pieces/cajeta-celaya/qa/c01.jpg
+?? pieces/cajeta-celaya/qa/c02.jpg
+?? pieces/cajeta-celaya/qa/c03.jpg
+?? pieces/cajeta-celaya/qa/c04.jpg
+?? pieces/cajeta-celaya/qa/c05.jpg
+?? pieces/cajeta-celaya/qa/c06.jpg
+?? pieces/cajeta-celaya/qa/c07.jpg
+?? pieces/cajeta-celaya/qa/c08.jpg
+?? pieces/cajeta-celaya/qa/c09.jpg
+?? pieces/cajeta-celaya/qa/c10.jpg
+?? pieces/cajeta-celaya/qa/c11.jpg
+?? pieces/cajeta-celaya/qa/c12.jpg
+?? pieces/cajeta-celaya/qa/c13.jpg
+?? pieces/cajeta-celaya/qa/c14.jpg
+?? pieces/cajeta-celaya/qa/c15.jpg
+?? pieces/cajeta-celaya/qa/c16.jpg
+?? pieces/cajeta-celaya/qa/c17.jpg
+?? pieces/cajeta-celaya/qa/hook_mouth.jpg
+?? pieces/cajeta-celaya/qa/i01.jpg
+?? pieces/cajeta-celaya/qa/mouth0.jpg
+?? pieces/cajeta-celaya/qa/mouth1.jpg
+?? pieces/cajeta-celaya/qa/mouth2.jpg
+?? pieces/cajeta-celaya/qa/mouth3.jpg
+?? pieces/cajeta-celaya/qa/mouth4.jpg
+?? pieces/cajeta-celaya/qa/mouth5.jpg
+?? pieces/cajeta-celaya/qa/r1.jpg
+?? pieces/cajeta-celaya/qa/r2.jpg
+?? pieces/cajeta-celaya/qa/r3.jpg
+?? pieces/cajeta-celaya/qa/r4.jpg
+?? pieces/cajeta-celaya/qa/regen.jpg
+?? pieces/cajeta-celaya/qa/s1.jpg
+?? pieces/cajeta-celaya/qa/s2.jpg
+?? pieces/cajeta-celaya/qa/subs_check.jpg
+?? pieces/cantera-huichapan-p2/chars/
+?? pieces/cantera-huichapan/chars/
+?? pieces/carta-durango/chars/
+?? pieces/carta-durango/clips_log.txt
+?? pieces/carta-durango/gen_log.txt
+?? pieces/carta-durango/qa/
+?? pieces/carta-durango/regen_log.txt
+?? pieces/carta-durango/sheets_log.txt
+?? pieces/cobre-santaclara/chars/
+?? pieces/cobre-santaclara/qa/c01.jpg
+?? pieces/cobre-santaclara/qa/c02.jpg
+?? pieces/cobre-santaclara/qa/c03.jpg
+?? pieces/cobre-santaclara/qa/c04.jpg
+?? pieces/cobre-santaclara/qa/c05.jpg
+?? pieces/cobre-santaclara/qa/c06.jpg
+?? pieces/cobre-santaclara/qa/c07.jpg
+?? pieces/cobre-santaclara/qa/c08.jpg
+?? pieces/cobre-santaclara/qa/c09.jpg
+?? pieces/cobre-santaclara/qa/c10.jpg
+?? pieces/cobre-santaclara/qa/c11.jpg
+?? pieces/cobre-santaclara/qa/c12.jpg
+?? pieces/cobre-santaclara/qa/c13.jpg
+?? pieces/cobre-santaclara/qa/c14.jpg
+?? pieces/cobre-santaclara/qa/c15.jpg
+?? pieces/cobre-santaclara/qa/c16.jpg
+?? pieces/cobre-santaclara/qa/c17.jpg
+?? pieces/cobre-santaclara/qa/c18.jpg
+?? pieces/cobre-santaclara/qa/c19.jpg
+?? pieces/cobre-santaclara/qa/i01.jpg
+?? pieces/cobre-santaclara/qa/i02.jpg
+?? pieces/cobre-santaclara/qa/mouth0.jpg
+?? pieces/cobre-santaclara/qa/mouth1.jpg
+?? pieces/cobre-santaclara/qa/mouth2.jpg
+?? pieces/cobre-santaclara/qa/mouth3.jpg
+?? pieces/cobre-santaclara/qa/mouth4.jpg
+?? pieces/cobre-santaclara/qa/mouth5.jpg
+?? pieces/cobre-santaclara/qa/r1.jpg
+?? pieces/cobre-santaclara/qa/r2.jpg
+?? pieces/cobre-santaclara/qa/r3.jpg
+?? pieces/cobre-santaclara/qa/r4.jpg
+?? pieces/cobre-santaclara/qa/s1.jpg
+?? pieces/cobre-santaclara/qa/s2.jpg
+?? pieces/cobre-santaclara/qa/s3.jpg
+?? pieces/compromiso-lagunillas/
+?? pieces/copita-matatlan/chars/
+?? pieces/copita-matatlan/clips_log.txt
+?? pieces/copita-matatlan/gen_log.txt
+?? pieces/copita-matatlan/qa/
+?? pieces/copita-matatlan/sheets_log.txt
+?? pieces/costal-cuyutlan-p2/chars/
+?? pieces/costal-cuyutlan/chars/
+?? pieces/dama-lagos/
+?? pieces/danzon-cordoba/
+?? pieces/domino-jerez/chars/
+?? pieces/domino-jerez/qa/c01.jpg
+?? pieces/domino-jerez/qa/c02.jpg
+?? pieces/domino-jerez/qa/c03.jpg
+?? pieces/domino-jerez/qa/c04.jpg
+?? pieces/domino-jerez/qa/c05.jpg
+?? pieces/domino-jerez/qa/c06.jpg
+?? pieces/domino-jerez/qa/c07.jpg
+?? pieces/domino-jerez/qa/c08.jpg
+?? pieces/domino-jerez/qa/c09.jpg
+?? pieces/domino-jerez/qa/c10.jpg
+?? pieces/domino-jerez/qa/c11.jpg
+?? pieces/domino-jerez/qa/c12.jpg
+?? pieces/domino-jerez/qa/c13.jpg
+?? pieces/domino-jerez/qa/c14.jpg
+?? pieces/domino-jerez/qa/i01.jpg
+?? pieces/domino-jerez/qa/mouth0.jpg
+?? pieces/domino-jerez/qa/mouth1.jpg
+?? pieces/domino-jerez/qa/mouth2.jpg
+?? pieces/domino-jerez/qa/mouth3.jpg
+?? pieces/domino-jerez/qa/mouth4.jpg
+?? pieces/domino-jerez/qa/mouth5.jpg
+?? pieces/domino-jerez/qa/r1.jpg
+?? pieces/domino-jerez/qa/r2.jpg
+?? pieces/domino-jerez/qa/r3.jpg
+?? pieces/domino-jerez/qa/r4.jpg
+?? pieces/domino-jerez/qa/strip.jpg
+?? pieces/flores-tapalpa/
+?? pieces/foto-cosala/
+?? pieces/frascos-sanignacio-p2/chars/
+?? pieces/frascos-sanignacio/chars/
+?? pieces/garrafon-bernal-p2/chars/
+?? pieces/garrafon-bernal/chars/
+?? pieces/gaviota-bacalar-p2/chars/
+?? pieces/gaviota-bacalar/chars/
+?? pieces/gloria-linares/chars/
+?? pieces/gloria-linares/qa/c01.jpg
+?? pieces/gloria-linares/qa/c02.jpg
+?? pieces/gloria-linares/qa/c03.jpg
+?? pieces/gloria-linares/qa/c04.jpg
+?? pieces/gloria-linares/qa/c05.jpg
+?? pieces/gloria-linares/qa/c06.jpg
+?? pieces/gloria-linares/qa/c07.jpg
+?? pieces/gloria-linares/qa/c08.jpg
+?? pieces/gloria-linares/qa/c09.jpg
+?? pieces/gloria-linares/qa/c10.jpg
+?? pieces/gloria-linares/qa/c11.jpg
+?? pieces/gloria-linares/qa/c12.jpg
+?? pieces/gloria-linares/qa/c13.jpg
+?? pieces/gloria-linares/qa/c14.jpg
+?? pieces/gloria-linares/qa/c15.jpg
+?? pieces/gloria-linares/qa/c16.jpg
+?? pieces/gloria-linares/qa/c17.jpg
+?? pieces/gloria-linares/qa/c18.jpg
+?? pieces/gloria-linares/qa/c18start.jpg
+?? pieces/gloria-linares/qa/c19.jpg
+?? pieces/gloria-linares/qa/c20.jpg
+?? pieces/gloria-linares/qa/c21.jpg
+?? pieces/gloria-linares/qa/c22.jpg
+?? pieces/gloria-linares/qa/c23.jpg
+?? pieces/gloria-linares/qa/c24.jpg
+?? pieces/gloria-linares/qa/i01.jpg
+?? pieces/gloria-linares/qa/i02.jpg
+?? pieces/gloria-linares/qa/mouth0.jpg
+?? pieces/gloria-linares/qa/mouth1.jpg
+?? pieces/gloria-linares/qa/mouth2.jpg
+?? pieces/gloria-linares/qa/mouth3.jpg
+?? pieces/gloria-linares/qa/mouth4.jpg
+?? pieces/gloria-linares/qa/mouth5.jpg
+?? pieces/gloria-linares/qa/mouths.jpg
+?? pieces/gloria-linares/qa/r1.jpg
+?? pieces/gloria-linares/qa/r2.jpg
+?? pieces/gloria-linares/qa/r3.jpg
+?? pieces/gloria-linares/qa/r4.jpg
+?? pieces/gloria-linares/qa/rg.jpg
+?? pieces/gloria-linares/qa/s1.jpg
+?? pieces/gloria-linares/qa/s2.jpg
+?? pieces/gloria-linares/qa/s3.jpg
+?? pieces/gloria-linares/qa/s4.jpg
+?? pieces/guitarra-paracho/chars/
+?? pieces/guitarra-paracho/qa/c01.jpg
+?? pieces/guitarra-paracho/qa/c02.jpg
+?? pieces/guitarra-paracho/qa/c03.jpg
+?? pieces/guitarra-paracho/qa/c04.jpg
+?? pieces/guitarra-paracho/qa/c05.jpg
+?? pieces/guitarra-paracho/qa/c06.jpg
+?? pieces/guitarra-paracho/qa/c07.jpg
+?? pieces/guitarra-paracho/qa/c08.jpg
+?? pieces/guitarra-paracho/qa/c09.jpg
+?? pieces/guitarra-paracho/qa/c10.jpg
+?? pieces/guitarra-paracho/qa/c11.jpg
+?? pieces/guitarra-paracho/qa/c12.jpg
+?? pieces/guitarra-paracho/qa/c13.jpg
+?? pieces/guitarra-paracho/qa/c14.jpg
+?? pieces/guitarra-paracho/qa/c15.jpg
+?? pieces/guitarra-paracho/qa/c16.jpg
+?? pieces/guitarra-paracho/qa/c17.jpg
+?? pieces/guitarra-paracho/qa/c18.jpg
+?? pieces/guitarra-paracho/qa/i01.jpg
+?? pieces/guitarra-paracho/qa/i02.jpg
+?? pieces/guitarra-paracho/qa/mouth0.jpg
+?? pieces/guitarra-paracho/qa/mouth1.jpg
+?? pieces/guitarra-paracho/qa/mouth2.jpg
+?? pieces/guitarra-paracho/qa/mouth3.jpg
+?? pieces/guitarra-paracho/qa/mouth4.jpg
+?? pieces/guitarra-paracho/qa/mouth5.jpg
+?? pieces/guitarra-paracho/qa/r1.jpg
+?? pieces/guitarra-paracho/qa/r2.jpg
+?? pieces/guitarra-paracho/qa/r3.jpg
+?? pieces/guitarra-paracho/qa/s1.jpg
+?? pieces/guitarra-paracho/qa/s2.jpg
+?? pieces/guitarra-paracho/qa/s3.jpg
+?? pieces/guitarra-paracho/qa/sub0.jpg
+?? pieces/guitarra-paracho/qa/sub1.jpg
+?? pieces/guitarra-paracho/qa/sub2.jpg
+?? pieces/guitarra-paracho/qa/sub3.jpg
+?? pieces/guitarra-paracho/qa/sub4.jpg
+?? pieces/guitarra-paracho/qa/sub5.jpg
+?? pieces/guitarra-paracho/qa/sub6.jpg
+?? pieces/guitarra-paracho/qa/sub7.jpg
+?? pieces/guitarra-paracho/qa/subs_check.jpg
+?? pieces/guitarra-paracho/qa/subs_fix.jpg
+?? pieces/hamaca-comalcalco-p2/chars/
+?? pieces/hamaca-comalcalco/chars/
+?? pieces/hotel-mazamitla/
+?? pieces/jaiba-lagunamadre/chars/
+?? pieces/jaiba-lagunamadre/contact.jpg
+?? pieces/jaiba-lagunamadre/qa/c01.jpg
+?? pieces/jaiba-lagunamadre/qa/c02.jpg
+?? pieces/jaiba-lagunamadre/qa/c03.jpg
+?? pieces/jaiba-lagunamadre/qa/c04.jpg
+?? pieces/jaiba-lagunamadre/qa/c05.jpg
+?? pieces/jaiba-lagunamadre/qa/c06.jpg
+?? pieces/jaiba-lagunamadre/qa/c07.jpg
+?? pieces/jaiba-lagunamadre/qa/c08.jpg
+?? pieces/jaiba-lagunamadre/qa/c09.jpg
+?? pieces/jaiba-lagunamadre/qa/c10.jpg
+?? pieces/jaiba-lagunamadre/qa/c11.jpg
+?? pieces/jaiba-lagunamadre/qa/c12.jpg
+?? pieces/jaiba-lagunamadre/qa/c12sub.jpg
+?? pieces/jaiba-lagunamadre/qa/c12subs.jpg
+?? pieces/jaiba-lagunamadre/qa/c13.jpg
+?? pieces/jaiba-lagunamadre/qa/c14.jpg
+?? pieces/jaiba-lagunamadre/qa/c15.jpg
+?? pieces/jaiba-lagunamadre/qa/c16.jpg
+?? pieces/jaiba-lagunamadre/qa/c17.jpg
+?? pieces/jaiba-lagunamadre/qa/c18.jpg
+?? pieces/jaiba-lagunamadre/qa/c19.jpg
+?? pieces/jaiba-lagunamadre/qa/c20.jpg
+?? pieces/jaiba-lagunamadre/qa/c21.jpg
+?? pieces/jaiba-lagunamadre/qa/c22.jpg
+?? pieces/jaiba-lagunamadre/qa/c23.jpg
+?? pieces/jaiba-lagunamadre/qa/g0.jpg
+?? pieces/jaiba-lagunamadre/qa/g1.jpg
+?? pieces/jaiba-lagunamadre/qa/g2.jpg
+?? pieces/jaiba-lagunamadre/qa/g3.jpg
+?? pieces/jaiba-lagunamadre/qa/g4.jpg
+?? pieces/jaiba-lagunamadre/qa/i01.jpg
+?? pieces/jaiba-lagunamadre/qa/i02.jpg
+?? pieces/jaiba-lagunamadre/qa/r1.jpg
+?? pieces/jaiba-lagunamadre/qa/r2.jpg
+?? pieces/jaiba-lagunamadre/qa/r3.jpg
+?? pieces/jaiba-lagunamadre/qa/r4.jpg
+?? pieces/jaiba-lagunamadre/qa/r5.jpg
+?? pieces/jaiba-lagunamadre/qa/s_1.jpg
+?? pieces/jaiba-lagunamadre/qa/s_2.jpg
+?? pieces/jaiba-lagunamadre/qa/s_3.jpg
+?? pieces/jaiba-lagunamadre/qa/s_4.8.jpg
+?? pieces/jaiba-lagunamadre/qa/s_4.jpg
+?? pieces/jaiba-lagunamadre/qa/s_5.5.jpg
+?? pieces/jaiba-lagunamadre/qa/t.jpg
+?? pieces/jaiba-lagunamadre/qa/t05.jpg
+?? pieces/jaiba-lagunamadre/qa/t17.jpg
+?? pieces/jaiba-lagunamadre/qa/t23.jpg
+?? pieces/jarana-tlacotalpan/chars/
+?? pieces/jarana-tlacotalpan/qa/c01.jpg
+?? pieces/jarana-tlacotalpan/qa/c02.jpg
+?? pieces/jarana-tlacotalpan/qa/c03.jpg
+?? pieces/jarana-tlacotalpan/qa/c04.jpg
+?? pieces/jarana-tlacotalpan/qa/c05.jpg
+?? pieces/jarana-tlacotalpan/qa/c06.jpg
+?? pieces/jarana-tlacotalpan/qa/c07.jpg
+?? pieces/jarana-tlacotalpan/qa/c08.jpg
+?? pieces/jarana-tlacotalpan/qa/c09.jpg
+?? pieces/jarana-tlacotalpan/qa/c10.jpg
+?? pieces/jarana-tlacotalpan/qa/c11.jpg
+?? pieces/jarana-tlacotalpan/qa/c12.jpg
+?? pieces/jarana-tlacotalpan/qa/c13.jpg
+?? pieces/jarana-tlacotalpan/qa/c14.jpg
+?? pieces/jarana-tlacotalpan/qa/c15.jpg
+?? pieces/jarana-tlacotalpan/qa/c16.jpg
+?? pieces/jarana-tlacotalpan/qa/c17.jpg
+?? pieces/jarana-tlacotalpan/qa/c18.jpg
+?? pieces/jarana-tlacotalpan/qa/i01.jpg
+?? pieces/jarana-tlacotalpan/qa/i02.jpg
+?? pieces/jarana-tlacotalpan/qa/mouth0.jpg
+?? pieces/jarana-tlacotalpan/qa/mouth1.jpg
+?? pieces/jarana-tlacotalpan/qa/mouth2.jpg
+?? pieces/jarana-tlacotalpan/qa/mouth3.jpg
+?? pieces/jarana-tlacotalpan/qa/mouth4.jpg
+?? pieces/jarana-tlacotalpan/qa/mouth5.jpg
+?? pieces/jarana-tlacotalpan/qa/r1.jpg
+?? pieces/jarana-tlacotalpan/qa/r2.jpg
+?? pieces/jarana-tlacotalpan/qa/r3.jpg
+?? pieces/jarana-tlacotalpan/qa/r4.jpg
+?? pieces/jarana-tlacotalpan/qa/s1.jpg
+?? pieces/jarana-tlacotalpan/qa/s2.jpg
+?? pieces/jarana-tlacotalpan/qa/s3.jpg
+?? pieces/jarana-tlacotalpan/qa/sub0.jpg
+?? pieces/jarana-tlacotalpan/qa/sub1.jpg
+?? pieces/jarana-tlacotalpan/qa/sub2.jpg
+?? pieces/jarana-tlacotalpan/qa/sub3.jpg
+?? pieces/jarana-tlacotalpan/qa/sub4.jpg
+?? pieces/jarana-tlacotalpan/qa/sub5.jpg
+?? pieces/jarana-tlacotalpan/qa/sub6.jpg
+?? pieces/jarana-tlacotalpan/qa/sub7.jpg
+?? pieces/jarana-tlacotalpan/qa/subs_check.jpg
+?? pieces/jima-arandas/
+?? pieces/jipi-becal-p2/chars/
+?? pieces/jipi-becal/chars/
+?? pieces/junta-guadalajara/chars/
+?? pieces/junta-guadalajara/qa/c01.jpg
+?? pieces/junta-guadalajara/qa/c02.jpg
+?? pieces/junta-guadalajara/qa/c03.jpg
+?? pieces/junta-guadalajara/qa/c04.jpg
+?? pieces/junta-guadalajara/qa/c05.jpg
+?? pieces/junta-guadalajara/qa/c06.jpg
+?? pieces/junta-guadalajara/qa/c07.jpg
+?? pieces/junta-guadalajara/qa/c08.jpg
+?? pieces/junta-guadalajara/qa/c09.jpg
+?? pieces/junta-guadalajara/qa/c10.jpg
+?? pieces/junta-guadalajara/qa/c11.jpg
+?? pieces/junta-guadalajara/qa/c12.jpg
+?? pieces/junta-guadalajara/qa/c13.jpg
+?? pieces/junta-guadalajara/qa/c14.jpg
+?? pieces/junta-guadalajara/qa/c15.jpg
+?? pieces/junta-guadalajara/qa/i01.jpg
+?? pieces/junta-guadalajara/qa/mouth0.jpg
+?? pieces/junta-guadalajara/qa/mouth1.jpg
+?? pieces/junta-guadalajara/qa/mouth2.jpg
+?? pieces/junta-guadalajara/qa/mouth3.jpg
+?? pieces/junta-guadalajara/qa/mouth4.jpg
+?? pieces/junta-guadalajara/qa/mouth5.jpg
+?? pieces/junta-guadalajara/qa/r1.jpg
+?? pieces/junta-guadalajara/qa/r2.jpg
+?? pieces/junta-guadalajara/qa/r3.jpg
+?? pieces/junta-guadalajara/qa/strip.jpg
+?? pieces/laca-olinala/chars/
+?? pieces/laca-olinala/qa/c01.jpg
+?? pieces/laca-olinala/qa/c02.jpg
+?? pieces/laca-olinala/qa/c03.jpg
+?? pieces/laca-olinala/qa/c04.jpg
+?? pieces/laca-olinala/qa/c05.jpg
+?? pieces/laca-olinala/qa/c06.jpg
+?? pieces/laca-olinala/qa/c07.jpg
+?? pieces/laca-olinala/qa/c08.jpg
+?? pieces/laca-olinala/qa/c09.jpg
+?? pieces/laca-olinala/qa/c10.jpg
+?? pieces/laca-olinala/qa/c11.jpg
+?? pieces/laca-olinala/qa/c12.jpg
+?? pieces/laca-olinala/qa/c13.jpg
+?? pieces/laca-olinala/qa/c14.jpg
+?? pieces/laca-olinala/qa/c15.jpg
+?? pieces/laca-olinala/qa/c16.jpg
+?? pieces/laca-olinala/qa/c17.jpg
+?? pieces/laca-olinala/qa/c18.jpg
+?? pieces/laca-olinala/qa/i01.jpg
+?? pieces/laca-olinala/qa/mouth0.jpg
+?? pieces/laca-olinala/qa/mouth1.jpg
+?? pieces/laca-olinala/qa/mouth2.jpg
+?? pieces/laca-olinala/qa/mouth3.jpg
+?? pieces/laca-olinala/qa/mouth4.jpg
+?? pieces/laca-olinala/qa/mouth5.jpg
+?? pieces/laca-olinala/qa/r1.jpg
+?? pieces/laca-olinala/qa/r2.jpg
+?? pieces/laca-olinala/qa/r3.jpg
+?? pieces/laca-olinala/qa/r4.jpg
+?? pieces/laca-olinala/qa/s1.jpg
+?? pieces/laca-olinala/qa/s2.jpg
+?? pieces/laca-olinala/qa/s3.jpg
+?? pieces/laca-olinala/qa/sub0.jpg
+?? pieces/laca-olinala/qa/sub1.jpg
+?? pieces/laca-olinala/qa/sub2.jpg
+?? pieces/laca-olinala/qa/sub3.jpg
+?? pieces/laca-olinala/qa/sub4.jpg
+?? pieces/laca-olinala/qa/sub5.jpg
+?? pieces/laca-olinala/qa/sub6.jpg
+?? pieces/laca-olinala/qa/sub7.jpg
+?? pieces/laca-olinala/qa/subs_check.jpg
+?? pieces/ladrillo-tecate/chars/
+?? pieces/ladrillo-tecate/qa/c01.jpg
+?? pieces/ladrillo-tecate/qa/c02.jpg
+?? pieces/ladrillo-tecate/qa/c03.jpg
+?? pieces/ladrillo-tecate/qa/c04.jpg
+?? pieces/ladrillo-tecate/qa/c05.jpg
+?? pieces/ladrillo-tecate/qa/c06.jpg
+?? pieces/ladrillo-tecate/qa/c07.jpg
+?? pieces/ladrillo-tecate/qa/c08.jpg
+?? pieces/ladrillo-tecate/qa/c09.jpg
+?? pieces/ladrillo-tecate/qa/c10.jpg
+?? pieces/ladrillo-tecate/qa/c11.jpg
+?? pieces/ladrillo-tecate/qa/c12.jpg
+?? pieces/ladrillo-tecate/qa/c13.jpg
+?? pieces/ladrillo-tecate/qa/c14.jpg
+?? pieces/ladrillo-tecate/qa/c15.jpg
+?? pieces/ladrillo-tecate/qa/c16.jpg
+?? pieces/ladrillo-tecate/qa/c17.jpg
+?? pieces/ladrillo-tecate/qa/c18.jpg
+?? pieces/ladrillo-tecate/qa/c19.jpg
+?? pieces/ladrillo-tecate/qa/c20.jpg
+?? pieces/ladrillo-tecate/qa/i01.jpg
+?? pieces/ladrillo-tecate/qa/i02.jpg
+?? pieces/ladrillo-tecate/qa/mouth0.jpg
+?? pieces/ladrillo-tecate/qa/mouth1.jpg
+?? pieces/ladrillo-tecate/qa/mouth2.jpg
+?? pieces/ladrillo-tecate/qa/mouth3.jpg
+?? pieces/ladrillo-tecate/qa/mouth4.jpg
+?? pieces/ladrillo-tecate/qa/mouth5.jpg
+?? pieces/ladrillo-tecate/qa/r1.jpg
+?? pieces/ladrillo-tecate/qa/r2.jpg
+?? pieces/ladrillo-tecate/qa/r3.jpg
+?? pieces/ladrillo-tecate/qa/r4.jpg
+?? pieces/ladrillo-tecate/qa/rg.jpg
+?? pieces/ladrillo-tecate/qa/s1.jpg
+?? pieces/ladrillo-tecate/qa/s2.jpg
+?? pieces/ladrillo-tecate/qa/s3.jpg
+?? pieces/llavero-saltillo/
+?? pieces/lucero-parral/chars/
+?? pieces/lucero-parral/clips_log.txt
+?? pieces/lucero-parral/gen_log.txt
+?? pieces/lucero-parral/qa/
+?? pieces/lucero-parral/regen_log.txt
+?? pieces/lucero-parral/sheets_log.txt
+?? pieces/luto-tacambaro/
+?? pieces/mango-rosario/chars/
+?? pieces/mango-rosario/qa/c01.jpg
+?? pieces/mango-rosario/qa/c01_mouth.jpg
+?? pieces/mango-rosario/qa/c01mouth.jpg
+?? pieces/mango-rosario/qa/c02.jpg
+?? pieces/mango-rosario/qa/c03.jpg
+?? pieces/mango-rosario/qa/c04.jpg
+?? pieces/mango-rosario/qa/c05.jpg
+?? pieces/mango-rosario/qa/c06.jpg
+?? pieces/mango-rosario/qa/c07.jpg
+?? pieces/mango-rosario/qa/c08.jpg
+?? pieces/mango-rosario/qa/c09.jpg
+?? pieces/mango-rosario/qa/c10.jpg
+?? pieces/mango-rosario/qa/c11.jpg
+?? pieces/mango-rosario/qa/c12.jpg
+?? pieces/mango-rosario/qa/c13.jpg
+?? pieces/mango-rosario/qa/c14.jpg
+?? pieces/mango-rosario/qa/c15.jpg
+?? pieces/mango-rosario/qa/c16.jpg
+?? pieces/mango-rosario/qa/c17.jpg
+?? pieces/mango-rosario/qa/c18.jpg
+?? pieces/mango-rosario/qa/c19.jpg
+?? pieces/mango-rosario/qa/c20.jpg
+?? pieces/mango-rosario/qa/c21.jpg
+?? pieces/mango-rosario/qa/c22.jpg
+?? pieces/mango-rosario/qa/hook_mouth.jpg
+?? pieces/mango-rosario/qa/i01.jpg
+?? pieces/mango-rosario/qa/i02.jpg
+?? pieces/mango-rosario/qa/mouth0.jpg
+?? pieces/mango-rosario/qa/mouth1.jpg
+?? pieces/mango-rosario/qa/mouth2.jpg
+?? pieces/mango-rosario/qa/mouth3.jpg
+?? pieces/mango-rosario/qa/mouth4.jpg
+?? pieces/mango-rosario/qa/mouth5.jpg
+?? pieces/mango-rosario/qa/r1.jpg
+?? pieces/mango-rosario/qa/r2.jpg
+?? pieces/mango-rosario/qa/r3.jpg
+?? pieces/mango-rosario/qa/r4.jpg
+?? pieces/mango-rosario/qa/regen.jpg
+?? pieces/mango-rosario/qa/s1.jpg
+?? pieces/mango-rosario/qa/s2.jpg
+?? pieces/mango-rosario/qa/s3.jpg
+?? pieces/mango-rosario/qa/sub0.jpg
+?? pieces/mango-rosario/qa/sub1.jpg
+?? pieces/mango-rosario/qa/sub2.jpg
+?? pieces/mango-rosario/qa/sub3.jpg
+?? pieces/mango-rosario/qa/sub4.jpg
+?? pieces/mango-rosario/qa/sub5.jpg
+?? pieces/mango-rosario/qa/sub6.jpg
+?? pieces/mango-rosario/qa/sub7.jpg
+?? pieces/mango-rosario/qa/subs_check.jpg
+?? pieces/manteles-apan/chars/
+?? pieces/manteles-apan/clips_log.txt
+?? pieces/manteles-apan/gen_log.txt
+?? pieces/manteles-apan/qa/
+?? pieces/manteles-apan/sheets_log.txt
+?? pieces/manzana-cuauhtemoc/chars/
+?? pieces/manzana-cuauhtemoc/qa/c01.jpg
+?? pieces/manzana-cuauhtemoc/qa/c02.jpg
+?? pieces/manzana-cuauhtemoc/qa/c03.jpg
+?? pieces/manzana-cuauhtemoc/qa/c04.jpg
+?? pieces/manzana-cuauhtemoc/qa/c05.jpg
+?? pieces/manzana-cuauhtemoc/qa/c06.jpg
+?? pieces/manzana-cuauhtemoc/qa/c07.jpg
+?? pieces/manzana-cuauhtemoc/qa/c08.jpg
+?? pieces/manzana-cuauhtemoc/qa/c09.jpg
+?? pieces/manzana-cuauhtemoc/qa/c10.jpg
+?? pieces/manzana-cuauhtemoc/qa/c11.jpg
+?? pieces/manzana-cuauhtemoc/qa/c12.jpg
+?? pieces/manzana-cuauhtemoc/qa/c13.jpg
+?? pieces/manzana-cuauhtemoc/qa/c14.jpg
+?? pieces/manzana-cuauhtemoc/qa/c15.jpg
+?? pieces/manzana-cuauhtemoc/qa/c16.jpg
+?? pieces/manzana-cuauhtemoc/qa/c17.jpg
+?? pieces/manzana-cuauhtemoc/qa/c18.jpg
+?? pieces/manzana-cuauhtemoc/qa/c19.jpg
+?? pieces/manzana-cuauhtemoc/qa/c20.jpg
+?? pieces/manzana-cuauhtemoc/qa/c21.jpg
+?? pieces/manzana-cuauhtemoc/qa/c22.jpg
+?? pieces/manzana-cuauhtemoc/qa/c23.jpg
+?? pieces/manzana-cuauhtemoc/qa/c24.jpg
+?? pieces/manzana-cuauhtemoc/qa/i01.jpg
+?? pieces/manzana-cuauhtemoc/qa/i02.jpg
+?? pieces/manzana-cuauhtemoc/qa/mouth0.jpg
+?? pieces/manzana-cuauhtemoc/qa/mouth1.jpg
+?? pieces/manzana-cuauhtemoc/qa/mouth2.jpg
+?? pieces/manzana-cuauhtemoc/qa/mouth3.jpg
+?? pieces/manzana-cuauhtemoc/qa/mouth4.jpg
+?? pieces/manzana-cuauhtemoc/qa/mouth5.jpg
+?? pieces/manzana-cuauhtemoc/qa/r1.jpg
+?? pieces/manzana-cuauhtemoc/qa/r2.jpg
+?? pieces/manzana-cuauhtemoc/qa/r3.jpg
+?? pieces/manzana-cuauhtemoc/qa/r4.jpg
+?? pieces/manzana-cuauhtemoc/qa/r5.jpg
+?? pieces/manzana-cuauhtemoc/qa/s1.jpg
+?? pieces/manzana-cuauhtemoc/qa/s2.jpg
+?? pieces/manzana-cuauhtemoc/qa/s3.jpg
+?? pieces/manzana-cuauhtemoc/qa/s4.jpg
+?? pieces/manzana-cuauhtemoc/qa/s5.jpg
+?? pieces/mole-atocpan/chars/
+?? pieces/mole-atocpan/qa/c01.jpg
+?? pieces/mole-atocpan/qa/c02.jpg
+?? pieces/mole-atocpan/qa/c03.jpg
+?? pieces/mole-atocpan/qa/c04.jpg
+?? pieces/mole-atocpan/qa/c05.jpg
+?? pieces/mole-atocpan/qa/c06.jpg
+?? pieces/mole-atocpan/qa/c07.jpg
+?? pieces/mole-atocpan/qa/c08.jpg
+?? pieces/mole-atocpan/qa/c09.jpg
+?? pieces/mole-atocpan/qa/c10.jpg
+?? pieces/mole-atocpan/qa/c11.jpg
+?? pieces/mole-atocpan/qa/c12.jpg
+?? pieces/mole-atocpan/qa/c13.jpg
+?? pieces/mole-atocpan/qa/c14.jpg
+?? pieces/mole-atocpan/qa/c15.jpg
+?? pieces/mole-atocpan/qa/c16.jpg
+?? pieces/mole-atocpan/qa/c17.jpg
+?? pieces/mole-atocpan/qa/i01.jpg
+?? pieces/mole-atocpan/qa/mouth0.jpg
+?? pieces/mole-atocpan/qa/mouth1.jpg
+?? pieces/mole-atocpan/qa/mouth2.jpg
+?? pieces/mole-atocpan/qa/mouth3.jpg
+?? pieces/mole-atocpan/qa/mouth4.jpg
+?? pieces/mole-atocpan/qa/mouth5.jpg
+?? pieces/mole-atocpan/qa/r1.jpg
+?? pieces/mole-atocpan/qa/r2.jpg
+?? pieces/mole-atocpan/qa/r3.jpg
+?? pieces/mole-atocpan/qa/s1.jpg
+?? pieces/mole-atocpan/qa/s2.jpg
+?? pieces/mole-atocpan/qa/s3.jpg
+?? pieces/mole-atocpan/qa/sub0.jpg
+?? pieces/mole-atocpan/qa/sub1.jpg
+?? pieces/mole-atocpan/qa/sub2.jpg
+?? pieces/mole-atocpan/qa/sub3.jpg
+?? pieces/mole-atocpan/qa/sub4.jpg
+?? pieces/mole-atocpan/qa/sub5.jpg
+?? pieces/mole-atocpan/qa/sub6.jpg
+?? pieces/mole-atocpan/qa/sub7.jpg
+?? pieces/mole-atocpan/qa/subs_check.jpg
+?? pieces/moro-sabinas/
+?? pieces/nieve-tepoztlan/chars/
+?? pieces/nieve-tepoztlan/contact.jpg
+?? pieces/nieve-tepoztlan/qa/c01.jpg
+?? pieces/nieve-tepoztlan/qa/c02.jpg
+?? pieces/nieve-tepoztlan/qa/c03.jpg
+?? pieces/nieve-tepoztlan/qa/c04.jpg
+?? pieces/nieve-tepoztlan/qa/c05.jpg
+?? pieces/nieve-tepoztlan/qa/c06.jpg
+?? pieces/nieve-tepoztlan/qa/c07.jpg
+?? pieces/nieve-tepoztlan/qa/c08.jpg
+?? pieces/nieve-tepoztlan/qa/c09.jpg
+?? pieces/nieve-tepoztlan/qa/c10.jpg
+?? pieces/nieve-tepoztlan/qa/c11.jpg
+?? pieces/nieve-tepoztlan/qa/c12.jpg
+?? pieces/nieve-tepoztlan/qa/c13.jpg
+?? pieces/nieve-tepoztlan/qa/c14.jpg
+?? pieces/nieve-tepoztlan/qa/c15.jpg
+?? pieces/nieve-tepoztlan/qa/c16.jpg
+?? pieces/nieve-tepoztlan/qa/c17.jpg
+?? pieces/nieve-tepoztlan/qa/c18.jpg
+?? pieces/nieve-tepoztlan/qa/c19.jpg
+?? pieces/nieve-tepoztlan/qa/c19chk.jpg
+?? pieces/nieve-tepoztlan/qa/c19f.jpg
+?? pieces/nieve-tepoztlan/qa/c20.jpg
+?? pieces/nieve-tepoztlan/qa/c21.jpg
+?? pieces/nieve-tepoztlan/qa/c22.jpg
+?? pieces/nieve-tepoztlan/qa/c23.jpg
+?? pieces/nieve-tepoztlan/qa/c24.jpg
+?? pieces/nieve-tepoztlan/qa/c25.jpg
+?? pieces/nieve-tepoztlan/qa/c26.jpg
+?? pieces/nieve-tepoztlan/qa/c27.jpg
+?? pieces/nieve-tepoztlan/qa/g0.jpg
+?? pieces/nieve-tepoztlan/qa/g1.jpg
+?? pieces/nieve-tepoztlan/qa/g2.jpg
+?? pieces/nieve-tepoztlan/qa/g3.jpg
+?? pieces/nieve-tepoztlan/qa/g4.jpg
+?? pieces/nieve-tepoztlan/qa/g5.jpg
+?? pieces/nieve-tepoztlan/qa/i01.jpg
+?? pieces/nieve-tepoztlan/qa/r1.jpg
+?? pieces/nieve-tepoztlan/qa/r2.jpg
+?? pieces/nieve-tepoztlan/qa/r3.jpg
+?? pieces/nieve-tepoztlan/qa/r4.jpg
+?? pieces/nuez-parras/chars/
+?? pieces/nuez-parras/qa/c01.jpg
+?? pieces/nuez-parras/qa/c01g.jpg
+?? pieces/nuez-parras/qa/c02.jpg
+?? pieces/nuez-parras/qa/c03.jpg
+?? pieces/nuez-parras/qa/c04.jpg
+?? pieces/nuez-parras/qa/c05.jpg
+?? pieces/nuez-parras/qa/c06.jpg
+?? pieces/nuez-parras/qa/c07.jpg
+?? pieces/nuez-parras/qa/c08.jpg
+?? pieces/nuez-parras/qa/c09.jpg
+?? pieces/nuez-parras/qa/c10.jpg
+?? pieces/nuez-parras/qa/c11.jpg
+?? pieces/nuez-parras/qa/c12.jpg
+?? pieces/nuez-parras/qa/c13.jpg
+?? pieces/nuez-parras/qa/c14.jpg
+?? pieces/nuez-parras/qa/c15.jpg
+?? pieces/nuez-parras/qa/c16.jpg
+?? pieces/nuez-parras/qa/c17.jpg
+?? pieces/nuez-parras/qa/c18.jpg
+?? pieces/nuez-parras/qa/c19.jpg
+?? pieces/nuez-parras/qa/i01.jpg
+?? pieces/nuez-parras/qa/i02.jpg
+?? pieces/nuez-parras/qa/mouth0.jpg
+?? pieces/nuez-parras/qa/mouth1.jpg
+?? pieces/nuez-parras/qa/mouth2.jpg
+?? pieces/nuez-parras/qa/mouth3.jpg
+?? pieces/nuez-parras/qa/mouth4.jpg
+?? pieces/nuez-parras/qa/mouth5.jpg
+?? pieces/nuez-parras/qa/r1.jpg
+?? pieces/nuez-parras/qa/r2.jpg
+?? pieces/nuez-parras/qa/r3.jpg
+?? pieces/nuez-parras/qa/r4.jpg
+?? pieces/nuez-parras/qa/r5.jpg
+?? pieces/nuez-parras/qa/s1.jpg
+?? pieces/nuez-parras/qa/s2.jpg
+?? pieces/nuez-parras/qa/s3.jpg
+?? pieces/nuez-parras/qa/sub0.jpg
+?? pieces/nuez-parras/qa/sub1.jpg
+?? pieces/nuez-parras/qa/sub2.jpg
+?? pieces/nuez-parras/qa/sub3.jpg
+?? pieces/nuez-parras/qa/sub4.jpg
+?? pieces/nuez-parras/qa/sub5.jpg
+?? pieces/nuez-parras/qa/sub6.jpg
+?? pieces/nuez-parras/qa/sub7.jpg
+?? pieces/nuez-parras/qa/subs_check.jpg
+?? pieces/ojo-cienegas/
+?? pieces/palofierro-kino/chars/
+?? pieces/palofierro-kino/qa/c01.jpg
+?? pieces/palofierro-kino/qa/c02.jpg
+?? pieces/palofierro-kino/qa/c03.jpg
+?? pieces/palofierro-kino/qa/c04.jpg
+?? pieces/palofierro-kino/qa/c05.jpg
+?? pieces/palofierro-kino/qa/c06.jpg
+?? pieces/palofierro-kino/qa/c07.jpg
+?? pieces/palofierro-kino/qa/c08.jpg
+?? pieces/palofierro-kino/qa/c09.jpg
+?? pieces/palofierro-kino/qa/c10.jpg
+?? pieces/palofierro-kino/qa/c11.jpg
+?? pieces/palofierro-kino/qa/c12.jpg
+?? pieces/palofierro-kino/qa/c13.jpg
+?? pieces/palofierro-kino/qa/c14.jpg
+?? pieces/palofierro-kino/qa/c15.jpg
+?? pieces/palofierro-kino/qa/c16.jpg
+?? pieces/palofierro-kino/qa/c17.jpg
+?? pieces/palofierro-kino/qa/c18.jpg
+?? pieces/palofierro-kino/qa/c19.jpg
+?? pieces/palofierro-kino/qa/i01.jpg
+?? pieces/palofierro-kino/qa/i02.jpg
+?? pieces/palofierro-kino/qa/mouth0.jpg
+?? pieces/palofierro-kino/qa/mouth1.jpg
+?? pieces/palofierro-kino/qa/mouth2.jpg
+?? pieces/palofierro-kino/qa/mouth3.jpg
+?? pieces/palofierro-kino/qa/mouth4.jpg
+?? pieces/palofierro-kino/qa/mouth5.jpg
+?? pieces/palofierro-kino/qa/r1.jpg
+?? pieces/palofierro-kino/qa/r2.jpg
+?? pieces/palofierro-kino/qa/r3.jpg
+?? pieces/palofierro-kino/qa/r3chk.jpg
+?? pieces/palofierro-kino/qa/r4.jpg
+?? pieces/palofierro-kino/qa/s1.jpg
+?? pieces/palofierro-kino/qa/s2.jpg
+?? pieces/palofierro-kino/qa/s3.jpg
+?? pieces/palofierro-kino/qa/sub0.jpg
+?? pieces/palofierro-kino/qa/sub1.jpg
+?? pieces/palofierro-kino/qa/sub2.jpg
+?? pieces/palofierro-kino/qa/sub3.jpg
+?? pieces/palofierro-kino/qa/sub4.jpg
+?? pieces/palofierro-kino/qa/sub5.jpg
+?? pieces/palofierro-kino/qa/sub6.jpg
+?? pieces/palofierro-kino/qa/sub7.jpg
+?? pieces/palofierro-kino/qa/subs_check.jpg
+?? pieces/pan-comala/chars/
+?? pieces/pan-comala/qa/c01.jpg
+?? pieces/pan-comala/qa/c02.jpg
+?? pieces/pan-comala/qa/c03.jpg
+?? pieces/pan-comala/qa/c04.jpg
+?? pieces/pan-comala/qa/c05.jpg
+?? pieces/pan-comala/qa/c06.jpg
+?? pieces/pan-comala/qa/c06all.jpg
+?? pieces/pan-comala/qa/c07.jpg
+?? pieces/pan-comala/qa/c08.jpg
+?? pieces/pan-comala/qa/c09.jpg
+?? pieces/pan-comala/qa/c10.jpg
+?? pieces/pan-comala/qa/c11.jpg
+?? pieces/pan-comala/qa/c12.jpg
+?? pieces/pan-comala/qa/c13.jpg
+?? pieces/pan-comala/qa/c14.jpg
+?? pieces/pan-comala/qa/c15.jpg
+?? pieces/pan-comala/qa/c16.jpg
+?? pieces/pan-comala/qa/c17.jpg
+?? pieces/pan-comala/qa/c18.jpg
+?? pieces/pan-comala/qa/i01.jpg
+?? pieces/pan-comala/qa/i02.jpg
+?? pieces/pan-comala/qa/mouth0.jpg
+?? pieces/pan-comala/qa/mouth1.jpg
+?? pieces/pan-comala/qa/mouth2.jpg
+?? pieces/pan-comala/qa/mouth3.jpg
+?? pieces/pan-comala/qa/mouth4.jpg
+?? pieces/pan-comala/qa/mouth5.jpg
+?? pieces/pan-comala/qa/r1.jpg
+?? pieces/pan-comala/qa/r2.jpg
+?? pieces/pan-comala/qa/r3.jpg
+?? pieces/pan-comala/qa/r4.jpg
+?? pieces/pan-comala/qa/s1.jpg
+?? pieces/pan-comala/qa/s2.jpg
+?? pieces/pan-comala/qa/s3.jpg
+?? pieces/pan-comala/qa/sub0.jpg
+?? pieces/pan-comala/qa/sub1.jpg
+?? pieces/pan-comala/qa/sub2.jpg
+?? pieces/pan-comala/qa/sub3.jpg
+?? pieces/pan-comala/qa/sub4.jpg
+?? pieces/pan-comala/qa/sub5.jpg
+?? pieces/pan-comala/qa/sub6.jpg
+?? pieces/pan-comala/qa/sub7.jpg
+?? pieces/pan-comala/qa/subs_check.jpg
+?? pieces/panuelo-jalpan/
+?? pieces/paste-realdelmonte/chars/
+?? pieces/paste-realdelmonte/qa/c01.jpg
+?? pieces/paste-realdelmonte/qa/c02.jpg
+?? pieces/paste-realdelmonte/qa/c03.jpg
+?? pieces/paste-realdelmonte/qa/c04.jpg
+?? pieces/paste-realdelmonte/qa/c05.jpg
+?? pieces/paste-realdelmonte/qa/c06.jpg
+?? pieces/paste-realdelmonte/qa/c07.jpg
+?? pieces/paste-realdelmonte/qa/c08.jpg
+?? pieces/paste-realdelmonte/qa/c09.jpg
+?? pieces/paste-realdelmonte/qa/c10.jpg
+?? pieces/paste-realdelmonte/qa/c11.jpg
+?? pieces/paste-realdelmonte/qa/c12.jpg
+?? pieces/paste-realdelmonte/qa/c13.jpg
+?? pieces/paste-realdelmonte/qa/c14.jpg
+?? pieces/paste-realdelmonte/qa/c15.jpg
+?? pieces/paste-realdelmonte/qa/c16.jpg
+?? pieces/paste-realdelmonte/qa/c17.jpg
+?? pieces/paste-realdelmonte/qa/c18.jpg
+?? pieces/paste-realdelmonte/qa/c19.jpg
+?? pieces/paste-realdelmonte/qa/c20.jpg
+?? pieces/paste-realdelmonte/qa/c21.jpg
+?? pieces/paste-realdelmonte/qa/c22.jpg
+?? pieces/paste-realdelmonte/qa/c23.jpg
+?? pieces/paste-realdelmonte/qa/i01.jpg
+?? pieces/paste-realdelmonte/qa/mouth0.jpg
+?? pieces/paste-realdelmonte/qa/mouth1.jpg
+?? pieces/paste-realdelmonte/qa/mouth2.jpg
+?? pieces/paste-realdelmonte/qa/mouth3.jpg
+?? pieces/paste-realdelmonte/qa/mouth4.jpg
+?? pieces/paste-realdelmonte/qa/mouth5.jpg
+?? pieces/paste-realdelmonte/qa/r1.jpg
+?? pieces/paste-realdelmonte/qa/r1chk.jpg
+?? pieces/paste-realdelmonte/qa/r2.jpg
+?? pieces/paste-realdelmonte/qa/r3.jpg
+?? pieces/paste-realdelmonte/qa/r4.jpg
+?? pieces/paste-realdelmonte/qa/s1.jpg
+?? pieces/paste-realdelmonte/qa/s2.jpg
+?? pieces/paste-realdelmonte/qa/s3.jpg
+?? pieces/paste-realdelmonte/qa/s4.jpg
+?? pieces/pinata-acolman/chars/
+?? pieces/pinata-acolman/qa/c01.jpg
+?? pieces/pinata-acolman/qa/c02.jpg
+?? pieces/pinata-acolman/qa/c03.jpg
+?? pieces/pinata-acolman/qa/c04.jpg
+?? pieces/pinata-acolman/qa/c05.jpg
+?? pieces/pinata-acolman/qa/c06.jpg
+?? pieces/pinata-acolman/qa/c07.jpg
+?? pieces/pinata-acolman/qa/c08.jpg
+?? pieces/pinata-acolman/qa/c09.jpg
+?? pieces/pinata-acolman/qa/c10.jpg
+?? pieces/pinata-acolman/qa/c11.jpg
+?? pieces/pinata-acolman/qa/c12.jpg
+?? pieces/pinata-acolman/qa/c13.jpg
+?? pieces/pinata-acolman/qa/c14.jpg
+?? pieces/pinata-acolman/qa/c15.jpg
+?? pieces/pinata-acolman/qa/c16.jpg
+?? pieces/pinata-acolman/qa/c17.jpg
+?? pieces/pinata-acolman/qa/i01.jpg
+?? pieces/pinata-acolman/qa/mouth0.jpg
+?? pieces/pinata-acolman/qa/mouth1.jpg
+?? pieces/pinata-acolman/qa/mouth2.jpg
+?? pieces/pinata-acolman/qa/mouth3.jpg
+?? pieces/pinata-acolman/qa/mouth4.jpg
+?? pieces/pinata-acolman/qa/mouth5.jpg
+?? pieces/pinata-acolman/qa/r1.jpg
+?? pieces/pinata-acolman/qa/r2.jpg
+?? pieces/pinata-acolman/qa/r3.jpg
+?? pieces/pinata-acolman/qa/r4.jpg
+?? pieces/pinata-acolman/qa/s1.jpg
+?? pieces/pinata-acolman/qa/s2.jpg
+?? pieces/pinata-acolman/qa/s3.jpg
+?? pieces/pinata-acolman/qa/sub0.jpg
+?? pieces/pinata-acolman/qa/sub1.jpg
+?? pieces/pinata-acolman/qa/sub2.jpg
+?? pieces/pinata-acolman/qa/sub3.jpg
+?? pieces/pinata-acolman/qa/sub4.jpg
+?? pieces/pinata-acolman/qa/sub5.jpg
+?? pieces/pinata-acolman/qa/sub6.jpg
+?? pieces/pinata-acolman/qa/sub7.jpg
+?? pieces/pinata-acolman/qa/subs_check.jpg
+?? pieces/pipian-tlaxcala/chars/
+?? pieces/pipian-tlaxcala/qa/c01.jpg
+?? pieces/pipian-tlaxcala/qa/c02.jpg
+?? pieces/pipian-tlaxcala/qa/c03.jpg
+?? pieces/pipian-tlaxcala/qa/c04.jpg
+?? pieces/pipian-tlaxcala/qa/c05.jpg
+?? pieces/pipian-tlaxcala/qa/c06.jpg
+?? pieces/pipian-tlaxcala/qa/c07.jpg
+?? pieces/pipian-tlaxcala/qa/c08.jpg
+?? pieces/pipian-tlaxcala/qa/c09.jpg
+?? pieces/pipian-tlaxcala/qa/c10.jpg
+?? pieces/pipian-tlaxcala/qa/c11.jpg
+?? pieces/pipian-tlaxcala/qa/c12.jpg
+?? pieces/pipian-tlaxcala/qa/c13.jpg
+?? pieces/pipian-tlaxcala/qa/c14.jpg
+?? pieces/pipian-tlaxcala/qa/c15.jpg
+?? pieces/pipian-tlaxcala/qa/i01.jpg
+?? pieces/pipian-tlaxcala/qa/mouth0.jpg
+?? pieces/pipian-tlaxcala/qa/mouth1.jpg
+?? pieces/pipian-tlaxcala/qa/mouth2.jpg
+?? pieces/pipian-tlaxcala/qa/mouth3.jpg
+?? pieces/pipian-tlaxcala/qa/mouth4.jpg
+?? pieces/pipian-tlaxcala/qa/mouth5.jpg
+?? pieces/pipian-tlaxcala/qa/r1.jpg
+?? pieces/pipian-tlaxcala/qa/r2.jpg
+?? pieces/pipian-tlaxcala/qa/r3.jpg
+?? pieces/pipian-tlaxcala/qa/s1.jpg
+?? pieces/pipian-tlaxcala/qa/s1s.jpg
+?? pieces/pipian-tlaxcala/qa/s2.jpg
+?? pieces/pipian-tlaxcala/qa/s2s.jpg
+?? pieces/pipian-tlaxcala/qa/strip.jpg
+?? pieces/prueba-penjamo/
+?? pieces/pulsera-mexcaltitan-p2/chars/
+?? pieces/pulsera-mexcaltitan/chars/
+?? pieces/puro-tuxtla/
+?? pieces/queso-tequisquiapan/chars/
+?? pieces/queso-tequisquiapan/qa/c01.jpg
+?? pieces/queso-tequisquiapan/qa/c02.jpg
+?? pieces/queso-tequisquiapan/qa/c03.jpg
+?? pieces/queso-tequisquiapan/qa/c04.jpg
+?? pieces/queso-tequisquiapan/qa/c05.jpg
+?? pieces/queso-tequisquiapan/qa/c06.jpg
+?? pieces/queso-tequisquiapan/qa/c07.jpg
+?? pieces/queso-tequisquiapan/qa/c08.jpg
+?? pieces/queso-tequisquiapan/qa/c09.jpg
+?? pieces/queso-tequisquiapan/qa/c10.jpg
+?? pieces/queso-tequisquiapan/qa/c11.jpg
+?? pieces/queso-tequisquiapan/qa/c12.jpg
+?? pieces/queso-tequisquiapan/qa/c13.jpg
+?? pieces/queso-tequisquiapan/qa/c14.jpg
+?? pieces/queso-tequisquiapan/qa/c15.jpg
+?? pieces/queso-tequisquiapan/qa/c16.jpg
+?? pieces/queso-tequisquiapan/qa/c17.jpg
+?? pieces/queso-tequisquiapan/qa/c18.jpg
+?? pieces/queso-tequisquiapan/qa/c19.jpg
+?? pieces/queso-tequisquiapan/qa/c20.jpg
+?? pieces/queso-tequisquiapan/qa/i01.jpg
+?? pieces/queso-tequisquiapan/qa/i02.jpg
+?? pieces/queso-tequisquiapan/qa/mouth0.jpg
+?? pieces/queso-tequisquiapan/qa/mouth1.jpg
+?? pieces/queso-tequisquiapan/qa/mouth2.jpg
+?? pieces/queso-tequisquiapan/qa/mouth3.jpg
+?? pieces/queso-tequisquiapan/qa/mouth4.jpg
+?? pieces/queso-tequisquiapan/qa/mouth5.jpg
+?? pieces/queso-tequisquiapan/qa/r1.jpg
+?? pieces/queso-tequisquiapan/qa/r2.jpg
+?? pieces/queso-tequisquiapan/qa/r3.jpg
+?? pieces/queso-tequisquiapan/qa/r4.jpg
+?? pieces/queso-tequisquiapan/qa/s1.jpg
+?? pieces/queso-tequisquiapan/qa/s2.jpg
+?? pieces/queso-tequisquiapan/qa/s3.jpg
+?? pieces/queso-tequisquiapan/qa/s4.jpg
+?? pieces/queso-tequisquiapan/qa/sub0.jpg
+?? pieces/queso-tequisquiapan/qa/sub1.jpg
+?? pieces/queso-tequisquiapan/qa/sub2.jpg
+?? pieces/queso-tequisquiapan/qa/sub3.jpg
+?? pieces/queso-tequisquiapan/qa/sub4.jpg
+?? pieces/queso-tequisquiapan/qa/sub5.jpg
+?? pieces/queso-tequisquiapan/qa/sub6.jpg
+?? pieces/queso-tequisquiapan/qa/sub7.jpg
+?? pieces/queso-tequisquiapan/qa/subs_check.jpg
+?? pieces/rebozo-santamaria/chars/
+?? pieces/rebozo-santamaria/contact.jpg
+?? pieces/rebozo-santamaria/qa/c01.jpg
+?? pieces/rebozo-santamaria/qa/c02.jpg
+?? pieces/rebozo-santamaria/qa/c03.jpg
+?? pieces/rebozo-santamaria/qa/c04.jpg
+?? pieces/rebozo-santamaria/qa/c05.jpg
+?? pieces/rebozo-santamaria/qa/c06.jpg
+?? pieces/rebozo-santamaria/qa/c07.jpg
+?? pieces/rebozo-santamaria/qa/c08.jpg
+?? pieces/rebozo-santamaria/qa/c09.jpg
+?? pieces/rebozo-santamaria/qa/c10.jpg
+?? pieces/rebozo-santamaria/qa/c11.jpg
+?? pieces/rebozo-santamaria/qa/c12.jpg
+?? pieces/rebozo-santamaria/qa/c13.jpg
+?? pieces/rebozo-santamaria/qa/c14.jpg
+?? pieces/rebozo-santamaria/qa/c15.jpg
+?? pieces/rebozo-santamaria/qa/c16.jpg
+?? pieces/rebozo-santamaria/qa/c17.jpg
+?? pieces/rebozo-santamaria/qa/c18.jpg
+?? pieces/rebozo-santamaria/qa/c19.jpg
+?? pieces/rebozo-santamaria/qa/c20.jpg
+?? pieces/rebozo-santamaria/qa/c21.jpg
+?? pieces/rebozo-santamaria/qa/c22.jpg
+?? pieces/rebozo-santamaria/qa/c23.jpg
+?? pieces/rebozo-santamaria/qa/c24.jpg
+?? pieces/rebozo-santamaria/qa/c25.jpg
+?? pieces/rebozo-santamaria/qa/c26.jpg
+?? pieces/rebozo-santamaria/qa/c27.jpg
+?? pieces/rebozo-santamaria/qa/g0.jpg
+?? pieces/rebozo-santamaria/qa/g1.jpg
+?? pieces/rebozo-santamaria/qa/g2.jpg
+?? pieces/rebozo-santamaria/qa/g3.jpg
+?? pieces/rebozo-santamaria/qa/g4.jpg
+?? pieces/rebozo-santamaria/qa/g5.jpg
+?? pieces/rebozo-santamaria/qa/i01.jpg
+?? pieces/rebozo-santamaria/qa/i02.jpg
+?? pieces/rebozo-santamaria/qa/m.jpg
+?? pieces/rebozo-santamaria/qa/m04.jpg
+?? pieces/rebozo-santamaria/qa/m17.jpg
+?? pieces/rebozo-santamaria/qa/m25.jpg
+?? pieces/rebozo-santamaria/qa/r1.jpg
+?? pieces/rebozo-santamaria/qa/r2.jpg
+?? pieces/rebozo-santamaria/qa/r3.jpg
+?? pieces/rebozo-santamaria/qa/r4.jpg
+?? pieces/rebozo-santamaria/qa/r5.jpg
+?? pieces/red-janitzio/chars/
+?? pieces/red-janitzio/qa/c01.jpg
+?? pieces/red-janitzio/qa/c02.jpg
+?? pieces/red-janitzio/qa/c03.jpg
+?? pieces/red-janitzio/qa/c04.jpg
+?? pieces/red-janitzio/qa/c05.jpg
+?? pieces/red-janitzio/qa/c06.jpg
+?? pieces/red-janitzio/qa/c07.jpg
+?? pieces/red-janitzio/qa/c08.jpg
+?? pieces/red-janitzio/qa/c09.jpg
+?? pieces/red-janitzio/qa/c10.jpg
+?? pieces/red-janitzio/qa/c11.jpg
+?? pieces/red-janitzio/qa/c12.jpg
+?? pieces/red-janitzio/qa/c13.jpg
+?? pieces/red-janitzio/qa/c14.jpg
+?? pieces/red-janitzio/qa/c15.jpg
+?? pieces/red-janitzio/qa/c16.jpg
+?? pieces/red-janitzio/qa/c17.jpg
+?? pieces/red-janitzio/qa/c18.jpg
+?? pieces/red-janitzio/qa/i01.jpg
+?? pieces/red-janitzio/qa/i02.jpg
+?? pieces/red-janitzio/qa/mouth0.jpg
+?? pieces/red-janitzio/qa/mouth1.jpg
+?? pieces/red-janitzio/qa/mouth2.jpg
+?? pieces/red-janitzio/qa/mouth3.jpg
+?? pieces/red-janitzio/qa/mouth4.jpg
+?? pieces/red-janitzio/qa/mouth5.jpg
+?? pieces/red-janitzio/qa/r1.jpg
+?? pieces/red-janitzio/qa/r2.jpg
+?? pieces/red-janitzio/qa/r3.jpg
+?? pieces/red-janitzio/qa/s1.jpg
+?? pieces/red-janitzio/qa/s2.jpg
+?? pieces/red-janitzio/qa/s3.jpg
+?? pieces/red-janitzio/qa/sub0.jpg
+?? pieces/red-janitzio/qa/sub1.jpg
+?? pieces/red-janitzio/qa/sub2.jpg
+?? pieces/red-janitzio/qa/sub3.jpg
+?? pieces/red-janitzio/qa/sub4.jpg
+?? pieces/red-janitzio/qa/sub5.jpg
+?? pieces/red-janitzio/qa/sub6.jpg
+?? pieces/red-janitzio/qa/sub7.jpg
+?? pieces/red-janitzio/qa/subs_check.jpg
+?? pieces/relevo-ures/
+?? pieces/reloj-zacatlan/chars/
+?? pieces/reloj-zacatlan/qa/c01.jpg
+?? pieces/reloj-zacatlan/qa/c02.jpg
+?? pieces/reloj-zacatlan/qa/c03.jpg
+?? pieces/reloj-zacatlan/qa/c04.jpg
+?? pieces/reloj-zacatlan/qa/c05.jpg
+?? pieces/reloj-zacatlan/qa/c06.jpg
+?? pieces/reloj-zacatlan/qa/c07.jpg
+?? pieces/reloj-zacatlan/qa/c08.jpg
+?? pieces/reloj-zacatlan/qa/c09.jpg
+?? pieces/reloj-zacatlan/qa/c10.jpg
+?? pieces/reloj-zacatlan/qa/c11.jpg
+?? pieces/reloj-zacatlan/qa/c12.jpg
+?? pieces/reloj-zacatlan/qa/c13.jpg
+?? pieces/reloj-zacatlan/qa/c13z.jpg
+?? pieces/reloj-zacatlan/qa/c14.jpg
+?? pieces/reloj-zacatlan/qa/c15.jpg
+?? pieces/reloj-zacatlan/qa/c16.jpg
+?? pieces/reloj-zacatlan/qa/c17.jpg
+?? pieces/reloj-zacatlan/qa/c18.jpg
+?? pieces/reloj-zacatlan/qa/c19.jpg
+?? pieces/reloj-zacatlan/qa/c20.jpg
+?? pieces/reloj-zacatlan/qa/c21.jpg
+?? pieces/reloj-zacatlan/qa/c22.jpg
+?? pieces/reloj-zacatlan/qa/i01.jpg
+?? pieces/reloj-zacatlan/qa/mouth0.jpg
+?? pieces/reloj-zacatlan/qa/mouth1.jpg
+?? pieces/reloj-zacatlan/qa/mouth2.jpg
+?? pieces/reloj-zacatlan/qa/mouth3.jpg
+?? pieces/reloj-zacatlan/qa/mouth4.jpg
+?? pieces/reloj-zacatlan/qa/mouth5.jpg
+?? pieces/reloj-zacatlan/qa/r1.jpg
+?? pieces/reloj-zacatlan/qa/r2.jpg
+?? pieces/reloj-zacatlan/qa/r3.jpg
+?? pieces/reloj-zacatlan/qa/r4.jpg
+?? pieces/reloj-zacatlan/qa/s1.jpg
+?? pieces/reloj-zacatlan/qa/s2.jpg
+?? pieces/reloj-zacatlan/qa/s3.jpg
+?? pieces/reloj-zacatlan/qa/sub0.jpg
+?? pieces/reloj-zacatlan/qa/sub1.jpg
+?? pieces/reloj-zacatlan/qa/sub2.jpg
+?? pieces/reloj-zacatlan/qa/sub3.jpg
+?? pieces/reloj-zacatlan/qa/sub4.jpg
+?? pieces/reloj-zacatlan/qa/sub5.jpg
+?? pieces/reloj-zacatlan/qa/sub6.jpg
+?? pieces/reloj-zacatlan/qa/sub7.jpg
+?? pieces/reloj-zacatlan/qa/subs_check.jpg
+?? pieces/sarape-saltillo-p2/chars/
+?? pieces/sarape-saltillo/chars/
+?? pieces/silla-izamal/chars/
+?? pieces/silla-izamal/qa/c01.jpg
+?? pieces/silla-izamal/qa/c02.jpg
+?? pieces/silla-izamal/qa/c03.jpg
+?? pieces/silla-izamal/qa/c03r.jpg
+?? pieces/silla-izamal/qa/c04.jpg
+?? pieces/silla-izamal/qa/c05.jpg
+?? pieces/silla-izamal/qa/c06.jpg
+?? pieces/silla-izamal/qa/c07.jpg
+?? pieces/silla-izamal/qa/c08.jpg
+?? pieces/silla-izamal/qa/c09.jpg
+?? pieces/silla-izamal/qa/c10.jpg
+?? pieces/silla-izamal/qa/c11.jpg
+?? pieces/silla-izamal/qa/c12.jpg
+?? pieces/silla-izamal/qa/c13.jpg
+?? pieces/silla-izamal/qa/c14.jpg
+?? pieces/silla-izamal/qa/c15.jpg
+?? pieces/silla-izamal/qa/i01.jpg
+?? pieces/silla-izamal/qa/mouth0.jpg
+?? pieces/silla-izamal/qa/mouth1.jpg
+?? pieces/silla-izamal/qa/mouth2.jpg
+?? pieces/silla-izamal/qa/mouth3.jpg
+?? pieces/silla-izamal/qa/mouth4.jpg
+?? pieces/silla-izamal/qa/mouth5.jpg
+?? pieces/silla-izamal/qa/r1.jpg
+?? pieces/silla-izamal/qa/r2.jpg
+?? pieces/silla-izamal/qa/r3.jpg
+?? pieces/silla-izamal/qa/s1.jpg
+?? pieces/silla-izamal/qa/s2.jpg
+?? pieces/silla-izamal/qa/subs_check.jpg
+?? pieces/sobre-alamos/chars/
+?? pieces/sobre-alamos/qa/c01.jpg
+?? pieces/sobre-alamos/qa/c02.jpg
+?? pieces/sobre-alamos/qa/c03.jpg
+?? pieces/sobre-alamos/qa/c04.jpg
+?? pieces/sobre-alamos/qa/c05.jpg
+?? pieces/sobre-alamos/qa/c06.jpg
+?? pieces/sobre-alamos/qa/c07.jpg
+?? pieces/sobre-alamos/qa/c08.jpg
+?? pieces/sobre-alamos/qa/c09.jpg
+?? pieces/sobre-alamos/qa/c10.jpg
+?? pieces/sobre-alamos/qa/c11.jpg
+?? pieces/sobre-alamos/qa/c12.jpg
+?? pieces/sobre-alamos/qa/c13.jpg
+?? pieces/sobre-alamos/qa/i01.jpg
+?? pieces/sobre-alamos/qa/mouth0.jpg
+?? pieces/sobre-alamos/qa/mouth1.jpg
+?? pieces/sobre-alamos/qa/mouth2.jpg
+?? pieces/sobre-alamos/qa/mouth3.jpg
+?? pieces/sobre-alamos/qa/mouth4.jpg
+?? pieces/sobre-alamos/qa/mouth5.jpg
+?? pieces/sobre-alamos/qa/r1.jpg
+?? pieces/sobre-alamos/qa/r2.jpg
+?? pieces/sobre-alamos/qa/r3.jpg
+?? pieces/sobre-alamos/qa/r4.jpg
+?? pieces/sobre-alamos/qa/strip.jpg
+?? pieces/sombrero-sahuayo/chars/
+?? pieces/sombrero-sahuayo/qa/c01.jpg
+?? pieces/sombrero-sahuayo/qa/c02.jpg
+?? pieces/sombrero-sahuayo/qa/c03.jpg
+?? pieces/sombrero-sahuayo/qa/c04.jpg
+?? pieces/sombrero-sahuayo/qa/c05.jpg
+?? pieces/sombrero-sahuayo/qa/c06.jpg
+?? pieces/sombrero-sahuayo/qa/c07.jpg
+?? pieces/sombrero-sahuayo/qa/c08.jpg
+?? pieces/sombrero-sahuayo/qa/c09.jpg
+?? pieces/sombrero-sahuayo/qa/c10.jpg
+?? pieces/sombrero-sahuayo/qa/c11.jpg
+?? pieces/sombrero-sahuayo/qa/c12.jpg
+?? pieces/sombrero-sahuayo/qa/c13.jpg
+?? pieces/sombrero-sahuayo/qa/c14.jpg
+?? pieces/sombrero-sahuayo/qa/c15.jpg
+?? pieces/sombrero-sahuayo/qa/c16.jpg
+?? pieces/sombrero-sahuayo/qa/c17.jpg
+?? pieces/sombrero-sahuayo/qa/c18.jpg
+?? pieces/sombrero-sahuayo/qa/i01.jpg
+?? pieces/sombrero-sahuayo/qa/i02.jpg
+?? pieces/sombrero-sahuayo/qa/mouth0.jpg
+?? pieces/sombrero-sahuayo/qa/mouth1.jpg
+?? pieces/sombrero-sahuayo/qa/mouth2.jpg
+?? pieces/sombrero-sahuayo/qa/mouth3.jpg
+?? pieces/sombrero-sahuayo/qa/mouth4.jpg
+?? pieces/sombrero-sahuayo/qa/mouth5.jpg
+?? pieces/sombrero-sahuayo/qa/r1.jpg
+?? pieces/sombrero-sahuayo/qa/r2.jpg
+?? pieces/sombrero-sahuayo/qa/r3.jpg
+?? pieces/sombrero-sahuayo/qa/r4.jpg
+?? pieces/sombrero-sahuayo/qa/s1.jpg
+?? pieces/sombrero-sahuayo/qa/s2.jpg
+?? pieces/sombrero-sahuayo/qa/s3.jpg
+?? pieces/sombrero-sahuayo/qa/sub0.jpg
+?? pieces/sombrero-sahuayo/qa/sub1.jpg
+?? pieces/sombrero-sahuayo/qa/sub2.jpg
+?? pieces/sombrero-sahuayo/qa/sub3.jpg
+?? pieces/sombrero-sahuayo/qa/sub4.jpg
+?? pieces/sombrero-sahuayo/qa/sub5.jpg
+?? pieces/sombrero-sahuayo/qa/sub6.jpg
+?? pieces/sombrero-sahuayo/qa/sub7.jpg
+?? pieces/sombrero-sahuayo/qa/subs_check.jpg
+?? pieces/talavera-cholula/chars/
+?? pieces/talavera-cholula/qa/c01.jpg
+?? pieces/talavera-cholula/qa/c02.jpg
+?? pieces/talavera-cholula/qa/c03.jpg
+?? pieces/talavera-cholula/qa/c04.jpg
+?? pieces/talavera-cholula/qa/c05.jpg
+?? pieces/talavera-cholula/qa/c06.jpg
+?? pieces/talavera-cholula/qa/c07.jpg
+?? pieces/talavera-cholula/qa/c08.jpg
+?? pieces/talavera-cholula/qa/c09.jpg
+?? pieces/talavera-cholula/qa/c10.jpg
+?? pieces/talavera-cholula/qa/c11.jpg
+?? pieces/talavera-cholula/qa/c12.jpg
+?? pieces/talavera-cholula/qa/c13.jpg
+?? pieces/talavera-cholula/qa/c14.jpg
+?? pieces/talavera-cholula/qa/c15.jpg
+?? pieces/talavera-cholula/qa/c16.jpg
+?? pieces/talavera-cholula/qa/c17.jpg
+?? pieces/talavera-cholula/qa/i01.jpg
+?? pieces/talavera-cholula/qa/i02.jpg
+?? pieces/talavera-cholula/qa/mouth0.jpg
+?? pieces/talavera-cholula/qa/mouth1.jpg
+?? pieces/talavera-cholula/qa/mouth2.jpg
+?? pieces/talavera-cholula/qa/mouth3.jpg
+?? pieces/talavera-cholula/qa/mouth4.jpg
+?? pieces/talavera-cholula/qa/mouth5.jpg
+?? pieces/talavera-cholula/qa/r1.jpg
+?? pieces/talavera-cholula/qa/r2.jpg
+?? pieces/talavera-cholula/qa/r3.jpg
+?? pieces/talavera-cholula/qa/regen.jpg
+?? pieces/talavera-cholula/qa/s1.jpg
+?? pieces/talavera-cholula/qa/s2.jpg
+?? pieces/talavera-cholula/qa/s3.jpg
+?? pieces/talavera-cholula/qa/subs_check.jpg
+?? pieces/tienda-mineral/
+?? pieces/traje-zamora/
+?? pieces/trajinera-xochimilco/chars/
+?? pieces/trajinera-xochimilco/qa/c01.jpg
+?? pieces/trajinera-xochimilco/qa/c02.jpg
+?? pieces/trajinera-xochimilco/qa/c03.jpg
+?? pieces/trajinera-xochimilco/qa/c04.jpg
+?? pieces/trajinera-xochimilco/qa/c05.jpg
+?? pieces/trajinera-xochimilco/qa/c06.jpg
+?? pieces/trajinera-xochimilco/qa/c07.jpg
+?? pieces/trajinera-xochimilco/qa/c08.jpg
+?? pieces/trajinera-xochimilco/qa/c09.jpg
+?? pieces/trajinera-xochimilco/qa/c10.jpg
+?? pieces/trajinera-xochimilco/qa/c11.jpg
+?? pieces/trajinera-xochimilco/qa/c12.jpg
+?? pieces/trajinera-xochimilco/qa/c13.jpg
+?? pieces/trajinera-xochimilco/qa/c14.jpg
+?? pieces/trajinera-xochimilco/qa/c15.jpg
+?? pieces/trajinera-xochimilco/qa/c16.jpg
+?? pieces/trajinera-xochimilco/qa/c17.jpg
+?? pieces/trajinera-xochimilco/qa/i01.jpg
+?? pieces/trajinera-xochimilco/qa/mouth0.jpg
+?? pieces/trajinera-xochimilco/qa/mouth1.jpg
+?? pieces/trajinera-xochimilco/qa/mouth2.jpg
+?? pieces/trajinera-xochimilco/qa/mouth3.jpg
+?? pieces/trajinera-xochimilco/qa/mouth4.jpg
+?? pieces/trajinera-xochimilco/qa/mouth5.jpg
+?? pieces/trajinera-xochimilco/qa/r1.jpg
+?? pieces/trajinera-xochimilco/qa/r2.jpg
+?? pieces/trajinera-xochimilco/qa/r3.jpg
+?? pieces/trajinera-xochimilco/qa/s1.jpg
+?? pieces/trajinera-xochimilco/qa/s2.jpg
+?? pieces/trajinera-xochimilco/qa/s3.jpg
+?? pieces/trajinera-xochimilco/qa/sub0.jpg
+?? pieces/trajinera-xochimilco/qa/sub1.jpg
+?? pieces/trajinera-xochimilco/qa/sub2.jpg
+?? pieces/trajinera-xochimilco/qa/sub3.jpg
+?? pieces/trajinera-xochimilco/qa/sub4.jpg
+?? pieces/trajinera-xochimilco/qa/sub5.jpg
+?? pieces/trajinera-xochimilco/qa/sub6.jpg
+?? pieces/trajinera-xochimilco/qa/sub7.jpg
+?? pieces/trajinera-xochimilco/qa/subs_check.jpg
+?? pieces/trapiche-cuautla/
+?? pieces/upnext-girl/tools/crashsune.log
+?? pieces/upnext-metalshadow/engine/ref/
+?? pieces/vainilla-papantla/chars/
+?? pieces/vainilla-papantla/qa/c01.jpg
+?? pieces/vainilla-papantla/qa/c02.jpg
+?? pieces/vainilla-papantla/qa/c03.jpg
+?? pieces/vainilla-papantla/qa/c04.jpg
+?? pieces/vainilla-papantla/qa/c05.jpg
+?? pieces/vainilla-papantla/qa/c06.jpg
+?? pieces/vainilla-papantla/qa/c07.jpg
+?? pieces/vainilla-papantla/qa/c08.jpg
+?? pieces/vainilla-papantla/qa/c09.jpg
+?? pieces/vainilla-papantla/qa/c10.jpg
+?? pieces/vainilla-papantla/qa/c11.jpg
+?? pieces/vainilla-papantla/qa/c12.jpg
+?? pieces/vainilla-papantla/qa/c13.jpg
+?? pieces/vainilla-papantla/qa/c14.jpg
+?? pieces/vainilla-papantla/qa/c15.jpg
+?? pieces/vainilla-papantla/qa/c16.jpg
+?? pieces/vainilla-papantla/qa/c16s.jpg
+?? pieces/vainilla-papantla/qa/c17.jpg
+?? pieces/vainilla-papantla/qa/c18.jpg
+?? pieces/vainilla-papantla/qa/c19.jpg
+?? pieces/vainilla-papantla/qa/c20.jpg
+?? pieces/vainilla-papantla/qa/c21.jpg
+?? pieces/vainilla-papantla/qa/c22.jpg
+?? pieces/vainilla-papantla/qa/c23.jpg
+?? pieces/vainilla-papantla/qa/i01.jpg
+?? pieces/vainilla-papantla/qa/mouth0.jpg
+?? pieces/vainilla-papantla/qa/mouth1.jpg
+?? pieces/vainilla-papantla/qa/mouth2.jpg
+?? pieces/vainilla-papantla/qa/mouth3.jpg
+?? pieces/vainilla-papantla/qa/mouth4.jpg
+?? pieces/vainilla-papantla/qa/mouth5.jpg
+?? pieces/vainilla-papantla/qa/r1.jpg
+?? pieces/vainilla-papantla/qa/r2.jpg
+?? pieces/vainilla-papantla/qa/r3.jpg
+?? pieces/vainilla-papantla/qa/r4.jpg
+?? pieces/vainilla-papantla/qa/r5.jpg
+?? pieces/vainilla-papantla/qa/s1.jpg
+?? pieces/vainilla-papantla/qa/s2.jpg
+?? pieces/vainilla-papantla/qa/s3.jpg
+?? pieces/vainilla-papantla/qa/s4.jpg
+?? pieces/vendimia-ensenada/
+?? pieces/viajante-sombrerete/
+?? pieces/yegua-jerez/chars/
+?? pieces/yegua-jerez/qa/c01.jpg
+?? pieces/yegua-jerez/qa/c02.jpg
+?? pieces/yegua-jerez/qa/c03.jpg
+?? pieces/yegua-jerez/qa/c04.jpg
+?? pieces/yegua-jerez/qa/c05.jpg
+?? pieces/yegua-jerez/qa/c06.jpg
+?? pieces/yegua-jerez/qa/c07.jpg
+?? pieces/yegua-jerez/qa/c08.jpg
+?? pieces/yegua-jerez/qa/c09.jpg
+?? pieces/yegua-jerez/qa/c10.jpg
+?? pieces/yegua-jerez/qa/c11.jpg
+?? pieces/yegua-jerez/qa/c12.jpg
+?? pieces/yegua-jerez/qa/c13.jpg
+?? pieces/yegua-jerez/qa/c14.jpg
+?? pieces/yegua-jerez/qa/c15.jpg
+?? pieces/yegua-jerez/qa/c16.jpg
+?? pieces/yegua-jerez/qa/c17.jpg
+?? pieces/yegua-jerez/qa/c18.jpg
+?? pieces/yegua-jerez/qa/duquesa.jpg
+?? pieces/yegua-jerez/qa/i01.jpg
+?? pieces/yegua-jerez/qa/i02.jpg
+?? pieces/yegua-jerez/qa/mouth0.jpg
+?? pieces/yegua-jerez/qa/mouth1.jpg
+?? pieces/yegua-jerez/qa/mouth2.jpg
+?? pieces/yegua-jerez/qa/mouth3.jpg
+?? pieces/yegua-jerez/qa/mouth4.jpg
+?? pieces/yegua-jerez/qa/mouth5.jpg
+?? pieces/yegua-jerez/qa/open.jpg
+?? pieces/yegua-jerez/qa/r1.jpg
+?? pieces/yegua-jerez/qa/r2.jpg
+?? pieces/yegua-jerez/qa/r3.jpg
+?? pieces/yegua-jerez/qa/s1.jpg
+?? pieces/yegua-jerez/qa/s2.jpg
+?? pieces/yegua-jerez/qa/s3.jpg
+?? pieces/yegua-jerez/qa/sub0.jpg
+?? pieces/yegua-jerez/qa/sub1.jpg
+?? pieces/yegua-jerez/qa/sub2.jpg
+?? pieces/yegua-jerez/qa/sub3.jpg
+?? pieces/yegua-jerez/qa/sub4.jpg
+?? pieces/yegua-jerez/qa/sub5.jpg
+?? pieces/yegua-jerez/qa/sub6.jpg
+?? pieces/yegua-jerez/qa/sub7.jpg
+?? pieces/yegua-jerez/qa/subs_check.jpg
+?? pieces/zombie-03-station/largo3/miniaturas_v2/_flow/
+?? pieces/zombie-03-station/largo3/miniaturas_v2/_hoja.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/_layers/avaA.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/_layers/avaB.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/_layers/avaC.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/_layers/stA.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/_layers/stB.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/_layers/stC.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/_layers/zA.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/_layers/zB.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/_layers/zC.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/code_A1_text.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/code_A2_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/code_A3_text.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/flow_B1_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/flow_B2_text.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/flow_B3_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/flow_B4_text.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/flow_B5_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v3/G1a_stalker_ps1_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v3/G1b_stalker_ps1_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v3/G1c_stalker_ps1_close_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v3/G2a_b3giant_hexbox_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v3/G2b_b3giant_coat_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v3/G2c_b3giant_tubes_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v3/_flow/
+?? pieces/zombie-03-station/largo3/miniaturas_v3/_hoja.png
+?? pieces/zombie-03-station/largo3/miniaturas_v3/_layers/bustA.png
+?? pieces/zombie-03-station/largo3/miniaturas_v3/_layers/bustA_ref.png
+?? pieces/zombie-03-station/largo3/miniaturas_v3/_layers/bustB.png
+?? pieces/zombie-03-station/largo3/miniaturas_v3/_layers/bustC.png
+?? pieces/zombie-03-station/largo3/miniaturas_v4/_flow/
+?? pieces/zombie-03-station/largo3/miniaturas_v4/_hoja.png
+?? pieces/zombie-03-station/largo3/miniaturas_v4/_layers/bA_34.png
+?? pieces/zombie-03-station/largo3/miniaturas_v4/_layers/bB_low.png
+?? pieces/zombie-03-station/largo3/miniaturas_v4/_layers/bC_front.png
+?? pieces/zombie-03-station/largo3/miniaturas_v4/_layers/bD_34L.png
+?? pieces/zombie-03-station/largo3/miniaturas_v4/v4_A_34_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v4/v4_B_low_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v4/v4_C_front_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v4/v4_D_34L_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v5/_hoja.png
+?? pieces/zombie-03-station/largo3/miniaturas_v5/_layers/bA_34.png
+?? pieces/zombie-03-station/largo3/miniaturas_v5/_layers/bB_low.png
+?? pieces/zombie-03-station/largo3/miniaturas_v5/_layers/bC_front.png
+?? pieces/zombie-03-station/largo3/miniaturas_v5/_layers/bD_34L.png
+?? pieces/zombie-03-station/largo3/miniaturas_v5/v5_A_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v5/v5_B_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v5/v5_C_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v5/v5_D_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v6/_flow/
+?? pieces/zombie-03-station/largo3/miniaturas_v6/_hoja.png
+?? pieces/zombie-03-station/largo3/miniaturas_v6/_layers/hA.png
+?? pieces/zombie-03-station/largo3/miniaturas_v6/_layers/hB.png
+?? pieces/zombie-03-station/largo3/miniaturas_v6/_layers/hB_ref.png
+?? pieces/zombie-03-station/largo3/miniaturas_v6/_layers/hC.png
+?? pieces/zombie-03-station/largo3/miniaturas_v6/v6_A_flowhead_red.png
+?? pieces/zombie-03-station/largo3/miniaturas_v6/v6_B_flowhead_white.png
+?? pieces/zombie-03-station/largo3/miniaturas_v6/v6_C_codehead_red.png
+?? pieces/zombie-03-station/largo3/miniaturas_v6/v6_D_codehead_white.png
+?? pieces/zombie-03-station/largo3/review/parts/rev0.log
+?? pieces/zombie-03-station/largo3/review/parts/rev1.log
+?? pieces/zombie-03-station/largo3/review/parts/rev2.log
+?? pieces/zombie-03-station/largo3/review/parts/rev3.log
+?? pieces/zombie-03-station/largo3/review/parts2/rev0.log
+?? pieces/zombie-03-station/largo3/review/parts2/rev1.log
+?? pieces/zombie-03-station/largo3/review/parts2/rev2.log
+?? pieces/zombie-03-station/largo3/review/parts2/rev3.log
+?? pieces/zombie-03-station/largo3/review/parts3/rev0.log
+?? pieces/zombie-03-station/largo3/review/parts3/rev1.log
+?? pieces/zombie-03-station/largo3/review/parts3/rev2.log
+?? pieces/zombie-03-station/largo3/review/parts3/rev3.log
+?? pieces/zombie-03-station/largo3/review/render_v1.log
+?? pieces/zombie-03-station/largo3/review/render_v2.log
+?? pieces/zombie-03-station/largo3/review/render_v3.log
+?? pieces/zombie-03-station/largo3/review/render_v4.log
 ?? pieces/zombie-03-station/largo3/stalker/compare.png
 ?? pieces/zombie-03-station/largo3/stalker/compare_v2.png
 ?? pieces/zombie-03-station/largo3/stalker/compare_v3.png
 ?? pieces/zombie-03-station/largo3/stalker/concept/
 ?? pieces/zombie-03-station/largo3/stalker/renders/
-?? pieces/zombie-03-station/largo3/stalker/src/
 ?? pieces/zombie-03-station/largo3/stalker/tex/
 ?? pieces/zombie-03-station/largo3/stalker/v3/mesh_back.png
 ?? pieces/zombie-03-station/largo3/stalker/v3/mesh_cmp.png
@@ -14967,28 +16924,7 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 ?? pieces/zombie-03-station/largo3/storyboard_v2_7.png
 ?? pieces/zombie-03-station/largo3/storyboard_v2_8.png
 ?? pieces/zombie-03-station/largo3/storyboard_v2_9.png
-?? pieces/zombie-03-station/largo3/voz/assemble_log.txt
-?? pieces/zombie-03-station/largo3/voz/fix_report.txt
-?? pieces/zombie-03-station/largo3/voz/gen_fix_log.txt
-?? pieces/zombie-03-station/largo3/voz/gen_log.txt
-?? pieces/zombie-03-station/largo3/voz/gen_log2.txt
-?? pieces/zombie-03-station/largo3/voz/gen_report.txt
-?? pieces/zombie-03-station/largo3/voz/pick.txt
-?? styles/ava-restfield/fonts/
-?? tools/mexitv_cola.json
 ?? tools/mexitv_publicar.log
-?? tools/mexitv_publicar.py
-?? tools/patrick.py
-?? tools/patrick_ai_inbox.py
-?? tools/patrick_dm.py
-?? tools/patrick_inbox.py
-?? tools/patrick_sync.py
-?? tools/srzGoogleFlowMCP/srzGoogleFlowMCP/MEMORY.md
-?? tools/srzGoogleFlowMCP/srzGoogleFlowMCP/fb_reels.mjs
-?? tools/srzGoogleFlowMCP/srzGoogleFlowMCP/flow-mcp-only.md
-?? tools/srzGoogleFlowMCP/srzGoogleFlowMCP/ig_caps.mjs
-?? tools/srzGoogleFlowMCP/srzGoogleFlowMCP/ig_cookies.mjs
-?? tools/srzGoogleFlowMCP/srzGoogleFlowMCP/ig_reels.mjs
 ```
 
 ## Estructura de primer nivel
@@ -15020,6 +16956,8 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 - `Ref youtube agente`
 - `Tiktok cuentas`
 - `VoiceStudio`
+- `Voz ashley clean limpia.wav`
+- `Voz mesera clean.wav`
 - `_claude`
 - `agente-davis`
 - `assets`
@@ -15043,4 +16981,6 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 - `tools`
 - `videos-pov3d.txt`
 - `voces`
+- `voz pip gnomo.wav`
+- `voz theo pretendiente clean.wav`
 - `yt-editor`

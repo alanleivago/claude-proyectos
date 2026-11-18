@@ -97,7 +97,7 @@ function tiles(page) {
   return page.evaluate(() => [...document.querySelectorAll('flow-grid-tile-container')].map((t) => ({
     // newer Flow UI: the name lives in the tile's aria-label (the footer title span is gone)
     name: (t.querySelector('span.footer-title')?.innerText || t.getAttribute('aria-label') || '').trim(),
-    mediaId: t.querySelector('img[data-media-id]')?.dataset.mediaId || '',
+    mediaId: t.querySelector('[data-media-id]')?.dataset.mediaId || '',
   })).filter((t) => t.mediaId));
 }
 
@@ -132,7 +132,7 @@ async function closePicker(page) {
 }
 
 async function renameTile(page, mediaId, name) {
-  const tile = page.locator('flow-grid-tile-container').filter({ has: page.locator(`img[data-media-id="${mediaId}"]`) });
+  const tile = page.locator('flow-grid-tile-container').filter({ has: page.locator(`[data-media-id="${mediaId}"]`) });
   await closePicker(page);
   await tile.click({ button: 'right' });
   await page.getByRole('menuitem').filter({ has: icon(page, 'edit') }).click(); // rename

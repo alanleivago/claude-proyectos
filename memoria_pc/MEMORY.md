@@ -1,0 +1,75 @@
+- [Audio = grabaciones reales](audio-recorded-sound.md) — opción B (ambientes CC0 + kit sound-layer) para pov3d/realistas; NO para bitpix (ahí SFX en código + pista del usuario)
+- [Reglas pov3d](pov3d-style.md) — TODAS las peticiones del usuario para este estilo (texto, detalle, gente, cámara, efectos, sonido, versiones EN, flujo); oxigeno = nivel mínimo
+- [Bitstory / bitpix series](bitpix-series.md) — English remakes of Ref bit y pixels; Algrow dropped (no mencionar), code SFX + user's documentary track
+- [Cortes de voz solo en silencio](voice-cuts-in-silence.md) — nunca cortar la voz dentro de una palabra; split_voice.py corta en la pausa más larga
+- [Estilo scroll3d](scroll3d-style.md) — remake en español de las refs "Ref Scroll aniamtions" (mismos planos/cámara, texto parafraseado, elementos cambiados); el usuario graba la voz
+- [Guion: natural y limpio](script-format.md) — inglés conversacional con "…", entregar solo el texto para copiar/pegar
+- [Guiones + voz Agente Davis](agente-davis-guiones.md) — yo escribo guiones (fórmula de sus ganadores) y genero su voz d31aa86f en VoiceStudio; carpeta agente-davis/
+- [Estilo YouTube agente Davis](yt-agente-style.md) — estilo APROBADO: flujo edit.py, imágenes pantalla completa sincronizadas a la palabra, burns solo 50 s, zoom lento subpíxel, SIN storyboard (render directo), sin imágenes repetidas
+- [Estilo cartoon3d](cartoon3d-style.md) — 3D cartoon shorts: replicar al máximo los 7 refs (mandan sobre el tutorial), sin Creatorize, subtítulos de 1 palabra
+- [cartoon3d nivel aprobado](cartoon3d-level.md) — apple-wayne v2 es la barra mínima del estilo; estructura y pipeline a copiar; voz VoiceStudio "3D cartoons"
+- [cartoon3d reglas 2](cartoon3d-rules-2.md) — revisión v1: voz sin cortes, música desde el frame 0, primer plano con parallax, sombras en los pies, muchos SFX, datos con recursos creativos (ID card)
+- [Verificar tutoriales](verify-tutorial-claims.md) — no fiarse del resumen de Gemini: preguntar qué herramienta hizo cada asset (caras/pelo en Flow en cartoon3d)
+- [Estilo emberlite](emberlite-style.md) — escenas low poly PS2 en Blender vía MCP; piloto pieces/emberlite-desk (build.py/shots.py)
+- [Estilo sinaboto](sinaboto-style.md) — explainers PS1 low poly de TikTok @sinaboto; refs en Ref sinaboto/, plan three.js + VRM + shader PS1
+- [Modelo Zero mujer](zero-fem-model.md) — modelo Megaman Legends comprado (derechos del usuario); feminizado sin deformar el diseño, render plano sin brillo
+- [Reglas Mechayuki](mechayuki-rules.md) — nivel APROBADO (digger01 v3) + TODAS las correcciones; revisarlas en cada plano antes del render final
+- [Mechayuki Expediciones](mechayuki-expeditions.md) — largo YouTube APROBADO (exp01 bedroom v3) + todas las correcciones; shorts pueden reusar sus assets
+- [Canal The Digger](digger-channel.md) — nicho elegido: androide arqueóloga de artefactos humanos; voz femenina + filtro retro; formato de 70 s
+- [Flow MCP](flow-mcp.md) — srz-google-flow-mcp instalado: rutas, carpeta de salida, CLI claude.exe del VSCode
+- [Sonido pro](sonido-pro.md) — "sonido pro" = earshot + real-sfx + Openverse + Freesound; también en la Mac, cada máquina con su instalación
+- [earshot](earshot.md) — F:\earshot + MCP + skills earshot/real-sound; usarlo para elegir/verificar/criticar SFX en todos los videos
+- [Openverse](openverse.md) — API sin clave para buscar audio/imágenes CC (SFX, música); filtrar license_type=commercial
+- [Freesound](freesound.md) — API key en ~/.freesound.json; búsqueda con filtro CC0 + previews HQ mp3
+- [real-sfx](real-sfx.md) — skill que pone sonidos reales de sound-layer (3130, indexado) + uisfx en los eventos del video
+- [Hypit](hypit.md) — skill + ejecutable npm para clonar videos virales (SVML); sin servicio de modelos conectado aún
+- [Skills YouTube](youtube-skills.md) — 11 skills yt-* (guion con hooks puntuados, título+miniatura, SEO, capítulos, retención); usarlas en todo lo de YouTube
+- [Zernio](zernio.md) — MCP para publicar/programar videos en TikTok, Facebook, etc.; confirmar cada publicación
+- [VoiceStudio](voicestudio.md) — voz local clonada vía MCP/REST; voz mathomaly a5ce5a5c, siempre steps=32 + wav, salida en voces/
+- [Canal zombies](zombie-channel.md) — heroína PS1 estilo RE hecha desde cero (pieces/zombie-girl), ref Learn with Alya, voz nueva US
+- [Reglas Ava Restfield (ex Ava Bread)](ava-rules.md) — voz speed 0.88 + cinematográfico (pausas, pensamientos susurrados, miedo); nivel APROBADO short ep4 v6 (Last Train) + ep5 v5 (P.T.) + LARGO ep3 v3 (16:9 ≥8 min, plantilla largo/); voz ava bread buena f2a102da; todas las correcciones (sin traspasar, SUBSCRIBE!, música audible por LUFS)
+- [Créditos API $200](api-credits.md) — Max trae $200/mes de API; key en .env (no en Windows), vence 27 nov; scripts ver-youtube + revisión de renders
+- [Créditos API primero](api-credits-first.md) — toda tarea que pueda ir por la API (scripts) usa los créditos antes que los tokens del plan
+- [humanizer](humanizer.md) — skill blader/humanizer instalada; pasarla por todo guion antes de generar la voz
+- [Esfuerzo pov3d moderado](pov3d-effort.md) — buenos pero rápidos: reutilizar sets, ≤3 agentes sin high, una pasada de storyboard
+- [Estilo corte de cueva](cavecut-style.md) — pieces/cavernas: corte 3D three.js, roca verde-negra con toque marrón + musgo, OXÍGENO; look aprobado
+- [Entrega de videos largos](long-video-delivery.md) — al entregar la versión final de un largo: título + miniatura 1280x720 siempre
+- [LucidLink renders](lucidlink-renders.md) — render final → C:\Volumes\alanwork\trabajo\Renders finales claude\<Estilo>\ (+ caption .txt); reemplaza Telegram desde 2026-11-12 (salvo novelas mexicanas: LucidLink + Telegram); miniatura en <Estilo>/Miniaturas/
+- [Low poly desde foto](lowpoly-from-photo.md) — método vlvt: foto→script Blender loft 6-12 lados, tex 128px/32 colores, revisar al lado de la foto
+- [Artemis](artemis.md) — F:\artemis instalado (Android por lenguaje natural); para publicar en FB/TikTok desde sus teléfonos, NO configurar hasta que avise
+- [pov3d-hd nicho](pov3d-hd-niche.md) — largo 16:9 "Couldn't Stop" 8:30, sin voz (como Minute Zero); rocket-speedup en curso
+- [yokai 40 s máx](yokai-40s.md) — kodamashorts/yokai: videos de 40 s como máximo por ahora (desde 2026-11-03)
+- [lemo-opuscar](lemo-opuscar.md) — plugin con 66 estilos de película hechos en código; copia y galería en opuscar/styleboard/index.html
+- [Novelas Atrium](atrium-novelas.md) — telenovelas IA estilo @atriumstories_ con Omni Flash; Flow Ultra 25k créditos, generar uno por uno; clips Omni de 8-10 s (varias líneas por clip, se cortan en montaje)
+- [Solo Flow MCP](flow-mcp-only.md) — NUNCA flow-auto/Flow Connector; todo Flow por srz-google-flow-mcp (video: extender el MCP); cuenta monetizadotiktok18 (desde 2026-11-16, gastar todo; luego correoderecuperacion496), nunca manuelleivapro60
+- [Cuenta de créditos Flow](flow-creditos.md) — pieces/_creditos.json: cli.js suma 10 por clip Omni y corta al límite (11.400 en la tanda del 2026-11-14); sin gastar tokens en vigilarlo
+- [Reglas novelas VISTA/MAJESTIC](atrium-reglas.md) — MAYORÍA tipo capos/figura de poder (análisis atrium-vista), ≤2 s por plano; Parte 2 con la misma marca de la Parte 1; APROBADO reten-sierra v4 + hacienda-sangre v2 (edit.py por frases, saltos del mismo personaje, CTA con carisma, continuidad de bordes, marca alterna); VERIFICAR antes de entregar
+- [Autonomía atrium](atrium-autonomia.md) — autorizado encadenar remakes (medalla-mezcal → El Retén → ...); estado en pieces/medalla-mezcal/ESTADO.md
+- [Flow rápido + vigilar](flow-generacion-rapida.md) — clips encadenados sin pausa fija; Monitor sobre el log; si falla Flow RECARGAR (tools/flow_reload.js), nunca esperar
+- [Caption novelas](atrium-telegram-caption.md) — caption.txt al lado del mp4; antes Telegram con 3er arg = marca (VISTA/MAJESTIC/MEXI/MEXITV/SIN MARCA; MEXITV = marca nueva distinta de MEXI, videos de @mexitve) en mayúsculas al inicio; título gancho + descripción + CTA + hashtags en <pieza>/caption.txt; enviar_telegram.py lo lee
+- [Tesseract](tesseract.md) — tsrct CLI 0.5.0 + skills tesseract-* para talking heads/motion; ruta del .cmd, telemetría on
+- [Estilo Stimulus](stimulus-style.md) — talking heads de Dariel: spec styles/stimulus/ESTILO.md, outro real + logo en assets, fuente DIN Next LT Arabic Bold
+- [FilmCraft](filmcraft.md) — editor NLE en Rust en F:\filmcraft, MCP filmcraft (user scope) + CLI con 700+ comandos
+- [Premiere MCP](premiere-mcp.md) — adobe-premiere-pro-mcp + CEP; manejar Premiere (proyecto Stimulus) para roto y perfeccionar videos
+- [positpixel solo código](positpixel-code-only.md) — réplica positpixel: solo todo en código (híbrido Flow descartado); prueba pieces/pp-chihuahua/code
+- [Personajes toon.js](cartoon3d-toon-chars.md) — cartoon3d en código con toon.js; NIVEL APROBADO actual = pieces/trash-library (cámara secuencial seqCam, grade Ricks, sombras estables) desde 2026-11-12
+- [Roblox en Windows](roblox-windows.md) — voz local 3D cartoon 2 d9b69bea (+4 st), BGM TEMPOREX en styles/roblox/bgm, refs en Ref roblox/, pipeline = copia de rbx-rope; guiones SIEMPRE empiezan "In this town"
+- [Storyboard antes del render](storyboard-before-render.md) — aunque digan "procede al render", mostrar el storyboard y esperar OK primero
+- [Estilo f1motion](f1motion-style.md) — reel IG "F1 explicado" re-tematizado a Stimulus: gráficos a 12 fps, b-roll B/N con trama 8 px (~32 %), objetos en Flow (nada técnico en código), caras B/N; spec styles/f1motion/ESTILO.md, APROBADO v4 + 12 fps (8 rechazado), plantilla pieces/f1motion-test; catálogo de 5 reels en styles/f1motion/CATALOGO.md
+- [Recursos D: del usuario](recursos-d-alan.md) — fuentes, PNG/iconos, overlays, SFX y música propios en D:\Alan\Fiverr Upwork...; revisar antes de buscar afuera
+- [Sin duplicados](final-renders-folders.md) — final SOLO a LucidLink; no copiar a pieces/<Estilo>/, borrar renders superados
+- [Estilo Ali Abdaal (ex docucollage)](ali-abdaal-style.md) — APROBADO v3c-final 2026-11-11: host + collage por capas con parallax, títulos EB Garamond tecleados con wiggle 12 fps, karaoke crema; storyboard 1:1 con la ref antes del render; spec styles/docucollage/ESTILO.md
+- [Kimodo en el PC](kimodo-pc.md) — opción A instalada (env conda kimodo, encoder en CPU); kimodo_batch.py → BVH de zawdog
+- [cartoon3d voz continua](cartoon3d-voz-continua.md) — llegar a 60.5 s con más palabras, nunca gags mudos
+- [zawdog: solo personajes necesarios](zawdog-only-needed-chars.md) — pulir solo los humanos que usa el próximo video; ropa Flow = build_human3 flow=1
+- [Estilo Ali Abdaal 2](ali-abdaal-2-style.md) — APROBADO 2026-11-12: réplica McDonald's 1:1 (Instrument Serif + subrayado ondulado, captions en caja gris, burbujas de chat, crema con motas, sin viñeta); spec styles/ali-abdaal-2/
+- [Links clicables](links-clicables.md) — siempre link markdown relativo a la raíz del workspace para cada archivo entregado
+- [VMOS Cloud](vmos-cloud.md) — teléfonos en la nube por API con tools/vmos.py; Pixel APP6958QPXXF8LD7 (naldo) + V06 ATP63362YSJXJF2F (Patrick @agentedavis, VMOS_PAD=)
+- [agent-browser](agent-browser.md) — CLI navegador instalado; usarlo a mi criterio (piezas HTML, webs sin API), nunca para Flow
+- [Gumroad](gumroad.md) — MCP conectado a la tienda agentpatrickdavis; confirmar antes de publicar
+- [Migración Antigravity](migracion-antigravity.md) — MIGRACION_ANTIGRAVITY.md se regenera solo (Stop hook); Mac genera MIGRACION_MAC.md
+- [P2 solo si la P1 pasa 10k](atrium-p2-solo-si-funciona.md) — novelas: solo Partes 1; P2 en Flow únicamente si la P1 supera 10k vistas en @vistastoriestv / @wepsychologic (MAJESTIC) / @mexistories / @mexitve (MEXI TV, Pixel VMOS)
+- [DMs Patrick = ventas](patrick-dm-ventas.md) — siempre mandar link de guía/producto; demanda sin producto → crear producto; no resolver casos
+- [Mechayuki UpNext remakes](mechayuki-upnext-remake.md) — NUEVO formato 2026-11-15: rehacer reels de @jongmin.design con mismos planos + diálogo parafraseado; specs en fuentes/jongmin-design/remake/
+- [Horario @mexitve](mexitv-horario.md) — 3 días 18:00, luego 08:00+18:00; tools/mexitv_cola.json + tarea programada
+- [Miniaturas Ava](ava-thumbnails.md) — fórmula APROBADA v6A (key art RE Requiem: Ava + busto del gigante low poly + zombis + HUNTER en Anton detrás de la cabeza); nunca fuente pixel

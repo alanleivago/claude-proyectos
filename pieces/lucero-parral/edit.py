@@ -33,7 +33,35 @@ ER = "crop=540:960:180:0,"
 # Por armar desde renders/phr.json (python -I phr.py). Objetivo: <=2 s por TRAMO real (sin contar punch-in).
 # Frases cortas en su plano, mismo personaje = salto dentro de su clip (c27-c28 Cleofas), insertos y reacciones de ~1.0-1.2 s (r4, r5, r6, r7).
 # Arranca en c01 (Marcela ya hablando, sin plano previo de objetos): "Antes de que cuaje el ate" entra antes de los 2 s. Insertos solo en medio. BLACK de 0.4 s antes de c29 (CTA).
-EDL = []
+EDL = [('c01', (0.25, 5.32), '', '3.4dB', [(2.79, PUNCH)]),
+       ('c02', (0.86, 3.14), '', '3.7dB'),
+       ('c02', (3.74, 5.38), '', '3.7dB'),
+       ('c03', (1.09, 2.67), '', '1.2dB'),
+       ('c03', (3.25, 5.35), '', '1.2dB'),
+       ('c04', (0.2, 2.71), '', '5.4dB'),
+       ('c04', (3.3, 4.67), '', '5.4dB'),
+       ('c05', (0.79, 2.84), '', '1.0dB'),
+       ('c05', (3.71, 5.29), '', '1.0dB'),
+       ('c06', (0.52, 3.6), '', '1.1dB'),
+       ('c06', (4.06, 5.58), '', '1.1dB'),
+       ('r1', (3.0, 4.2), '', 0),
+       ('c07', (0.23, 2.14), '', '-0.2dB'),
+       ('c07', (3.31, 4.35), '', '-0.2dB'),
+       ('c08', (0.37, 2.4), '', '1.3dB'),
+       ('c08', (3.26, 5.61), '', '1.3dB'),
+       ('c09', (0.29, 5.65), '', '5.7dB', [(2.97, PUNCH)]),
+       ('c10', (0.59, 2.4), '', '1.6dB'),
+       ('c10', (3.13, 4.78), '', '1.6dB'),
+       ('c11', (0.57, 1.95), '', '-0.9dB'),
+       ('c11', (2.5, 5.39), '', '-0.9dB', [(3.94, PUNCH)]),
+       ('i01', (2.0, 3.4), '', 0),
+       ('c12', (0.36, 1.02), '', '6.0dB'),
+       ('c12', (2.25, 3.85), '', '6.0dB'),
+       ('r2', (3.0, 4.2), '', 0),
+       ('c13', (0.5, 3.5), '', '4.4dB', [(2.0, PUNCH)]),
+       ('c13', (4.18, 5.93), '', '4.4dB'),
+       ('BLACK', 0.4),
+       ('c14', (0.14, 9.75), '', '-1.4dB', [(4.95, PUNCH)])]
 
 
 def main():

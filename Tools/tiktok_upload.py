@@ -46,6 +46,17 @@ def find(pattern, ns=None):
     return None
 
 
+_SIZE = []
+
+
+def P(x, y):
+    """Coordenadas fijas medidas en el Pixel (1080x2410) -> pantalla de este teléfono (V06 es 720x1280)."""
+    if not _SIZE:
+        m = re.search(r'(\d+)x(\d+)', run(PAD, 'wm size'))
+        _SIZE.extend([int(m[1]), int(m[2])] if m else [1080, 2410])
+    return round(x * _SIZE[0] / 1080), round(y * _SIZE[1] / 2410)
+
+
 def tap(x, y, wait=2.5):
     # como un dedo: nunca el mismo píxel, y pausas que varían
     sh(f'input tap {x + random.randint(-12, 12)} {y + random.randint(-10, 10)}')
@@ -54,10 +65,12 @@ def tap(x, y, wait=2.5):
 
 def browse(n):
     """Mira n videos del Para ti como una persona (sin LLM)."""
-    from tiktok_warmup import swipe, watch_time
+    from tiktok_warmup import watch_time
     for _ in range(n):
         time.sleep(watch_time())
-        swipe()
+        x1, y1 = P(random.randint(430, 650), random.randint(1650, 1900))
+        _, y2 = P(0, random.randint(450, 750))
+        sh(f'input swipe {x1} {y1} {x1 + random.randint(-40, 40)} {y2} {random.randint(180, 380)}')
 
 
 def tap_text(pattern, timeout=20, wait=2.5):
@@ -107,15 +120,16 @@ def download_from_lucid(style, name):
             break
         for pat in (re.escape(style), r'Renders finales claude', r'trabajo'):
             p = find(pat, ns)
-            if p and not (pat == re.escape(style) and p[1] < 400):  # no el breadcrumb
+            if p and p[1] >= P(0, 400)[1]:  # nunca el breadcrumb (arriba); si no está en pantalla, se desplaza
                 tap(*p)
                 break
         else:
-            sh('input swipe 540 1800 540 900 300')  # la carpeta puede estar más abajo
+            sh('input swipe %d %d %d %d 300' % (*P(540, 1800), *P(540, 900)))  # la carpeta puede estar más abajo
             time.sleep(2)
     else:
         raise RuntimeError(f'no encontré {style}/{name} en LucidLink')
-    tap(995, row[1])  # menú ⋮ de esa fila
+    menus = [(x, y) for t, x, y in nodes() if t == 'file context menu']
+    tap(*min(menus, key=lambda m: abs(m[1] - row[1])) if menus else P(995, row[1]))  # menú ⋮ de esa fila
     tap_text(r'Download|Descargar')
     tap_text(r'GUARDAR|SAVE')
     for _ in range(180):
@@ -138,7 +152,7 @@ def post_tiktok(caption, dry):
             break
     if not dry:
         browse(random.randint(3, 6))  # primero mira unos videos, como cualquiera
-    tap(540, 2337, wait=5)  # "+"
+    tap(*P(540, 2337), wait=5)  # "+"
     for _ in range(4):
         if not dismiss_dialogs(nodes()):
             break
@@ -149,10 +163,11 @@ def post_tiktok(caption, dry):
         if dismiss_dialogs(ns):
             continue
         cam = find(r'C[ÁA]MARA|CAMERA', ns)
-        tap(120, cam[1] if cam else 2305, wait=4)
+        tap(P(120, 0)[0], cam[1] if cam else P(0, 2305)[1], wait=4)
     else:
         raise RuntimeError('no se abrió la galería')
-    tap(302, 412, wait=2)  # primer elemento = el más reciente
+    dur = find(r'^\d{1,2}:\d{2}$')  # duración del primer video de la cuadrícula = el más reciente
+    tap(*(dur if dur else P(302, 412)), wait=2)
     tap_text(r'Siguiente.*', wait=8)
     tap_text(r'Siguiente', wait=6)
     tap_text(r'Añade una descripci.*|Add a description.*')
@@ -170,7 +185,7 @@ def post_tiktok(caption, dry):
         if not dismiss_dialogs(nodes()):
             break
     print('publicado', flush=True)
-    tap(107, 2337, wait=4)  # Inicio
+    tap(*P(107, 2337), wait=4)  # Inicio
     browse(random.randint(4, 8))  # y se queda un rato mirando
 
 

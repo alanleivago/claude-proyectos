@@ -89,7 +89,7 @@ Marcas: **[CAPO]** = funciona con capo, cacique, hacendado o patrón poderoso. C
 - Gancho: "Falta alguien. El señor pidió que nadie se sentara en esa silla."
 - Cliffhanger: el capataz se sienta; el notario abre un sobre lacrado con su nombre.
 
-**8. Las llaves de la bodega**
+**8. Las llaves de la bodega** (usada: llavero-saltillo, MAJESTIC)
 - Premisa: el padre muere y a cada hijo le deja algo que parece valioso. A la nuera que todos desprecian le deja solo un llavero viejo.
 - Conflicto: herencia aparentemente pobre que esconde todo.
 - Gancho: la cuñada: "A ti te tocó basura, como siempre."
@@ -249,7 +249,7 @@ Marcas: **[CAPO]** = funciona con capo, cacique, hacendado o patrón poderoso. C
 - Gancho: el yerno, frente a él: "El viejo ya no ve ni su propia sombra."
 - Cliffhanger: el patrón le dice al yerno, mirándolo fijo: "Bonita camisa azul, hijo."
 
-**33. La viuda del capo** [CAPO]
+**33. La viuda del capo** [CAPO] (usada: luto-tacambaro, MEXITV)
 - Premisa: en el velorio del capo, la viuda que todos creían sumisa toma el mando y lo primero que hace es llamar a la amante a sentarse a su lado.
 - Conflicto: poder heredado por la mujer subestimada.
 - Gancho: el lugarteniente: "La señora no sabe nada del negocio."
@@ -401,6 +401,18 @@ Arquetipos tomados de éxitos del género (Soy tu dueña / La Dueña, Destilando
 - Conflicto: amor prohibido por clase, matrimonio arreglado.
 - Gancho: (el padre) "Usted administra mis tierras, Manuel. No a mi hija."
 - Cliffhanger: el prometido entra justo cuando ella le entrega una carta al administrador.
+
+**57. La torcedora del remate** [CAPO] (usada: puro-tuxtla, MEXI)
+- Premisa: en la galera de su hacienda tabacalera de San Andrés Tuxtla, la temida doña Elvira desprecia a la torcedora nueva que contrató su hijo; la muchacha tuerce el puro con el remate que solo hacía el difunto patrón.
+- Conflicto: patrona desconfiada vs. empleada con un secreto; traición del capataz con la familia rival.
+- Gancho: "En esta galera no se sienta cualquiera a torcer."
+- Cliffhanger: acusada de espía, la torcedora revela que vio al capataz abrirle la bodega a los rivales.
+
+**58. La viuda del trapiche** [CAPO] (usada: trapiche-cuautla, VISTA)
+- Premisa: época (~1910, ropa de época): el hacendado vecino le propone matrimonio a la viuda de una hacienda cañera de Morelos para juntar las tierras; ella le presenta a su nuevo administrador, un hombre al que él le cerró la puerta hace años.
+- Conflicto: patrona que no se deja + paternidad negada del poderoso.
+- Gancho: "Una viuda sola no puede con tanta caña."
+- Cliffhanger: el administrador pone sobre la mesa el reloj de su madre; el hacendado lo reconoce: "Hijo…".
 
 ### Variedad de cierres (rotar, nunca repetir dos seguidos)
 1. Entra un personaje inesperado (1, 3, 16, 26, 27).
