@@ -1,6 +1,6 @@
 # ep10: limpia palabras de engine/timeline.json (sin '!'/'?', numeros en letras donde la voz los dice). python fix_caps.py (despues de fix_words.py)
 import json
-E = r"F:/Claude Proyectos/pieces/zombie-10-stairs/engine/timeline.json"
+E = r"/Users/alanleiva/claude-proyectos/pieces/zombie-10-stairs/engine/timeline.json"
 TL = json.load(open(E, encoding="utf8")); NUM = {"4": "four", "1": "one", "2": "two"}
 for w in TL["words"]:
     for k in (0, 4): w[k] = NUM.get(w[k].strip("!?"), w[k].replace("!", "").replace("?", ""))

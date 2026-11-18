@@ -51,7 +51,7 @@ Junto a ella: [PROPUESTAS.md](PROPUESTAS.md) (próximos videos), [ASSETS.md](ASS
 ### Ava
 - **VoiceStudio, perfil clon "ava bread buena" `f2a102da`** (desde el largo 1 v1, 2026-10-30; reemplaza a "ava bread 2" 3824e262, y la primera "ava bread" 2dd9cbec tenía un error: no usar). La referencia está en el kit (`voces_ref/f2a102da.m4a`); en la Mac hay que clonarla de nuevo con ese audio y este texto de referencia:
   > I've been waiting for this handheld for so long. I think I placed my order about two months ago. The AY and Thor runs on Android, and the setup to play games takes a little bit of time, but it isn't that hard. I watched this YouTube video by Retro Game Core, and it helped a lot with the setup, so I highly recommend. And once it's all set up, it's just so easy to use.
-  (El ID nuevo en la Mac será otro: anotarlo en `voz/gen.py` como `VOICE`.)
+  **ID en la Mac: `f2f8f8dc`** (perfil "Ava Restfield" guardado por el usuario en VoiceStudio, 2026-11-16; ya puesto en todos los `voz/gen.py` y `largo*/voz/takes.py`). En el PC sigue siendo `f2a102da`.
 - **Siempre `steps=32` (`num_step: 32`), formato `wav`, `speed ≈ 0.88`** (desde 2026-11-11 para TODO lo de Ava: iba muy rápido). REST: `POST http://127.0.0.1:3900/v1/audio/speech` con `{"model":"omnivoice","input":..., "voice":..., "language":"en","response_format":"wav","num_step":32,"speed":0.88,"seed":N}`.
 - **8+ semillas por toma** (hasta 14 en las difíciles). `voz/pick.py`: whisper (faster-whisper small) debe coincidir EXACTO con el texto; entre las exactas, la más viva y con **F0 final descendente** (frase declarativa; VoiceStudio a veces termina subiendo como pregunta → regenerar con punto). Revisar a mano y fijar en `voz/pick_manual.json`.
 - Pipeline de scripts (copiar de la pieza plantilla): `gen.py → pick.py → prep.py → assemble.py → fix_words.py → fix_caps.py → build_cues.py`.
@@ -67,6 +67,7 @@ Junto a ella: [PROPUESTAS.md](PROPUESTAS.md) (próximos videos), [ASSETS.md](ASS
 - Nada de sílabas estiradas por el speed bajo (revisar palabras sueltas tipo "three... seven"; si se alargan, regenerar esa a speed normal). Si una línea corre hacia el plano siguiente se puede usar `speed` más alto en esa toma.
 - Nunca lecturas gritadas ("First problem", "7-3-7", "Rule four"). Pausa entre la pregunta final y "Comment yes or no".
 - Ava NUNCA dice "click" ni onomatopeyas: el sonido va como SFX.
+- El gigante, en la voz de Ava, es **"the hunter"**.
 - Releer la redacción exacta del usuario para frases fijas ("THE ghost", no "a ghost"). Tomas lentas necesitan pausa real en las comas.
 - Una vez aprobada una voz, no cambiarla; arreglar ritmo recortando huecos.
 
@@ -74,13 +75,13 @@ Junto a ella: [PROPUESTAS.md](PROPUESTAS.md) (próximos videos), [ASSETS.md](ASS
 Muletilla de Ava cuando el final sale mal, en TODOS los episodios. Reusar SIEMPRE la toma del ep1 `pieces/zombie-01-door/voz/lines/13_fudge.wav` (está en el kit) para que suene igual. Si hay que generar una corta nueva: sola y verificada con whisper; si se rompe, dentro de una frase más larga y cortar en el silencio real. En el largo 2 se usó versión *temblando*. Cara: boca abierta normal (la mueca de dientes y la cara >.< fueron rechazadas).
 
 ### Otras voces (VoiceStudio, diseños; referencias en el kit `voces_ref/`)
-| Personaje | ID PC | Diseño (instruct) |
-|---|---|---|
-| Desconocido en la puerta (ep10, radio ep12, baño ep13) | `b0469a54` | male, elderly, moderate pitch, american accent, seed 42 |
-| Policía RPD / Officer Vickers (largos) | `cf919aa6` | male, middle-aged, low pitch, american accent, seed 42 |
-| Marla (archivista superviviente) | `996b1578` | perfil = diseño con "whisper"; desde el Día 3 v3 se genera con `instruct` = "female, middle-aged, low pitch, american accent" (voz con cuerpo, cansada, NO susurro), seed 1 para todas sus líneas; los gritos ("Go! Don't you look back!") con el "!" en el texto |
-| Dutch (preso de la celda 4) | `644338f4` | male, middle-aged, very low pitch, american accent, seed 42 |
-En la Mac: recrear los diseños con esos parámetros (o clonar desde el wav del kit). Efectos: radio = filtro de banda + saturación; voz tras puerta = paso bajo 1.3 kHz + eco corto (ver `voz/assemble.py` de ep12/ep13).
+| Personaje | ID PC | ID Mac | Diseño (instruct) |
+|---|---|---|---|
+| Desconocido en la puerta (ep10, radio ep12, baño ep13) | `b0469a54` | `c5f333e5` | male, elderly, moderate pitch, american accent, seed 42 |
+| Policía RPD / Officer Vickers (largos) | `cf919aa6` | `0142e2dc` | male, middle-aged, low pitch, american accent, seed 42 |
+| Marla (archivista superviviente) | `996b1578` | `73886ef4` | perfil = diseño con "whisper"; desde el Día 3 v3 se genera con `instruct` = "female, middle-aged, low pitch, american accent" (voz con cuerpo, cansada, NO susurro), seed 1 para todas sus líneas; los gritos ("Go! Don't you look back!") con el "!" en el texto |
+| Dutch (preso de la celda 4) | `644338f4` | `504bcb20` | male, middle-aged, very low pitch, american accent, seed 42 |
+En la Mac (2026-11-14): Desconocido, Vickers y Dutch clonados desde su wav del kit (texto de referencia "Here's a quick sample of this voice so you can hear how it sounds."). Marla: VoiceStudio no deja crear diseños por API sin `vd_states`; se clonó desde una muestra del diseño (`voces_ref/marla_design_seed42.wav`). El piloto del Día 3 (`0e713b26` en `largo3/voz/takes.py`) todavía no existe en la Mac. Efectos: radio = filtro de banda + saturación; voz tras puerta = paso bajo 1.3 kHz + eco corto (ver `voz/assemble.py` de ep12/ep13).
 
 ---
 
@@ -97,6 +98,7 @@ En la Mac: recrear los diseños con esos parámetros (o clonar desde el wav del 
   - **Gancho 0-10 s con más música de terror:** drone real + caja de música + stinger en palabras clave, crossfade al BGM hacia los ~10 s (`mix5.py`, `mix13.py`). En el largo 2 el gancho va a ~7 LU bajo la voz.
   - BGM oscura continua (sin huecos largos). Se corta en los YOU DIED. En los largos, la BGM suena hasta el final; pistas por capítulo (`largo2/audio/mix_largo.py`, tabla `TRK`/`CUES`).
   - Pistas usadas (créditos): metrostock99 345069 y 350953, Dredile 164272, mr45 492956, szegvari 559388/640612/631933, kkenny101 865550, xkeril 686659, más `mus_horror/610534`, `hook_drone/799307`, `hook_musicbox/712798` en shorts.
+- **Tema del cazador (regla fija desde el ep15):** cada vez que el cazador aparece, su BGM (`audio/bgm_giant/`, cover "Menacing Nemesis") **arranca de nuevo desde 0,5 s** del tema (nunca sigue desde donde quedó), con una entrada corta de 0,15–0,3 s para que el ataque caiga con él; sale con un fundido de ~0,8 s al cambiar de escena; la última aparición suena desde 0,5 s sin cortes hasta el final (`mix15.py`, `GSEG`).
 - **Master:** ESTÉREO, **−14 LUFS integrados**, true peak ≤ −1 dBTP (un mono se lee 3 dB más fuerte en plataformas). Voz: `x1.15` en mix3 y +1.5 dB extra en largos.
 - Largos: `mix_largo.py` mapea cada evento SFX de `sfx_events.json` a un sonido real; la lista de no mapeados debe quedar vacía.
 
@@ -177,10 +179,17 @@ Cada regla es una corrección que el usuario tuvo que pedir; repetirla cuesta un
 - **Nunca repetir palabras** tipo "stay. Stay." o "Static. Static.": una sola vez.
 - **Cualquier toma que suene robótica se regenera** (varias semillas, elegir la más humana: earshot `rank` "a frightened young woman whispering, natural breathy human voice" + transcripción exacta). Los susurros a velocidad 0.76 sonaban robóticos: usar ~0.88.
 - El gigante ruge (ver [STALKER.md](STALKER.md)); nunca narrar que "no hace ruido".
+- **En la narración el gigante se llama "the hunter"** (desde el ep15, pedido del usuario): nunca "the smile", "the giant" ni "the Stalker" en voz o subtítulos. Cuando está en pantalla suena su tema (ep15: cover "Menacing Nemesis" de Andre Kane, `pieces/zombie-15-lasttrain3/audio/bgm_giant/`) con cruce de 0,6–0,8 s, y entra un gruñido/rugido del kit en su cuadro de aparición.
 
 ### Finales y tarjetas
 - Shorts: **"FOLLOW FOR MORE!"**. Largos: **"SUBSCRIBE!"** (y la BGM suena hasta el final). Ya no "FOLLOW AVA RESTFIELD!".
 - Tarjeta "NEXT:" (no "NEXT WEEK:") a máquina en Courier, con un objeto 3D examinado girando justo arriba del texto.
+- **Toda decisión final usa la gramática RE3 de negativo + destellos (regla fija desde el ep15, 2026-11-17)**, como el largo 3 (`150_choice`) y `pieces/zombie-15-lasttrain3/engine/sets/lasttrain3.js` (`10_choice`):
+  - Secuencia: corte seco → destello blanco 0,5 s → NEGATIVO congelado SIN texto 2,5 s → parpadeo negro + destello 0,5 s → NEGATIVO con las dos opciones (Courier oscuro) 2,4 s → parpadeo + destello 0,5 s → vuelve el color con el mismo encuadre.
+  - Al volver el color: caja azul en la opción que nombra la voz, cuenta regresiva, menú vivo, COMMENT 1 OR 2 + FOLLOW FOR MORE!. Barras grises arriba y abajo. Destellos en rampa, nunca pops.
+  - La voz se ancla así: las opciones caen al empezar el negativo con texto (+3,5 s) y "Comment…" cuando vuelve el color (+6,4 s; `voz/prep.py` TDEC). Sin subtítulos encima.
+  - La amenaza sigue actuando, en cámara lenta (×0,5) y congelada en los negativos. En el ep15, el cazador golpea la puerta: solo la hoja cede y rebota y el vidrio se raja de a poco. Cada golpe lleva un impacto pesado en su cuadro y gruñidos estirados ×0,5 y graves. Ava no tiembla y la cámara tampoco.
+  - Música: el tema del cazador (`audio/bgm_giant/`) suena desde la decisión (o antes, si ya está en pantalla) hasta el final, sin cortes. Debajo, drone grave filtrado (871189) + latido 40 bpm en el negativo y 60 después. La música no sube: 10–11 LU bajo la voz.
 - **Finales de elección (desde 2026-11-03):** el video TERMINA en el menú RE ("WHAT DO YOU DO?" 1 / 2, "COMMENT 1 OR 2", + FOLLOW FOR MORE!) sobre fondo VIVO (Ava respirando, o Ava de espaldas en la mirilla), nunca congelado, sin tarjeta final aparte, sin subtítulos encima. Tarjeta de decisión = Ava de cuerpo completo mirando hacia la amenaza.
 - En un final de elección la amenaza queda AMBIGUA: la persona en la puerta es un civil sospechoso (ropa oscura, ojos en sombra, sin sangre), nunca un zombi obvio.
 - Largos terminan con CTA de elección ("Do you let Dutch out?" YES/NO, "Should I go to the barn?" 1/2) + SUBSCRIBE!. La mini maqueta de la tarjeta final = el modelo real del set escalado.
@@ -202,6 +211,16 @@ Cada regla es una corrección que el usuario tuvo que pedir; repetirla cuesta un
 ---
 
 ## 7. Miniaturas
+
+### Estilo fijo desde el ep15 (2026-11-17): poster de cine tipo RE3 (TODOS los videos de Ava)
+- **El cazador** (el gigante) enorme arriba: cabeza, hombros y los dientes sin labios llenan el ~40 % de arriba, oscuro y medio perdido en la niebla.
+- **Ava al centro adelante**, cuerpo entero o 3/4 hasta las rodillas, de frente a cámara con mirada decidida; recta, apenas girada; el brazo derecho relajado abajo con la **pistola negra baja a la altura de la cadera** (de perfil para que se lea contra la niebla).
+- **Zombis a los dos lados** detrás de ella, borrosos en la niebla. **Fondo = el set del episodio** (aquí el túnel del metro).
+- Look de cine: niebla volumétrica espesa, luz de luna fría azul, contraluz en Ava y en el cazador, reflejo de piso mojado, profundidad de campo.
+- **HUD real** (panel CONDITION de `film.js hud()`) **debajo de Ava, abajo al centro**, nítido (nearest). Ningún otro texto.
+- Se renderiza desde el motor 3D (nuestros modelos, texturas PS1) en capas + pase de niebla compuesto: `?poster=1&layer=bg|ava|hud` en el set (`pieces/zombie-15-lasttrain3/engine/sets/lasttrain3.js`, bloque "poster"), `review/poster_layers.sh` y `review/poster.py` (DOF, niebla fractal, luna, reflejo, contraluz, HUD). 1080x1920.
+- Revisar al 100 % y con recortes antes de entregar: pistola negra legible, dientes del cazador legibles, Ava sin cortar, HUD nítido.
+- Lo de abajo (pose apuntando a dos manos, HUD arriba) queda como referencia de las miniaturas viejas.
 
 - Largos: siempre miniatura YouTube 1280x720 (`largo/miniatura_1280x720.png`); shorts: portada vertical 1080x1920. Renderizar desde el propio motor 3D del video.
 - Investigar título (skills `yt-package`, `yt-viral`) y competidores del nicho + lecciones de `fuentes/miniaturas/` (video KE4zqD0ONDI).
@@ -233,6 +252,8 @@ Cada regla es una corrección que el usuario tuvo que pedir; repetirla cuesta un
 | 11 | `zombie-11-xvirus` | "How Not to Turn" — X-virus que se comporta como la rabia (lavar 15 min, WHO/CDC) | entregado v3 |
 | 12 | `zombie-12-radio` | "The Radio" — radio a manivela, un auricular, AM de noche, silueta tipo Mr. X; "Answer / Stay silent" | entregado (2 rondas) |
 | 13 | `zombie-13-gasstation` | "Gas Station, Part 1" — bombas sin luz, agua antes que snacks, cámara frigorífica = safe room, mano vendada bajo la puerta del baño | entregado (último short, plantilla) |
+| 14 | `zombie-14-attic` | "How To HIDE In Your Attic During A Zombie Outbreak" — The Stairs, Part 2 (misma casa del ep10): silencio 60/30 dB, llama visible a 1+ milla, manta + linterna al piso, desván con escotilla y escalera plegable, el piso roba calor; el gigante entra por la ventana del pie de la escalera y mira arriba; decisión RE3 "Stay still / Jump to the neighbor's roof" | entregado v5 (74.9 s; LucidLink `How To HIDE In Your Attic During A Zombie Outbreak.mp4`) |
+| 15 | `zombie-15-lasttrain3` | "CHOOSE: You Stayed On The Last Train… - Part 3": rama LEAVE (tercer riel 600 V, pasos detrás, el cazador, YOU DIED) → rewind → rama STAY (tren sin conductor, dead man's switch atado con cinta, regla 3 NEVER ENTER THE CAB, Ava frena con sus manos), "the hunter got on board", pantalla YOU BROKE RULE 3 — 10; menú "Run for the exit / Lock yourself in the cab". El gigante reemplaza a la criatura; su tema (cover de Andre Kane) suena cuando está en pantalla | entregado (62,0 s; LucidLink `CHOOSE - You Stayed On The Last Train… - Part 3.mp4`) |
 | L1 | `zombie-03-station/largo` | LARGO "Zombie Outbreak: 1 Night Locked Inside a Police Station" (~7:40, 18 capítulos) | APROBADO v3 |
 | L2 | `zombie-03-station/largo2` | LARGO "Zombie Outbreak: Day 2 Locked Inside a Police Station" (~9 min, 18 capítulos) | entregado v3 (LucidLink `police-station-part-2.mp4`) |
 | L3 | `zombie-03-station/largo3` | LARGO "Zombie Outbreak: Day 3 Something Followed Me Out of the Sewers" (~9:57, 19 capítulos): alcantarillas → bosque → mansión, aparece el gigante | entregado v3 (correcciones del usuario; LucidLink `police-station-part-3.mp4`) |

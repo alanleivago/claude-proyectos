@@ -5,9 +5,9 @@
 import json, subprocess, numpy as np, soundfile as sf, pyloudnorm as pyln
 from scipy.ndimage import uniform_filter1d, minimum_filter1d
 SR = 48000
-DUR = json.load(open(r'F:/Claude Proyectos/pieces/zombie-04-subway/engine/cues.json'))['END']; N = int(DUR * SR)   # v4: de la voz
-P = r"F:/Claude Proyectos/pieces/zombie-04-subway"; C = f"{P}/audio/cand"; DC = r"F:/Claude Proyectos/assets/dino-crisis-sfx"
-E3 = r"F:/Claude Proyectos/pieces/zombie-03-station/audio/cand"
+DUR = json.load(open(r'/Users/alanleiva/claude-proyectos/pieces/zombie-04-subway/engine/cues.json'))['END']; N = int(DUR * SR)   # v4: de la voz
+P = r"/Users/alanleiva/claude-proyectos/pieces/zombie-04-subway"; C = f"{P}/audio/cand"; DC = r"/Users/alanleiva/claude-proyectos/assets/dino-crisis-sfx"
+E3 = r"/Users/alanleiva/claude-proyectos/pieces/zombie-03-station/audio/cand"
 CREDITS = {  # Freesound CC0
     "705378 Subway train departing": "chungus43A", "817387 cretestepping.wav": "Mihacappy", "482827 R15-47-Heavy Breathing": "craigsmith",
     "345070 CHAIN & LOCK ON FENCE": "metrostock99", "530482 Notification sound 2": "Rickplayer", "353125 Paper Rustle": "BenjaminNelan",

@@ -9,7 +9,7 @@ out = sys.argv[3] if len(sys.argv) > 3 else os.path.join(ROOT, "review", "_poses
 zoom = sys.argv[4] if len(sys.argv) > 4 else "body"
 names = [x[0] for x in spec]
 subprocess.run([sys.executable, "-I", os.path.join(HERE, "author.py"), ",".join(names)], check=True, capture_output=True)
-BL = r"C:\Program Files\Blender Foundation\Blender 5.2\blender.exe"
+BL = r"/Applications/Blender.app/Contents/MacOS/Blender"
 r = subprocess.run([BL, "-b", "--factory-startup", "--python", os.path.join(HERE, "bl_build.py"), "--", os.path.join(ROOT, "ref", "build3_forest.json"),
                     os.path.join(ROOT, "ref", "anim.npz"), os.path.join(ROOT, "ref", "a_wine.blend")], capture_output=True, text=True)
 if "BUILD saved" not in r.stdout: print(r.stdout[-2000:], r.stderr[-2000:]); raise SystemExit

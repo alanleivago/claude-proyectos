@@ -43,42 +43,42 @@ def lp(x, f):
 
 
 FS = lambda n: os.path.join(H, "chosen", n)
-HERO_T = 1.02                 # zaw-dog #7: bark onset ~1.10 s, inside the gap after "knows" (0.99-1.49 s): never covers a word
-G1, G2 = 9.60, 13.96          # the two subtle real gasps: owner SCARED (04c swap) and SURPRISED (06b cut)
-POPS = [5.05, 7.97]           # KYOTO, 2015 / the red cross (shots.py text_at t0)
+HERO_T = 1.93                 # zaw-dog #7 v3: bark onset ~2.01 s, in the clean gap AFTER "lying" (ends ~1.85 s; next word 2.76 s)
+G1 = 15.80                    # the subtle real gasp: the owner SURPRISED (07a cut)
+POPS = [6.07, 8.63]           # KYOTO, 2015 / the red cross (shots.py text_at t0)
 CUES = [   # (time s, file, start, end, level dB rel. voice RMS, fade in, fade out, filter)  every file CC0 (CREDITS.md), earshot-ranked
-    (0.00, "room_tone_329533.mp3", 0.5, 8.6, -24, 0.05, 0.3, None),
+    (0.00, "room_tone_329533.mp3", 0.5, 10.5, -24, 0.05, 0.3, None),
     (0.35, "collar_jingle_851618.mp3", 0.5, 1.1, -19, 0.02, 0.2, ("lp", 7000)),   # the dog's suspicious head move
+    (1.05, "dog_whine_498703.mp3", 2.2, 2.75, -20, 0.02, 0.15, None),        # a low suspicious whine under "when you're lying"
     (HERO_T, "hero_bark_483180.mp3", 0.25, 0.55, 5.0, 0.003, 0.05, None),   # HERO bark in the gap (+3 dB over the boosted voice)
-    (1.06, "whoosh_830856.mp3", 0.0, 0.45, -19, 0.005, 0.1, None),           # snap-zoom accent
-    (1.95, "dog_whine_498703.mp3", 2.2, 2.75, -18, 0.02, 0.15, None),        # a low suspicious whine at his grin
-    (2.72, "point_393811.mp3", 0.0, 0.21, -14, 0.002, 0.05, None),           # the point (swish)
-    (3.05, "tail_thump_657779.mp3", 0.2, 0.9, -17, 0.01, 0.15, None),        # happy wag
-    (3.70, "dog_skid_208654.mp3", 1.0, 2.0, -12, 0.01, 0.15, None),          # it runs straight over (paws on wood)
-    (3.72, "whoosh_830856.mp3", 0.0, 0.45, -17, 0.005, 0.1, None),           # whip-in
-    (4.30, "eat_691471.mp3", 4.4, 5.6, -13, 0.03, 0.2, None),                # kibble crunch
-    (4.93, "whoosh_830856.mp3", 0.0, 0.45, -18, 0.005, 0.1, None),           # cut to the top-down insert
-    (6.12, "point_393811.mp3", 0.0, 0.21, -14, 0.002, 0.05, None),           # the point at the EMPTY bowl
-    (6.45, "dog_walk_635117.mp3", 7.0, 8.0, -15, 0.02, 0.15, None),          # it trots over
-    (7.25, "dog_sniff_427169.mp3", 0.0, 0.9, -13, 0.01, 0.15, None),         # sniffs the empty bowl
-    (7.94, "whoosh_830856.mp3", 0.0, 0.45, -18, 0.005, 0.1, None),           # snap-zoom
-    (8.15, "dog_whine_498703.mp3", 2.2, 3.0, -15, 0.02, 0.2, None),          # betrayed whine
-    (8.62, "point_393811.mp3", 0.0, 0.21, -15, 0.002, 0.05, None),           # he points again
-    (8.60, "room_tone_329533.mp3", 8.6, 16.6, -24, 0.05, 0.3, None),
-    (9.05, "dog_sigh_427172.mp3", 0.3, 0.9, -15, 0.01, 0.15, None),          # the dog does not budge (sigh)
-    (G1, "gasp_812418.mp3", 0.0, 0.37, -11, 0.003, 0.06, None),              # GASP 1 (subtle, real) on the scared swap
-    (10.37, "whoosh_830856.mp3", 0.0, 0.45, -17, 0.005, 0.1, None),          # whip-in to the mailman
-    (10.50, "letters_572018.mp3", 0.25, 0.9, -16, 0.01, 0.1, None),          # his letters
-    (10.68, "point_393811.mp3", 0.0, 0.21, -14, 0.002, 0.05, None),          # the stranger points
-    (11.50, "dog_skid_208654.mp3", 1.0, 2.0, -11, 0.01, 0.15, None),         # off they went
-    (11.85, "dog_pant_841349.mp3", 0.0, 0.9, -15, 0.03, 0.15, None),
-    (12.25, "eat_691471.mp3", 4.4, 5.3, -14, 0.03, 0.2, None),
-    (12.75, "tail_thump_657779.mp3", 0.2, 1.2, -16, 0.01, 0.15, None),       # wagging at his feet
-    (13.20, "collar_jingle_851618.mp3", 2.4, 3.0, -17, 0.01, 0.2, ("lp", 7000)),
-    (G2, "gasp_344407.mp3", 0.12, 0.5, -11, 0.003, 0.06, None),              # GASP 2 (subtle, real) on the surprised face
-    (14.30, "groan2_318088.mp3", 0.05, 1.0, -15, 0.01, 0.2, None),           # he starts to cry (sigh)
-    (14.85, "dog_pant_841349.mp3", 0.0, 1.2, -14, 0.03, 0.2, None),          # happy dog with the mailman
-    (15.15, "tail_thump_657779.mp3", 0.2, 1.0, -16, 0.01, 0.2, None),
+    (1.97, "whoosh_830856.mp3", 0.0, 0.45, -19, 0.005, 0.1, None),           # snap-zoom accent
+    (2.62, "point_393811.mp3", 0.0, 0.21, -14, 0.002, 0.05, None),           # he points at the treat (swish)
+    (2.95, "tail_thump_657779.mp3", 0.2, 0.9, -17, 0.01, 0.15, None),        # happy wag
+    (3.43, "whoosh_830856.mp3", 0.0, 0.45, -17, 0.005, 0.1, None),           # whip-in
+    (3.45, "dog_skid_208654.mp3", 1.0, 2.0, -12, 0.01, 0.15, None),          # he runs straight to it (paws on wood)
+    (4.15, "eat_691471.mp3", 4.4, 5.3, -13, 0.03, 0.2, None),                # kibble crunch
+    (4.97, "whoosh_830856.mp3", 0.0, 0.45, -19, 0.005, 0.1, None),           # cut to the lab
+    (6.33, "whoosh_830856.mp3", 0.0, 0.45, -18, 0.005, 0.1, None),           # cut to the top-down insert
+    (7.32, "point_393811.mp3", 0.0, 0.21, -14, 0.002, 0.05, None),           # she points at the EMPTY bowl
+    (7.55, "dog_walk_635117.mp3", 7.0, 8.0, -15, 0.02, 0.15, None),          # the dog trots over
+    (8.18, "dog_sniff_427169.mp3", 0.0, 0.9, -13, 0.01, 0.15, None),         # sniffs the bowl: nothing in it
+    (8.58, "whoosh_830856.mp3", 0.0, 0.45, -18, 0.005, 0.1, None),           # snap-zoom on the shocked look
+    (8.80, "dog_whine_498703.mp3", 2.2, 3.0, -15, 0.02, 0.2, None),          # betrayed whine
+    (9.75, "point_393811.mp3", 0.0, 0.21, -15, 0.002, 0.05, None),           # she points again
+    (10.50, "room_tone_329533.mp3", 8.6, 18.6, -24, 0.05, 0.3, None),
+    (11.40, "dog_sigh_427172.mp3", 0.3, 0.9, -15, 0.01, 0.15, None),         # the dog stays put (sigh)
+    (12.73, "whoosh_830856.mp3", 0.0, 0.45, -17, 0.005, 0.1, None),          # whip-in to the mailman
+    (12.85, "letters_572018.mp3", 0.25, 0.9, -16, 0.01, 0.1, None),          # his letters
+    (13.00, "point_393811.mp3", 0.0, 0.21, -14, 0.002, 0.05, None),          # the stranger points
+    (14.10, "dog_skid_208654.mp3", 1.0, 2.0, -11, 0.01, 0.15, None),         # off he ran
+    (14.60, "dog_pant_841349.mp3", 0.0, 0.9, -15, 0.03, 0.15, None),
+    (15.25, "eat_691471.mp3", 4.4, 5.3, -14, 0.03, 0.2, None),               # to the bowl
+    (G1, "gasp_812418.mp3", 0.0, 0.37, -11, 0.003, 0.06, None),              # GASP (subtle, real) on the surprised face
+    (16.20, "groan2_318088.mp3", 0.05, 1.0, -15, 0.01, 0.2, None),           # he starts to cry (sigh)
+    (17.10, "tail_thump_657779.mp3", 0.2, 1.2, -16, 0.01, 0.15, None),       # wagging at the mailman's feet
+    (17.40, "collar_jingle_851618.mp3", 2.4, 3.0, -17, 0.01, 0.2, ("lp", 7000)),
+    (18.10, "dog_pant_841349.mp3", 0.0, 1.2, -14, 0.03, 0.2, None),          # happy dog with the mailman
+    (18.50, "tail_thump_657779.mp3", 0.2, 1.0, -16, 0.01, 0.2, None),
 ] + [(t, "pop_744144.mp3" if k % 2 else "pop_744140.mp3", 0.0, 0.12, -12, 0.002, 0.03, None) for k, t in enumerate(POPS)]
 
 

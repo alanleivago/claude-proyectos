@@ -51,6 +51,13 @@ Full detail is in STYLE.md. In short:
 - **Silhouettes:** gentle curves, not waves or beaks, unless the design calls for them.
 - **Sockets:** asymmetric and cracked, so the face doesn't read as a clean trefoil or emoji.
 
+## Motion and people (user, 2026-11-13)
+- Creatures move uncannily: stop-motion holds (2–4 frames) then snaps, twitchy over-rotated head tilts, fingers out of sync, slow pulls then sudden bursts, a full freeze before a lunge. Never smooth, symmetric or bouncy (Teke Teke v1 looked funny).
+- Keep faces mostly hidden by hair or shadow, with one eye visible. Heavy hair with weight and lagging secondary motion, never straight strips.
+- People must never look like dolls or mannequins (user, 2026-11-16, SCP-087 janitor): realistic proportions, shoulder joints inside the torso (no arms glued on a box), hands with fingers, realistic faces with lids/irises/folds (no dots, holes or flat textures), clear readable headwear. Self-check each person alone (front/3-4/side/face expressions) before the board.
+- People: real walk cycles (heel strike, stance foot locked, no deep knee squat, arm counter-swing) and realistic faces (no dot eyes, no "O" mouths).
+- Night scenes: light pools from flickering street lamps, with dark gaps between them.
+
 ## Hook (0–5 s)
 - **The creature:** big (at least 35 % of the frame height), in the upper half above the paragraph, lighter than its background (rim light, moon, fog) and moving within the first 2 s.
 - **The first line** is a warning or a rule, readable by about 0.5 s.

@@ -1,6 +1,6 @@
 # ep8: elige con earshot (api.rank) el mejor candidato CC0 de cada carpeta cand/<key> -> ../picks8.json. python rank8.py
 import json, os, sys, glob
-sys.path.insert(0, r"F:/earshot")
+sys.path.insert(0, r"/Users/alanleiva/tools/earshot")
 from earshot import api
 H = os.path.dirname(os.path.abspath(__file__)) + "/.."
 DESC = {

@@ -32,7 +32,7 @@ ph = Image.open(f"{P}/phone/c_5.jpg").convert("RGB").crop((149, 100, 1149, 2197)
 blue = Image.open(f"{P}/sign2/c_1.jpg").convert("RGB").crop((190, 352, 1105, 428)).resize((512, 96), Image.BICUBIC)
 sg = Image.new("RGB", (512, 96)); sg.paste(blue, (0, 0)); d = ImageDraw.Draw(sg)
 d.rectangle([5, 5, 506, 90], outline=(235, 236, 240), width=4)
-f = ImageFont.truetype("C:/Windows/Fonts/arialbd.ttf", 58); d.text((256, 50), "MERCY STREET", font=f, fill=(240, 240, 244), anchor="mm")
+f = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial Bold.ttf", 58); d.text((256, 50), "MERCY STREET", font=f, fill=(240, 240, 244), anchor="mm")
 ps1(sg, 128, 24, name="sign_front")
 # ---- paredes y andén
 ps1(Image.open(f"{P}/ticketm/c_8.jpg").convert("RGB").crop((270, 213, 412, 455)), 64, 96, name="wall_tile")

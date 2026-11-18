@@ -56,7 +56,7 @@ def raw(f):
     return im
 
 
-TEXT_SHOTS = {"03a", "04a"}   # KYOTO, 2015 / the red cross
+TEXT_SHOTS = {"03a", "04b"}   # KYOTO, 2015 / the red cross
 
 
 COLOR_TEXT = {"04a": "red"}   # zaw-dog-05 (user): the check is GREEN, the cross RED - same stepped edges

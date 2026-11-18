@@ -9,8 +9,8 @@ import json, sys, subprocess, numpy as np, soundfile as sf, pyloudnorm as pyln
 from scipy.ndimage import uniform_filter1d, minimum_filter1d
 from scipy.signal import butter, sosfilt
 SR = 48000
-L3 = r"F:/Claude Proyectos/pieces/zombie-03-station/largo3"; L2 = r"F:/Claude Proyectos/pieces/zombie-03-station/largo2"; L1 = r"F:/Claude Proyectos/pieces/zombie-03-station/largo"; P = r"F:/Claude Proyectos/pieces/zombie-03-station"
-DC = r"F:/Claude Proyectos/assets/dino-crisis-sfx"; ZS = r"F:/Claude Proyectos/assets/zombie-sfx-yt/seg"; KIT = r"F:/Claude Proyectos/sound-layer/kit"; NC = f"{L3}/audio/cand"
+L3 = r"/Users/alanleiva/claude-proyectos/pieces/zombie-03-station/largo3"; L2 = r"/Users/alanleiva/claude-proyectos/pieces/zombie-03-station/largo2"; L1 = r"/Users/alanleiva/claude-proyectos/pieces/zombie-03-station/largo"; P = r"/Users/alanleiva/claude-proyectos/pieces/zombie-03-station"
+DC = r"/Users/alanleiva/claude-proyectos/assets/dino-crisis-sfx"; ZS = r"/Users/alanleiva/claude-proyectos/assets/zombie-sfx-yt/seg"; KIT = r"/Users/alanleiva/claude-proyectos/sound-layer/kit"; NC = f"{L3}/audio/cand"
 sys.path.insert(0, f"{L3}/voz"); import takes as TK
 CUT = json.load(open(f"{L3}/review/cuts.json")); T0 = dict(CUT["cuts"]); DUR = CUT["dur"]; N = int(DUR * SR)
 CUTS = CUT["cuts"]; END = {k: (CUTS[i + 1][1] if i + 1 < len(CUTS) else DUR) for i, (k, _) in enumerate(CUTS)}

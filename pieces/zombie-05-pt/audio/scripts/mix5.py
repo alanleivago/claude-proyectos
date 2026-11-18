@@ -4,7 +4,7 @@
 import json, subprocess, numpy as np, soundfile as sf, pyloudnorm as pyln
 from scipy.ndimage import uniform_filter1d, minimum_filter1d
 SR = 48000
-P = r"F:/Claude Proyectos/pieces/zombie-05-pt"; C = f"{P}/audio/cand"; DC = r"F:/Claude Proyectos/assets/dino-crisis-sfx"
+P = r"/Users/alanleiva/claude-proyectos/pieces/zombie-05-pt"; C = f"{P}/audio/cand"; DC = r"/Users/alanleiva/claude-proyectos/assets/dino-crisis-sfx"
 CU = json.load(open(f"{P}/engine/cues.json", encoding="utf8")); W, T = CU["W"], CU["T"]; DUR = CU["END"]; N = int(DUR * SR)
 CREDITS = {  # Freesound CC0 (earshot rank: z de la consulta entre parentesis)
     "546362 footsteps on wooden floor (z 6.4)": "Freesound CC0", "482827 R15-47-Heavy Breathing (z 5.8)": "craigsmith",

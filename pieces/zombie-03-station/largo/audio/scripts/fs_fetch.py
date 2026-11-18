@@ -1,7 +1,7 @@
 # largo: copia de ../../audio/scripts/fs_fetch.py con busquedas nuevas. Freesound CC0 search + HQ preview download: audio/cand/<key>/<id>.mp3 and audio/cand/<key>/meta.json
 import json, os, sys, urllib.request, urllib.parse
 KEY = json.load(open(os.path.expanduser("~/.freesound.json"), encoding="utf-8-sig"))["api_key"]
-OUT = r"F:/Claude Proyectos/pieces/zombie-03-station/largo/audio/cand"
+OUT = r"/Users/alanleiva/claude-proyectos/pieces/zombie-03-station/largo/audio/cand"
 Q = {
  "cough": ("man cough single", 0.3, 2.5),
  "mus_dark": ("dark ambient horror music", 90, 600), "mus_tension": ("tension suspense music", 90, 600),

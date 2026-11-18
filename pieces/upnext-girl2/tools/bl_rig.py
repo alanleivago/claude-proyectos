@@ -4,7 +4,7 @@ blender -b --factory-startup --python tools/bl_rig.py -- ref/rig_in.npz out/girl
 import bpy, sys, json, math, os, numpy as np
 from mathutils import Vector, Matrix, Quaternion
 argv = sys.argv[sys.argv.index("--") + 1:]
-ZERO = r"F:/Claude Proyectos/pieces/zero-fem/anim/zero_anim.glb"
+ZERO = r"/Users/alanleiva/claude-proyectos/pieces/zero-fem/anim/zero_anim.glb"
 D = np.load(argv[0], allow_pickle=True)
 OUT = argv[1]
 J = json.loads(str(D["joints"])); W = json.loads(str(D["weights"]))

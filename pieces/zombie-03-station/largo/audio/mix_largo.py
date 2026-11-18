@@ -8,9 +8,9 @@
 import json, subprocess, numpy as np, soundfile as sf, pyloudnorm as pyln
 from scipy.ndimage import uniform_filter1d, minimum_filter1d
 SR = 48000
-L = r"F:/Claude Proyectos/pieces/zombie-03-station/largo"; P = r"F:/Claude Proyectos/pieces/zombie-03-station"
-DC = r"F:/Claude Proyectos/assets/dino-crisis-sfx"; ZS = r"F:/Claude Proyectos/assets/zombie-sfx-yt/seg"
-C2 = r"F:/Claude Proyectos/pieces/zombie-02-window/audio/cand"; KIT = r"F:/Claude Proyectos/sound-layer/kit"
+L = r"/Users/alanleiva/claude-proyectos/pieces/zombie-03-station/largo"; P = r"/Users/alanleiva/claude-proyectos/pieces/zombie-03-station"
+DC = r"/Users/alanleiva/claude-proyectos/assets/dino-crisis-sfx"; ZS = r"/Users/alanleiva/claude-proyectos/assets/zombie-sfx-yt/seg"
+C2 = r"/Users/alanleiva/claude-proyectos/pieces/zombie-02-window/audio/cand"; KIT = r"/Users/alanleiva/claude-proyectos/sound-layer/kit"
 CUT = json.load(open(f"{L}/review/cuts.json")); T0 = dict(CUT["cuts"]); DUR = CUT["dur"]; N = int(DUR * SR)
 TL = json.load(open(f"{L}/engine/timeline.json", encoding="utf-8"))
 _c = {}

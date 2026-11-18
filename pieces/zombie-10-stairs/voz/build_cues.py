@@ -1,7 +1,7 @@
 # ep10 "The Stairs": tiempos de imagen y sonido derivados de la voz (engine/timeline.json + voz/lines.json) -> engine/cues.json
 # {W: palabras clave, T: cortes de plano, END, VOICE_END}. Lo leen film.js, sets/*.js y el mix. python build_cues.py (tras prep + assemble + fix_words + fix_caps)
 import json, re
-E = r"F:/Claude Proyectos/pieces/zombie-10-stairs/engine"; V = r"F:/Claude Proyectos/pieces/zombie-10-stairs/voz"
+E = r"/Users/alanleiva/claude-proyectos/pieces/zombie-10-stairs/engine"; V = r"/Users/alanleiva/claude-proyectos/pieces/zombie-10-stairs/voz"
 TL = json.load(open(f"{E}/timeline.json", encoding="utf8")); LN = json.load(open(f"{V}/lines.json", encoding="utf8"))
 WD = TL["words"]; nrm = lambda s: re.sub(r"[^a-z0-9']", "", s.lower().replace(".", "").replace("’", "'"))
 def find(line, *ws, nth=0):

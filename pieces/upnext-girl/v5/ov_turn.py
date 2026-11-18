@@ -6,7 +6,7 @@ from scipy import ndimage as nd
 tag = sys.argv[1]; ks = [int(x) for x in sys.argv[2].split(",")] if len(sys.argv) > 2 else list(range(0, 50, 5))
 d = np.load(f"posed_{tag}.npz"); cam = json.load(open("turn_cam.json"))
 MS = np.unpackbits(np.load("turn5_masks.npy"), axis=-1)[..., :1920].astype(bool)
-D = "F:/Claude Proyectos/fuentes/mml2-girl-tutorial/frames/turn5/"
+D = "/Users/alanleiva/claude-proyectos/fuentes/mml2-girl-tutorial/frames/turn5/"
 BANDS = (("head", 0.0, 0.215), ("body", 0.215, 0.585), ("legs", 0.585, 1.0))
 def iou(a, b): return (a & b).sum() / max(1, (a | b).sum())
 tiles = []; tot = {n: [] for n in ("all", "head", "body", "legs")}

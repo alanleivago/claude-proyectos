@@ -1,7 +1,7 @@
 # Freesound CC0 (busqueda + preview HQ) para el ep7 (Safe Room) -> audio/cand/<key>/<id>.mp3 + meta.json. python fs_fetch5.py [keys]
 import json, os, sys, urllib.request, urllib.parse
 KEY = json.load(open(os.path.expanduser("~/.freesound.json"), encoding="utf-8-sig"))["api_key"]
-OUT = r"F:/Claude Proyectos/pieces/zombie-07-saferoom/audio/cand"
+OUT = r"/Users/alanleiva/claude-proyectos/pieces/zombie-07-saferoom/audio/cand"
 Q = {"aerosol": ("spray can", 0.3, 5), "bandage": ("tape", 0.3, 5), "chest_open": ("wooden lid", 0.3, 4), "chest_close": ("box close", 0.2, 3),
      "heal": ("heal", 0.3, 4), "cut": ("cut", 0.1, 2), "item_drop": ("drop wood", 0.1, 2), "wind": ("wind", 10, 120), "chest_creak": ("creak", 0.3, 4)}
 only = set(sys.argv[1:])

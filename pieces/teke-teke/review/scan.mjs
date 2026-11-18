@@ -18,13 +18,15 @@ const res = await page.evaluate(([mode, a0, a1, step]) => {
       P.arm.forEach((a, i) => { if (a.S.distanceTo(a.W) > P.pd.uArm + P.pd.fArm - 0.003) bad.push('p' + pi + ' arm' + i + ' overreach'); if (inWall(a.W)) bad.push('p' + pi + ' hand in wall'); });
       if (P.H.position.distanceTo(cam) < 0.35) bad.push('cam in p' + pi); });
     const G = Wd.girl; if (G.g.visible) { const st = G.st;
-      G.arms.forEach((A, ai) => { const a = st.arms[ai]; const u = A.S.distanceTo(a.E), f = a.E.distanceTo(a.W); if (u > GL.uArm * 1.12) bad.push('g upper' + ai + ' ' + u.toFixed(2)); if (Math.abs(f - GL.fArm) > 0.04) bad.push('g fore' + ai + ' ' + f.toFixed(2));
+      G.arms.forEach((A, ai) => { const a = Object.assign({}, st.arms[ai], { E: A.E }); const u = A.S.distanceTo(a.E), f = a.E.distanceTo(a.W); if (u > GL.uArm * 1.12) bad.push('g upper' + ai + ' ' + u.toFixed(2)); if (f > GL.fArm + 0.04) bad.push('g fore' + ai + ' ' + f.toFixed(2));
         A.f.forEach((F, fi) => { const tp = F.tip; if (st.gy && tp.y < gT(tp.x, tp.z) - 0.04) bad.push('g tip under ' + ai + fi); if (inWall(tp)) bad.push('g tip in wall ' + ai + fi); if (tp.distanceTo(cam) < 0.2) bad.push('g tip at cam'); });
         if (st.gy && (a.E.y < gT(a.E.x, a.E.z) - 0.01)) bad.push('g elbow under'); if (inWall(a.E) || inWall(a.W)) bad.push('g arm in wall ' + ai);
         if (Wd.ken.g.visible) { const kc = Wd.ken.T.position.clone().add(V3(0, 0.3, 0)); if (a.W.distanceTo(kc) < 0.1) bad.push('g wrist inside ken'); } });
       if (inWall(st.chest) || inWall(st.head.p)) bad.push('g body in wall'); if (st.gy && st.waist.y < gT(st.waist.x, st.waist.z)) bad.push('g waist under');
       if (G.head.position.distanceTo(cam) < 0.3) bad.push('g head at cam ' + G.head.position.distanceTo(cam).toFixed(2));
       if (Wd.ken.g.visible) { const d = G.head.position.distanceTo(Wd.ken.H.position); if (d < 0.19) bad.push('heads overlap ' + d.toFixed(2)); } }
+    const A0 = [Wd.me, Wd.ken].map((P) => P.g.visible ? P.leg.map((l) => l.A.clone()) : null);
+    window.renderFrame(t + 1 / 24, c); [Wd.me, Wd.ken].forEach((P, pi) => { if (!A0[pi] || !P.g.visible) return; P.leg.forEach((l, i) => { const a = A0[pi][i], b = l.A, g0 = gT(a.x, a.z); if (a.y - g0 < P.pd.ank + 0.012 && b.y - gT(b.x, b.z) < P.pd.ank + 0.012) { const dd = Math.hypot(a.x - b.x, a.z - b.z); if (dd > 0.012) bad.push('p' + pi + ' foot' + i + ' slides ' + dd.toFixed(3)); } }); });
     if (bad.length) out.push([+t.toFixed(2), bad.join('; ')]); }
   return out; }, [mode, +a0, +a1, +(step || 1)]);
 console.log(JSON.stringify(res)); await browser.close();

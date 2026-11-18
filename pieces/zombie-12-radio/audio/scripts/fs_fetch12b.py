@@ -1,7 +1,7 @@
 # Freesound CC0 (busqueda + preview HQ) para el ep12 (The Radio) -> audio/cand/<key>/<id>.mp3 + meta.json. python fs_fetch5.py [keys]
 import json, os, sys, urllib.request, urllib.parse
 KEY = json.load(open(os.path.expanduser("~/.freesound.json"), encoding="utf-8-sig"))["api_key"]
-OUT = r"F:/Claude Proyectos/pieces/zombie-12-radio/audio/cand"
+OUT = r"/Users/alanleiva/claude-proyectos/pieces/zombie-12-radio/audio/cand"
 Q = {"crank": ("crank winding ratchet", 0.5, 10), "crank2": ("wind up crank", 0.5, 10), "plug": ("plug in cable click", 0.1, 2), "heavy_steps": ("footsteps heavy", 1, 20), "steps_out": ("footsteps gravel slow", 2, 20),
      "paper": ("paper rustle", 0.2, 2), "tuning2": ("radio frequency tuning", 1, 10), "stomp": ("heavy stomp boot", 0.2, 3)}
 only = set(sys.argv[1:])

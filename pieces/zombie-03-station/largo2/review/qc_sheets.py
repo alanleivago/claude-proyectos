@@ -8,7 +8,7 @@ cuts = json.load(open(f"{H}/cuts.json")); C = cuts["cuts"]; END = {k: (C[i + 1][
 SET = {s[0]: s[1] for s in json.load(open(f"{E}/shots.json", encoding="utf8"))}
 EXTRA = {"07_lit_lobby", "08_lighthouse", "09_count80", "16_dark", "17_turnaway", "91_sunset", "92_lights_on", "95_stopped", "04_dawn_knock", "06_whatsleft", "11_cross"}
 ids = [k for k, _ in C if SET.get(k) == "p2new" or k in EXTRA]
-F = ImageFont.truetype("C:/Windows/Fonts/arialbd.ttf", 13)
+F = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial Bold.ttf", 13)
 frames = []
 for k in ids:
     t0, t1 = dict(C)[k], END[k]; d = f"{OUT}/f_{k}"; os.makedirs(d, exist_ok=True)

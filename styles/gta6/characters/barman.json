@@ -1,0 +1,318 @@
+{
+ "photo": "pieces/gta6-look/flow4/barman4_photo.jpg",
+ "out": "pieces/gta6-look/work4/barman4.png",
+ "height": 2048,
+ "upper": [
+  "shirt"
+ ],
+ "add": [
+  {
+   "box": [
+    380,
+    640,
+    570,
+    935
+   ],
+   "material": "tee",
+   "within": [
+    "shirt"
+   ],
+   "smooth": 5
+  },
+  {
+   "poly": [
+    [
+     505,
+     797
+    ],
+    [
+     560,
+     786
+    ],
+    [
+     662,
+     795
+    ],
+    [
+     652,
+     880
+    ],
+    [
+     632,
+     975
+    ],
+    [
+     560,
+     990
+    ],
+    [
+     518,
+     980
+    ],
+    [
+     509,
+     880
+    ]
+   ],
+   "material": "glass",
+   "keep": [
+    "skin",
+    "face"
+   ],
+   "smooth": 1
+  },
+  {
+   "box": [
+    0,
+    1110,
+    200,
+    1376
+   ],
+   "material": "wood",
+   "under": true
+  }
+ ],
+ "materials": {
+  "skin": {
+   "colors": {
+    "shadow": "#9A4A62",
+    "key": "#D98A72",
+    "hi": "#F6CFA0",
+    "rim": "#E57BA6",
+    "deep": "#5C2440"
+   },
+   "key": 0.45,
+   "hi_frac": 0,
+   "rim": 0.12,
+   "deep_frac": 0.08,
+   "photo_w": 0.55,
+   "smooth": 4,
+   "shape_smooth": 9,
+   "angular": 3,
+   "min_area": 1500,
+   "detail": 0.15,
+   "detail_t": 1.6,
+   "local_color": 0.25,
+   "airbrush": 0.1,
+   "ao_only": true,
+   "edge": 2.5,
+   "model": 0.5,
+   "model_sigma": 4
+  },
+  "lips": {
+   "colors": {
+    "shadow": "#8A3A58",
+    "key": "#B9606C",
+    "deep": "#5C2440"
+   },
+   "key": 0.45,
+   "deep_frac": 0.15,
+   "smooth": 1.5,
+   "shape_smooth": 2,
+   "min_area": 60
+  },
+  "hair": {
+   "colors": {
+    "shadow": "#6C5E86",
+    "key": "#BDB3C4",
+    "hi": "#EFE6DA",
+    "deep": "#3E3256"
+   },
+   "key": 0.4,
+   "hi_frac": 0.1,
+   "rim": 0,
+   "deep_frac": 0,
+   "photo_w": 0.85,
+   "smooth": 1.5,
+   "shape_smooth": 5,
+   "min_area": 400,
+   "detail": 0.7,
+   "detail_t": 1.4,
+   "detail_sigma": 2.0,
+   "model": 0.6,
+   "model_sigma": 2
+  },
+  "shirt": {
+   "colors": {
+    "shadow": "#2C4563",
+    "key": "#3F7882",
+    "hi": "#79B2A8",
+    "rim": "#6A6FB8",
+    "deep": "#1E2742"
+   },
+   "key": 0.45,
+   "hi_frac": 0.05,
+   "rim": 0.2,
+   "deep_frac": 0.03,
+   "photo_w": 0.55,
+   "smooth": 14,
+   "shape_smooth": 18,
+   "angular": 10,
+   "min_area": 9000,
+   "airbrush": 0.08,
+   "print": {
+    "colors": [
+     "#5C9C9E",
+     "#4D8A92",
+     "#2F5468"
+    ],
+    "size": 0.1,
+    "spacing": 1.0,
+    "opacity": 0.75,
+    "warp": 0.02
+   },
+   "edge": 2.0,
+   "model": 0.12,
+   "model_sigma": 10
+  },
+  "tee": {
+   "colors": {
+    "shadow": "#9C98B8",
+    "key": "#EEF0E6",
+    "hi": "#FFFBEA",
+    "rim": "#BFA6D6",
+    "deep": "#6E6890"
+   },
+   "key": 0.5,
+   "hi_frac": 0.1,
+   "rim": 0.2,
+   "deep_frac": 0.05,
+   "photo_w": 0.5,
+   "smooth": 8,
+   "shape_smooth": 14,
+   "angular": 8,
+   "min_area": 5000,
+   "edge": 2.0,
+   "model": 0.2,
+   "model_sigma": 8
+  },
+  "pants": {
+   "colors": {
+    "shadow": "#1E1F38",
+    "key": "#33405E",
+    "deep": "#121224"
+   },
+   "key": 0.4,
+   "angular": 5
+  },
+  "glass": {
+   "colors": {
+    "shadow": "#7A5468",
+    "key": "#D9A57A",
+    "body": "#E6E2F2",
+    "liquid": "#C8743E",
+    "liquid_hi": "#F2B05A",
+    "glint": "#FFF8E6"
+   },
+   "mode": "glass",
+   "key": 0.5,
+   "body_alpha": 0.3,
+   "glint_L": 72
+  },
+  "wood": {
+   "colors": {
+    "shadow": "#5A4066",
+    "key": "#B78C8C",
+    "hi": "#E9CBB0",
+    "deep": "#3A2846"
+   },
+   "key": 0.5,
+   "hi_frac": 0.1,
+   "angular": 5,
+   "smooth": 4,
+   "photo_w": 0.4
+  },
+  "default": {
+   "colors": {
+    "shadow": "#5A4A6A",
+    "key": "#C8A2A0",
+    "hi": "#F2DCC0"
+   },
+   "key": 0.5
+  },
+  "face": {
+   "colors": {
+    "shadow": "#9A4A62",
+    "key": "#D98A72",
+    "hi": "#F6CFA0",
+    "rim": "#E57BA6",
+    "deep": "#5C2440"
+   },
+   "key": 0.5,
+   "hi_frac": 0,
+   "rim": 0,
+   "deep_frac": 0.07,
+   "photo_w": 0.9,
+   "smooth": 2,
+   "shape_smooth": 4,
+   "angular": 2,
+   "min_area": 250,
+   "detail": 0.2,
+   "detail_t": 1.6,
+   "local_color": 0.25,
+   "airbrush": 0.1,
+   "ao_only": true,
+   "edge": 0.9,
+   "model": 0.6,
+   "model_sigma": 2.5,
+   "deep_alpha": 0.5
+  }
+ },
+ "lines": {
+  "color": "#2A1426",
+  "face": {
+   "sigma": 1.5,
+   "strength": 0.55,
+   "min_len": 200
+  },
+  "skin": {
+   "sigma": 1.4,
+   "strength": 0.4,
+   "min_len": 350
+  },
+  "hair": {
+   "sigma": 1.0,
+   "strength": 0.35,
+   "min_len": 90
+  },
+  "cloth": {
+   "sigma": 2.0,
+   "strength": 0,
+   "min_len": 500
+  },
+  "brows": 0.5,
+  "border": [
+   1.2,
+   2.2
+  ],
+  "silhouette": [
+   2.5,
+   5.5
+  ]
+ },
+ "rim": {
+  "sun": 0.7,
+  "shadow": 0.5
+ },
+ "grade": 0.15,
+ "sun": "right",
+ "depth_relief": 600,
+ "key_z": 0.25,
+ "flow": {
+  "subject": "the man",
+  "face": "same face shape, crooked nose, heavy-lidded eyes, deep wrinkles, grey stubble, unimpressed look, no beautifying, not younger",
+  "extra": "a flat painted palm-leaf print on the shirt, a clear whiskey tumbler with amber whisky and ice"
+ },
+ "flat_bg": "#D8B4E0",
+ "finish": {
+  "shadow": 0.6,
+  "shadow_frac": 0.45,
+  "split_bias": 0.22,
+  "light": 0.3,
+  "light_frac": 0.2,
+  "rim": 0.45,
+  "grade": 0.12,
+  "noise": 3.0,
+  "saturation": 1.25
+ }
+}

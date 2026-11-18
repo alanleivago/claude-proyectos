@@ -1,6 +1,6 @@
 """One-off: v4 parts -> v5/pieces.json (one entry per rigid piece, his outliner breakdown). Run in Blender."""
 import bpy, json
-src = open(r"F:/Claude Proyectos/pieces/upnext-girl/build.py").read().split('if __name__ == "__main__" or True:')[0]
+src = open(r"/Users/alanleiva/claude-proyectos/pieces/upnext-girl/build.py").read().split('if __name__ == "__main__" or True:')[0]
 exec(src, globals())
 B = build_mesh(); bm = B.bm
 bm.verts.index_update()
@@ -32,5 +32,5 @@ for name, fs in groups.items():
     bone = BONE.get(name) or {"LegUpper": "Thigh", "LegLower": "Calf", "Boot": "Calf", "Foot": "Foot", "UpperArm": "UpperArm",
                               "Forearm": "Forearm", "Hand": "Hand"}[s[0]] + "." + s[1]
     out[name] = dict(bone=bone, verts=verts, faces=faces)
-json.dump(out, open(r"F:/Claude Proyectos/pieces/upnext-girl/v5/pieces.json", "w"), indent=0)
+json.dump(out, open(r"/Users/alanleiva/claude-proyectos/pieces/upnext-girl/v5/pieces.json", "w"), indent=0)
 print({k: (v["bone"], len(v["verts"]), len(v["faces"])) for k, v in out.items()})

@@ -3,7 +3,7 @@
 import os, json, sys; from PIL import Image, ImageDraw, ImageFont
 H = os.path.dirname(os.path.abspath(__file__)); P = os.path.join(H, "..")
 C = json.load(open(os.path.join(P, "engine", "cues.json"), encoding="utf8")); T, W = C["T"], C["W"]
-F = ImageFont.truetype("C:/Windows/Fonts/arialbd.ttf", 15); f2 = ImageFont.truetype("C:/Windows/Fonts/arial.ttf", 13)
+F = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial Bold.ttf", 15); f2 = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial.ttf", 13)
 B = [(W["stay"] + 0.4, "1  hook", "'Last time, you had to choose... get on, or stay.' Dark platform, train open: 1 GET ON (blue) -> door, 2 STAY (red) -> Ava. Ava on screen from frame 0. Hook music"),
      (W["leaves"] + 0.9, "2  STAY", "'Say you stay. The doors close, and the train leaves without you.' Red 2 STAY pinned at the top"),
      (T["02b_floor"] + 1.0, "2b", "'On the floor you find the rest of rule two...' Ava kneels for the torn half (kneel plays once)"),

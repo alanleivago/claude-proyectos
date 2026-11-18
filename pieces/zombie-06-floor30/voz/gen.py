@@ -1,7 +1,7 @@
 # Tomas de VoiceStudio para el ep6 (Floor 30): voz "ava bread buena" f2a102da, steps 32, wav. Una toma por mitad de cada "…"
 # (nunca se corta una toma en "…"). Verifica con whisper. python gen.py [ids...] [--redo] --seed N
 import json, re, sys, os, urllib.request, numpy as np, soundfile as sf
-API = "http://127.0.0.1:3900/v1/audio/speech"; VOICE = "f2a102da"
+API = "http://127.0.0.1:3900/v1/audio/speech"; VOICE = "f2f8f8dc"
 args = sys.argv[1:]
 FEMA = "Fema"   # VoiceStudio: "FEMA" lo deletrea; "Fema" se lee FEE-muh
 T = [  # id, texto (la mitad que sigue termina en coma: entonacion que continua). Ep6 "Floor 30"

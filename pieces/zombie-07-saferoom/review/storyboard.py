@@ -1,7 +1,7 @@
 # storyboard_v1.png (ep7 The Safe Room): un panel por beat (frames reales del motor, review/sb/f_<t>.png, tiempos SCRATCH sin voz) +
 # fila de objetos foto -> lowpoly (objects/compare/*_cmp.png). python storyboard.py
 import os; from PIL import Image, ImageDraw, ImageFont
-H = os.path.dirname(os.path.abspath(__file__)); P = os.path.join(H, ".."); F = ImageFont.truetype("C:/Windows/Fonts/arialbd.ttf", 15); f2 = ImageFont.truetype("C:/Windows/Fonts/arial.ttf", 13)
+H = os.path.dirname(os.path.abspath(__file__)); P = os.path.join(H, ".."); F = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial Bold.ttf", 15); f2 = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial.ttf", 13)
 B = [(0.6, "1  0:00", "'You can't defend the whole house...' Fast crane over the cutaway house (RE map): room labels LIVING / KITCHEN / BATH / CLOSET. Hook music"),
      (2.6, "1b 0:02", "'...so you pick one room.' Ava in the hall, looks up at camera (on screen by 2 s)"),
      (7.6, "2  0:04", "'So you pick the living room. It's the biggest.' HUD -> CAUTION. 3 windows + 2 doors flash red one by one (WINDOWS x3, DOORS x2)"),

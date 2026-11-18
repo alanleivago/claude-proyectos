@@ -2,8 +2,8 @@
 needs: node tools/anim/render2.mjs shots <clip:frame,...> 0 <view> 420 640  (done by this script via subprocess)"""
 import subprocess, os, sys
 from PIL import Image, ImageDraw, ImageFont
-J = "F:/Claude Proyectos/fuentes/jongmin-design/remake/cuts/"
-R = "C:/Users/ALANLE~1/AppData/Local/Temp/claude/c026b2981c42eeb2/b19cd1d9-332a-4ffd-91ff-b618e0ca55df/scratchpad/refs/"
+J = "/Users/alanleiva/claude-proyectos/fuentes/jongmin-design/remake/cuts/"
+R = "/private/tmp/upnext-scratch/refs/"
 PAIRS = [  # (ref image, label, clip, frame, view)
     (J + "DenXjPdN-UE/c025.jpg", "UpNext #1 listen, head down", "listen_head_down", 60, "3q"),
     (J + "DeDhBizhWi3/c018.jpg", "UpNext #3 glance + reply", "glance_reply", 40, "3q"),

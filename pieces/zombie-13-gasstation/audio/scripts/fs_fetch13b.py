@@ -1,7 +1,7 @@
 # Freesound CC0 (busqueda + preview HQ) para el ep13 (Gas Station) -> audio/cand/<key>/<id>.mp3 + meta.json. python fs_fetch5.py [keys]
 import json, os, sys, urllib.request, urllib.parse
 KEY = json.load(open(os.path.expanduser("~/.freesound.json"), encoding="utf-8-sig"))["api_key"]
-OUT = r"F:/Claude Proyectos/pieces/zombie-13-gasstation/audio/cand"
+OUT = r"/Users/alanleiva/claude-proyectos/pieces/zombie-13-gasstation/audio/cand"
 Q = {"pump_beep": ("beep", 0.1, 1), "fuel_pour": ("liquid pouring", 2, 20), "door_chime": ("door bell", 0.5, 4), "knock": ("door knock", 0.3, 5), "groan": ("monster growl", 1, 8)}
 only = set(sys.argv[1:])
 for key, (q, dmin, dmax) in Q.items():

@@ -7,8 +7,8 @@
 import json, subprocess, numpy as np, soundfile as sf, pyloudnorm as pyln, os
 from scipy.ndimage import uniform_filter1d, minimum_filter1d
 SR = 48000
-P = r"F:/Claude Proyectos/pieces/zombie-08-farm"; E3 = r"F:/Claude Proyectos/pieces/zombie-03-station"; L3 = E3 + "/largo"; P7 = r"F:/Claude Proyectos/pieces/zombie-07-saferoom/audio/cand"
-DC = r"F:/Claude Proyectos/assets/dino-crisis-sfx"; ZS = r"F:/Claude Proyectos/assets/zombie-sfx-yt/seg"; C2 = r"F:/Claude Proyectos/pieces/zombie-02-window/audio/cand"; KIT = r"F:/Claude Proyectos/sound-layer/kit"
+P = r"/Users/alanleiva/claude-proyectos/pieces/zombie-08-farm"; E3 = r"/Users/alanleiva/claude-proyectos/pieces/zombie-03-station"; L3 = E3 + "/largo"; P7 = r"/Users/alanleiva/claude-proyectos/pieces/zombie-07-saferoom/audio/cand"
+DC = r"/Users/alanleiva/claude-proyectos/assets/dino-crisis-sfx"; ZS = r"/Users/alanleiva/claude-proyectos/assets/zombie-sfx-yt/seg"; C2 = r"/Users/alanleiva/claude-proyectos/pieces/zombie-02-window/audio/cand"; KIT = r"/Users/alanleiva/claude-proyectos/sound-layer/kit"
 CUT = json.load(open(f"{P}/review/cuts.json")); T0 = dict(CUT["cuts"]); DUR = CUT["dur"]; N = int(DUR * SR)
 TL = json.load(open(f"{P}/engine/timeline.json", encoding="utf-8"))
 _c = {}

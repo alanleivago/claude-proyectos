@@ -9,7 +9,7 @@ HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(os.pat
 sys.path.insert(0, HERE); sys.path.insert(0, os.path.join(ROOT, "tools"))
 import rig as RG
 
-BL = r"C:\Program Files\Blender Foundation\Blender 5.2\blender.exe"
+BL = r"/Applications/Blender.app/Contents/MacOS/Blender"
 S = RG.S_ENGINE
 u = lambda c: [c[0] * S, c[1] * S, c[2] * S + RG.FLOOR]
 TMP = os.path.join(ROOT, "review", "_tmp"); os.makedirs(TMP, exist_ok=True)

@@ -1,7 +1,7 @@
 # Freesound CC0 (busqueda + preview HQ) para el ep5 (P.T.) -> audio/cand/<key>/<id>.mp3 + meta.json. python fs_fetch5.py [keys]
 import json, os, sys, urllib.request, urllib.parse
 KEY = json.load(open(os.path.expanduser("~/.freesound.json"), encoding="utf-8-sig"))["api_key"]
-OUT = r"F:/Claude Proyectos/pieces/zombie-05-pt/audio/cand"
+OUT = r"/Users/alanleiva/claude-proyectos/pieces/zombie-05-pt/audio/cand"
 Q = {"steps_wood": ("footsteps wooden floor walking", 3, 30), "breath": ("heavy breathing close", 2, 15), "breath_creepy": ("creepy breathing exhale", 1, 10),
      "radio_static": ("radio static noise", 3, 30), "door_creak": ("door creak open", 1, 8), "whoosh": ("whoosh swish fast", 0.2, 2),
      "room_tone": ("room tone", 20, 300), "house_creak": ("wooden house creak", 1, 10), "stinger": ("horror stinger hit", 1, 8),

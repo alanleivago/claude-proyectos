@@ -6,8 +6,8 @@ import json, subprocess, numpy as np, soundfile as sf, pyloudnorm as pyln
 from scipy.ndimage import uniform_filter1d, minimum_filter1d
 from scipy.signal import butter, sosfilt
 SR = 48000
-P = r"F:/Claude Proyectos/pieces/zombie-13-gasstation"; C = f"{P}/audio/cand"; DC = r"F:/Claude Proyectos/assets/dino-crisis-sfx"
-C4 = r"F:/Claude Proyectos/pieces/zombie-04-subway/audio/cand"; C7 = r"F:/Claude Proyectos/pieces/zombie-07-saferoom/audio/cand"
+P = r"/Users/alanleiva/claude-proyectos/pieces/zombie-13-gasstation"; C = f"{P}/audio/cand"; DC = r"/Users/alanleiva/claude-proyectos/assets/dino-crisis-sfx"
+C4 = r"/Users/alanleiva/claude-proyectos/pieces/zombie-04-subway/audio/cand"; C7 = r"/Users/alanleiva/claude-proyectos/pieces/zombie-07-saferoom/audio/cand"
 CU = json.load(open(f"{P}/engine/cues.json", encoding="utf8")); W, T = CU["W"], CU["T"]; DUR = CU["END"]; N = int(DUR * SR); VEND = CU["VOICE_END"]
 def load(path, a=None, b=None, trim=True, norm=True):
     cmd = ["ffmpeg", "-v", "quiet"] + (["-ss", str(a)] if a is not None else []) + ["-i", path] + (["-t", str(b - a)] if b is not None else []) + ["-f", "f32le", "-ac", "1", "-ar", str(SR), "-"]
@@ -37,7 +37,7 @@ DEFAULT = load(f"{DC}/9PdkWu31Xwo.wav"); INV = load(f"{DC}/ch/inventory.wav", 1.
 KEY = load(f"{DC}/ch/bonus_2_rick_typing.wav", 2.17, 2.40); SUCCESS = load(f"{DC}/ch/keypad_unlock.wav", 26.5, 28.2)
 STING = load(f"{C4}/stinger/271945.mp3"); BREATH = load(f"{C4}/breath/482827.mp3"); ROOM = load(f"{C7}/room_tone/144046.mp3", trim=False); WIND = load(f"{C7}/wind/438862.mp3", trim=False)
 WHOOSH = load(f"{C7}/whoosh/855844.mp3")
-ZS = r"F:/Claude Proyectos/assets/zombie-sfx-yt/seg"; ZGROWL = load(f"{ZS}/z07_107.5.wav"); ZGROAN = load(f"{ZS}/z05_103.1.wav")
+ZS = r"/Users/alanleiva/claude-proyectos/assets/zombie-sfx-yt/seg"; ZGROWL = load(f"{ZS}/z07_107.5.wav"); ZGROAN = load(f"{ZS}/z05_103.1.wav")
 BEEP = load(f"{C}/pump_beep/862533.mp3"); CHIME = load(f"{C}/door_chime/345275.mp3"); FRIDGE = load(f"{C}/fridge_hum/740110.mp3", trim=False); BUZZ = load(f"{C}/buzz/637543.mp3", trim=False)
 CLICK = load(f"{C}/click/502506.mp3"); FUEL = load(f"{C}/fuel_pour/377988.mp3", trim=False); GDOOR = load(f"{C}/glass_door/559754.mp3"); NIGHT = load(f"{C}/night/436528.mp3", trim=False)
 KNK = hits(load(f"{C}/knock/193863.mp3", trim=False), 6, 0.3, 0.15, gapf=12) or [load(f"{C}/knock/193863.mp3")[:int(0.3 * SR)]]

@@ -4,7 +4,7 @@
 import json, subprocess, numpy as np, soundfile as sf, pyloudnorm as pyln
 from scipy.ndimage import uniform_filter1d, minimum_filter1d
 SR = 48000
-P = r"F:/Claude Proyectos/pieces/zombie-07-saferoom"; C = f"{P}/audio/cand"; DC = r"F:/Claude Proyectos/assets/dino-crisis-sfx"
+P = r"/Users/alanleiva/claude-proyectos/pieces/zombie-07-saferoom"; C = f"{P}/audio/cand"; DC = r"/Users/alanleiva/claude-proyectos/assets/dino-crisis-sfx"
 CU = json.load(open(f"{P}/engine/cues.json", encoding="utf8")); W, T = CU["W"], CU["T"]; DUR = CU["END"]; N = int(DUR * SR); VEND = CU["VOICE_END"]
 PICK = json.load(open(f"{P}/audio/pick_sfx.json", encoding="utf8"))   # {clave: [archivo, credito]} (earshot rank)
 def load(path, a=None, b=None, trim=True, norm=True):

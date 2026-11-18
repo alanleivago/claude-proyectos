@@ -4,7 +4,7 @@ exec in Blender after build.py:  render_views(["front","side","back","3q"], "rev
 import bpy, math, os
 from mathutils import Vector
 
-ROOT = r"F:/Claude Proyectos/pieces/upnext-girl"
+ROOT = r"/Users/alanleiva/claude-proyectos/pieces/upnext-girl"
 VIEWS = {"front": (0, -1, 0.10), "side": (1, 0, 0.10), "back": (0, 1, 0.10), "3q": (0.62, -0.78, 0.18),
          "3q_l": (-0.62, -0.78, 0.18), "side_l": (-1, 0, 0.10)}
 

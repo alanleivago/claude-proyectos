@@ -107,7 +107,7 @@ def main():
     json.dump(ac, open(OUT / 'girl_up01_actions.json', 'w'), indent=1)
     for r in report: print(r)
     if '--noglb' in sys.argv: return
-    BL = r'C:/Program Files/Blender Foundation/Blender 5.2/blender.exe'
+    BL = r'/Applications/Blender.app/Contents/MacOS/Blender'
     out = OUT / 'girl_up01_tights.glb'
     p = subprocess.run([BL, '-b', '--factory-startup', '--python', 'tools/anim/bl_build2.py', '--', 'ref/rig2.npz', str(anpz), 'tights', str(out)], capture_output=True, text=True)
     print('\n'.join(l for l in p.stdout.splitlines() if 'BUILD' in l or 'rror' in l)[-2000:])

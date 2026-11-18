@@ -1,6 +1,6 @@
 """The author's three final poses (video 11:26-13:20: idle, running punch, hand on hip) + a relaxed turnaround pose,
 keyed as actions on the Zero-fem rig. exec in Blender after build.py:
-    exec(open(r"F:/Claude Proyectos/pieces/upnext-girl/poses.py").read()); make_all()
+    exec(open(r"/Users/alanleiva/claude-proyectos/pieces/upnext-girl/poses.py").read()); make_all()
 Poses are written as armature-space targets (bone directions, foot positions), so they read like the reference.
 Directions use (x = her left, y = back, z = up); 'L'/'R' specs are given for her left side and mirrored.
 """

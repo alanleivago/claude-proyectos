@@ -31,6 +31,7 @@ All recordings are Creative Commons 0 (public domain dedication) from Freesound,
 | whisper | [851760](https://freesound.org/s/851760/) | 851760_Set_Me_upon_your_brow_Whispering_Rough_L.mp3 | CC0 |
 | shakuhachi | [157759](https://freesound.org/s/157759/) | 157759_Shakuhachi_with_Echo.mp3 | CC0 |
 | cinematic_impact_boom | [150550](https://freesound.org/s/150550/) | 150550_Percussive_Sounddesign_2_B2_.mp3 | CC0 |
+| bone_crack | [217760](https://freesound.org/s/217760/) | 217760_cccrack_wav.mp3 | CC0 |
 
 - Commons: `Howling_wind.ogg` (the wind bed under the whole film), reused from pieces/gashadokuro/sound/rec via black-cave (see pieces/gashadokuro/sound/CREDITS.md for the source and licence).
 - Code layer: synthesized in `mix.py`, no third-party material.

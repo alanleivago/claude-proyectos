@@ -9,7 +9,7 @@ FR = os.path.join(HERE, "review", "frames")
 REF = os.path.join(HERE, "..", "..", "fuentes", "jongmin-design", "remake", "cuts", "DeDhBizhWi3_sheet.jpg")
 V = sys.argv[1] if len(sys.argv) > 1 else "v1"
 labels = json.load(open(os.path.join(FR, "labels.json")))
-F = lambda s: ImageFont.truetype("C:/Windows/Fonts/arialbd.ttf", s)
+F = lambda s: ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial Bold.ttf", s)
 W, PAD, BG, FG = 2700, 24, (28, 30, 34), (235, 235, 235)
 sheet = Image.new("RGB", (W, 3600), BG); d = ImageDraw.Draw(sheet)
 y = PAD

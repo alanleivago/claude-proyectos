@@ -1,7 +1,7 @@
 # Corrige palabras que whisper oye mal en la toma unida (la toma suelta si dice lo del guion: gen_report OK).
 # Une 'door is closed' -> 'doors close' y 'door shut' -> 'doors shut'. python fix_caps.py (despues de fix_words.py)
 import json
-E = r"F:/Claude Proyectos/pieces/zombie-09-subway2/engine/timeline.json"
+E = r"/Users/alanleiva/claude-proyectos/pieces/zombie-09-subway2/engine/timeline.json"
 TL = json.load(open(E, encoding="utf8")); W = TL["words"]; out = []; i = 0
 while i < len(W):
     w = W[i]; w[0] = w[0].replace("!", ""); w[4] = w[4].replace("!", ""); seq = [x[0] for x in W[i:i + 3]]

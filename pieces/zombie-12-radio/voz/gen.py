@@ -1,7 +1,7 @@
 # Tomas de VoiceStudio para el ep12 (The Radio): voz "ava bread buena" f2a102da, steps 32, wav. Una toma por mitad de cada "…"
 # (nunca se corta una toma en "…"). Verifica con whisper. python gen.py [ids...] [--redo] --seed N
 import json, re, sys, os, urllib.request, numpy as np, soundfile as sf
-API = "http://127.0.0.1:3900/v1/audio/speech"; VOICE = "f2a102da"
+API = "http://127.0.0.1:3900/v1/audio/speech"; VOICE = "f2f8f8dc"
 args = sys.argv[1:]
 FEMA = "Fema"   # VoiceStudio: "FEMA" lo deletrea; "Fema" se lee FEE-muh
 T = [  # id, texto[, voz]. Ep12 "The Radio": una toma por mitad de cada "…"
@@ -12,7 +12,7 @@ T = [  # id, texto[, voz]. Ep12 "The Radio": una toma por mitad de cada "…"
  ("05_0", "Save your batteries and listen at the top of the hour, when the news comes on."), ("05_1", "Then write down every time and frequency."),
  ("06_0", "Listen for what keeps repeating, like shelters, safe routes, and curfew times."), ("06_1", "If you hear it every hour, it's probably official."),
  ("07_0", "But a stranger inviting you somewhere isn't a rescue."), ("07_1", "Listening is free. Talking back tells them where you are."), ("07_2", "Anyone can say they're the army."),
- ("08_r0", "Anyone out there?", "b0469a54"), ("08_r1", "We're at the police station. We have food.", "b0469a54"), ("08_r2", "Come to the front gate.", "b0469a54"),
+ ("08_r0", "Anyone out there?", "c5f333e5"), ("08_r1", "We're at the police station. We have food.", "c5f333e5"), ("08_r2", "Come to the front gate.", "c5f333e5"),
  ("10_0", "So, what do you do?"), ("10_1", "Answer them, or stay silent?"), ("10_2", "Comment one or two."),
 ]
 SPEED = float(args[args.index("--speed") + 1]) if "--speed" in args else 1.0

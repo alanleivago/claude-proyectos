@@ -7,8 +7,9 @@ from faster_whisper import WhisperModel
 
 H = os.path.dirname(os.path.abspath(__file__)); V = os.path.join(H, "voice")
 SR, GAP, PRE, TEMPO = 44100, 0.09, 0.15, 1.1
-EXTRA = {0: 0.15, 2: 0.12, 4: 0.25}       # #7 deadpan beats after the claim, the study line and before the punchline (s)
-COMMA = {"knows": 0.5}                  # #7: the hero bark sits in this gap after "knows" (line 1 only, no comma in the text)
+EXTRA = {0: 0.62, 3: 0.12, 5: 0.22}       # #7 v3 (user's script): the HERO BARK gap AFTER "lying" (whole word, never cut),
+                                          # a beat after "nothing in it", a beat before the punchline (s)
+COMMA = {}                                # (v2 cut a gap inside line 1 after "knows": it clipped the word; dropped)
 FIX = {}
 S = json.load(open(os.path.join(V, "script.json")))
 asr = WhisperModel("small.en", compute_type="int8")

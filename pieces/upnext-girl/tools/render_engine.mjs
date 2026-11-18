@@ -1,5 +1,5 @@
 // node render.mjs [accion ...] [--n 8] [--view 3q]
-// Sirve F:\Claude Proyectos\pieces\ (para llegar a sina-test/node_modules/three), abre viewer.html en Chromium headless
+// Sirve /Users/alanleiva/claude-proyectos\pieces\ (para llegar a sina-test/node_modules/three), abre viewer.html en Chromium headless
 // y guarda N frames por accion en frames/<accion>_<vista>/f_XXX.png. Luego: python sheets.py
 import http from 'node:http';
 import fs from 'node:fs';

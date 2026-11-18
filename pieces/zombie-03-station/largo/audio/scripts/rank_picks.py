@@ -1,6 +1,6 @@
 # Elige con earshot (api.rank) el mejor candidato de cada carpeta cand/<key> para su descripcion -> picks_largo.json
 import json, os, sys, glob
-sys.path.insert(0, r"F:/earshot")
+sys.path.insert(0, r"/Users/alanleiva/tools/earshot")
 from earshot import api
 sys.path.insert(0, os.path.dirname(__file__)); import importlib.util
 spec = importlib.util.spec_from_file_location("fsf", os.path.join(os.path.dirname(__file__), "fs_fetch.py"))

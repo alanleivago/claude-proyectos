@@ -2,8 +2,8 @@
 import numpy as np
 from PIL import Image
 from scipy import ndimage as nd
-F = "F:/Claude Proyectos/fuentes/mml2-girl-tutorial/frames/cam/"
-OUT = "F:/Claude Proyectos/pieces/upnext-girl/v5/"
+F = "/Users/alanleiva/claude-proyectos/fuentes/mml2-girl-tutorial/frames/cam/"
+OUT = "/Users/alanleiva/claude-proyectos/pieces/upnext-girl/v5/"
 VIEWS = {"front": ("front_rest.png", "vp", (560, 1100)), "q3": ("q3.png", "game", (650, 1300)),
          "side": ("side.png", "game", (650, 1300)), "back": ("back.png", "game", (700, 1250)),
          "front_idle": ("front_idle.png", "game", (650, 1300))}

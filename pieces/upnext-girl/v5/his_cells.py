@@ -2,7 +2,7 @@
 sample 51x55 texels (median of the texel block), match each to the 11 cells of his final atlas thumbnail (687 s)."""
 import glob, numpy as np
 from PIL import Image
-F = "F:/Claude Proyectos/fuentes/mml2-girl-tutorial/frames/"
+F = "/Users/alanleiva/claude-proyectos/fuentes/mml2-girl-tutorial/frames/"
 CW, CH = 50, 54          # interior texels between dividers (51/55 pitch incl. 1 divider)
 
 

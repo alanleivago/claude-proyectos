@@ -6,7 +6,7 @@ from PIL import Image, ImageChops, ImageDraw, ImageEnhance, ImageFilter, ImageFo
 
 R = Path(sys.argv[1]); OUT = Path(__file__).resolve().parent.parent
 W, H = 1280, 720
-BLACK = 'C:/Windows/Fonts/ariblk.ttf'
+BLACK = '/System/Library/Fonts/Supplemental/Arial Black.ttf'
 PIX = str(Path(__file__).resolve().parent / 'fonts' / 'PixelifySans.ttf')
 CREAM, RED, INK = (246, 241, 230), (232, 52, 38), (40, 40, 44)
 REF = Path(__file__).resolve().parents[4] / 'fuentes/miniaturas/competencia/ref_2XYr2AEHDGI/2XYr2AEHDGI.png'

@@ -1,7 +1,7 @@
 # Freesound CC0 (busqueda + preview HQ) para el ep9 (Last Train P2) -> audio/cand/<key>/<id>.mp3 + meta.json. python fs_fetch5.py [keys]
 import json, os, sys, urllib.request, urllib.parse
 KEY = json.load(open(os.path.expanduser("~/.freesound.json"), encoding="utf-8-sig"))["api_key"]
-OUT = r"F:/Claude Proyectos/pieces/zombie-09-subway2/audio/cand"
+OUT = r"/Users/alanleiva/claude-proyectos/pieces/zombie-09-subway2/audio/cand"
 Q = {"vhs_rewind": ("vhs rewind", 0.5, 6), "glitch": ("glitch", 0.2, 3), "brake": ("brake squeal", 1, 8), "switch": ("train wheels clack", 0.5, 8),
      "tick": ("clock tick", 0.5, 5), "power_down": ("power down", 0.5, 4), "screen_on": ("tv on", 0.2, 3), "glass_bang": ("bang on glass window", 0.2, 3),
      "subway_ride": ("subway train interior", 5, 60), "gate_rattle": ("metal gate rattle", 0.3, 4)}

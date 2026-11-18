@@ -1,0 +1,11 @@
+window.renderFrame = function (t, canvas) {
+  const cv = canvas || document.getElementById('c'); const g = cv.getContext('2d');
+  const T = Math.floor(t * STEP + 1e-6) / STEP;              // everything on 2s (12 fps), camera included
+  g.save(); g.imageSmoothingQuality = 'high'; frame(g, T); g.restore();
+};
+if (!/export=1/.test(location.search)) {
+  let t0 = performance.now();
+  const loop = () => { if (window.renderFrame) window.renderFrame(((performance.now() - t0) / 1000) % window.TIMELINE.duration); requestAnimationFrame(loop); };
+  (window.ASSETS_READY || Promise.resolve()).then(loop);
+}
+</script></body></html>

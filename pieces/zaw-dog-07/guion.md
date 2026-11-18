@@ -12,7 +12,35 @@ EN, 16.2 s, 48 words, deadpan narrator, 14 cuts (1.16 s average). This is the fi
 
 **Topic overlap:** #2 used the same Takaoka study (lines 2-8, inside the fake-throw story). Here it carries the whole video, as asked.
 
-## Script (after the humanizer pass)
+## Script v3 (2026-11-13, the USER's words, verbatim, no humanizer pass)
+19.7 s, 7 lines, 16 shots (1.23 s average). VoiceStudio "3d cartoon", TEMPO 1.1, retro_eq. The HERO BARK sits in a clean gap AFTER "lying": "lying" ends at about 1.85 s, the bark starts at 1.99 s, and the next word comes at 2.76 s. The v2 voice cut a gap inside "knows".
+
+| # | Voice | Shots |
+|---|---|---|
+| 1 | Your dog knows when you're lying. *(BARK)* | 01a: the dog, suspicious. 01b: the owner's lying grin. 01c: the dog barks, with a snap-zoom. |
+| 2 | Point at a treat, and he runs straight to it. | 02a: the owner's pointing hand in profile at the food bowl. 02b: the dog runs to it and eats. |
+| 3 | You see, scientists in Kyoto tried a trick. | 03a: the Kyoto scientist (kit-v6, as-is) in the "lab", with "KYOTO, 2015". 03b: top-down on the two bowls with the dog. |
+| 4 | They pointed at a bowl with nothing in it. | 04a: the scientist's pointing hand at the empty bowl; the dog trots in. 04b: nose in the bowl, nothing, then shocked, with a red cross. |
+| 5 | And the next time they pointed, most dogs just stayed put. | 05a: she points again (arm in from beside her hip). 05b: the dog stays put, judging. |
+| 6 | But when a stranger pointed, off they ran to the bowl. | 06a: the mailman at the front door points with his free hand. 06b: the dog runs down the hall to the bowl. |
+| 7 | So lie to your dog, and he'll trust the mailman more than you. | 07a: the owner, surprised (gasp), then crying. 07b: crane from the dog at the mailman's feet up to his laugh. 07c: the owner crying in the foreground, with the dog and the mailman behind. |
+
+The v2 script and shots below are kept for reference; v2 files are in `v2/` and v1 files in `v1/`.
+
+## Final v3 (2026-11-15, user approved board v3: "si adelante")
+- Master: `renders/Your Dog Knows When You're Lying.mp4` (1080x1920). Thumbnail: `renders/thumbnail.png`.
+- QA: `review/qa_final.txt`. API review: `review/final_revision.md` (verdict CASI).
+- After the review, the 03a camera was moved so the lamppost no longer grows out of the scientist's head.
+- Delivered to `/Volumes/alanwork/trabajo/Renders finales claude/Doggo poly shorts/` (share encode), with the thumbnail in `Miniaturas/`.
+- Remaining weak points:
+  - **Humans:** kit-v6 seams on the owner and mailman (collar notch, ragged sleeve hems), low-detail hands. The scientist is used as-is, so her face oval and flat hands show.
+  - **Mailman props:** the letters read as a white strip by his leg, and the bag is flat.
+  - **Exterior:** the lawn smears at grazing angles.
+  - **Dog:** the chest patch and grey legs of the approved kit dog; the ears look stiff from above.
+  - **Lamp:** the floor-lamp shade has a magenta rim.
+  - **Continuity:** the food bowl jumps from the living room to the hallway.
+
+## Script v2 (superseded)
 
 | # | Beat | Voice | On screen | Camera | Mocap / faces | SFX |
 |---|---|---|---|---|---|---|

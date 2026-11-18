@@ -109,3 +109,85 @@ Checks: camera vs ground, wall and poles; boys' feet vs ground (rail height in b
   - Kenta's face is modelled but simple (round eyes, O mouth).
   - Translucent hair shadows on the wall in the hook and wall shots.
   - The critique still scores 8–12 s as synthetic (p_real 0.76 overall).
+
+## 2026-11-13 — user: "laughable, not disturbing" → rework (girl, motion, boys, dark night); board only, no export
+- **The girl** (`src/beings.js`):
+  - **Body:** a long thin hunched torso with a hump, shoulder blades and spine knobs showing through the wet navy uniform. The head hangs low between the shoulders.
+  - **Arms:** 0.47 + 0.47 m spidery arms with knobby elbows. They are slightly hyper-extended (pole inward-down) when reaching far, and fold up and out like a spider's leg when compressed.
+  - **Face:** mostly hidden. Seven wet clumps cover it, with a gap for ONE bloodshot eye (tiny pupil, red pin, dark veins round it and under the jaw). The mouth is a too-wide cracked slit; a 3D cavity with gums and small uneven teeth opens slowly only in the hit (46.4–50.6).
+  - **Hair:** 22 back clumps plus 7 face clumps, built as tapered tubes rebuilt every frame from a gravity chain. Roots are darker. The hair is up to 1.35 m long and lags the head's velocity (secondary motion). It drags on the snow behind her, lies on the wall top and hangs down the wall face, and drips. When she tilts her head 90°, the face clumps fall with gravity.
+- **Her motion:**
+  - Stop-motion holds: her pose time is quantised to 2–4-frame holds (`stutT`), then snaps.
+  - Twitchy head jerks (`jerk`): snapped targets with overshoot and occasional over-rotation, the neck shifting sideways.
+  - Fingers drum and dig, each on its own clock.
+  - The crawl (`mkCrawl` / `crawlAt`) is reach (one arm, then the other) → a beat of stillness → the body drags after its hands. It mixes slow, medium and burst cycles; the chase is med, 5 bursts, slow, 5 bursts. Snow kicks up at each plant.
+  - She freezes 44.22–44.72, then lunges. In the wall shot her head lifts 33.4–36.4 and tilts 90° (35.2–37.2).
+- **The boys:**
+  - New gait (`gaitFeet` / `walkP`): the foot is locked in stance (heel strike → flat → toe-off pivot); the pelvis height comes from the stance legs (straight-ish, bob); pelvis yaw, shoulder roll, counter-swinging arms, a level head.
+  - Run: lean 0.24, 40 % duty with a flight phase, pumping arms. The stop is a last half step to standing, and the turn pivots on locked feet.
+  - Teen proportions (legs 0.92, head 0.088). Gakuran fold texture, stand collar, buttons, scarf tails that sway.
+  - Modelled almond eyes with lids and irises, brows, nose, jaw, ears; hair cap with volume clumps and fringe strands. The fear face raises the brows, widens the eyes and drops the jaw.
+- **Night:**
+  - Deep blue-black sky, near-zero ambient (hemi 0.16, moon 0.05), dark fog.
+  - 7 street lamps (sodium / fluorescent), 3 of them flicker irregularly. The 4 nearest lamps to the shot light pools on the snow; the gaps between pools are dark. Plus the red crossing lamps and the house windows.
+  - A cool bounce light keeps her face readable. Dawn is dimmer and colder.
+- **QA:**
+  - Numeric pass: clean after fixing these:
+    - wall-lean forearm overreach;
+    - crawl wrist reach (now clamped to arm length);
+    - stance fingertips deep in the snow;
+    - the turn pivot sliding (feet locked).
+  - A new foot-slide check (grounded ankle moving over 1.2 cm per frame) is clean.
+  - Remaining by design: some fingertips dig 4+ cm into the snow during the drum, and Kenta's running swing foot reaches 0.31 m high.
+  - Frame scan: the spikes are the lamp flicker (intended), her stop-motion snaps in the close chase shot, the cuts (including 39.4 and 43.3), the lunge, the train and the bag push-in.
+  - Self-check: `review/selfcheck3.png` (crawl views plus 8 consecutive chase frames showing the holds and snaps) and `review/selfcheck3a.png` (larger views).
+- **Weak / open:**
+  - The wide chase shot (43.3–45) keeps both of them in frame, so she is small there.
+  - Kenta's hit face is modelled but still reads warm and round under the sodium and red light.
+  - The bag push-in still passes over the barrier arm.
+
+## 2026-11-13 — board notes round (4 points + new card print), board only
+- **Card:** new Flow project, card1 + card3 as style refs, 3 generations, no Flow errors.
+  - #1: a Yoshitoshi-like print, but the face is fully shown.
+  - #2: four spider legs, blood specks.
+  - #3 (kept): a woodblock look with flat colour, keyblock lines and paper; two long spider arms, the torn uniform trailing, hair over the face with one eye, the red crossing lamp, the barrier, the wall and the snow. Cropped (a strip of another panel at the top) → `assets/print.jpg`.
+- **Kenta (hit):**
+  - Head: oval skull, narrower jaw and chin, cheekbones, side and fringe hair strands.
+  - Fear face: smaller eyes with more white, pupils at 50 %, brows up and together, a gasp with upper and lower lips and teeth.
+  - Light: a cool key from above-front (fluorescent `lampCool`), a cool fill, and a red rim from behind only (the flat red point light is off).
+- **Hook:** the camera is at 1.25 m on her head.
+  - Fixed: the face clumps used to hug the face in head space (horizontal slices when the head rolled). Now every clump hangs in world space and is pushed out of the head ellipsoid, so the hair drapes as vertical clumps.
+  - Face hair: 9 clumps, with the eye gap kept.
+- **End:** the camera is in front of the houses looking down the line to the left. Both crossing poles are out of frame; no hanging shape.
+- **Bag:** cool lamps; the crossing red fades to 20 % from 55.8; a soft cool lamp-pool key on the bag.
+- **QA:** numeric pass clean on 0–4.5 and 45.6–71. Frame scan on 0–4.5, 45.6–51.6 and 55.5–71 shows no spikes outside the intended flicker and cuts.
+
+## 2026-11-13 — v2 final: export + re-timed sonido pro + final QA
+- **Export:** `export.mjs --share` of the approved board (no visual changes).
+- **Sound re-timed to the new picture:**
+  - `review/events.mjs` dumps frame-accurate cues (after her stop-motion holds) to `sound/cues.json`: 24 hand plants, 12 drags, 31 head-jerk snaps, the lamp flicker jumps, 26 walk heel strikes, 14 run strikes, the landing 39.46, the freeze 44.50, the lunge 44.83 and the tilt 35.29.
+  - Every plant gets a knock + nails + snow crunch, and nothing plays in the held beats. Each drag gets a wet cloth drag.
+  - The freeze ducks everything to −22 dB except the wind until the lunge (whoosh + crunch + drag).
+  - Neck crack on the 90° tilt; small dry clicks on the head jerks.
+  - Lamp flicker: a click per jump plus a buzz gated by the tube level, louder the nearer the lamp is to the shot.
+  - Whooshes on the new cuts at 39.4 and 43.3.
+  - The mouth: a wet click at 46.45, a slow wet stretch, and a tooth tick at 50.55.
+  - Heel strikes from the new gait; the stop half step and the turn.
+  - Recordings: the bone crack grains are onset-picked single cracks. The train pass is still aligned on its single peak.
+- **Fix round:**
+  - True peak after AAC was −1.0. The source was very sharp knock transients and un-faded flicker clicks: knocks low-passed, clicks faded and lowered 12 dB, a 15 kHz low-pass on the mix, a 4× oversampled true-peak limiter.
+  - The hook (bells, drum) and then the train (gust, bells, pass) were louder than THE HIT on momentary LUFS: lowered.
+  - Plant knocks −2 dB, the peak act −0.7 dB.
+- **Final:** −15.8 LUFS, true peak −3.2 dBTP after AAC, exact silence 45.0–45.6. The loudest 100 ms (45.6) and the loudest momentary (46.0, −10.7 LUFS) are THE HIT.
+- **QA:**
+  - review.mjs:
+    - text PASS;
+    - cuts PASS;
+    - flat frames only the planned ones;
+    - story arc 4/5 (gift p90 −13.3 vs peak p90 −13.9: 0.6 dB short of the 1 dB rule);
+    - dead beats WARN at 59.8–66.3 and 67.3–70.3 (the slow dawn push, approved as is).
+  - earshot timeline: 85 % of 80 cues within 40 ms, 98.8 % within 100 ms, median 6 ms.
+  - earshot critique: launch-grade 0.919 (21/23). Flags: final_lu (the decaying end, by design) and p_real 0.72 minor (8–12 s and 16–20 s still score code-like).
+  - Frame scan: the spikes are the lamp flicker (intended), the cuts and her stop-motion snaps.
+  - revisar_render: CASI. Visual notes only: the hook creature is mostly covered by hair, and Kenta's close-up still reads a little cartoony. Both are on the approved board, so no change.
+- **Final file:** `renders/The Girl Who Wants Her Legs Back.mp4` (= `renders/share.mp4`).

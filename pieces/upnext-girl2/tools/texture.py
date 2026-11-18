@@ -10,7 +10,7 @@ ap = argparse.ArgumentParser(); ap.add_argument("inp"); ap.add_argument("out")
 ap.add_argument("--ts", type=int, default=2048); ap.add_argument("--step", type=int, default=1)
 ap.add_argument("--power", type=float, default=30.0); ap.add_argument("--uv", default="")
 a = ap.parse_args()
-BL = r"C:/Program Files/Blender Foundation/Blender 5.2/blender.exe"
+BL = r"/Applications/Blender.app/Contents/MacOS/Blender"
 D = dict(np.load(a.inp, allow_pickle=True)); V, F, C, P = D["V"], D["F"], D["C"], D["P"]; names = list(D["names"])
 cam = json.loads(str(D["cam"])); A = D["alphas"]
 uvf = a.uv or "ref/_uv.npz"

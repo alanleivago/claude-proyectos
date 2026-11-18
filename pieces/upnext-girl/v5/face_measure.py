@@ -2,7 +2,7 @@
 import numpy as np, sys
 from PIL import Image
 from scipy import ndimage as nd
-F = "F:/Claude Proyectos/fuentes/mml2-girl-tutorial/frames/"
+F = "/Users/alanleiva/claude-proyectos/fuentes/mml2-girl-tutorial/frames/"
 V = {"q3": F + "turn5/t046.png", "idle": F + "cam/front_idle.png", "front": F + "rest2/r011.png", "side": F + "turn5/t011.png"}
 
 

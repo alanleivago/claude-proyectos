@@ -1,7 +1,7 @@
 # ep9 "The Last Train, Part 2": tiempos de imagen y sonido derivados de la voz (engine/timeline.json + voz/lines.json) -> engine/cues.json
 # {W: palabras clave, T: cortes de plano, R2: palabras de la regla 2, END}. Lo leen film.js, sets/subway2.js y el mix. python build_cues.py (tras prep + assemble + fix_words)
 import json, re
-E = r"F:/Claude Proyectos/pieces/zombie-09-subway2/engine"; V = r"F:/Claude Proyectos/pieces/zombie-09-subway2/voz"
+E = r"/Users/alanleiva/claude-proyectos/pieces/zombie-09-subway2/engine"; V = r"/Users/alanleiva/claude-proyectos/pieces/zombie-09-subway2/voz"
 TL = json.load(open(f"{E}/timeline.json", encoding="utf8")); LN = json.load(open(f"{V}/lines.json", encoding="utf8"))
 WD = TL["words"]; nrm = lambda s: re.sub(r"[^a-z0-9']", "", s.lower().replace(".", "").replace("’", "'"))
 def find(line, w, nth=0):

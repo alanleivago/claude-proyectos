@@ -2,7 +2,7 @@
 import sys, json, subprocess, os
 from PIL import Image, ImageDraw
 os.chdir(os.path.join(os.path.dirname(__file__), "..", ".."))
-S = "C:/Users/ALANLE~1/AppData/Local/Temp/claude/c026b2981c42eeb2/b19cd1d9-332a-4ffd-91ff-b618e0ca55df/scratchpad/"
+S = "/private/tmp/upnext-scratch/"
 clips = sys.argv[1].split(","); glb = sys.argv[2] if len(sys.argv) > 2 else "_t_bare.glb"; n = int(sys.argv[3]) if len(sys.argv) > 3 else 4
 views = (sys.argv[4] if len(sys.argv) > 4 else "3q,front").split(",")
 acts = json.load(open("out/actions.json"))

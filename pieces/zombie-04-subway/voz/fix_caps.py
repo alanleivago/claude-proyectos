@@ -1,5 +1,5 @@
 # tras assemble.py: numeros de los subtitulos como se leen (1142 -> 11:42, 3 % -> 3%, 5 30 -> 5:30). python fix_caps.py
-import json; p = r"F:/Claude Proyectos/pieces/zombie-04-subway/engine/timeline.json"; t = json.load(open(p, encoding="utf8")); W = t["words"]; out = []; i = 0
+import json; p = r"/Users/alanleiva/claude-proyectos/pieces/zombie-04-subway/engine/timeline.json"; t = json.load(open(p, encoding="utf8")); W = t["words"]; out = []; i = 0
 while i < len(W):
     w = W[i]
     if w[0] == "1142": w[0] = "11:42"

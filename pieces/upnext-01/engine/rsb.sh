@@ -9,5 +9,5 @@ from PIL import Image
 fs=sorted(glob.glob('stills/%s/f_*.png'%sys.argv[1]));W,H=216,384
 im=Image.new('RGB',(W*8,H*3))
 for i,f in enumerate(fs): im.paste(Image.open(f).resize((W,H)),((i%8)*W,(i//8)*H))
-im.save('C:/Users/ALANLE~1/AppData/Local/Temp/claude/c026b2981c42eeb2/b19cd1d9-332a-4ffd-91ff-b618e0ca55df/scratchpad/sb/%s.png'%sys.argv[1])
+im.save('/private/tmp/upnext-scratch/sb/%s.png'%sys.argv[1])
 PY

@@ -1,7 +1,7 @@
 """review/sheet_<tag>.png: turnaround, the author's poses, 8 key expressions, each next to the video frames."""
 import sys
 from PIL import Image, ImageDraw
-R = "F:/Claude Proyectos/fuentes/mml2-girl-tutorial/frames/ref/"
+R = "/Users/alanleiva/claude-proyectos/fuentes/mml2-girl-tutorial/frames/ref/"
 t = sys.argv[1]; out = sys.argv[2]
 BG = (24, 26, 32)
 W = 1800

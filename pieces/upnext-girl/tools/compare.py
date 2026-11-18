@@ -1,7 +1,7 @@
 """Side-by-side: our renders (row 1) vs reference frames (row 2). python tools/compare.py <prefix> <out>"""
 import sys
 from PIL import Image
-R = "F:/Claude Proyectos/fuentes/mml2-girl-tutorial/frames/ref/"
+R = "/Users/alanleiva/claude-proyectos/fuentes/mml2-girl-tutorial/frames/ref/"
 pre, out = sys.argv[1], sys.argv[2]
 pairs = [("front", "t759.png", (780, 60, 1180, 1060)), ("3q_l", "t743.png", (700, 40, 1200, 1040)),
          ("side_l", "t736.png", (720, 40, 1220, 1040)), ("back", "t737.png", (720, 40, 1220, 1040))]

@@ -10,9 +10,9 @@ relatedTo: [pieces/zaw-dog-07/guion.md]
 - "Waiting" from the *16-Bit Starter Pack*. Music composed by Bert Cole, https://bitbybitsound.com (free license; credit required).
 
 ## Voice
-- Narration generated with VoiceStudio (profile "3d cartoon"), retro EQ.
+- Narration (the creator's own script) generated with VoiceStudio (profile "3d cartoon"), retro EQ.
 
-## Sound effects (Freesound, CC0; picked with earshot rank)
+## Sound effects (Freesound, CC0; picked with earshot rank; re-cued to the v3 voice)
 - "Double small cowbells jingle 2" by Sadiquecat, CC0, https://freesound.org/people/Sadiquecat/sounds/851618/
 - "Dog Panting Loop 2" by qubodup, CC0, https://freesound.org/people/qubodup/sounds/841349/
 - "18-SuspiroPerritoYMiniGuau.wav" by Caap, CC0, https://freesound.org/people/Caap/sounds/427172/
@@ -34,7 +34,7 @@ relatedTo: [pieces/zaw-dog-07/guion.md]
 - "mouth pop4.wav" by Reitanna, CC0, https://freesound.org/people/Reitanna/sounds/323738/
 - "whoosh low" by MeanRaccoon, CC0, https://freesound.org/people/MeanRaccoon/sounds/830856/
 ## 3D assets
-- Humans: kit v6 (MakeHuman / MPFB2 CC0 base, Flow-photo garments and faces made for this channel); mocap CMU + 100STYLE, Kimodo clips (see styles/zawdog/motions/README.md).
+- Humans (kit v6): the owner, the mailman and the Kyoto scientist (MakeHuman / MPFB2 CC0 base, Flow-photo garments and faces made for this channel); mocap CMU + 100STYLE, Kimodo clips incl. the scientist's point (see styles/zawdog/motions/README.md).
 - Dog, sets and props: own low-poly kit (pieces/zaw-dog-v2, pieces/zaw-dog-05) with Flow photo textures.
 
 ## Study

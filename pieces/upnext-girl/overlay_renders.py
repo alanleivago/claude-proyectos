@@ -1,6 +1,6 @@
 """Renders for tools/overlay.py: his three reference views at a fan of yaws (exec in Blender after poses.make_all)."""
 import math
-D0 = r"F:/Claude Proyectos/pieces/upnext-girl/"
+D0 = r"/Users/alanleiva/claude-proyectos/pieces/upnext-girl/"
 for f in ("poses.py", "render.py"):
     exec(open(D0 + f).read())
 FANS = {("tut_idle", "front"): (range(-30, 31, 10), (1,)), ("tut_hip", "3q"): (range(-70, -9, 10), (1,)),

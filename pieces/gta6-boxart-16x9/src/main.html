@@ -1,0 +1,119 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>gta6-boxart-16x9</title>
+<style>html,body{margin:0;background:#111}canvas{display:block;max-width:100vw;max-height:100vh;margin:auto}</style>
+</head><body><canvas id="c" width="1920" height="1080"></canvas>
+<script>
+"use strict";
+// Classic box-art cover as a comic grid: character panels with thick borders slam/slide in one by one,
+// each with its own parallax (plate + character layer), ending on the full cover + our own title.
+// Everything stepped at 12 fps.
+const STYLE = { name: 'gta6', ones: false };
+const W = 1920, H = 1080, FPS = 24, STEP = 12, DUR = 20;
+window.TIMELINE = { width: W, height: H, fps: FPS, duration: DUR, frames: Math.round(DUR * FPS) };
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const lin = (t, a, b) => clamp((t - a) / (b - a));
+const outCubic = (x) => 1 - Math.pow(1 - x, 3);
+const outBack = (x) => { const c = 1.7; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+
+// panel rects (x, y, w, h) from make_panels.py; entry time and move
+const PANELS = [   // redrawn new-pose characters (v4 hybrid); rects from make_panels.py
+  { id: 'jason',   r: [602, 18, 716, 500],  t: 0.4,  move: 'slam' },
+  { id: 'lucia',   r: [602, 536, 352, 244], t: 1.9,  move: 'up' },
+  { id: 'brian',   r: [18, 18, 566, 330],   t: 3.2,  move: 'left' },
+  { id: 'boobie',  r: [1336, 18, 566, 430], t: 4.5,  move: 'right' },
+  { id: 'cal',     r: [966, 536, 352, 244], t: 5.8,  move: 'up' },
+  { id: 'dimez',   r: [18, 366, 566, 330],  t: 7.1,  move: 'left' },
+  { id: 'drequan', r: [1336, 466, 566, 596], t: 8.4, move: 'right' },
+  { id: 'raul',    r: [18, 714, 566, 348],  t: 9.7,  move: 'left' },
+];
+const TITLE = { r: [602, 798, 716, 264], t: 11.4 };
+const BORDER = 9, INK = '#120A12', PAPER = '#F4EEE4';
+
+let PRINT = null;
+function makePrint() {
+  const c = document.createElement('canvas'); c.width = W; c.height = H; const g = c.getContext('2d');
+  const id = g.createImageData(W, H), d = id.data; let s = 99991;
+  const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const P = 6, ang = 0.6, ca = Math.cos(ang), sa = Math.sin(ang);
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const u = (x * ca + y * sa) / P, v = (-x * sa + y * ca) / P;
+    const fu = u - Math.floor(u) - .5, fv = v - Math.floor(v) - .5;
+    const dot = Math.sqrt(fu * fu + fv * fv) < .27 ? 1 : 0;
+    const i = (y * W + x) * 4; const val = 128 + (dot ? -18 : 5) + (rnd() - .5) * 26;
+    d[i] = d[i + 1] = d[i + 2] = val; d[i + 3] = 255;
+  }
+  g.putImageData(id, 0, 0); return c;
+}
+function entry(p, move) {            // -> {dx, dy, s, rot}
+  const e = outBack(p);
+  if (move === 'slam') return { dx: 0, dy: 0, s: 1 + 0.45 * (1 - outCubic(p)), rot: -0.07 * (1 - outCubic(p)) };
+  if (move === 'left') return { dx: -W * 0.75 * (1 - e), dy: 0, s: 1, rot: -0.03 * (1 - e) };
+  if (move === 'right') return { dx: W * 0.75 * (1 - e), dy: 0, s: 1, rot: 0.03 * (1 - e) };
+  return { dx: 0, dy: H * 0.9 * (1 - e), s: 1, rot: 0.025 * (1 - e) };
+}
+function panel(g, A, P, T) {
+  if (T < P.t) return;
+  const [x, y, w, h] = P.r, p = lin(T, P.t, P.t + 0.42), en = entry(p, P.move);
+  const life = lin(T, P.t, DUR);                                  // slow parallax drift for the rest of the video
+  const push = 1 + 0.07 * (1 - outCubic(lin(T, P.t, P.t + 0.8)));  // content settles after the panel lands
+  const pushC = 1 + 0.12 * (1 - outCubic(lin(T, P.t + 0.08, P.t + 1.0)));
+  g.save();
+  g.translate(x + w / 2 + en.dx, y + h / 2 + en.dy); g.rotate(en.rot); g.scale(en.s, en.s);
+  g.fillStyle = INK; g.fillRect(-w / 2 - BORDER, -h / 2 - BORDER, w + 2 * BORDER, h + 2 * BORDER);   // shadow + border
+  g.beginPath(); g.rect(-w / 2, -h / 2, w, h); g.clip();
+  const pl = A[P.id + '_plate.jpg'], ch = A[P.id + '.png'];
+  const pw = w * 1.1 * push, ph = h * 1.1 * push;
+  g.drawImage(pl, -pw / 2 + w * 0.03 * (0.5 - life), -ph / 2, pw, ph);
+  const cw = w * 1.1 * pushC, chh = h * 1.1 * pushC;
+  g.drawImage(ch, -cw / 2 - w * 0.035 * (0.5 - life), -chh / 2 + h * 0.012 * Math.sin(T * 1.7 + x), cw, chh);
+  if (p < 1) { g.fillStyle = `rgba(255,250,235,${0.85 * (1 - lin(T, P.t + 0.25, P.t + 0.42))})`; if (T > P.t + 0.25) g.fillRect(-w / 2, -h / 2, w, h); }
+  g.restore();
+}
+function titlePanel(g, T) {
+  if (T < TITLE.t) return;
+  const [x, y, w, h] = TITLE.r, p = lin(T, TITLE.t, TITLE.t + 0.45), en = entry(p, 'slam');
+  g.save(); g.translate(x + w / 2, y + h / 2); g.rotate(en.rot); g.scale(en.s, en.s);
+  g.fillStyle = INK; g.fillRect(-w / 2 - BORDER, -h / 2 - BORDER, w + 2 * BORDER, h + 2 * BORDER);
+  const gr = g.createLinearGradient(0, -h / 2, 0, h / 2); gr.addColorStop(0, '#2A1036'); gr.addColorStop(1, '#5A1E58');
+  g.fillStyle = gr; g.fillRect(-w / 2, -h / 2, w, h);
+  g.font = '900 140px "Impact","Haettenschweiler","Arial Narrow Bold",sans-serif'; g.textAlign = 'center'; g.lineJoin = 'round';
+  g.lineWidth = 22; g.strokeStyle = '#120A12'; g.strokeText('LEONIDA', 0, 30);
+  const tg = g.createLinearGradient(0, -100, 0, 30); tg.addColorStop(0, '#FFFFFF'); tg.addColorStop(1, '#FFD6A8');
+  g.fillStyle = tg; g.fillText('LEONIDA', 0, 30);
+  g.font = '900 64px "Impact",sans-serif'; g.lineWidth = 12; g.strokeText('STORIES', 0, 108);
+  g.fillStyle = '#FF6FB0'; g.fillText('STORIES', 0, 108);
+  const sp = outBack(lin(T, TITLE.t + 1.2, TITLE.t + 1.5));
+  if (sp > 0) {
+    g.save(); g.translate(250, -96); g.rotate(0.12); g.scale(sp, sp);
+    g.font = '900 40px "Impact",sans-serif'; const tw = g.measureText('TEST 02').width;
+    g.fillStyle = INK; g.fillRect(-tw / 2 - 14 + 6, -36 + 6, tw + 28, 50); g.fillStyle = '#FFE14D'; g.fillRect(-tw / 2 - 14, -36, tw + 28, 50);
+    g.fillStyle = INK; g.fillText('TEST 02', 0, 4); g.restore();
+  }
+  g.restore();
+}
+function frame(g, T) {
+  const A = ASSETS;
+  g.fillStyle = PAPER; g.fillRect(0, 0, W, H);
+  // page camera: a 2-frame shake on every slam, then a slow push on the finished cover
+  let sx = 0, sy = 0;
+  for (const P of [PANELS[0], TITLE]) if (T >= P.t + 0.33 && T < P.t + 0.5) { sx = (T * 12 % 2 < 1 ? 1 : -1) * 9; sy = 5; }
+  const zp = 1 + 0.025 * outCubic(lin(T, 12.6, DUR));
+  g.save(); g.translate(W / 2 + sx, H / 2 + sy); g.scale(zp, zp); g.translate(-W / 2, -H / 2);
+  for (const P of PANELS) panel(g, A, P, T);
+  titlePanel(g, T);
+  g.restore();
+  g.globalCompositeOperation = 'soft-light'; g.globalAlpha = 0.22; g.drawImage(PRINT, 0, 0); g.globalAlpha = 1;
+  g.globalCompositeOperation = 'source-over';
+}
+window.renderFrame = function (t, canvas) {
+  const cv = canvas || document.getElementById('c'); const g = cv.getContext('2d');
+  if (!PRINT) PRINT = makePrint();
+  const T = Math.floor(t * STEP + 1e-6) / STEP;
+  g.save(); g.imageSmoothingQuality = 'high'; frame(g, T); g.restore();
+};
+if (!/export=1/.test(location.search)) {
+  let t0 = performance.now();
+  const loop = () => { if (window.renderFrame) window.renderFrame(((performance.now() - t0) / 1000) % DUR); requestAnimationFrame(loop); };
+  (window.ASSETS_READY || Promise.resolve()).then(loop);
+}
+</script></body></html>

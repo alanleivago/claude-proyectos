@@ -13,7 +13,7 @@ from scipy.signal import butter, sosfilt
 SR = 44100
 SEC = json.load(open(sys.argv[1])); OUT = sys.argv[2]
 DUR = SEC["dur"]; BRK = SEC.get("breakdown", [-1, -1]); STING = SEC.get("gross"); T_OUT = SEC.get("outro", DUR - 3); END = SEC.get("end", DUR)
-CM = r"F:/Claude Proyectos/pieces/digger-01-fridge/audio/cand_music"   # CC0 one-shots (CREDITS: johnnydekk, Brandao38, sgossner, MrFossy)
+CM = r"/Users/alanleiva/claude-proyectos/pieces/digger-01-fridge/audio/cand_music"   # CC0 one-shots (CREDITS: johnnydekk, Brandao38, sgossner, MrFossy)
 BPM = 111; BEAT = 60 / BPM; BAR = 4 * BEAT; S8 = BEAT / 2
 N = int((END + 0.5) * SR); rng = np.random.default_rng(23)
 stems = {k: np.zeros(N) for k in ("bass", "pluck", "marimba", "box", "drums", "pad", "reed", "sting")}
@@ -78,7 +78,7 @@ def pad(ms, dur):   # soft string-ish pad (detuned, low-passed saw-ish)
 
 # v2: REAL instrument one-shots (Freesound CC0, mostly the VSCO-2 CE library by sgossner), pitch-shifted by resampling
 # from the nearest sample: violin pizzicato (melody), standup bass + cello pizzicato (walking bass), marimba, clarinet
-CM3 = r"F:/Claude Proyectos/pieces/digger-03-lock/audio/cand_music"
+CM3 = r"/Users/alanleiva/claude-proyectos/pieces/digger-03-lock/audio/cand_music"
 def _smp(path, midi):
     x = load(path); a = np.abs(x); env = np.convolve(a, np.ones(441) / 441, "same"); end = len(x)
     above = np.where(env > env.max() * 0.004)[0]; end = above[-1] if len(above) else end

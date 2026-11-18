@@ -127,76 +127,74 @@ B("snow_wind", 0, 4.5, [[0, -27], [4.5, -28]])
 B("snow_wind", 8.5, 45.0, [[8.5, -24], [14.6, -24], [20.6, -28], [32.6, -30], [38.6, -28], [44.9, -27]])
 B("snow_wind", 45.6, 71.0, [[45.6, -30], [51.6, -30], [58.6, -27], [66, -29], [71, -33]])
 put(filt(brown(36.5), "lowpass", 160) * db(-46), 8.5)                                               # the town's low hum
-# ---------------------------------------------------------------- hook (0–4.5): the bell rings with the lamps (crossing(t + 0.3)); her nails scrape the wall as the fingers dig and tap
-bells(0.0, 4.45, 0.3, -17, pan=0.35)
-NC = Gon("nails_concrete", 0.22, 3, hp=500, whole=True); NL = Gon("nails", 0.07, 4, hp=800, span=2)
-def taps(t0, t1, ai, fi, g, gk=lambda t: 1.0, pan=0.0, tight=False):   # fingertip lands when 11(t + 0.7·ai) + 1.7·fi reaches (2m+1)π (run.js fingerPtsG)
-    for m in range(400):
-        t = ((2 * m + 1) * math.pi - 1.7 * fi) / 11 - 0.7 * ai
-        if t0 < t < t1 and NL[0] is not None and gk(t) > 0.05: place(NL[(m + fi) % len(NL)], t, g + 20 * math.log10(gk(t)), pan)
+# ---------------------------------------------------------------- picture cues (review/events.mjs → cues.json: frame-accurate, after her 2–4-frame stop-motion holds)
+CU = json.load(open("cues.json"))
+STUT = [0]; _f = 0; _k = 0
+while _f < 1900: _f += 2 + int(hsh(_k, 41) * 3); _k += 1; STUT.append(_f)
+def stut(t):   # = beings.js stutT
+    f = int(math.floor(t * 24 + 1e-6)); import bisect; return STUT[bisect.bisect_right(STUT, f) - 1] / 24
+def snap(te):   # when her held pose shows an event at te
+    f = math.ceil(te * 24 - 1e-6)
+    while stut(f / 24) < te - 1e-6: f += 1
+    return f / 24
+NC = Gon("nails_concrete", 0.22, 3, hp=500, whole=True); NL = Gon("nails", 0.07, 4, hp=800, span=2); KN = Gon("knock", 0.18, 3, hp=200, lp=6000, whole=True)
+SC = Gon("snow_crunch", 0.2, 3, whole=True); STP = Gon("snow_steps", 0.32, 6, span=4); RUN = Gon("snow_run", 0.25, 6, span=4) if F("snow_run") else STP
+CRK = Gon("bone_crack", 0.35, 2, whole=True) if F("bone_crack") else [None]
+DR = "cloth_drag"
+def drum(t0, t1, ai, fi, g, gk=lambda t: 1.0, pan=0.0):   # beings.js fingerPtsG: finger fi lands when sin(t·fq + 2.3fi + 6·hsh(fi, 92)) falls to 0 (t = her held time + 0.7·ai)
+    fq = 6 + 9 * hsh(fi, 91); ph = fi * 2.3 + hsh(fi, 92) * 6
+    for m in range(-5, 900):
+        t = ((2 * m + 2) * math.pi - ph) / fq - 0.7 * ai
+        if t0 < t < t1 and NL[0] is not None and gk(t) > 0.05: place(NL[(m + fi) % len(NL)], snap(t), g + 20 * math.log10(gk(t)), pan)
+# ---------------------------------------------------------------- hook (0–4.5): the bell on the lamp clock (crossing(t + 0.3)); nails drum out of sync and dig as the fingers spread
+bells(0.0, 4.45, 0.3, -21, pan=0.35)
 for ai in (0, 1):
-    for fi in (1, 2): taps(0.5, 4.45, ai, fi, -20 - 3 * (fi - 1), lambda t: sm(0.5, 1.0, t), pan=(-0.2 if ai else 0.2))
-if NC[0] is not None: place(NC[0], 0.45, -19, 0.2); place(NC[1 % len(NC)], 0.75, -21, -0.2); place(NC[2 % len(NC)], 2.6, -22, 0.1)
-O("drip", 1.8, -30, 0.6)
+    for fi in (1, 2, 3): drum(0.3, 4.45, ai, fi, -24 - 2 * (fi - 1), lambda t: sm(0.3, 0.8, t), pan=(-0.2 if ai else 0.2))
+if NC[0] is not None: place(NC[0], snap(0.45), -19, 0.2); place(NC[1 % len(NC)], snap(0.75), -21, -0.2)
+for t in (1.3, 2.6, 3.7): O("drip", t, -29, 0.5, pan=0.1)
 drone(0, 8.5, 41, -32, [[0, -2], [2.2, 0], [4.4, -3], [8.5, -10]])
 # ---------------------------------------------------------------- card (4.5–8.5)
 O("shakuhachi", 5.0, -26, 3.2, lp=5000)
 bells(5.2, 8.2, 0.0, -36, gk=lambda t: 1 - sm(5.5, 8.2, t), pan=-0.3)
-# ---------------------------------------------------------------- town (8.5–14.6): snow hush, a far dog, the streetlamp buzz, one distant horn; marks (14.6–20.6): a faint rhythmic scrape far down the line
-# (no dog: the candidates had birdsong, wrong for a winter night)
-buzz_d = 6.1; tt = T_(buzz_d); put(filt(np.sin(2 * np.pi * 120 * tt) + 0.5 * np.sin(2 * np.pi * 240 * tt) + 0.2 * noise(buzz_d), "bandpass", [100, 3000]) * np.interp(tt, [0, 0.3, buzz_d - 0.3, buzz_d], [0, 1, 1, 0]) * db(-50), 8.5, pan=0.3)
+# ---------------------------------------------------------------- town (8.5–14.6): snow hush, one distant horn; marks (14.6–20.6): a faint rhythmic scrape far down the line
 O("train_horn", 12.4, -38, 2.2, lp=1500, pan=-0.5)
 for k in range(9): O("nails_concrete", 15.6 + k * 0.52, -40 - 2 * abs(k - 4) * 0.5, 0.18, lp=2500, s=S("nails_concrete") + (k % 3) * 0.2, pan=-0.3)
 drone(14.6, 20.6, 36, -39, [[14.6, -6], [20.6, -10]], beat=0.2, lp=500)
-# ---------------------------------------------------------------- walk (20.6–28.1): two pairs of boots on the walk cycle (walkP L 0.62, s = 1.1(t − 20.6); Kenta s + 0.31)
-STP = Gon("snow_steps", 0.32, 6, span=4)
-def steps(t0, t1, s_of_plant, g, pan):
-    c = 0
-    for n in range(-2, 40):
-        for j in (0, 1):
-            t = s_of_plant(0.62 * (n + 0.38 + 0.5 * j))
-            if t0 < t < t1 and STP[0] is not None: place(STP[c % len(STP)], t - 0.01, g + 1.5 * (hsh(n * 2 + j, 3) - 0.5), pan); c += 1
-steps(20.65, 28.1, lambda s: 20.6 + s / 1.1, -22, -0.15)
-steps(20.65, 28.1, lambda s: 20.6 + (s - 0.31) / 1.1, -23, 0.15)
-if STP[0] is not None: place(STP[1 % len(STP)], 28.6, -25, -0.1); place(STP[2 % len(STP)], 29.1, -26, 0.15); place(STP[3 % len(STP)], 29.45, -27, 0.1)   # they turn round
+# ---------------------------------------------------------------- walk (20.6–28.1): heel strikes from the new gait (cues.json steps); the last half step (28.1–28.5) and the turn on planted feet
+for i, e in enumerate(CU["steps"]):
+    if STP[0] is not None: place(STP[i % len(STP)], e["t"] - 0.01, (-22 if e["who"] == "me" else -23) + 1.5 * (hsh(i, 3) - 0.5), -0.15 if e["who"] == "me" else 0.15)
+if STP[0] is not None: place(STP[2 % len(STP)], 28.42, -24, -0.15); place(STP[4 % len(STP)], 28.45, -25, 0.15); place(STP[1 % len(STP)], 28.9, -30, -0.1); place(STP[3 % len(STP)], 29.3, -30, 0.15)
 B("breath_run", 28.3, 32.6, [[28.3, -42], [29, -36], [32.6, -38]], lp=3000, s0=0.5)
-# ---------------------------------------------------------------- hear (28.1–): teke. teke. teke. — three dry taps, close and behind, then silence
-KN = Gon("knock", 0.18, 3, hp=200, whole=True)
+# ---------------------------------------------------------------- hear: teke. teke. teke. — three dry taps, close and behind, then silence
 for i, t in enumerate((28.25, 28.72, 29.18)):
-    if KN[0] is not None: place(KN[i % len(KN)], t, -15 - i, -0.25)
+    if KN[0] is not None: place(KN[i % len(KN)], t, -19 - i, -0.25)
     if NL[0] is not None: place(NL[i % len(NL)], t + 0.01, -22, -0.25)
 drone(28.1, 38.6, 34, -32, [[28.1, -8], [32.6, -3], [38.6, 0]], beat=0.25, lp=600)
-# ---------------------------------------------------------------- wall (32.6–38.6): a wet drip from her hair, nails clicking on the wall top (tap 0.5), cloth dragging over concrete as she pulls over (35.6–38.4)
-for ai in (0, 1): taps(32.6, 38.55, ai, 1, -26, lambda t: 0.5, pan=-0.3)
+# ---------------------------------------------------------------- wall (32.6–38.6): drips, nails drumming on the wall face, the neck cracking as the head tilts 90° (from 35.29), wet cloth and hair dragging over the top (35.8–38.4)
+for ai in (0, 1): drum(32.6, 38.55, ai, 1, -27, lambda t: 0.6, pan=-0.3)
 for t in (33.4, 34.9, 36.6, 37.8): O("drip", t, -30, 0.5, pan=-0.3)
-DR = "cloth_drag"
-O(DR, 35.6, -22, 2.8, lp=5000, pan=-0.3)
-# ---------------------------------------------------------------- chase (38.6–45.0): she drops (38.6–39.4, a thump at 39.4); the elbow plants (s = 0.6k, s = 3τ + 0.125τ², τ = t − 39.4) are the teke-teke;
-# Kenta runs (L 1.15, s = 2.85(t − 38.6)); the bell takes over as they near the crossing; the barrier motor at 43.0
-O(DR, 38.62, -20, 0.8, lp=5000)
-put(boom(70, 0.5, 0.3) * db(-17), 39.4)
-SC = Gon("snow_crunch", 0.2, 3, whole=True)
-if SC[0] is not None: place(SC[0], 39.4, -14)
-def tau(s): return (-3 + math.sqrt(9 + 0.5 * s)) / 0.25
-k = 1
-while True:
-    t = 39.4 + tau(0.6 * k)
-    if t >= 44.95: break
-    side = -0.15 if k % 2 else 0.15
-    if KN[0] is not None: place(KN[k % len(KN)], t, -13 + 3 * sm(39.4, 44.9, t), side)   # the elbow
-    if NL[0] is not None: place(NL[k % len(NL)], t + 0.035, -19, side)                     # nails right after
-    if SC[0] is not None: place(SC[k % len(SC)], t + 0.01, -23, side)                       # snow kicked up
-    k += 1
-RUN = Gon("snow_run", 0.25, 6, span=4) if F("snow_run") else STP
-c = 0
-for n in range(0, 30):
-    for j in (0, 1):
-        t = 38.6 + 1.15 * (n + 0.38 + 0.5 * j) / 2.85
-        if 38.6 < t < 44.95 and RUN[0] is not None: place(RUN[c % len(RUN)], t, -25 + 1.5 * (hsh(c, 4) - 0.5), 0.25); c += 1
-B("breath_run", 38.8, 44.95, [[38.8, -34], [40, -26], [44.9, -23]], lp=5000, s0=S("breath_run"))
-bells(38.6, 44.95, 0.0, -24, gk=lambda t: 0.3 + 0.7 * sm(39, 44.5, t), pan=0.3)
-motor(43.0, 44.6, -29)
-drone(38.6, 44.95, 33, -28, [[38.6, -3], [44.9, 3]], beat=0.5, lp=700)
+if CRK[0] is not None: place(CRK[0], CU["misc"]["tilt"], -15, -0.2); place(CRK[1 % len(CRK)], snap(36.1), -21, -0.2)
+O(DR, 35.85, -23, 2.5, lp=4500, pan=-0.3)
+# ---------------------------------------------------------------- chase (38.6–45.0): the drop (thump on landing), then the teke-teke: a hard knock + nails + snow on every hand plant,
+# nothing in the held beat, a wet drag while the body slides after its hands; Kenta's running strikes; she FREEZES (near silence), then lunges
+O(DR, 38.62, -20, 0.7, lp=5000)
+L0 = CU["misc"]["land"]; put(boom(70, 0.5, 0.3) * db(-16), L0)
+if SC[0] is not None: place(SC[0], L0, -14)
+for i, e in enumerate(CU["plants"]):
+    t = e["t"]; side = -0.15 if e["hand"] else 0.15; g = {"slow": -13, "med": -15, "burst": -17}[e["ty"]]
+    if KN[0] is not None: place(KN[i % len(KN)], t, g, side)
+    if NL[0] is not None: place(NL[i % len(NL)], t + 0.03, g - 6, side)
+    if SC[0] is not None: place(SC[i % len(SC)], t + 0.008, g - 8, side)
+for i, d in enumerate(CU["drags"]):
+    dur = max(0.08, d["t1"] - d["t0"]); O(DR, d["t0"], -20 if d["ty"] == "slow" else -24, dur + 0.05, lp=4000, s=S(DR) + 0.3 * (i % 4), pan=0.05)
+for i, e in enumerate(CU["run"]):
+    if RUN[0] is not None and e["t"] < CU["misc"]["freeze"] + 0.4: place(RUN[i % len(RUN)], e["t"], -24 + 1.5 * (hsh(i, 4) - 0.5), 0.25)
+FZ, LG = CU["misc"]["freeze"], CU["misc"]["lunge"]
+B("breath_run", 38.8, FZ, [[38.8, -34], [40, -27], [FZ, -24]], lp=5000, s0=S("breath_run"))
+bells(38.6, FZ, 0.0, -24, gk=lambda t: 0.3 + 0.7 * sm(39, 44.2, t), pan=0.3)
+motor(43.0, FZ, -29)
+drone(38.6, FZ, 33, -28, [[38.6, -3], [FZ, 3]], beat=0.5, lp=700)
+whoosh_t = [39.4, 43.3]
 # ---------------------------------------------------------------- THE HIT (45.6): a sub drop, an impact, a bell clang; then her whisper close, his breath trembling; the bell keeps the lamp clock
 put(boom(40, 5.0, 0.5) * db(0), 45.6)
 O("cinematic_impact_boom", 45.6, -1, 3.0)
@@ -210,15 +208,15 @@ B("breath_panic", 46.3, 51.5, [[46.3, -30], [48, -24], [51.4, -28]], lp=5000)
 bells(46.3, 51.5, 0.0, -30, pan=0.35)
 drone(45.6, 51.6, 30, -25, [[45.6, 3], [51.6, -2]], beat=0.4, lp=600)
 # ---------------------------------------------------------------- train (51.6–58.6): bell, the barrier motor (51.8–53.2), the horn, the pass-by aligned so its loudest moment sits on the front passing (54.5), the bell stops 57.4–57.8
-bells(51.6, 57.8, 0.0, -23, gk=lambda t: 1 - sm(57.4, 57.8, t), pan=0.25)
+bells(51.6, 57.8, 0.0, -26, gk=lambda t: 1 - sm(57.4, 57.8, t), pan=0.25)
 motor(51.8, 53.2, -26)
 O("train_horn", 53.05, -23, 1.4, lp=6000, pan=-0.3)
 if F("train_pass"):
     x = load(src(F("train_pass"))); e = np.convolve(np.abs(x).mean(1), np.ones(4800) / 4800, "same"); pk = int(np.argmax(e)) / SR
     a0 = max(0.0, pk - 1.9); y = x[int(a0 * SR):int((pk + 2.4) * SR)].copy(); n = len(y); w = np.interp(np.arange(n) / SR, [0, 0.5, n / SR - 0.9, n / SR], [0, 1, 1, 0]); y *= w[:, None]
-    y = filt(y, 'lowpass', 7000); y = y / (np.abs(y).max() + 1e-9) * db(-18.5); put(y, 54.5 - (pk - a0))
+    y = filt(y, 'lowpass', 7000); y = y / (np.abs(y).max() + 1e-9) * db(-22); put(y, 54.5 - (pk - a0))
     print("train_pass peak at", round(pk, 2), "s in the file; placed so it lands at 54.5")
-put(filt(noise(3.0), "bandpass", [200, 3000]) * np.interp(T_(3.0), [0, 0.6, 2.4, 3.0], [0, 1, 1, 0]) * db(-24), 53.6, pan=0.0)   # the wind gust and snow blast
+put(filt(noise(3.0), "bandpass", [200, 3000]) * np.interp(T_(3.0), [0, 0.6, 2.4, 3.0], [0, 1, 1, 0]) * db(-33), 53.6, pan=0.0)   # the wind gust and snow blast
 O("snow_wind", 56.4, -26, 2.0)
 # ---------------------------------------------------------------- dawn (58.6–71): dawn wind, a far crow, the bell silent
 O("crow", 62.2, -31, 2.0, lp=6000, pan=0.4)
@@ -234,6 +232,47 @@ def whoosh(t, g, d=0.6, f0=300, f1=2400):
     yy *= (np.arange(n) / n) ** 2.2; put(yy / np.abs(yy).max() * db(g), t - d)
 whoosh(4.5, -34, 0.5); put(boom(50, 0.6, 0.3) * db(-30), 4.5); whoosh(8.6, -32, 0.4)
 for tc in [14.6, 20.6, 26.6, 32.6, 38.6, 51.6, 58.6]: whoosh(tc, -30); put(boom(55, 0.7, 0.3) * db(-24), tc)
+for tc in whoosh_t: whoosh(tc, -32, 0.35)
+whoosh(LG + 0.12, -16, 0.25, 500, 3500)                                                                           # the lunge
+if SC[0] is not None: place(SC[1 % len(SC)], LG, -14, 0.1)
+O(DR, LG, -16, 0.3, lp=6000)
+# lamp flicker: a click on every jump of a flickering tube + its buzz gated by the level, louder the nearer the lamp is to the shot
+def focus_x(t):
+    if t < 4.5: return 9.6
+    if t < 14.6: return 11.2
+    if t < 20.6: return 6.0
+    if t < 38.6: return -7.5
+    if t < 45.0: return -7.45 + 10.7 * sm(39.4, 44.5, t)
+    return 13.0
+CLK = Gon("knock", 0.05, 1, hp=1500, whole=True)[0]
+for e in CU["flick"]:
+    t = e["t"]
+    if (4.4 < t < 8.6) or (44.95 < t < 45.65) or t > 58.5: continue
+    g = -24 - 1.6 * abs(e["x"] - focus_x(t))
+    if g < -42: continue
+    ck = filt(noise(0.04), "bandpass", [1800, 6000]) * np.exp(-T_(0.04) / 0.008) * env(int(0.04 * SR), 0.0015); put(ck / (np.abs(ck).max() + 1e-9) * db(g - 12), t, pan=0.2)
+    if CLK is not None and not e["up"]: place(CLK, t, g - 4, 0.2)
+lampL = {}
+for e in CU["flick"]: lampL.setdefault(e["lamp"], []).append(e)
+for lid, evs in lampL.items():
+    x = evs[0]["x"]; tt = T_(58.5); lv = np.ones(len(tt)); prev = 0.0
+    for e in evs:
+        i = int(e["t"] * SR)
+        if i < len(lv): lv[i:] = e["v"]
+    near = np.array([db(max(-60, -26 - 1.6 * abs(x - focus_x(q)))) for q in np.arange(0, 58.5, 0.25)]); near = np.repeat(near, int(0.25 * SR))[:len(tt)]
+    lv = np.convolve(lv, np.ones(240) / 240, "same")
+    hum = np.sin(2 * np.pi * 120 * tt) * 0.6 + np.sin(2 * np.pi * 240 * tt) * 0.4 + 0.2 * noise(58.5)
+    y = filt(hum, "bandpass", [100, 4000]) * lv * near * 0.25; y[int(4.4 * SR):int(8.6 * SR)] = 0; put(y, 0.0, pan=0.25)
+# her head jerks: a small dry neck click on each snap
+for i, e in enumerate(CU["jerks"]):
+    if CRK[0] is not None: place(CRK[i % len(CRK)], e["t"], -30 + 8 * e["amp"], -0.1)
+# the slit mouth opens (46.4–50.6): a wet click as the lips part, a slow wet stretch, teeth tick at the widest
+mc = filt(noise(0.03), "bandpass", [600, 2500]) * np.exp(-T_(0.03) / 0.006) * env(int(0.03 * SR), 0.002); put(mc / (np.abs(mc).max() + 1e-9) * db(-24), snap(46.45), pan=-0.15)
+O(DR, 46.5, -27, 4.0, lp=1800, rate=0.6, pan=-0.15)
+if NL[0] is not None: place(NL[1], snap(50.55), -24, -0.15)
+# the freeze: everything but the wind and a thin drone drops away until the lunge
+fz = np.ones(N); a_, b_ = int(FZ * SR), int(LG * SR); r_ = int(0.05 * SR); fz[a_:b_] = db(-22); fz[a_ - r_:a_] = np.linspace(1, db(-22), r_); out *= fz[:, None]
+bed(WIND, FZ, LG, [[FZ, -36], [LG, -34]], lp=900)
 # ---------------------------------------------------------------- master
 import os
 if os.environ.get('MIX_DEBUG'): sf.write('audio/premaster.wav', out.astype(np.float32), SR, subtype='FLOAT')
@@ -266,8 +305,8 @@ for _ in range(6):
     dip = np.zeros(N)
     for i in bad: c = int((i * 0.05 + 0.05) * SR); h = int(0.3 * SR); dip[max(0, c - h):c + h] = np.maximum(dip[max(0, c - h):c + h], w100[i] - (hitv - 1.5))
     dip = np.convolve(dip, np.ones(int(0.15 * SR)) / int(0.15 * SR), "same"); out *= db(-dip)[:, None]
-arc = np.interp(np.arange(N) / SR, [0, 8.3, 8.7, 20.4, 20.8, 38.4, 38.8, 44.9, 45.0, 57.9, 58.8, 80], [-1.5, -1.5, -0.5, -0.5, -2.5, -2.5, -1.0, -1.0, 0.7, 0.7, -3.0, -3.0]); out *= db(arc)[:, None]   # the story arc: the hit act stays on top, the ending decays
-out *= db(-14.5 - meter.integrated_loudness(out)); lim = db(-5.0)   # make-up to the target, then the peak limiter again
+arc = np.interp(np.arange(N) / SR, [0, 8.3, 8.7, 20.4, 20.8, 38.4, 38.8, 44.9, 45.0, 57.9, 58.8, 80], [-2.5, -2.5, -0.5, -0.5, -3.2, -3.2, -3.2, -3.2, 0.7, 0.7, -3.0, -3.0]); out *= db(arc)[:, None]   # the story arc: the hit act stays on top, the ending decays
+out *= db(-14.2 - meter.integrated_loudness(out)); lim = db(-5.0)   # make-up to the target, then the peak limiter again
 for _ in range(4):
     if np.abs(out).max() <= lim: break
     g = np.minimum(1, lim / (np.abs(out).max(1) + 1e-9)); g = np.minimum.reduce([np.roll(g, s) for s in range(-240, 241, 24)]); out *= g[:, None]
@@ -280,6 +319,12 @@ for _ in range(6):
     dip = np.zeros(N)
     for i in bad: c = int((i * 0.05 + 0.05) * SR); h = int(0.3 * SR); dip[max(0, c - h):c + h] = np.maximum(dip[max(0, c - h):c + h], w100[i] - (hitv - 1.5))
     dip = np.convolve(dip, np.ones(int(0.15 * SR)) / int(0.15 * SR), "same"); out *= db(-dip)[:, None]
+out = filt(out, 'lowpass', 15000, 2); out[int(45.0 * SR):int(45.6 * SR)] = 0
+for _ in range(4):   # true-peak safety: 4x oversampled peaks held under -4.5 dBTP so AAC stays below -1.4
+    osm = np.abs(signal.resample_poly(out, 4, 1, axis=0)).max(1)[:4 * N].reshape(-1, 4).max(1); lim2 = db(-4.5)
+    if osm.max() <= lim2: break
+    g = np.minimum(1, lim2 / (osm + 1e-9)); g = np.minimum.reduce([np.roll(g, s_) for s_ in range(-240, 241, 24)]); out *= g[:, None]
+out[int(45.0 * SR):int(45.6 * SR)] = 0
 L2 = meter.integrated_loudness(out)
 sf.write("audio/mix.wav", out.astype(np.float32), SR, subtype="FLOAT")
 w = np.lib.stride_tricks.sliding_window_view(out.mean(1) ** 2, int(0.1 * SR))[::int(0.05 * SR)].mean(1); i = int(np.argmax(w))

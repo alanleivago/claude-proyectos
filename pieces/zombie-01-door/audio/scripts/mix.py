@@ -4,7 +4,7 @@
 # Master -14 LUFS integrado (la ref mide -14.0), true peak <= -1 dBTP.
 import json, subprocess, numpy as np, soundfile as sf, pyloudnorm as pyln
 SR = 48000; DUR = 49.0; N = int(DUR * SR)
-P = r"F:/Claude Proyectos/pieces/zombie-01-door"; DC = r"F:/Claude Proyectos/assets/dino-crisis-sfx"; CAND = f"{P}/audio/cand"; KIT = r"F:/Claude Proyectos/sound-layer/kit"
+P = r"/Users/alanleiva/claude-proyectos/pieces/zombie-01-door"; DC = r"/Users/alanleiva/claude-proyectos/assets/dino-crisis-sfx"; CAND = f"{P}/audio/cand"; KIT = r"/Users/alanleiva/claude-proyectos/sound-layer/kit"
 _c = {}
 def load(path, a=None, b=None, trim=True):
     k = (path, a, b, trim)
@@ -39,7 +39,7 @@ KEY = load(f"{DC}/ch/bonus_2_rick_typing.wav", 2.17, 2.40)   # una tecla (pulsar
 BURST = load(f"{CAND}/door_burst/160213.mp3"); GROWL = load(f"{CAND}/zombie_groan/754440.mp3"); GROAN = load(f"{CAND}/zombie_groan/196723.mp3")
 FALL = load(f"{CAND}/body_fall/346692.mp3"); DRILL = load(f"{CAND}/drill_screw/871631.mp3"); DRILL2 = load(f"{CAND}/drill_screw/873413.mp3")
 GLASS = load(f"{CAND}/glass_bang/104339.mp3"); POUND = load(f"{CAND}/door_pound/587930.mp3"); CLANK = load(f"{CAND}/metal_bar_clank/835169.mp3")
-ZS = r"F:/Claude Proyectos/assets/zombie-sfx-yt/seg"   # zombis de Resident Evil (pedido del usuario: video 4JCoB0GUIVs desde 1:20)
+ZS = r"/Users/alanleiva/claude-proyectos/assets/zombie-sfx-yt/seg"   # zombis de Resident Evil (pedido del usuario: video 4JCoB0GUIVs desde 1:20)
 ZSHOUT = load(f"{ZS}/z11_123.9.wav"); ZGROWL = load(f"{ZS}/z07_107.5.wav"); ZGROAN = load(f"{ZS}/z05_103.1.wav")
 ZMOAN = load(f"{ZS}/z08_110.4.wav"); ZMOAN2 = load(f"{ZS}/z06_104.9.wav"); ZMOAN3 = load(f"{ZS}/z01_83.0.wav")
 MAGOUT = load(f"{CAND}/mag_out/711555.mp3"); MAGIN = load(f"{CAND}/mag_in/815879.mp3", 0.0, 0.45)

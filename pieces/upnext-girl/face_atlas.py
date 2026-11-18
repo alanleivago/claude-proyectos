@@ -19,7 +19,7 @@ import numpy as np
 from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-FR = "F:/Claude Proyectos/fuentes/mml2-girl-tutorial/frames/"
+FR = "/Users/alanleiva/claude-proyectos/fuentes/mml2-girl-tutorial/frames/"
 CW, CH = 51, 55
 SPLIT = 34                     # rows < SPLIT belong to face_eyes polys, rows >= SPLIT to face_mouth polys
 

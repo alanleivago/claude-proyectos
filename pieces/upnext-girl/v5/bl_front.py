@@ -1,6 +1,6 @@
 """Blender: his rest pose in the viewport (11:29, t=689 s): camera + arms-down pose fit on the front silhouette."""
 import time
-V5 = r"F:/Claude Proyectos/pieces/upnext-girl/v5/"
+V5 = r"/Users/alanleiva/claude-proyectos/pieces/upnext-girl/v5/"
 exec(open(V5 + "bl_posefit.py").read())
 FM = np.load(V5 + "front_mask_q.npy")
 CUTQ = int(1062 * 0.25)

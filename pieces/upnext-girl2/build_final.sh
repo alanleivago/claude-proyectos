@@ -9,7 +9,7 @@
 set -e
 cd "$(dirname "$0")"
 FIT=$1; TS=${2:-4096}
-BL="/c/Program Files/Blender Foundation/Blender 5.2/blender.exe"
+BL="/Applications/Blender.app/Contents/MacOS/Blender"
 python tools/fixup.py $FIT ref/final_fix.npz
 python tools/texture.py ref/final_fix.npz ref/final_tex.npz --ts $TS --step ${3:-2}
 python tools/face_cells.py ref/final_tex.npz

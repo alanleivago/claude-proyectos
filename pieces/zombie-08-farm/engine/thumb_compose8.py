@@ -7,7 +7,7 @@ from pathlib import Path
 from PIL import Image, ImageChops, ImageDraw, ImageEnhance, ImageFilter, ImageFont, ImageOps
 R = Path(sys.argv[1]); OUT = Path(__file__).resolve().parent.parent
 W, H = 1280, 720
-BLACK = 'C:/Windows/Fonts/ariblk.ttf'
+BLACK = '/System/Library/Fonts/Supplemental/Arial Black.ttf'
 CREAM, RED, INK = (246, 241, 230), (232, 52, 38), (40, 40, 44)
 def img(n): return Image.open(R / f'{n}.png').convert('RGB')
 def crop(im, x0, y0, w, h, size): return im.crop((x0, y0, x0 + w, y0 + h)).resize(size, Image.LANCZOS)

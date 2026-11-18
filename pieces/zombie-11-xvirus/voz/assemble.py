@@ -4,7 +4,7 @@
 import json, re, subprocess, numpy as np, soundfile as sf
 from faster_whisper import WhisperModel
 
-HERE = r"F:/Claude Proyectos/pieces/zombie-11-xvirus/voz"
+HERE = r"/Users/alanleiva/claude-proyectos/pieces/zombie-11-xvirus/voz"
 LINES = json.load(open(f"{HERE}/lines.json", encoding="utf-8"))
 SR, DUR = 48000, 64.0
 

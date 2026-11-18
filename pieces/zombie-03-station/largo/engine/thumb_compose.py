@@ -7,8 +7,8 @@ from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont, ImageOps
 R = Path(sys.argv[1])
 OUT = Path(__file__).resolve().parent.parent
 W, H = 1280, 720
-IMPACT = 'C:/Windows/Fonts/impact.ttf'
-SERIF = 'C:/Windows/Fonts/timesbd.ttf'
+IMPACT = '/System/Library/Fonts/Supplemental/Impact.ttf'
+SERIF = '/System/Library/Fonts/Supplemental/Times New Roman Bold.ttf'
 RED = (226, 30, 30)
 
 

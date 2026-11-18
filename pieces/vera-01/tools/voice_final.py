@@ -24,7 +24,7 @@ from scipy.signal import resample_poly
 
 PIECE = Path(__file__).resolve().parents[1]
 OUT = PIECE / 'voz'; RAW = OUT / 'raw'
-GIRL, MENTOR = 'e9c8051b', '8da96883'   # GIRL = Vera, MENTOR = Theo ("Voz theo pretendiente", the user's real voice; v1 test = Eagle One 0e713b26 in voz/test_eagle)
+GIRL, MENTOR = 'cf0b8ddb', 'a66e21f8'   # GIRL = Vera, MENTOR = Theo ("Voz theo pretendiente", the user's real voice; v1 test = Eagle One 0e713b26 in voz/test_eagle)
 HPF = {GIRL: 150, MENTOR: 90}
 SPEED = {MENTOR: 1.15}   # Theo's clone speaks slowly (the episode ran 81 s); flustered = a touch quicker
 LINES = [(n, GIRL if k == 'V' else MENTOR, t) for n, k, t in json.loads((PIECE / 'work' / 'lines.json').read_text(encoding='utf-8'))]

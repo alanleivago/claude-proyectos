@@ -1,7 +1,7 @@
 """Blender <-> numpy: export rest pieces + rigid pose matrices; import bone world matrices as a pose."""
 import bpy, json, numpy as np
 from mathutils import Matrix, Vector
-V5 = r"F:/Claude Proyectos/pieces/upnext-girl/v5/"
+V5 = r"/Users/alanleiva/claude-proyectos/pieces/upnext-girl/v5/"
 ARM = bpy.data.objects["Armature"]
 
 

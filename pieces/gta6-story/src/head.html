@@ -1,0 +1,15 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Only Way Out</title>
+<style>html,body{margin:0;background:#111}canvas{display:block;max-width:100vw;max-height:100vh;margin:auto}</style>
+</head><body><canvas id="c" width="1920" height="1080"></canvas>
+<script>
+"use strict";
+// "Only Way Out" - private GTA VI fan comic, 16:9, no voice-over. Everything stepped at 12 fps (STYLE.md).
+const STYLE = { name: 'gta6', ones: false };
+const W = 1920, H = 1080, FPS = 24, STEP = 12;
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const lin = (t, a, b) => clamp((t - a) / (b - a));
+const outCubic = (x) => 1 - Math.pow(1 - x, 3);
+const inCubic = (x) => x * x * x;
+const outBack = (x, c = 1.7) => 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2);
+try { document.fonts.load('40px "Bangers"'); document.fonts.load('40px "Luckiest Guy"'); document.fonts.load('bold 30px "Menlo"'); } catch (e) {}

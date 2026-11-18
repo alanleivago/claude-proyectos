@@ -1,6 +1,6 @@
 """Vertex sweep on the final Girl mesh (50/50 joints included); writes the result back into pieces.json (same vertex order)."""
 import os, time
-V5 = r"F:/Claude Proyectos/pieces/upnext-girl/v5/"
+V5 = r"/Users/alanleiva/claude-proyectos/pieces/upnext-girl/v5/"
 exec(open(V5 + "bl_posefit.py").read())
 MODE = "sil"
 G = bpy.data.objects["Girl"]; G["col"] = (250, 209, 160)

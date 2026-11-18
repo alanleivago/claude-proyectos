@@ -1,6 +1,6 @@
 """Rebuild + all review renders. exec in Blender: TAG = "v4"; exec(open(r".../review_renders.py").read())"""
 import bpy
-D0 = r"F:/Claude Proyectos/pieces/upnext-girl/"
+D0 = r"/Users/alanleiva/claude-proyectos/pieces/upnext-girl/"
 for f in ("build.py", "poses.py", "render.py"):
     exec(open(D0 + f).read())
 make_all()

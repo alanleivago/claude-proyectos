@@ -3,7 +3,7 @@ sole and head centre. The yaw is chosen by the IoU of the HAIR masks (same palet
 python tools/overlay.py <tag>   -> review/overlay_<tag>.png (ours | his | 50 % overlay) per view"""
 import sys, glob, os, numpy as np
 from PIL import Image
-F = "F:/Claude Proyectos/fuentes/mml2-girl-tutorial/frames/"
+F = "/Users/alanleiva/claude-proyectos/fuentes/mml2-girl-tutorial/frames/"
 REFS = [("front", "tut_idle", "ref/t759.png", 957, (650, 1300)), ("3q", "tut_hip", "ref/t743.png", 995, (650, 1300)),
         ("side", "tut_hip", "ref/t736.png", 969, (650, 1300)), ("back", "tut_hip", "ref/t737.png", 981, (800, 1150)),
         ("run", "tut_run", "ref/t785.png", 925, (840, 1130))]

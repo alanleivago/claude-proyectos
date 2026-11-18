@@ -1,7 +1,7 @@
 # storyboard_v1.png (ep10 The Stairs): un panel por beat (frames reales del motor con la voz real, review/sb/f_<t>.png) +
 # fila de objetos nuevos foto Flow -> lowpoly (recorte PNG | en el motor). python storyboard.py
 import os; from PIL import Image, ImageDraw, ImageFont
-H = os.path.dirname(os.path.abspath(__file__)); P = os.path.join(H, ".."); F = ImageFont.truetype("C:/Windows/Fonts/arialbd.ttf", 15); f2 = ImageFont.truetype("C:/Windows/Fonts/arial.ttf", 13)
+H = os.path.dirname(os.path.abspath(__file__)); P = os.path.join(H, ".."); F = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial Bold.ttf", 15); f2 = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial.ttf", 13)
 B = [(1.2, "1  0:00", "'In a zombie outbreak, the bite isn't what turns you...' Ava in the ep1/ep10 living room, looks at camera. Hook horror music 0-10 s"),
      (3.6, "1b 0:02", "'...the X-virus is.' HUD in at once; she lifts her forearm and the camera pushes into it -> white flash"),
      (10.9, "2  0:04", "MICROSCOPE (RE UI, X-VIRUS label): cute-creepy virus with a face. 'In this world, it spreads like rabies... blood and spit' -> arrows BITE / SCRATCH / SPLASH (EYES/MOUTH) on their words"),

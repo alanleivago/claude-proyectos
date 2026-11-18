@@ -2,7 +2,7 @@
 exec(open(r".../v5/bl_shrink.py").read()); load_hull("hip"); shrink("Hair", limit=0.5)"""
 import bpy, numpy as np
 from mathutils import Matrix, Vector
-V5 = r"F:/Claude Proyectos/pieces/upnext-girl/v5/"
+V5 = r"/Users/alanleiva/claude-proyectos/pieces/upnext-girl/v5/"
 ARM = bpy.data.objects["Armature"]
 
 

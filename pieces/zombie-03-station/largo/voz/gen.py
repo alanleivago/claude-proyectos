@@ -4,7 +4,7 @@
 import json, re, sys, os, urllib.request, numpy as np, soundfile as sf
 from takes import T
 API = "http://127.0.0.1:3900/v1/audio/speech"
-VOICE = {"ava": "f2a102da", "radio": "cf919aa6", "cop": "cf919aa6", "marla": "996b1578"}
+VOICE = {"ava": "f2f8f8dc", "radio": "0142e2dc", "cop": "0142e2dc", "marla": "73886ef4"}
 SAY = {"K-9": "K nine", "point one oh": "point one oh", "World's Okayest": "World's Okayest", "A.M.": "A M", "FEMA's": "Fema's", "nine-millimeter": "nine millimeter"}
 OUT = "takes"; os.makedirs(OUT, exist_ok=True)
 args = sys.argv[1:]; redo = "--redo" in args; seed = None

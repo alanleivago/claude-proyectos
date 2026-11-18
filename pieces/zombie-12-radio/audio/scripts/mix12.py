@@ -6,8 +6,8 @@ import json, subprocess, numpy as np, soundfile as sf, pyloudnorm as pyln
 from scipy.ndimage import uniform_filter1d, minimum_filter1d
 from scipy.signal import butter, sosfilt
 SR = 48000
-P = r"F:/Claude Proyectos/pieces/zombie-12-radio"; C = f"{P}/audio/cand"; DC = r"F:/Claude Proyectos/assets/dino-crisis-sfx"
-C4 = r"F:/Claude Proyectos/pieces/zombie-04-subway/audio/cand"; C7 = r"F:/Claude Proyectos/pieces/zombie-07-saferoom/audio/cand"
+P = r"/Users/alanleiva/claude-proyectos/pieces/zombie-12-radio"; C = f"{P}/audio/cand"; DC = r"/Users/alanleiva/claude-proyectos/assets/dino-crisis-sfx"
+C4 = r"/Users/alanleiva/claude-proyectos/pieces/zombie-04-subway/audio/cand"; C7 = r"/Users/alanleiva/claude-proyectos/pieces/zombie-07-saferoom/audio/cand"
 CU = json.load(open(f"{P}/engine/cues.json", encoding="utf8")); W, T = CU["W"], CU["T"]; DUR = CU["END"]; N = int(DUR * SR); VEND = CU["VOICE_END"]
 def load(path, a=None, b=None, trim=True, norm=True):
     cmd = ["ffmpeg", "-v", "quiet"] + (["-ss", str(a)] if a is not None else []) + ["-i", path] + (["-t", str(b - a)] if b is not None else []) + ["-f", "f32le", "-ac", "1", "-ar", str(SR), "-"]
@@ -37,7 +37,7 @@ DEFAULT = load(f"{DC}/9PdkWu31Xwo.wav"); INV = load(f"{DC}/ch/inventory.wav", 1.
 KEY = load(f"{DC}/ch/bonus_2_rick_typing.wav", 2.17, 2.40); SUCCESS = load(f"{DC}/ch/keypad_unlock.wav", 26.5, 28.2)
 STING = load(f"{C4}/stinger/271945.mp3"); BREATH = load(f"{C4}/breath/482827.mp3"); ROOM = load(f"{C7}/room_tone/144046.mp3", trim=False); WIND = load(f"{C7}/wind/438862.mp3", trim=False)
 WHOOSH = load(f"{C7}/whoosh/855844.mp3")
-ZS = r"F:/Claude Proyectos/assets/zombie-sfx-yt/seg"; ZGROWL = load(f"{ZS}/z07_107.5.wav"); ZGROAN = load(f"{ZS}/z05_103.1.wav")
+ZS = r"/Users/alanleiva/claude-proyectos/assets/zombie-sfx-yt/seg"; ZGROWL = load(f"{ZS}/z07_107.5.wav"); ZGROAN = load(f"{ZS}/z05_103.1.wav")
 STATIC = load(f"{C}/static/724702.mp3", trim=False); TUNE = load(f"{C}/tuning2/58932.mp3"); TUNE2 = load(f"{C}/tuning/261873.mp3")
 CRANK = load(f"{C}/crank/734567.mp3", trim=False); PLUG = load(f"{C}/plug/477628.mp3"); PENCIL = load(f"{C}/pencil/335509.mp3"); PAPER = load(f"{C}/paper/353125.mp3")
 DOOR = load(f"{C}/door_creak/553250.mp3"); CHIME = load(f"{C}/chime/616696.mp3"); NIGHT = load(f"{C}/night_amb/436528.mp3", trim=False)

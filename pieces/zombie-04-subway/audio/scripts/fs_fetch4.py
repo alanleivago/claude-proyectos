@@ -1,7 +1,7 @@
 # Freesound CC0 (busqueda + preview HQ) para el ep4 -> audio/cand/<key>/<id>.mp3 + meta.json. python fs_fetch4.py [keys]
 import json, os, sys, urllib.request, urllib.parse
 KEY = json.load(open(os.path.expanduser("~/.freesound.json"), encoding="utf-8-sig"))["api_key"]
-OUT = r"F:/Claude Proyectos/pieces/zombie-04-subway/audio/cand"
+OUT = r"/Users/alanleiva/claude-proyectos/pieces/zombie-04-subway/audio/cand"
 Q = {"train_depart": ("subway train departing", 4, 30), "subway_doors": ("subway train doors closing", 1, 10),
      "door_chime": ("subway door chime", 0.5, 6), "breath": ("heavy breathing close", 2, 15), "steps_slow": ("slow footsteps concrete", 3, 20),
      "steps_run": ("running footsteps concrete", 2, 12), "chain_rattle": ("chain rattle metal gate", 0.5, 6), "paper_tear": ("paper tear", 0.3, 3),

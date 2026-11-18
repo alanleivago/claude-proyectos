@@ -2,7 +2,7 @@
 # {W: palabras clave, T: cortes de plano, R2: palabras de la regla 2, END}. Lo leen film.js, sets/subway.js y mix4.py.
 # python build_cues.py  (despues de prep.py + assemble.py + fix_caps.py)
 import json, re
-E = r"F:/Claude Proyectos/pieces/zombie-04-subway/engine"; V = r"F:/Claude Proyectos/pieces/zombie-04-subway/voz"
+E = r"/Users/alanleiva/claude-proyectos/pieces/zombie-04-subway/engine"; V = r"/Users/alanleiva/claude-proyectos/pieces/zombie-04-subway/voz"
 TL = json.load(open(f"{E}/timeline.json", encoding="utf8")); LN = json.load(open(f"{V}/lines.json", encoding="utf8"))
 WD = TL["words"]; nrm = lambda s: re.sub(r"[^a-z0-9:%']", "", s.lower().replace("’", "'"))
 def words(line): return [w for w in WD if w[3] == line]

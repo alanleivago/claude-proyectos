@@ -2,8 +2,8 @@
 # tras un silencio y corta el final de linea): inicio = primer cuadro de 20 ms sobre -40 dB dentro de la palabra;
 # la ultima palabra de cada linea dura hasta que la voz cae bajo -45 dB. python fix_words.py (despues de assemble.py)
 import json, numpy as np, soundfile as sf
-E = r"F:/Claude Proyectos/pieces/zombie-13-gasstation/engine/timeline.json"
-x, sr = sf.read(r"F:/Claude Proyectos/pieces/zombie-13-gasstation/voz/track.wav"); x = x if x.ndim == 1 else x.mean(1)
+E = r"/Users/alanleiva/claude-proyectos/pieces/zombie-13-gasstation/engine/timeline.json"
+x, sr = sf.read(r"/Users/alanleiva/claude-proyectos/pieces/zombie-13-gasstation/voz/track.wav"); x = x if x.ndim == 1 else x.mean(1)
 H = int(0.02 * sr); db = 20 * np.log10(np.array([np.sqrt(np.mean(x[i:i + H] ** 2)) for i in range(0, len(x) - H, H)]) + 1e-9)
 f = lambda t: min(len(db) - 1, max(0, int(t / 0.02)))
 TL = json.load(open(E, encoding="utf8")); W = TL["words"]; n = 0

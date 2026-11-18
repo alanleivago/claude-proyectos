@@ -2,7 +2,7 @@
 # largo: copia de ../../audio/scripts/fs_fetch.py con busquedas nuevas. Freesound CC0 search + HQ preview download: audio/cand/<key>/<id>.mp3 and audio/cand/<key>/meta.json
 import json, os, sys, urllib.request, urllib.parse
 KEY = json.load(open(os.path.expanduser("~/.freesound.json"), encoding="utf-8-sig"))["api_key"]
-OUT = r"F:/Claude Proyectos/pieces/zombie-08-farm/audio/cand"
+OUT = r"/Users/alanleiva/claude-proyectos/pieces/zombie-08-farm/audio/cand"
 Q = {
  "cow_moo": ("cow moo single", 0.8, 6), "cow_herd": ("cows mooing herd farm", 3, 30), "chicken_cluck": ("chickens clucking farm", 2, 30), "chicken_alarm": ("chicken alarm call squawk", 0.5, 6),
  "rooster": ("rooster crow", 1, 6), "dog_bark": ("dog bark single", 0.2, 3), "farm_day": ("countryside ambience birds wind field", 20, 180), "crickets": ("crickets night ambience", 20, 180),

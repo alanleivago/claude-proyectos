@@ -1,0 +1,42 @@
+zaw-dog #8 storyboard v2 QA (2026-11-16), preview = review/preview_moves.mp4 (540x960, 640 frames, 21.33 s). v1 QA in v1/qa_v1.txt.
+
+VOICE (Whisper medium, voice/whisper_check.txt): voice.wav and voice_retro.wav ratio 1.000, 0 word diffs (77/77 words) after the pause tightening.
+MIX (sound/out/final_mix.wav): I: -11.3 LUFS  Peak: -2.6 dBFS  (true peak measured -2.4 dBTP on the AAC preview)
+  earshot timeline: hero bark onset ~2.21 s in the gap after "him" (ends 1.90; next word 2.50).
+
+POPCHECK (review/popcheck_preview.txt):
+640 frames; cut steps (expected): 16; in-shot step median 3.63
+flags (beat, frame, step, beat median): [('02c', 153, 14.5, 3.6), ('02c', 154, 20.2, 3.6), ('02c', 155, 20.6, 3.6), ('02c', 156, 17.1, 3.6), ('06a', 405, 18.8, 2.6), ('06a', 406, 23.1, 2.6), ('06a', 407, 21.3, 2.6), ('06a', 408, 17.1, 2.6), ('07a', 527, 34.9, 6.7), ('07a', 528, 39.2, 6.7), ('07a', 529, 29.5, 6.7), ('07c', 638, 21.4, 3.6)]
+  -> all flags are designed accents: 02c / 06a / 07a whip-ins (first frames after the cut), 07c startle at the end.
+
+FLIP-FLOP flicker (review/flipflop_preview.txt):
+01a: flip-flop 0.25%  worst 0.85%
+01b: flip-flop 0.79%  worst 6.11%
+02a: flip-flop 0.03%  worst 0.31%
+02b: flip-flop 0.42%  worst 0.81%
+02c: flip-flop 0.71%  worst 5.93%
+03a: flip-flop 1.14%  worst 1.86%
+03b: flip-flop 0.18%  worst 0.67%
+04a: flip-flop 0.54%  worst 1.92%
+04b: flip-flop 0.17%  worst 0.24%
+05a: flip-flop 0.39%  worst 1.30%
+05b: flip-flop 1.09%  worst 3.35%
+06a: flip-flop 0.79%  worst 7.57%
+06b: flip-flop 0.03%  worst 0.10%
+06c: flip-flop 0.05%  worst 0.10%
+07a: flip-flop 1.32%  worst 9.45%
+07b: flip-flop 0.34%  worst 3.53%
+07c: flip-flop 0.34%  worst 1.29%
+  -> mean <= 1.32 % in every shot (07a = whip + the arm lift; 05b = the trot); worst single frames are the whip/snap accents.
+
+FEET / INTERSECTIONS (review/feet_check.txt, EVERY frame of every shot):
+  dog lowest -0.008..-0.002 m; people lowest -0.008..+0.009 m;
+  ARM-VS-TORSO (new): arm/hand vertices > 1.5 cm inside the torso = 0 in all 17 shots (07c, the user's defect, = 0);
+  dog vertices inside a human = 0 everywhere (min gap 0.018 m in 01a, 0.083 m in 05b);
+  dog vertices at the glass panes = 0; human vertices within 2 cm of a pane: 0 (1 in 03b, the open hand at the gap).
+
+HAND MOTION (defect 1): consecutive frames of the pull-backs (review/preview/nc_00266..00287 and nc_00404..00425) show a
+  continuous arc (Kimodo z8_sci_offer_pull's own withdrawal), no snap, no IK flip.
+
+API REVIEW (revisar_render --estilo lowpolyshorts): review/preview_moves_revision.md = CASI (v1: NO LISTO);
+  intermediate v2 passes kept as preview_moves_revision_v2a/b/c.md.

@@ -10,10 +10,11 @@ rows = [("owner_point", ["front", "side", "head_f", "head_34", "head_side", "sho
         ("owner_cry", ["front", "head_f", "head_34", "head_side", "shoulder", "handL", "handR", "side"]),
         ("mailman_point", ["front", "side", "head_f", "head_side", "shoulder", "handL", "hand_point_side", "handR"]),
         ("mailman_laugh", ["front", "head_f", "head_34", "head_side", "shoulder", "handL", "handR", "side"]),
+        ("scientist_point", ["front", "side", "head_f", "head_34", "head_side", "shoulder", "hand_point_side", "handR"]),
         ("dog", ["sit_front", "sit_side", "sit_face", "happy_front", "happy_side", "shocked_front", "eat_front", "eat_side"])]
 W, Hh = 240, 320
 S = Image.new("RGB", (8 * (W + 4) + 4, len(rows) * (Hh + 24) + 40), (20, 20, 20)); d = ImageDraw.Draw(S)
-d.text((8, 8), "zaw-dog #7 v2 self-check (isolated, before the board): body_fix seams, pointing hands, crying face, levelled sit", font=FT, fill=(255, 230, 40))
+d.text((8, 8), "zaw-dog #7 v3 self-check (isolated, before the board): body_fix seams, pointing hands, crying face, levelled sit", font=FT, fill=(255, 230, 40))
 for r, (tag, views) in enumerate(rows):
     for c, v in enumerate(views):
         p = os.path.join(I, f"{tag}_{v}.png") if tag != "dog" else os.path.join(I, f"dog_{v}.png")

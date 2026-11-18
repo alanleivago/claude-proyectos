@@ -1,7 +1,7 @@
 # storyboard_v1.png (ep10 The Stairs): un panel por beat (frames reales del motor con la voz real, review/sb/f_<t>.png) +
 # fila de objetos nuevos foto Flow -> lowpoly (recorte PNG | en el motor). python storyboard.py
 import os; from PIL import Image, ImageDraw, ImageFont
-H = os.path.dirname(os.path.abspath(__file__)); P = os.path.join(H, ".."); F = ImageFont.truetype("C:/Windows/Fonts/arialbd.ttf", 15); f2 = ImageFont.truetype("C:/Windows/Fonts/arial.ttf", 13)
+H = os.path.dirname(os.path.abspath(__file__)); P = os.path.join(H, ".."); F = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial Bold.ttf", 15); f2 = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial.ttf", 13)
 B = [(1.8, "1  0:00", "'It's 2 AM, and you're alone at a gas station, filling up...' Elevated fixed camera: canopy lights, pump, Ava's car; her left hand holds the nozzle in the filler (two-bone IK, no clip on top); hose to the pump. 2:00 AM. Hook horror music"),
      (5.0, "1b 0:03", "'...the lights flicker, and the pump stops at twelve forty.' HUD in. Pump display counting, freezes at $12.40 as the canopy lights flicker and die"),
      (8.0, "2  0:06", "'Your tank's only a quarter full, and the hose is dead...' Ava's face on the dead nozzle, TANK 1/4 gauge, HOSE: DEAD"),

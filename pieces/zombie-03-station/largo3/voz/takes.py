@@ -198,7 +198,7 @@ T = [
  ("e6", "final", "ava", "most comments decide Day four. SUBSCRIBE!", None, 0.5),
 ]
 
-VOICE = {"ava": "f2a102da", "think": "f2a102da", "shake": "f2a102da", "marla": "996b1578", "dutch": "644338f4", "pilot": "0e713b26"}
+VOICE = {"ava": "f2f8f8dc", "think": "f2f8f8dc", "shake": "f2f8f8dc", "marla": "73886ef4", "dutch": "504bcb20", "pilot": "0e713b26"}
 STYLE = {"ava": (0.88, None), "think": (0.76, "whisper"), "shake": (0.80, "whisper, low pitch"), "marla": (0.9, None), "dutch": (0.92, None), "pilot": (1.0, None)}
 # por toma (speed, instruct): numeros sueltos y cuentas a velocidad normal (a 0.88 se estiran las silabas)
 TSTYLE = {"u1": (1.0, None), "u2": (1.0, None), "u3": (1.0, None), "l5": (1.0, None), "r4": (0.95, None), "r8": (1.0, None), "q8": (0.85, "whisper"), "e6": (0.95, None)}

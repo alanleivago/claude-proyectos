@@ -3,7 +3,7 @@ Finds the black 1-texel dividers, derives the texel scale, samples each cell (51
 (median of a 3x3 patch). Writes fuentes/mml2-girl-tutorial/frames/cells/t<frame>_r<row>_c<col>.png + preview."""
 import sys, numpy as np
 from PIL import Image
-F = "F:/Claude Proyectos/fuentes/mml2-girl-tutorial/frames/"
+F = "/Users/alanleiva/claude-proyectos/fuentes/mml2-girl-tutorial/frames/"
 CW, CH = 51, 55
 TOP = {640: 387.5}
 FULLW = {664, 666, 667, 668}

@@ -1,7 +1,7 @@
 """Blender: every render for review/sheet_v5.png"""
 import bpy
 TAG = globals().get("TAG", "v6")
-D0 = r"F:/Claude Proyectos/pieces/upnext-girl/"
+D0 = r"/Users/alanleiva/claude-proyectos/pieces/upnext-girl/"
 for f in ("poses.py", "render.py"): exec(open(D0 + f).read())
 exec(open(D0 + "v5/bl_refcams.py").read())
 POSE_FACES["his_rest"] = ("open", "neutral")

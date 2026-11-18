@@ -16,6 +16,7 @@ Herramientas que ya usan los créditos:
 
 - Cada video terminado se entrega en `/Volumes/alanwork/trabajo/Renders finales claude/<carpeta del canal>/`, con el título como nombre de archivo. Carpetas: Agente davis, Ali Abdaal, Alterbase, Amphorus, Ava Restfield, Cartoon3d, Doggo poly shorts, Edicion de videos Reels, Kodama yokai, Madfable, Majestic, Mechayuki, MexiTV, Punk poly shorts, Roblox, Stimulus, Tuneles, Vista. **cartoon3d ("3D cartoon") → Alterbase.** Si no está claro qué carpeta, preguntar una vez.
 - Se envía la versión **share** (como `export.mjs --share`: libx264 CRF 24 preset slow, yuv420p, AAC 192k, +faststart), no el master.
-- Después de entregar, borrar las versiones anteriores en `pieces/<pieza>/renders/` (silent vN, raw, duplicados final.mp4/<pieza>.mp4); queda solo el master con el título.
+- **También** se copia la misma versión share a `/Users/Shared/Contenido/<carpeta del canal>/` (miniatura en su subcarpeta de imágenes, p. ej. `Imagenes y miniaturas/`). Si la carpeta del canal no existe ahí, crearla.
+- **Desde 2026-11-16 los renders finales NO quedan en `pieces/`:** después de entregar a las dos carpetas, borrar todos los mp4 finales/versiones de `pieces/<pieza>/renders/`.
 - La miniatura va en `<carpeta del canal>/Miniaturas/`, con el mismo nombre (título) en .png.
 - Esa carpeta (`/Volumes/alanwork/...` en la Mac; el mismo disco está activo en la PC) es el canal para pasar archivos entre la PC y la Mac: renders, miniaturas y cualquier archivo pesado que no va a git.

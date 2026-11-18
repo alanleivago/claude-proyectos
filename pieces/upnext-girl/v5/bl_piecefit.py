@@ -1,5 +1,5 @@
 import time
-V5 = r"F:/Claude Proyectos/pieces/upnext-girl/v5/"
+V5 = r"/Users/alanleiva/claude-proyectos/pieces/upnext-girl/v5/"
 exec(open(V5 + "bl_pieces.py").read()); exec(open(V5 + "bl_posefit.py").read())
 MODE = "sil"
 

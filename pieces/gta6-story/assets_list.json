@@ -1,0 +1,513 @@
+{
+ "characters": [
+  {
+   "id": "lucia_bunk",
+   "char": "lucia",
+   "beats": "1.1 1.2 1.5 1.5b",
+   "pose": "sits on the edge of a steel prison bunk in a faded orange prison jumpsuit, forearms on knees, fists clenched, eyes up, tired and hard",
+   "light": "cold light left",
+   "status": "done",
+   "identity": "painted 0.49 PASS, shots 0.35 (<0.38 marginal), rank 1",
+   "cutout": "PASS"
+  },
+  {
+   "id": "mendez_ref",
+   "char": "mendez",
+   "beats": "anchor",
+   "pose": "NEW character Mendez (Special Task Force cop): Latino man ~50, grey buzz cut, thick grey moustache, deep forehead lines, heavy-lidded patient eyes, thick neck, black tactical vest over a navy polo, badge on belt. Neutral portrait chest-up",
+   "light": "hard sun left",
+   "status": "done",
+   "identity": "anchor (NB Pro photo)",
+   "cutout": "n/a",
+   "final": "pieces/gta6-story/id/mendez.jpg",
+   "notes": "painted face crop: id/mendez_painted.jpg"
+  },
+  {
+   "id": "mendez_cell",
+   "char": "mendez",
+   "beats": "1.3 1.4 1.5 1.5b",
+   "pose": "sits on a prison bunk leaning forward, elbows on knees, sliding a sheet of paper forward with two fingers, calm half smile",
+   "light": "cold light right",
+   "status": "done",
+   "identity": "0.470 PASS",
+   "cutout": "PASS",
+   "final": "pieces/gta6-story/chars/mendez_cell_final.png"
+  },
+  {
+   "id": "mendez_phone",
+   "char": "mendez",
+   "beats": "3.6 6.6 8.2 8.2b",
+   "pose": "in a dark car at night, phone at his ear, smug, dashboard glow on his face (chest-up)",
+   "light": "dashboard glow + cold rim",
+   "status": "done",
+   "identity": "0.476 PASS (tries 0.368/0.394/0.437 before)",
+   "cutout": "PASS",
+   "final": "pieces/gta6-story/chars/mendez_phone_final.png",
+   "notes": "photo retried; render pass with the photo as ref worked best"
+  },
+  {
+   "id": "lucia_walk",
+   "char": "lucia",
+   "beats": "3.1 3.2 3.2b",
+   "pose": "walks toward camera, grey tank top, jeans, black ankle monitor on her ankle visible, small plastic bag of belongings in one hand, squinting in the sun; framed at the knees or full body",
+   "light": "hard sun left",
+   "status": "done",
+   "identity": "painted3 0.427 rank 1 FAIL (shot11 0.34); painted2 scored 0.53 but copied lroof outfit",
+   "cutout": "PASS",
+   "final": "pieces/gta6-story/chars/lucia_walk_final.png",
+   "notes": "6 gens; full body = small face; knee-crop photo retry gave camo jeans + 0.28. Ankle monitor not clearly visible in final"
+  },
+  {
+   "id": "jason_lean",
+   "char": "jason",
+   "beats": "3.2 3.2b",
+   "pose": "leans back against a car fender (car NOT in the photo, just the pose), arms crossed, aviator sunglasses, white tank top, slight smirk",
+   "light": "hard sun left",
+   "status": "done",
+   "identity": "0.513 rank 1 PASS",
+   "cutout": "PASS",
+   "final": "pieces/gta6-story/chars/jason_lean_final.png",
+   "notes": "aviators on his head (worn aviators scored 0.35 - face_id can't read through them); 6 gens"
+  },
+  {
+   "id": "jason_drive",
+   "char": "jason",
+   "beats": "3.3b 3.4",
+   "pose": "driving, seen from the passenger seat: one hand on the steering wheel, other hand on the gearstick, eyes on the road, sunset light (car interior ok in the photo)",
+   "light": "low sunset sun right",
+   "status": "done",
+   "identity": "0.466 rank 1 PASS",
+   "cutout": "PASS",
+   "final": "pieces/gta6-story/chars/jason_drive_final.png",
+   "notes": "steering wheel kept in the layer; second hand on the column, not a gearstick"
+  },
+  {
+   "id": "lucia_car",
+   "char": "lucia",
+   "beats": "3.3b 3.4 6.1b",
+   "pose": "sits in a car passenger seat, elbow on the door, wind in her hair, looking out the side, a cheap flip phone in her lap",
+   "light": "low sunset sun left",
+   "status": "done",
+   "identity": "painted4 0.441 rank 1 FAIL (shots 0.32); best of 4 renders 0.355-0.443",
+   "cutout": "PASS",
+   "final": "pieces/gta6-story/chars/lucia_car_final.png",
+   "notes": "6 gens; flip phone lost in the paint pass (cut below frame); lroof keeps pushing its denim outfit unless told 'never her clothes'"
+  },
+  {
+   "id": "lucia_phone",
+   "char": "lucia",
+   "beats": "3.6 6.6 6.8 8.2b",
+   "pose": "sits on a step at night, a cheap flip phone pressed to her ear, whispering, phone glow on her face, guarded look",
+   "light": "phone glow + cool moon rim",
+   "status": "done",
+   "identity": "painted3 0.487 rank 1 near-PASS (shots 0.34)",
+   "cutout": "PASS",
+   "final": "pieces/gta6-story/chars/lucia_phone_final.png",
+   "notes": "4 gens; top became a grey halter"
+  },
+  {
+   "id": "brian_beers",
+   "char": "brian",
+   "beats": "4.1 4.2 4.2b",
+   "pose": "stands on a wooden dock holding two beer bottles by the necks, stern, not smiling, looking off to the side",
+   "light": "low dusk sun left",
+   "status": "done",
+   "identity": "0.486 rank 1 PASS",
+   "cutout": "PASS",
+   "final": "pieces/gta6-story/chars/brian_beers_final.png",
+   "notes": "2 gens; bottles dark, low contrast against the shirt"
+  },
+  {
+   "id": "jason_dock",
+   "char": "jason",
+   "beats": "4.2 4.2b 4.6",
+   "pose": "standing, both hands open in a defensive 'come on' gesture, frowning, talking",
+   "light": "low dusk sun right",
+   "status": "done",
+   "identity": "0.502 rank 1 PASS",
+   "cutout": "PASS",
+   "final": "pieces/gta6-story/chars/jason_dock_final.png",
+   "notes": "2 gens"
+  },
+  {
+   "id": "lori_ref",
+   "char": "lori",
+   "beats": "anchor",
+   "pose": "NEW character Lori, Brian's wife: white woman ~60, deeply tanned leathery skin, big bleached-blonde blow-dried hair, heavy eye make-up, gold hoop earrings, loud tropical-print blouse. Neutral portrait chest-up",
+   "light": "hard sun left",
+   "status": "done",
+   "identity": "anchor (NB Pro photo)",
+   "cutout": "n/a",
+   "final": "pieces/gta6-story/id/lori.jpg",
+   "notes": "painted face crop: id/lori_painted.jpg"
+  },
+  {
+   "id": "lori_shrimp",
+   "char": "lori",
+   "beats": "4.3",
+   "pose": "comes down wooden steps carrying a plate of shrimp with both hands, big friendly smile",
+   "light": "low dusk sun left",
+   "status": "done",
+   "identity": "0.646 PASS",
+   "cutout": "PASS",
+   "final": "pieces/gta6-story/chars/lori_shrimp_final.png",
+   "notes": "2 gens; painted face crop id/lori_painted.jpg"
+  },
+  {
+   "id": "cal_scanner",
+   "char": "cal",
+   "beats": "4.4 4.5 4.6",
+   "pose": "at night on a porch, leaning over a table with a glowing police scanner radio, marker in hand, whispering, paranoid eyes; keep his big round belly and thick arms",
+   "light": "scanner glow + porch bulb",
+   "status": "done",
+   "identity": "painted2 0.404 rank 1 FAIL (painted3 0.419 had shirt text)",
+   "cutout": "PASS",
+   "final": "pieces/gta6-story/chars/cal_scanner_final.png",
+   "notes": "6 gens; 'whispering' made NB Pro put a hand over his mouth twice; final pose: marker + green-screen scanner in hands, no table"
+  },
+  {
+   "id": "boobie_booth",
+   "char": "boobie",
+   "beats": "5.2 5.2b 5.5",
+   "pose": "seated in a club booth, leaning forward on the table, rings on his fingers, sunglasses, talking low",
+   "light": "neon pink right, cyan left",
+   "status": "done",
+   "identity": "painted3 0.471 rank 1 PASS",
+   "cutout": "PASS",
+   "final": "pieces/gta6-story/chars/boobie_booth_final.png",
+   "notes": "3 gens; sunglasses pushed up on head"
+  },
+  {
+   "id": "raul_booth",
+   "char": "raul",
+   "beats": "5.2 5.3 5.6",
+   "pose": "seated in a club booth in a cream linen suit, relaxed, studying someone, slight knowing smile",
+   "light": "neon pink left",
+   "status": "done",
+   "identity": "0.625 rank 1 PASS",
+   "cutout": "PASS",
+   "final": "pieces/gta6-story/chars/raul_booth_final.png",
+   "notes": "2 gens; paint pass added his tinted glasses (as in official art)"
+  },
+  {
+   "id": "jason_club",
+   "char": "jason",
+   "beats": "5.2b 5.6b",
+   "pose": "seated in a nightclub holding a glass, dark shirt, cool and tired",
+   "light": "neon pink right",
+   "status": "done",
+   "identity": "0.498 rank 1 PASS",
+   "cutout": "PASS",
+   "final": "pieces/gta6-story/chars/jason_club_final.png",
+   "notes": "2 gens"
+  },
+  {
+   "id": "lucia_club",
+   "char": "lucia",
+   "beats": "5.3 5.6b",
+   "pose": "seated in a nightclub in a black going-out top and gold hoops, holding a glass, cool unimpressed look",
+   "light": "neon cyan left, pink right",
+   "status": "done",
+   "identity": "painted4 0.506 rank 1 near-PASS (shots 0.33)",
+   "cutout": "PASS",
+   "final": "pieces/gta6-story/chars/lucia_club_final.png",
+   "notes": "6 gens; photo retried with 3/4 head turn; martini glass"
+  },
+  {
+   "id": "drequan_film",
+   "char": "drequan",
+   "beats": "5.4",
+   "pose": "holds a phone up horizontally filming, shouting directions with the other hand pointing, club neon",
+   "light": "neon pink left",
+   "status": "fail",
+   "identity": "painted1 0.408 rank 1 FAIL (retries 0.38/0.36/0.34)",
+   "cutout": "PASS",
+   "final": "pieces/gta6-story/chars/drequan_film_final.png",
+   "notes": "6 gens; first photo (dark bg) lost both hands, redid on grey wall; phone present; forearm tattoo has script lettering (paint over in code if readable)"
+  },
+  {
+   "id": "lucia_mirror",
+   "char": "lucia",
+   "beats": "5.7 5.7b",
+   "pose": "stands at a bathroom sink typing on a cheap flip phone, looking at her own reflection, guilty",
+   "light": "neon pink through a door, right",
+   "status": "done",
+   "identity": "0.538 rank 1 near-PASS (shots 0.36)",
+   "cutout": "PASS",
+   "final": "pieces/gta6-story/chars/lucia_mirror_final.png",
+   "notes": "2 gens; flip phone reads as a small dark phone (closed-looking) in her hands; top became a dark criss-cross halter"
+  },
+  {
+   "id": "raul_shout",
+   "char": "raul",
+   "beats": "6.2 6.3b 6.5",
+   "pose": "in a car back seat clutching a canvas cash bag, shouting, eyes wide, police lights",
+   "light": "red/blue police light",
+   "status": "done",
+   "identity": "0.575 rank 1 PASS",
+   "cutout": "PASS",
+   "final": "pieces/gta6-story/chars/raul_shout_final.png",
+   "notes": "2 gens; police red/blue to be added in grade"
+  },
+  {
+   "id": "jason_bills",
+   "char": "jason",
+   "beats": "6.7 6.8b",
+   "pose": "counting a few crumpled dollar bills in his hands, frowning, parking-garage light",
+   "light": "sodium garage light from above left",
+   "status": "done",
+   "identity": "0.465 rank 1 PASS",
+   "cutout": "PASS",
+   "final": "pieces/gta6-story/chars/jason_bills_final.png",
+   "notes": "2 gens; block-in had a hole in the white tank top, paint pass filled it"
+  },
+  {
+   "id": "cal_tape",
+   "char": "cal",
+   "beats": "7.1 7.1b 7.2 7.8",
+   "pose": "soaked by rain in a wet windbreaker over his flower shirt, holding up a small cassette recorder, urgent; keep belly and thick arms",
+   "light": "motel neon pink + rain",
+   "status": "done",
+   "identity": "painted3 0.575 rank 1 PASS (painted1 0.34, painted2 0.25 no-sunglasses, painted4 0.42 rank 2)",
+   "cutout": "PASS",
+   "final": "pieces/gta6-story/chars/cal_tape_final.png",
+   "notes": "5 gens; only passes with his aviator sunglasses on; chosen pass lost the flower shirt (dark jacket over grey graphic tee) and the recorder reads as a black phone (add cassette recorder in code); belly not big; passes that kept the flower shirt copied the ref's printed tee text"
+  },
+  {
+   "id": "jason_bed",
+   "char": "jason",
+   "beats": "7.4 7.5 7.6 7.7b",
+   "pose": "sits on the edge of a motel bed, elbows on knees, hands together, staring down, betrayed",
+   "light": "lamp light left, blue window right",
+   "status": "done",
+   "identity": "painted4 0.466 rank 1 PASS",
+   "cutout": "PASS",
+   "final": "pieces/gta6-story/chars/jason_bed_final.png",
+   "notes": "6 gens; head-down photo stuck at 0.41-0.44, photo retried with head level + eyes down; cutout FAIL (halo 3.3%) fixed with qa_cutout --fix (2.0%)"
+  },
+  {
+   "id": "lucia_shout",
+   "char": "lucia",
+   "beats": "7.5 7.6 7.7",
+   "pose": "stands in a motel room shouting with tears in her eyes, one hand open toward someone",
+   "light": "lamp light right",
+   "status": "fail",
+   "identity": "painted2 0.434 rank 1 FAIL (shots 0.30; others 0.41/0.44 rank 2/0.42)",
+   "cutout": "PASS",
+   "final": "pieces/gta6-story/chars/lucia_shout_final.png",
+   "notes": "6 gens; shouting face drifts off-model; photo retry (photo2) scored lower (0.33) and was discarded"
+  },
+  {
+   "id": "jason_swamp",
+   "char": "jason",
+   "beats": "8.3 8.3b 8.5",
+   "pose": "wet, blood on his left arm, holding a mangrove branch back with one hand, shouting back over his shoulder",
+   "light": "red and blue police lights in mist",
+   "status": "done",
+   "identity": "painted2 0.550 rank 1 PASS",
+   "cutout": "PASS",
+   "final": "pieces/gta6-story/chars/jason_swamp_final.png",
+   "notes": "3 gens; branch painted in his right hand (kept in cutout); blood on left forearm"
+  },
+  {
+   "id": "lucia_swamp",
+   "char": "lucia",
+   "beats": "8.4 8.5 8.6",
+   "pose": "knee-deep in black swamp water, wet hair, holding a folding knife, determined, tank top",
+   "light": "red and blue police lights in mist",
+   "status": "fail",
+   "identity": "painted4 0.453 rank 1 FAIL (shots 0.30; others 0.45/0.38/0.42)",
+   "cutout": "PASS",
+   "final": "pieces/gta6-story/chars/lucia_swamp_final.png",
+   "notes": "6 gens; knife kept; photo retry (photo2, 0.31) discarded; crop at waist so the water line goes in the bg"
+  }
+ ],
+ "backgrounds": [
+  {
+   "id": "bg_cell",
+   "desc": "night prison cell: two steel bunks (one on each side, the lower-middle open), concrete walls, a flickering fluorescent strip light, barred door on the right",
+   "beats": "1.1-1.6",
+   "status": "done",
+   "path": "pieces/gta6-story/bg/bg_cell.jpg",
+   "notes": "1 gen; barred door right, toilet between bunks; sat x1.25 (cut_layer --plate)"
+  },
+  {
+   "id": "bg_gate",
+   "desc": "hard-sun road outside a prison gate: chain-link and razor wire, guard tower, a matte black 1970s muscle car parked on the right side, empty lower-middle",
+   "beats": "3.1 3.2 3.2b",
+   "status": "done",
+   "path": "pieces/gta6-story/bg/bg_gate.jpg",
+   "notes": "1 gen; dusty desert-ish road, warm morning sun; sat x1.25 (cut_layer --plate)"
+  },
+  {
+   "id": "bg_highway",
+   "desc": "Overseas Highway style long bridge over green water at sunset, a small black muscle car crossing, pelicans",
+   "beats": "3.3",
+   "status": "done",
+   "path": "pieces/gta6-story/bg/bg_highway.jpg",
+   "notes": "2 gens; 1st copied Vice City ref (people+text); 2nd bridge side view, a bit flat/simple; sat x1.25 (cut_layer --plate)"
+  },
+  {
+   "id": "bg_car_int",
+   "desc": "inside a classic convertible car at sunset seen from the back seat: two empty front seats, dashboard, the road and palm trees ahead",
+   "beats": "3.3b 6.1b",
+   "status": "done",
+   "path": "pieces/gta6-story/bg/bg_car_int.jpg",
+   "notes": "1 gen; red retro convertible interior, empty seats; sat x1.25 (cut_layer --plate)"
+  },
+  {
+   "id": "bg_gas",
+   "desc": "small old Keys gas station at golden hour, pumps, palm trees, ice machine, a black muscle car at a pump",
+   "beats": "3.4",
+   "status": "done",
+   "path": "pieces/gta6-story/bg/bg_gas.jpg",
+   "notes": "1 gen; blank signs; sat x1.25 (cut_layer --plate)"
+  },
+  {
+   "id": "bg_trailer",
+   "desc": "trailer park at night, a single-wide trailer with a lit window and front step, moonlight, palms, mosquitoes in the porch light",
+   "beats": "3.6",
+   "status": "done",
+   "path": "pieces/gta6-story/bg/bg_trailer.jpg",
+   "notes": "1 gen; mosquitoes barely visible; sat x1.25 (cut_layer --plate)"
+  },
+  {
+   "id": "bg_porch",
+   "desc": "Cal's screened porch at night: a wall covered with handwritten dates and pinned papers, a table with beer cans and a radio scanner, a bare bulb, empty chair",
+   "beats": "4.4 4.5 4.6",
+   "status": "done",
+   "path": "pieces/gta6-story/bg/bg_porch.jpg",
+   "notes": "1 gen; notes wall with red string, scribbles unreadable; table on the left; sat x1.25 (cut_layer --plate)"
+  },
+  {
+   "id": "bg_club_stage",
+   "desc": "nightclub stage with neon, a pole, smoke, a ring light, empty floor",
+   "beats": "5.4",
+   "status": "done",
+   "path": "pieces/gta6-story/bg/bg_club_stage.jpg",
+   "notes": "1 gen; abstract neon wall, pole + ring light; sat x1.25 (cut_layer --plate)"
+  },
+  {
+   "id": "bg_bathroom",
+   "desc": "nightclub bathroom: mirror over a sink, graffiti-free tiles, pink neon bleeding through the door gap",
+   "beats": "5.7 5.7b",
+   "status": "done",
+   "path": "pieces/gta6-story/bg/bg_bathroom.jpg",
+   "notes": "1 gen; mirror reflects no one; sat x1.25 (cut_layer --plate)"
+  },
+  {
+   "id": "bg_bank",
+   "desc": "bright morning city street at a bank curb: palm trees, an armored truck, a sedan at the curb with an open rear door",
+   "beats": "6.1 6.2",
+   "status": "done",
+   "path": "pieces/gta6-story/bg/bg_bank.jpg",
+   "notes": "1 gen; noon sun, truck + sedan open rear door; car plate blank-ish; sat x1.25 (cut_layer --plate)"
+  },
+  {
+   "id": "bg_garage",
+   "desc": "empty parking garage at night, sodium lights, concrete pillars, a black muscle car parked",
+   "beats": "6.6-6.8b",
+   "status": "done",
+   "path": "pieces/gta6-story/bg/bg_garage.jpg",
+   "notes": "1 gen; sodium orange stronger than the palette; sat x1.25 (cut_layer --plate)"
+  },
+  {
+   "id": "bg_motel_ext",
+   "desc": "roadside motel in heavy rain at night, VACANCY neon sign (no other text), puddles, doors along a walkway",
+   "beats": "7.1 7.1b",
+   "status": "done",
+   "path": "pieces/gta6-story/bg/bg_motel_ext.jpg",
+   "notes": "1 gen; only text = VACANCY neon; sat x1.25 (cut_layer --plate)"
+  },
+  {
+   "id": "bg_motel_room",
+   "desc": "cheap motel room at night: bed on the left, lamp, rain on the window, curtains, a small cassette recorder on the bedside table",
+   "beats": "7.2-7.8",
+   "status": "done",
+   "path": "pieces/gta6-story/bg/bg_motel_room.jpg",
+   "notes": "1 gen; recorder on bedside table; sat x1.25 (cut_layer --plate)"
+  },
+  {
+   "id": "bg_swamp",
+   "desc": "Everglades-like swamp at dawn: a dirt road ending in black water, mangroves, mist, a pickup truck stuck in the water",
+   "beats": "8.1-8.7",
+   "status": "done",
+   "path": "pieces/gta6-story/bg/bg_swamp.jpg",
+   "notes": "1 gen; red/blue glow at right edge; sat x1.25 (cut_layer --plate)"
+  }
+ ],
+ "inserts": [
+  {
+   "id": "ins_sign",
+   "desc": "close-up of a woman's hand with scarred knuckles signing a document with a cheap pen on a steel table",
+   "beats": "1.6 7.3",
+   "status": "done",
+   "path": "pieces/gta6-story/bg/ins_sign.jpg",
+   "notes": "1 gen; warm light rather than cold fluorescent; scars subtle; doc lines + signature unreadable; sat x1.25 (cut_layer --plate)"
+  },
+  {
+   "id": "ins_map",
+   "desc": "top-down heist plan: a city route map with a red marker line, a bus timetable under a man's finger with a gold ring, a canvas cash bag",
+   "beats": "5.5",
+   "status": "done",
+   "path": "pieces/gta6-story/bg/ins_map.jpg",
+   "notes": "1 gen; timetable has pseudo-letter scribbles (not real words); sat x1.25 (cut_layer --plate)"
+  },
+  {
+   "id": "ins_tire",
+   "desc": "extreme close-up of a muscle-car tyre screeching with smoke",
+   "beats": "6.3",
+   "status": "done",
+   "path": "pieces/gta6-story/bg/ins_tire.jpg",
+   "notes": "1 gen; car body reads lilac, not black; sat x1.25 (cut_layer --plate)"
+  },
+  {
+   "id": "ins_windshield",
+   "desc": "car windshield shattered by bullets from inside, a city street outside",
+   "beats": "6.3",
+   "status": "done",
+   "path": "pieces/gta6-story/bg/ins_windshield.jpg",
+   "notes": "1 gen; sat x1.25 (cut_layer --plate)"
+  },
+  {
+   "id": "ins_heli",
+   "desc": "police helicopter at low altitude with a spotlight beam, skyline",
+   "beats": "6.3 6.3b 8.1",
+   "status": "done",
+   "path": "pieces/gta6-story/bg/ins_heli.jpg",
+   "notes": "2 gens; 1st had a drawn panel border; sat x1.25 (cut_layer --plate)"
+  },
+  {
+   "id": "ins_phone",
+   "desc": "a woman's hand holding a cheap flip phone with a glowing blank screen, neon bathroom light",
+   "beats": "5.7 6.6",
+   "status": "done",
+   "path": "pieces/gta6-story/bg/ins_phone.jpg",
+   "notes": "2 gens; retry policy-flagged, used 1st with its drawn panel border cropped off; sat x1.25 (cut_layer --plate)"
+  },
+  {
+   "id": "ins_phone_water",
+   "desc": "a cracked flip phone sinking in black swamp water, red-blue reflections",
+   "beats": "8.4 8.5b",
+   "status": "done",
+   "path": "pieces/gta6-story/bg/ins_phone_water.jpg",
+   "notes": "1 gen; sat x1.25 (cut_layer --plate)"
+  },
+  {
+   "id": "ins_knife_band",
+   "desc": "a folding knife cutting a black ankle monitor strap on a wet ankle in swamp water",
+   "beats": "8.5 8.5b",
+   "status": "done",
+   "path": "pieces/gta6-story/bg/ins_knife_band.jpg",
+   "notes": "1 gen; darker-skinned ankle/hand; sat x1.25 (cut_layer --plate)"
+  }
+ ],
+ "reused": {
+  "brian_plate": "4.1-4.3 dock",
+  "drequan_plate": "5.1 Jack of Hearts exterior",
+  "boobie_plate": "5.2-5.3 booth",
+  "bay_plate": "6.4 causeway",
+  "raul_plate": "6.5 Little Haiti",
+  "c_*.png (8 approved credits poses)": "0.x, 2.x, 9.1"
+ }
+}

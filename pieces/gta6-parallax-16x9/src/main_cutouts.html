@@ -1,0 +1,142 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>gta6-parallax-16x9</title>
+<style>html,body{margin:0;background:#111}canvas{display:block;max-width:100vw;max-height:100vh;margin:auto}</style>
+</head><body><canvas id="c" width="1920" height="1080"></canvas>
+<script>
+"use strict";
+// GTA VI loading-screen test, 16:9, official cast (private test). Layers cut from the official artworks
+// (cut_layer.py) + Flow clean plates, parallax camera, everything stepped at 12 fps (STYLE.md motion rules).
+const STYLE = { name: 'gta6', ones: false };
+const W = 1920, H = 1080, FPS = 24, STEP = 12, DUR = 20.5;
+window.TIMELINE = { width: W, height: H, fps: FPS, duration: DUR, frames: Math.round(DUR * FPS) };
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const lin = (t, a, b) => clamp((t - a) / (b - a));
+const outCubic = (x) => 1 - Math.pow(1 - x, 3);
+const outBack = (x) => { const c = 1.6; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+const inCubic = (x) => x * x * x;
+
+let PRINT = null;
+function makePrint() {
+  const c = document.createElement('canvas'); c.width = W; c.height = H; const g = c.getContext('2d');
+  const id = g.createImageData(W, H), d = id.data; let s = 1234567;
+  const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const P = 7, ang = 0.5, ca = Math.cos(ang), sa = Math.sin(ang);
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const u = (x * ca + y * sa) / P, v = (-x * sa + y * ca) / P;
+    const fu = u - Math.floor(u) - .5, fv = v - Math.floor(v) - .5;
+    const dot = Math.sqrt(fu * fu + fv * fv) < .28 ? 1 : 0;
+    const i = (y * W + x) * 4; const val = 128 + (dot ? -20 : 6) + (rnd() - .5) * 28;
+    d[i] = d[i + 1] = d[i + 2] = val; d[i + 3] = 255;
+  }
+  g.putImageData(id, 0, 0); return c;
+}
+// full-frame layer with the camera: depth-weighted zoom about the centre + pan
+function layer(g, img, cam, depth, dx = 0, dy = 0, extra = 1) {
+  const k = Math.pow(cam.z, 0.35 + depth * 1.3) * extra;
+  const w = W * 1.004 * k, h = H * 1.004 * k;
+  const px = cam.px * (0.3 + depth), py = cam.py * (0.3 + depth);
+  g.drawImage(img, W / 2 - w / 2 + dx + px, H / 2 - h / 2 + dy + py, w, h);
+}
+function fronds(g, img, cam, dy, sway) {      // two frond clusters in the top corners, nearest depth
+  const k = Math.pow(cam.z, 1.65), w = 700 * k, h = w * img.height / img.width;
+  g.drawImage(img, -260 + sway + cam.px * 1.3, dy, w, h);
+  g.save(); g.translate(W, 0); g.scale(-1, 1); g.drawImage(img, -260 - sway - cam.px * 1.3, dy - 40, w, h); g.restore();
+}
+function title(g, lines, x, y, size, p, tilt = -0.06, sticker = null) {
+  if (p <= 0) return;
+  const s = outBack(clamp(p));
+  g.save(); g.translate(x, y); g.rotate(tilt); g.scale(s, s);
+  g.font = `900 ${size}px "Impact","Haettenschweiler","Arial Narrow Bold",sans-serif`;
+  g.textBaseline = 'alphabetic'; g.lineJoin = 'round';
+  lines.forEach((t, i) => {
+    const yy = i * size * 0.92;
+    g.fillStyle = '#2a1036'; g.fillText(t, 12, yy + 14);
+    g.lineWidth = size * 0.16; g.strokeStyle = '#140818'; g.strokeText(t, 0, yy);
+    const gr = g.createLinearGradient(0, yy - size, 0, yy); gr.addColorStop(0, '#FFFFFF'); gr.addColorStop(1, '#FFE2B0');
+    g.fillStyle = gr; g.fillText(t, 0, yy);
+  });
+  if (sticker) {
+    const [txt, sx, sy] = sticker; g.translate(sx, sy); g.rotate(0.09);
+    g.font = `900 ${size * 0.5}px "Impact",sans-serif`; const tw = g.measureText(txt).width;
+    g.fillStyle = '#140818'; g.fillRect(-14 + 8, -size * 0.5 - 6 + 8, tw + 28, size * 0.66);
+    g.fillStyle = '#FFE14D'; g.fillRect(-14, -size * 0.5 - 6, tw + 28, size * 0.66);
+    g.fillStyle = '#140818'; g.fillText(txt, 0, 2);
+  }
+  g.restore();
+}
+function grade(g) {
+  g.globalCompositeOperation = 'soft-light'; g.globalAlpha = 0.2; g.drawImage(PRINT, 0, 0); g.globalAlpha = 1;
+  g.globalCompositeOperation = 'multiply'; const v = g.createRadialGradient(W / 2, H * .5, H * .45, W / 2, H * .5, W * .62);
+  v.addColorStop(0, 'rgba(255,255,255,1)'); v.addColorStop(1, 'rgba(130,90,160,1)');
+  g.globalAlpha = 0.28; g.fillStyle = v; g.fillRect(0, 0, W, H); g.globalAlpha = 1;
+  g.globalCompositeOperation = 'source-over';
+}
+// camera per shot: ease-out push-in (+10 % in ~1 s), then a slow creep
+function shotCam(T, t0, t1, pan) {
+  const z = 1 + 0.055 * outCubic(lin(T, t0, t0 + 1.0)) + 0.02 * lin(T, t0 + 1.0, t1);   // 16:9 crops are tight: smaller push than 9:16
+  return { z, px: pan * lin(T, t0, t1), py: 14 * outCubic(lin(T, t0, t0 + 1.0)) };
+}
+// push transition (16:9 "character swap"): the new plate slides in from the left and shoves the old scene
+// right; the new character follows ~6 frames later with an out-back overshoot
+function push(T, t0) {
+  const pPlate = outCubic(lin(T, t0, t0 + 0.5)), pChar = outBack(lin(T, t0 + 0.25, t0 + 0.75)), pOld = inCubic(lin(T, t0, t0 + 0.45));
+  return { oldX: W * 1.1 * pOld, plateX: -W * (1 - pPlate), charX: -W * 1.1 * (1 - pChar), on: T >= t0, done: T >= t0 + 0.75 };
+}
+
+// timeline: S1 Jason & Lucia 0-4 | bg swap 4.0-4.8 | S2 beach 4.8-7.6 | push Raul 7.6 | bg swap 11.0 |
+//           push Real Dimez 13.6 | push Cal 16.8 | end title 17.9
+function frame(g, T) {
+  const A = ASSETS;
+  g.fillStyle = '#C9A6D8'; g.fillRect(0, 0, W, H);
+  const bob = (ph) => Math.sin(T * 2.1 + ph) * 5;
+  if (T < 8.2) {                                          // ---- S1 + S2: Jason & Lucia
+    const cam = T < 4.8 ? shotCam(T, 0, 4.8, -24) : shotCam(T, 4.8, 8.2, 20);
+    const P = push(T, 7.6);
+    const ox = P.on ? P.oldX : 0;
+    const out1 = inCubic(lin(T, 4.0, 4.5)), in2 = outCubic(lin(T, 4.25, 4.85));
+    if (T < 4.5) layer(g, A['jl_plate.jpg'], cam, 0.12, ox, -H * 1.06 * out1);
+    if (T >= 4.25) layer(g, A['vc_beach.jpg'], cam, 0.1, ox, H * 1.06 * (1 - in2));
+    const rise = 110 * (1 - outCubic(lin(T, 0, 0.9))), lift = T > 4.0 && T < 4.9 ? -18 * Math.sin(Math.PI * lin(T, 4.0, 4.9)) : 0;
+    layer(g, A['jl.png'], cam, 0.3, ox, rise + bob(0) + lift);
+    const fIn = outCubic(lin(T, 0, 0.8)), fOut = inCubic(lin(T, 3.9, 4.25)), f2 = outCubic(lin(T, 4.6, 5.2));
+    if (T < 4.25) fronds(g, A['fronds.png'], cam, -300 - 420 * (1 - fIn) - 700 * fOut, 14 * Math.sin(T * 1.3));
+    else if (T < 7.6) fronds(g, A['fronds.png'], cam, -290 - 500 * (1 - f2), 14 * Math.sin(T * 1.3));
+    if (P.on) { layer(g, A['raul_plate.jpg'], shotCam(T, 7.6, 11.8, -20), 0.12, P.plateX); layer(g, A['raul.png'], shotCam(T, 7.6, 11.8, -20), 0.3, P.charX); }
+  } else if (T < 14.2) {                                  // ---- S3 + S4: Raul Bautista
+    const cam = T < 11.8 ? shotCam(T, 7.6, 11.8, -20) : shotCam(T, 11.8, 14.2, 18);
+    const P = push(T, 13.6);
+    const ox = P.on ? P.oldX : 0;
+    const out1 = inCubic(lin(T, 11.0, 11.5)), in2 = outCubic(lin(T, 11.25, 11.85));
+    if (T < 11.5) layer(g, A['raul_plate.jpg'], cam, 0.12, ox, -H * 1.06 * out1);
+    if (T >= 11.25) layer(g, A['keys_beach.jpg'], cam, 0.1, ox, H * 1.06 * (1 - in2));
+    const lift = T > 11.0 && T < 11.9 ? -18 * Math.sin(Math.PI * lin(T, 11.0, 11.9)) : 0;
+    layer(g, A['raul.png'], cam, 0.3, ox, bob(1) + lift);
+    if (P.on) { const c2 = shotCam(T, 13.6, 17.4, -18); layer(g, A['dimez_plate.jpg'], c2, 0.12, P.plateX); layer(g, A['dimez.png'], c2, 0.3, P.charX); }
+  } else if (T < 17.4) {                                  // ---- S5: Real Dimez
+    const cam = shotCam(T, 13.6, 17.4, -18);
+    const P = push(T, 16.8);
+    const ox = P.on ? P.oldX : 0;
+    layer(g, A['dimez_plate.jpg'], cam, 0.12, ox);
+    layer(g, A['dimez.png'], cam, 0.3, ox, bob(2));
+    if (P.on) { const c2 = shotCam(T, 16.8, DUR, 16); layer(g, A['cal_plate.jpg'], c2, 0.12, P.plateX); layer(g, A['cal.png'], c2, 0.2, P.charX); }
+  } else {                                                // ---- S6: Cal Hampton + end title
+    const cam = shotCam(T, 16.8, DUR, 16);
+    layer(g, A['cal_plate.jpg'], cam, 0.12);
+    layer(g, A['cal.png'], cam, 0.2, 0, bob(3) * 0.6);
+  }
+  grade(g);
+  if (T > 0.4 && T < 3.7) title(g, ['LEONIDA', 'STORIES'], 120, 820, 150, lin(T, 0.4, 0.7) * (1 - lin(T, 3.45, 3.7)), -0.06, ['TEST 01', 520, 170]);
+  if (T > 17.9) title(g, ['LEONIDA', 'STORIES'], 110, 300, 140, lin(T, 17.9, 18.25), -0.06, ['COMING SOON', 470, 160]);
+}
+window.renderFrame = function (t, canvas) {
+  const cv = canvas || document.getElementById('c'); const g = cv.getContext('2d');
+  if (!PRINT) PRINT = makePrint();
+  const T = Math.floor(t * STEP + 1e-6) / STEP;              // everything on 2s (12 fps)
+  g.save(); g.imageSmoothingQuality = 'high'; frame(g, T); g.restore();
+};
+if (!/export=1/.test(location.search)) {
+  let t0 = performance.now();
+  const loop = () => { if (window.renderFrame) window.renderFrame(((performance.now() - t0) / 1000) % DUR); requestAnimationFrame(loop); };
+  (window.ASSETS_READY || Promise.resolve()).then(loop);
+}
+</script></body></html>

@@ -1,0 +1,38 @@
+zaw-dog #8 storyboard QA (2026-11-16), preview = review/preview_moves.mp4 (540x960, 674 frames, 22.47 s)
+
+VOICE (Whisper medium, voice/whisper_check.txt): voice.wav and voice_retro.wav ratio 1.000, 0 word diffs (77/77 words).
+MIX (sound/out/final_mix.wav):  I: -11.3 LUFS  Peak: -2.6 dBFS 
+  earshot timeline: hero bark onset 2.26 s (cue 2.25), in the gap after "him" (ends 1.95; next word 2.77); all 9 picture cues answered within 100 ms.
+
+POPCHECK (consecutive-frame steps, review/popcheck_preview.txt):
+674 frames; cut steps (expected): 16; in-shot step median 4.51
+flags (beat, frame, step, beat median): [('01b', 69, 24.2, 5.2), ('01b', 70, 22.2, 5.2), ('02c', 165, 23.6, 5.3), ('02c', 166, 24.9, 5.3), ('06a', 427, 17.8, 3.5), ('06a', 428, 25.4, 3.5), ('06a', 429, 25.4, 3.5), ('06a', 430, 19.2, 3.5), ('07a', 554, 22.8, 4.8), ('07a', 555, 32.4, 4.8), ('07a', 556, 28.4, 4.8), ('07a', 557, 19.1, 4.8), ('07c', 637, 12.7, 2.6), ('07c', 638, 13.3, 2.6)]
+  -> every flag is a designed accent: 01b bark snap-zoom, 02c / 06a / 07a whip-ins in the first frames after the cut, 07c snap on the busted face.
+
+FLIP-FLOP flicker (review/flipflop_preview.txt, % pixels jumping and back):
+01a: flip-flop 0.26%  worst 0.46%
+01b: flip-flop 0.79%  worst 6.42%
+02a: flip-flop 0.14%  worst 0.64%
+02b: flip-flop 0.34%  worst 0.47%
+02c: flip-flop 0.70%  worst 4.97%
+03a: flip-flop 0.57%  worst 1.00%
+03b: flip-flop 0.43%  worst 0.96%
+04a: flip-flop 0.47%  worst 1.89%
+04b: flip-flop 0.25%  worst 0.68%
+05a: flip-flop 0.22%  worst 0.76%
+05b: flip-flop 1.44%  worst 4.12%
+06a: flip-flop 0.84%  worst 6.77%
+06b: flip-flop 0.09%  worst 0.18%
+06c: flip-flop 0.28%  worst 0.78%
+07a: flip-flop 0.82%  worst 8.75%
+07b: flip-flop 0.43%  worst 4.29%
+07c: flip-flop 0.23%  worst 1.36%
+  -> 05b 1.44 % is the fast trot past the rug (the camera no longer tracks the dog; it was 4.33 %); every other shot < 0.9 %.
+
+FEET / INTERSECTIONS (review/feet_check.txt, every 2nd frame of every shot):
+  dog lowest -0.008..-0.002 m (on the floor, no float), people lowest -0.006..+0.001 m;
+  dog vertices in a human 0 in every shot (min gap 0.083 m, 03a); dog vertices at the glass panes 0;
+  human vertices within 2 cm of a glass pane 2-3 (scientist, lab shots; the arm passes through the gap only).
+
+API REVIEW (revisar_render --estilo lowpolyshorts): review/preview_moves_revision.md (v2, NO LISTO: kit-v6 human seams/hands,
+  the dog's hind legs on the trot, 06c reads as a brown mass); v1 in review/preview_moves_revision_v0.md.

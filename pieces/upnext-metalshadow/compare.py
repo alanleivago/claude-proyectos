@@ -15,7 +15,7 @@ import compose as C                                                 # noqa: E402
 
 meta = json.loads((ENG / "stills" / "sb_meta.json").read_text(encoding="utf-8"))
 W, H = C.W, C.H; S = 0.5; w, h = int(W * S), int(H * S)
-F = lambda n: ImageFont.truetype("C:/Windows/Fonts/arialbd.ttf", n)
+F = lambda n: ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial Bold.ttf", n)
 cols = [("REF (@jongmin.design)", None), ("Pip (current)", "mentor"), ("MetalShadow 0.72 m", "mentor_ms")]
 sheet = Image.new("RGB", (3 * w + 4 * 24, 90 + len(meta) * (h + 70)), (18, 18, 22)); d = ImageDraw.Draw(sheet)
 d.text((24, 24), "upnext-01 key shots: ref | Pip | MetalShadow (same scene, camera, clip and expression; girl 1.6 m)", font=F(34), fill=(240, 240, 240))

@@ -3,7 +3,7 @@
 # smaller fists, welded knees, green collar island, pocket openings -> face atlases -> authored clips -> checks -> out/suitor.glb
 set -e
 cd "$(dirname "$0")"
-BL="/c/Program Files/Blender Foundation/Blender 5.2/blender.exe"
+BL="/Applications/Blender.app/Contents/MacOS/Blender"
 W=$(cygpath -wa .)
 python -I tools/geom.py wine > /dev/null          # v1 pass: writes tex/body.png (skin recolour) used by the face atlases
 python -I tools/face_atlas.py

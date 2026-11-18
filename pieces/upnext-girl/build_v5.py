@@ -1,11 +1,11 @@
 """upnext-girl v5: his piece-by-piece model (v5/pieces.json, one rigid piece per bone, his outliner breakdown) ->
 textured, rigged 'Girl' mesh. Vertices of every piece were placed against his turntable (12:14-12:24, calibrated
 camera, visual hull) and his rest frame (11:29); see v5/*.py. Texture, face atlas and rig as in build.py.
-exec in Blender:  exec(open(r"F:/Claude Proyectos/pieces/upnext-girl/build_v5.py").read())"""
+exec in Blender:  exec(open(r"/Users/alanleiva/claude-proyectos/pieces/upnext-girl/build_v5.py").read())"""
 import bpy, bmesh, json, os, math
 import numpy as np
 from mathutils import Vector
-_src = open(r"F:/Claude Proyectos/pieces/upnext-girl/build.py").read().split('if __name__ == "__main__" or True:')[0]
+_src = open(r"/Users/alanleiva/claude-proyectos/pieces/upnext-girl/build.py").read().split('if __name__ == "__main__" or True:')[0]
 exec(_src, globals())
 PJ = os.path.join(ROOT, "v5", "pieces.json")
 # his face measured at 12:23 (same camera): eye span +18 %, iris height -15 % -> face cell 1.18x wider (face plane widened

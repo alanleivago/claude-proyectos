@@ -2,7 +2,7 @@
 # inicios en cadena (pausa PAUSE entre partes de una linea, GAP entre lineas). python prep.py
 import json, shutil, re, numpy as np, soundfile as sf
 from faster_whisper import WhisperModel
-V = r"F:/Claude Proyectos/voces"
+V = r"/Users/alanleiva/claude-proyectos/voces"
 L = [  # id, tomas, texto (… = corte entre tomas), pausa tras la linea
  ("01_open", "57abec56,e563fe67", "Zombies took the city at nine… and you're locked inside the old police station.", 0.45),
  ("02_safe", "d26667b0,3268e924", "Sounds like the safest place in town… it isn't.", 0.5),

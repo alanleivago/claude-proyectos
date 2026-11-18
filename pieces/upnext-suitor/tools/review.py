@@ -3,7 +3,7 @@ import json, os, subprocess, sys
 from PIL import Image, ImageDraw, ImageFont
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BL = r"C:\Program Files\Blender Foundation\Blender 5.2\blender.exe"
+BL = r"/Applications/Blender.app/Contents/MacOS/Blender"
 TMP = os.path.join(ROOT, "review", "_tmp")
 os.makedirs(TMP, exist_ok=True)
 C = 0.0

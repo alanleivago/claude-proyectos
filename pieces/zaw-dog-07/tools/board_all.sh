@@ -3,7 +3,7 @@
 cd "$(dirname "$0")/../../.."
 B=/Applications/Blender.app/Contents/MacOS/Blender; LOG=pieces/zaw-dog-07/review/logs; mkdir -p $LOG
 MODE=${MODE:-board}
-beats=(01a 01b 02a 02b 03a 03b 04a 04b 04c 05a 05b 06a 06b 06c)
+beats=(01a 01b 01c 02a 02b 03a 03b 04a 04b 05a 05b 06a 06b 07a 07b 07c)
 (( $# )) && beats=("$@")
 for b in $beats; do
   ( $B -b -P pieces/zaw-dog-05/build.py -- exec pieces/zaw-dog-07/shots.py $MODE $b > $LOG/${MODE}_$b.log 2>&1

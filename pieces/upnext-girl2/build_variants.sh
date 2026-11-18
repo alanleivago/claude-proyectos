@@ -2,7 +2,7 @@
 # V2 (curvy, bare legs) and V3 (curvy, tights) from the V1 build (run build_final.sh first)
 set -e
 cd "$(dirname "$0")"
-BL="/c/Program Files/Blender Foundation/Blender 5.2/blender.exe"
+BL="/Applications/Blender.app/Contents/MacOS/Blender"
 python tools/variants.py ref/final_tex.npz ref/rig_in.npz
 "$BL" -b --factory-startup --python tools/bl_rig.py -- ref/rig_in_v2.npz out/girl2_curvy_bare.glb 2>&1 | grep RIG
 "$BL" -b --factory-startup --python tools/bl_rig.py -- ref/rig_in_v3.npz out/girl2_curvy_tights.glb 2>&1 | grep RIG

@@ -1,0 +1,45 @@
+zaw-dog #8 FINAL QA (2026-11-16): 1080x1920, 640 frames, 21.33 s; delivered share encode (libx264 CRF 24 slow, yuv420p, AAC 192k, +faststart).
+MIX: I: -11.3 LUFS  Peak: -2.6 dBFS 
+POPCHECK (renders/post):
+640 frames; cut steps (expected): 16; in-shot step median 3.41
+flags (beat, frame, step, beat median): [('01b', 67, 22.8, 5.6), ('02c', 153, 14.1, 3.4), ('02c', 154, 21.1, 3.4), ('02c', 155, 20.3, 3.4), ('02c', 156, 16.7, 3.4), ('06a', 405, 18.6, 2.4), ('06a', 406, 23.1, 2.4), ('06a', 407, 21.9, 2.4), ('06a', 408, 16.7, 2.4), ('07a', 527, 35.3, 6.6), ('07a', 528, 39.5, 6.6), ('07a', 529, 29.6, 6.6), ('07b', 583, 18.6, 4.4), ('07c', 638, 21.2, 3.3)]
+  -> all flags are designed accents (01b bark snap, 02c/06a/07a whips, 07b snap, 07c startle). The 05b trot->eat pop found here was fixed (dog_eat_blend) and re-exported.
+FLICKER (2nd difference, review/flicker_final.txt):
+01a: 2nd-diff mean 7.38  flicker px 5.02%  worst frame 4 14.75%
+01b: 2nd-diff mean 12.46  flicker px 7.97%  worst frame 68 30.06%
+02a: 2nd-diff mean 1.96  flicker px 0.63%  worst frame 91 2.53%
+02b: 2nd-diff mean 5.33  flicker px 3.53%  worst frame 124 5.20%
+02c: 2nd-diff mean 8.41  flicker px 6.82%  worst frame 155 36.62%
+03a: 2nd-diff mean 12.10  flicker px 9.74%  worst frame 192 13.80%
+03b: 2nd-diff mean 5.71  flicker px 5.31%  worst frame 230 7.79%
+04a: 2nd-diff mean 6.88  flicker px 5.22%  worst frame 283 14.66%
+04b: 2nd-diff mean 3.03  flicker px 1.85%  worst frame 296 2.79%
+05a: 2nd-diff mean 9.12  flicker px 7.56%  worst frame 367 14.49%
+05b: 2nd-diff mean 12.99  flicker px 10.36%  worst frame 383 18.87%
+06a: 2nd-diff mean 7.58  flicker px 5.94%  worst frame 407 37.33%
+06b: 2nd-diff mean 3.16  flicker px 2.01%  worst frame 449 3.74%
+06c: 2nd-diff mean 3.22  flicker px 1.62%  worst frame 493 3.61%
+07a: 2nd-diff mean 15.42  flicker px 12.64%  worst frame 528 53.31%
+07b: 2nd-diff mean 8.64  flicker px 4.90%  worst frame 584 24.29%
+07c: 2nd-diff mean 7.81  flicker px 5.99%  worst frame 638 21.17%
+FLIP-FLOP (true flicker, review/flipflop_final.txt):
+01a: flip-flop 0.25%  worst 0.91%
+01b: flip-flop 0.78%  worst 6.07%
+02a: flip-flop 0.02%  worst 0.24%
+02b: flip-flop 0.35%  worst 0.69%
+02c: flip-flop 0.68%  worst 5.89%
+03a: flip-flop 1.06%  worst 1.72%
+03b: flip-flop 0.14%  worst 0.61%
+04a: flip-flop 0.45%  worst 1.72%
+04b: flip-flop 0.13%  worst 0.18%
+05a: flip-flop 0.37%  worst 1.28%
+05b: flip-flop 1.23%  worst 3.31%
+06a: flip-flop 0.76%  worst 7.41%
+06b: flip-flop 0.02%  worst 0.08%
+06c: flip-flop 0.05%  worst 0.09%
+07a: flip-flop 1.75%  worst 9.75%
+07b: flip-flop 0.33%  worst 3.53%
+07c: flip-flop 0.36%  worst 1.46%
+FEET / INTERSECTIONS incl. ARM-VS-TORSO, every frame (review/feet_check.txt; same scenes as the final): arm-in-torso 0 in all 17 shots;
+  dog in human 0 (min gap 0.018 m); dog at glass 0; human at glass 0 (1 vertex in 03b); dog lowest -0.008..-0.002 m, people -0.008..+0.009 m.
+API REVIEW: review/final_revision.md = CASI (pre-fix pass: review/final_revision_prefix.md).

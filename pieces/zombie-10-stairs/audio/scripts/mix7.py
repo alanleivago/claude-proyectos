@@ -4,7 +4,7 @@
 import json, subprocess, numpy as np, soundfile as sf, pyloudnorm as pyln
 from scipy.ndimage import uniform_filter1d, minimum_filter1d
 SR = 48000
-P = r"F:/Claude Proyectos/pieces/zombie-07-saferoom"; C = f"{P}/audio/cand"; DC = r"F:/Claude Proyectos/assets/dino-crisis-sfx"
+P = r"/Users/alanleiva/claude-proyectos/pieces/zombie-07-saferoom"; C = f"{P}/audio/cand"; DC = r"/Users/alanleiva/claude-proyectos/assets/dino-crisis-sfx"
 CU = json.load(open(f"{P}/engine/cues.json", encoding="utf8")); W, T = CU["W"], CU["T"]; DUR = CU["END"]; N = int(DUR * SR); VEND = CU["VOICE_END"]
 PICK = json.load(open(f"{P}/audio/pick_sfx.json", encoding="utf8"))   # {clave: [archivo, credito]} (earshot rank)
 def load(path, a=None, b=None, trim=True, norm=True):
@@ -32,7 +32,7 @@ S = {k: load(f"{C}/{v[0]}", trim=k not in ("wind", "room_tone")) for k, v in PIC
 DEFAULT = load(f"{DC}/9PdkWu31Xwo.wav"); INV = load(f"{DC}/ch/inventory.wav", 1.78, 2.6)
 ALARM = load(f"{DC}/ch/rick_calling_beep.wav", 3.45, 4.1); KEY = load(f"{DC}/ch/bonus_2_rick_typing.wav", 2.17, 2.40)
 SUCCESS = load(f"{DC}/ch/keypad_unlock.wav", 26.5, 28.2)
-ZS = r"F:/Claude Proyectos/assets/zombie-sfx-yt/seg"; ZGROWL = load(f"{ZS}/z07_107.5.wav"); ZGROAN = load(f"{ZS}/z05_103.1.wav")
+ZS = r"/Users/alanleiva/claude-proyectos/assets/zombie-sfx-yt/seg"; ZGROWL = load(f"{ZS}/z07_107.5.wav"); ZGROAN = load(f"{ZS}/z05_103.1.wav")
 GL = hits(S["glass"], 6, 0.35, 0.08) or [S["glass"][:int(0.35 * SR)]]; TH = hits(S["thunk"], 4, 0.4, 0.05) or [S["thunk"][:int(0.4 * SR)]]; KN = hits(S["knock_wood"], 6, 0.35, 0.08) or hits(S["knock"], 6, 0.35)
 ease = lambda a, b, x: (lambda u: u * u * (3 - 2 * u))(min(1, max(0, (x - a) / (b - a))))
 def typed(t0, text, rate, db=-17):

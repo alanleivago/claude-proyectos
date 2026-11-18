@@ -42,8 +42,7 @@ def wf(line, idx, pre=0.08):
     return round((WL[line][idx]["s"] - pre) * FPS7)
 
 
-_g0, _g1 = WL[0][2]["e"], WL[0][3]["s"]                                # the hero bark: in the gap after "knows"
-BARK7 = round((_g0 + 0.1) * FPS7) / FPS7
+BARK7 = round((WL[0][5]["e"] + 0.3) * FPS7) / FPS7                     # v3: the hero bark onset in the clean gap AFTER "lying"
 
 # ---------------------------------------------------------------- set dressing (same kit fixes as #6), in SET units
 _pic = bpy.data.objects["pic1"]; _pic.data.materials.clear(); _pic.data.materials.append(mtex("pic_dog"))   # noqa: F821
@@ -109,6 +108,8 @@ CAST = {}
 
 
 def fix_human(P):
+    if not os.path.exists(os.path.join(Z7, "tex", f"{P.name}_body_fix.png")):   # (the scientist is used as-is)
+        return
     """#7 only, in memory: the repaired body texture (straight sleeve hem / collar, skin toned to the face) and strand
     shading on the hair mesh so it stops reading as a smooth cap."""
     fx_ = bpy.data.images.load(os.path.join(Z7, "tex", f"{P.name}_body_fix.png")); fx_.pack()
@@ -129,7 +130,7 @@ def fix_human(P):
         to_ = l_.to_socket; nt.links.remove(l_); nt.links.new(mx.outputs[2], to_)
 
 
-for s_ in ("owner", "mailman"):
+for s_ in ("owner", "mailman", "scientist"):
     P_ = HU.Human(s_)
     fix_human(P_)
     P_.body.modifiers.new("ps1", "NODES").node_group = bpy.data.node_groups["PS1Snap"]
@@ -139,8 +140,8 @@ for s_ in ("owner", "mailman"):
         c_ = P_.rig.pose.bones[f"lowerarm02.{sd}"].constraints.new("IK"); c_.target = tg; c_.chain_count = 4; c_.influence = 0.0
         P_.ik[sd] = (c_, tg)
     P_.show(False); P_.place((0, -40, 0)); CAST[s_] = P_
-OWN, MAIL = CAST["owner"], CAST["mailman"]
-ACT7 = {k: HU.load_action(k) for k in ("c_owner_idle", "k_point_forward", "c_mailman_idle")}
+OWN, MAIL, SCI = CAST["owner"], CAST["mailman"], CAST["scientist"]
+ACT7 = {k: HU.load_action(k) for k in ("c_owner_idle", "k_point_forward", "c_mailman_idle", "c_scientist_idle", "z6_sci_point")}
 FINGER_OPEN = 0.65
 
 
@@ -342,18 +343,21 @@ def dog_go(t, t0, dur, p0, bowl, expr, rate=2.0, eat_expr=None, stop=0.55):
     return dd, True
 
 
-# ================================================================ beats (t = s into the beat, d = beat length)
-# framing numbers (lens 25 mm, sensor 36 mm vertical): frame height = 1.44 x distance. Dog sitting = 0.87 m tall.
-def b01a(t, d):   # dog MFS -> MS (0.45 -> 0.6 of the frame), camera 0.8 m pitched down, push-in; owner cropped at the right edge; SNAP on the bark
+# ================================================================ beats v3 (user's 7-line script; t = s into the beat, d = beat length)
+# L1 owner/dog + the BARK after "lying" | L2 owner points at the treat, the dog runs to it | L3-L5 the Kyoto scientist
+# (kit-v6 scientist, as-is) in the "lab" (the living room) | L6 the mailman at the front door | L7 the owner cries.
+SCIP = OWNP                            # the scientist stands where the owner stood (the living room = the "lab")
+SCI_YAW = OWN_YAW
+
+
+def b01a(t, d):   # dog MFS -> MS, camera 0.74 m pitched down, push-in: the dog faces us, suspicious; owner cropped at the edge
     room("")
     hpose(OWN, "c_owner_idle", 1 + t * 30, (1.3, 0.75), yaw_to((1.3, 0.75), (0.2, -2.5)), "smile", sh=3)   # noqa: F821
-    dd = dog_sit_at((0.0, -0.55), (0.0, -3.0), "judging", t)
-    bark_jaw(dd, t, BARK7)
-    zc(t, d, (0.0, -0.55, 0.55), (0.0, -0.55, 0.57), (-8, 1.35, 0.74, LENS), (-3, 1.02, 0.73, LENS), e=1.6)
-    fx(t, snap=(BARK7 - 0.03, 1.14))
+    dog_sit_at((0.0, -0.55), (0.0, -3.0), "judging", t)
+    zc(t, d, (0.0, -0.55, 0.55), (0.0, -0.55, 0.57), (-8, 1.35, 0.74, LENS), (-3, 1.12, 0.73, LENS), e=1.6)
 
 
-def b01b(t, d):   # owner knee-up -> waist-up (head top ~0.2 from the top), chest-height camera, orbit + push; the dog's head low in frame, side-eyeing him
+def b01b(t, d):   # owner knee-up -> waist-up, chest-height camera, orbit + push: his lying grin; the dog side-eyes him
     room("")
     t1 = (BY7["01b"][1] - BY7["01a"][1]) / FPS7 + t
     op = (0.98, 0.55)
@@ -362,73 +366,86 @@ def b01b(t, d):   # owner knee-up -> waist-up (head top ~0.2 from the top), ches
     zc(t, d, (op[0] - 0.12, op[1], 1.35), (op[0] - 0.05, op[1], 1.4), (-24, 1.05, 1.3, LENS), (-8, 0.85, 1.36, LENS))
 
 
-def b02a(t, d):   # gentle HIGH beside his right arm: his POINTING HAND in the foreground, the food bowl, the dog sitting beyond, eager
+def b01c(t, d):   # dog MS 3/4, the HERO BARK in the gap after "lying"; SNAP-zoom on it
+    room("")
+    dd = dog_sit_at((0.0, -0.55), (0.3, -3.0), "judging", t)
+    bark_jaw(dd, t + BY7["01c"][1] / FPS7, BARK7)
+    zc(t, d, (0.02, -0.6, 0.6), (0.02, -0.6, 0.62), (14, 0.95, 0.74, LENS), (10, 0.85, 0.73, LENS), e=1.4)
+    fx(t, snap=(BARK7 - BY7["01c"][1] / FPS7 - 0.03, 1.15))
+
+
+def b02a(t, d):   # beside his right hip: his arm + POINTING HAND in profile at the treat (the food bowl); the dog beyond, eager
     room("FE")
     point_at(OWN, "k_point_forward", 30 + t * 20, OWNP, OWN_YAW, BOWL_PT_F, "smile", 3, ease7(t / 0.25), roll=ROLL7)
-    dog_sit_at(DOGS0, OWNP, "happy", t, wag=0.7)
-    zc(t, d, (-0.05, -1.0, 0.5), (-0.03, -1.0, 0.5), (203, 1.95, 0.92, 28), (206, 1.78, 0.9, 28), e=1.5)   # beside his right hip: arm + hand in profile
+    dog_sit_at((-0.38, -1.15), OWNP, "happy", t, wag=0.7)               # off the finger's line: the finger reads on the bowl
+    zc(t, d, (-0.05, -1.0, 0.5), (-0.03, -1.0, 0.5), (203, 1.95, 0.92, 28), (206, 1.78, 0.9, 28), e=1.5)
 
 
-def b02b(t, d):   # dog level (0.75 m) low behind the food bowl (foreground 0.6 m): the dog runs straight at us and eats; WHIP-in; his leg at the edge
+def b02b(t, d):   # dog level, low behind the food bowl (foreground): he runs straight to it and eats; WHIP-in
     room("FE")
     point_at(OWN, "k_point_forward", 50, OWNP, OWN_YAW, BOWL_PT_F, "smile", 3)
-    dd, eat = dog_go(t, 0.0, 0.62, DOGS0, FOODB, "happy", 2.4)
+    dd, eat = dog_go(t, 0.0, 0.7, DOGS0, FOODB, "happy", 2.4)
     D.happy_wag(dd["arm"], t, 0.8, 4.0, up=0.0)                         # noqa: F821
     zc(t, d, (-0.22, -0.92, 0.45), (-0.5, -0.55, 0.36), (196, 1.25, 0.68, LENS), (192, 1.0, 0.64, LENS), e=1.4)
     fx(t, whip=(-0.25, 0.22))
 
 
-def b03a(t, d):   # TOP-DOWN insert (long side along the room): full | empty bowl left / right, the dog's head at the bottom
-    # looking up; his arm + POINTING HAND swing in from the top (0.6 m from the lens) to the EMPTY bowl on "pointed";
-    # slow rotate + crane down; KYOTO, 2015
+def b03a(t, d):   # the "lab": the Kyoto SCIENTIST waist-up, chest-height camera, push + orbit; "KYOTO, 2015" pops on "Kyoto"
     room("FE")
-    point_at(OWN, "k_point_forward", 30 + t * 20, OWNP, OWN_YAW, BOWL_PT_E, "smile", 3, ease7((t - 0.25) / 0.55))
-    dog_sit_at((0.0, -0.95), OWNP, "happy", t, wag=0.6, level=-0.1)
+    hpose(SCI, "c_scientist_idle", 1 + t * 30, SCIP, SCI_YAW, "smile", sh=2)   # noqa: F821
+    hc = head_c(SCI)
+    zc(t, d, (hc.x - 0.08, hc.y, hc.z - 0.32), (hc.x - 0.03, hc.y, hc.z - 0.22), (8, 1.0, 1.25, LENS), (18, 0.78, 1.3, LENS), e=1.5)   # (orbit to the right: the lamppost no longer grows out of her head)
+    text_at("kyoto", t, WL[2][4]["s"] - BY7["03a"][1] / FPS7 - 0.05, 0.0, 0.56, 1.0, 0.6)   # noqa: F821
+
+
+def b03b(t, d):   # TOP-DOWN insert, slow rotate + crane down: the trick set up - full | empty bowl, the dog's head looking up, her shoes
+    room("FE")
+    hpose(SCI, "c_scientist_idle", 40 + t * 30, SCIP, SCI_YAW, "smile", sh=2)   # noqa: F821
+    dog_sit_at((0.0, -0.95), SCIP, "happy", t, wag=0.6, level=-0.1)
     u = ease7(t / d)
-    cam((0.02, -0.27 + 0.02 * u, 1.85 - 0.13 * u), (0.02, -0.2, 0.0), LENS, roll=math.radians(-10 + 20 * u))   # never exactly vertical: a dead-vertical look flipped 180 deg on frame 0   # noqa: F821
-    text_at("kyoto", t, 0.12, 0.0, -0.1, 1.0, 0.6)                       # between the bowls, under the arm, above the caption                        # noqa: F821
+    cam((0.02, -0.27 + 0.02 * u, 1.85 - 0.13 * u), (0.02, -0.2, 0.0), LENS, roll=math.radians(-10 + 20 * u))   # never exactly vertical   # noqa: F821
 
 
-def b03b(t, d):   # close on his POINTING HAND (0.7-0.9 m, from the side, hand in profile) over the EMPTY bowl; the dog trots in to it
+def b04a(t, d):   # close on her POINTING HAND (profile) over the EMPTY bowl; the dog trots in to it
     room("FE")
-    point_at(OWN, "k_point_forward", 30 + t * 20, OWNP, OWN_YAW, BOWL_PT_E, "smile", 3, 0.35 + 0.65 * ease7(t / 0.45), roll=ROLL7)
-    dd, eat = dog_go(t, 0.3, 0.8, DOGS0, EMPTYB, "happy", 2.0, eat_expr="neutral")
+    sd_ = point_at(SCI, "z6_sci_point", 30 + t * 20, SCIP, SCI_YAW, BOWL_PT_E, "smile", 2, 0.35 + 0.65 * ease7(t / 0.45), roll=ROLL7)
+    dd, eat = dog_go(t, 0.25, 0.7, DOGS0, EMPTYB, "happy", 2.2, eat_expr="neutral")
     if not eat:
         D.happy_wag(dd["arm"], t, 0.7, 3.5, up=0.0)                     # noqa: F821
-    bpy.context.view_layer.update(); hw = OWN.bone_world("wrist.R", tail=True)
-    a0 = hw.lerp(Vector((EMPTYB[0], EMPTYB[1], 0.3)), 0.4)
-    zc(t, d, tuple(a0), tuple(a0 + Vector((0.03, -0.04, -0.03))), (-62, 1.0, 1.02, LENS), (-54, 0.86, 0.98, LENS), e=1.4)
+    bpy.context.view_layer.update(); hw = SCI.bone_world(f"wrist.{sd_}", tail=True)
+    a0 = hw.lerp(Vector((EMPTYB[0], EMPTYB[1], 0.3)), 0.25)
+    sg_ = -1 if sd_ == "R" else 1                                       # the camera on the pointing arm's outer side: hand in profile
+    zc(t, d, tuple(a0), tuple(a0 + Vector((0.03, -0.04, -0.03))), (sg_ * 50, 1.2, 1.0, LENS), (sg_ * 42, 1.05, 0.96, LENS), e=1.4)
 
 
-def b04a(t, d):   # dog MS over the empty bowl: nose in it ... nothing; looks up into the lens, SHOCKED -> judging; SNAP; red cross
+def b04b(t, d):   # dog MS over the empty bowl: nose in it ... NOTHING IN IT; looks up into the lens, SHOCKED -> judging; SNAP; red cross
     room("FE")
-    look = ease7((t - 0.25) / 0.2)
+    look = ease7((t - 0.45) / 0.2)
     yaw = yaw_to(DOGS0, EMPTYB)                                         # noqa: F821
-    dd = dog(0, (EMPTYB[0], EMPTYB[1], 0), yaw, "shocked" if t < 0.6 else "judging", t)   # noqa: F821
+    dd = dog(0, (EMPTYB[0], EMPTYB[1], 0), yaw, "neutral" if t < 0.45 else ("shocked" if t < 0.95 else "judging"), t)   # noqa: F821
     D.rot2(dd["arm"], "neck", [((1, 0, 0), 1.1 * (1 - look) + 0.12 * look)])   # noqa: F821
     nose_at(0, EMPTYB, 0.0 * (1 - look) + 0.12 * look); ground_dog(0)  # noqa: F821
-    zc(t, d, (EMPTYB[0], EMPTYB[1] - 0.25, 0.5), (EMPTYB[0], EMPTYB[1] - 0.28, 0.54), (math.degrees(yaw) + 8, 0.95, 0.72, LENS),
+    zc(t, d, (EMPTYB[0], EMPTYB[1] - 0.25, 0.5), (EMPTYB[0], EMPTYB[1] - 0.28, 0.54), (math.degrees(yaw) + 10, 1.0, 0.72, LENS),
        (math.degrees(yaw) + 3, 0.8, 0.7, LENS))
-    fx(t, snap=(0.27, 1.2))
-    text_at("x", t, 0.3, 0.13, 0.3, 1.0, 0.95)                          # bigger, right by the dog's head (it read as a stray mark)                          # noqa: F821
+    fx(t, snap=(0.47, 1.2))
+    text_at("x", t, 0.5, 0.27, 0.5, 1.0, 1.3)                           # beside the head, never into it                          # noqa: F821
 
 
-def b04b(t, d):   # dog MFS, sitting, judging, does not move; behind it he points at the food again (cropped at the chest); short orbit
+def b05a(t, d):   # "the next time they pointed": from beside her hip (cropped), her arm + hand point at the food again; the dog sits beyond
     room("FE")
-    point_at(OWN, "k_point_forward", 30 + t * 20, OWNP, OWN_YAW, BOWL_PT_F, "smile", 3, ease7(t / 0.2))
-    dog_sit_at(DOGS0, OWNP, "judging", t)                               # facing him, not moving
-    zc(t, d, (0.02, -1.0, 0.5), (0.0, -1.0, 0.5), (199, 1.95, 0.86, 28), (196, 1.75, 0.84, 28))   # from beside his hip: his arm + hand in, cropped
+    point_at(SCI, "z6_sci_point", 30 + t * 20, SCIP, SCI_YAW, BOWL_PT_F, "neutral", 2, ease7(t / 0.3))
+    dog_sit_at(DOGS0, SCIP, "judging", t)
+    zc(t, d, (0.02, -1.0, 0.5), (0.0, -1.0, 0.5), (196, 1.9, 0.82, 28), (193, 1.7, 0.8, 28))
 
 
-def b04c(t, d):   # owner waist-up with his POINTING FINGER in the lower frame -> MCU: smile -> SCARED (gasp #1); push, handheld
+def b05b(t, d):   # "most dogs just stayed put": the dog MS, sitting, flat judging squint, does NOT move; slow push + short orbit
     room("FE")
-    point_at(OWN, "k_point_forward", 50, OWNP, OWN_YAW, BOWL_PT_F, "smile" if t < 0.3 else "scared", 3)
-    hc = head_c(OWN)
-    zc(t, d, (hc.x - 0.06, hc.y, hc.z - 0.4), (hc.x - 0.02, hc.y, hc.z - 0.14), (6, 1.0, 1.4, LENS), (2, 0.68, 1.5, LENS), e=1.6)
-    fx(t, shake=0.006)
+    point_at(SCI, "z6_sci_point", 50, SCIP, SCI_YAW, BOWL_PT_F, "neutral", 2)
+    dog_sit_at(DOGS0, (0.3, 2.0), "judging", t)                          # facing her side of the room, not moving
+    zc(t, d, (0.0, -1.0, 0.55), (0.0, -1.0, 0.58), (162, 1.25, 0.76, LENS), (172, 1.0, 0.74, LENS), e=1.4)
 
 
-def b05a(t, d):   # FRONT DOOR: the mailman on the doorstep, knee-up, points with his FREE LEFT hand at the bowl; street behind; whip-in + push
+def b06a(t, d):   # FRONT DOOR: the stranger (mailman) on the doorstep points with his FREE LEFT hand at the bowl; whip-in + push
     hall()
     point_at(MAIL, "c_mailman_idle", 25 + t * 25, MAILP, yaw_to(MAILP, (HXW, DOORY - 3.0)), (FOODH[0], FOODH[1], 0.05), "smile", 2,   # noqa: F821
              ease7(t / 0.3), sd="L")
@@ -436,47 +453,49 @@ def b05a(t, d):   # FRONT DOOR: the mailman on the doorstep, knee-up, points wit
     fx(t, whip=(0.25, 0.22))
 
 
-def b05b(t, d):   # hallway, dog level, low by the bowl at the door: the dog sprints down the hall straight at us and eats
+def b06b(t, d):   # hallway, dog level by the bowl at the door: off he runs down the hall, straight at us, to the bowl, and eats
     hall()
     point_at(MAIL, "c_mailman_idle", 50, MAILP, yaw_to(MAILP, (HXW, DOORY - 3.0)), (FOODH[0], FOODH[1], 0.05), "smile", 2, sd="L")   # noqa: F821
-    dd, eat = dog_go(t, 0.0, 1.12, DOGH0, FOODH, "happy", 2.6)
+    dd, eat = dog_go(t, 0.0, 1.15, DOGH0, FOODH, "happy", 2.6)
     D.happy_wag(dd["arm"], t, 0.9, 4.2, up=0.0)                         # noqa: F821
     zc(t, d, (HXW, DOORY - 2.6, 0.22), (HXW + 0.1, DOORY - 1.7, 0.2), (176, 1.85, 0.82, LENS), (174, 1.6, 0.8, LENS), e=1.4)
 
 
-def b06a(t, d):   # CRANE from the dog's face (dog level) up to his laugh (waist-up, level at the end): the dog at his feet, beaming, wagging
+def b07a(t, d):   # "So lie to your dog": the owner in the hallway, waist-up -> MCU, SURPRISED (gasp) -> CRYING; push + snap
     hall()
-    hpose(MAIL, "c_mailman_idle", 1 + t * 30, MAILP, yaw_to(MAILP, (HXW + 0.2, DOORY - 3.0)), "smile" if t < 0.6 else "laughing", sh=2)   # noqa: F821
+    hpose(OWN, "c_owner_idle", 40 + t * 30, OWNH, yaw_to(OWNH, (HXW - 0.2, DOORY - 5.0)), "surprised" if t < 0.4 else "crying", sh=3)   # noqa: F821
+    hc = head_c(OWN)
+    zc(t, d, (hc.x, hc.y, hc.z - 0.22), (hc.x, hc.y, hc.z - 0.1), (-12, 0.8, 1.48, LENS), (-6, 0.6, 1.52, LENS), e=1.6)
+    fx(t, snap=(0.4, 1.1))
+
+
+def b07b(t, d):   # "he'll trust the mailman": CRANE from the dog at his feet (beaming, wagging) up to his laugh, ending level
+    hall()
+    hpose(MAIL, "c_mailman_idle", 1 + t * 30, MAILP, yaw_to(MAILP, (HXW + 0.2, DOORY - 3.0)), "smile" if t < 0.5 else "laughing", sh=2)   # noqa: F821
     dog_sit_at(MDOG, (HXW + 0.1, DOORY - 3.0), "happy", t, wag=0.9)
     zc(t, d, (MDOG[0], MDOG[1], 0.55), (MAILP[0] + 0.18, MAILP[1], 1.6), (6, 1.0, 0.78, LENS), (-2, 1.05, 1.56, LENS), e=1.3)
 
 
-def b06b(t, d):   # the owner in the hallway, waist-up -> MCU: SURPRISED (gasp #2) -> CRYING; face push + snap
-    hall()
-    hpose(OWN, "c_owner_idle", 40 + t * 30, OWNH, yaw_to(OWNH, (HXW - 0.2, DOORY - 5.0)), "surprised" if t < 0.35 else "crying", sh=3)   # noqa: F821
-    hc = head_c(OWN)
-    zc(t, d, (hc.x, hc.y, hc.z - 0.22), (hc.x, hc.y, hc.z - 0.1), (-12, 0.78, 1.48, LENS), (-6, 0.6, 1.52, LENS), e=1.6)
-    fx(t, snap=(0.35, 1.1))
-
-
-def b06c(t, d):   # the owner in the FOREGROUND, waist-up, facing us, crying; behind him at the open door the dog beams beside the laughing mailman; slow pull-out + rise
+def b07c(t, d):   # "more than you": the owner in the FOREGROUND facing us, crying; behind him the dog beams beside the laughing mailman
     hall()
     hpose(MAIL, "c_mailman_idle", 20 + t * 30, MAILP, yaw_to(MAILP, (HXW + 0.3, DOORY - 3.0)), "laughing", sh=2)   # noqa: F821
     dog_sit_at(MDOG, (HXW - 0.1, DOORY - 3.0), "happy", t, wag=0.9)
     cp_ = (OWNH[0] + 0.15, OWNH[1] - 1.0)
     hpose(OWN, "c_owner_idle", 60 + t * 20, OWNH, yaw_to(OWNH, cp_), "crying", sh=3)   # noqa: F821
     droop(OWN)
-    zc(t, d, (OWNH[0] + 0.2, OWNH[1] + 0.9, 1.32), (OWNH[0] + 0.22, OWNH[1] + 0.9, 1.3), (0, 1.72, 1.4, LENS), (2, 1.95, 1.46, LENS))
+    zc(t, d, (OWNH[0] + 0.2, OWNH[1] + 0.9, 1.32), (OWNH[0] + 0.22, OWNH[1] + 0.9, 1.3), (0, 1.72, 1.4, LENS), (2, 2.0, 1.46, LENS))
 
 
 C = CUT7
+F_LYING = round((WL[0][5]["e"] + 0.12) * FPS7)                          # the bark shot starts right after "lying" ends
 BEATS7 = [  # name, f0, f1, fn, board fraction
-    ("01a", 0, round(_g1 * FPS7) - 2, b01a, 0.8), ("01b", round(_g1 * FPS7) - 2, C[1], b01b, 0.6),
+    ("01a", 0, wf(0, 3), b01a, 0.7), ("01b", wf(0, 3), F_LYING, b01b, 0.6), ("01c", F_LYING, C[1], b01c, 0.35),
     ("02a", C[1], wf(1, 4), b02a, 0.6), ("02b", wf(1, 4), C[2], b02b, 0.75),
-    ("03a", C[2], wf(2, 3), b03a, 0.6), ("03b", wf(2, 3), C[3], b03b, 0.6),
-    ("04a", C[3], wf(3, 2), b04a, 0.8), ("04b", wf(3, 2), wf(3, 5), b04b, 0.6), ("04c", wf(3, 5), C[4], b04c, 0.75),
-    ("05a", C[4], wf(4, 3), b05a, 0.6), ("05b", wf(4, 3), C[5], b05b, 0.5),
-    ("06a", C[5], wf(5, 5), b06a, 0.7), ("06b", wf(5, 5), wf(5, 8) + 4, b06b, 0.7), ("06c", wf(5, 8) + 4, END7, b06c, 0.5),
+    ("03a", C[2], wf(2, 5), b03a, 0.92), ("03b", wf(2, 5), C[3], b03b, 0.6),
+    ("04a", C[3], wf(3, 4), b04a, 0.6), ("04b", wf(3, 4), C[4], b04b, 0.8),
+    ("05a", C[4], wf(4, 6), b05a, 0.6), ("05b", wf(4, 6), C[5], b05b, 0.6),
+    ("06a", C[5], wf(5, 5), b06a, 0.6), ("06b", wf(5, 5), C[6], b06b, 0.55),
+    ("07a", C[6], wf(6, 5), b07a, 0.7), ("07b", wf(6, 5), wf(6, 10), b07b, 0.75), ("07c", wf(6, 10), END7, b07c, 0.5),
 ]
 BY7 = {b[0]: b for b in BEATS7}
 
@@ -609,7 +628,8 @@ elif XMODE == "iso":
     for tag, P, act, f, fc, tgt, sd0 in (("owner_point", OWN, "k_point_forward", 50, "smile", (-0.6, -0.84, 0.05), None),
                                          ("owner_cry", OWN, "c_owner_idle", 60, "crying", None, None),
                                          ("mailman_point", MAIL, "c_mailman_idle", 50, "smile", (0.35, -0.8, 0.05), "L"),
-                                         ("mailman_laugh", MAIL, "c_mailman_idle", 20, "laughing", None, None)):
+                                         ("mailman_laugh", MAIL, "c_mailman_idle", 20, "laughing", None, None),
+                                         ("scientist_point", SCI, "z6_sci_point", 45, "smile", (0.6, -0.84, 0.05), None)):
         reset7(); room(""); loc = (0.0, 0.0)
         if tgt:
             sd = point_at(P, act, f, loc, 0.0, tgt, fc, 3, sd=sd0)

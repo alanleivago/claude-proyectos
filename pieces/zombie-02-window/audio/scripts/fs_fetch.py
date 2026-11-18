@@ -1,7 +1,7 @@
 # Freesound CC0 search + HQ preview download: audio/cand/<key>/<id>.mp3 and audio/cand/<key>/meta.json
 import json, os, sys, urllib.request, urllib.parse
 KEY = json.load(open(os.path.expanduser("~/.freesound.json"), encoding="utf-8-sig"))["api_key"]
-OUT = r"F:/Claude Proyectos/pieces/zombie-02-window/audio/cand"
+OUT = r"/Users/alanleiva/claude-proyectos/pieces/zombie-02-window/audio/cand"
 Q = {
  "zombie_groan": ("zombie groan", 0.8, 6), "zombie_growl_attack": ("zombie attack growl", 0.5, 4),
  "door_burst": ("door kicked open wood break", 0.3, 4), "wood_splinter": ("wood splinter crack", 0.2, 3),

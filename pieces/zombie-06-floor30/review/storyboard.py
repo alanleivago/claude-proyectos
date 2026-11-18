@@ -1,7 +1,7 @@
 # storyboard_v1.png (ep6 Floor 30): un panel por beat (frames reales del motor, review/sb/f_<t>.png, tiempos SCRATCH sin voz) +
 # fila de objetos foto -> lowpoly (objects/compare/*_cmp.png). python storyboard.py
 import os; from PIL import Image, ImageDraw, ImageFont
-H = os.path.dirname(os.path.abspath(__file__)); P = os.path.join(H, ".."); F = ImageFont.truetype("C:/Windows/Fonts/arialbd.ttf", 15); f2 = ImageFont.truetype("C:/Windows/Fonts/arial.ttf", 13)
+H = os.path.dirname(os.path.abspath(__file__)); P = os.path.join(H, ".."); F = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial Bold.ttf", 15); f2 = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial.ttf", 13)
 B = [(2.0, "1  0:00", "'Imagine you live on the thirtieth floor...' Fast crane up the night facade"),
      (5.2, "1b 0:04", "...ends at the window of 3012, Ava inside looks at camera ('Until tonight')"),
      (6.3, "2  0:06", "POV in the hallway at door 3012. HUD in (FINE)"),

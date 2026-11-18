@@ -1,0 +1,22 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Only Way Out v2</title>
+<style>html,body{margin:0;background:#111}canvas{display:block;max-width:100vw;max-height:100vh;margin:auto}</style>
+</head><body><canvas id="c" width="1920" height="3530"></canvas>
+<script>
+"use strict";
+// "Only Way Out" v2 pilot (scenes 0-1): cinematic shots, each pose painted over its own photo and set on a plate
+// repainted from the same photo (staging matches by construction). Everything stepped at 12 fps (STYLE.md).
+const STYLE = { name: 'gta6', ones: false };
+const W = 1920, H = 1080, SH = 3530, FPS = 24, STEP = 12;
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const lin = (t, a, b) => clamp((t - a) / (b - a));
+const outCubic = (x) => 1 - Math.pow(1 - x, 3);
+const inCubic = (x) => x * x * x;
+const inOut = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+const outBack = (x, c = 1.7) => 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2);
+try { for (const f of ['40px "Pricedown Black"', '600 40px "Outfit"', '800 40px "Barlow Condensed"', '600 40px "Barlow Semi Condensed"', '700 40px "Red Hat Display"']) document.fonts.load(f); } catch (e) {}
+window.renderFrame = function (t, canvas) {
+  const cv = canvas || document.getElementById('c'); const g = cv.getContext('2d');
+  const T = Math.floor(t * STEP + 1e-6) / STEP;              // everything on 2s (12 fps), camera included
+  g.save(); g.imageSmoothingQuality = 'high'; frame(g, T); g.restore();
+};

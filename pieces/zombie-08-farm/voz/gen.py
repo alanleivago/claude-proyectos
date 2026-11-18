@@ -3,7 +3,7 @@
 # python gen.py [ids...] [--redo] [--seeds 1,2,3,4]
 import json, re, sys, os, urllib.request, numpy as np, soundfile as sf, scipy.signal as ss
 from takes import T
-API = "http://127.0.0.1:3900/v1/audio/speech"; VOICE = "f2a102da"
+API = "http://127.0.0.1:3900/v1/audio/speech"; VOICE = "f2f8f8dc"
 SAY = {"Ready dot gov": "Ready dot gov"}
 args = sys.argv[1:]; redo = "--redo" in args
 SEEDS = [int(s) for s in (args[args.index("--seeds") + 1] if "--seeds" in args else "1,2,3,4").split(",")]

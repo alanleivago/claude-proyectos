@@ -1,7 +1,7 @@
 # Freesound CC0 (busqueda + preview HQ) para el ep10 (The Stairs) -> audio/cand/<key>/<id>.mp3 + meta.json. python fs_fetch5.py [keys]
 import json, os, sys, urllib.request, urllib.parse
 KEY = json.load(open(os.path.expanduser("~/.freesound.json"), encoding="utf-8-sig"))["api_key"]
-OUT = r"F:/Claude Proyectos/pieces/zombie-10-stairs/audio/cand"
+OUT = r"/Users/alanleiva/claude-proyectos/pieces/zombie-10-stairs/audio/cand"
 Q = {"window_slide": ("sash window open", 0.5, 5), "rope_ladder": ("rope ladder", 0.5, 6), "furniture_fall": ("furniture fall", 0.3, 4), "body_fall": ("body fall stairs", 0.3, 4),
      "stair_creak": ("wooden stairs creak", 0.3, 4), "door_burst": ("door break", 0.5, 4), "shelf_push": ("furniture drag", 0.5, 5), "knock_soft": ("knocking on door", 0.5, 4), "zombie_shuffle": ("shuffling footsteps", 1, 8)}
 only = set(sys.argv[1:])

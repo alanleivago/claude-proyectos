@@ -1,8 +1,8 @@
 """Blender: pieces.json <-> objects in collection GirlV5 (rigid, one bone per piece, parented to Armature).
-exec(open(r"F:/Claude Proyectos/pieces/upnext-girl/v5/bl_pieces.py").read()); materialize()"""
+exec(open(r"/Users/alanleiva/claude-proyectos/pieces/upnext-girl/v5/bl_pieces.py").read()); materialize()"""
 import bpy, json, bmesh
 from mathutils import Vector
-PJ = r"F:/Claude Proyectos/pieces/upnext-girl/v5/pieces.json"
+PJ = r"/Users/alanleiva/claude-proyectos/pieces/upnext-girl/v5/pieces.json"
 FLAT = {"Cone": (250, 209, 160), "Hair": (247, 184, 101), "HairLock": (247, 184, 101), "Head": (250, 209, 160), "Nose": (250, 209, 160), "Ears": (250, 209, 160),
         "Neck": (211, 105, 39), "Torso": (211, 105, 39), "Sleeves": (83, 57, 34), "Waist": (46, 53, 22), "Skirt": (60, 84, 24),
         "LegUpper": (250, 209, 160), "LegLower": (250, 209, 160), "Boot": (81, 50, 62), "Foot": (81, 50, 62),

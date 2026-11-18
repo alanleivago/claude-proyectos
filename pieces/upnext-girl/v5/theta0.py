@@ -1,7 +1,7 @@
 import sys, json, numpy as np; sys.path.insert(0, "."); from fit import *
 from PIL import Image
 cam = json.load(open("turn_cam.json"))
-D = "F:/Claude Proyectos/fuentes/mml2-girl-tutorial/frames/turn5/"
+D = "/Users/alanleiva/claude-proyectos/fuentes/mml2-girl-tutorial/frames/turn5/"
 MS = np.unpackbits(np.load("turn5_masks.npy"), axis=-1)[..., :W0].astype(bool)
 SC = 0.25
 def hc(k):

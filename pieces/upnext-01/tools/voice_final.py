@@ -25,7 +25,7 @@ from scipy.signal import resample_poly
 
 PIECE = Path(__file__).resolve().parents[1]
 OUT = PIECE / 'voz'; RAW = OUT / 'raw'
-GIRL, MENTOR = 'de01f9d9', '67ba355b'
+GIRL, MENTOR = '60ea9b99', 'b63fd159'
 HPF = {GIRL: 150, MENTOR: 90}
 LINES = [
     ('01_ashley', GIRL, "From tomorrow on, I'm waking at four."),

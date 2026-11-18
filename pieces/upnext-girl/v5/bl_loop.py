@@ -1,5 +1,5 @@
 import subprocess, time
-V5 = r"F:/Claude Proyectos/pieces/upnext-girl/v5/"
+V5 = r"/Users/alanleiva/claude-proyectos/pieces/upnext-girl/v5/"
 exec(open(V5 + "bl_pieces.py").read()); exec(open(V5 + "bl_posefit.py").read()); exec(open(V5 + "bl_io.py").read())
 FIT = "LegUpper.L,LegLower.L,Boot.L,Foot.L,LegUpper.R,LegLower.R,Boot.R,Foot.R,UpperArm.L,Forearm.L,Hand.L,UpperArm.R,Forearm.R,Hand.R,Skirt,Torso,Neck"
 

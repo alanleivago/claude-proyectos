@@ -6,7 +6,7 @@ from PIL import Image, ImageDraw
 from scipy import ndimage as nd
 from scipy.optimize import minimize
 import rast
-F = "F:/Claude Proyectos/fuentes/mml2-girl-tutorial/frames/"
+F = "/Users/alanleiva/claude-proyectos/fuentes/mml2-girl-tutorial/frames/"
 VIEWS = {   # name: frame, x-range, initial camera
     "front": ("rest2/r011.png", (560, 1100), dict(theta=11, phi=14, dist=48.4, u=2.45, v=2.98, roll=1, f=50)),
     "side": ("wire/w020.png", (600, 1200), dict(theta=90, phi=0, dist=60, u=0, v=0, roll=0, f=50, ortho=14)),

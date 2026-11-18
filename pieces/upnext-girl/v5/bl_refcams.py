@@ -2,8 +2,8 @@
 camera background image. render_ref(view, path) renders our model through it."""
 import bpy, json, math, numpy as np
 from mathutils import Vector, Matrix, Quaternion
-V5 = r"F:/Claude Proyectos/pieces/upnext-girl/v5/"
-FR = r"F:/Claude Proyectos/fuentes/mml2-girl-tutorial/frames/"
+V5 = r"/Users/alanleiva/claude-proyectos/pieces/upnext-girl/v5/"
+FR = r"/Users/alanleiva/claude-proyectos/fuentes/mml2-girl-tutorial/frames/"
 import sys; sys.path.insert(0, V5)
 import importlib, rast; importlib.reload(rast)
 TURN = json.load(open(V5 + "turn_cam.json"))

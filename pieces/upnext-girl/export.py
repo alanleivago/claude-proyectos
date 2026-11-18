@@ -4,8 +4,8 @@ exec in Blender after build.py + poses.py make_all():  exec(open(r".../export.py
 """
 import bpy, json, os
 
-ROOT = r"F:/Claude Proyectos/pieces/upnext-girl"
-ZANIM = r"F:/Claude Proyectos/pieces/zero-fem/anim"
+ROOT = r"/Users/alanleiva/claude-proyectos/pieces/upnext-girl"
+ZANIM = r"/Users/alanleiva/claude-proyectos/pieces/zero-fem/anim"
 NEW = {"tut_idle": (41, True, "smile"), "tut_hip": (48, True, "talkO"), "tut_run": (17, True, None)}
 
 for f in ("render.py", "poses.py"):

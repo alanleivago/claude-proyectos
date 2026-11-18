@@ -1,7 +1,7 @@
 # Tomas de VoiceStudio para el ep10 (The Stairs): voz "ava bread buena" f2a102da, steps 32, wav. Una toma por mitad de cada "…"
 # (nunca se corta una toma en "…"). Verifica con whisper. python gen.py [ids...] [--redo] --seed N
 import json, re, sys, os, urllib.request, numpy as np, soundfile as sf
-API = "http://127.0.0.1:3900/v1/audio/speech"; VOICE = "f2a102da"
+API = "http://127.0.0.1:3900/v1/audio/speech"; VOICE = "f2f8f8dc"
 args = sys.argv[1:]
 FEMA = "Fema"   # VoiceStudio: "FEMA" lo deletrea; "Fema" se lee FEE-muh
 T = [  # id, texto[, voz]. Ep10 "The Stairs": una toma por mitad de cada "…"
@@ -14,7 +14,7 @@ T = [  # id, texto[, voz]. Ep10 "The Stairs": una toma por mitad de cada "…"
  ("07_0", "But don't trap yourself. Your exit is the upstairs window, with an escape ladder."), ("07_1", "Fire safety says every room needs two ways out."),
  ("08_0", "You carry up the water, the backpack, the radio, and the First Aid Spray."), ("08_1", "Day four, you save your game."),
  ("09_0", "Then someone knocks downstairs. Zombies don't knock."),
- ("09_m0", "Hello?", "b0469a54"), ("09_m1", "Please,", "b0469a54"), ("09_m2", "I'm not bitten!", "b0469a54"),
+ ("09_m0", "Hello?", "c5f333e5"), ("09_m1", "Please,", "c5f333e5"), ("09_m2", "I'm not bitten!", "c5f333e5"),
  ("10_0", "So, should you open the door?"), ("10_1", "Let them in, or stay quiet?"), ("10_2", "Comment one or two."),
 ]
 SPEED = float(args[args.index("--speed") + 1]) if "--speed" in args else 1.0

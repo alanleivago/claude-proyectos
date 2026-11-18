@@ -1,0 +1,6 @@
+if (!/export=1/.test(location.search)) {
+  let t0 = performance.now();
+  const loop = () => { if (window.renderFrame) window.renderFrame(((performance.now() - t0) / 1000) % window.TIMELINE.duration); requestAnimationFrame(loop); };
+  (window.ASSETS_READY || Promise.resolve()).then(loop);
+}
+</script></body></html>

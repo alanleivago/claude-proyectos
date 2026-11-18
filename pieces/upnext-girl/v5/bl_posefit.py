@@ -3,7 +3,7 @@ exec(open(r".../v5/bl_posefit.py").read()); init_from_action("tut_hip"); fit_rou
 State in v5/pose_<name>.json: {"theta0": deg, "bones": {bone: [lx,ly,lz, rx,ry,rz (deg, XYZ euler of matrix_basis)]}}"""
 import bpy, json, math, sys, time, numpy as np
 from mathutils import Euler, Vector, Quaternion
-V5 = r"F:/Claude Proyectos/pieces/upnext-girl/v5/"
+V5 = r"/Users/alanleiva/claude-proyectos/pieces/upnext-girl/v5/"
 sys.path.insert(0, V5)
 import importlib, rast; importlib.reload(rast)
 ARM = bpy.data.objects["Armature"]

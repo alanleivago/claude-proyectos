@@ -1,7 +1,7 @@
 # Tomas de VoiceStudio para el ep13 (Gas Station, Part 1): voz "ava bread buena" f2a102da, steps 32, wav. Una toma por mitad de cada "…"
 # (nunca se corta una toma en "…"). Verifica con whisper. python gen.py [ids...] [--redo] --seed N
 import json, re, sys, os, urllib.request, numpy as np, soundfile as sf
-API = "http://127.0.0.1:3900/v1/audio/speech"; VOICE = "f2a102da"
+API = "http://127.0.0.1:3900/v1/audio/speech"; VOICE = "f2f8f8dc"
 args = sys.argv[1:]
 FEMA = "Fema"   # VoiceStudio: "FEMA" lo deletrea; "Fema" se lee FEE-muh
 T = [  # id, texto[, voz]. Ep13 "Gas Station, Part 1": una toma por mitad de cada "…"
@@ -11,7 +11,7 @@ T = [  # id, texto[, voz]. Ep13 "Gas Station, Part 1": una toma por mitad de cad
  ("04_0", "Don't hide by the windows. Glass breaks, and they can see you through it."), ("04_1", "The walk-in cooler has one door, thick walls, and no windows. That's your safe room."),
  ("05_0", "Outside, shapes cross in front of a car's headlights."), ("05_1", "Flashlight off. Stay low, and don't move."), ("05_2", "A flashlight behind all that glass can be seen from the road."),
  ("06_0", "Someone knocks from inside the locked bathroom."),
- ("07_s0", "Please,", "b0469a54"), ("07_s1", "let me in. I'm not bitten.", "b0469a54"), ("07_s2", "I cut my hand on the glass.", "b0469a54"),
+ ("07_s0", "Please,", "c5f333e5"), ("07_s1", "let me in. I'm not bitten.", "c5f333e5"), ("07_s2", "I cut my hand on the glass.", "c5f333e5"),
  ("08_0", "A hand slides out under the door, wrapped in a bandage."),
  ("09_0", "A drop of blood rolls out after it."), ("09_2", "Bites bleed, but so do cuts."),
  ("10_0", "So, would you unlock it?"), ("10_1", "Unlock it, or leave it locked?"), ("10_2", "Comment one or two."),

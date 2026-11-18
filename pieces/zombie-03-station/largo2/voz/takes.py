@@ -170,7 +170,7 @@ T = [
  ("x5", "final", "ava", "Do you let Dutch out? Comment yes or no,", None, 0.35),
  ("x6", "final", "ava", "most comments decide Day three.", None, 0.0),
 ]
-VOICE = {"ava": "f2a102da", "think": "f2a102da", "shake": "f2a102da", "radio": "cf919aa6", "dutch": "644338f4", "marla": "996b1578"}
+VOICE = {"ava": "f2f8f8dc", "think": "f2f8f8dc", "shake": "f2f8f8dc", "radio": "0142e2dc", "dutch": "504bcb20", "marla": "73886ef4"}
 STYLE = {"ava": (0.88, None), "think": (0.76, "whisper"), "shake": (0.80, "whisper, low pitch"), "radio": (1.0, None), "dutch": (0.92, None), "marla": (0.9, None)}
 # v3: por toma (speed, instruct). h6-h8 a 1.0 (a 0.88 estiraba "threeee, seeeeven"); m3 susurro humano asustado
 TSTYLE = {"h6": (1.0, None), "h7": (1.0, None), "h8": (1.0, None), "m3": (0.95, "whisper")}

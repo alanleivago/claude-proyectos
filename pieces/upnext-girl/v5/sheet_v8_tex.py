@@ -4,8 +4,8 @@ import json, numpy as np
 from PIL import Image, ImageDraw
 import sys; sys.path.insert(0, ".")
 from fit import bands
-R = "F:/Claude Proyectos/pieces/upnext-girl/review/"
-F = "F:/Claude Proyectos/fuentes/mml2-girl-tutorial/frames/"
+R = "/Users/alanleiva/claude-proyectos/pieces/upnext-girl/review/"
+F = "/Users/alanleiva/claude-proyectos/fuentes/mml2-girl-tutorial/frames/"
 MS = np.unpackbits(np.load("turn5_masks.npy"), axis=-1)[..., :1920].astype(bool)
 BG = (24, 26, 32); W = 1800
 OV = [("front (rest, 11:29)", "front", F + "rest2/r011.png", np.asarray(Image.open("ref_front_mask.png")) > 127, 1062),

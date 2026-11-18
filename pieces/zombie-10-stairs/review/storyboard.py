@@ -1,7 +1,7 @@
 # storyboard_v1.png (ep10 The Stairs): un panel por beat (frames reales del motor con la voz real, review/sb/f_<t>.png) +
 # fila de objetos nuevos foto Flow -> lowpoly (recorte PNG | en el motor). python storyboard.py
 import os; from PIL import Image, ImageDraw, ImageFont
-H = os.path.dirname(os.path.abspath(__file__)); P = os.path.join(H, ".."); F = ImageFont.truetype("C:/Windows/Fonts/arialbd.ttf", 15); f2 = ImageFont.truetype("C:/Windows/Fonts/arial.ttf", 13)
+H = os.path.dirname(os.path.abspath(__file__)); P = os.path.join(H, ".."); F = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial Bold.ttf", 15); f2 = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial.ttf", 13)
 B = [(1.6, "1  0:00", "'In a zombie outbreak, your safe room won't hold forever...' Crane over the cutaway house (ep1/ep7), zombies pounding the front door '13'. Ava in the living by 1 s. Hook horror music 0-10 s"),
      (3.9, "1b 0:04", "'...so you go up.' Crane rises to the new 2F: staircase + landing, label 2F"),
      (7.6, "2  0:05", "'Most people stay downstairs, with two doors and five windows...' 2F hidden, 2 doors + 5 windows flash red one by one (DOORS x2, WINDOWS x5). HUD CAUTION"),

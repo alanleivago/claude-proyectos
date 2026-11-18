@@ -3,7 +3,7 @@
 #   bash build_lowpoly.sh            (fit stages skipped when ref/lp_fit.npz exists; pass "refit" to redo them)
 set -e
 cd "$(dirname "$0")"
-BL="/c/Program Files/Blender Foundation/Blender 5.2/blender.exe"
+BL="/Applications/Blender.app/Contents/MacOS/Blender"
 if [ ! -f ref/lp_fit.npz ] || [ "$1" == "refit" ]; then
   "$BL" -b --factory-startup --python tools/bl_lowpoly.py -- ref/final_fix.npz ref/lp_parts.npz 2>&1 | grep LOWPOLY
   python tools/lowpoly.py ref/final_fix.npz ref/lp_parts.npz ref/lp0.npz

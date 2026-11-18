@@ -41,21 +41,23 @@ def label(d, x, y, text, s, on=1.0):
     fill = tuple(int(250 * (0.55 + 0.45 * on)) for _ in range(3))
     d.rectangle((x, y, x + tw + 24 * s, y + 40 * s), fill=fill, outline=(0, 0, 0), width=max(2, int(3 * s)))
     d.text((x + 12 * s + tw / 2, y + 21 * s), text, font=f2, fill=(10, 10, 10), anchor="mm")
-NOTES = {"01a": "LIVING ROOM. Dog MFS->MS (0.45->0.6 of frame), cam 0.8 m pitched down, push-in; owner cropped at the edge; HERO BARK + snap",
-         "01b": "Owner knee-up -> waist-up, chest-height cam, orbit + push: his lying grin (smile)",
-         "02a": "Gentle HIGH beside his right arm: his POINTING HAND in, the food bowl, the dog beyond, eager",
-         "02b": "Dog level, low behind the food bowl (fg): the dog runs straight at us and eats; whip-in",
-         "03a": "TOP-DOWN insert, slow rotate + crane down: full bowl | empty bowl; KYOTO, 2015",
-         "03b": "HIGH over his left side: he points at the EMPTY bowl, the dog trots in to it",
-         "04a": "Dog MS over the empty bowl: sniff ... nothing; looks up SHOCKED -> judging; snap + red cross",
-         "04b": "From beside his hip (cropped): arm + hand point at the food again; the dog sits, judging, does not move",
-         "04c": "Owner waist-up -> MCU, handheld push: smile -> SCARED (gasp #1)",
-         "05a": "FRONT DOOR (new set from the kit hallway): the mailman on the doorstep points with his FREE left hand; whip + push",
-         "05b": "HALLWAY, dog level by the bowl at the door: the dog sprints down the hall at us (off they went)",
-         "06a": "CRANE from the dog at his feet (wagging) up to his laugh, ending level, door jamb in frame",
-         "06b": "Owner in the hallway, waist-up -> MCU, push + snap: SURPRISED (gasp #2) -> CRYING",
-         "06c": "Owner in the FOREGROUND facing us, crying; behind him the dog beams beside the mailman at the open door; pull-out"}
-TEXT_SHOTS = {"03a", "04a"}   # big yellow 3D texts: final_post.pixelate_text (cap/11 steps)
+NOTES = {"01a": "LIVING ROOM. Dog MFS->MS, cam 0.74 m pitched down, push-in: the dog faces us, suspicious",
+         "01b": "Owner knee-up -> waist-up, chest-height cam, orbit + push: his lying grin",
+         "01c": "Dog MS 3/4: the HERO BARK in the clean gap AFTER 'lying' + snap-zoom",
+         "02a": "Beside his right hip: arm + POINTING HAND in profile at the treat (food bowl); the dog beyond, eager",
+         "02b": "Dog level behind the food bowl (fg): he runs straight to it and eats; whip-in",
+         "03a": "The 'lab': the Kyoto SCIENTIST waist-up, push + orbit; 'KYOTO, 2015' pops on 'Kyoto'",
+         "03b": "TOP-DOWN insert, rotate + crane: the trick - full | empty bowl, the dog's head, her shoes",
+         "04a": "Her POINTING HAND (profile) at the bowl with NOTHING in it; the dog trots in",
+         "04b": "Dog MS over the empty bowl: sniff ... nothing; looks up SHOCKED -> judging; snap + red cross",
+         "05a": "'The next time they pointed': beside her hip (cropped), arm + hand point at the food; the dog beyond",
+         "05b": "'Most dogs just stayed put': the dog MS, flat judging squint, does NOT move; push + short orbit",
+         "06a": "FRONT DOOR: the stranger (mailman) on the doorstep points with his free left hand; whip + push",
+         "06b": "HALLWAY, dog level by the bowl at the door: off he runs down the hall to the bowl and eats",
+         "07a": "'So lie to your dog': the owner in the hallway, SURPRISED (gasp) -> CRYING; push + snap",
+         "07b": "'He'll trust the mailman': CRANE from the dog at his feet up to his laugh, ending level",
+         "07c": "'More than you': the owner in the FOREGROUND facing us, crying; the dog beams beside the mailman"}
+TEXT_SHOTS = {"03a", "04b"}   # big yellow 3D texts: final_post.pixelate_text (cap/11 steps)
 
 
 def caption_at(t):
@@ -119,8 +121,9 @@ def main():
         if name in TEXT_SHOTS:                                        # same as final_post: cap/11 steps, then laid back over the dither
             import final_post as FP
             FP.pixelate_text(Image.open(os.path.join(RAW, f"{name}.png")).convert("RGB").resize((1080, 1920), Image.LANCZOS), name=name)
-            src, m = FP.TEXT_KEEP; FP.TEXT_KEEP = None
-            keep = (src.resize((540, 960), Image.NEAREST), Image.fromarray(m.astype(np.uint8) * 255).resize((540, 960), Image.NEAREST))
+            if FP.TEXT_KEEP is not None:                               # (no text on screen yet at this frame)
+                src, m = FP.TEXT_KEEP; FP.TEXT_KEEP = None
+                keep = (src.resize((540, 960), Image.NEAREST), Image.fromarray(m.astype(np.uint8) * 255).resize((540, 960), Image.NEAREST))
         if name in NIGHT:
             im = night(im)
         im = ps1_post(im, scale=2)                                    # 540 -> 270x480 base, 15-bit Bayer, x2 nearest
@@ -153,10 +156,10 @@ def main():
 
 
     CW, CH, TXT = 300, 533, 150
-    for b, chunk in enumerate((frames[:7], frames[7:]), 1):  # 14 shots: 7 + 7
-        cols = 7; rows = (len(chunk) + cols - 1) // cols
+    for b, chunk in enumerate((frames[:8], frames[8:]), 1):  # v3: 16 shots, 8 + 8
+        cols = 8; rows = (len(chunk) + cols - 1) // cols
         sh = Image.new("RGB", (cols * CW, rows * (CH + TXT) + 50), (22, 20, 18)); d = ImageDraw.Draw(sh)
-        d.text((10, 12), f"Doggo Poly Shorts #7 'Your Dog Knows When You\'re Lying' - storyboard v2 (Zaw framing, set x1.35) {b}/2  (voice {TIM['end']:.1f} s, 30 fps)",
+        d.text((10, 12), f"Doggo Poly Shorts #7 'Your Dog Knows When You\'re Lying' - storyboard v3 (user's script, Zaw framing) {b}/2  (voice {TIM['end']:.1f} s, 30 fps)",
                font=FS, fill=(245, 235, 48))
         for k, (name, f0, f1, fb, im) in enumerate(chunk):
             x, y = (k % cols) * CW, 50 + (k // cols) * (CH + TXT)

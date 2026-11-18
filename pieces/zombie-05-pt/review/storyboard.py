@@ -1,7 +1,7 @@
 # storyboard_v1.png (ep5 P.T.): un panel por beat (frames reales del motor, review/sb/f_<t>.png) + Lisa antes/despues +
 # nuestro pasillo junto a una captura real de P.T. python storyboard.py
 import os; from PIL import Image, ImageDraw, ImageFont
-H = os.path.dirname(os.path.abspath(__file__)); P = os.path.join(H, ".."); F = ImageFont.truetype("C:/Windows/Fonts/arialbd.ttf", 15); f2 = ImageFont.truetype("C:/Windows/Fonts/arial.ttf", 13)
+H = os.path.dirname(os.path.abspath(__file__)); P = os.path.join(H, ".."); F = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial Bold.ttf", 15); f2 = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial.ttf", 13)
 REF = os.path.join(P, "..", "..", "fuentes", "zombie-nicho", "pt_refs", "hall_norm.png")
 B = [(2.8, "1  0:00", "'Did you know that in P.T.…' Continuous push down the L hallway, Ava ahead"),
      (6.6, "2  0:05", "RE FILE: typewriter 2014 > 2019, '5 years. Nobody saw her.'"),

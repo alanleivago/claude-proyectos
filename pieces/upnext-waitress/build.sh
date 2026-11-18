@@ -2,7 +2,7 @@
 # Waitress rebuild: geometry+textures (numpy/PIL) -> Blender rig/actions -> glb. Review sheets via tools/review.py
 set -e
 cd "$(dirname "$0")"
-BL="/c/Program Files/Blender Foundation/Blender 5.2/blender.exe"
+BL="/Applications/Blender.app/Contents/MacOS/Blender"
 W=$(cygpath -wa .)
 python -I tools/geom.py all
 for O in A B C; do

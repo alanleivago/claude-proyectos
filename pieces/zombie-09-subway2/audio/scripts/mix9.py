@@ -4,8 +4,8 @@
 import json, subprocess, numpy as np, soundfile as sf, pyloudnorm as pyln
 from scipy.ndimage import uniform_filter1d, minimum_filter1d
 SR = 48000
-P = r"F:/Claude Proyectos/pieces/zombie-09-subway2"; C = f"{P}/audio/cand"; DC = r"F:/Claude Proyectos/assets/dino-crisis-sfx"
-C4 = r"F:/Claude Proyectos/pieces/zombie-04-subway/audio/cand"; C7 = r"F:/Claude Proyectos/pieces/zombie-07-saferoom/audio/cand"; E3 = r"F:/Claude Proyectos/pieces/zombie-03-station/audio/cand"
+P = r"/Users/alanleiva/claude-proyectos/pieces/zombie-09-subway2"; C = f"{P}/audio/cand"; DC = r"/Users/alanleiva/claude-proyectos/assets/dino-crisis-sfx"
+C4 = r"/Users/alanleiva/claude-proyectos/pieces/zombie-04-subway/audio/cand"; C7 = r"/Users/alanleiva/claude-proyectos/pieces/zombie-07-saferoom/audio/cand"; E3 = r"/Users/alanleiva/claude-proyectos/pieces/zombie-03-station/audio/cand"
 CU = json.load(open(f"{P}/engine/cues.json", encoding="utf8")); W, T = CU["W"], CU["T"]; DUR = CU["END"]; N = int(DUR * SR); VEND = CU["VOICE_END"]
 def load(path, a=None, b=None, trim=True, norm=True):
     cmd = ["ffmpeg", "-v", "quiet"] + (["-ss", str(a)] if a is not None else []) + ["-i", path] + (["-t", str(b - a)] if b is not None else []) + ["-f", "f32le", "-ac", "1", "-ar", str(SR), "-"]
@@ -34,7 +34,7 @@ TRAIN = load(f"{C4}/train_depart/705378.mp3", trim=False); CHAIN = load(f"{C4}/c
 BEEP = load(f"{C4}/phone_beep/530482.mp3"); RUSTLE = load(f"{C4}/paper_rustle/353125.mp3"); DOORS = load(f"{C4}/subway_doors/187310.mp3"); CHIME = load(f"{C4}/door_chime/720572.mp3")
 STING = load(f"{C4}/stinger/271945.mp3"); BREATH = load(f"{C4}/breath/482827.mp3"); CLUNK = load(f"{E3}/light_switch/870288.mp3"); ROOM = load(f"{C4}/room_tone/479536.mp3", trim=False)
 WHOOSH = load(f"{C7}/whoosh/855844.mp3"); GL = hits(load(f"{C7}/glass_bang/104339.mp3", trim=False), 6, 0.35, 0.08); TH = hits(load(f"{C7}/wood_thunk/803551.mp3", trim=False), 4, 0.4, 0.05)
-ZS = r"F:/Claude Proyectos/assets/zombie-sfx-yt/seg"; ZGROWL = load(f"{ZS}/z07_107.5.wav"); ZGROAN = load(f"{ZS}/z05_103.1.wav")
+ZS = r"/Users/alanleiva/claude-proyectos/assets/zombie-sfx-yt/seg"; ZGROWL = load(f"{ZS}/z07_107.5.wav"); ZGROAN = load(f"{ZS}/z05_103.1.wav")
 GLITCH = load(f"{C}/glitch/834161.mp3"); VHS = load(f"{C}/vhs_rewind/613353.mp3"); RIDE = load(f"{C}/subway_ride/650720.mp3", trim=False); BRAKE = load(f"{C}/brake/838597.mp3", trim=False)
 TK = hits(load(f"{C}/tick/485407.mp3", trim=False), 1, 0.25, 0.1); TICK = TK[0] if TK else load(f"{C}/tick/485407.mp3")[:int(0.25 * SR)]
 # ---------------- eventos (cues.json) ----------------

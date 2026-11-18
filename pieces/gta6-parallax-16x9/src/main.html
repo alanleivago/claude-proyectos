@@ -1,0 +1,143 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>gta6-parallax-16x9</title>
+<style>html,body{margin:0;background:#111}canvas{display:block;max-width:100vw;max-height:100vh;margin:auto}</style>
+</head><body><canvas id="c" width="1920" height="1080"></canvas>
+<script>
+"use strict";
+// GTA VI loading-screen test, 16:9, official cast (private test). Layers cut from the official artworks
+// (cut_layer.py) + Flow clean plates, parallax camera, everything stepped at 12 fps (STYLE.md motion rules).
+const STYLE = { name: 'gta6', ones: false };
+const W = 1920, H = 1080, FPS = 24, STEP = 12, DUR = 20.5;
+window.TIMELINE = { width: W, height: H, fps: FPS, duration: DUR, frames: Math.round(DUR * FPS) };
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+const lin = (t, a, b) => clamp((t - a) / (b - a));
+const outCubic = (x) => 1 - Math.pow(1 - x, 3);
+const outBack = (x) => { const c = 1.6; return 1 + (c + 1) * Math.pow(x - 1, 3) + c * Math.pow(x - 1, 2); };
+const inCubic = (x) => x * x * x;
+
+let PRINT = null;
+function makePrint() {
+  const c = document.createElement('canvas'); c.width = W; c.height = H; const g = c.getContext('2d');
+  const id = g.createImageData(W, H), d = id.data; let s = 1234567;
+  const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  const P = 7, ang = 0.5, ca = Math.cos(ang), sa = Math.sin(ang);
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const u = (x * ca + y * sa) / P, v = (-x * sa + y * ca) / P;
+    const fu = u - Math.floor(u) - .5, fv = v - Math.floor(v) - .5;
+    const dot = Math.sqrt(fu * fu + fv * fv) < .28 ? 1 : 0;
+    const i = (y * W + x) * 4; const val = 128 + (dot ? -20 : 6) + (rnd() - .5) * 28;
+    d[i] = d[i + 1] = d[i + 2] = val; d[i + 3] = 255;
+  }
+  g.putImageData(id, 0, 0); return c;
+}
+// full-frame layer with the camera: depth-weighted zoom about the centre + pan
+function layer(g, img, cam, depth, dx = 0, dy = 0, extra = 1) {
+  const k = Math.pow(cam.z, 0.35 + depth * 1.3) * extra;
+  const w = W * 1.004 * k, h = H * 1.004 * k;
+  const px = cam.px * (0.3 + depth), py = cam.py * (0.3 + depth);
+  g.drawImage(img, W / 2 - w / 2 + dx + px, H / 2 - h / 2 + dy + py, w, h);
+}
+function fronds(g, img, cam, dy, sway) {      // two frond clusters in the top corners, nearest depth
+  const k = Math.pow(cam.z, 1.65), w = 700 * k, h = w * img.height / img.width;
+  g.drawImage(img, -260 + sway + cam.px * 1.3, dy, w, h);
+  g.save(); g.translate(W, 0); g.scale(-1, 1); g.drawImage(img, -260 - sway - cam.px * 1.3, dy - 40, w, h); g.restore();
+}
+function title(g, lines, x, y, size, p, tilt = -0.06, sticker = null) {
+  if (p <= 0) return;
+  const s = outBack(clamp(p));
+  g.save(); g.translate(x, y); g.rotate(tilt); g.scale(s, s);
+  g.font = `900 ${size}px "Impact","Haettenschweiler","Arial Narrow Bold",sans-serif`;
+  g.textBaseline = 'alphabetic'; g.lineJoin = 'round';
+  lines.forEach((t, i) => {
+    const yy = i * size * 0.92;
+    g.fillStyle = '#2a1036'; g.fillText(t, 12, yy + 14);
+    g.lineWidth = size * 0.16; g.strokeStyle = '#140818'; g.strokeText(t, 0, yy);
+    const gr = g.createLinearGradient(0, yy - size, 0, yy); gr.addColorStop(0, '#FFFFFF'); gr.addColorStop(1, '#FFE2B0');
+    g.fillStyle = gr; g.fillText(t, 0, yy);
+  });
+  if (sticker) {
+    const [txt, sx, sy] = sticker; g.translate(sx, sy); g.rotate(0.09);
+    g.font = `900 ${size * 0.5}px "Impact",sans-serif`; const tw = g.measureText(txt).width;
+    g.fillStyle = '#140818'; g.fillRect(-14 + 8, -size * 0.5 - 6 + 8, tw + 28, size * 0.66);
+    g.fillStyle = '#FFE14D'; g.fillRect(-14, -size * 0.5 - 6, tw + 28, size * 0.66);
+    g.fillStyle = '#140818'; g.fillText(txt, 0, 2);
+  }
+  g.restore();
+}
+function grade(g) {
+  g.globalCompositeOperation = 'soft-light'; g.globalAlpha = 0.2; g.drawImage(PRINT, 0, 0); g.globalAlpha = 1;
+  g.globalCompositeOperation = 'multiply'; const v = g.createRadialGradient(W / 2, H * .5, H * .45, W / 2, H * .5, W * .62);
+  v.addColorStop(0, 'rgba(255,255,255,1)'); v.addColorStop(1, 'rgba(130,90,160,1)');
+  g.globalAlpha = 0.28; g.fillStyle = v; g.fillRect(0, 0, W, H); g.globalAlpha = 1;
+  g.globalCompositeOperation = 'source-over';
+}
+// camera per shot: ease-out push-in (+10 % in ~1 s), then a slow creep
+function shotCam(T, t0, t1, pan) {
+  const z = 1 + 0.055 * outCubic(lin(T, t0, t0 + 1.0)) + 0.02 * lin(T, t0 + 1.0, t1);   // 16:9 crops are tight: smaller push than 9:16
+  return { z, px: pan * lin(T, t0, t1), py: 14 * outCubic(lin(T, t0, t0 + 1.0)) };
+}
+// push transition (16:9 "character swap"): the new plate slides in from the left and shoves the old scene
+// right; the new character follows ~6 frames later with an out-back overshoot
+function push(T, t0) {
+  const pPlate = outCubic(lin(T, t0, t0 + 0.5)), pChar = outBack(lin(T, t0 + 0.25, t0 + 0.75)), pOld = inCubic(lin(T, t0, t0 + 0.45));
+  return { oldX: W * 1.1 * pOld, plateX: -W * (1 - pPlate), charX: -W * 1.1 * (1 - pChar), on: T >= t0, done: T >= t0 + 0.75 };
+}
+
+// v2 (2026-11-13): only REDRAWN new-pose characters (v4 hybrid, identity-checked), no cut-outs.
+// S1 Jason aiming on the skyline beach 0-3.8 | bg swap 3.6 -> mural | push Lucia 7.4 (rooftop) |
+// push Cal 11.0 (boat) | push DreQuan 14.6 (club street) | end title 17.6
+const SC = [
+  { t0: 0,    t1: 7.4,  plate: 'jl_plate.jpg', plate2: 'raul_plate.jpg', swap: 3.6, ch: 'c_jason.png', pan: -24 },
+  { t0: 7.4,  t1: 11.0, plate: 'dimez_plate.jpg', ch: 'c_lucia.png', pan: 20 },
+  { t0: 11.0, t1: 14.6, plate: 'bay_plate.jpg', ch: 'c_cal.png', pan: -18 },
+  { t0: 14.6, t1: DUR,  plate: 'drequan_plate.jpg', ch: 'c_drequan.png', pan: 16 },
+];
+function drawScene(g, A, S, T, ox, charX, plateX, k) {
+  const cam = S.swap && T >= S.swap + 0.8 ? shotCam(T, S.swap + 0.8, S.t1, -S.pan) : shotCam(T, S.t0, S.swap || S.t1, S.pan);
+  const lift = S.swap && T > S.swap && T < S.swap + 0.9 ? -18 * Math.sin(Math.PI * lin(T, S.swap, S.swap + 0.9)) : 0;
+  if (S.swap) {
+    const out1 = inCubic(lin(T, S.swap, S.swap + 0.5)), in2 = outCubic(lin(T, S.swap + 0.25, S.swap + 0.85));
+    if (T < S.swap + 0.5) layer(g, A[S.plate], cam, 0.12, ox + plateX, -H * 1.06 * out1);
+    if (T >= S.swap + 0.25) layer(g, A[S.plate2], cam, 0.1, ox + plateX, H * 1.06 * (1 - in2));
+  } else layer(g, A[S.plate], cam, 0.12, ox + plateX);
+  const rise = k === 0 ? 110 * (1 - outCubic(lin(T, 0, 0.9))) : 0;
+  layer(g, A[S.ch], cam, 0.3, ox + charX, rise + Math.sin(T * 2.1 + k) * 5 + lift);
+  if (k === 0) {
+    const fIn = outCubic(lin(T, 0, 0.8)), fOut = inCubic(lin(T, 3.5, 3.85));
+    if (T < 3.85) fronds(g, A['fronds.png'], cam, -300 - 420 * (1 - fIn) - 700 * fOut, 14 * Math.sin(T * 1.3));
+  }
+}
+function frame(g, T) {
+  const A = ASSETS;
+  g.fillStyle = '#C9A6D8'; g.fillRect(0, 0, W, H);
+  let k = 0; while (k < SC.length - 1 && T >= SC[k + 1].t0) k++;
+  const nxt = SC[k + 1];
+  const P = nxt ? push(T, nxt.t0) : null;
+  // current scene (shoved right once the next one starts entering)
+  if (T >= SC[k].t0) drawScene(g, A, SC[k], T, 0, 0, 0, k);
+  // incoming scene during the last 0.75 s before its start: plate slides in from the left, character follows
+  if (nxt && T >= nxt.t0 - 0.75) {
+    const P2 = push(T, nxt.t0 - 0.75);
+    g.save(); g.globalCompositeOperation = 'source-over';
+    // redraw: old scene shoved right, new scene entering
+    g.fillStyle = '#C9A6D8'; g.fillRect(0, 0, W, H);
+    drawScene(g, A, SC[k], T, P2.oldX, 0, 0, k);
+    drawScene(g, A, nxt, T, 0, P2.charX, P2.plateX, k + 1);
+    g.restore();
+  }
+  grade(g);
+  if (T > 0.4 && T < 3.5) title(g, ['LEONIDA', 'STORIES'], 110, 820, 150, lin(T, 0.4, 0.7) * (1 - lin(T, 3.25, 3.5)), -0.06, ['TEST 01', 520, 170]);
+  if (T > 17.6) title(g, ['LEONIDA', 'STORIES'], 1020, 300, 140, lin(T, 17.6, 17.95), -0.06, ['COMING SOON', 380, 160]);
+}
+window.renderFrame = function (t, canvas) {
+  const cv = canvas || document.getElementById('c'); const g = cv.getContext('2d');
+  if (!PRINT) PRINT = makePrint();
+  const T = Math.floor(t * STEP + 1e-6) / STEP;              // everything on 2s (12 fps)
+  g.save(); g.imageSmoothingQuality = 'high'; frame(g, T); g.restore();
+};
+if (!/export=1/.test(location.search)) {
+  let t0 = performance.now();
+  const loop = () => { if (window.renderFrame) window.renderFrame(((performance.now() - t0) / 1000) % DUR); requestAnimationFrame(loop); };
+  (window.ASSETS_READY || Promise.resolve()).then(loop);
+}
+</script></body></html>

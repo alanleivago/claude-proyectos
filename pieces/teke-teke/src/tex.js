@@ -139,7 +139,7 @@ function texFaceOf(k) {
   }, [1, 1]);
 }
 function texSky() {   // night: deep teal to a lighter haze at the horizon, thin cloud bands (dithers into dot screens); the moon is its own mesh
-  return txCanvas('sky', 512, 256, (x, w, h, R) => { const g = x.createLinearGradient(0, 0, 0, h); g.addColorStop(0, '#06090f'); g.addColorStop(0.5, '#0b1a22'); g.addColorStop(0.78, '#1f3c44'); g.addColorStop(0.92, '#346c76'); g.addColorStop(1, '#2a3a3a'); x.fillStyle = g; x.fillRect(0, 0, w, h);
+  return txCanvas('sky', 512, 256, (x, w, h, R) => { const g = x.createLinearGradient(0, 0, 0, h); g.addColorStop(0, '#010205'); g.addColorStop(0.5, '#02050b'); g.addColorStop(0.78, '#050b15'); g.addColorStop(0.92, '#0a1624'); g.addColorStop(1, '#0a1218'); x.fillStyle = g; x.fillRect(0, 0, w, h);
     for (let i = 0; i < 50; i++) { x.fillStyle = R.pick(['rgba(52,108,118,0.16)', 'rgba(20,40,46,0.3)', 'rgba(120,150,150,0.1)']); const cy = R.r(h * 0.3, h * 0.85); x.beginPath(); x.ellipse(R.r(0, w), cy, R.r(30, 110), R.r(3, 9), 0, 0, TAU); x.fill(); }
     for (let i = 0; i < 160; i++) { x.fillStyle = 'rgba(220,230,230,' + R.r(0.2, 0.7) + ')'; x.fillRect(R.r(0, w), R.r(0, h * 0.55), 1, 1); } }, [1, 1]);
 }

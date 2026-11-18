@@ -1,6 +1,6 @@
 """upnext-girl: MML2-style girl (recreation of MercurialForge's "Ashley", video DqntXa7dOO8), 100 % by script.
 
-Run inside Blender (live MCP or GUI):  exec(open(r"F:/Claude Proyectos/pieces/upnext-girl/build.py").read())
+Run inside Blender (live MCP or GUI):  exec(open(r"/Users/alanleiva/claude-proyectos/pieces/upnext-girl/build.py").read())
 (system python first: python pieces/upnext-girl/face_atlas.py -> tex/face_eyes.png, tex/face_mouth.png from his cells)
 
 Method (as in the video): cubes/rings shaped into a person (~500 tris), one 256x256 body texture made of
@@ -16,8 +16,8 @@ import bpy, bmesh, math, os, json
 import numpy as np
 from mathutils import Vector
 
-ROOT = r"F:/Claude Proyectos/pieces/upnext-girl"
-ZERO_BLEND = r"F:/Claude Proyectos/pieces/zero-fem/anim/zero_anim.blend"
+ROOT = r"/Users/alanleiva/claude-proyectos/pieces/upnext-girl"
+ZERO_BLEND = r"/Users/alanleiva/claude-proyectos/pieces/zero-fem/anim/zero_anim.blend"
 TEX = os.path.join(ROOT, "tex")
 TS = 256                     # body texture size
 DENS = 13.0                  # texture pixels per unit

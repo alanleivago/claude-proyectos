@@ -1,7 +1,7 @@
 import numpy as np, glob, sys
 from PIL import Image
 from scipy import ndimage as nd
-D = "F:/Claude Proyectos/fuentes/mml2-girl-tutorial/frames/turn5/"
+D = "/Users/alanleiva/claude-proyectos/fuentes/mml2-girl-tutorial/frames/turn5/"
 
 
 def gmask(a, x0=600, x1=1350):

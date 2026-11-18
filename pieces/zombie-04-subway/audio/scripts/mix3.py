@@ -5,8 +5,8 @@
 # Master -14 LUFS estereo, true peak <= -1 dBTP.
 import json, subprocess, numpy as np, soundfile as sf, pyloudnorm as pyln
 SR = 48000; DUR = 67.6; N = int(DUR * SR)
-P = r"F:/Claude Proyectos/pieces/zombie-03-station"; DC = r"F:/Claude Proyectos/assets/dino-crisis-sfx"
-C2 = r"F:/Claude Proyectos/pieces/zombie-02-window/audio/cand"; KIT = r"F:/Claude Proyectos/sound-layer/kit"; ZS = r"F:/Claude Proyectos/assets/zombie-sfx-yt/seg"
+P = r"/Users/alanleiva/claude-proyectos/pieces/zombie-03-station"; DC = r"/Users/alanleiva/claude-proyectos/assets/dino-crisis-sfx"
+C2 = r"/Users/alanleiva/claude-proyectos/pieces/zombie-02-window/audio/cand"; KIT = r"/Users/alanleiva/claude-proyectos/sound-layer/kit"; ZS = r"/Users/alanleiva/claude-proyectos/assets/zombie-sfx-yt/seg"
 _c = {}
 def load(path, a=None, b=None, trim=True):
     k = (path, a, b, trim)

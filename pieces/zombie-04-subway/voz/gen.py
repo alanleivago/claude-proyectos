@@ -1,7 +1,7 @@
 # Tomas de VoiceStudio para el ep4: voz "ava bread buena" f2a102da, steps 32, wav. Una toma por mitad de cada "…"
 # (nunca se corta una toma en "…"). Verifica con whisper. python gen.py [ids...] [--redo] [--seed N]
 import json, re, sys, os, urllib.request, numpy as np, soundfile as sf
-API = "http://127.0.0.1:3900/v1/audio/speech"; VOICE = "f2a102da"
+API = "http://127.0.0.1:3900/v1/audio/speech"; VOICE = "f2f8f8dc"
 T = [  # id, texto que se manda (la mitad que sigue termina en coma: entonación que continúa)
  ("01_0", "Imagine you miss the last train,"), ("01_1", "and the station locks you in."),   # v4: abre con "Imagine you…" como la referencia
  ("02_0", "Your phone has no signal and three percent battery. It's eleven forty-two,"), ("02_1", "and the next train isn't until five thirty."),

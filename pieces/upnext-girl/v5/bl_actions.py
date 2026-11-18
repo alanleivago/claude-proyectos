@@ -1,7 +1,7 @@
 """Blender: key the fitted poses as actions (tut_hip from pose_hip.json, his_rest from pose_front.json)."""
 import bpy, json, math
 from mathutils import Euler
-V5 = r"F:/Claude Proyectos/pieces/upnext-girl/v5/"
+V5 = r"/Users/alanleiva/claude-proyectos/pieces/upnext-girl/v5/"
 ARM = bpy.data.objects["Armature"]
 
 

@@ -6,7 +6,7 @@ relatedTo: [CLAUDE.md, CLAUDE.local.md, tools/exportar_contexto.py]
 ---
 # Contexto completo para continuar el trabajo en Antigravity
 
-Generado el 2026-11-14 en la máquina Darwin con `tools/exportar_contexto.py`, a partir de todo lo trabajado con Claude Code: instrucciones, memoria, estilos, estado de piezas, el historial completo de mensajes del usuario, herramientas y git. Solo incluye texto: los videos, audios y modelos 3D están en el repo y en los discos.
+Generado el 2026-11-18 en la máquina Darwin con `tools/exportar_contexto.py`, a partir de todo lo trabajado con Claude Code: instrucciones, memoria, estilos, estado de piezas, el historial completo de mensajes del usuario, herramientas y git. Solo incluye texto: los videos, audios y modelos 3D están en el repo y en los discos.
 
 ## 0. Léeme primero (instrucciones para el agente de Antigravity)
 
@@ -228,7 +228,8 @@ Herramientas que ya usan los créditos:
 
 - Cada video terminado se entrega en `/Volumes/alanwork/trabajo/Renders finales claude/<carpeta del canal>/`, con el título como nombre de archivo. Carpetas: Agente davis, Ali Abdaal, Alterbase, Amphorus, Ava Restfield, Cartoon3d, Doggo poly shorts, Edicion de videos Reels, Kodama yokai, Madfable, Majestic, Mechayuki, MexiTV, Punk poly shorts, Roblox, Stimulus, Tuneles, Vista. **cartoon3d ("3D cartoon") → Alterbase.** Si no está claro qué carpeta, preguntar una vez.
 - Se envía la versión **share** (como `export.mjs --share`: libx264 CRF 24 preset slow, yuv420p, AAC 192k, +faststart), no el master.
-- Después de entregar, borrar las versiones anteriores en `pieces/<pieza>/renders/` (silent vN, raw, duplicados final.mp4/<pieza>.mp4); queda solo el master con el título.
+- **También** se copia la misma versión share a `/Users/Shared/Contenido/<carpeta del canal>/` (miniatura en su subcarpeta de imágenes, p. ej. `Imagenes y miniaturas/`). Si la carpeta del canal no existe ahí, crearla.
+- **Desde 2026-11-16 los renders finales NO quedan en `pieces/`:** después de entregar a las dos carpetas, borrar todos los mp4 finales/versiones de `pieces/<pieza>/renders/`.
 - La miniatura va en `<carpeta del canal>/Miniaturas/`, con el mismo nombre (título) en .png.
 - Esa carpeta (`/Volumes/alanwork/...` en la Mac; el mismo disco está activo en la PC) es el canal para pasar archivos entre la PC y la Mac: renders, miniaturas y cualquier archivo pesado que no va a git.
 
@@ -798,7 +799,738 @@ User's standing notes for this look: lots of detail everywhere; very pixelated (
 - [zelda-kakariko](project-zelda-kakariko.md) — night tapestry Short with mesh puppets; exported 2026-11-09
 - [Tapestry texture on all](feedback-tapestry-texture-all.md) — everything woven, 1 band top/bottom, sword inside the hand
 - [Clean cutouts](feedback-clean-cutouts.md) — no key-colour remnants; QA every layer over black/white/contrast
-- [Final renders folder](feedback-final-renders-folder.md) — ALL styles: share encode → /Volumes/alanwork/trabajo/Renders finales claude/<channel> (cartoon3d → Alterbase); delete old versions in pieces
+- [Final renders folder](feedback-final-renders-folder.md) — ALL styles: share encode → /Volumes/alanwork/trabajo/Renders finales claude/<channel> (cartoon3d → Alterbase); also /Users/Shared/Contenido/<channel>; no final mp4 left in pieces
+- [api-credits-first](api-credits-first.md) — Siempre que una tarea pueda correr por la API de Claude (créditos $200), hacerla así antes que gastar tokens del plan
+- [digger-channel](digger-channel.md) — Chosen concept for our TikTok channel with zero_fem — \"The Digger\" robot archaeologist of human artifacts (+ some human body/habits videos
+- [earshot](earshot.md) — earshot (ears for agents + 252-SFX code bank) installed; use it to choose/verify/critique SFX in every video from now on
+- [final-renders-folders](final-renders-folders.md) — Ya NO copiar finales a pieces/<Estilo>/ — el único destino del final es LucidLink (ver lucidlink-renders)
+- [freesound](freesound.md) — Freesound API key (token auth) for searching SFX and downloading HQ mp3 previews; backup/complement to Openverse
+- [humanizer](humanizer.md) — humanizer skill (blader/humanizer) installed in ~/.claude/skills/humanizer — run it on every voiced script before generating voice
+- [links-clicables](links-clicables.md) — Siempre dar link clicable markdown (ruta relativa a la raíz del workspace) a cada archivo que el usuario deba ver/escuchar
+- [long-video-delivery](long-video-delivery.md) — when delivering the FINAL version of any long YouTube video, always include the title and a YouTube thumbnail (1280x720)
+- [lucidlink-renders](lucidlink-renders.md) — Renders finales van a LucidLink C:\Volumeslanwork	rabajo\Renders finales claude\<Estilo>\ (reemplaza Telegram desde 2026-11-12)
+- [mechayuki-expeditions](mechayuki-expeditions.md) — Mechayuki long horizontal YouTube format \"Expeditions\" (min 8 min) chosen by the user 2026-10-30, plus the MML2 menu SFX folder
+- [mechayuki-rules](mechayuki-rules.md) — APPROVED level and every rule/check the user asked for in the Mechayuki (@mechayuki) TikTok videos — run all checks before every final rende
+- [openverse](openverse.md) — Openverse API (CC audio/images search) works anonymously; endpoint and useful filters for sourcing SFX/music
+- [real-sfx](real-sfx.md) — real-sfx skill (Clipwing) installed at ~/.claude/skills/real-sfx; places real library sounds on a video's events and critiques the mix
+- [script-format](script-format.md) — Bitstory voice scripts must be natural conversational English, and be handed over as clean copy-paste text only
+- [sinaboto-style](sinaboto-style.md) — New PS1 low poly explainer style copied from TikTok @sinaboto (refs in \"Ref sinaboto/\"); my analysis and chosen pipeline
+- [sonido-pro](sonido-pro.md) — sonido pro" = the user's name for the full SFX stack (earshot + real-sfx + Openverse + Freesound); installed on both this Windows PC and the
+- [storyboard-before-render](storyboard-before-render.md) — Siempre mostrar el storyboard completo y esperar aprobación antes del render, aunque el usuario diga \"procede al render\"
+- [voice-cuts-in-silence](voice-cuts-in-silence.md) — Voice-over cuts must fall in silence between words, never inside a word or mid-phrase (all bitpix videos and later)
+- [voicestudio](voicestudio.md) — VoiceStudio (voz local clonada) instalado con MCP; voz mathomaly, siempre calidad máxima
+- [zero-fem-model](zero-fem-model.md) — Megaman Legends style model (bought from @dreamsbell, rights owned by the user) turned female in pieces/zero-fem
+- [Ponytail scope](ponytail-scope.md) — explicit-only; never lowers video quality; also installed hallmark/impeccable/last30days/diagram-design/scrapling (2026-11-17)
+- [VideoHub](videohub.md) — local preview + notes + thumbnails at 127.0.0.1:7788; pieces/ watched; pieces need a renderOut adapter (2026-11-17)
+- [agent-browser](agent-browser.md) — CLI navegador instalado; usarlo a mi criterio (piezas HTML, webs sin API), nunca para Flow
+- [Guiones + voz Agente Davis](agente-davis-guiones.md) — yo escribo guiones (fórmula de sus ganadores) y genero su voz d31aa86f en VoiceStudio; carpeta agente-davis/
+- [Estilo Ali Abdaal 2](ali-abdaal-2-style.md) — APROBADO 2026-11-12: réplica McDonald's 1:1 (Instrument Serif + subrayado ondulado, captions en caja gris, burbujas de chat, crema con motas, sin viñeta); spec styles/ali-abdaal-2/
+- [Estilo Ali Abdaal (ex docucollage)](ali-abdaal-style.md) — APROBADO v3c-final 2026-11-11: host + collage por capas con parallax, títulos EB Garamond tecleados con wiggle 12 fps, karaoke crema; storyboard 1:1 con la ref antes del render; spec styles/docucollage/ESTILO.md
+- [Créditos API $200](api-credits.md) — Max trae $200/mes de API; key en .env (no en Windows), vence 27 nov; scripts ver-youtube + revisión de renders
+- [Artemis](artemis.md) — F:\artemis instalado (Android por lenguaje natural); para publicar en FB/TikTok desde sus teléfonos, NO configurar hasta que avise
+- [Autonomía atrium](atrium-autonomia.md) — autorizado encadenar remakes (medalla-mezcal → El Retén → ...); estado en pieces/medalla-mezcal/ESTADO.md
+- [Novelas Atrium](atrium-novelas.md) — telenovelas IA estilo @atriumstories_ con Omni Flash; Flow Ultra 25k créditos, generar uno por uno; clips Omni de 8-10 s (varias líneas por clip, se cortan en montaje)
+- [P2 solo si la P1 pasa 10k](atrium-p2-solo-si-funciona.md) — novelas: solo Partes 1; P2 en Flow únicamente si la P1 supera 10k vistas en @vistastoriestv / @wepsychologic (MAJESTIC) / @mexistories / @mexitve (MEXI TV, Pixel VMOS)
+- [Reglas novelas VISTA/MAJESTIC](atrium-reglas.md) — MAYORÍA tipo capos/figura de poder (análisis atrium-vista), ≤2 s por plano; Parte 2 con la misma marca de la Parte 1; APROBADO reten-sierra v4 + hacienda-sangre v2 (edit.py por frases, saltos del mismo personaje, CTA con carisma, continuidad de bordes, marca alterna); VERIFICAR antes de entregar
+- [Caption novelas](atrium-telegram-caption.md) — caption.txt al lado del mp4; antes Telegram con 3er arg = marca (VISTA/MAJESTIC/MEXI/MEXITV/SIN MARCA; MEXITV = marca nueva distinta de MEXI, videos de @mexitve) en mayúsculas al inicio; título gancho + descripción + CTA + hashtags en <pieza>/caption.txt; enviar_telegram.py lo lee
+- [Audio = grabaciones reales](audio-recorded-sound.md) — opción B (ambientes CC0 + kit sound-layer) para pov3d/realistas; NO para bitpix (ahí SFX en código + pista del usuario)
+- [Reglas Ava Restfield (ex Ava Bread)](ava-rules.md) — voz speed 0.88 + cinematográfico (pausas, pensamientos susurrados, miedo); nivel APROBADO short ep4 v6 (Last Train) + ep5 v5 (P.T.) + LARGO ep3 v3 (16:9 ≥8 min, plantilla largo/); voz ava bread buena f2a102da; todas las correcciones (sin traspasar, SUBSCRIBE!, música audible por LUFS)
+- [Miniaturas Ava](ava-thumbnails.md) — fórmula APROBADA v6A (key art RE Requiem: Ava + busto del gigante low poly + zombis + HUNTER en Anton detrás de la cabeza); nunca fuente pixel
+- [Bitstory / bitpix series](bitpix-series.md) — English remakes of Ref bit y pixels; Algrow dropped (no mencionar), code SFX + user's documentary track
+- [Personajes toon.js](cartoon3d-toon-chars.md) — cartoon3d en código con toon.js; NIVEL APROBADO actual = pieces/trash-library (cámara secuencial seqCam, grade Ricks, sombras estables) desde 2026-11-12
+- [cartoon3d voz continua](cartoon3d-voz-continua.md) — llegar a 60.5 s con más palabras, nunca gags mudos
+- [Estilo corte de cueva](cavecut-style.md) — pieces/cavernas: corte 3D three.js, roca verde-negra con toque marrón + musgo, OXÍGENO; look aprobado
+- [Estilo emberlite](emberlite-style.md) — escenas low poly PS2 en Blender vía MCP; piloto pieces/emberlite-desk (build.py/shots.py)
+- [Estilo f1motion](f1motion-style.md) — reel IG "F1 explicado" re-tematizado a Stimulus: gráficos a 12 fps, b-roll B/N con trama 8 px (~32 %), objetos en Flow (nada técnico en código), caras B/N; spec styles/f1motion/ESTILO.md, APROBADO v4 + 12 fps (8 rechazado), plantilla pieces/f1motion-test; catálogo de 5 reels en styles/f1motion/CATALOGO.md
+- [FilmCraft](filmcraft.md) — editor NLE en Rust en F:\filmcraft, MCP filmcraft (user scope) + CLI con 700+ comandos
+- [Cuenta de créditos Flow](flow-creditos.md) — pieces/_creditos.json: cli.js suma 10 por clip Omni y corta al límite (11.400 en la tanda del 2026-11-14); sin gastar tokens en vigilarlo
+- [Flow rápido + vigilar](flow-generacion-rapida.md) — clips encadenados sin pausa fija; Monitor sobre el log; si falla Flow RECARGAR (tools/flow_reload.js), nunca esperar
+- [Solo Flow MCP](flow-mcp-only.md) — NUNCA flow-auto/Flow Connector; todo Flow por srz-google-flow-mcp (video: extender el MCP); cuenta monetizadotiktok18 (desde 2026-11-16, gastar todo; luego correoderecuperacion496), nunca manuelleivapro60
+- [Flow MCP](flow-mcp.md) — srz-google-flow-mcp instalado: rutas, carpeta de salida, CLI claude.exe del VSCode
+- [Gumroad](gumroad.md) — MCP conectado a la tienda agentpatrickdavis; confirmar antes de publicar
+- [Hypit](hypit.md) — skill + ejecutable npm para clonar videos virales (SVML); sin servicio de modelos conectado aún
+- [Kimodo en el PC](kimodo-pc.md) — opción A instalada (env conda kimodo, encoder en CPU); kimodo_batch.py → BVH de zawdog
+- [lemo-opuscar](lemo-opuscar.md) — plugin con 66 estilos de película hechos en código; copia y galería en opuscar/styleboard/index.html
+- [Low poly desde foto](lowpoly-from-photo.md) — método vlvt: foto→script Blender loft 6-12 lados, tex 128px/32 colores, revisar al lado de la foto
+- [Mechayuki UpNext remakes](mechayuki-upnext-remake.md) — NUEVO formato 2026-11-15: rehacer reels de @jongmin.design con mismos planos + diálogo parafraseado; specs en fuentes/jongmin-design/remake/
+- [Horario @mexitve](mexitv-horario.md) — 3 días 18:00, luego 08:00+18:00; tools/mexitv_cola.json + tarea programada
+- [Migración Antigravity](migracion-antigravity.md) — MIGRACION_ANTIGRAVITY.md se regenera solo (Stop hook); Mac genera MIGRACION_MAC.md
+- [DMs Patrick = ventas](patrick-dm-ventas.md) — siempre mandar link de guía/producto; demanda sin producto → crear producto; no resolver casos
+- [positpixel solo código](positpixel-code-only.md) — réplica positpixel: solo todo en código (híbrido Flow descartado); prueba pieces/pp-chihuahua/code
+- [Esfuerzo pov3d moderado](pov3d-effort.md) — buenos pero rápidos: reutilizar sets, ≤3 agentes sin high, una pasada de storyboard
+- [pov3d-hd nicho](pov3d-hd-niche.md) — largo 16:9 "Couldn't Stop" 8:30, sin voz (como Minute Zero); rocket-speedup en curso
+- [Reglas pov3d](pov3d-style.md) — TODAS las peticiones del usuario para este estilo (texto, detalle, gente, cámara, efectos, sonido, versiones EN, flujo); oxigeno = nivel mínimo
+- [Premiere MCP](premiere-mcp.md) — adobe-premiere-pro-mcp + CEP; manejar Premiere (proyecto Stimulus) para roto y perfeccionar videos
+- [Recursos D: del usuario](recursos-d-alan.md) — fuentes, PNG/iconos, overlays, SFX y música propios en D:\Alan\Fiverr Upwork...; revisar antes de buscar afuera
+- [Roblox en Windows](roblox-windows.md) — voz local 3D cartoon 2 d9b69bea (+4 st), BGM TEMPOREX en styles/roblox/bgm, refs en Ref roblox/, pipeline = copia de rbx-rope; guiones SIEMPRE empiezan "In this town"
+- [Estilo scroll3d](scroll3d-style.md) — remake en español de las refs "Ref Scroll aniamtions" (mismos planos/cámara, texto parafraseado, elementos cambiados); el usuario graba la voz
+- [Estilo Stimulus](stimulus-style.md) — talking heads de Dariel: spec styles/stimulus/ESTILO.md, outro real + logo en assets, fuente DIN Next LT Arabic Bold
+- [Tesseract](tesseract.md) — tsrct CLI 0.5.0 + skills tesseract-* para talking heads/motion; ruta del .cmd, telemetría on
+- [Verificar tutoriales](verify-tutorial-claims.md) — no fiarse del resumen de Gemini: preguntar qué herramienta hizo cada asset (caras/pelo en Flow en cartoon3d)
+- [VMOS Cloud](vmos-cloud.md) — teléfonos en la nube por API con tools/vmos.py; Pixel APP6958QPXXF8LD7 (naldo) + V06 ATP63362YSJXJF2F (Patrick @agentedavis, VMOS_PAD=)
+- [yokai 40 s máx](yokai-40s.md) — kodamashorts/yokai: videos de 40 s como máximo por ahora (desde 2026-11-03)
+- [Skills YouTube](youtube-skills.md) — 11 skills yt-* (guion con hooks puntuados, título+miniatura, SEO, capítulos, retención); usarlas en todo lo de YouTube
+- [Estilo YouTube agente Davis](yt-agente-style.md) — estilo APROBADO: flujo edit.py, imágenes pantalla completa sincronizadas a la palabra, burns solo 50 s, zoom lento subpíxel, SIN storyboard (render directo), sin imágenes repetidas
+- [zawdog: solo personajes necesarios](zawdog-only-needed-chars.md) — pulir solo los humanos que usa el próximo video; ropa Flow = build_human3 flow=1
+- [Zernio](zernio.md) — MCP para publicar/programar videos en TikTok, Facebook, etc.; confirmar cada publicación
+- [Canal zombies](zombie-channel.md) — heroína PS1 estilo RE hecha desde cero (pieces/zombie-girl), ref Learn with Alya, voz nueva US
+
+## memoria: `agent-browser.md`
+
+---
+name: agent-browser
+description: agent-browser 0.43.0 (Vercel Labs) instalado global en Windows; usarlo a criterio propio para revisar piezas HTML y webs sin API
+metadata:
+  node_type: memory
+  type: reference
+  originSessionId: 64e68669-3c98-47c9-8df4-61a973da7b91
+  modified: 2026-11-13T20:48:09.455Z
+---
+
+`agent-browser` (npm global, Chrome for Testing 157 en ~/.agent-browser/browsers) instalado 2026-11-13. CLI: open → snapshot -i (refs @e1) → click/fill/upload → screenshot/record → close. `--auto-connect` usa el Chrome del usuario con sus sesiones. Guía: `agent-browser skills get core`.
+
+**Why:** el usuario dijo "úsalo cuando consideres que te serviría" — autorización a criterio propio, sin preguntar.
+
+**How to apply:** usarlo para revisar piezas HTML/three.js (consola, capturas, vitals) y webs sin API/MCP. NO para Flow (ver [[flow-mcp-only]]). Publicar en redes sigue requiriendo confirmación (ver [[zernio]]).
+
+## memoria: `agente-davis-guiones.md`
+
+---
+name: agente-davis-guiones
+description: Desde 2026-10-24 yo escribo los guiones del canal Agente Davis (mejorando sus videos ganadores) y genero su voz en VoiceStudio; carpeta agente-davis/
+metadata:
+  node_type: memory
+  type: project
+  originSessionId: 4acbbdf7-be55-457b-a4ba-363c0a2f0599
+  modified: 2026-10-31T05:29:44.833Z
+---
+
+**Entrega de video (pedido 2026-10-29):** SIEMPRE que entregue un video renderizado, incluir en el mensaje su TÍTULO (y el texto de la miniatura). Guardar el título elegido en la cabecera del guion (`guiones/NN-*.md`) para no perderlo.
+- 02-telefono (video03_telefono.mp4): "Si ICE te pide tu TELÉFONO, di ESTO (Solo UNA palabra)" · miniatura "NO LO DESBLOQUEES".
+- 03-carro (voz/03): "Si ICE te pregunta "¿A dónde vas?" en el carro, di ESTO" · miniatura "NO LE CONTESTES".
+- 04-carta-residentes (voz/04, aviso para comparecer/NTA a residentes): "Si eres RESIDENTE y te llega ESTA carta, NO la ignores" · miniatura "¿TE LLEGÓ ESTA CARTA?".
+- 05-puerta (voz/05, video v06): "Si ICE toca tu puerta y pregunta "¿Está…?", di ESTO" · miniatura "¿PUEDEN ENTRAR?".
+- 06-congreso-ice (voz/06, noticia: demócratas ganan el Congreso 3-nov-2026): "Trump PERDIÓ el Congreso… ¿y ahora qué pasa con ICE?" · miniatura "¿ICE SE DETIENE?".
+- **Corrección 2026-11-13: YA NO mencionar la tarjeta roja** (externa, casi no deja ganancia). El bloque de mitad de video pasa a ser el Kit Plan de Emergencia Familiar de Gumroad (agentpatrickdavis.gumroad.com/l/kit-familiar), ver [[gumroad]]. Instagram de Patrick ya no existe.
+- **Corrección 2026-11-07:** variar también el FORMATO del título/tema: no siempre "Si ICE hace X, haz/di ESTO"; usar noticias del momento (elecciones, leyes, cortes) cuando tengan potencial. Elegir temas por OUTLIERS (vistas ÷ mediana del canal), no por vistas brutas. Canales a revisar cada vez: los de ideas.md + @AngelLealLawyer, @LaHoraDelInmigrante, @abogadaerikajurado. vidIQ puede quedarse sin créditos: usar `yt-dlp --flat-playlist -J --playlist-end 80 <canal>/videos` y dividir por la mediana. Datos de noticias SIEMPRE verificados con fuentes, pero Patrick NUNCA las cita en el guion (nada de "según AP/NBC/un estudio"): él lo explica todo como propio (corrección 2026-11-07) y nombres en inglés añadidos a SAY en gen_voice.py.
+- **Corrección 2026-11-05 (2):** texto de miniatura CORTO (2-3 palabras, ej. "¿PUEDEN ENTRAR?"), no cabe más. En la edición NUNCA repetir una imagen dentro del mismo video (cada imagen distinta). Y para estos videos NO mandar storyboard: editar y renderizar directo (sigue habiendo QA propio de cada frame).
+- **Corrección 2026-11-05 (desde guion 05):**
+  - Duración: guiones de ≥15 min de voz (~2.700-2.900 palabras) y voz más lenta (gen_voice.SPEED = 0.9).
+  - Patrick está del lado de la gente: NUNCA contar en primera persona cosas que él hacía como agente de ICE que caigan mal ("cuando yo tocaba puertas…"). Decirlo en tercera persona ("cuando un agente toca una puerta…"); su experiencia solo sirve para saber cómo funciona por dentro.
+  - Texto de miniatura: NUNCA la solución del video (mal: "PÁSELA POR DEBAJO"); poner algo que dé curiosidad y obligue a ver el video para descubrir la respuesta.
+- **Variar (corrección 2026-11-02):** los guiones 01-04 abrían todos con "Imagina que…" y las miniaturas siempre con "NO + verbo" (NO LO DESBLOQUEES, NO LE CONTESTES…): le cansa. Cada guion abre de forma distinta (dato, pregunta directa, frase citada, confesión del agente, cuenta regresiva…) y la miniatura cambia de patrón (pregunta, peligro, número, frase citada…). Revisar los anteriores antes de escribir.
+- Palabras en inglés como "Notice to Appear" la voz las destroza: decirlas en español.
+- QA de voz: `python qa_voice.py guiones/X.md voz/NN` (Whisper por párrafo); retomas con otra seed vía `gen_voice.SEED` + `gen_voice.tts`, originales en voz/NN/retake/.
+
+El usuario me pidió escribir los guiones y generar su voz (VoiceStudio, perfil **"Agente davis" `d31aa86f`**); él graba el video raw con esa voz y luego yo lo edito con el estilo [[yt-agente-style]].
+- Carpeta: `/Users/alanleiva/claude-proyectos/agente-davis/` (guiones/, voz/, ideas.md con el estudio de canales y temas priorizados, gen_voice.py).
+- Voz: REST `/v1/audio/speech` model omnivoice, voice d31aa86f, language es, num_step 32, wav, seed 7, párrafo a párrafo (~6 s de generación por s de audio → 14 min ≈ 1,5 h, correr en segundo plano). Números escritos en letras. **"ICE" se pronuncia "ais"**: gen_voice.py lo sustituye solo para la voz (tabla SAY); vigilar otras siglas que la voz pueda leer mal. El guion 01 (aeropuerto) salió aprobado ("bastante bien"). Ver [[voicestudio]].
+- Guiones: fórmula de sus ganadores ("Si ICE te pregunta X, di/no digas Y"), tono orgánico de sus videos marcados como humanos, incluir siempre "Soy el agente Patrick Davis y…" (dispara la intro en la edición) y cerrar con "Aquí les dejaré otro video que estoy seguro de que les aportará mucho más valor… Así que nos vemos allí."
+- **Desde el guion 02, en cada guion (pedido 2026-10-24):**
+  - Hacia la mitad, un bloque de la **tarjeta roja "Conoce tus derechos"** (variar las palabras cada vez; ideas obligatorias: la recomiendo, es la tarjeta que protege tus derechos si ais te detiene, parece pequeña pero he visto muchas paradas resolverse solo con mostrarla, cuando los nervios atacan dices lo que no debes y la tarjeta hace el trabajo por ti dejando al agente sin opciones, viene en inglés y español, "haz clic aquí abajo"; cerrar con "ahora bien, continuando con el video…"). Texto base del usuario: "Y antes de continuar, quiero recomendarte la tarjeta roja de conoce tus derechos… Ahora bien, continuando con el video".
+  - Terminar SIEMPRE con (variando levemente): "Aquí les dejaré otro video que estoy seguro de que les aportará mucho más valor en cuanto a cómo pueden mantenerse protegidos. Así que nos vemos allí."
+- **Entregar la voz también en 2 partes** (él graba el raw en 2 partes): cortar en la pausa entre párrafos más cercana a la mitad, nunca dentro de una palabra (01: parte1 5:36 / parte2 5:13, corte tras el bloque del ebook).
+- Fuentes de temas: sus 9 videos ganadores, canales de referencia < 250k subs con videos largos > 50k vistas y del mismo tema, y vidIQ (outliers/tendencias). Temas permitidos: ICE, visas, green card, aeropuertos, países para emigrar, qué hacer si ICE te detiene.
+**Why:** quiere delegar guion + voz para solo grabar.
+**How to apply:** datos legales exactos y prudentes (es su credibilidad); entregar el guion limpio + el WAV.
+
+## memoria: `ali-abdaal-2-style.md`
+
+---
+name: ali-abdaal-2-style
+description: "Estilo Ali Abdaal 2 (reel IG C_QLaqdI0Wd, McDonald's): APROBADO 2026-11-12, réplica 1:1 storyboard v1 + motion_test; spec styles/ali-abdaal-2/"
+metadata:
+  node_type: memory
+  type: project
+  originSessionId: 180a3cfb-8b3b-49b6-b8ac-a71a3a85ca01
+  modified: 2026-11-12T16:28:18.298Z
+---
+
+Segundo estilo de Ali Abdaal, hermano de [[ali-abdaal-style]]: otras fuentes, otros captions y otros motion graphics; gráficos a 12 fps.
+- **Ref:** IG C_QLaqdI0Wd = YouTube 3Uuwe4BxYJE (1080p) en fuentes/ali-abdaal-2/.
+- **Spec:** styles/ali-abdaal-2/ESTILO.md (números), CATALOGO.md (25 planos, 8 tipos), kit/ (fuentes + kit.json).
+- **Pieza:** pieces/ali-abdaal-2-test/ (prep/board.py: board / motion / frame).
+- **Fuentes:**
+  - Instrument Serif con un trazo del 1.25 % para el título en minúscula con subrayado ondulado amarillo→azul.
+  - Neue Haas Display Bold para palabra + barra de color ("Tuesday").
+  - FreeSans Bold para captions en caja gris translúcida y para las burbujas de chat naranja/azul.
+- **Fondo:** crema plano #FFFBE8 con motas de tinta (overlay del usuario). SIN viñeta: la de las capturas era del reproductor de IG.
+- **APROBADO 2026-11-12:** el usuario dijo "quedó excelente". La réplica McDonald's (storyboard/v1 + motion_test.mp4) es el nivel mínimo y no se cambia más.
+- **Método aprobado:**
+  - Primero replicar la ref 1:1 con sus mismos assets y su audio como guía de tiempos (ejercicio interno, no se publica).
+  - Después adaptar el estilo al raw del usuario: el primero fue Ashton Cole, "2 ash.mp4", primeros 20 s.
+- Aplican todas las reglas de [[ali-abdaal-style]]: capas con parallax, transiciones escalonadas, recortes limpios, zoom en el corte, storyboard antes del render.
+
+## memoria: `ali-abdaal-style.md`
+
+---
+name: ali-abdaal-style
+description: "Estilo ALI ABDAAL (antes docucollage), APROBADO 2026-11-11 = shorts de Ali Abdaal (reel 1 \"Gold Medal Syndrome\" DIV6ZPFIx3y es LA referencia, + DHt949poQGJ, DHgssOYoF6v, DF0jP-vIYlk): host grande + collage editorial; spec styles/docucollage/ (REEL1_FRAME_ANALISIS.md manda)"
+metadata:
+  node_type: memory
+  type: project
+  originSessionId: 180a3cfb-8b3b-49b6-b8ac-a71a3a85ca01
+  modified: 2026-11-10T23:36:17.370Z
+---
+
+Estilo replicado a pedido del usuario (2026-11-10).
+- **Referencia principal: reel 1.** Copia 1080p en YouTube: `alLf0hN5JsQ` (`fuentes/docucollage/reels/DIV6ZPFIx3y/reel1080.mp4`). IG solo da 608p. Ali Abdaal tiene los 4 shorts en su canal de YouTube.
+- **Spec:**
+  - `styles/docucollage/REEL1_FRAME_ANALISIS.md`: análisis cuadro a cuadro a 25 fps, todos los frames, más mediciones con código.
+  - `ESTILO.md`, `CATALOGO.md` (22 tipos), `kit.js`.
+  - `ref_frames/user_favs/`: los 21 frames favoritos del usuario = la vara de calidad y el menú de composiciones.
+- **Pieza:** `pieces/docucollage-test` (raw stimulus-01).
+  - `prep/gen2.py` genera index.html.
+  - `prep/assets2.py` hace cutouts, fotos y caras.
+  - `prep/fix_matte.py` arregla el matte (balón y silla).
+  - `tools/face_eyes.py` saca las barras de censura con MediaPipe.
+
+## Reglas del usuario (feedback 2026-11-10, OBLIGATORIAS)
+1. **12 fps** en animaciones y transiciones. El reel mide 10; el usuario pidió 12. Render a 24 fps con `tlg` a floor(t*12)/12. TH, host recortado, deblur y relleno de subtítulos van suaves.
+2. **Cada transición lleva blur/defocus.**
+   - Deblur de 18 px → 0 en ~0.26 s al entrar.
+   - Whip-out: blur hasta 18 px y −100 px en 4 frames.
+   - TH: copia borrosa que se desvanece.
+3. **Subtítulos más chicos:**
+   - píldora #FBF5E5 de 86 px de alto, radio 30, Poppins Bold 44 px;
+   - cada palabra se rellena progresivamente al decirla: crossfade #CFC8B6 → #1B1B1B durante la duración de la palabra (0.12-0.4 s);
+   - y=900 en el bloque gráfico, y=1384 desde el TH.
+4. **Títulos de arriba (fuentes del reel 1, para TODOS los títulos, números incluidos):**
+   - línea condensada: Bebas Neue con stroke de 2 px y tracking .2em;
+   - línea héroe: Besley 900;
+   - dorado plano #FFD08D con sombra dura (+10/+9 px a cap ~100, #422F1A);
+   - **wiggle por letra:** pose nueva en cada paso, ±3 px x / ±2 px y / ±1.6°, independiente por letra;
+   - **brillo:** banda blanca diagonal de izquierda a derecha, ~1000 px/s, al terminar el tipeo;
+   - tipeo por letra; en el TH las letras caen 100 px.
+   - Montserrat NUNCA en títulos. La mano (Covered By Your Grace, amarillo) solo para marcas tipo "JESSICA" / "less!".
+5. **Personas completas.** Nunca cortadas a media figura: cuerpo entero o saliendo por el borde inferior.
+6. **Host:**
+   - **nunca teñido** (ni sepia ni amarillo);
+   - **encuadre grande estilo Ali**: `th_big.mp4` / `cutout_big.webm`, crop 654×1164 desde (273, 690) del raw, ×1.65, cabeza arriba ~280 px;
+   - es una capa que se puede subir y bajar.
+7. **El host NUNCA solo sobre un fondo gráfico.**
+   - Sí: TH real; o recortado delante de una escena completa con título detrás (abajo, como fav 1/2); o subiendo sobre una foto y disolviendo al TH (reel P21/P27).
+   - Las pantallas gráficas son para visuales creativos.
+8. **Barras de censura sobre los OJOS:**
+   - verificadas con landmarks (`tools/face_eyes.py`; filtrar falsos positivos);
+   - difuminadas/borroneadas como en el reel (box-shadow feather, sin filter blur);
+   - en todos los que no son el host.
+9. **Nunca repetir una imagen** dentro del video.
+10. **Todo se mueve.**
+    - Cada persona u objeto es una capa propia: entrada expo.out sin rebote, deriva, parallax (bg 0.3×, sujeto 1.25×, título 1.4×), pops del reel (×1.28 → 1 en 1 frame), péndulo en colgados.
+    - Push +1.2…+5.8 %/s y bursts escalonados.
+11. **Buscar recursos activamente** (web, Google Fonts, Flow), no conformarse con la biblioteca. Flow por MCP. Ojo: a veces Flow guarda la imagen del prompt anterior; verificar cada archivo.
+12. **Zonas seguras:** texto entre y 168 y 1330 y hasta x 940. Ningún `<video>` dentro de un div con data-start.
+13. **Pocos elementos con filter/clip-path/radial** (HyperFrames avisa a partir de ~40, riesgo de frames negros).
+
+**Storyboard v3 aprobado como estilo (2026-11-10)**, correcciones:
+- Títulos serif: fuente delgada y alargada tipo Garamond Bold (no gorda); shine lento; wiggle suave y algo lento; sombra corta.
+- Palabras de un mismo título bien juntas (CLUB/DIRECTORS, FAMILIES/SEE con SEE más grande).
+- Parallax en todo zoom: personaje recortado separado del suelo/fondo.
+- Personas en paneles completas hacia abajo, con fade a negro arriba.
+- Fondos con degradé hacia oscuro (arriba o abajo, según la ref); sombras sobre caras con fade.
+- Objetos en paneles que giran = giro 3D; zooms con motion blur y halftone donde la ref los tiene.
+
+**Ronda 2 (2026-11-11), reglas generales:**
+- TODO por capas: fondo plano + escenario + personaje, cada uno con movimiento propio (parallax, cámara dinámica). Nunca una foto entera de fondo.
+- Overlay grunge suave (multiply) en movimiento sobre la mayoría de los planos de gráficos.
+- Fondos con un brillo blanco suave en el centro o a la izquierda, con mucho feather; los fades a oscuro también con mucho feather, nunca bruscos.
+- Títulos con palabras más juntas en todos; EB Garamond un poco más gruesa; palabras grandes más grandes si hay margen.
+- Nunca se ve el borde de un recorte: un miembro que entra por el borde sigue fuera del cuadro.
+- Los colores de cada escena van con lo que dice nuestro guion, no con los de la ref (S18: rojo/triste no sirve).
+
+**Ronda 3 (2026-11-11):** v3b "muuucho mejor". Ajustes a recordar:
+- El wiggle bueno es el de title_test_v3b: 60 % de amplitud, 3.5 Hz. No volver a acelerarlo.
+- Shine blanco y algo rápido.
+- Grunge más visible.
+- Halftone de punto chico, rotado y con modo de fusión.
+- Paredes blancas como en la ref.
+- Los fades de arriba nunca llegan a negro total.
+- Lo que va pegado al borde no se despega durante el movimiento.
+
+**Render v3c (2026-11-11):** "muuuy bien". Reglas que se suman:
+- Sin SFX de brillo en el shine.
+- Grunge sutil (baja opacidad o soft-light).
+- NUNCA corte seco entre planos de gráficos: cada capa sale y la nueva entra desde abajo, escalonado y dinámico.
+- Cada elemento aparece por separado (modelo: la entrada de la mujer en el segundo 24).
+- Los objetos de una escena actúan: la lupa busca y luego aparece el círculo rojo.
+- Los giros 3D tienen que notarse.
+
+## APROBADO (2026-11-11): nivel mínimo = docucollage-v3c-final
+El usuario lo aprobó ("ese es el estilo") y lo renombró **Ali Abdaal**. Los archivos siguen en styles/docucollage/ y pieces/docucollage-test/. La copia del final está en pieces/Ali Abdaal/.
+- Plantilla: prep/board3c.py (storyboard) → prep/render3c.py (gráficos 12 fps) → prep/gen3.py (composición) → hyperframes check → render → +1 dB de audio (-14 LUFS).
+- Todos los valores finales (wiggle, shine, grunge, halftone, capas, parallax, transiciones, encuadres del TH) están en styles/docucollage/ESTILO.md, que manda.
+- Flujo de trabajo: storyboard con cada escena junto a su frame de ref → OK del usuario → render. Copiar la ref 1:1 y cambiar solo los assets.
+- Transición del fondo: el fondo NO se desliza, cambia de color al del plano siguiente; solo se desliza el sujeto, y tiene que estar completo (regenerarlo en Flow si viene cortado).
+- Recortes de cabeza o cuello a color sobre cuerpo B/N: siguiendo la línea real de la ropa, sin halo y con zoom 3x antes de entregar.
+
+## memoria: `api-credits-first.md`
+
+---
+name: api-credits-first
+description: "Siempre que una tarea pueda correr por la API de Claude (créditos $200), hacerla así antes que gastar tokens del plan"
+metadata:
+  node_type: memory
+  type: feedback
+  originSessionId: 98e21a33-27f5-4cd2-b46a-f3e7cab88585
+  modified: 2026-10-29T03:29:19.074Z
+---
+
+Regla del usuario (2026-10-28): cualquier actividad que pueda usar el saldo de créditos de API ([[api-credits]]) debe usarlo primero, antes que los tokens del plan de Claude Code.
+
+**Why:** quiere ahorrar los límites del plan Max; los créditos se pierden cada mes si no se usan.
+**How to apply:** para trabajo pesado o repetitivo (ver/analizar videos y fotogramas, revisar renders, guiones en lote, títulos/SEO, transcripciones con análisis) usar un script Python con el SDK `anthropic` y la key del `.env`; el script escribe un reporte .md corto y yo leo solo el resultado. Si los créditos se acabaron (error de saldo), avisar y recién ahí hacerlo yo.
+
+## memoria: `api-credits.md`
+
+---
+name: api-credits
+description: "Max 20x plan includes $200/month Claude API credits; key in project .env, SDK installed; use for automated scripts to save plan limits"
+metadata:
+  node_type: memory
+  type: reference
+  originSessionId: 98e21a33-27f5-4cd2-b46a-f3e7cab88585
+  modified: 2026-10-29T03:42:20.741Z
+---
+
+El plan Max 20x del usuario trae USD 200/mes de créditos de API (no se acumulan; reset ~1 de cada mes). Organización "Alan's Individual Org" en platform.claude.com, sin tarjeta ni recarga automática: al acabarse los créditos la API se detiene, sin cobros.
+
+- Clave: `ANTHROPIC_API_KEY` en `/Users/alanleiva/claude-proyectos/.env` (git-ignorado). NUNCA como variable de entorno de Windows (Claude Code la usaría en vez del plan, y los créditos no cubren Claude Code).
+- La clave vence a los 30 días (27 nov 2026): renovarla en Console → Claves y acceso.
+- SDK `anthropic` instalado; probado con claude-haiku-5-5 el 2026-10-28.
+
+Herramientas hechas (2026-10-28), ambas con streaming + max_tokens 16000 (Sonnet 5.5 piensa antes de responder):
+- `ver-youtube` ya usa Claude: yt-dlp (`--js-runtimes node`) + faster-whisper local + fotogramas. Un short de 2 min cuesta unos $0.13.
+- `tools/revisar_render.py --estilo ava|mechayuki|pov3d|cartoon3d|yt-agente|sinaboto|emberlite|scroll3d [--nota] video.mp4` deja `<video>_revision.md` (veredicto, fallos con [MM:SS], cumple, no verificable). Unos $0.25 por render de 90 s. Correrlo antes de mostrarle cada render al usuario.
+
+**Why:** el usuario quiere que el trabajo pesado y repetitivo (ver videos, revisar renders contra reglas) lo hagan scripts con esos créditos y no gaste tokens del plan.
+**How to apply:** plan aprobado el 2026-10-28: (1) reemplazar Gemini en ver-youtube por yt-dlp + Whisper local + Claude API; (2) revisión automática de renders contra las reglas de cada estilo ([[ava-rules]], [[mechayuki-rules]], [[pov3d-style]], [[cartoon3d-rules-2]]). Los scripts escriben un reporte .md y lo leo solo si hace falta. Usar Haiku/Sonnet y caché de prompts.
+
+## memoria: `artemis.md`
+
+---
+name: artemis
+description: "Artemis (google/artemis) instalado en F:\\artemis para manejar Android por lenguaje natural; el usuario quiere usarlo para publicar en Facebook/TikTok desde sus teléfonos, pero aún no"
+metadata:
+  node_type: memory
+  type: project
+  originSessionId: 8902ab2e-7298-4e9b-8cc9-0c6cf244fa6a
+  modified: 2026-11-02T03:28:17.089Z
+---
+
+Instalado 2026-11-01 en `F:\artemis` (uv sync hecho; uv, adb, scrcpy vía winget). Falta: GEMINI_API_KEY en `F:\artemis\.env` (defaults son Gemini Flash), teléfono con depuración USB, y registrar el MCP (`uv run artemis mcp --install claude`, que también mete reglas de testing; pedir aprobación).
+
+**Why:** el usuario planea que yo publique en Facebook y TikTok usando sus teléfonos Android vía Artemis.
+**How to apply:** NO configurarlo hasta que el usuario avise. Cuando lo haga: desactivar ARTEMIS_HELPER_AUTO_INSTALL si es teléfono personal, confirmar cada publicación (como con [[zernio]]).
+
+## memoria: `atrium-autonomia.md`
+
+---
+name: atrium-autonomia
+description: El usuario autorizó encadenar remakes de atrium sin esperar (noche 2026-11-04); estado en pieces/medalla-mezcal/ESTADO.md
+metadata:
+  type: project
+---
+2026-11-04: el usuario se fue a dormir y autorizó terminar medalla-mezcal (remake de "Llegó buscando a la patrona", 1.5M) y seguir con el siguiente más visto (El Retén, 1.1M) sin preguntar. Plan y estado en `pieces/medalla-mezcal/ESTADO.md`.
+**Why:** quiere avanzar la cola de remakes de [[atrium-novelas]] mientras duerme.
+**How to apply:** seguir [[atrium-reglas]] (verificación completa) y entregar cada uno por Telegram; no pedir confirmaciones intermedias.
+
+- **Clip que no sale (2026-11-04):** si un clip sigue sin generarse después de muchos intentos (pasadas, palabras suaves, personaje sin imagen, prompt mínimo), no trabar la cola: pasar al siguiente video de la lista con todas las reglas de [[flow-generacion-rapida]]. El video trabado queda en ESTADO.md con lo que falta. Si se puede montar sin ese clip, se monta igual.
+- **Agentes autorizados (2026-11-04):** para estas novelas se pueden usar varios agentes en paralelo cuando haga falta: QA de clips, preparar el siguiente video, verificar el render. Ojo: solo UNA cosa a la vez en Flow.
+- **Flow nunca ocioso (2026-11-04):** siempre que Flow esté libre, aprovecharlo para avanzar el siguiente video (hojas o clips). Preparar con agentes el guion/archivos del video N+1 mientras se genera o monta el N, para que Flow no quede esperando.
+
+- **Cola vacía = escribir la siguiente pieza (usuario, 2026-11-08):** nunca detenerse a preguntar "¿qué sigo?" cuando se acaba la cola. Encadenar solo: nueva Parte 1 de capos (premisas de fuentes/atrium-vista/resumen.md, rotando la marca) y, en paralelo, el paquete de una Parte 2 sin usar Flow, para que Flow no quede nunca libre.
+
+## memoria: `atrium-novelas.md`
+
+---
+name: atrium-novelas
+description: "Nicho novelas cortas estilo @atriumstories_ (telenovela mexicana IA, Omni Flash en Flow); cuenta Flow Ultra 25k créditos, generar uno por uno"
+metadata:
+  node_type: memory
+  type: project
+  originSessionId: 31217992-d068-4929-9882-eede7428b798
+  modified: 2026-11-03T14:03:36.387Z
+---
+
+Desde 2026-11-03: replicar las telenovelas cortas de TikTok @atriumstories_ (guiones, ganchos, cortes rápidos ~1,5-2 s, plano-contraplano, fotorrealista hora dorada). Análisis en fuentes/atriumstories/ (tools/analizar_novela.py por API).
+
+- El creador hace hojas de personaje antes (ChatGPT); aquí se hacen en Flow con flow-create-character (+ --body, voz "native Mexican Spanish speaker").
+- La cuenta de Flow es **Ultra con ~25.000 créditos**: generar los videos que hagan falta, pero **uno por uno** (con --wait, sin batch).
+
+- **Flujo:** tomar los videos con más vistas (de atrium y de otras cuentas del estilo que pasará el usuario) y rehacerlos con la MISMA base (estructura, ritmo, beats) pero cambiando bastante personajes, diálogos y elementos. Piloto: pieces/agua-hacienda (remake de "vaso de leche" P1).
+
+**Why:** el usuario lo pidió así; la extensión dice "plan free" pero eso es el conector, no los créditos de Flow.
+**How to apply:** no frenar por coste de créditos en Flow; un job a la vez.
+- Omni Flash: aprovechar clips de 8 y 10 s (pedido del usuario): varias líneas/planos por clip y cortar en el montaje. MCP a 720p (default de Flow es 360p).
+
+## memoria: `atrium-p2-solo-si-funciona.md`
+
+---
+name: atrium-p2-solo-si-funciona
+description: "Novelas VISTA/MEXI/MAJESTIC: generar solo Partes 1; la Parte 2 solo si la P1 pasa 10k vistas en su TikTok"
+metadata:
+  node_type: memory
+  type: feedback
+  originSessionId: 50c3c1ee-af27-4bdd-ab17-c508335a8f8f
+  modified: 2026-11-15T20:17:14.710Z
+---
+
+Desde 2026-11-15: generar en Flow SOLO Partes 1 de las novelas. Una Parte 2 se genera únicamente cuando su Parte 1 supera las **10.000 vistas** en la cuenta de TikTok de su marca:
+- VISTA → https://www.tiktok.com/@vistastoriestv
+- MAJESTIC → https://www.tiktok.com/@wepsychologic
+- MEXI → https://www.tiktok.com/@mexistories
+- MEXITV (marca APARTE de MEXI; en Telegram 3er arg = MEXITV; en edit.py BRAND = "MEXITV": marca de agua "MEXI TV" arriba-izquierda y=135, kit pieces/_marcas/MEXITV) → https://www.tiktok.com/@mexitve (cuenta del Pixel 10 Pro de VMOS, APP6958QPXXF8LD7; desde 2026-11-16 también se generan videos para ella, mismas reglas)
+
+**Why:** no gastar créditos de Flow en segundas partes de historias que no funcionaron.
+
+**How to apply:** antes de escribir/generar una P2, revisar las vistas de la P1 en su cuenta (Apify/vidiq tiktok profile videos). Guion de la P2 se puede dejar escrito, pero no gastar Flow hasta que pase 10k. Ver [[atrium-reglas]], [[atrium-autonomia]], [[flow-creditos]].
+
+## memoria: `atrium-reglas.md`
+
+---
+name: atrium-reglas
+description: "Correcciones del usuario al piloto agua-hacienda v1 (novelas estilo atrium, cuenta VISTA STORIES)"
+metadata:
+  node_type: memory
+  type: feedback
+  originSessionId: 31217992-d068-4929-9882-eede7428b798
+  modified: 2026-11-03T22:29:54.769Z
+---
+
+Revisión v1 de pieces/agua-hacienda (2026-11-03), aplica a todas las novelas [[atrium-novelas]]:
+- Cuenta: **VISTA STORIES** (marca de agua arriba al centro, como "ATRIUM STORIES").
+- **Música de fondo de telenovela** siempre, como las refs (cama bajo todo el diálogo).
+- **Ritmo rápido**: cortes rápidos, sin silencios; silencio solo cuando la escena lo pide (alguien revisa un documento/foto).
+- **No cortar palabras bruscamente**: dejar que cada palabra termine (margen tras la última palabra, fundidos cortos de audio).
+- **Pronunciación**: vigilar errores del generador ("trabayo" en vez de "trabajo"); regenerar el clip. Escribir la palabra de forma que no la deforme.
+- **Morphing prohibido** (p. ej. anciano que se transforma en la niña): revisar cada clip y regenerar si pasa.
+- Subtítulos quemados en algún clip: no importa si el video en general sale bien.
+- **Transiciones** (fundido a negro, etc.): copiar exactamente cómo lo hacen las refs.
+- **CTA final**: el protagonista en primer plano dice a cámara un CTA relacionado con la historia (verificar en refs y replicar).
+
+**Why:** pedidos explícitos del usuario tras ver v1 ("va por muy buen camino").
+**How to apply:** revisar cada punto antes de entregar cualquier versión.
+- **Política de menores en Flow**: si bloquea, reintentar con varias redacciones (sin "girl/little girl/child": "daughter", "young Lupita", "the kid", plano medio con un adulto, sin sed/llanto/abuso hacia ella) antes de rendirse.
+- **Inicio de la música**: todas las refs abren con un BOOM (golpe) en el frame 0 y siguen con música de suspenso; la cama cálida entra después (escena del protector).
+- **Revisión v2 (2026-11-03):** empezar SIN plano abierto, con los personajes hablando de una; música más baja que v2 (cama de fondo, la voz manda); el BOOM inicial es el golpe comprimido/cinematográfico de las refs (no un hit con cuernos); fundido a negro antes del CTA; CTA tipo pregunta: "¿Creen que Ezequiel se quedará con el rancho? Denle me gusta y compartan para ver la segunda parte."; marca VISTA STORIES visible de verdad; nada de personajes que aparecen de golpe.
+- **Desfase voz/labios**: concatenar partes mp4+aac con `-c copy` acumula retraso (v2 llegó a >1 s). Cortar a frames exactos y audio PCM.
+- **SIEMPRE revisar antes de entregar** (el usuario lo exige): sincronía labios al inicio/medio/final, marca visible en frame a tamaño real, pops/morphs en cada corte, volumen música vs voz, boom, transiciones, CTA.
+- **APROBADO: agua-hacienda v4 (2026-11-04)** = nivel mínimo y plantilla. `pieces/agua-hacienda/edit.py` es el montaje de referencia (copiarlo): partes a frames exactos (`fps=24,tpad` + `-frames:v`, audio `apad,atrim` PCM .mov), concat por FILTRO con `setpts=N/24/TB` / `asetpts=N/SR/TB` (el concat demuxer y sin setpts desfasan labios hasta 15 frames), mezcla de audio a WAV aparte y luego video, `loudnorm -14 + alimiter`.
+- Marca VISTA STORIES como ATRIUM STORIES: blanca, 22 px, sin contorno, opacidad baja (alpha ~80/255, bajada desde 110 a pedido del usuario el 2026-11-04), y≈135. NO "CONTINUARÁ". Golpe inicial sutil (hit oscuro con lowpass, volumen 0.3, bajo la voz), no un boom exagerado.
+- **Verificación obligatoria antes de entregar** (lo más importante para el usuario): medir desfase labios/voz en 5 puntos (offset de video y audio de cada parte contra el final), hojas de fotogramas de cada zona corregida y del final, recorte de la marca a tamaño real, earshot en el inicio y los niveles, revisar morphs/apariciones en cada clip. Nunca decir "arreglado" por duraciones; medir contra el resultado.
+- Bug Flow MCP: generar varias hojas seguidas puede devolver la MISMA imagen (md5 igual) → comprobar `md5sum chars/*.jpg` y que personajes distintos no se parezcan.
+- **Marca rotativa:** VISTA STORIES → MAJESTIC STORIES → MEXI STORIES → VISTA… una por video. SAGA FILMS PAUSADA por el usuario (2026-11-04) hasta que avise. Asignadas: …camionetas=SAGA, tele-nueva=VISTA, buen-hijo=MAJESTIC, recetario=MEXI, suegra=VISTA, siguiente=MAJESTIC, luego MEXI. Mismo estilo (22 px, alpha 80, y=135).
+- **Ritmo de cortes como la ref** (El Retén de atrium, medido): 62 planos en 113 s, media 1.8 s, mediana 1.6 s, cuartil bajo ~1.0 s. Arranque y clímax en ~1 s por plano. Nuestro v1 de reten iba en media 2.6 / mediana 2.1: demasiado lento. Técnicas:
+  - **Corte SOLO al terminar la frase** (corrección del usuario): nunca a mitad de frase, nunca la voz sonando sobre la cara del que escucha. Cada frase completa en su plano y, apenas termina, corte seco al siguiente (reacción, otro ángulo o el otro personaje). La rapidez sale de recortar el aire entre frases y de frases cortas por plano, no de L-cuts.
+  - **Plano/contraplano:** alternar constantemente los planos sobre el hombro.
+  - **Planos largos:** solo en las amenazas clave.
+  - **Transiciones:** corte seco.
+  - **Objetivo:** media ≤ 1.9 s. Medirlo con `select='gt(scene,0.3)'` antes de entregar.
+- **Corrección de cortes (2026-11-04, tras ver reten v3 y hacienda v1):**
+  - **Mismo personaje con varias frases seguidas:** se queda en SU plano. Se corta solo el silencio entre frases (salto dentro del mismo clip) y sigue la siguiente frase. NO se intercala la cara del otro si todavía no le toca hablar. Ej. reten 14 s: "Buenas tardes, señora." → directo a "¿Pa' dónde lleva tanto ganado?", sin la señora en medio.
+  - **Reacciones mudas:** solo cuando aportan algo a la escena (ej. reten 43 s: el muchacho impotente). No como relleno de ritmo.
+  - **El cambio de plano** va cuando cambia el que habla o cuando la reacción cuenta algo.
+- **CTA con carisma:** como en las refs, el personaje lo dice moviéndose de forma orgánica: se toca o ajusta el sombrero, asiente, ladea la cabeza, sonríe, gesticula. Nada de busto rígido. Pedirlo así en el prompt del clip CTA.
+- **Continuidad de personajes en el borde del cuadro:** en los planos sobre el hombro, quien aparece de espaldas o en el borde tiene que ser el MISMO personaje con su MISMA ropa (en reten, la abuela del borde era otra y vestida distinto). Revisarlo en el QA de cada clip y regenerarlo si no coincide. En el prompt, nombrar al personaje del borde con su `@{ASSET}` y su ropa.
+- **APROBADO (2026-11-04): reten-sierra v4 + hacienda-sangre v2 = nivel y plantilla actuales** (reemplazan a agua v4 como referencia de montaje). Copiar `pieces/reten-sierra/edit.py` (o hacienda-sangre) para los nuevos.
+  - **EDL por frases:** `renders/phr.json`. Entrada 0.08 s antes de cada frase y salida 0.15 s después. Admite `(cid, rango, *pre)` para recortes o crops por tramo.
+  - **Mismo personaje con varias frases:** salto dentro del mismo clip. Las reacciones van solo si aportan. Ritmo de unos 1.9 s por segmento.
+  - **Cierre:** CTA con carisma. Antes del CTA, BLACK de 0.4 s.
+  - **Marca:** alterna VISTA y MAJESTIC, alpha 80.
+  - **Audio:** `alimiter limit=0.80`, que da un pico ≤ -1 dBTP. loudnorm a -14.
+- **Flujo aprobado por video:**
+  1. Un agente escribe los archivos y el caption.
+  2. Hojas: md5 y montaje visual.
+  3. Clips con reintentos automáticos.
+  4. Agente de QA, que también revisa la continuidad de los bordes y de la ropa.
+  5. Regenerar los clips que fallen.
+  6. Agente que monta y verifica: sincronía en 5 puntos, ritmo, LUFS/pico, transcripción por plano y hojas de contactos.
+  7. Telegram con caption.txt.
+  8. Actualizar ESTADO.md.
+- **Pantallas (laptop, tele o celular):** la persona del video tiene que verse como imagen plana DENTRO del marco de la pantalla, nunca saliendo de ella (en encendedor c01 la cabeza de Leandro salía de la laptop, corrección del usuario). En el prompt va "2D image displayed INSIDE the screen rectangle… nothing comes out of the screen", mejor sobre el hombro de quien mira. Revisarlo en el QA.
+- **Guion compacto:** los guiones de 300 s en bruto obligaron a quitar 15–27 frases en el montaje (camionetas salía en 3:16). Apuntar a unos 220–240 s de voz en bruto. El CTA solo menciona nombres que el espectador oyó en el video; si no, usar el rol ("el gerente").
+
+## Segundas partes (2026-11-05)
+Intercalar: 2 videos NUEVOS por cada 1 Parte 2 (las primeras partes se ven más; corrección 2026-11-05). El usuario autorizó hacer Parte 2 de las novelas ya entregadas, con la MISMA marca de agua de su Parte 1 (no entra en la rotación). Carpeta pieces/<pieza>-p2/, reusar chars/ de la Parte 1 (mismos personajes y ropa), caption "· Parte 2". Orden: agua-hacienda, medalla-mezcal, reten-sierra, hacienda-sangre, ...
+
+## Marcas: música y posición (2026-11-05)
+Cada marca tiene su música fija (tension, calida, revelacion, boom) y su posición de marca de agua, en pieces/_marcas/<MARCA>/ + marcas.json; edit.py las toma con `from marca import brand, brand_wm` (BRAND = "...").
+- VISTA: la música original (Thriller Documentary Pack, Lament of the Vaquero); marca arriba al centro, y=135.
+- MAJESTIC: arriba a la izquierda (x=36, y=210). MEXI: arriba a la derecha, alineada a la derecha (margen 36, y=210). Siempre 22 px, alfa 80.
+**Why:** TikTok descalificó un video por "no original": todas las marcas sonaban y se veían igual.
+**How to apply:** nunca copiar music/ de otra pieza ni dibujar la marca a mano; nunca cruzar la música de una marca con otra.
+
+## Historias propias + Navidad (2026-11-05)
+Sin referencias nuevas, escribo historias ORIGINALES inspiradas en los más virales de las cuentas de referencia (fuentes/referencias2/ranking.md) (humillación → giro de poder → payoff → gancho Parte 2). Nov-dic: IR INTRODUCIENDO la Navidad, NO todas (aprox. 1 de cada 3), tema navideño (posadas, Nochebuena, cena familiar, piñata, ponche, nacimiento) sin dinero/aguinaldo ni niños.
+
+## Cuarta marca: SIN MARCA (2026-11-06)
+Rotación ahora VISTA → MAJESTIC → MEXI → SIN MARCA (video sin marca de agua). Kit en pieces/_marcas/SINMARCA con su propia BGM de suspenso (distinta de las otras 3, misma esencia).
+
+## Apelaciones TikTok (2026-11-06)
+Cuando el usuario avise de un video descalificado: texto de apelación ≤500 caracteres (honesto: historia/guion/personajes/edición originales, sin negar uso de IA) + carpeta <pieza>/apelacion/ con guion, hoja de personajes, prompts, grilla de escenas generadas y script de edición, para que él tome las fotos.
+
+## Qué funciona (análisis 2026-11-07, fuentes/atrium-vista/resumen.md)
+- El usuario pidió: la mayoría inspiradas en @atriumstories_ (original), tipo CAPOS. Datos: figura de poder (capo/patrón/matriarca) = lo que rinde. VISTA: capos mediana 116K vs 5.6K resto (reten-sierra, medalla-mezcal). Atrium: capos 3.1x, humillación-revancha y hacienda también altas; familia/infidelidad/bondad sin poderoso < 0.5x.
+- Ritmo: ≤2 s por plano de media (60-90 planos); los flojos iban a 3.5-4.3 s.
+- Gancho 0-2 s visual (amenaza/gesto/camionetas) + cifra y plazo; nunca abrir con conversación estática. Castigo en P2, cierre con dilema a cámara. Sin armas ni sangre visibles (escoltas, convoyes, maletines, radios); suavizar palabras según la tabla del resumen.
+- P1 pesa mucho más que P2 (P2 cae ~5x).
+
+## Remakes transformados (usuario, 2026-11-08)
+Preferir remakes de los videos de Atrium con >1M vistas (fuentes/atrium-vista/ranking.md), pero NUNCA iguales: si la historia se parece demasiado, TikTok lo descalifica por contenido no original. Mantener solo el esqueleto (humillación + plazo → llega la figura de poder → plazo invertido → giro familiar → castigo en P2) y cambiar escenario, oficio, objeto clave, nombres, diálogos, giro y CTA.
+
+## Re-análisis 2026-11-14 (fuentes/atrium-vista/ranking2.md)
+El usuario pidió enfocarse en las historias de Atrium (las que mejor funcionan). Datos de 49 posts: madrastra (mediana 336K) y padre que pone orden a los hijos (276K) superan a capos (188K, aunque capos tiene los picos 1.6M/1.1M); esas sagas sostienen la P2 (Evaristo P2 > P1). Flojos: infidelidad, bondad, humilde-dignidad. Tanda del 2026-11-14: solo VISTA, MEXI y MAJESTIC (sin SIN MARCA).
+
+## Nunca abrir con inserto vacío (usuario, 2026-11-14)
+No empezar el video con un plano donde no se ve a nadie (algo que cae, alguien rompe/tira algo, manos, pies, objetos). Atrium nunca lo hace: el primer tramo es el personaje hablando, directo en el conflicto. Insertos solo en medio.
+
+## Velocidad 1.2x (2026-11-14)
+Atrium acelera sus videos a 1.20x (rango 1.15-1.25): imagen y voz por igual, con el tono conservado (atempo), y exporta a 30 fps. Informe: fuentes/atrium-vista/velocidad.md. Desde jipi-becal, edit.py aplica después del concat `setpts=PTS/1.2,fps=30` + `atempo=1.2` y divide at() entre SPEED; la música no se acelera.
+**Usuario (2026-11-14): le gusta acelerar pero un poco menos: usar SPEED = 1.15** (setpts=PTS/1.15, atempo=1.15), no 1.2.
+
+## Encuadres con 2 personajes (usuario, 2026-11-14; fuentes/atrium-vista/encuadres.md)
+Atrium: 15 % planos de 1 persona, 62 % sobre el hombro (OTS: el que habla de frente, el que escucha de espaldas desenfocado en el borde), 16 % two-shot, 6 % grupo. Nosotros hacíamos 94 % de 1 persona. Meta: ~50 % OTS, ~25 % 1 persona (CTA, llamadas, llanto), ~15 % two-shot, ~10 % grupo. La persona de espaldas va con su @{ASSET} + ropa vista de atrás (si no, Omni mete dobles); solo mueve los labios el de frente. Snippet: pieces/_encuadres_snippet.py; primera pieza: costal-cuyutlan.
+Resultado costal-cuyutlan: 17/17 OTS, 6/6 two-shot y 3/3 grupo bien a la primera, sin dobles. Plantilla de encuadres = pieces/costal-cuyutlan/clips.py; usarla en TODAS las piezas nuevas.
+
+## Flow: diálogos inventados y contaminación (2026-11-15)
+- Omni a veces inventa diálogos ajenos ("No me mientas, Eduardo"). Arreglo: en talk() poner el diálogo AL INICIO del prompt: "DIALOGUE (exact Spanish words, nothing else): …". Usarlo en todas las plantillas nuevas.
+- Un proyecto de Flow compartido entre piezas mete personajes de otra pieza y gatitos del test de control. Usar un proyecto Flow nuevo por pieza (o borrar los assets "Kitten playing with yarn").
+
+- **Subtítulos quemados (desde 2026-11-16):** todo render lleva subtítulos amarillos en negrita con contorno oscuro, tercio inferior centrado, 1-2 líneas por frase, sincronizados, texto de lines.json sin errores (como la ref @alisorxomrb 7706249552289860896). No re-renderizar lo ya entregado.
+
+- **Historias variadas (2026-11-17):** PROHIBIDO repetir la fórmula desalojo/echar a alguien con plazo ("antes de que suenen las campanas te vas"). Cada pieza con premisa distinta (identidad oculta, herencia, doble vida, traición de hermano, boda interrumpida, paternidad...) sacada de fuentes/novelas-variedad/CATALOGO.md; sin repetir estructura ni patrón de frase final.
+- **Patronas y haciendas (2026-11-17):** el usuario pidió sumar historias tipo Soy tu dueña / Destilando Amor / La Patrona / Doña Bárbara / Pasión de Gavilanes: catálogo #45-#56, ~1 de cada 2 piezas nuevas; solo arquetipos, nunca tramas reales.
+
+## memoria: `atrium-telegram-caption.md`
+
+---
+name: atrium-telegram-caption
+description: Formato del texto con que se envía cada novela VISTA STORIES a Telegram (título gancho + descripción + CTA + hashtags)
+metadata:
+  node_type: memory
+  type: feedback
+  originSessionId: 31217992-d068-4929-9882-eede7428b798
+  modified: 2026-11-04T11:24:43.791Z
+---
+
+Cada render de las novelas [[atrium-novelas]] se envía a Telegram con título y descripción listos para publicar, no solo el título.
+
+**Formato** (ejemplos del usuario, 2026-11-04):
+- **Línea 1:** "Parte 1 | gancho con puntos suspensivos… giro 🔑" o "gancho… giro 😳 | Título · Parte 1". Lleva un emoji al final.
+- **Párrafo:** 2-3 frases en español mexicano que cuentan el arranque y dejan la pregunta abierta. Puede llevar un emoji (👀).
+- **Pregunta al público** (opcional): "¿Qué harías tú en su lugar? 👀".
+- **CTA:** "Sigue la página para no perderte la segunda parte, deja tu me gusta y comparte."
+- **Hashtags:** 4-6, por ejemplo #telenovela #novelamexicana #drama #historiasmexicanas #parte1, más uno del título (#elreten).
+
+**How to apply:** escribir el texto en `<pieza>/caption.txt` (máximo 1024 caracteres, el límite de Telegram) y enviar con `python tools/enviar_telegram.py <render> <pieza>/caption.txt`. El script lee el .txt si se le pasa uno. Pasarlo por humanizer de tono. Ver [[telegram-renders]].
+
+## memoria: `audio-recorded-sound.md`
+
+---
+name: audio-recorded-sound
+description: "All animation videos use real CC0 recordings (option B), never synthesized ambience/SFX"
+metadata:
+  node_type: memory
+  type: feedback
+  originSessionId: dd621c73-0dc8-4663-a3a9-e8d02c9a413f
+  modified: 2026-10-11T17:43:12.463Z
+---
+
+Every video's sound = real CC0 recordings ("opción B", tested 2026-10-11 on ola-700): ambience beds built from Openverse/Freesound recordings + discrete hits from the sound-layer kit, mixed with sound-layer `mix.py` (bed in the "voice" slot), checked with `qa.py`. No synthesized ambience, no music. User: "mil veces mejor, se escucha tal cual como en una grabación real".
+
+**Why:** synthesized beds (sirens as pure tones, noise-filter water) sound fake; recorded beds sound like a real recording.
+
+**How to apply:** workflow and scripts live in `pieces/ola-700/sound-test/B/` (bed.py, layers.json, look.py) and `sound-layer/` (kit + work/cand recordings). Search: `sfx.py search "<q>" --type transition --out work/cand/<name>` (slow, ~5 min/query; run in parallel). Look at spectrograms (look.py) before choosing. Hero hit needs a loud bed under it (mix.py sizes hits against the bed). Credits in CREDITS.md per piece. Related: [[pov3d-style]]
+
+**Exception (2026-10-12):** not for the bitpix / Bitstory data-explainer style — there the user wants synthesized code SFX plus their own music track. Related: [[bitpix-series]]
+
+**Upgrade (2026-10-25):** from now on pov3d videos get "sonido pro": use the `real-sound` skill (licensed real recordings, cue list from the picture, mixer, QA, mastering, credits) and `earshot` to actually listen/verify, instead of only the sound-layer bed + code SFX. User asked: "a partir de ahora mejora el sonido con sonido pro".
+
+## memoria: `ava-rules.md`
+
+---
+name: ava-rules
+description: Ava Bread (zombie channel) — APPROVED level = pieces/zombie-01-door v6 + ALL user corrections from its 6 review rounds; check every shot against them before rendering
+metadata:
+  node_type: memory
+  type: feedback
+  originSessionId: 3b008220-5710-444f-9064-2bac0d02be64
+  modified: 2026-10-30T05:10:57.867Z
+---
+
+Approved level (user, 2026-10-28: "ahora sí quedó bien"): `pieces/zombie-01-door/zombie01_door_v6.mp4`. Its engine (`engine/`: main.js, lib.js, film.js, sets/*.js), `voz/assemble.py` and `audio/scripts/mix.py` are the template for the next Ava videos; LOG.md lists every change. Channel context in [[zombie-channel]].
+
+**Why:** each rule below is a correction the user had to ask for; repeating any of them costs a review round.
+
+**How to apply:** build the next episode from these files and check every shot against this list before the storyboard and before the final render.
+
+Voice
+- VoiceStudio clone **"ava bread 2" `3824e262`**, steps 32, wav (NOT "ava bread" 2dd9cbec, it had an error). Once approved, never change the voice; fix timing only by trimming gaps.
+- NEVER split one take at "…": the pause is not silence and words get cut. Generate each half as its own take (`voz/lines/<id>_<j>.wav`). Trim at -45 dB with 80/180 ms margins and a 30 ms fade-out. Place each piece so its first SOUND lands on the cue. Get word times per take; whisper stretches the first word over the leading silence, so clamp it to the onset.
+- Very short lines ("Oh, fudge"): generate one on its own and check it with whisper; if it breaks, generate it inside a longer sentence and cut in the real silence.
+- If the new voice is slower, use VoiceStudio `speed` (~1.12) on the line that runs into the next shot.
+- Dead air between lines (>~0.5 s) gets cut. Use film.js `CUTS_T` + `warp()`, with the same cut in mix.py, in whole eighth-notes of the music.
+
+Picture
+- Look: PS1 Resident Evil. "RE" font (refont.js) with pixelated captions (9 px ×3). No channel header. The HUD is the ECG combined with the RE2 CONDITION panel.
+- YOU DIED in RE style: a red-tinted freeze, a TRANSLUCENT black (~86 %, the scene still visible behind) and red letters with drips.
+- Transitions are seamless: the white flash ramps in and out, never a hard pop.
+- The opening can have a pistol reload (`reload` action). No magazine prop: it clipped through the gun. Hands + slide + SFX are enough.
+- In frontal shots Ava looks AT THE CAMERA: `ch.lookAt(camera)` in lib.js, which restores the animated bone every frame or it flickers. Give her cute expressions (shrug, wink + smile) instead of a blank stare upward.
+- Ava must NEVER shake. When zombies push the door, only the door moves: the leaf gives and rebounds and the handle rattles (hall.js `THUMPS`/`rattle()`). No camera shake. Measure jitter with the hair-centroid test (≤1 px, no frame-to-frame back and forth).
+- Labels and animations land on the word that says them (e.g. NOT EVEN CLOSE on "don't even reach").
+- RE props in the sets: First Aid Sprays (copy of Markus Darius' itch.io model), green/red/yellow herb pots. Props need real low-poly texture detail.
+- **Name: AVA RESTFIELD** (user, 2026-10-28, ep2; was "Ava Bread"). End card: typewriter "NEXT:" / topic in Courier, a rotating examined 3D object just above the text, **"FOLLOW AVA RESTFIELD!"** below.
+- HUD (CONDITION panel) appears EARLY, AT ONCE on the cut to the 2nd shot (~2.3 s, film.js `HUD_T0`). The user REJECTED a slide-in/CRT-flicker entrance (not animated enough) and a 💢 anger mark: no manga symbols.
+- Every zombie hit shakes the window/door (only that object) with a hit SFX on the same frame. Blood decals = real textures (Flow), never painted pixels. Zombie hands = the model's own hands, never box-built limbs.
+- Inventory/EXAMINE screens: fill them with RE2 items (First Aid Spray, shotgun, herbs, ammo) and real detail.
+- Opening line must sound declarative: check the F0 contour of the last word (VoiceStudio sometimes ends rising, like a question; regenerate with a period).
+- English only, jokes in English, no Russian, no sub-captions like "(the polite version)".
+- **"Oh, fudge!" is Ava's running gag** (user, 2026-10-28, ep2): her catchphrase when the ending goes wrong (the ref's "Ech, blin" beat), every episode. Reuse ep1's take `zombie-01-door/voz/lines/13_fudge.wav` so it always sounds the same.
+
+Ep3 "AVA: DAY 1 — The Police Station" APPROVED at v4 (2026-10-30, pieces/zombie-03-station; mix3.py uses real CC0 music Freesound 345069 — synthetic drones read as a humming voice and lacked presence; Dino Crisis radio beep first, then FILE menu sound; lines that continue must be ONE take, no full stop).
+Ep3 v1 review (2026-10-29): ALWAYS humanize the script — talk like a normal person with connectors ("four toilet tanks, that's six more, so eleven days. And help comes in seven"), never telegraphic lists of fragments. Rain/drops on glass fall DOWN; no flickering reflections; police caps low peaked (not big square blocks); keep the same cop look in every shot; Dino Crisis radio beep only when the radio appears; voice a bit louder (mix3 voice x1.15); dark BGM must be continuous (no long holes). Free low-poly models from 3D platforms beat ugly procedural vehicles. Save-game sheets show the location name (e.g. "POLICE STATION").
+
+Scripts: the user asked (ep2) to IMPROVE the ref's script, not copy it: same beats and shots, clearer logic order, US units (inches) with facts checked (FEMA/FLASH), callbacks to earlier episodes ("friction still doesn't care…").
+Lighting: the user found ep1 too dark → from ep2, 3D shots (rooms, Ava, exteriors) ~30 % brighter with lifted shadows; YOU DIED and diagrams stay dark.
+
+Sound
+- Every action has a real SFX on its exact frame. Trim the leading silence of every SFX file (the Dino Crisis default sound had 0.33 s and made every label late). The typewriter is one key per letter, on the letter's frame.
+- Sound sources:
+  - Dino Crisis (`assets/dino-crisis-sfx`): the default sound on labels, a radio beep when the HUD comes in, steps, push, inventory, unlock.
+  - Zombie voices from Resident Evil (`assets/zombie-sfx-yt/seg`, YouTube 4JCoB0GUIVs from 1:20).
+  - Freesound CC0 for the rest (door, drill, glass, reload).
+- Music is cut on the two YOU DIED moments and before the end card. The mix is STEREO at -14 LUFS, true peak ≤ -1 dBTP.
+Long ep3 v1 review (2026-10-30):
+- Voice is now **"ava bread buena" f2a102da** (better quality; replaces 3824e262 from here on).
+- Never keep shouted reads ("First problem", "7-3-7", "Rule four"). Pause between the final question and "Comment yes or no".
+- Music must be clearly audible: the user couldn't hear it at all.
+- End card says **"SUBSCRIBE!"** (not "FOLLOW AVA RESTFIELD!") and the BGM plays to the very end.
+- No clipping:
+  - Ava through doors: make door-open animations.
+  - Hands on props: use Ava's own hand, never floating.
+  - Flashlight beam must follow the flashlight.
+  - Make new animations whenever a shot needs them.
+- Guns are black with detail, never flat grey.
+- The dog must look cute: head and neck joined, no transparent parts, round eyes with a highlight.
+- Rooms get rich low-poly detail, not flat.
+- Light spill from doors must not flicker.
+- Hold key items on screen for ~2 s after they are named.
+- Long ep3 APPROVED at largo v3 (2026-10-30, pieces/zombie-03-station/largo/zombie03_station_largo_v3.mp4). Music: match by LUFS, not RMS (bass-heavy tracks vanish); ~9–13 LU under the voice and never louder where SFX are dense; voice +1.5 dB over v2.
+
+Long-form version (16:9, ≥ 8 min) of every short — template = pieces/zombie-03-station/largo/ (v3 approved 2026-10-30):
+- Reuse the short's sets. The engine is `largo/engine/` at 640x360 ×3, with shots tied to words (shots.json + ctx.at).
+- Extend with new chapters, fixed RE cameras and an RE2-1998 inventory / MAP / FILE screens.
+- Add these elements:
+  - a puzzle (clover key);
+  - a survivor NPC;
+  - a companion (dog Ribbon);
+  - a fake YOU DIED;
+  - a chapter card with the time of day for each chapter;
+  - a real fact (with source) in each problem.
+- Script and title:
+  - humanize the script (humanizer skill) and keep `guion.md` + FACTS.md;
+  - research the title for virality ("Zombie Outbreak: 1 Night Locked Inside a …").
+- Audio:
+  - `largo/audio/mix_largo.py` maps every SFX event to a real sound; the unmapped list must be empty;
+  - Dino Crisis walk_run_indoors for steps;
+  - real CC0 music per chapter, matched by LUFS.
+- Review: `revisar_render.py` runs out of output on long files, so review in ~2:40 parts (all three, including the last). Then check frames of every fix yourself.
+- Deliver `DESCRIPCION.md`: title, chapters ≥ 10 s from 0:00, credits (Quaternius dog CC-BY, dogchicken zombie CC-BY, Kenney CC0, Freesound authors).
+- Pipeline: one background agent owns the whole long version and gets resumed with each review round.
+
+**End card text:** shorts always say "FOLLOW FOR MORE!" and longs always say "SUBSCRIBE!" (user, 2026-11-01, ep4). Shorts no longer say "FOLLOW AVA RESTFIELD!".
+
+**Ep4 "The Last Train" review (2026-11-01):**
+- **Format:** shorts adapt viral series from other accounts (play.malo "Subway") beat by beat. Open with "Imagine you…" and match the ref's framings (she chases the leaving train, benches on the platform, gate shot from behind her).
+- **Duration:** about 61.5 s.
+- **Voice:** short pauses between lines (0.3–0.45 s).
+- **Phone POV:** the phone sits upright and level; hands don't matter.
+- **Ava's acting:**
+  - no tremble animation;
+  - the "Oh, fudge" face is >.<, never happy.
+- **Creature:**
+  - emerges from the dark, never pops in;
+  - two separate glowing eyes, not a goggle band.
+- **Ep4 short APPROVED at v6** (2026-11-01): pieces/zombie-04-subway/renders/zombie04_subway_v6.mp4, 61.5 s, −14 LUFS.
+  - Base the next shorts on it: copy its engine.
+  - voz/build_cues.py builds every cue from the voice.
+  - Objects made with the photo→lowpoly method live in objects/.
+  - Ava has a new `run` animation.
+  - The >.< face is in the eye atlas.
+- **Ep5 P.T. review (2026-11-02):**
+  - Lisa/ghosts LEVITATE behind Ava (they float with a soft bob, never walk).
+  - Reread the user's exact wording for fixed lines (e.g. "THE ghost", not "a ghost").
+  - Slow takes need a real pause on commas ("Lisa, stuck to…").
+  - The >.< face was rejected twice. Design a clean expression that fits each situation (scared, eyes looking sideways, cringe mouth), never with cropped atlas cells.
+- **Never change Ava's base model or textures** (pants, clothes) without being asked (user, 2026-11-02). The ep5 pants change was rejected; if a smudge appears, report it instead of repainting. "Oh, fudge" keeps her normal open mouth (the teeth grimace was rejected).
+- **Ep5 "P.T." short APPROVED at v5** (2026-11-02): pieces/zombie-05-pt/renders/zombie05_pt_v5.mp4, 62 s.
+  - The hook (0–10 s) carries MORE horror music: a real drone plus a music box, a stinger on key words, crossfaded into the BGM by ~10 s (audio/scripts/mix5.py).
+  - Fact shorts adapted from TikTok refs work in this format.
+  - Lisa: Sketchfab model, pixelated, levitating.
+- **Choice ("Choose") endings, user 2026-11-03:**
+  - The video ENDS on the RE choice menu ("WHAT DO YOU DO? 1 / 2", "COMMENT 1 OR 2", plus FOLLOW FOR MORE!) over a living background: Ava breathing, or Ava from behind at the peephole. Never a frozen frame, and no separate end card after it.
+  - No word subtitles over the menu.
+- **Every video lasts at least 61 s** (target ~62).
+- **City backgrounds:** long draw distance.
+- **"Imagine you…" scripts, user 2026-11-03 (ep6):**
+  - Narrate in SECOND PERSON all the way through ("you fill the tub", "you freeze"), never "Ava does…".
+  - In a choice ending the threat must stay AMBIGUOUS. The person at the door is a suspicious civilian (dark clothes, eyes in shadow, no blood), never an obvious zombie.
+  - Openings: Ava on screen by ~2 s.
+- **Maximum 2 review rounds per video** (user, 2026-11-03). Ep6 took 6 renders, which was too many. After 2 passes (API review plus crops), deliver. Fix only clear failures; cosmetic nitpicks wait for the user's review.
+
+**Farm long v3 review (user, 2026-11-04):**
+- An animation clip plays ONCE per action. Never restart or loop the same clip on consecutive shots (the phone look repeated, a 3x loop).
+- No flickering ground/grass. Check frame diffs on exterior shots (z-fighting of decals/paths).
+- Ava inside vehicles: a real cab interior (seat, wheel, dashboard) plus a sitting animation, never Ava standing behind a window.
+- Monsters hidden in the dark: eyes ON the head, never floating. Monsters other than zombies are welcome (downloaded models, e.g. tentacles).
+- Long end card: the mini model must match the real set (reuse the real model scaled), and longs end with a choice CTA ("Should I go to the barn?" 1/2, as in the station long) + SUBSCRIBE!.
+- Measure the music per segment: no section louder than the rest (7:34 was too loud).
+
+**Revisión ep12 Radio v1 (usuario, 2026-11-08):** props en mano orientados hacia quien los usa (pantalla del teléfono hacia Ava); animaciones de brazo sin temblor (no sumar clip + sway); transiciones oscuras con luz suave para que se lean; siluetas con volumen 3D (sombrero con ala/copa, abrigo, rim light), nunca planas/cuadradas; props apoyados bien (teclas sobre el cuerpo de la máquina, nada hundido en la mesa); tarjeta final de decisión = Ava de cuerpo completo mirando hacia la amenaza (ventana).
+
+**Revisión ep13 Gas storyboard (usuario, 2026-11-10):** sets exteriores con MUCHO detalle (nada plano: bordillo, manchas, props, fondo con árboles/edificios y cielo); vehículos con modelo low poly real (no cajas); puertas siempre dentro de su marco/pared (nunca flotando); manos/cuerpos sueltos = low poly facetado con dedos y nudillos, nunca formas planas tipo ladrillo.
+**Verificación obligatoria (usuario, 2026-11-10):** antes de reenviar una corrección, YO reviso el mp4 exportado cuadro a cuadro (≥5 fps) en el tramo corregido, buscando geometría que atraviese a Ava. Nunca fiarse del reporte del agente (ep13 v3 se envió con el pilar atravesándola).
+
+**Desde 2026-11-11 (largo Day 2), para TODO lo de Ava:** voz más lenta (VoiceStudio `speed` ≈ 0.88; ella iba muy rápido) y tono cinematográfico/humano: más pausas entre frases (silencios de 1-2 s con ambiente), pensamientos internos susurrados ([PIENSA], instruct "whisper", más cerca/secos en la mezcla), miedo audible (respiración, tragar saliva, voz que tiembla), que parezca que lo está viviendo. **Why:** el usuario lo pidió como regla fija. **How to apply:** marcar en el guion [PIENSA]/[RESPIRA]/(pausa) y respetarlos al generar y mezclar.
+
+**Correcciones largo Day 2 v2 (2026-11-12), reglas fijas:** Ava NUNCA dice "click" (onomatopeyas fuera del guion; el sonido va como SFX). Tarjetas negras de hora: solo texto, SIN recuadro gris debajo. Inicio de una Parte N nunca brusco: recapitular la elección con una frase ("Last night you had to choose..."). Nada de sílabas estiradas por speed bajo (revisar palabras sueltas tipo "three... seven" y regenerar a speed normal si se alargan). Cabezas de zombies sin temblor. Nada quieto >4 s: cambiar planos. Pensamientos de miedo (no, no, no) con toma humana, no robótica. SFX sin duplicar ni duros. Personajes en pantallas de resumen = render 3D real, no iconos.
+
+## memoria: `ava-thumbnails.md`
+
+---
+name: ava-thumbnails
+description: "Ava Restfield thumbnails — approved RE Requiem key-art formula (Day 3 v6A), Anton font, no pixel font"
+metadata:
+  node_type: memory
+  type: feedback
+  originSessionId: 3b008220-5710-444f-9064-2bac0d02be64
+  modified: 2026-11-16T23:31:31.887Z
+---
+
+Thumbnail approved 2026-11-16: pieces/zombie-03-station/largo3/miniaturas_v6/v6_A_flowhead_red.png.
+Formula: RE Requiem–style key art, horizontal; Ava right (flashlight glowing, clean pistol down); recurring enemy bust huge upper-left as double exposure over rainy ruins, with a head close to OUR low-poly model (Flow head swap using our render as reference); zombie silhouettes in fog bottom-left; teal palette + rain; a big word in Anton ("HUNTER", blood red) BEHIND the giant's head. Never the old pixel font. Tools: miniaturas_v6/_tools/compose_v6.py, engine/thumb_shoot.mjs.
+
+**Why:** the user iterated v2→v6. They rejected Flow repainting the giant without the low-poly look and wanted the giant bigger with sharper edges.
+**How to apply:** start every Ava thumbnail from this formula. The user wants to improve thumbnails across ALL styles. Related: [[ava-rules]], [[long-video-delivery]].
+
+## memoria: `bitpix-series.md`
+
+---
+name: bitpix-series
+description: "English \"Bitstory\" explainer series in the saved bitpix style; theseus (2026-10-12) is the approved quality bar"
+metadata:
+  node_type: memory
+  type: project
+  originSessionId: 43d77a66-727b-4ff2-aa9b-7484954d167a
+  modified: 2026-10-12T05:30:58.986Z
+---
+
+Series started 2026-10-12: English remakes (reworded, never literal) of the Spanish refs in `Ref bit y pixels/` (1 speed vs time, 2 marble jar, 3 survivorship bias, 4 Galton's ox, 5 Ship of Theseus = done `pieces/theseus`, 6 how a network learns = done `pieces/learn`, 2:11; 7 birthday paradox = done `pieces/birthday`, 1:08; 8 times-table heart = done `pieces/heart`, 1:25; 9 why steel ships float = done `pieces/float`, 1:10; 10 doppler effect = done `pieces/doppler`, 1:31). Mad 3 sometimes skips a sentence: always re-transcribe the take and make script.json match what was said. User sets the length per video (e.g. 'summarize 2:40 to 2:10–2:20') and wants everything centred (ignore TikTok icons). User approved theseus as "the style and the level for these videos" and will keep improving it. Everything is in `styles/bitpix/STYLE.md` (workflow, palette, checklist), `styles/bitpix/template/` (theseus source), `styles/bitpix/tools/` (split_voice.py, shape_track.py).
+
+**Why:** a repeatable series format at a fixed quality bar.
+**How to apply:** start each new video from `styles/bitpix/template/` and follow STYLE.md "How to make the next video". Voice: Algrow was dropped (user, 2026-11-08: "lo dejamos de usar hace semanas"); the Algrow MCP failing to connect is irrelevant, do not mention it. Sound = code SFX + the user's documentary track at voice.music -7 (no recorded SFX here, see [[audio-recorded-sound]]). Captions in the pov3d serif, "Bitstory" signature at the bottom of the end. Related: [[pov3d-style]]
 
 ## memoria: `cartoon3d-level.md`
 
@@ -835,7 +1567,7 @@ metadata:
   node_type: memory
   type: feedback
   originSessionId: e3b19138-633b-4f91-a0e9-968a2b60dee4
-  modified: 2026-11-02T11:57:53.458Z
+  modified: 2026-11-09T02:23:25.095Z
 ---
 
 For this and EVERY future cartoon3d short:
@@ -874,6 +1606,30 @@ For this and EVERY future cartoon3d short:
 
 - (2026-11-02, human-library mromidev test) User REJECTED the mromidev Remotion bean-head characters and their motion. Keep OUR characters/animation (kit c3Person, Ricks hair, fists). ADOPT from the test: its richer sets (reading room, street, canal aerial, globe — dense props, windows, mouldings, posters), more dynamic camera (C3_CAMFX push-ins/tilts/shakes, C3_DOF, c3Fog), the MRO grade (sat ~0.49, no grain), short_qa.py + side-by-side verifier. Export stays 1080x1920.
 - (2026-11-02, mistaken-orders storyboard) Interiors MUST show cast shadows: room ceilings/walls are built with `plNC`/`rbNC` (userData.noCast — kit c3ShadowSetup skips them; otherwise the ceiling shades the whole room and no shadow reads) and shots.js uses `C3_SHADOW = {...C3_SHADOW_DEF, catch: 0.6, tint: '#1e1c5a', key: 0.8}` (mromidev: warm light, cool blue-violet shadows; key > 1 washes orange walls to yellow). hair_rk_greybun is a bad purple cut — never use it; grey bun = rk_bungrey. Framing: SHOT_WIDEN ~1.6 default, inserts 1.7, and keep front tables out of the camera lines.
+- (2026-11-03) CAMERA FROM NOW ON = ref youtube.com/shorts/6WTahOqdEl4 ("exactly this dynamic"): hold almost still, then SNAP to the next framing in ~5 frames (bell speed, peak ~255 px/f, dolly/zoom up to ±86 %), ~80 snaps/min + ~50 cuts/min, crash zoom-in on punch words, motion blur on snaps, whip pans at place changes, hard cuts (no dissolves). Kit `C3_SNAP` (c3SnapCam / c3SnapPunch / c3SnapBlur / c3Whip); measured spec fuentes/cartoon3d/camara-dinamica-6WTahOqdEl4.md; first wiring in pieces/mistaken-orders (SNAP_TEST, camMove in common2.js, sceneApple in shots.js). Each shot: 2-3 framings snapping on spoken words. CORRECTION same day: zooms are NEVER random — each snap lands on the object/text/character the voice names at that word, fitted WHOLE (texts legible entire, heads whole) via c3FrameBox + a SNAPS table [t, targets, fill] per shot; zoom-outs (-80..-150 %) reopen context after each detail; punch-ins on the same subject only +8..18 %. Verify with tools/analizar_camara.py (API) — % landing on narrated subject and % subject whole. NO SHAKE (user, same day: "temblor raro, zooms chocando"): only ONE zoom system per shot — authored SNAPS; turn off C3_CAMFX punch/roll when SNAPS are used; measure each snap target ONCE per shot (dry-run pose at the key time, cached: snapKeys in mistaken-orders common2.js), never re-measure live boxes every frame (arms moving = jitter); mid-hold punch-ins only on holds > 1.2 s; keep impact kicks only on real impacts. Also check that no person stands between the fitted camera and the target (occluder head at the bottom of the frame).
+
+- (2026-11-08) Tutorial youtube _XllAGyvdd8 (Creatorize look: fog/grade/head shade) tested on cheese-bank -> user: "quedó casi igualito, olvida ese tutorial" (LOOK_TUT=false). CHARACTERS: user says Ricks draws them IN CODE as 2D-3D cards (3D sets, 2D-3D people) — that's why heads look voluminous with soft shading. No Flow for characters; build them the mromidev way (Canvas2D toon cards lit by the scene, refs-ext/claude-animated-shorts toon.ts/cast.ts/cardshade.ts) but tuned to look like Ricks, not like the rejected human-library bean-heads. Test in progress: styles/cartoon3d/toon.js + pieces/toon-test.
+
+- (2026-11-08, toon.js v2 — user's list of Ricks details, apply to every code-drawn 2D-3D character):
+  1. Heads are NEVER perfect circles: each character has its own slightly irregular, lumpy head (pointed/flat crown, fuller or narrower jaw, chin that drops off-centre, a few degrees of tilt, asymmetry toward the facing side). toon.js: per-key `t3HeadSpec` (override with `o.head`).
+  2. Eyes and expressions carry a little shine: a white catchlight (+ a tiny second dot) in dot, lidded and ring eyes, always on the light side.
+  3. Hairstyles must match Ricks' real ones: mop with a few big fringe locks, messy clumps with loose strands, slick side part with grey/lilac streaks, black bob with straight bangs, bun/topknot with a pin, balding with side hair hugging the skull. Hair has volume beyond the skull, a matte look with one small soft gloss, a few dark strands (not umbrella spokes), loose flyaway hairs; from behind: strands radiating from the crown whorl.
+  4. They must feel 2D-3D: the drawn card is lit by the room (darkens with the ambient, takes the room's tint in the crescent, receives the set's cast shadows such as blind stripes), casts its own shadow, and switches front / 3/4 / profile / back drawing by the camera angle.
+  5. Sets as detailed as Ricks': framed pictures, wall clock, calendar, cork board with joke notes, posters, signage with sub-text, desk clutter (monitor, keyboard, phone, pen cup, paper stacks, nameplate, post-its, coins, mug), rug with border, plants with big leaves, bench + newspaper, water cooler, ATM, bookcase, extinguisher, a cat; baseboards, wainscot, coffered ceiling, sconces, light pools. One dominant palette per room (cream/soft walls + 1-2 accents), no loud orange-on-red-on-green. Check walls fully cover openings (v1 bank had gaps into the vault).
+  6. Idle is alive: head and body move independently (head bob/tilt on its own rhythm, lagging the torso sway), breathing, weight shifts; talking adds nods.
+  7. Arms are bendable: rubber-hose curves with elbows (2-bone IK), follow-through (forearm lags, overshoot) via keyframed hand tracks, gestures that beat with the speech, mitten hands that grip props (thumb over the front), arms slightly thicker than legs.
+  8. More from the refs: walk in 3/4 and profile (stride with depth, bob, lean), sit with anticipation + contact squash + settle, real shoes, name tags / lanyards / camera straps, stubble dots, an integrated moustache (soft brush shape in the hair colour, no hard outline), sweat drop / sparkle fx, warm bounce light under the jaw, ink warm dark brown with 3:1 thick/thin heaviest away from the light.
+
+- (2026-11-08, toon.js v5 — user's complaints on v4 + deep study of 4 Ricks/Creatorize shorts, fuentes/cartoon3d/ricks-estilo-4shorts.md; SUPERSEDES v2 points 1, 2, 6, 7 and 8 where they conflict):
+  1. The face sits CENTRED on the head at front and 3/4 — no face slide on turns, no contour skew; only a real profile (|facing| > 1.3) moves it. No nose in any view.
+  2. No stray strokes Ricks doesn't have: no glasses temple / lens gloss arc, no cheek dimple line. Eyes: small black ovals with at most ONE small catchlight (the 4 shorts show none); big white ring eyes with a solid pupil; thick short brows; effort face = `> <` + teeth box (`strain`).
+  3. No accessories Ricks doesn't use: no lanyards, name badges, camera straps, pens (the user read them as "a little line and a black square").
+  4. Arms = rubber-hose arcs, never a kinked elbow: a soft C bowing >= 22 % of its span, leaving the torso EDGE just under the head (0.2 of torso height), round dot hands; raised arms are U/cactus arcs outside the head.
+  5. Timing = Ricks snap: ~65-70 % of every move in the first 4 of 10 frames, settled at 0.33 s, no overshoot, no motion blur; then DEAD-STILL holds (no breathing, no sine sway) of 0.7-2 s; faces change instantly; arm moves start ON the key (on the word). Head and body keep independent hold schedules.
+  6. Ink ~3.5 % of head width, near uniform (not 3:1). Close-ups get a shallow DOF (background clearly blurred).
+  7. Still open: hats as the main character differentiator, narrower real-Ricks torsos, darker hazy sets, a camera that almost never stops (push/orbit/whip).
+  9. (v6, user: "parece que camina hacia atrás") WALK: facing sign + = screen right (pieces/toon-test toonFacing had it inverted → moonwalk); the planted foot slides back linearly at ground speed (stride = the same world units per cycle the piece divides distance by for `phase`, pass it as `stride`), hips drop on contacts, arms counter-swing their own leg, `stop` eases the last steps into the stand. Ricks' walk = long V strides, body leaning into the travel.
+  8. Verify by LOOKING (Read) at side-by-side sheets Ricks vs ours at the same scale and pose before declaring anything done — the API review missed obvious things.
 
 **Why:** the user's review of the first full render; they said "these instructions are for this video and all future ones".
 **How to apply:** check every item before showing a render. Related: [[cartoon3d-style]], [[voice-cuts-in-silence]]
@@ -908,6 +1664,209 @@ Estilo nuevo pedido 2026-10-21: shorts verticales 3D cartoon (cabeza-bola, cuerp
 
 **Why:** el usuario quiere "replicar lo mejor posible las referencias, haciendo lo que sea necesario".
 **How to apply:** cuando el video del tutorial y las referencias difieren, mandan las referencias (ej.: subtítulos de UNA palabra a la vez, no dos). Medir contra las refs antes de dar algo por bueno. Ver también [[audio-recorded-sound]], [[script-format]].
+
+## memoria: `cartoon3d-toon-chars.md`
+
+---
+name: cartoon3d-toon-chars
+description: "Personajes cartoon3d = toon.js en código (v5 APROBADO 2026-11-08), nunca Flow; base para todos los videos desde ahora"
+metadata:
+  node_type: memory
+  type: project
+  originSessionId: ca3359ff-a367-4b93-9bf3-49898e4562fd
+  modified: 2026-11-09T02:13:46.948Z
+---
+
+Desde 2026-11-08 los personajes de cartoon3d se hacen con `styles/cartoon3d/toon.js` (método mromidev: tarjetas Canvas2D iluminadas dentro de sets three.js), prueba en `pieces/toon-test` (v5 aprobado: "quedó muchísimo mejor... a partir de ahora lo usaremos así"). Nada de sprites Flow (c3Person) para personajes.
+
+Claves aprobadas: cabeza casi redonda, cara centrada (kit igual en todos, sin nariz), pelo pegado al contorno y moviéndose con la cabeza, brazos de goma curvos desde el borde del torso con mano-punto, sin accesorios raros (credenciales, correas), pose a pose con snap (67 % en 4 frames) y quietud total, caras que cambian de golpe. Estudio visual en `fuentes/cartoon3d/ricks-estilo-4shorts.md`.
+
+**Why:** el usuario sabe que Ricks Clips hace los personajes en código 2D-3D; Flow no da ese look.
+**How to apply:** usar toon.js en cada video nuevo de cartoon3d (desde batch 04 #3, alquiler de cobayos). Pendientes a ir sumando: caminata (arreglo moonwalk en curso), sombreros, torsos más angostos, más atuendos y animaciones, sets más oscuros con niebla/partículas, cámara con órbitas y whip. Ver [[cartoon3d-rules-2]], [[cartoon3d-level]].
+
+2026-11-09 (storyboard guinea-rent): cara SIEMPRE completa en perfil (2 ojos, 2 cejas, boca; nunca 1 ojo sin boca). Textos/avisos NUNCA flotantes: en documentos/carteles del mundo (sello ILLEGAL en un aviso, contrato que se escribe/firma) con plano cenital + paneo/grúa. Cámara casi nunca quieta (push-in continuo, órbitas, grúas, fundidos con movimiento). Hallazgos en fuentes/cartoon3d/ricks-documentos-camara.md.
+
+2026-11-09 (tras guinea-rent, APROBADO y enviado): para los siguientes — sets MÁS GRANDES (más espacio para mover la cámara: órbitas, grúas, travellings como en los 3 shorts de Ricks), objetos sostenidos AGARRADOS de verdad por la mano (no flotando frente al torso), documentos sin texto cortado en el borde, caras sin quedar oscuras en sombras. Plantilla: pieces/guinea-rent (sound/ incluido).
+
+2026-11-12 (pull desde la Mac): **NUEVO NIVEL APROBADO = `pieces/trash-library`** ("quedó excelente, este es el nivel que quiero"). Todo short nuevo arranca copiando trash-library: cámara secuencial Ricks (`seqCam`/`CAMSEQ`, un plano continuo por set, cambio de eje cada 1,2-1,8 s, whips entre sets, pico <110°/s), grade Ricks medido, `stableShadow` + `toonShadowTwin`, `pose({look, heading})`, props en FOCUS + oclusores, sets densos, sonido de trash-library/sound. Reglas en styles/cartoon3d/STYLE.md §7 y §9 "trash-library v2", fuentes/cartoon3d/camara-secuencial-ricks.md, brief de agentes en pieces/trash-library/AGENT_BRIEF.md.
+
+## memoria: `cartoon3d-voz-continua.md`
+
+---
+name: cartoon3d-voz-continua
+description: "cartoon3d — llegar a 60.5 s con MÁS PALABRAS en el guion/voz, nunca con gags mudos; la voz no para en ningún momento"
+metadata:
+  node_type: memory
+  type: feedback
+  originSessionId: ca3359ff-a367-4b93-9bf3-49898e4562fd
+  modified: 2026-11-11T22:02:00.637Z
+---
+
+Desde 2026-11-11 (#6 single-cinnamon): para llegar a 60.5 s se extiende el guion con palabras (frases extra narradas con la misma voz), NUNCA con tramos sin voz / gags mudos. El gag mudo de lost-luggage fue una excepción de ese video.
+
+**Why:** el usuario: "estos videos no se pueden quedar sin voz en ningún momento".
+**How to apply:** escribir guiones de ~220 palabras (≈ 60 s tras quitar pausas, words/3.67); si tras el recorte falta tiempo, generar una frase de cierre extra con la misma semilla y empalmarla en silencio. Ver [[cartoon3d-rules-2]], [[cartoon3d-level]].
+
+## memoria: `cavecut-style.md`
+
+---
+name: cavecut-style
+description: Estilo "corte de cueva 3D" (pieces/cavernas): accidentes en cavernas como corte transversal three.js, ref TikTok hai.zhang515; look aprobado 2026-10-30
+metadata:
+  type: project
+---
+
+Pieza pieces/cavernas (2026-10-30): Gollum's Cave (Provo, Utah, ago 2005) en español, voz mathomaly ([[voicestudio]]), ~120 s, 18 beats aprobados. Ref: TikTok @hai.zhang515 (video 7696394873850662158), descargada en pieces/cavernas/ref/ (dice "Gulo Cave" = mala transcripción de Gollum's Cave).
+
+Look APROBADO ("está excelente"): corte transversal 3D (src/cave.js sobre el motor three.js de grow): losa frontal con el paso recortado, paredes del corte, fondo arenisca sobre el agua y azul con cáusticas debajo, lámina de agua cian, cuerda guía beige, barra OXÍGENO arriba a la izquierda, subtítulos blancos en negrita al centro-abajo, cota "4,5 m".
+**Corrección del usuario:** roca verde-negra y borde de musgo verde como el original, pero con un toque marrón para diferenciarlo (no gris azulado ni ocre).
+
+**Why:** el usuario quiere el mismo look que la ref, cambiado lo justo para no ser copia.
+**How to apply:** en próximos videos de cavernas reutilizar src/cave.js y esta paleta; pedir más movimientos de cámara que la ref.
+
+**Estado 2026-10-30:** v1 entregada (renders/share.mp4, 87,8 s). Sonido con audio/mix_track.py (Freesound CC0 en audio/fs + sound-layer). Freesound falla con SSL de forma intermitente desde aquí: reintentar en bucle funciona. La voz mathomaly no articula bien "se desmaya": reformular la frase.
+
+**APROBADO 2026-10-31 (final, 109 s):** voz **"Voz Tuneles" (VoiceStudio 41641440)**, no mathomaly; voz alta: piece.json `"voice": {"music": -10}`. Whisper en español: `voice.mjs --model small` (voice_words.py ya detecta idioma si el modelo no es .en). Cierre: sobre el negro final, foto de grupo de las víctimas (si no hay real, recreación Flow) **recta, centrada, pixelada que se aclara**, SIN etiqueta "recreación", bajo el último subtítulo; cola de voz `tail: 6`. Escenario siguiente: mismo estilo, nuevas refs de @hai.zhang515.
+
+**Foto final (regla del usuario 2026-11-01):** SIEMPRE buscar primero una foto REAL de las personas del caso; solo si no existe, recrearla con Flow (pixelada, recta, centrada). Segunda pieza del estilo: pieces/rescate (Erasto Crisanto, cueva inundada 15 días, jul-ago 2026); selva portada de pieces/lluvia/src/world.js.
+
+## memoria: `digger-channel.md`
+
+---
+name: digger-channel
+description: "Chosen concept for our TikTok channel with zero_fem — \"The Digger\" robot archaeologist of human artifacts (+ some human body/habits videos)"
+metadata:
+  node_type: memory
+  type: project
+  originSessionId: b19cd1d9-332a-4ffd-91ff-b618e0ca55df
+  modified: 2026-10-27T01:07:41.591Z
+---
+
+Character/channel name: **Mechayuki** (@mechayuki), chosen 2026-10-27 ("yuki" = snow). The user prefers the megagirl voice (user clone) WITHOUT the 'digger' filter (it sounded robotic). Outro over her goodbye shot with name + follow CTA, never a black end screen. Videos can run 80-100 s. Decided 2026-10-27. Persona: android from the far future, humans are gone; she digs up "human artifacts" (fridge, toilet, microwave, money…) and rebuilds them from scratch to understand them. Calls the viewer "Operator". Opening "Operator… I dug up another human artifact." Closing "Artifact understood. Logging off." Some videos apply the same concept to the human body and habits (Unit-07 angle).
+Format from the 7-account research (`fuentes/tiktok-research/`, propuesta-nicho.md): ~70 s, ~240 words, absurd primitive hook, failure→fix chain with "This is a…" labels, viewer comment at 35-40%, "That's why your…" payoff + callback.
+Voice: a FEMALE voice (she's part human, like Megaman). Measured (pieces/voice-fx/README.md): the refs have NO retro filter, just a high-pitched (F0 205-300 Hz) dry, compressed voice (-14 LUFS, low cut ~170 Hz), probably neural TTS; the retro feel comes from chiptune music/SFX. pieces/voice-fx/retro_voice.py has per-account presets + "digger" (adds a light PS1 layer). Don't clone the reference accounts' voices (no consent); use an original or consenting voice + the retro filter. Engine: pieces/zero-test (fx.js, captions, sky presets). Related: [[zero-fem-model]], [[script-format]].
+Episode 01 "the fridge" produced 2026-10-26 (pieces/digger-01-fridge): engine/film.js (?v=megagirl|studio) drives 24 shots from the voice's word timings (timeline_<voice>.json via voz-studio/scripts/{gen2,assemble,prep_timeline}.py); audio/scripts/{music,mix}.py = code chiptune bed + Freesound CC0 SFX, -14 LUFS; engine/render_film.mjs renders the mp4. megagirl (user clone baab32b2, F0 ~307 Hz raw) sounds best with retro_voice 'digger' ('genre' reads as beeping in earshot). Details in LOG.md.
+Update 2026-10-26: channel/character name chosen = **MECHAYUKI** (@mechayuki). Only the megagirl voice is kept. The user found retro_voice 'digger' too robotic: use the clean chain (genre --eq 0: HPF 170 + comp + -14 LUFS). The TTS can't do rising wh-questions (fix with a PSOLA ramp on the last word). Labels use engine/pixfont.js (Pixelify closes C/E at small sizes). Don't end on a black screen: put the outro + follow CTA over her goodbye shot. Ep.01 v2 = digger01_megagirl_v2.mp4.
+
+## memoria: `earshot.md`
+
+---
+name: earshot
+description: earshot (ears for agents + 252-SFX code bank) installed; use it to choose/verify/critique SFX in every video from now on
+metadata:
+  node_type: memory
+  type: reference
+  originSessionId: c06d4859-1bbd-4e22-88ca-0cdf712f4c20
+  modified: 2026-10-25T04:24:08.932Z
+---
+
+earshot 0.4.0 lives at `F:\earshot` (repo + venv; models cached in `F:\earshot\.cache\hf`). Python: `F:\earshot\.venv\Scripts\python.exe` (this is `{{PY}}` in the real-sound skill).
+MCP `earshot` registered at user scope (models stay loaded; prefer it over many CLI calls, each CLI call ~20-40 s). Skills `earshot` and `real-sound` copied to `~/.claude/skills`.
+The user asked (2026-10-25) to use it to raise the level of SFX in ALL future videos: pick/verify sounds with `rank`/`match`/`realness`, check sync with `timeline`/`critique`, render bank SFX with `sfx render`/`kit`.
+Respect per-style rules: [[audio-recorded-sound]], [[bitpix-series]].
+
+## memoria: `emberlite-style.md`
+
+---
+name: emberlite-style
+description: "Emberlite PS1/PS2 low poly Blender scenes (refs in \"Ref emberlite 3D blender\"); pilot = pieces/emberlite-desk via Blender MCP"
+metadata:
+  node_type: memory
+  type: project
+  originSessionId: b19cd1d9-332a-4ffd-91ff-b618e0ca55df
+  modified: 2026-10-22T06:48:44.185Z
+---
+
+User wants the 4 refs in `Ref emberlite 3D blender/` (vertical 720x1280, ~13 s, 4 shots of ~3.3 s with hard cuts, slow push-ins, night blue/pink or warm orange, parody brands, cat, floating game marker) replicated in Blender via the Blender MCP. User is on Max 20x, usage is not a concern (2026-10-22).
+
+Pilot started 2026-10-22: ref 3 (night desk) in `pieces/emberlite-desk/`: `make_tex.py` (PIL textures, Closest interpolation), `build.py` (exec in live Blender, rebuilds the whole scene), `shots.py` (4 cameras + timeline markers + screen swap), `desk.blend`, render with `blender -b desk.blend -a` + ffmpeg.
+
+User feedback on v1 (2026-10-22): no cat; it must look truly low poly like the ref. What actually makes the ref look PS2 (verified at pixel level, unlike Gemini's "no AA / 320x240 / nearest" claim): every surface has a photo texture (no flat colors), textures downscaled to 128-512 px with linear filtering, matte materials (low specular), faceted geometry (8-sided cylinders), deep saturated blue lighting with a cool monitor spot on the desk + "Medium High Contrast" look. Textures from Flow via `gen_flow.py` (use a fresh Flow project, otherwise the CLI grabs old tiles; Flow rejects "carpet/fabric" prompts, make those procedural).
+
+**Why:** reproducible scripts let each fix be a rebuild instead of manual edits.
+**How to apply:** for the next scenes, copy this structure. Poly Pizza/Sketchfab are off in the addon (ask the user to enable them for complex models like cats). Flow blocked automation with "unusual activity" on 2026-10-22, see [[flow-mcp]]; textures drawn in code work fine as a fallback.
+
+## memoria: `f1motion-style.md`
+
+---
+name: f1motion-style
+description: "Estilo f1motion (reel IG DdolSnYt_iX \"F1 explicado\") aplicado a talking heads Stimulus: caras recortadas sobre cuerpos/vehículos, display ancho + thin, tabs teal, pills doradas, sprites pixel; spec styles/f1motion/ESTILO.md"
+metadata:
+  node_type: memory
+  type: project
+  originSessionId: 180a3cfb-8b3b-49b6-b8ac-a71a3a85ca01
+  modified: 2026-11-10T12:04:53.472Z
+---
+
+El usuario pidió (2026-11-10) replicar el motion graphics del reel `fuentes/f1motion/ref/reel.mp4` en un raw de Stimulus. Mandó 16 capturas con lo que más le gusta.
+- No usar marcas, equipos ni pilotos de F1. Todo se re-tematiza a fútbol y camisetas Stimulus.
+- Spec medida: `styles/f1motion/ESTILO.md`. Constantes en `styles/f1motion/kit.js`. Análisis del reel por la API en `fuentes/f1motion/ref/analysis/` y `SPEC_api.md`.
+- Pieza de prueba: `pieces/f1motion-test/` (raw stimulus-05).
+  - `prep/face_cut.py` recorta solo la cabeza (BiRefNet × elipse).
+  - `prep/torso.py` saca el torso pixel→real.
+  - `prep/gen.py` genera index.html.
+- Fuentes:
+  - display: Turret Road ExtraBold con scaleX 1.3 y trazo de 2 px (lo más parecido al unicase futurista del reel);
+  - thin: Poppins Light;
+  - pills: Poppins Medium;
+  - script: Photograph Signature.
+- Sonido: house "vox and bells" (Freesound 277448, CC0) a 0.13, más pops, whoosh, auto, sticker, marcador y clic reales (sound-layer + Freesound), pocos y en sus eventos.
+- Estado: v1 enviada (gustó), v2 enviada a Telegram el 2026-11-10. Es un video de práctica interna (no se publica): el objetivo es perfeccionar el estilo.
+
+## Reglas v2 del usuario (2026-11-10). Detalle en ESTILO.md, "Reglas v2"
+- **12 fps en los gráficos.** Es un medido del reel: en las escenas gráficas cambia 1 de cada 2 frames.
+  - Render a 24 fps.
+  - Los tweens van en `tlg`, buscado a floor(t*12)/12 por un tween conductor.
+  - Caras `face*12.webm` con `fps=12,fps=24`.
+  - Talking head y b-roll a 24 fps.
+- **B-roll B/N en ≈32 % de los planos.** YouTube de niños, entrenadores y árbitros, con caption Poppins SemiBold 110 px blanco abajo a la izquierda.
+  - Trama de **líneas verticales de 8 px**, sinusoidal ±10 %, estática.
+  - El usuario dijo "horizontales"; en el reel son verticales y se copió lo medido.
+- **Nada técnico dibujado en código.** Vehículos, camisetas, zapatillas, balón, chevrons y manos emoji se hacen en Google Flow (MCP, Nano Banana Pro), con recortes del reel como referencia de estilo, y luego rembg.
+  - Los sprites pixel son esas imágenes en mosaico.
+- **Caras siempre en B/N.**
+  - El brazo de la mano 👍 va detrás de la cabeza.
+  - La barbilla entra en el cuello en V de la camiseta (cuello abierto transparente).
+- Stickers del calendario dentro de las celdas.
+- Walker como el reel: octágono dorado, piernas curvas en degradado, zapatillas reales, balón y mano del corazón, texto thin + display palabra por palabra.
+- Camiseta del callout más arriba, reflejada en el piso halftone.
+- Revisar SIEMPRE escena por escena contra los frames del reel: formas, proporciones, colores, movimiento, fps, tiempos y SFX. El usuario espera que estos detalles los encuentre yo.
+
+## Reglas v3 (2026-11-10). v3 enviada a Telegram; detalle en ESTILO.md, "Reglas v3"
+- FPS remedido en 18 tramos: los gráficos del reel son 12 fps fijos (movimiento real cada 2 frames, no variable). Se mantiene 12.
+- Chevrons pegados al texto.
+- Círculos de marcador dibujándose (attr stroke-dashoffset).
+- Cabeza siempre en el octágono dorado, con la camiseta colgando debajo. Sombra = elipse teal con degradado suave.
+- B-roll sin sujetos cortados en el borde, zoom extra del 6 %, todos con caption.
+- Sticker con peel del reel: esquina doblada gigante que se repliega a una pequeña que respira.
+- TH real también a los ~10 s.
+- Línea del tab que se desvanece en los extremos.
+- Primer plano con la camiseta Flow sin pixelar.
+- Vans del mismo modelo, sin logos reales.
+- Recursos del usuario permitidos (fuentes, emojis, overlays, SFX y música en `D:\Alan\Fiverr Upwork trabajo fotos y videos`). Música v3: Dr Delight "Feel It" (Audios musica Fiesta). Al usuario le encantan las fuentes elegidas: mantenerlas.
+
+## Reglas v4 (2026-11-10). v4 enviada; detalle en ESTILO.md, "Reglas v4"
+- B-roll: `setsar=1` y `object-fit:cover`. Los bordes blancos venían del SAR. Revisar las columnas del borde en el render.
+- La esquina del sticker es un rollo curvo con brillo y sombra (clipPath SVG animado con attr), no un triángulo.
+- En "at STIMULUS" va el logo Stimulus girando, no su torso.
+- Walker: brazos plateados con degradado como las piernas, y gafas que caen una sola vez (wrapper propio, sin bounce).
+- Cara en la ventana de la van con máscara de la ventana, cabina oscura detrás, reflejo y puerta por delante.
+
+## v5 (2026-11-10): "Está excelente!". Regla final de movimiento
+- **Posterize de 8 fps en gráficos, zooms y transiciones** (incluidos los push-ins del talking head): es preferencia del usuario sobre los 12 fps medidos en el reel; no volver a debatirlo.
+- El contenido de video sigue a 24 fps por dentro; las caras van a 8 fps (`face*8.webm`).
+- Se mantienen las frenadas ease-out.
+
+## APROBADO (2026-11-10): v4 + 12 fps
+- **12 fps final; 8 fps se probó y se rechazó.** Todo va a 12 fps: gráficos, cámaras, push-ins y transiciones. El video por dentro sigue a 24.
+- Plantilla: `pieces/f1motion-test`.
+
+## Catálogo de 5 reels (2026-11-10)
+- `styles/f1motion/CATALOGO.md` tiene 30 tipos de escena de 4 reels más del mismo estilo (KIMI DfNzJyXtRpJ, CHG Deje_IEhM8c, MUSE DdyxpSRBWIT, BTS Dc_K1gSx5id), con layout, colores, movimiento, SFX, re-tema y Flow vs código.
+- Frames de referencia en `styles/f1motion/ref_frames/<reel>/` (índice en index.json).
+- Los bloques nuevos están en `kit.js` (`blocks`, `catalog`).
+- Usar el catálogo para elegir escenas en los próximos videos de este estilo.
+- Cobertura verificable: los 396 planos de los 4 reels están clasificados (102 de gráficos, todos analizados a 12 fps cuadro a cuadro). Hay un frame por plano en `ref_frames/<reel>/shots/`, tabla en CATALOGO.md "Cobertura por plano" y 33 tipos.
 
 ## memoria: `feedback-amphorus-endcard.md`
 
@@ -996,7 +1955,7 @@ metadata:
 From 2026-11-13, every finished video (any style, any session) is delivered to `/Volumes/alanwork/trabajo/Renders finales claude/<channel folder>/`, named with its title.
 Folders there: Agente davis, Ali Abdaal, Alterbase, Amphorus, Ava Restfield, Cartoon3d, Doggo poly shorts, Edicion de videos Reels, Kodama yokai, Madfable, Majestic, Mechayuki, MexiTV, Punk poly shorts, Roblox, Stimulus, Tuneles, Vista. cartoon3d ("3D cartoon") videos go to **Alterbase**. If the style's folder is unclear, ask once.
 Thumbnail (title-named .png) goes to `<channel folder>/Miniaturas/`. This shared drive is also how files move between the PC and the Mac (big files that do not go to git). Send the **share** version (export.mjs --share encode: libx264 CRF 24 preset slow, yuv420p, AAC 192k, +faststart), not the big master.
-After delivering, delete the older versions in the piece's `renders/` (silent vN, raw, duplicate final.mp4/<name>.mp4); keep only the title-named master.
+ALSO copy the same share file to `/Users/Shared/Contenido/<channel folder>/` (thumbnail in its images subfolder, e.g. `Imagenes y miniaturas/`); create the channel folder there if missing. From 2026-11-16 final renders do NOT stay in `pieces/`: after delivering to both places, delete every final mp4/version from the piece's `renders/`.
 
 **Why:** user's central delivery folder per channel (2026-11-13).
 **How to apply:** last step of every delivery; give the user the delivered path. Works on the Mac (external volume /Volumes/alanwork); on the PC ask for the equivalent path.
@@ -1598,6 +2557,7 @@ Everything the user asked for across jorogumo and behemoth (2026-10-22..25). Beh
 **Speed (user, 2026-10-30/31):** pieces were taking 2–3 h. Reuse the previous piece's src (gashadokuro/corpo-seco), keep QA targeted (numeric + frame scan + one visual pass), board in under an hour. After render: ONE fix round only for real failures (clipping, floating parts, text over the subject, unreadable story beat); no second polish round. List remaining minor items to the user and let them decide.
 
 **Creature motion and people (user, 2026-11-13, Teke Teke "da risa"):** creatures must move uncannily: stop-motion holds then snaps, twitchy over-rotated head tilts, out-of-sync fingers, slow pulls then sudden bursts, freezes before lunges; no smooth/symmetric/bouncy cartoon motion. Faces mostly hidden (hair, shadow), one eye visible; heavy hair with weight and secondary motion, never straight strips. People need real walk cycles (heel-toe, locked stance foot, no deep knee squat, counter-swing) and realistic faces (no dot eyes / "O" mouths). Night scenes lit by flickering street lamps with dark gaps between pools of light.
+- People never doll-like (2026-11-16): realistic proportions, shoulder joints inside torso, real faces (lids/irises/folds), readable headwear; self-check each person alone before board. See styles/yokai/RULES.md.
 
 ## memoria: `feedback-yokai-sources.md`
 
@@ -1631,6 +2591,680 @@ Installed on 2026-10-29 in ~/.claude/skills/yt-* (from Jakeschincariol/youtube-a
 
 **Why:** the user wants me to act as a YouTube expert for the content they publish.
 **How to apply:** for each video that goes up on YouTube, use /yt-package (title + thumbnail, run title.py), /yt-script (hookscore.py on the hook), /yt-seo (description/tags), and /yt-shorts, /yt-viral, /yt-plan as needed. Related: [[amphora-style]].
+
+## memoria: `filmcraft.md`
+
+---
+name: filmcraft
+description: "FilmCraft 0.17.1 (editor de video NLE en Rust, storytold/filmcraft) instalado en F:\\filmcraft con MCP \"filmcraft\" a nivel usuario"
+metadata:
+  node_type: memory
+  type: reference
+  originSessionId: f027d5ef-1e9e-4319-87b5-cdfbb5c70a8c
+  modified: 2026-11-05T14:46:24.585Z
+---
+
+FilmCraft (editor de video tipo Premiere, open source, 700+ comandos manejables por agentes) instalado 2026-11-05.
+- App portable: `F:\filmcraft\app\filmcraft.exe`; CLI: `F:\filmcraft\app\filmcraft-cli.exe` (`commands` lista todo).
+- Código y docs: `F:\filmcraft\src` (docs/agents.md, docs/control-protocol.md).
+- MCP `filmcraft` (user scope) = `filmcraft-cli.exe mcp` headless. Para manejar la app abierta: `filmcraft.exe --control 9876` y MCP con `mcp --bridge 127.0.0.1:9876`.
+- Si la app no abre: `$env:WGPU_BACKEND="vulkan"`. Logs en `%APPDATA%\FilmCraft\Logs\filmcraft.log`.
+- Actualizar: bajar el portable x64 nuevo de github.com/storytold/filmcraft/releases y verificar con SHA256SUMS.txt.
+
+## memoria: `final-renders-folders.md`
+
+---
+name: final-renders-folders
+description: Ya NO copiar finales a pieces/<Estilo>/ — el único destino del final es LucidLink (ver lucidlink-renders)
+metadata:
+  type: feedback
+---
+
+Desde 2026-11-12 el usuario pidió dejar de crear copias/duplicados. El render final va SOLO a LucidLink ([[lucidlink-renders]]), un archivo por video (reemplazar si hay versión corregida). No copiar a pieces/<Estilo>/, no guardar v1/v2 viejos en renders/ (borrar los superados), no enviar a Telegram.
+
+**Why:** demasiadas copias ocupan disco (F: llegó a 62 GB libres).
+**How to apply:** al terminar: renders/share.mp4 → LucidLink/<Estilo>/<titulo-corto>.mp4; borrar renders superados.
+
+## memoria: `flow-creditos.md`
+
+---
+name: flow-creditos
+description: Llevar la cuenta de créditos de Flow (Omni Flash) por clip y parar en el límite que diga el usuario
+metadata:
+  node_type: memory
+  type: feedback
+  originSessionId: 50c3c1ee-af27-4bdd-ab17-c508335a8f8f
+  modified: 2026-11-14T17:16:30.762Z
+---
+
+El usuario pide llevar la cuenta de cada clip generado en Flow y de los créditos gastados, y no pasar nunca el límite que fije (2026-11-14: 11.400 créditos, cuenta correoderecuperacion496).
+
+**Cómo está hecho:** `tools/srzGoogleFlowMCP/srzGoogleFlowMCP/src/cli.js` (comando `video`) lee y escribe `pieces/_creditos.json` ({limite, costo 10, gastado, clips, fallidos}). Suma 10 por cada clip que sale; si el siguiente pasaría el límite, imprime "LIMITE DE CREDITOS" y sale con código 3. clips.py (plata-taxco, invernadero-atlixco y las plantillas nuevas) termina con "FIN por limite de creditos" al ver ese texto. Para una tanda nueva: cambiar `limite` y poner `gastado` a 0.
+
+**Why:** se quedaron sin créditos dos cuentas a mitad de tanda; quiere controlar el gasto. Pidió explícitamente que llevar la cuenta NO gaste muchos tokens: "solo lleva la cuenta normal".
+
+**How to apply:** no vigilar el contador clip a clip; solo leerlo al reportar un render o al terminar la tanda (1 línea: gastado/límite). Ver [[flow-mcp-only]], [[flow-generacion-rapida]].
+
+
+**2026-11-16 — cuenta nueva monetizadotiktok18@gmail.com (ACTIVA, default en chrome.js):** gastar TODOS sus créditos (sin límite; parar cuando Flow diga que no hay). Su cuenta va APARTE en pieces/_creditos_monetizadotiktok18.json (cli.js elige archivo por cuenta). correoderecuperacion496 queda en _creditos.json (11.230/11.400) y NO se usa hasta agotar monetizadotiktok18.
+
+## memoria: `flow-generacion-rapida.md`
+
+---
+name: flow-generacion-rapida
+description: Generar clips en Flow uno tras otro sin pausas fijas y vigilar el avance con un monitor mientras el usuario no está
+metadata:
+  node_type: memory
+  type: feedback
+  originSessionId: 31217992-d068-4929-9882-eede7428b798
+  modified: 2026-11-08T03:07:25.186Z
+---
+
+Generar los videos en Flow encadenados: cuando termina uno, se pide el siguiente de inmediato. No dejar pausas fijas entre clips (antes había 75 s). Solo esperar si Flow avisa de "actividad inusual".
+
+Mientras genera, vigilar el avance: un Monitor sobre el log que avise de cada OK o FALLO, y reaccionar enseguida. Si un asset falta, reintentar; si Flow bloquea por política, cambiar la redacción. No quedarse horas esperando la notificación final.
+
+**Why:** el 2026-11-04 el usuario encontró la tanda de reten-sierra parada durante horas: 22 fallos sin atender y esperas largas entre clips. Va a volver a dejar generaciones solas.
+
+**How to apply:** en todo clips.py de [[atrium-novelas]] y en cualquier tanda de Flow ([[flow-mcp-only]]).
+
+Ajustes del usuario (2026-11-04):
+- **Tiempo de espera:** si un video no aparece en 90 s, se da por fallido y se pasa al siguiente (`timeoutMs` = 90000 en `generateVideo` de flow.js).
+- **Pausa entre clips:** 17 s (subida desde 10 s el 2026-11-04 por los frenos de "actividad inusual").
+- **Reintentos:** 4 intentos por clip, cada uno con otra redacción (`variant()` en reten-sierra/clips.py).
+- **Políticas de Flow:** rechaza niños y gente con uniforme oficial (policía, militar). Siempre buscarle la vuelta: describir ropa civil concreta (p. ej. "commander in a dark grey ranch jacket", "roadblock" en vez de "police checkpoint", "the kid/daughter").
+- **Una sesión a la vez en Flow:** dos sesiones de Claude en el mismo Chrome/Flow chocan (asset "no existe", botones que no aparecen, timeouts, posibles videos cruzados). Si otra sesión está generando, esperar a que termine y luego retomar (elegido por el usuario 2026-11-04).
+- **Palabras fuertes:** en cada intento fallido, revisar las palabras "fuertes" del prompt (gritos, furia, amenaza, venas, sudor, armas, sangre, dinero/soborno, "¡!") y cambiarlas por algo más liviano. Tabla `SOFT` en reten-sierra/clips.py, se aplica desde el 2º intento; copiarla a cada clips.py nuevo.
+- **Consejos de Gemini sobre Omni (enviados por el usuario):**
+  - Edades: nada de "young/teenager"; poner edad numérica adulta ("a 25-year-old man").
+  - Acciones: verbos de persecución, choque o contacto brusco pasan a acciones tranquilas ("ride slowly", "walking behind").
+  - Imágenes de referencia: sin famosos, marcas ni personajes con derechos; caras con luz clara y sin expresiones extremas.
+  - Prompts: simples; no mezclar muchas instrucciones en uno.
+  - Los "Safety Settings" de AI Studio no aplican a la interfaz de Flow.
+- **Gatito = IMAGEN (usuario, 2026-11-07):** la prueba se hace con una imagen (gratis), nunca con video (costaba 12-15 créditos; 202 gatitos ≈ 10% de los 25k). Ya cambiado en los 48 clips.py (`node src/cli.js --count 1 --aspect 9:16 --out ... "<prompt>"`).
+- **Prueba de control:** cuando un clip falla sin aviso de políticas, generar algo neutro (un gatito, sin assets). Si sale, el problema es el prompt: seguir con otra redacción. Si no sale, el que falla es Flow: esperar 60 s y repetir sin gastar intento. Es `flow_ok()` en reten-sierra/clips.py.
+- **Tiempo de espera en flow.js:** máximo 90 s por intento, sin extender (el usuario no quiere esperas de 5 min).
+- **No rendirse nunca:** siempre seguir buscando la solución. Si el texto suavizado no pasa, cambiar el personaje: quitar la imagen de referencia y describirlo en ropa civil (`NOREF` en clips.py), y si tampoco pasa, dejar solo una línea de diálogo. Repetir pasadas sobre los clips que falten.
+- **Atuendos = los de la referencia:** vestir a los personajes como en el video de referencia, cambiando colores (si a atrium le funcionó, a nosotros también). Ej.: El Retén de atrium usa uniforme camuflado + gorra (no policía con placa/chaleco); en reten-sierra GARZAVERDE y SOLDADOFLACO van de camuflaje verde olivo. Antes de hacer hojas, mirar los atuendos en un mosaico de fotogramas de la ref.
+- **Proyecto de Flow cambia (2026-11-04):** los assets viven en el proyecto Flow activo (`state.json` → projectId). Si una pieza vieja falla con "asset-item ... Timeout" aunque el gatito sale bien, sus imágenes están en un proyecto anterior: volver a subirlas desde `chars/` con `node src/cli.js upload <jpg> --name <NOMBRE>` antes de regenerar.
+- **Colas de Flow:** encadenar esperando un marcador ("FIN X") en el log de la tanda anterior, NUNCA buscando el nombre del proceso con Get-CimInstance: el propio comando de búsqueda contiene el texto y se encuentra a sí mismo, así que la espera no termina (2026-11-04 se perdieron 30 min). Si un monitor pasa 30 min sin eventos, revisar enseguida.
+- **Ahorro de tokens (pedido del usuario, 2026-11-04):** los monitores solo avisan de fin de tanda ("^FIN"), Traceback y fallo final ("intento 6"); nada de avances (OK c10/c20) ni de cada reintento. Cuando un monitor vence no se escribe al usuario: se vuelve a armar en silencio si hace falta. Respuestas a eventos de 1 línea.
+
+## Prioridad de la cola (2026-11-05)
+Siempre priorizar en Flow lo que está casi listo: regeneraciones de clips de videos ya generados van ANTES que videos nuevos completos (aunque haya que cortar la tanda en curso).
+
+## Flow NO se desbloquea esperando (corrección 2026-11-07)
+"Detectamos actividad inusual" / gatito falla → NUNCA pausar 90 min ni esperar. Recargar la página: `node tools/flow_reload.js` (CDP 9333). clips.py ya llama reload_flow() en cada fallo; make_sheets: recargar y reintentar. Si aun así no sale, probar otros medios (cerrar/abrir pestaña, nuevo proyecto) y avisar.
+**Why:** el usuario: "flow no funciona así, flow no se bloquea"; anoche se perdieron ~5 h esperando y lo resolvió una recarga.
+- 2026-11-07: recargar NO bastó para imágenes (gatito pro seguía "inusual"); lo que funcionó fue **crear proyecto nuevo** (MCP flow_new_project) → gatito en 15 s. Luego hay que volver a subir las hojas (make_sheets.py --reupload) porque los assets no pasan al proyecto nuevo.
+- 2026-11-07 tarde: "Could not remove the previous reference images" = Flow ahora muestra chips en el historial; flow.js:194 arreglado para contar solo `flow-base-prompt-box flow-ingredient-chip`. Mantener UNA sola pestaña de Flow (tools/flow_tabs.js --close-extra <projectId>); con dos, reload_flow recarga ambas.
+- clips.py (fonda-chela, monedas-carretera, foto-trucada, bascula-limon, huipil-robado = plantillas) ya hace solo: 1.er fallo de gatito → recarga; 2.º seguido → new_project() (CLI project new + cerrar pestañas extra + make_sheets --reupload). Copiar esas plantillas en piezas nuevas.
+- OJO: tras un proyecto nuevo, las hojas de las demás piezas en cola quedan en el proyecto viejo → antes de lanzar clips (o regens) de otra pieza correr su make_sheets.py --reupload (si no, falla 'button.asset-item' y acaba en NOREF).
+- Cola pausada por falta de créditos: ver pieces/_cola_flow.md
+
+## memoria: `flow-mcp-only.md`
+
+---
+name: flow-mcp-only
+description: NUNCA usar el Flow Connector (flow-auto / skill flow-generate); siempre el Flow MCP (srz-google-flow-mcp)
+metadata:
+  node_type: memory
+  type: feedback
+  originSessionId: 31217992-d068-4929-9882-eede7428b798
+  modified: 2026-11-14T17:16:22.877Z
+---
+
+Desde 2026-11-03 el usuario prohibió el Flow Connector (CLI `flow-auto`, skill flow-generate). Todo lo de Google Flow va por el MCP srz-google-flow-mcp ([[flow-mcp]]), también los videos de [[atrium-novelas]].
+
+**Why:** el Connector no generaba nada en su Flow (cola pausada, pestaña oculta) y el usuario quiere usar solo el MCP.
+**How to apply:** imágenes con flow_generate_image (+ flow_upload_file para referencias @{name}). Video: flow_generate_video (Omni 1.1 Flash, 720p, 4/6/8/10 s, ingredients @{name}); CLI `node src/cli.js video --prompt-file p.txt --duration 8 --out DIR`. Acento mexicano aprobado por el usuario (prompt "native Mexican Spanish ... clear lip sync").
+
+**Cuenta (desde 2026-11-14):** usar SIEMPRE correoderecuperacion496@gmail.com (ULTRA, /u/3/; abre en modo Agente, flow.js lo apaga solo; antes tiktokeeuu691 y lyrics33231363, sin créditos) en Flow/Chrome, nunca manuelleivapro60@gmail.com (las dos están logueadas en el Chrome del MCP, FlowImageChrome). El MCP abre Flow con `?authuser=` = FLOW_ACCOUNT (src/chrome.js, default tiktokeeuu691).
+
+## memoria: `flow-mcp.md`
+
+---
+name: flow-mcp
+description: srz-google-flow-mcp installed (Google Flow / Nano Banana image gen via dedicated Chrome); paths and output folder
+metadata:
+  node_type: memory
+  type: reference
+  originSessionId: 750061ec-7801-45cc-8773-82b3dd37b899
+  modified: 2026-10-20T21:40:24.553Z
+---
+
+srz-google-flow-mcp is installed at `/Users/alanleiva/claude-proyectos/tools/srzGoogleFlowMCP/srzGoogleFlowMCP` and registered in Claude Code (user scope). Tools: flow_generate_image, flow_upload_file, flow_list_assets, flow_new_project. CLI fallback: `node src/cli.js "prompt" --aspect 9:16`.
+Output folder (config.json): `D:\Alan\Fiverr Upwork trabajo fotos y videos\Crudos\Mios\Facebook y tik tok\Reels e imagenes facebook memu\Claude\Imagenes google flow agente davis`.
+The `claude` CLI is not on PATH; use the bundled one at `C:\Users\Alan Leiva\.vscode\extensions\anthropic.claude-code-*\resources\native-binary\claude.exe`.
+If generation fails with "Execution context destroyed" or a ProseMirror timeout, the Flow Chrome is closed or not signed in; run `node src/cli.js chrome` and have the user sign in.
+
+## memoria: `freesound.md`
+
+---
+name: freesound
+description: Freesound API key (token auth) for searching SFX and downloading HQ mp3 previews; backup/complement to Openverse
+metadata:
+  node_type: memory
+  type: reference
+  originSessionId: c06d4859-1bbd-4e22-88ca-0cdf712f4c20
+  modified: 2026-10-25T04:40:38.368Z
+---
+
+Freesound API key saved in `%USERPROFILE%\.freesound.json` (`api_key`; app `alanleiva-video-sfx`, created 2026-10-25). Manage keys at https://freesound.org/apiv2/apply/ (not /apiv2/apps).
+Search: `https://freesound.org/apiv2/search/text/?query=<q>&filter=license:"Creative Commons 0"&fields=id,name,license,duration,previews,username&token=<key>` → `previews.preview-hq-mp3`. Original WAV download needs OAuth2 (not set up).
+More results than [[openverse]] (whoosh CC0: 2315 vs 240). Pick the best with [[earshot]]; credit CC-BY authors.
+
+## memoria: `gumroad.md`
+
+---
+name: gumroad
+description: "MCP Gumroad conectado (user scope, OAuth) a la tienda agentpatrickdavis; confirmar antes de publicar/despublicar"
+metadata:
+  node_type: memory
+  type: reference
+  originSessionId: 64e68669-3c98-47c9-8df4-61a973da7b91
+  modified: 2026-11-13T20:53:06.412Z
+---
+
+MCP `gumroad` (https://gumroad.com/claude/v1/mcp, user scope) conectado 2026-11-13 a la cuenta "Patrick Davis" (agentpatrickdavis.gumroad.com, USD), ligada a [[agente-davis-guiones]]. Producto inicial: "Documento de Supervivencia Migratoria en Estados Unidos" $15, publicado.
+
+**How to apply:** ventas/productos/borradores/descuentos por el MCP; publicar o despublicar solo con confirmación. Revocar acceso en Gumroad Settings > Applications.
+
+**Estado 2026-11-13:** guía tsroia actualizada (texto nuevo, "paga lo que quieras" con mínimo $15 y sugerido $20, recibo que anuncia el kit; el usuario pidió "explicada por un agente", sin "desde dentro"). Borrador "Kit Plan de Emergencia Familiar" $27 (/l/kit-familiar) con PDF de 29 págs y portada en agente-davis/productos/kit-familiar/ (generado por API con gen_kit.py + brief.md). Correo a compradores en agente-davis/productos/correo-compradores.md (código FAMILIA40). Instagram de Patrick ya no existe: canales = YouTube + TikTok. Pendiente: lead magnet gratis, paquete $39, datos del canal (vidIQ no tiene el canal).
+Usuario quiere que yo haga TODO (portadas incluidas, Flow si hace falta); él solo supervisa. Gumroad en el navegador: `agent-browser --session gumroad --restore gumroad --headed` (login persistente). Canal: https://www.youtube.com/@AgenteDeICE (datos con yt-dlp, NO vidIQ). El correo-compradores.md lo retocó el usuario: no reescribirlo.
+**2026-11-13 (2):** Kit publicado ($27, /l/kit-familiar), paquete guía+kit publicado ($39, /l/paquete-familiar), código FAMILIA40 (40 %, solo kit, vence 2026-11-20). Correo enviado a los 20 compradores. Support email = fuenmayorcarlos794@gmail.com (el usuario NO quiere que los compradores vean alanleivago@gmail.com, que es el de la cuenta). Pendiente: revisar el PDF de la guía vs descripción, bloque del kit en guiones, lead magnet gratis, link en TikTok.
+**2026-11-13 (3):** guía = 32 págs (PDF en agente-davis/productos/guia/, texto en guia.txt; NO habla de aeropuerto/carro/notarios); descripción corregida a sus capítulos. Código permanente GUIA30 (30 % kit) en recibos de guía y checklist. Checklist GRATIS publicado (/l/checklist-gratis, lead magnet que junta correos). Bloque de video + comentario fijado + descripción + bio TikTok en agente-davis/productos/bloques-youtube.md (usar en cada guion). Skills de marketing coreyhaines31 (53) instaladas globales. Bajar archivos de Gumroad: fetch /product_files_utility/product_files/<prod>?product_file_ids[]=<file> en la sesión del navegador.
+**2026-11-14:** Workflow "Checklist gratis → Kit" publicado (compró checklist y no kit/paquete; correos día 1, 3, 6; textos en /tmp, resumen: 2 números de memoria → quién cuida a tus hijos + GUIA30 → cierre). Upsell al pagar "Guía → Kit" (30 % off). Afiliados activos: 35 % en guía, kit y paquete; página https://agentpatrickdavis.gumroad.com/affiliates. Pendiente: reclutar afiliados (pedir OK antes de contactar a nadie), clips TikTok.
+
+## memoria: `humanizer.md`
+
+---
+name: humanizer
+description: humanizer skill (blader/humanizer) installed in ~/.claude/skills/humanizer — run it on every voiced script before generating voice
+metadata:
+  node_type: memory
+  type: feedback
+  originSessionId: 3b008220-5710-444f-9064-2bac0d02be64
+  modified: 2026-10-30T06:47:44.369Z
+---
+
+Installed 2026-10-30 at the user's request (`~/.claude/skills/humanizer`, from github.com/blader/humanizer, MIT). Use it to humanize every script that gets voiced (Ava and other channels) before generating the voice.
+
+**Why:** the user wants scripts to sound like a real person talking, never robotic or AI-written (see [[ava-rules]]: humanize with connectors, no telegraphic lists).
+
+**How to apply:** after drafting a script, apply the humanizer rules (no not-X-but-Y contrasts, forced triads, stacked zingers, staged openers, filler), keep facts/gags/beats, then voice it.
+
+## memoria: `hypit.md`
+
+---
+name: hypit
+description: "Hypit (clone viral videos via SVML) installed: global skill + npm executable; no generation service connected yet"
+metadata:
+  node_type: memory
+  type: reference
+  originSessionId: c06d4859-1bbd-4e22-88ca-0cdf712f4c20
+  modified: 2026-10-26T11:41:51.820Z
+---
+
+Hypit skill at `~/.claude/skills/hypit` (installed 2026-10-26 with `npx skills add hypit-ai/hypit -g`) and executable `@hypit/hypit` 0.3.1 global via npm (`hypit version`, `hypit --help`); koffi/esbuild install scripts allowed with `--allow-scripts=koffi,esbuild`.
+No model service connected yet (HypiHub or own API keys); ask the user before choosing one or spending. Works without generation models too (captions, motion graphics, code visuals).
+
+## memoria: `kimodo-pc.md`
+
+---
+name: kimodo-pc
+description: Kimodo oficial (opción A) instalado en el PC Windows; cómo correr kimodo_batch.py para los movimientos de zawdog
+metadata:
+  node_type: memory
+  type: reference
+  originSessionId: fee78aff-f43d-47c1-a432-a0f21fe3abed
+  modified: 2026-11-11T19:15:59.615Z
+---
+
+Kimodo oficial instalado el 2026-11-11 en el PC (RTX 3060 Ti 8 GB, 64 GB RAM).
+- Entorno: `C:\Users\Alan Leiva\miniconda3\envs\kimodo\python.exe` (conda no está en el PATH).
+- Correr: `TEXT_ENCODER_DEVICE=cpu HF_HUB_DISABLE_XET=1 <python> styles/zawdog/tools/kimodo_batch.py [--only nombre] [--seed N]`. Unos 15 s por clip. Salida: `styles/zawdog/motions/kimodo/*.bvh`; los `.npz` están en el gitignore.
+- Login de HF guardado en `~/.cache/huggingface/token`. Modelos en la caché de HF: Kimodo-SOMA-SEED-v1.1, Llama-3-8B-Instruct y LLM2Vec mntp/supervised.
+- Para reinstalar: CMake de winget no queda en el PATH (está en `%LOCALAPPDATA%\Microsoft\WinGet\Packages\Kitware.CMake_*\...\bin`), y el pip de kimodo lo necesita.
+- Avisos que no importan: el reporte de carga dice "MISSING lora", pero se verificó que el adaptador LLM2Vec sí se aplica. Si `xet` corta la descarga con "error decoding response body", usar `HF_HUB_DISABLE_XET=1`.
+- La traslación del cuerpo en los BVH va en Hips, no en Root.
+
+Relacionado: [[bitpix-series]] no; estilo zawdog → `styles/zawdog/STYLE.md`.
+
+## memoria: `lemo-opuscar.md`
+
+---
+name: lemo-opuscar
+description: "Plugin lemo-opuscar (LemoLab) instalado: 66 estilos de película hechos en código; copia de estilos y galería en opuscar/"
+metadata:
+  node_type: memory
+  type: reference
+  originSessionId: 315a5ed2-12fc-47ef-8cec-acc8db9b100e
+  modified: 2026-11-03T11:48:22.797Z
+---
+
+Plugin `lemo-opuscar@lemolab` instalado (scope user) el 2026-11-03 con el claude.exe del VSCode (ver [[flow-mcp]]). Se usa con `/lemo-opuscar:lemo-opuscar`; en el primer uso baja guías y herramientas a `~/lemo-opuscar`.
+
+- Copia local: `/Users/alanleiva/claude-proyectos/opuscar/` → `styles/<slug>/STYLE.md` (prompt del estilo), `poster.jpg` y `demo/` (código del corto demo, sin mp4: hay que renderizarlo); `styleboard/index.html` = galería con los 66 estilos; `styleboard/catalog.json` = slug, nombre, categoría y usos.
+- Hechos en código (sin modelo de video), 1920x1080 a 24 fps, 30–60 min y bastantes tokens por película. Voz por defecto Kokoro. Requiere Node 20+, ffmpeg 7+ y Python 3.11+ (hay de todo en este PC).
+- Licencia: código MIT; demos CC BY 4.0 (dar crédito a LemoLab); lo que hagamos con los estilos es nuestro.
+- Estilos propios en `~/lemo-my-styles/` (ver MY-STYLES.md).
+
+## memoria: `links-clicables.md`
+
+---
+name: links-clicables
+description: Siempre dar link clicable markdown (ruta relativa a la raíz del workspace) a cada archivo que el usuario deba ver/escuchar
+metadata:
+  type: feedback
+---
+
+Al entregar storyboards, renders, audios o tomas: SIEMPRE poner el link markdown clicable en el chat, con ruta relativa a la raíz `F:\Claude Proyectos` (ej. `[storyboard.png](pieces/x/storyboard.png)`), no relativa a la carpeta de la pieza (eso falló: "Couldn't open that file").
+
+**Why:** el usuario: "ponme aquí el link siempre para verlo aquí".
+**How to apply:** cada archivo entregado → link `[nombre](pieces/.../archivo)`; la ruta absoluta solo como respaldo.
+
+## memoria: `long-video-delivery.md`
+
+---
+name: long-video-delivery
+description: "when delivering the FINAL version of any long YouTube video, always include the title and a YouTube thumbnail (1280x720)"
+metadata:
+  node_type: memory
+  type: feedback
+  originSessionId: b19cd1d9-332a-4ffd-91ff-b618e0ca55df
+  modified: 2026-11-01T01:49:51.970Z
+---
+
+From 2026-10-30, the user's request: every long video's final delivery includes the **YouTube title** and the **thumbnail**.
+
+**Why:** the user publishes the long versions on YouTube and wants the packaging ready with the video.
+
+**How to apply:**
+- Research the title for virality (yt-package, yt-viral).
+- Design the thumbnail from competitor thumbnails in the same niche plus the lessons in `fuentes/miniaturas/` (YouTube video KE4zqD0ONDI).
+- Render it from the video's own 3D engine. Save it in `largo/miniatura_1280x720.png`.
+- See [[ava-rules]].
+
+Mechayuki Expeditions too (user 2026-10-31): every final Expedition → viral title + 1280x720 thumbnail rendered from the expedition engine (Mechayuki + the episode's artifact/ruin in MML2 style), saved in the piece folder as miniatura_1280x720.png. See [[mechayuki-expeditions]]. Mechayuki thumbnails (user 2026-10-31): NO brightness/glow boost (keep the film's natural PS1 look), MML2-style game-UI font (never Ava's font), and show her FULL body head to feet. Liked look (user's Gemini ref, pieces/expedition-01-bedroom/review/ref_thumb_gemini.jpg): holographic cyan→blue grid room, big golden 3D beveled text with orange outline, cheerful full-body pose beside one big artifact with sparkles. Her EYES always OPEN in thumbnails. APPROVED thumbnail (2026-10-31): pieces/expedition-01-bedroom/miniatura_A1.png (= miniatura_1280x720.png; code engine/thumb_shots.js + thumb_compose.py, font Luckiest Guy) — curved cyan/blue grid dome, big one-line 3D jittered letters #FFE21A with amber #A87800 extrusion and NO black outline, Mechayuki hands on hips with smirk + one big artifact with sparkles. SHORTS too: every Mechayuki short gets a vertical 1080x1920 cover in this same style (and a viral title). She must be BIG in frame (most of the height); thinking/expressive poses; title as real 3D extruded letters with per-letter jitter, Low Poly Shorts logo style (spec in fuentes/lowpolyshorts-style/especificacion-tecnica-del-estilo.md).
+
+**Thumbnail subject (user, 2026-10-30):** Ava's body is always the main subject: action-heroine key-art pose (RE cover style), full or 3/4 body, slightly in profile, holding her black pistol, legs and thighs visible, attractive but tasteful. The threat (zombies, Vickers) goes behind her. Be creative with poses and lighting.
+
+**Approved thumbnail pose (user screenshot, 2026-10-31):** `fuentes/miniaturas/ref_pose/ava_pose_usuario.jpg`.
+- Ava in 3/4 profile, aiming the pistol two-handed at chest height, knees bent in a wide stance, thighs clearly visible, determined look.
+- The RE CONDITION/ECG panel ("STATION · Fine") at the top, smaller than in the screenshot. It is a Resident Evil reference people recognize.
+- Horizontal thumbnails: the same pose and HUD inside the split-screen idea. The calm left side shows a DIFFERENT place (e.g. the station entrance from outside); the right side is the dark night with the threat.
+
+**Review before showing (user, 2026-10-31):** never show the user a thumbnail without a careful review at 100 % zoom and 4× crops.
+- The pistol must be BLACK and readable as a handgun; never white or glowing.
+- Ava's thighs must look full, with the camera matched to the screenshot.
+- The text needs margin from the divider and edges.
+- The background place must be understandable (pull back to show the entrance).
+- Don't push Ava into a corner.
+- The short cover's HUD is centered at about 45–50 % of the width.
+- **HUD in thumbnails = the REAL engine HUD** (render it with `largo/engine/hud_png.mjs` using film.js hud()), never a redrawn panel; upscale with nearest-neighbor.
+
+## memoria: `lowpoly-from-photo.md`
+
+---
+name: lowpoly-from-photo
+description: "Método PS1 low poly desde 1 foto (tutorial vlvt): script Python en Blender, loft por silueta 6-12 lados, textura 128px/32 colores, revisión al lado de la foto"
+metadata:
+  node_type: memory
+  type: reference
+  originSessionId: 3b008220-5710-444f-9064-2bac0d02be64
+  modified: 2026-11-01T08:12:26.552Z
+---
+
+Tutorial que el usuario pidió aprender y aplicar a sus videos low poly (2026-11-01). Notas completas: `fuentes/blender-lowpoly/reel-ps1-lowpoly-desde-foto.md`.
+
+Resumen del método:
+- **Foto de entrada:** 1 foto frontal limpia, sobre fondo liso.
+- **Malla:** Claude escribe un script que lee el ancho de la silueta por filas y hace un loft de 6 a 12 lados.
+- **Textura:** UV + la misma foto proyectada.
+- **Cajas:** se texturizan con la cara frontal y la lateral.
+- **Personajes:** hoja T-pose de frente y espalda sobre croma, partes en bloques, rig e idle.
+- **Look PS1:**
+  - textura de 64 a 512 px (128 por defecto), unos 32 colores, nearest;
+  - snap de vértices y warping afín;
+  - render a 270 px de alto, escalado ×4 con dither 4x4.
+- **Revisión:** render desde el ángulo de la foto, al lado de la foto. Primero la silueta, después la textura, un solo arreglo por vez.
+
+**Pedido del usuario (2026-11-01):** aplicarlo en los siguientes videos, sobre todo a los OBJETOS. Los escenarios solo cuando es barato: una pared, puerta, cartel o mueble es una caja con su foto, sin rehacer el cuarto entero.
+
+**Fotos (usuario, 2026-11-01):** se bajan de Google Imágenes sin buscar licencia, porque estos videos no se monetizan. Si no hay una foto frontal limpia de lo que se necesita, se genera con Flow ([[flow-mcp]]).
+
+**How to apply:** props y personajes de [[zombie-channel]], [[sinaboto-style]], [[emberlite-style]] y [[mechayuki-rules]] salen de foto o T-pose con este método. El GLB resultante se importa en el motor three.js, que ya hace el snap PS1.
+
+**Photos must be clean (user, 2026-11-02, ep5 radio):** the photo must show the object from the front and ISOLATED, as a PNG cutout with no background or scenery. A photo with background bakes the scene into the model's texture. If no clean cutout turns out well, model the object in code.
+
+## memoria: `lucidlink-renders.md`
+
+---
+name: lucidlink-renders
+description: Renders finales van a LucidLink /Volumes/alanwork/trabajo/Renders finales claude/<Estilo>/ (reemplaza Telegram desde 2026-11-12)
+metadata:
+  type: feedback
+---
+
+Cada render final (también corregidos y otros idiomas) se copia a `/Volumes/alanwork/trabajo/Renders finales claude/<Estilo>/<titulo-corto>.mp4`, con `caption.txt` al lado como `<titulo-corto>.txt` si existe. Novelas mexicanas: carpeta según marca (MexiTV / Vista / Majestic).
+**Why:** el usuario usa LucidLink para pasar archivos entre este PC, la Mac y el teléfono VMOS (app LucidLink logueada, desde ahí sube a TikTok) — reemplaza a Telegram.
+**How to apply:** ya no correr enviar_telegram.py salvo pedido explícito. Ver [[vmos-cloud]], [[atrium-telegram-caption]].
+
+**Miniaturas (2026-11-13):** cada carpeta de estilo en LucidLink tiene `Miniaturas/`; la miniatura de cada video (largos sobre todo) va ahí con el mismo nombre que el mp4 (`<titulo-corto>.png`). Al crear una carpeta de estilo nueva, crear también su `Miniaturas/`.
+
+**Excepción novelas mexicanas (usuario, 2026-11-14):** las novelas VISTA/MEXI/MAJESTIC van a LucidLink Y TAMBIÉN a Telegram como antes (`python tools/enviar_telegram.py <render> <caption.txt> <MARCA>`). El resto de estilos solo LucidLink.
+
+## memoria: `mechayuki-expeditions.md`
+
+---
+name: mechayuki-expeditions
+description: "Mechayuki long horizontal YouTube format \"Expeditions\" (min 8 min) chosen by the user 2026-10-30, plus the MML2 menu SFX folder"
+metadata:
+  node_type: memory
+  type: project
+  originSessionId: b19cd1d9-332a-4ffd-91ff-b618e0ca55df
+  modified: 2026-10-31T07:37:43.310Z
+---
+
+User chose (2026-10-30) the long-form horizontal YouTube format for Mechayuki: **Expeditions**. Each video = she explores a buried human "ruin" (supermarket, hospital, school, 1950 house…) like an MML2 dungeon, finds 10-12 artifacts explained sinaboto-style; MML2 STATUS/ITEMS menu screens (like the banner, pieces/mechayuki-banner) as chapters/inventory; mixed with "human body manual" segments (user asked); final boss = mystery object for comments. Min 8 min, MML2 visual aesthetic. Parallel to the Ava Restfield long-form work.
+
+Menu/select SFX downloaded by the user: assets/megaman legends sfx general (game rips — fine for TikTok; on monetized YouTube, possible Content ID claims → swap for CC0 if that happens).
+
+APPROVED level (2026-10-31): `pieces/expedition-01-bedroom/expedition01_bedroom_v3.mp4` ("quedó excelente") = minimum bar for every Expedition. Pipeline to copy: that folder (engine/film.js + main.js + menukit.js, audio/scripts music_exp.py + mix_exp.py, voz/scripts check_exp.py + splice_operator.py + fix_q.py, LOG.md, DESCRIPCION.md). Recipe: 16:9 480x270 ×4, ~10-11 min, ~115 shots (cut every ~5 s), 14 chapters from the real voice, 5 original MML2-style music areas + ITEM GET fanfare, voice ~14 dB over music while she talks, −12 LUFS / TP ≤ −1, closing line "Expedition complete. Logging off." (Digger shorts keep "Artifact understood."). Flow: storyboard approval → render → revisar_render → fix all valid flags → re-render → show user. Historical scenes each get their own set and period clothes; diagrams/panels in 3D (no flat 2D); every action with its prop (shovel, fire with flames, visible peas…); inventory cursor follows what she names.
+ASSET REUSE (user): Mechayuki SHORTS may reuse any Expedition asset (sets, NPCs, props, animations, menus, music) to save work, and vice versa.
+
+Exp 01 v1 feedback (2026-10-31): music lower / voice higher; outdoor meadows must look like MML2 fields (rolling green hills, big blue sky, fluffy clouds, rainbow, tan cliff band; ref pieces/expedition-01-bedroom/review/ref_mml2_prado.png); titles never over her face; wider letter spacing in captions; no clipping through windows; no flickering flowers/grass (z-fighting); camera moves must be continuous with no snap-back and repeat; never cut the last word of a question.
+
+Market analysis: fuentes/mechayuki-largo/analisis-viralidad.md. See [[mechayuki-rules]], [[digger-channel]].
+
+## memoria: `mechayuki-rules.md`
+
+---
+name: mechayuki-rules
+description: APPROVED level and every rule/check the user asked for in the Mechayuki (@mechayuki) TikTok videos — run all checks before every final render
+metadata:
+  node_type: memory
+  type: feedback
+  originSessionId: b19cd1d9-332a-4ffd-91ff-b618e0ca55df
+  modified: 2026-11-05T12:25:55.141Z
+---
+
+Approved bar (2026-10-27): `pieces/digger-01-fridge/digger01_megagirl_v3.mp4` ("perfect now"). Every new episode must be at least this level. Pipeline: digger-01-fridge (engine/film.js, voz-studio scripts, audio/scripts music+mix, render_film.mjs, LOG.md). See [[digger-channel]], [[zero-fem-model]].
+
+**Why:** the user reviewed v1→v3 and each item below was an explicit correction; repeating them wastes rounds.
+**How to apply:** build every episode with these rules and tick each one on start/mid/end stills of EVERY shot (review/ contact sheets) + earshot BEFORE the final render; write a per-shot PASS table in LOG.md.
+
+FORMAT BACK TO ARTIFACTS (user 2026-11-05): the cat.explains.it format (#06 bathing, #07 GPS, #08 music) did NOT perform well, so it is dropped. Shorts are again the artifact format (ep01-#05 style): she FINDS a human artifact in a VARIED location (different biome/place each episode, creative discovery) and explains it. Keep all the picture/sound/delivery rules below; the cat.explains.it lines are history only.
+OLD FORMAT, DROPPED (user 2026-11-01): make Mechayuki shorts like TikTok @cat.explains.it ("How people [did X] before [Y]": problem→solution chain, she tries/wears each historical solution in 3D, progress meter HUD, cut-aways, etymology/fun-fact ending; analysis in fuentes/cat-explains-it/). EVERYTHING with volume, NOTHING flat: the ref's flat 2D cartoon cards must be rebuilt as 3D PS1 scenes/panels.
+cat.explains.it-format lessons (short #06, 2026-11-02): each solution in its OWN recognizable set (never the same room); she physically TRIES/WEARS every solution; historical figures = an existing good-looking NPC + costume pieces (crown, cape…), never a new custom model (custom Henry VIII looked horrible); open with time first ("Five hundred years ago, there were no X… so…").
+Shorts max 1:20 (80 s) from 2026-10-31 (user) — script ~200 words max.
+Final files named with the video's TITLE (user 2026-10-31), for shorts AND long videos: "<Title>.mp4" + "<Title>.png" (thumbnail/cover) in the piece folder; strip characters Windows forbids (? : " / etc.).
+Delivery (user 2026-10-31): every short ends with a viral title + a vertical 1080x1920 cover in the approved thumbnail style (see [[long-video-delivery]], ref pieces/expedition-01-bedroom/miniatura_A1.png).
+
+Workflow (ep 02 feedback, 2026-10-27)
+- ALWAYS send the storyboard (+ style frames) to the user and wait for approval BEFORE rendering the video.
+- A video never starts and ends in the same place with the same shot (like sinaboto: different locations/framings for the opening and the ending).
+- ALTERNATE FORMATS (user, 2026-10-27): not every episode is "I found an artifact". Mix the Digger format with sinaboto-style episodes that open straight with the hook "If you [do X]… you have a Y." (no "Operator… I dug up" frame, no find scene). Decide the format per episode and propose it with the script; ep03 (lock) stays as an artifact episode.
+- Render rounds (user, ep04 + Exp01 v2, 2026-10-31): render, run revisar_render.py, FIX every valid flag yourself, re-render, then show the user (at most one self-fix pass; no endless v2/v3 loops). Never show a render with known review flags left unfixed — the review exists so the user doesn't have to list them.
+- NEVER put "!" in any TTS text (not only "Operator"): Exp01 v2 "Operators!" at the ending sounded horrible. Use "…" or ".".
+- Vary HOW she finds the artifact each episode (ep 03 feedback): not always digging with the shovel — invent a creative discovery (metal detector, melting ice block, snowplow, drone, falling out of a tree…). Check the previous episodes' openings and never repeat one.
+- Write the Operator comment at 35-40% of the script (ep 02 had it at 58%).
+- Opening "Operator…": NEVER use "!" (VoiceStudio changes delivery AND timbre -> sounds like another voice). Reuse `pieces/voice-fx/megagirl_operator.wav` (approved ep 01 v3 word) spliced in silence (`digger-02-toilet/voz-studio/scripts/splice_operator.py`), and pick any new take by speaker similarity to approved paragraphs (`speaker_sim.py`, WavLM-SV).
+
+Voice and script
+- Never write the opening as "Operator!" (the exclamation makes VoiceStudio change the voice's timbre); use "Operator…" like ep 01, or the reusable approved clip pieces/voice-fx/megagirl_operator.wav.
+- The opening "Operator…" must sound energetic, not flat/sad; "Operator X asks" must sound natural (not robotic) and never clip a word ("asks" got cut) — regenerate those takes and listen/measure.
+- Megagirl voice (user clone baab32b2) only, CLEAN chain (HPF ~170 Hz + gentle comp + -14 LUFS). No 'digger'/retro filter (sounds robotic).
+- Questions must sound like questions (rising pitch): check the contour; the TTS fails on wh-questions → regenerate or PSOLA ramp on the last word.
+- Whisper-check every line against the script (it once said "hit them" for "hid them"); never cut inside a word; give reaction words ("Gross!") room with a pause + reaction shot.
+- 80-100 s is fine; ~2.7 words/s. Fixed opening/closing lines, Operator comment at 35-40%, "This is a…" labels.
+
+Picture
+- She must be animated and the world must react: dynamic effects for actions (e.g. the snow hole grows with each shovel stroke, snow flies and piles up; poured material visibly streams out).
+- Every action must read clearly (what is she doing? what is in her hand? clear props, e.g. leftovers = recognisable takeout box/plate).
+- Hands never pass through objects; props stay in hand; objects sit ON surfaces (no floating holes or props).
+- Ep03 v1 corrections: pushed/carried props stay ON the ground and touching her hands (the rock sank and drifted away); every action has an SFX (the bar on the door); doors complete down to the floor with detail (planks, hinges, frame) — nothing flat; historical/diagram scenes with volume and contrast, never flat planes; NPCs with correct knees (the thief's legs bent backwards) — check walks in profile; tools IN the hands (the lockpicks); an open door shows a real interior; she is never cut off at the edge; keys/props complete in frame and never passing through the hand. Every action must be unmistakable (melting the ice: visible beam).
+- Ep04 storyboard: don't saturate everything with snow — add green areas (grass, trees, gardens) in every episode; she never passes through the bed/furniture when lying down; NPC hats in the PS1 style, attached to the head (no floating).
+- Ep04 storyboard feedback (2026-10-29): too much snow in every episode -> the overall balance must be GREEN (grass, leafy trees, bushes, gardens/flower pots, ivy, green valleys); snow only where the story needs winter. Lying/sitting in bed must never pass through the bed or the quilt (use the rig clips sleep_lie / wake_sit_up / slap_snooze with the root on the mattress, duvet arched over the legs; check from the side and above). NPC hats: low poly PS1 with small textures like the NPCs, sized from the measured head, attached to the head bone (Bone001), no gap/float/hair poking through.
+- Overlays stay inside their frames (e.g. water inside its circle); scan/diagram boxes small and clear.
+- Object/term labels: readable pixel font (engine/pixfont.js), spaced letters, moderate size ≈ caption height — never too big.
+- Expressions must match the line (real disgust face for "gross", etc.); paint new cells if missing.
+- Poop is drawn the anime way: the swirl poop-emoji shape (brown, coiled, often with a cute face), never realistic blobs.
+- Plenty of FX like the refs (shiver lines, cold puffs, sparkles…); her shadow fairly dark; face visible (avoid profile/hair covering it in key shots).
+- Captions: one word, Pixelify-style pixel font with the measured pop-in (0.86→1.05→0.98→1.0).
+- Ending: no black end screen and no "more soon" text; the outro (MECHAYUKI, artifact number, follow CTA, small) goes over her goodbye shot.
+
+Sound
+- Music NOT pure chiptune: original playful plucky track with a real bass line and soft drums (~105-112 BPM, major), ~7 dB under the voice, -12 LUFS master / TP ≤ -1 dBTP (user asked for louder in ep03); the pause after the opening "Operator…" ≈0.4 s, no clipping; real CC0 SFX on actions; check with earshot.
+- Credits: only CC0/CC-BY assets, CC-BY listed in the TikTok description (LOG.md).
+
+## memoria: `mechayuki-upnext-remake.md`
+
+---
+name: mechayuki-upnext-remake
+description: "Nuevo formato Mechayuki (2026-11-15) — remakes de los reels de @jongmin.design (\"UpNext\"): mismos planos, diálogo parafraseado, subtítulos como los suyos"
+metadata:
+  node_type: memory
+  type: project
+  originSessionId: b19cd1d9-332a-4ffd-91ff-b618e0ca55df
+  modified: 2026-11-18T01:25:24.924Z
+---
+
+Los shorts de artefacto y los de cat.explains.it no consiguieron vistas, así que el usuario (2026-11-15) quiere dejar el enfoque androide/artefactos. Desde ahora se rehacen los reels de @jongmin.design (Instagram, serie UpNext, autoayuda en diálogo con un gnomo mentor, low poly PS1): MISMOS planos, encuadres y ritmo, diálogo PARAFRASEADO en inglés y subtítulos iguales a los suyos. En TikTok esos videos no existen.
+Análisis: fuentes/jongmin-design/ (SINTESIS.md, remake/ESTILO.md, una spec por reel en remake/<id>.md, hojas de contacto en remake/cuts/).
+Orden: Dd2YemoPJ9- (342K likes), DeDh, DenX, Dd-HI, luego DeIZ, Dd5E y Deqi.
+**Why:** el formato anterior no agarraba vistas; el usuario eligió replicar esta cuenta.
+**How to apply:** render de prueba del gnomo antes del storyboard (NPC existente + gorro/barba, nunca un modelo a medida), storyboard → aprobación → render → revisión. Cambiar algunos detalles (objetos, nombres) para no quedar calcado. Ver [[mechayuki-rules]].
+Personajes (2026-11-16): gnomo Pip = Servbot con su textura sombreada original recoloreada + ojos estilo Servbot (APROBADO, pieces/upnext-gnome, ojos A). Chica = la del tutorial MercurialForge (youtube DqntXa7dOO8), el usuario la quiere IDÉNTICA (modelada a mano como él, paso a paso; guía extra: tutorial de Crashsune), en pieces/upnext-girl. Verificar con overlays al 50% en sus cámaras.
+Chica, v7 rechazada (2026-11-16): la cara era plana y la de él tiene volumen; la cabeza, el cuerpo y los pies no seguían su malla. Además usaba las caras de Roll (las del flequillo amarillo en el medio), que él solo pone como referencia; las suyas aparecen desde el minuto 9:19. Hay que replicar polígono por polígono su malla gris (7:55 y 7:57, ~470 tris), con Roll de assets/ (zip Roll Caskett) al lado como guía de altura, igual que él. No entregar hasta que sea idéntica. Capturas del usuario en fuentes/mml2-girl-tutorial/user_refs/.
+Chica del tutorial ABANDONADA (2026-11-16): no se logró idéntica. La reemplaza la réplica del modelo de TikTok @.rashiyx (Ashley RE4, vuelta de 360°): pieces/upnext-girl2. El usuario eligió V2 (curvy, piernas desnudas) y V3 (curvy, pantimedias) para alternarlas en los videos. Low poly de 3,6k tris, con el trasero agrandado a pedido.
+Al 2026-11-17: Ashley APROBADA (v5, pieces/upnext-girl2). Voces en VoiceStudio: "Ashley" y "Gnomo personaje apoyo" (quitarles el ruido). Las refs tienen un ojo de pez leve y animación a pocos fps. El usuario evalúa cambiar a Pip por MetalShadow (assets/Grego..., en prueba en pieces/upnext-metalshadow). Primer video en pieces/upnext-01, storyboard v2 gustó.
+Mesera APROBADA (pieces/upnext-waitress, shorts + jeans) para un formato nuevo estilo TikTok @missmedannypsx (análisis en fuentes/missmedannypsx/). Su pretendiente es Artillery de MML modificado (pieces/upnext-suitor). El usuario revisa las animaciones en video de 360°.
+Al 2026-11-17: Ashley ahora se llama "Airy" (banner v4 con "Subscribe!" en thatthatnewpixelfamilytest-square, pieces/upnext-girl2/branding/v4). Mesera = "Vera" (cuenta @askforvera, banner C black neon, pfp bored con fondo de un solo color). Pretendiente = "Theo". Voces en VoiceStudio: Vera "Voz mesera clean", Theo **"Voz theo pretendiente clean"** (usarla desde 2026-11-17), Pip "Voz gnomo pip", Airy "Ashley 2 clean". Modelos ripeados/comprados → LucidLink, nunca a git (el repo es público).
+
+## memoria: `mexitv-horario.md`
+
+---
+name: mexitv-horario
+description: Horario de publicación de @mexitve (Pixel VMOS): 3 días a las 18:00, luego 08:00 y 18:00; cola + tarea programada
+metadata:
+  type: project
+---
+
+Horario pedido 2026-11-16 para @mexitve (Pixel 10 Pro VMOS): 17, 18 y 19 de nov solo 1 video a las 18:00 (el 16 nada); desde el 20 de nov, 2 diarios (08:00 y 18:00), hora del PC (Venezuela, -04:00).
+
+**Cómo está hecho:** tarea de Windows "MexiTV publicar TikTok" (08:00 y 18:00) corre `tools/mexitv_publicar.py`, que publica el primero de `tools/mexitv_cola.json` (["Estilo","archivo.mp4"], el mp4 + .txt deben estar en LucidLink) con tiktok_upload.py; log en tools/mexitv_publicar.log. Si falla, queda en la cola.
+
+**How to apply:** la cola lleva SOLO videos generados para @mexitve (no reusar renders de otras cuentas). Cada video nuevo para @mexitve: entregarlo a LucidLink y añadirlo a la cola. Revisar el log y que la cola no se vacíe. Ver [[vmos-cloud]], [[atrium-p2-solo-si-funciona]].
+
+## memoria: `migracion-antigravity.md`
+
+---
+name: migracion-antigravity
+description: El usuario migrará pronto a Antigravity; MIGRACION_ANTIGRAVITY.md se regenera solo (Stop hook) y debe quedar completo
+metadata:
+  node_type: memory
+  type: project
+  originSessionId: 2713995d-530f-43bf-86e3-023d01bea9fa
+  modified: 2026-11-14T16:36:47.579Z
+---
+
+Desde 2026-11-14 el usuario prepara la migración a Antigravity (aún no migra). `tools/exportar_contexto.py` genera `MIGRACION_ANTIGRAVITY.md` (reglas, memoria, specs, ESTADO de piezas, historial de mensajes, MCP/skills, git; solo texto, secretos redactados). Un Stop hook en `.claude/settings.local.json` lo regenera tras cada turno. La Mac genera el suyo: `python3 tools/exportar_contexto.py MIGRACION_MAC.md`.
+
+**Why:** quiere tenerlo listo para darlo a Antigravity y seguir con normalidad.
+**How to apply:** si aparece una fuente nueva de contexto (otro tipo de doc, nueva carpeta de specs), sumarla al script; la intro está en `tools/exportar_contexto_intro.md`. Commitear el .md junto con los commits normales.
+
+## memoria: `openverse.md`
+
+---
+name: openverse
+description: Openverse API (CC audio/images search) works anonymously; endpoint and useful filters for sourcing SFX/music
+metadata:
+  node_type: memory
+  type: reference
+  originSessionId: c06d4859-1bbd-4e22-88ca-0cdf712f4c20
+  modified: 2026-10-25T04:34:25.867Z
+---
+
+Openverse API: `https://api.openverse.org/v1/audio/?q=<term>&license_type=commercial&page_size=N` (also `/v1/images/`). Works with no key (anonymous rate limit). Results give `title`, `license` (cc0, by...), `duration` (ms), `url` (often freesound HQ mp3 preview), `creator`, `foreign_landing_url` for credits.
+Registered 2026-10-25 as app `alanleiva-video-sfx` (email alanleivago@gmail.com); client_id/secret in `%USERPROFILE%\.openverse.json`. Token: POST `/v1/auth_tokens/token/` with client_id, client_secret, grant_type=client_credentials (lasts 12 h) → header `Authorization: Bearer <token>`. The email verification link returns HTTP 500 "Invalid verification code" (Openverse bug) and `verified` stays false, but the token already gets 100/min and 10000/day (anon: 20/min, 200/day). Always send the token. Use with [[earshot]] (`rank`/`realness`) to pick the best download.
+
+## memoria: `patrick-dm-ventas.md`
+
+---
+name: patrick-dm-ventas
+description: Mensajes y comentarios de Patrick (TikTok): siempre redirigir al link de una guía/producto; cada demanda nueva = crear producto; no resolver problemas
+metadata:
+  type: feedback
+---
+
+En DMs y comentarios de @agentedavis el objetivo es SIEMPRE que entren al link (checklist gratis, kit, guía, paquete), no resolverles el problema ni seguirles la corriente. Cualquier problema que cuenten se aprovecha para ofrecer un producto; si no existe uno que encaje, se crea (guía o documento, aunque la solución sea mínima) — la demanda genera la oferta. Tono educado y cálido como el de la respuesta a Maribel (le gustó). No hay "casos urgentes" que escalar.
+Fuente principal: comentarios de sus videos con "DOCUMENTO", "TARJETA", etc.: convertir cada uno (responder y mandar el link).
+
+**Why:** el usuario lo pidió 2026-11-15 tras ver que respondí a Maribel resolviendo su caso sin link.
+**How to apply:** respuestas cortas, empatía de una línea + link del producto más cercano; anotar demandas sin producto en agente-davis/tiktok/demandas.md para crear productos. Usar script por API (créditos) para leer chats/comentarios y redactar. Ver [[gumroad]], [[vmos-cloud]].
+
+**Videos TikTok (pedido 2026-11-15):** mismo formato que con la tarjeta roja: arriba clip viral generado con IA (ICE vs NYPD, aeropuerto, etc.), abajo Patrick opinando, y al final recomienda el producto (lista gratis / kit / guía) con CTA "comenta DOCUMENTO/LISTA" o "link en mi perfil"; a quien comente se le manda el link por DM. Detalle del formato viejo en agente-davis/tiktok/ESTRATEGIA.md.
+
+## memoria: `ponytail-scope.md`
+
+---
+name: ponytail-scope
+description: Ponytail skill installed explicit-only; must never lower video/animation/sound quality
+metadata:
+  type: feedback
+---
+Ponytail (~/.claude/skills/ponytail) was installed 2026-11-17 only on the condition that it does not hurt video quality. It runs only when the user explicitly says "ponytail" (disable-model-invocation, no plugin hooks).
+
+**Why:** the user values animation richness and quality rules over minimal code ([[feedback-animation-richness]]).
+**How to apply:** never apply Ponytail's minimalism to animation, layers, SFX, QA or storyboard steps; it only governs code structure. Also installed the same day: hallmark, impeccable, last30days, diagram-design skills, and the scrapling MCP (uv tool at ~/.local/bin/scrapling).
+
+## memoria: `positpixel-code-only.md`
+
+---
+name: positpixel-code-only
+description: "Estilo positpixel (shorts \"If A Human Had X Anatomy\"): solo todo en código, NO híbrido Flow; prueba en pieces/pp-chihuahua"
+metadata:
+  node_type: memory
+  type: feedback
+  originSessionId: b92f9035-1577-46e7-8626-9dad105318f7
+  modified: 2026-11-08T05:53:06.095Z
+---
+
+Para replicar los shorts de positpixel (pixel art de caras/cuerpos humanos que se transforman), el usuario quiere SOLO la versión todo en código (canvas 180×320 ×6, posterizado, contorno 1 px). El híbrido Flow + código queda descartado (2026-11-08).
+
+**Why:** en Flow no se pueden hacer los movimientos ni las formas de cuerpo que piden las transformaciones; la referencia está hecha a mano en pixel art.
+**How to apply:** prueba de réplica en pieces/pp-chihuahua/code (SPEC.md, render.mjs; refs locales en references/positpixel/). A la versión en código "le falta muchísimo" para igualar la referencia: iterar contra los fotogramas clave antes de pasar a piezas nuevas (búho = [[pixdoc]]-like, voz Ava de prueba).
+
+## memoria: `pov3d-effort.md`
+
+---
+name: pov3d-effort
+description: "pov3d \"¿Qué pasaría si…?\" videos — use moderate effort, not max: good quality but fast (user, 2026-10-30)"
+metadata:
+  node_type: memory
+  type: feedback
+  originSessionId: dd621c73-0dc8-4663-a3a9-e8d02c9a413f
+  modified: 2026-10-30T15:10:06.941Z
+---
+
+After the shrink video (5 high-effort agents + 3 fix agents + music + SFX agents, many hours) the user said: keep them good but don't spend that much effort; it took too long.
+
+**Why:** turnaround time matters more than the last bit of polish for this series.
+**How to apply:** for [[pov3d-style]] remakes, reuse existing pieces' sets/characters/sound where possible, use at most 2–3 agents (default effort, no "high"), one storyboard pass, fix only what the user flags, and keep the sound pipeline lean (one sound agent covering music + SFX). Still follow [[sonido-pro]].
+
+## memoria: `pov3d-hd-niche.md`
+
+---
+name: pov3d-hd-niche
+description: "pov3d-hd = long 16:9 \"What If X and Couldn't Stop?\" (8:30); niche mostly no voice; rocket-speedup piece started 2026-11-03"
+metadata:
+  node_type: memory
+  type: project
+  originSessionId: b662f66c-2701-43c1-aa76-70b98041d80b
+  modified: 2026-11-04T14:07:39.384Z
+---
+
+pov3d-hd is the long-form YouTube variant of [[pov3d-style]] (16:9, 30 fps, 8:30; pieces wave-grew, luckier, rocket-speedup). Style kit lives in styles/pov3d-hd/kit.js (synced via git pull from the Mac).
+
+Research 2026-11-03 (yt-dlp, vidIQ had no credits): 12 of 15 "couldn't stop" channels have no narration (Minute Zero, What If Sim, All Answers…); only The Readout / The Frame One / What If narrate. User chose no voice. Taken topics list is long; free ones then: rocket accelerating (chosen), snowball rolling, crack spreading, skyscraper growing.
+
+User notes on rocket-speedup v1 (2026-11-03), apply to every pov3d-hd piece:
+- The first 5 s teaser must be insane, with heavy motion and never-seen things.
+- No visual glitches or flicker.
+- Clouds must look volumetric, not painted.
+- Suspense music in the style of Interstellar (organ, ostinato), original or licensed, predominant at the climaxes.
+- Bodies never pass through the camera.
+- Planets arrive gradually (dot → grow → sweep → recede), never popping in or out.
+- First-person look-arounds (left, right, the photo) between events.
+- Chaos in the long late sections.
+- They liked the cockpit and its interior lighting.
+
+Thumbnails (user's refs: Whatfinity, Edgecount, Elapsed): a clean frame (HUD off) fills the thumbnail, hero on the right, darker left side, with a serif left column: a small spaced-caps label ("YOUR SPEED"), a huge number ("99.99% c") and an italic line. Never Impact or the YouTuber-bold look. Script: pieces/rocket-speedup/tools/thumb2.py.
+
+**Why:** user wants topics nobody has done and to follow what the big channels do.
+**How to apply:** for each new pov3d-hd piece, re-check the topic with yt-dlp searches before the story check; default to no voice.
+
+## memoria: `pov3d-style.md`
+
+---
+name: pov3d-style
+description: "User's standing rules for pov3d \"¿Qué pasaría si...?\" videos (look, people, camera, effects, sound, end card, versions, workflow)"
+metadata:
+  node_type: memory
+  type: feedback
+  originSessionId: dd621c73-0dc8-4663-a3a9-e8d02c9a413f
+  modified: 2026-10-17T07:36:52.020Z
+---
+
+Standing rules for every pov3d video (set 2026-10-11 → 2026-10-13; the oxygen piece, pieces/oxigeno + pieces/oxygen-en, is the current quality bar — "excelente, mucho mejor").
+
+**Text**
+- Title exactly as the user writes it; bigger and centred (bigTitle). Captions/HUD unchanged.
+- End card centred: the fact higher; ~2 s later below it "y tranquilo, esto nunca pasará", then 1 s later below that "... o si?", then "ALTERBASE.ESP" at the very bottom, well apart (user's wording from 2026-10-13, sol piece). English versions: paraphrased teaser + "ALTERBASE" (unless told otherwise).
+
+**Look and detail** (minimum = oxigeno; always push higher)
+- Rich textures with relief (wood grain, plaster, canvas, bump maps); no flat surfaces. Detailed sea (fine ripples), smoke/dust as ragged lit clusters, volumetric cloud clumps, real trees (not spheres), grass blades (not spikes), detailed cars, buildings/towers with façades.
+- Light: sun lens flare, bloom, long soft shadows; shadow box fixed (never follow the camera → flicker).
+- Show every claim on screen literally (e.g. "todo fuego se apaga" → visible fires/candles/fire pits that go out).
+- Destruction reads big and physical: buildings/towers crumbling from the top in pieces with dust; floors ripple, crack with dusty rims, then give way; clouds react to the event.
+- Climax like the references: a bright ignition point with particles and detailed smoke; shock/fire fronts as huge churning billows (never a plain dome/sphere) that reach the camera and crack its glass.
+
+**People**: the moment the event begins they must visibly look scared — some running off, others hands to the head, kneeling, phones up — and the camera must look at them then (always, every video). They react to every event (hands to ears in pain, doubling over, kneeling, collapsing); put some right next to the camera so it reads up close.
+
+**Match the reference closely when asked** (giro, 2026-10-13): same kind of place (city street, not a variant), POV height like the reference (e.g. one floor up), cel-shaded look (toon shading, not flat PBR), detailed bodies and cars (shaped sedans, lights, rims), real-looking ground cracks (fissures with chipped lit edges, heaved slabs), buildings stripped in layers (skin peels, floors exposed, they lean and sway more as it worsens), FAR more debris/particles — total chaos like the reference — and the final wave carrying buildings and debris; camera shake scaled to each event.
+
+**Replicate the reference's shots and camera moves** (protones, 2026-10-17): same shot order, framings and moves (low shot, tracking shot, tilt down to hands, pans over people, crane up/down), not just its beats.
+
+**Camera**: never locked — sways, glances at the action (slowly looks round at people after a shock), turns to show what the caption says, motion blur on moves.
+
+**Sound**: real CC0 recordings ([[audio-recorded-sound]]) layered with code SFX for weight (pressure hits, sub drops, rumbles, risers, cracks) plus a constant bed like the reference (e.g. the compressed breathing pulse over a drone). Much presence/weight; the payoff hit stays the loudest after a silence; check AAC true peak (rebalance, don't crush with a limiter).
+
+**References**: study the given reference frame by frame (key moments + spectrogram) and match its effects/sounds, but change places, sides and elements so it is not a copy.
+
+**Versions**: English versions (updated 2026-11-01, replaces the 2026-10-13 rule): the SAME video with the text in English — same scenes and the SAME sound; units in imperial (feet, miles, mph, °F). Separate copy pieces/<name>-en. Fix only what the user flags for that version. (Before 2026-11-01 the rule was to change the scene and use different sound; no longer.)
+
+**Workflow**: story → look → storyboard approval → render in 280–300-frame chunks (one long export slows to ~60 s/frame) → audio → qa.py + review.mjs → deliver.
+
+**Why:** accumulated user feedback across corre, agujero and oxigeno.
+**How to apply:** start new pieces from pieces/oxigeno (oxy.js techniques: people poses, dissolve, towers, blast front, lensFlare/bloom/motionBlur/crackGlass, synth.py) and plan these in the beat table.
+
+**Sound balance (faster, 2026-10-25)**: the user rejected a "correct" but sparse mix. Beds (waves) must not dominate; NO stretch may feel empty. Sound every visible thing: crowd walla around you, the sea retreating, time-lapse rushes when the sky races, helicopter, people running/screaming, and in chaos scenes big wind + debris so you FEEL it.
+**Clouds**: sprite/cartoon cumulus "look painted" — use realistic volumetric-looking clouds.
+
+## memoria: `premiere-mcp.md`
+
+---
+name: premiere-mcp
+description: Premiere Pro MCP (adobe-premiere-pro-mcp + CEP bridge) instalado; el usuario quiere que yo maneje Premiere para la roto (Recorte inteligente) y perfeccionar los videos Stimulus
+metadata:
+  type: reference
+---
+- npm global `adobe-premiere-pro-mcp`, CEP instalado (`premiere-pro-mcp --doctor` OK). Registrado en Claude Code user scope como `premiere-pro` (TOOLSET=full, telemetría 0). Repo clonado en F:\premiere-mcp.
+- Bridge dir: C:\Users\ALANLE~1\AppData\Local\Temp\premiere-mcp-bridge. En Premiere: Window > Extensions > MCP Bridge (CEP) → Temp Directory → Save → Start Bridge.
+- Primero siempre `verify_premiere_connection`. El usuario tiene abierto el proyecto Stimulus con todos sus assets de edición.
+- Motivo (2026-11-06): la roto de BiRefNet/hyperframes comía la gorra en el gancho; Premiere tiene mejor recorte. Ver [[stimulus-style]].
 
 ## memoria: `project-amphora-style.md`
 
@@ -2037,6 +3671,43 @@ pieces/zelda-kakariko (9:16, EN, 53.6 s, 14 panels). zelda-fairy v4 method in a 
 - Voice Mad 3 0.82 (seeds 7, weak lines 21), music "Impa's Fate" from the CrispyDonut mix (audio/src), sonido pro 111 cues (audio/tools/cues.py), voice +8.9 dB over bed, -14.0 LUFS / -1.5 dBTP.
 - Exported renders/'Kakariko Was Built on a Torture Chamber.mp4' + share.mp4; package in youtube.md, thumbs in thumb/.
 
+## memoria: `real-sfx.md`
+
+---
+name: real-sfx
+description: "real-sfx skill (Clipwing) installed at ~/.claude/skills/real-sfx; places real library sounds on a video's events and critiques the mix"
+metadata:
+  node_type: memory
+  type: reference
+  originSessionId: c06d4859-1bbd-4e22-88ca-0cdf712f4c20
+  modified: 2026-10-25T04:49:26.505Z
+---
+
+real-sfx (Clipwing/skills @ edbefcb) installed at `%USERPROFILE%\.claude\skills\real-sfx`, run scripts from that folder with system `python` (3.12).
+Library: `sound_layer` = `F:\Claude Proyectos\sound-layer` (main tier, 3130 sounds, has catalog, indexed) + uisfx (78 CC0 UI cues, npm in vendor/).
+To add more: `python scripts/setup.py add-library NAME PATH --tier main|extra --index` (e.g. a folder of downloads from [[freesound]] / [[openverse]]). Pairs with [[earshot]] for listening checks.
+
+## memoria: `recursos-d-alan.md`
+
+---
+name: recursos-d-alan
+description: "Biblioteca de recursos del usuario en D:\\Alan\\Fiverr Upwork trabajo fotos y videos (fuentes, PNG/iconos, overlays, SFX, música)"
+metadata:
+  node_type: memory
+  type: reference
+  originSessionId: 180a3cfb-8b3b-49b6-b8ac-a71a3a85ca01
+  modified: 2026-11-10T15:06:56.672Z
+---
+
+Recursos propios del usuario, libres para usar en cualquier video (2026-11-10):
+- Fuentes: `D:\Alan\Fiverr Upwork trabajo fotos y videos\Fuentes`
+- Imágenes e íconos PNG (15k archivos, buscar con find -iname): `...\EMOJIS PNG` (subcarpeta "MAS EMOJIS Y EFECTOS" = emojis estilo Apple + SFX)
+- Overlays: `...\Overlays`
+- Efectos de sonido: `...\Sound effects (otros estran en Audios Motiv.)` y la carpeta "Audios Motiv."
+- Raíz con todo, incluidas muchas canciones/audios: `D:\Alan\Fiverr Upwork trabajo fotos y videos`
+
+Revisar aquí antes de buscar fuentes/SFX/música afuera. Las fuentes de [[f1motion-style]] (Turret Road, Poppins, Photograph Signature) le gustaron mucho.
+
 ## memoria: `reference-all-answers.md`
 
 ---
@@ -2077,6 +3748,600 @@ metadata:
 The user wants to beat it with better ideas and better shorts. Zaw Poly Shorts stays the base reference. [[project-lowpolyshorts-style]]
 
 **How to apply:** before picking a dog topic, check that PawPoly hasn't done it. If it has, only make it if ours is clearly much better.
+
+## memoria: `roblox-windows.md`
+
+---
+name: roblox-windows
+description: Estilo roblox en este PC Windows — perfil de voz local y BGM descargada
+metadata:
+  node_type: memory
+  type: project
+  originSessionId: 9e5c0503-0eb1-4581-907e-9c16e4b79255
+  modified: 2026-11-09T03:04:26.827Z
+---
+
+Estilo roblox (receta en styles/roblox/STYLE.md, hecho en la Mac). En este PC Windows:
+- Voz: el perfil de la Mac `227af074` no existe aquí; usar **"3D cartoon 2" `d9b69bea`** en VoiceStudio (misma receta: steps 32, speed 1.25, +4 semitonos con ffmpeg).
+- BGM TEMPOREX bajada a styles/roblox/bgm/bgm.wav (2026-11-08, 184.5 s, git-ignorado).
+- Renders aprobados de referencia en `Ref roblox/` (1.mp4 120 s, Sock 126 s, Tug Of War 113 s).
+- Pipeline exacto = copiar pieces/rbx-rope (three.js propio), no el /animate de canvas.
+
+**Why:** el usuario lo indicó el 2026-11-08 al traer el estilo de la Mac.
+**How to apply:** en cada video roblox hecho en Windows, cambiar profile_id en gen.sh/fix.py a d9b69bea.
+
+**Regla de guion (2026-11-09):** todo guion roblox empieza con "In this town, …" (manda sobre la rotación de aperturas de STYLE.md).
+
+## memoria: `script-format.md`
+
+---
+name: script-format
+description: Bitstory voice scripts must be natural conversational English, and be handed over as clean copy-paste text only
+metadata:
+  type: feedback
+---
+
+For every video in the bitpix / Bitstory style:
+1. Write the voice script in natural, conversational, easy-to-follow English (the user's English isn't perfect — correct and polish it), with "…" for natural pauses so the Algrow voice doesn't sound robotic ("This is the two times table… and it's about to draw a heart."). Longer is fine if it reads more clearly.
+2. When giving the script (in the story check or anywhere), give ONLY the script, ready to paste into the voice generator: no tables, no boxes, no "image"/"sound" notes around it.
+
+**Why:** the user said so on 2026-10-15 after a terse script; it should be understandable and not robotic.
+**How to apply:** the story check shows the idea briefly, then the clean script block; keep beat/visual planning internal. Related: [[bitpix-series]], [[voice-cuts-in-silence]]
+
+## memoria: `scroll3d-style.md`
+
+---
+name: scroll3d-style
+description: "scroll3d = Spanish remake of a \"how it works\" 3D explainer reference (Ref Scroll animations/*.mp4) — same shots and camera moves, paraphrased text, some elements changed; user records the Spanish voice"
+metadata:
+  node_type: memory
+  type: project
+  originSessionId: 62eb6334-9eb3-4f82-9565-e63613e0a978
+  modified: 2026-10-21T22:23:30.425Z
+---
+
+Set 2026-10-16. Style folder: styles/scroll3d (built on pov3d's three.js engine, [[pov3d-style]]).
+- Each piece replicates one reference video from `Ref Scroll animations/` (renamed 2026-10-18; 1 Shazam, 2 AirTag, 3 Google Maps, 4 video compression, 5 Face ID, 6 Tesla Roadster upside down, 7 same subject in a look close to ours). Done: #4 → pieces/compresion; #6 → pieces/roadster (shots/camera of 6, look like 7 but improved, improved car); #8 → pieces/aire (thrust vs grip, reuses the roadster world); #9 → pieces/escucha (phone listening myth, living-room world); #10 → pieces/tarjeta (contactless skimming); #1 → pieces/shazam.
+- Keep the reference's shots, camera moves and duration identical; paraphrase all text into Spanish; change some elements (character, props, colours) so it is not an exact copy.
+- I write the Spanish script (clean copy-paste text, "…" for pauses, [[script-format]]); the user generates the voice and sends it; I time the picture to it (cuts only in silences, [[voice-cuts-in-silence]]).
+- Look: dark backgrounds, toon/clay low-poly 3D, one accent colour, karaoke captions in a dark pill at ~77% height (current word bright, rest grey), small mono labels ("ilustrativo", "esquemático"), data drawn inside the 3D scene.
+
+- Sound (user, 2026-10-17): the same "Documentary Background Music for Videos" track as bitpix (from 4 s, voice.music -7), code SFX clearly audible (sfxBus ×2.2), plus a few quiet real recordings from sound-layer/kit (paper, soft whooshes, cloth thump, clicks, pops) that add without getting in the way — never noise beds. Built by `pieces/compresion/sound/layer.py` into audio/track-shaped.wav.
+- End signature: "DOPAMENTES" (not ALTERBASE), centred on the screen.
+- Louder (2026-10-19, asked twice): master -9 LUFS (piece.json "loudness"), bgm at voice.music -4 and 0 dB in the track shape, code SFX ×3.5. Crowds in shot cheer/jump at the big moments.
+- Always (user, 2026-10-20): improve the animation of everything (people breathe, blink, look, talk with hands; springs on every pop; things never static), and EVERY transition seamless (no hard cuts: dissolve both shots with both cameras moving, or a match move).
+- Voice option (2026-10-22): when asked, generate it myself with VoiceStudio voice "Scroll español" (profile 0381b8fe), steps=32, one take per paragraph; every take opens with a stray ~0.12 s blip at 0.10 s and room noise (−33…−42 dB) → pieces/shazam/voice/clean.py cuts after the blip, high-pass + afftdn + soft gate; re-transcribe and regenerate any paragraph that drops words.
+- ALWAYS verify before delivering (user, 2026-10-22: "verifica estos detalles siempre antes de pasarme el video"): run styles/scroll3d/tools/qa.py (one-frame flashes, clipped word ends, stray blips, pause noise, broadband noise in the bed) and listen-proxy checks; never send with a FAIL. Known causes: InstancedMesh without instance colours at creation → white-field flashes in some workers; VoiceStudio clips the last syllable (use /generate with duration ×1.15–1.35 then rubberband back to the pace, gen.py); a gate between words cuts word tails (don't gate); noise-band SFX (long bandpass noiseHit, whooshes) read as background noise → avoid long noise beds.
+- Captions the user likes (2026-10-22, ref 1): spoken words white, the CURRENT word yellow (S3.hl = true) + a step bar on top (s3Steps). If a ref shows a place in a grey monochrome look (people included), match it (greyOut in pieces/shazam/src/world.js).
+- Reuse pov3d assets (user, 2026-10-21): for people or any element, take the pov3d builders when they raise the quality (people: pieces/oxigeno/src/scenes.js ~l.560–900, PG parts + personPose with cloth fold texture, hair, long hair; cars in pieces/giro; buildings/trees/props in pieces/oxigeno, agujero, asteroide). Only if they look better than the scroll3d ones.
+- Transitions into/out of a detail (e.g. the sweater) must be seamless: push in until the texture fills the frame, dissolve into the matching world (XFADE in shots.js), and back out in one move, no hard cut.
+- First piece `pieces/compresion` approved as "excelente" with those notes.
+
+**Why:** the user asked for this in the session that created the style.
+**How to apply:** for every scroll3d piece, transcribe the reference (faster-whisper on CPU, device="cpu"), log its shots at 1 fps, and match each Spanish line to the English line's time slot.
+
+## memoria: `sinaboto-style.md`
+
+---
+name: sinaboto-style
+description: "New PS1 low poly explainer style copied from TikTok @sinaboto (refs in \"Ref sinaboto/\"); my analysis and chosen pipeline"
+metadata:
+  node_type: memory
+  type: project
+  originSessionId: b19cd1d9-332a-4ffd-91ff-b618e0ca55df
+  modified: 2026-10-26T16:29:27.421Z
+---
+
+2026-10-25: the user switched focus from emberlite to the style of TikTok @sinaboto ("How to build X / how X works" engineering explainers, 85-107 s, 1080x1920, 1-5.5M views). 5 refs downloaded to `Ref sinaboto/` (yt-dlp needs `--impersonate chrome` + curl_cffi). The user says that account is made with Claude Code.
+
+What I measured: a rigged anime girl (VRoid/VRM look: hard hat, hi-vis vest, facial expressions) doing actions; low poly sets with photo textures and billboard trees; cutaway diagrams (house cross-section with temperature labels); PS1 post-process = render at ~1/3 res with nearest upscale, posterized/banded colour, 2-px horizontal scanlines; 1-word captions in a white pixel font with a black outline, yellow pixel-font labels, pixel-art sprites (germs, mascot), TikTok comment overlays, many short shots.
+
+2026-10-25 test: `pieces/sina-test/` replicates the first 10 s of the heating video (ref audio only for comparison, not to publish). Engine works: `main.js` (360x640 shots -> post pass: sRGB encode, 15-bit + 4x4 Bayer dither, pixel-mosaic dissolve 0.3 s centred on each cut, hard-edged low-res captions, scanlines at 1080x1920), `shots.js`, `char.js` (placeholder box girl), `render.mjs` (Playwright, 300 frames in 14 s), `compare.py` (ours vs ref sheet), Flow textures via `gen_tex.py` (Flow drew the face as pixel art, crop it). Measured from the ref: transitions are pixelated dissolves, not hard cuts; captions = one word at 73.5% height.
+
+2026-10-25 user verdict on the test: our box girl looks nothing like hers. The user confirmed sinaboto's girl comes from evanciao's NETO512 asset (free, credit required, no redistribution; tutorial notes in `fuentes/lowpoly-anime/`), with outfit changes. Plan: character in Blender from NETO512 (modify, rig, animate), export GLB to the three.js scenes. The user sends several tutorials; watch them fully myself (transcript + frame sheets), not through Gemini.
+
+2026-10-26: studied evanciao, SunnyIsOnline and Crashsune's 14-video low poly series (agents, notes in `fuentes/lowpoly-anime/crashsune/`). The combined plan is `fuentes/lowpoly-anime/GUIA-personaje-ps1.md` (work order: fix GLB export → sinaboto outfit → expressions → action library → vertex snapping). The user keeps sending tutorials; NETO512 + sinaboto remain the base, the others only add techniques.
+
+Also studied (2026-10-26): Crashsune PDFs, example .blends (Juliet, Astolfo, Teto, Love-chan eye rig; fan art, study only), Patreon captures (FOV, lighting, walk poses), animation series parts 7/9/10/11 and the walk cycle video (working walk script on a NETO copy). Everything is merged into the GUIA.
+
+Character v1 (2026-10-26): `pieces/sina-char/` — `uvmap_neto.py` (per-texel part/3D/normal maps), `outfit.py` (repaints by UV island + 3D position, tint mode so dark colours stay dark), `build_sina.py` (flattens hair, hard hat rigid-skinned to DEF-spine.006, DEF hierarchy fix, <=4 weights, checks, GLB export to `pieces/sina-test/models/sina.glb`, 638 tris). Preview: `node render.mjs --page viewer.html` in sina-test. Pending: expressions/eyes (NETO's goth eyes), real boots, action library.
+
+**Why:** the character carries the style, and every shot needs her animated.
+**How to apply:** I proposed three.js in code (VRM character + Mixamo clips + PS1 shader, rendered frame by frame in headless Chromium) over Blender. Make our own character, never copy theirs (the "S" helmet / brand). Related: [[emberlite-style]] (paused), [[verify-tutorial-claims]].
+
+## memoria: `sonido-pro.md`
+
+---
+name: sonido-pro
+description: "sonido pro" = the user's name for the full SFX stack (earshot + real-sfx + Openverse + Freesound); installed on both this Windows PC and the user's Mac
+metadata:
+  type: project
+---
+
+When the user says "sonido pro", use the whole stack: [[earshot]] (listen, bank, critique), [[real-sfx]] (real library sounds on the events), [[openverse]] and [[freesound]] (sourcing), plus the real-sound skill.
+Code-made sounds are allowed too (earshot bank/forge or own synthesis) when they fit and don't sound bad — check them with earshot first (e.g. realness, match, no artifacts) before using them.
+The user set up the same stack on their Mac too (2026-10-25). Tools, skills and keys live OUTSIDE the repo (F:\earshot, ~/.claude/skills, ~/.openverse.json, ~/.freesound.json), so git push/pull between the machines does not carry them; each machine has its own install and paths.
+**Why:** the user works on both machines and syncs projects via git.
+**How to apply:** after a pull, don't expect tool paths or keys from the Mac in the repo; never commit keys to make them sync.
+
+## memoria: `stimulus-style.md`
+
+---
+name: stimulus-style
+description: Estilo Stimulus (talking heads de Dariel) — spec en styles/stimulus/ESTILO.md, outro real y logo en styles/stimulus/assets
+metadata:
+  type: project
+---
+
+Primer estilo talking head pedido (2026-11-05): replicar los 7 videos de `Ref videos Dariel/Stimulus/` (marca Stimulus Athletic, uniformes deportivos, presentadora en inglés, 9:16, 14-24 s).
+- Fuente principal: DIN Next LT Arabic Bold (dicho por el usuario).
+- Outro con logo obligatorio: usar `styles/stimulus/assets/outro.mp4` (2.44 s, idéntico en todos los refs).
+- Spec medida: `styles/stimulus/ESTILO.md` (subtítulos blancos 60-64 px + resalte cursiva lima #E6F25A, gancho gigante con RGB split, saltos de zoom secos 100↔108-120 %, flashes cálidos, catálogos con subtítulo negro).
+- Herramienta: [[tesseract]]. Análisis por API: `tools/analizar_estilo_edicion.py`.
+- Primer video: `pieces/stimulus-01/` (build.py = fuente de verdad; regenerar el .tsrct con `python build.py`). Entregado 2026-11-05, críticos API 7 y 7.5 tras 3 rondas, pendiente feedback del usuario.
+
+## Corrección del usuario (2026-11-05): v1 en Tesseract "no se parece en nada"
+**Why:** usé el resumen de la API en vez de mirar los refs cuadro a cuadro, y abusé del serif.
+**How to apply:**
+- Hacerlo en HyperFrames (`pieces/stimulus-01-hf/`, `prep/gen.py` genera index.html; `prep/make_edit.py` corta el edit; `remove-background` da el recorte para texto detrás de la cabeza).
+- Títulos grandes = DIN Next bold (NO serif): degradado blanco→crema, glow, RGB split rojo/cian, detrás de la cabeza; kicker blanco arriba + línea blanca a la derecha; línea luminosa lima bajo la cifra.
+- Serif (Gloucester) SOLO en "1 Free PDF" y casos así, casi nunca.
+- Subtítulos: 1-2 líneas en el pecho; línea 1 blanca con sombra suave + glow blanco; línea 2 cursiva crema con glow; palabra negativa roja, positiva verde; entrada blur→nítido 0.3 s por línea.
+- Iconos de contorno blanco con glow en fila bajo el subtítulo (no emojis 3D). Checklist: círculo verde + MAYÚS cursiva + línea luminosa. Flashes light-leak naranja/rosa.
+- Estudiar SIEMPRE los refs a resolución completa (recortes) antes de construir.
+
+## Correcciones v2 → v3 (2026-11-05)
+- Palabras grandes detrás de la cabeza = lo PRIMERO que dice (ej. "CLUB" un poco grande + "DIRECTORS" enorme, la gorra tapa parte). Cifras ($5,000) van ABAJO en la zona de subtítulos, grandes pero no enormes, y aparecen JUSTO en la palabra, con conteo rápido (~0.4 s).
+- Palabras que flanquean la cabeza: una a la izquierda y otra a la derecha, detrás de él, sin taparle nunca la cara.
+- Aberración cromática difuminada (feather, blur ~5px, opacidad .6), no copias duras.
+- Recorte limpio: endurecer el alfa del cutout (niveles + erosión) para que nada traspase la cabeza.
+- Sin SFX en el zoom de entrada. Zooms: además de cortes secos y drift lento, push-ins rápidos con ease in/out en palabras clave.
+- Transiciones = film burns reales (Pexels, screen, opacidad ~0.5) en algunos cortes; NO light leaks de colores hechos en CSS.
+- Subtítulos con glow blanco ligero. Iconos siempre pegados al texto (nada suelto). Marca limpia y ordenada.
+- Outro: sin su música propia; sigue la música del video, más alta.
+
+## Correcciones v3 → v4 (2026-11-05)
+- Música: tipo `Ref videos Dariel/Stimulus/Referencia bgm.mp4` (groove funk/house ~120 BPM, sub bass, plucks, vocal chops, "confident & cool"); SIEMPRE debajo de la voz y sonando desde el frame 0 (sin intro floja).
+- Alinear palabras apiladas: la C de CLUB exactamente sobre la D de DIRECTORS (mismo borde de tinta, medido con PIL), con margen a los bordes (DIRECTORS ~190 px, CLUB ~134). Palabras que flanquean la cabeza: MISMO tamaño y misma línea, sin tocar bordes.
+- NADA de whoosh en transiciones/burns/outro.
+- Zooms como los refs (medidos con ORB): ~0.5 s, arranque corto (ease-in) + frenada larga (ease-out), ±12-18 %, alternando in/out; entre zooms la cámara QUIETA (sin drift lento). Cortes = salto de escala seco.
+- Cursivas con background-clip: dar padding al span (.cream) o se corta la última letra ("right?").
+- Subtítulos ~70 px (cursiva 66), máx 2-3 palabras por línea, slide-up marcado (~38 px, 0.34 s). Palabras clave en grande dorado + línea amarilla como el $5,000 (LESS, CASH, FREEDOM...). Iconos solo en bloques cortos para no tapar el balón/manos.
+- Checklist (seg 32) APROBADO tal cual.
+- Outro: `assets/outro.mp4` tenía 2 frames con un pedazo de otro video al inicio → recortado (2.336 s).
+
+## Correcciones v4 → v5 (2026-11-05)
+- Música = CINEMATOGRÁFICA/ORQUESTAL (cuerdas, metales, percusión, épica-inspiradora), NO funk. Usada: Freesound 608811 "Uplifting Dramatic Soundtrack" (CC0).
+- Palabras que flanquean la cabeza: una pegada a la izquierda y otra a la derecha con el MISMO margen (~75 px), misma línea y tamaño; "through" en blanco.
+- Líneas luminosas bajo palabras/montos: separadas ~15-20 px del texto.
+- Film burns: usar SIEMPRE `Ref videos Dariel/Stimulus/Overlay film burn transition.mp4` (1920x1080, rotar 90° a vertical), opacidad baja (~0.38), con el frame más brillante justo ANTES del corte (empieza antes, tapa el corte).
+- Outro: la tarjeta entra deslizando ENCIMA de todo; el video y los captions se quedan debajo (no mover la cámara).
+- Captions un poco más grandes (76 px / cursiva 72). Checklist también con glow y RGB ligera.
+- Estilo extra de los refs: línea chica blanca + línea luminosa separadora + línea en MAYÚSCULAS grande con degradado y RGB split visible ("you want to be / 100% SURE", "Coach, / THIS IS FOR YOU!"). Usarlo en algunos bloques.
+
+## Correcciones v5 → v6 (2026-11-06) — v6 = versión final de stimulus-01, plantilla para los siguientes
+- FLUJO: antes de renderizar, mandar STORYBOARD (contact sheets en `<pieza>/storyboard/`) + previews de música (25 s con voz) y esperar OK. Storyboards NO van a Telegram.
+- Música aprobada: Freesound 621294 "Orchestral Score 1" (sección de cuerdas 32.6-70.7 s en loop) + sub-bajo añadido (asubboost + bass shelf). Cellos, un poco rápida; risers (Freesound 500656/822419) antes de los momentos grandes ($5,000, giro, CASH, CTA).
+- Film burns llevan su propio sonido (audio del mismo overlay).
+- through / fundraising: grandes (96/80 px), misma línea base, mismo margen; plano en 1.16 con paneo dentro del rango que cubre el cuadro.
+- Zoom NUNCA < 1.16 (con y=-150 aparecen barras negras). Zooms: MUCHOS zoom-ins (~17 en 52 s), 0.6-0.9 s, power2.inOut (ease-in que se sienta), paso 0.09, máx 1.42; nunca cruzan un corte.
+- Líneas bajo palabras/montos: justo a la mitad entre esa línea y la de abajo (calcular con métricas DIN: asc 1.2, desc .27, cap .68).
+- Rojos: más grandes (+6 px) con contorno oscuro para que se lean sobre el balón. Captions 86 px (cursiva 82, caps 94), autoajuste a 960 px.
+- v6→v8: SOLO los risers estaban altos (los demás SFX bien: burn 0.4, impact 0.3-0.5, pop 0.25, click 0.35, tick 0.14). Riser RÁPIDO (~0.9 s de subida, Freesound 754771) a 0.08; nada de risers largos. Música bed 0.10, outro 0.32. Si piden bajar X, bajar SOLO X.
+
+## NIVEL APROBADO (2026-11-06): stimulus-01 v8 = formato y nivel mínimo para todos los siguientes
+Plantilla: `pieces/stimulus-01-hf/` (prep/make_edit.py, prep/gen.py, assets/). El usuario da libertad creativa para subir el nivel.
+
+## Video 2 (2026-11-06) — pieces/stimulus-02-hf (flujo: prep/transcribe.py <raw> -> prep/make_edit.py -> remove-background + firmar alfa -> prep/gen.py -> storyboard -> OK -> render)
+- MÚSICA DISTINTA en cada reel (parecida, no la misma) al menos en 6 de los 11; luego se pueden repetir. Usadas: v1 = Freesound 621294 (Orchestral Score 1); v2 = 583274 "Obsession (Strings)". Elegir la siguiente con earshot compare contra la B (cuerdas/cellos), siempre con el sub-bajo añadido.
+- Limpiar el ruido de fondo de la voz: afftdn=nr=18:nf=-42 + agate suave antes del compresor (piso -41 → -69 dB); igualar la voz a -15 LUFS integrados.
+- Iconos 130 px, separados del texto con el mismo aire que hay entre líneas (ICON_GAP 30 desde la caja de la última línea).
+
+## Correcciones video 2 (2026-11-06) — REGLAS FIJAS
+- NINGUNA palabra con pop-in/scale: TODO entra con slide-up + fade (+blur). Palabras grandes NUNCA en rojo: siempre el dorado/crema (gfill) del video 1.
+- Títulos detrás de la cabeza salen PALABRA POR PALABRA al ritmo en que las dice; ninguna palabra cortada/tapada por la gorra (kicker por encima de la cabeza).
+- NO poner SFX a palabras ni iconos (nada de pop/impact/click). Solo risers rápidos, sonido de los film burns.
+- Unir bloques cortos para que palabras e iconos duren más (ej. "one sheet, ONE BOX" + "ships to you." en un bloque con ambos iconos debajo).
+- Bloques sin icono con palabras rojas/listas: aprovechar para poner iconos debajo.
+- Revisar pausas largas en el edit (cortarlas aunque el detector no las marque).
+- Música: tipo DOCUMENTAL / inspiradora como la B; NADA de terror/suspenso. Dar 5 candidatas para elegir.
+- ANTES de entregar: revisión del render (tools/revisar_render.py + fotogramas).
+
+## Música por reel (desde 2026-11-06)
+Pistas del usuario en `Ref videos Dariel/Stimulus/musicas bgm/`, procesadas en `styles/stimulus/assets/bgm/*.wav`:
+premiere (Artlist Adrián Berenguer, desde seg 5), presto (Slowed&Reverbed acelerada asetrate ×1.2), highest_order (Soundstripe, atempo 0.92), zaphenath, rain, music_B.
+Asignación: v1 B · v2 premiere · v3 presto · v4 highest_order · v5 zaphenath · v6 rain · v7+ se repiten.
+Pistas Artlist/Soundstripe: sin bajo añadido, solo loudnorm -14; cama 0.10 bajo la voz (voz siempre encima).
+- Kicker del hook (COACHES & CLUB) va DETRÁS de la cabeza (z bajo el matte), pegado encima de DIRECTORS, con glow blanco.
+- Glow de iconos en el wrapper .icon (el tween sobre img pisa su filter); glow MEDIO (3px .8 + 12px .45); el fuerte de 4 sombras fue "muy alto".
+- Inicio de palabras: refinar con energía de la voz (prep/refine_words.py) — Whisper adelanta los inicios.
+- Palabra clave del hook (PICK WRONG) visible ≥0.9 s nítida; el bloque siguiente espera a que salga.
+
+## Video 2 APROBADO (2026-11-06) — plantilla para 3..11: pieces/stimulus-02-hf
+Flujo: transcribe.py (voz limpia) → refine_words.py (inicios reales) → make_edit.py (pausas globales) → words_edit.json con inicios refinados → plan (BLOCKS/CHECKS/CTA/HARD/ZMOVES) en gen.py → check → snapshots → render → revisar_render.py → Telegram.
+Reglas fijas añadidas: palabras aparecen cuando él las dice; "or" blanco entre palabras grandes; RGB difuminado (blur 7-10px, op .4-.5); sin riser en los primeros 3 s; burn SFX junto a su imagen; zoom termina ≥0.7 s antes de un corte y saltos de escala ≥1.6 s separados (sin zoom→corte inmediato); música del outro con fundido ~0.9 s (sin subida brusca).
+- (video 3) Cortar SIEMPRE las pausas largas "pensando": además del silencio global, cortar todo hueco entre palabras ≥0.3 s (con respiración no lo detecta -50 dB); fusionar pausas solapadas.
+- Título del gancho más grande (kicker 120 px, palabra grande 225 px) y alineados por el borde izquierdo de la tinta.
+- Si el recorte se lleva el neón del fondo: borrar SOLO ese blob del matte (caja justo encima del ala de la gorra, sin tocar cabeza) y revisar que no quede un "cuadro" raro sobre las letras.
+- Voz +1.5 dB sobre el v2 (mezcla ≈ -13.7 LUFS).
+- Sujeto con balón/objeto abajo: los bloques altos suben (nunca texto sobre el balón ni sobre la boca); cada línea ≥0.8 s en pantalla.
+- ANTES DE ENTREGAR: recortar y MIRAR de cerca las letras del gancho en 4-5 fotogramas (0.5-4 s) del render final; ninguna letra cortada por el matte. El neón del fondo se borra con geq siguiendo el borde de la gorra (no con caja).
+- Cortes reales a <1.6 s entre sí: misma escala (sin salto de zoom) y sin zoom en segmentos cortos.
+- Video 3 APROBADO (2026-11-06): pieces/stimulus-03-hf es la plantilla más reciente (gen.py con HOOK_HANDOFF/AFTER_HOOK, cámara sin saltos en cortes cercanos).
+- (video 4) prep/pauses.py = pausas globales + huecos ≥0.3 s; make_edit usa la duración real del raw (no 63.95 fijo). Ropa blanca: halo oscuro en .cap/.list. fit() a 930 px (rojas incluidas). Palabras "big" anchas (>~900 px) → usar caps. Título del gancho: colocar según dónde quede la gorra/neón de cada raw (revisar recortes).
+- (video 4 v2) Captions NUNCA en la cara: top ≥990 y CAP_BOTTOM por video (1560 sin balón, 1330 con balón). Lista: .dot flex:none (números alineados). Kicker del gancho CENTRADO y algo más chico (96 px) sobre la palabra grande. Zooms: solo zoom-in (el corte resetea) + push-in lento sine.inOut en tramos quietos ≥2.4 s. CTA "free design and sample jersey": 2 líneas blancas + icono de camiseta 3D a color (assets/icons/jersey3d.svg) grande a la derecha.
+- Refs nuevas (2026-11-06): "Ref videos Dariel/Stimulus/ref videos nuevos/ESTILO.md" (+ *_estilo.md). Adoptar desde v5: CTA en 4 bloques (Contact us today [icono teléfono con ondas] / to see if your team qualifies / for a free design / and sample jersey [camiseta 3D a color a la derecha]); tras cada corte push-in lento continuo (≈+3-6 %/s, hasta 108-118 %); barrido de brillo (shine 0.5 s) sobre la línea luminosa y títulos; palabra clave en cursiva que cambia de color al decirse (problema amarillo/rojo, solución verde); máx. 2 acentos por video. Mantener las reglas del usuario (slide-up, sin SFX en palabras) por encima de la ref.
+
+## v4 v3 (2026-11-06) — correcciones
+- MÁS íconos: casi todo bloque lleva 1-2 íconos (filas que se acumulan, p.ej. 3 camisetas). Ícono nunca aparece antes de la última línea de su bloque (si su palabra es antes, entra con la última línea, escalonado 0.15 s). Bloques con íconos suben 60 px (no tocar manos); bloques con "big" van sin íconos.
+- MÁS zooms: ZMOVES casi cada 2-3 palabras, ZSTEP 0.07, ZMAX 1.50, separación 0.1 s, y push-in lento en cualquier tramo quieto ≥1.4 s.
+- Nombres/palabras clave EXACTAMENTE al decirlas: verificar el onset en la forma de onda (Whisper puede atrasar 0.2 s) y corregir words[i]["s"].
+- Rotoscopia del gancho: rehacer con rembg BiRefNet-portrait (prep/roto_hook.py, solo los primeros ~4.7 s, cutout_hook.webm) — el matte de hyperframes deja manchas oscuras junto a la gorra/oreja. Revisar recortes sobre amarillo.
+
+## Roto del gancho = Premiere (2026-11-07, APROBADO como método)
+- El usuario hace la máscara de objeto en Premiere (secuencias "ROTO stimulus-0N", bin "Roto Claude", seguimiento hasta 10 s). Yo exporto con ExtendScript `seq.exportAsMediaDirect(out, "...Apple ProRes 4444 with alpha.epr", 1)` tras setIn 0/setOut 10.5 (Media Encoder se cae: NO usar export_sequence/AME). Luego `python tools/prores_to_cutout.py roto_pr.mov cutout_pr.webm` (deja solo el blob mayor = sin neón) y v-cut dura 10.4 s.
+- MCP: llamadas a Premiere SIEMPRE de una en una (en paralelo el bridge falla).
+- Referencias buenas del usuario: secuencia "Stimulus reels buenos" en el proyecto Dariel Stimulus (muchos reels; inspeccionar textos/brillos/zooms y ser creativo por reel).
+- OJO (corrección 2026-11-07): el export de Premiere puede venir ESCALADO/MOVIDO si el clip tiene Movimiento (v1 109%, v3 103%) → se ve doble. SIEMPRE medir alineación roto vs edit.mp4 (diff media en alfa ≈1 = bien; si >5, sacar el affine con cv2.findTransformECC y pasarlo como 3er arg a tools/prores_to_cutout.py). Mirar el render completo (no solo recortes de la gorra) antes de entregar.
+
+## Reglas 2026-11-07 (de "Stimulus reels buenos" en Premiere + correcciones) — APLICAR SIEMPRE
+- Íconos EN SU PALABRA (nunca esperar a la última línea). "three kids" = 3 camisetas a la vez (escalonadas 0.12 s). Entrada como el usuario: suben ~480 px en 0.5 s (power3.out, blur leve), fila separada ~235 px, glow medio + sombra 0 10px 14px.
+- Zooms (sus "Acercar lento"): rápido-largo 100→122-125 % en 1.2 s con ease, luego vuelta (zoom out 0.8 s) — alternar in/out cada ~3 s, el primero empieza a 0.6 s (zoomeando ya antes de los 2 s). También zoom lento 100→127 % en 5 s. NUNCA saltos de escala en inicios de frase (solo en cortes reales).
+- Kicker del gancho (HIGH SCHOOL): 82 px, baseline 478 (separado del título grande).
+- Inspeccionar la secuencia por ExtendScript con `return` explícito (sin return devuelve "undefined"); valores de keys con getValueAtTime.
+
+## Estándar "Premiere del usuario" (2026-11-07) — los 4 reels re-renderizados con styles/stimulus/hfkit.py (importado por cada prep/gen.py)
+- Subtítulos: DIN 83.5 px, tracking −0.031em, 90 px entre líneas base, blancos; línea 2/remate en cursiva BLANCA (no crema); resaltes verde #78FF00 / rojo #F92F2F en cursiva; MAYÚS solo en líneas de énfasis (cursiva, degradado #CDC9A9→blanco, sin text-shadow encima del background-clip). Entrada: +60 px en 0.5 s cubic-bezier(.33,0,0,1) (CustomEase "pr") + opacidad lineal 0.04–0.43 s. Palabras grandes: misma subida, 0.5 s.
+- Íconos = PNG del usuario (EMOJIS PNG) invertidos a blanco: `python styles/stimulus/make_icons.py` → styles/stimulus/icons_png (nombres en MAP; solo íconos negros de línea, los de color se descartan). 175 px (150/130 si hay balón), centro 125 px bajo la última línea base, ranuras 3 = 310/540/770, 4 = 190/420/660/890; suben 45 px en 0.51 s; bloques con íconos +60 px arriba; nunca en bloques "big" ni donde él gesticula.
+- Cámara: hfkit.camera() muestrea por fotograma (tl.set por frame; los keyframes GSAP en grupo NO se aplicaban). Tipos A 172→100 lineal 0.77 s · B push 1.24 en 1.2 s+deriva+vuelta · C escalera 1.15→1.26 · D lineal 1.27/5 s · E golpes ×1.13/×1.11 · cortes: O reset abrupto a 100 / I zoom-in abrupto 120 (el plano anterior vuelve a 100 antes). Cortes <1.6 s no cambian escala. Mientras el título está detrás de la cabeza solo D corto 1.095/2.7 s (la gorra no tapa más letras). Secuencias: v1 DBECBDEC/OIOO, v2 EDBCEBDC/OOI, v3 CBEDBECD/IOO, v4 BEDCBECD/OIO.
+- CTA "for a free design / and sample jersey" = hfkit.cta_free: Europa Grotesk SH Med (está en %LOCALAPPDATA%\Microsoft\Windows\Fonts\EuropaGroteskSH-Med.otf) 95.6 px +0.006em; línea 2 cursiva 91 px ×1.03, +93 px, degradado #BDBE83→#F8F8F6, +0.78 s, parpadeo de blur en el wrapper (no en el span: borra las sombras); camiseta tintada #1B6F4A (icons_png/jersey_green.png) 165 px, rot 8°, centro = fin de "design" −8 px, línea base −62 px, DETRÁS del texto, +0.117 s. Medido: la línea 1 del ref va de x 234 a 848 (ANALISIS decía 796, error).
+
+## 2026-11-07 — v1-v4 APROBADOS (estilo Premiere "Stimulus reels buenos", hfkit.py) + 2 correcciones para v5+
+- v1-v4 renders aprobados: "quedaron muchisimo mejor". Base para 5-11 = styles/stimulus/hfkit.py + premiere_ref/ANALISIS.md.
+- PALABRAS GRANDES (títulos/key words tipo CLUB DIRECTORS): usar el gradient VIEJO, más amarillo: `.gfill` linear-gradient(180deg,#ffffff 0%,#fbf8dc 45%,#ece88f 100%) (y `.cream` #fffef2→#f6f3c4 55%→#e7e98f) + RGB split feathered. El gradient nuevo de hfkit (más blanco/beige) NO gusta. Es lo único a conservar de las versiones viejas.
+- ÍCONOS: si la palabra del ícono cae tarde en el bloque (cerca del final de lo que dice), el ícono entra con la PRIMERA línea del bloque (ej. tienda en "Their uniforms came from", no en "brand"). Nunca íconos al final cuando el bloque ya se va.
+
+## v5-v11 (2026-11-07) — cómo se construyen (fase 1)
+- Código común: `styles/stimulus/gen5_body.py` (= gen.py aprobado del v4 con gancho genérico) + `hfkit.GOLD_CSS` (gradient viejo amarillo, SOLO v5+) + `icon_row(late_to_first=True)` (ícono cuya palabra cae en la 2ª mitad del bloque o con <1.3 s restantes entra con la 1ª línea; la fila se llena de izquierda a derecha). v1-v4 no usan nada de esto (no regenerarlos).
+- Cada pieza: `prep/plan.py` (HOOK kicker/big/end/k_base/big_base, BLOCKS, CHECKS, CTA, CAP_TOP/CAP_BOTTOM, CAM_ORIGIN/CAM_Y, JERSEY_TINT, BURN_CUTS) → `bash pieces/_mkgen.sh NN pista offset` arma prep/gen.py + assets/music.mp3. Montos "$16,000" en línea big = conteo 0.42 s automático.
+- Encuadre distinto por raw: el título va con su base ~147 px bajo el borde superior de la gorra en pantalla. Tomas de pie (cabeza alta): CAM_ORIGIN "585px 600px", CAM_Y +90. Con balón en el pecho: origen del zoom en el borde superior del balón (v8: "585px 1250px", y −100) y captions en el pecho ENCIMA del balón (760-1085) — debajo del balón no cabe, los zooms lo empujan.
+- Gancho temporal sin roto de Premiere: `prep/roto_hook.py <seg>` (BiRefNet CPU, ~8 s/fotograma) → cutout_hook.webm; gen usa cutout_pr.webm automáticamente cuando exista (re-correr gen.py + render).
+- Jersey del CTA teñido por reel: icons_png/jersey_{green,purple,navy,teal,red}.png (glow del mismo color).
+- Música 5-11: v5 zaphenath@12 · v6 rain@4 · v7 premiere@40 · v8 presto@60 · v9 highest_order@100 · v10 rain@60 · v11 zaphenath@78 (offset dentro de styles/stimulus/assets/bgm/*.wav, loudnorm -14).
+- Rotos 5-11 (Premiere, máscara de opacidad del usuario) exportados con exportAsMediaDirect + preset `C:\Program Files\Adobe\Adobe Premiere Pro 2026\MediaIO\systempresets\3F3F3F3F_4D6F6F56\Apple ProRes 4444 with alpha.epr`; chequeo `python pieces/_roto_align.py <pieza>` (diff ≈1 = ok; imprime AFF si no) y `python pieces/_cut_check.py NN out.jpg` (fondo amarillo + blobs). v6 venía con Escala 110 → AFF 1.1/-54/-96.
+- Premiere BLOQUEA los edit.mp4 importados: no reescribirlos. Voz al nivel aprobado (render ≈ -13.5 LUFS como v3/v4) va en `assets/edit_v.mp4` (gen5_body lo usa si existe). Medir: el volume=+G de ffmpeg sobre el edit dio ~1 dB más de lo calculado → medir después siempre.
+- Título del gancho: el revisor API marca "letra tapada por la gorra" siempre; subir el título hasta que la gorra solo tape la parte baja de 1 letra (base ≈ borde superior de la gorra + 105 px) sin que el kicker pise el neón STIMULUS (achicar kicker a 60-70 px si hace falta).
+
+## Correcciones v5-v11 (2026-11-07, "están geniales") — REGLAS
+- Zoom-out de arranque 172→100 RÁPIDO: 0.4 s (hfkit.camera a_dur; gen5_body pasa 0.4 por defecto). v1-v4 conservan 0.77.
+- Títulos apilados: la línea chica va PEGADA a la palabra grande (tinta de la grande 14 px bajo la base del kicker, como "SOCCER/COACHES", "100/Jersey Options" de los refs). gen5_body lo calcula solo (HOOK["gap"]); kicker más grande cuando sobra espacio (v6 86 px, v11 104).
+- Palabras del gancho y kicker: inicio medido por RMS SIEMPRE (Whisper atrasa 0.2-0.4 s: v7 "coaches" 1.50→1.27, v9 "uniform" 1.10→0.72 raw).
+- NUNCA cortar dentro de una palabra: revisar el primer corte del gancho con la envolvente RMS (v9 cortaba el inicio de "uniform"). Si el edit cambia después del roto de Premiere: rearmar el cutout (alfa viejo desplazado + BiRefNet solo en los fotogramas nuevos, prep/resync_cutout.py de v9) y medir el diff.
+- CTA "Start a design request / Link in bio" = gráfico cta_free del usuario (Europa blanca + línea 2 cursiva con degradado + camiseta), línea 2 entra en su palabra (dt2).
+- Palabra grande sola del gancho (sin kicker) más grande: 270 px, ancho hasta ~1010 (v8 COACHES).
+- v5: BGM 0.13 (pedido solo para v5).
+
+## 2026-11-07 — v1-v11 APROBADOS ("ahora sí quedaron excelentes") — plantilla para futuros Stimulus
+- Base de código: styles/stimulus/gen5_body.py + prep/plan.py por pieza (pieces/_mkgen.sh), hfkit.py, ANALISIS.md. Partir de stimulus-05..11-hf.
+- Zoom inicial 172→100 RÁPIDO: 0.4 s (no 0.77).
+- Títulos apilados: palabra grande pegada a la línea chica (~14 px de aire); línea chica grande y legible (≥86 px), palabras grandes ~270 px (COACHES, SIZING). Gradient amarillo viejo en palabras grandes.
+- Títulos/palabras clave salen EXACTO cuando las dice: medir el onset por RMS (Whisper llega tarde 0.2 s).
+- Nunca cortar dentro de una palabra (el hook también); cortes solo en silencio.
+- CTA final siempre con estilo (línea 1 blanca + ícono jersey, línea 2 itálica con gradient), nunca texto plano.
+- Verificar captions contra el audio cuando Whisper duda.
+- Flujo roto: crear secuencias "ROTO stimulus-NN" en bin "Roto Claude" → el usuario enmascara 10 s → exportAsMediaDirect ProRes 4444 → chequeo de alineación (corregir escala del clip, ej. 110%) → prores_to_cutout.py.
+
+**B-roll (2026-11-11):**
+- Equilibrado: unos 3 clips por video, con el film burn de Premiere al entrar y al salir.
+- Objetivo: que se vean las camisetas de Stimulus; mejor chicos jugando de verdad.
+- El b-roll entra ANTES de un corte del host, para taparlo.
+- Descargar solo los clips que se usan.
+- Zoom-out inicial en rampa, muy rápido (más que el V8 v3).
+- Voz alta y sin sonar comprimida.
+
+**Cortes (2026-11-11, queja del cliente):** el cambio de zoom (punch-in/out) cae EXACTAMENTE en el frame del corte, para taparlo. Nunca un zoom seguido de un corte a pocos frames (se siente como dos saltos). Nunca dejar clips sueltos de menos de ~8 frames. El b-roll se extiende o se mueve para tapar los cortes cercanos.
+- APROBADO V2 v4 (2026-11-11): cortes reales detectados del edit y zoom/b-roll pegados al frame del corte (helpers en hfkit; plantilla stimulus-02-hf/prep/gen.py).
+- Descargas: bajar SOLO los clips de b-roll que se usan. El usuario borró 60 GB que no se usaron.
+
+## memoria: `storyboard-before-render.md`
+
+---
+name: storyboard-before-render
+description: "Siempre mostrar el storyboard completo y esperar aprobación antes del render, aunque el usuario diga \"procede al render\""
+metadata:
+  node_type: memory
+  type: feedback
+  originSessionId: 10cedafc-4e3d-48cb-9e1f-a9ad81140e7d
+  modified: 2026-11-09T14:27:50.747Z
+---
+
+Aunque el usuario diga "procede al render" justo después de aprobar el look, primero se manda el storyboard completo (board sheets) y se espera su OK; recién después se renderiza.
+
+**Why:** en rbx-followers (2026-11-09) renderice directo tras "procede al render" y el usuario aclaro que debia enviar el storyboard antes.
+
+**How to apply:** en todo estilo con paso de storyboard (roblox, cartoon3d, etc.), "procede al render" = arma el storyboard, muestralo y espera aprobacion; luego render. Ver [[roblox-windows]].
+
+## memoria: `tesseract.md`
+
+---
+name: tesseract
+description: Tesseract by Mirage (tsrct CLI 0.5.0 + 5 skills tesseract-*) instalado para editar talking heads / motion graphics
+metadata:
+  node_type: memory
+  type: reference
+  originSessionId: 180a3cfb-8b3b-49b6-b8ac-a71a3a85ca01
+  modified: 2026-11-05T13:12:47.547Z
+---
+
+Instalado 2026-11-05 en este PC (Windows):
+- CLI: `%LOCALAPPDATA%\Tesseract\bin\tsrct.cmd` (no está en PATH; desde bash: `cmd //c "$(cygpath -w "$LOCALAPPDATA/Tesseract/bin/tsrct.cmd")" ...`). Zip v0.5.0 windows-x86_64, SHA256 b4cbb7b0...6b77523 verificado.
+- Skills globales: tesseract-video (editar footage, talking heads), tesseract-motion, tesseract-design, tesseract-3d, tesseract-editor (`npx skills add mirage-hq/Tesseract -g -a claude-code -s '*' -y --copy`).
+- Telemetría del CLI viene activada (`tsrct telemetry disable` para apagarla).
+- Licencia propietaria: gratis salvo empresas con ingresos ≥ US$1M/año.
+- Proyecto `.tsrct` es autocontenido (empaqueta media y fuentes); entregar carpeta con .tsrct + mp4 + Previews/ + fuentes originales.
+- Prueba OK: import-video + capa Video + rect → preview y export H.264/AAC 1080x1920 en 4 s.
+
+## Trucos del motor (aprendidos en stimulus-01, 2026-11-05)
+- Llamar `tsrct.exe` directo (`%LOCALAPPDATA%\Tesseract\public-cli\0.5.0-x86_64\bin\tsrct.exe`): el `.cmd` se rompe con rutas con espacios.
+- Cursiva real: `skew: -17, skewAxis: -90, rotation: +17` (axis 0 no hace nada; sin la rotación el renglón se inclina).
+- Export exige fuentes que resuelvan exacto: si una fuente falla "resolved only approximately", hacer copia con fontTools (nameID 2/4/6 con "Regular" y usWidthClass=5) y pasar `fontAssetId`.
+- `--fps` solo entero (24 para material 23.976).
+- Persona detrás de títulos: `applyFxVideoPersonCutout` (nativo, funciona); zoom en un Group que envuelve el video, no en el video.
+- Voz: derivar `voice.wav` con ffmpeg (highpass+compresor+loudnorm+alimiter) y ponerla en capas Audio por plano; volumen del video None. Mezcla -15 LUFS / -2 dBTP.
+- El helper de waveform del skill crashea en Windows (fontconfig): medir silencios con numpy.
+
+## memoria: `verify-tutorial-claims.md`
+
+---
+name: verify-tutorial-claims
+description: "When learning a method from a video via Gemini notes, don't trust the summary — ask targeted questions about the asset pipeline/tools and check frames before building"
+metadata:
+  node_type: memory
+  type: feedback
+  originSessionId: e3b19138-633b-4f91-a0e9-968a2b60dee4
+  modified: 2026-10-22T04:53:33.692Z
+---
+
+When a user says "do it exactly as the video says", Gemini's general notes are not enough: in the cartoon3d tutorial they omitted that the faces, expressions and hair were generated in Google Flow, and I built a procedural engine without it. The user caught it (2026-10-22).
+
+**Why:** a summary drops the "how" (which tool made each asset, prompts on screen); building on it wastes a full test iteration and erodes trust.
+**How to apply:** before building, run a targeted Gemini pass on the tutorial asking, per asset type, which tool made it and the exact on-screen prompts; say plainly that the notes come from Gemini, not from my own viewing. Related: [[cartoon3d-style]], [[flow-mcp]]
+
+## memoria: `videohub.md`
+
+---
+name: videohub
+description: VideoHub (local preview/notes/render queue + Thumbnail Studio) installed 2026-11-17; pieces/ is a watched folder
+metadata:
+  type: reference
+---
+VideoHub installed at ~/Tools/VideoHub (UI http://127.0.0.1:7788, MCP `videohub`, skill ~/.claude/skills/videohub, CLI `node ~/Tools/VideoHub/server/cli.js <tool> '<json>'`). Workspace ~/VideoHub; `claude-proyectos/pieces` added as watched folder, so hub_project/hub_live take the piece name (e.g. "teke-teke").
+
+Installed WITHOUT the global CLAUDE.md rule, login startup or shortcut. The skill has a local guard: films stay in pieces/, and storyboard/QA/revisar_render/delivery rules still apply ([[storyboard-before-render]], [[feedback-verify-before-render]]). Live-preview bridge (done for teke-teke, verified): add before </script> at the end of index.html `window.renderOut = t => { if (window.renderFrame) window.renderFrame(t); }; window.ASSETS_READY.then(() => { window.READY = true; });` then `hub_project {set:{live:{page,audio:'sound/audio/mix.wav',dur,fps}}}` from piece.json. 182 pieces expose window.renderFrame. Add the bridge to every new piece and call hub_live so the user reviews on the timeline. The hub does not start on boot: user opens it from ~/Applications/VideoHub.app (pinned in the Dock).
+
+## memoria: `vmos-cloud.md`
+
+---
+name: vmos-cloud
+description: VMOS Cloud (cloud phones) controlled via OpenAPI with tools/vmos.py; keys VMOS_AK/VMOS_SK in root .env; phone Pixel 10 Pro APP6958QPXXF8LD7
+metadata:
+  node_type: memory
+  type: reference
+  originSessionId: 77f884e0-20f8-427f-b074-6e8d6a4aabad
+  modified: 2026-11-12T19:32:23.963Z
+---
+
+- Client: `python tools/vmos.py list` / `python tools/vmos.py <endpoint> '<json>'` (V2 SHA-256 signing, host api.vmoscloud.com, prefix /vcpcloud/api/padApi/).
+- Phone (bought 2026-11-12): Google Pixel 10 Pro, padCode APP6958QPXXF8LD7, padType real, Android 16, 1080x2410, has TikTok + Chrome.
+- Screenshot: `getLongGenerateUrl {"padCodes":[...]}` → signed URL; download it UNCHANGED (editing width/height breaks the sign).
+- Endpoint list for AI: https://cloud.vmoscloud.com/vmoscloud/doc/zh/server/llms.html (simulateTouch, inputText, startApp, uploadFileV3, asyncCmd, openOnlineAdb).
+- vmos.py also: `shot [out]`, `sh "input tap x y"`, `run "cmd"` (waits output), `push local /sdcard/...` (base64 chunks, max 4096 chars/cmd, ~1 s per 3 KB: OK for photos, too slow for videos). In Git Bash prefix MSYS_NO_PATHCONV=1 or /sdcard gets mangled.
+- ADB tunnel does NOT work on this "real" phone (forward target localhost:1 → device offline); tools/vmos_adb.py left as is.
+- TikTok account @mexitve (antes @naldo5944) (pkg com.zhiliaoapp.musically), avatar = MEXI TV logo (2026-11-12). Warm-up: `python tools/tiktok_warmup.py [min] [p_like]` — pure script + Haiku 5.5 screen check every 8 videos (API credits); restarts TikTok at start.
+- Purpose: posting to TikTok/FB from cloud phones (related [[artemis]], [[zernio]]).
+- Subida PROBADA 2026-11-12 (chofer-patrona p1 publicado en @naldo5944): LucidLink app → Renders finales claude/<Estilo> → ⋮ → Download → GUARDAR (va a /sdcard/Download) → TikTok "+" → miniatura galería abajo-izq → video → Siguiente → Siguiente → tocar descripción → API `inputText {"padCodes":[pad],"text":caption}` (emojis OK; TikTok deja solo 5 hashtags) → atrás (teclado) → Publicar (≈2337 y). Caption sin la marca (MAJESTIC/VISTA...). Permisos de contactos: NO PERMITIR.
+- SCRIPT de subida (probado en seco 2026-11-12): `python tools/tiktok_upload.py <Estilo> <archivo.mp4> [--dry]` — baja de LucidLink, mira 3-6 videos, sube con el .txt (sin marca, 5 hashtags), luego mira 4-8 videos; toques con jitter. Botones por texto vía uiautomator filtrado en el teléfono (la API corta salidas a 2000 caracteres). Cero tokens.
+- **Teléfono V06 = cuenta de Patrick (2026-11-14):** padCode ATP63362YSJXJF2F (virtual, Android 15, M2012K11AG, SIM T-Mobile US, IP en Industry CA). TikTok @agentedavis (51.8K seguidores, app en español) + LucidLink (alanwork/trabajo) logueados. Zona horaria y GPS puestos en Los Ángeles para que coincidan con la IP. SOLO la cuenta de Patrick en este teléfono. Usar `VMOS_PAD=ATP63362YSJXJF2F python tools/vmos.py ...` (también tiktok_upload.py / tiktok_warmup.py leen VMOS_PAD del entorno; sin él usan el Pixel APP6958). Ver [[gumroad]], [[agente-davis-guiones]].
+- V06 herramientas (2026-11-14): `tools/patrick.py ui|tap|type|key|swipe`, `tools/patrick_inbox.py` (vuelca chats, pero NO lee mensajes largos: verificar con captura), `tools/patrick_dm.py`. inputText AÑADE al borrador: vaciar la caja antes (y en el chat se puede "Cancelar envío" con pulsación larga, 1 h). Pantalla 720x1280. Estrategia y estado: agente-davis/tiktok/ESTRATEGIA.md.
+
+## memoria: `voice-cuts-in-silence.md`
+
+---
+name: voice-cuts-in-silence
+description: Voice-over cuts must fall in silence between words, never inside a word or mid-phrase (all bitpix videos and later)
+metadata:
+  type: feedback
+---
+
+Never cut or separate a voice take in the middle of a word or while something is being said; cut only in the gaps/silences after a word ends. Applies to the birthday video and every video from now on (said 2026-10-14).
+
+**Why:** the first split cut at whisper's estimated word starts minus 0.05s, which can land inside a word; the user heard it.
+**How to apply:** use `styles/bitpix/tools/split_voice.py` (now cuts at the middle of the longest pause below −45 dBFS between lines, spells digits out before aligning, 8 ms fades, warns when no silence). After splitting, re-transcribe every line file and confirm each contains exactly its sentence before building. Related: [[bitpix-series]]
+
+Also never split a phrase between lines ("sonic | boom", 2026-10-21): the cut window starts at the end of the previous line's last heard word — a plosive's closure (the silent start of a 'b'/'p') is not a pause.
+
+## memoria: `voicestudio.md`
+
+---
+name: voicestudio
+description: "VoiceStudio (voz local clonada) instalado con MCP; voz mathomaly, siempre calidad máxima"
+metadata:
+  node_type: memory
+  type: reference
+  originSessionId: 53953e94-9f27-4760-b78b-71efa2260653
+  modified: 2026-10-26T22:07:34.938Z
+---
+
+VoiceStudio 0.5.6 (Electron) instalado en `%LOCALAPPDATA%\Programs\VoiceStudio`; backend `http://127.0.0.1:3900` (CUDA, RTX 3060 Ti), MCP en `/mcp/` configurado en `F:\Claude Proyectos\.mcp.json`.
+
+- Voz del usuario aprobada: **mathomaly**, profile_id `a5ce5a5c` (clon; al usuario le gustó el resultado).
+- **Calidad: nunca bajarla.** Generar siempre con `steps=32` y formato `wav` (nunca opus/ogg).
+- Env de usuario: `OMNIVOICE_MCP_OUTPUT_MODE=files`, `OMNIVOICE_MCP_BASE_PATH=F:\Claude Proyectos\voces` → los WAV del MCP caen ahí; clone_voice/transcribe solo leen archivos dentro de esa carpeta.
+- El MCP solo conecta si la app está abierta ANTES de arrancar Claude Code; si falla, usar el REST (`/v1/audio/speech`) igual.
+- La referencia de mathomaly dura 29.6 s (>20 s) → necesita `openai/whisper-large-v3-turbo` en `%LOCALAPPDATA%\OmniVoice\hf_cache` (instalado a mano, no está en el catálogo). No borrarlo.
+- cartoon3d voice: **"3D cartoon 2"** `d9b69bea` (user re-cloned; the first "3D cartoons" d9ac3ed9 left loose voice fragments). User wants it SUPER animated the whole way: `instruct` only accepts accent/age/pitch/whisper (no emotion) → NEVER add "!" to scripts (user: sounds horrible); drive energy with `guidance_scale` 3.0 and picking the liveliest seed (REST /v1/audio/speech, seed varies the take). Generate several seeds, diff each against the script with whisper (they repeat or drop words), pick, then fix pacing in post (insert ~0.16 s beats where lines run together).
+- Digger android voice (ORIGINAL, voice design, not a clone of anyone): profile **`5120fcba`** "Digger android (original)" (design: female, young adult, very high pitch, american accent, seed 7). REST /generate with num_step=32, seed=1, effect_preset=raw, then retro_voice.py --preset digger. Details in pieces/digger-01-fridge/voz-studio/README.md. Watch out: instruct+seed sometimes renders broken (a ~560 Hz tone); always check with whisper.
+- Datos/logs: `%APPDATA%\OmniVoice` (`omnivoice.log`).
+
+## memoria: `yokai-40s.md`
+
+---
+name: yokai-40s
+description: "kodamashorts (yokai style) videos are 40 s max for now, user decision 2026-11-03"
+metadata:
+  node_type: memory
+  type: feedback
+  originSessionId: 7cc3dc13-f225-43b5-961f-d10d33cd6c8f
+  modified: 2026-11-03T07:11:36.916Z
+---
+
+For the time being, every yokai/kodamashorts video lasts **40 seconds at most** (it was ~71 s, then 62 s for The Rake).
+
+**Why:** the user decided to keep them short for a while (2026-11-03, when the Noppera-bo piece started).
+**How to apply:** plan ~6–7 beats, scale the hit's silence and the badge timing to the shorter clock; don't propose 60–71 s pieces until the user changes it. Also written in styles/yokai/RULES.md.
+
+## memoria: `youtube-skills.md`
+
+---
+name: youtube-skills
+description: 11 yt-* skills (Jakeschincariol/youtube-agent-skill) installed globally; use them for everything published on YouTube
+metadata:
+  node_type: memory
+  type: feedback
+  originSessionId: c06d4859-1bbd-4e22-88ca-0cdf712f4c20
+  modified: 2026-10-26T23:58:50.568Z
+---
+
+Installed 2026-10-26 in `~/.claude/skills/yt-*`: yt-script (21 hook formulas + hookscore.py), yt-package (title+thumbnail lint, title.py), yt-seo, yt-chapters, yt-shorts, yt-retention, yt-edit, yt-viral, yt-comment, yt-plan, yt-audit. Tools run with plain `python` (no deps). Every skill reads `~/.claude/youtube/voice.md`, which is a router to one file per channel in `~/.claude/youtube/channels/` (agente-davis, megagirl, alterbase, amphorus, senior-doggo, flynn-flyers, boy-jesus; 2026-10-26). Each has "Open questions" still to fill. Goal: make all 7 channels viral.
+**Why:** the user wants me to act as a YouTube expert for the content we publish there.
+**How to apply:** for any YouTube video (e.g. [[agente-davis-guiones]], [[digger-channel]]) run the hook through yt-script/hookscore and the title+thumb through yt-package before delivering; add yt-seo description/tags and chapters. Publishing goes through [[zernio]] with confirmation.
+
+## memoria: `yt-agente-style.md`
+
+---
+name: yt-agente-style
+description: "Estilo APROBADO del canal YouTube \"agente Patrick Davis\" (refs en Ref youtube agente, video 1) y cómo se produce con yt-editor/edit.py"
+metadata:
+  node_type: memory
+  type: project
+  originSessionId: 4acbbdf7-be55-457b-a4ba-363c0a2f0599
+  modified: 2026-10-28T03:56:45.805Z
+---
+
+Estilo aprobado el 2026-10-21 tras video 1 (`yt-editor/raw/video1_edit.mp4`, cues en `raw/cues.json` = plantilla).
+
+**Flujo** (`/Users/alanleiva/claude-proyectos/yt-editor/edit.py`):
+1. Unir `Ref youtube agente\videos raw\N-1.mp4` + `N-2.mp4` (concat -c copy, lista sin BOM). Sin cortes.
+2. `python edit.py transcribe raw.mp4` (srt) y `python edit.py words raw.mp4` (tiempos por palabra). Whisper medium CPU int8 (CUDA falla por cublas; PyAV 19 roto → audio vía ffmpeg).
+3. Elegir imágenes ancladas a la PALABRA exacta (buscar la frase en words.json), verificar lo que se dice durante cada una.
+4. Imágenes: desde 2026-10-21 el usuario quiere FOTOS REALES DE INTERNET (sincronizadas a lo que se dice). Buscar primero en fuentes libres/dominio público: Wikimedia Commons API (`commons.wikimedia.org/w/api.php?action=query&generator=search&gsrnamespace=6&prop=imageinfo&iiprop=url|size|extmetadata&iiurlwidth=1920`, da licencia), fotos del gobierno de EE. UU. (DHS, CBP, USDA, DOL: dominio público), bancos gratuitos. Le avisé que fotos de prensa/agencias pueden dar reclamos o strikes; guardar lista de créditos (CC BY / BY-SA exigen atribución → para la descripción). Cuando se habla del gobierno/políticos (Trump, Casa Blanca, Congreso, DHS/ICE, Washington…) usar FOTOS REALES de esas personas/lugares, exactamente en la palabra que los nombra (retratos y fotos oficiales de la Casa Blanca/DHS/Congreso son dominio público; Wikimedia los tiene). Personas reales NUNCA con IA, solo fotos reales y de la persona correcta. Fallback si no hay foto adecuada: MCP srz-google-flow-mcp (Nano Banana 2.1, 16:9, prompt + ", realistic documentary photograph, natural light, no text, no logos, no readable signs"). NO flow-auto. Ver [[flow-mcp]].
+5. STORYBOARD antes del render (plan de imágenes con tiempo+frase dicha + fotogramas de un preview con `max_t`) y esperar OK. Luego render completo (~3 min, NVENC).
+
+**Reglas visuales:**
+- **Primeros 40 s (pedido 2026-10-25):** ritmo fijo de imagen 5 s → 6 s de cámara → imagen 5 s… (inicios en 0:04, 0:15, 0:26, 0:37), cada una elegida por lo que se dice en esa ventana. Después, el ritmo normal:
+- Imágenes a pantalla completa, ~6,5 s cada una, ≥9 s de cámara entre imágenes, y **media de una imagen cada ≤33 s** (pedido 2026-10-24: 46 s le pareció demasiado; v02 quedó en 28 s con 23 imágenes en 10:49). Si la regla de separación choca, acortar la imagen anterior (mín. 5 s) en vez de descartar. Primera imagen en el segundo 4. Zoom-in lento en cada imagen.
+- Film burns (de `Ref youtube agente\film burn.mp4`, usados 3s–86s, girados a horizontal, 8 clips en assets/burns, semitransparentes, pico en el corte) SOLO en cortes de los primeros 50 s; luego cortes directos.
+- Cámara: un push-in lento y continuo por tramo (sin saltos abierto/cerrado), con `perspective` subpíxel (zoompan tiembla). ZOOM_RATE 0.0055/s.
+- Intro (tarjeta Patrick Davis) cuando dice "soy el agente…", ~7,5 s, voz debajo. Botón de suscripción cada 2 min + en "suscríbanse" (asset recortado desde 17,7 s, sin destello). Outro "¡Suscríbete!" al final.
+- Títulos de los primeros ~15 s: 2 líneas grandes, palabras clave en amarillo #FFD400, glow brillante. Desde v03 (2026-10-27) ANIMADOS con Remotion (`yt-editor/yt-remotion`, composición Titles: palabras que entran escalonadas con spring + blur, destello de glow en las amarillas, salida con blur): `npx remotion render Titles ../vNN/titles.mov --props=../vNN/titles_props.json --codec=prores --prores-profile=4444 --pixel-format=yuva444p10le --image-format=png` y cue `"titles_video"`. Tarjetas laterales con sombra suave.
+- Subtítulos: UNA línea, FreeSansBold 78, blanco con borde negro.
+- Audio: voz -14 LUFS; BGM -29 LUFS (en video 1 fue -27 y aún algo alta).
+- **Bloque tarjeta roja (pedido 2026-10-27, hecho en v03):** igual que la ref (1.mp4 4:40-5:23). En "la tarjeta roja" entra `Ref youtube agente\tarjeta roja 2.webp` a la DERECHA (x1342 y147 468x542); en la siguiente frase `tarjeta roja 1.mp4` en bucle a la IZQUIERDA (x24 y192 703x405), esquinas redondeadas 22, fade-in 0,3. Tras "no se imaginan cuántas paradas… esta tarjeta" se INSERTA en el raw (corte en silencio) el clip `No importa tu situación migratoria…mp4` 3,9-11,4 s a pantalla completa (810 px de ancho centrado, fondo desenfocado) CON su audio; luego vuelven las tarjetas hasta terminar de hablar de ellas ("…aquí abajo") y salen con fade 0,5. edit.py: cues "pips"; plantilla `yt-editor/v03/cues.json`.
+**Why:** iterado con el usuario en 3 rondas hasta que dijo "mucho mejor… todo bien".
+**How to apply:** reutilizar edit.py tal cual; solo cambiar raw, imágenes, títulos de apertura y tiempos de botones.
+
+
+**Corrección 2026-11-05:** ya NO mostrar storyboard antes del render (son simples): renderizar y entregar directo. Nunca repetir la misma imagen en un video.
+
+## memoria: `zawdog-only-needed-chars.md`
+
+---
+name: zawdog-only-needed-chars
+description: "zawdog humans — polish only the characters the next video uses, not the whole cast pack"
+metadata:
+  node_type: memory
+  type: feedback
+  originSessionId: fee78aff-f43d-47c1-a432-a0f21fe3abed
+  modified: 2026-11-12T11:27:57.885Z
+---
+
+Only work on (build, fix, review) the zawdog characters needed for the next video, not all 15+15 of the cast packs.
+
+**Why:** user (2026-11-12): "si no estaremos todo el día aquí" — whole-pack passes take hours.
+
+**How to apply:** before any human build/fix pass, find out which characters the next short uses (script/storyboard) and touch only those. Flow-clothes method: `build_human3.py ... flow=1` (garments_flow.py). Related: [[kimodo-pc]]
+
+## memoria: `zernio.md`
+
+---
+name: zernio
+description: "Zernio hosted MCP (publish/schedule posts to TikTok, Facebook, Instagram, YouTube...) registered at user scope; the user wants finished videos published through it"
+metadata:
+  node_type: memory
+  type: project
+  originSessionId: c06d4859-1bbd-4e22-88ca-0cdf712f4c20
+  modified: 2026-10-26T11:47:39.640Z
+---
+
+Zernio MCP `https://mcp.zernio.com/mcp` added at user scope 2026-10-26 (OAuth via `/mcp` → zernio; repo zernio-dev/zernio-claude-plugin). The user wants me to publish the videos I make to their social networks (TikTok, Facebook...) through it.
+**Why:** automate posting of generated videos.
+**How to apply:** until the user sets a standing rule, confirm account, caption and time before each publish (it's public and hard to undo).
+
+## memoria: `zero-fem-model.md`
+
+---
+name: zero-fem-model
+description: "Megaman Legends style model (bought from @dreamsbell, rights owned by the user) turned female in pieces/zero-fem"
+metadata:
+  node_type: memory
+  type: project
+  originSessionId: b19cd1d9-332a-4ffd-91ff-b618e0ca55df
+  modified: 2026-10-29T00:03:09.160Z
+---
+
+`assets/crashsune/MegamanLegendsModel/ZeroVolnutt.blend` (~450 tris, 23-bone custom rig, one 192px texture, face painted in the texture). The user bought it and its rights from @dreamsbell, so no licence caveat is needed (2026-10-26).
+`pieces/zero-fem/`: `lashes.py` (anime lashes on the texture), `feminize.py` (chest plate moved forward as one block so the green orb keeps its shape, narrower waist, wider hips and butt; previews rendered unlit with an Emission swap and a black world, like the author's Render.png) → `out/zero_fem.blend` + `.glb`.
+2026-10-28: the user REJECTED the more feminine v2 body (pieces/zero-fem/v2: bigger bust, thighs, winged lashes) → use only the ORIGINAL v1 body; only v2's 5 new expressions (smirk, wink, soft smile, flirty, sweet surprise) are added to v1's atlas.
+Pipeline (2026-10-27): feminize.py (incl. ponytail tilted down) → face/build_face.py (16-cell eye/mouth atlases, wild expressions) → anim/build_anim.py (30 actions incl. dig, face_tracks.json) → anim/zero_anim.glb. Test video engine: pieces/zero-test (270x480 ×4, 8.5% scanline, no dither, Pixelify Sans captions, soft Lambert shading toggle ?flat=1). MML2 ripped filler assets recolored in pieces/lib-mml (user accepts the risk).
+User rules: keep her hair, face and face animation as they are; only add feminine lashes; make the body feminine WITHOUT deforming the design (no texture distortion); always preview unlit and flat (no Principled shine). Crashsune techniques (face atlas, poses, animation) can be borrowed for this model. The NETO/sinaboto girl ([[sinaboto-style]]) is paused; the user didn't want block hands on her.
+
+## memoria: `zombie-channel.md`
+
+---
+name: zombie-channel
+description: New TikTok/Shorts channel (2026-10-28) — PS1 Resident-Evil-style blonde heroine teaches zombie-survival tips; built from scratch in pieces/zombie-girl
+metadata:
+  node_type: memory
+  type: project
+  originSessionId: 3b008220-5710-444f-9064-2bac0d02be64
+  modified: 2026-10-30T00:07:00.276Z
+---
+
+Started 2026-10-28. Same production approach as Mechayuki ([[mechayuki-rules]], [[digger-channel]]) but a new niche: zombie-survival lessons. Reference to beat: "Learn with Alya" (YouTube @, 1 video, 46 s, `fuentes/zombie-ref/`): failed attempt → "YOU DIED" → real fix with diagrams/labels → joke; HUD ECG "FINE/CAUTION/DANGER", one-word captions.
+
+User decisions: English, 9:16, 45–60 s, NEW VoiceStudio voice designed with a normal US accent (no Russian accent), look = PS1 Resident Evil / Parasite Eve 2 (Jill / Aya), NOT Megaman-Legends cartoon.
+
+Heroine (original, 100 % ours, no credits): Flow sheet `pieces/zombie-girl/ref/sheet3.jpg` (blonde, cropped brown leather jacket, white crop top with navel, black pants, black fingerless gloves, combat boots; user chose the LEAST curvy of 4 variants). Built like the Stark Crafts PS1 tutorial (`fuentes/lowpoly-girl-tut/TECNICA.md`): `model/measure.py` (silhouette → rings) → `build.py` (1510 tris) → `texture.py` (projects the sheet front/side/back by normal, 256/128 px, Closest; rejects bg grey; hair accepts only hair-colour samples) → `out/heroine_tex.blend`. User approved grey mesh and textured look.
+
+Voice NOW (user, 2026-10-28, ep1 v4): VoiceStudio clone **"ava bread 2" `3824e262`** (the first "ava bread" 2dd9cbec had an error — don't use it). NEVER split a take at "…" (the pause is not silence → words get cut): generate each half as its own take (steps 32; "Oh, fudge"-style short lines: generate inside a longer sentence and cut in the silence). SFX must hit on the visual event: trim leading silence of every SFX file (Dino Crisis default sound had 0.33 s); typewriter = one key per letter. Earlier voice: design **"Zombie heroine B (medium)" `ef006e80`** (female, young adult, moderate pitch, american accent; F0 ≈ 190 Hz), steps=32 wav; casting takes in `pieces/zombie-girl/voz/casting/`.
+
+Rig done: `model/rig.py` copies zero-fem's 23-bone Armature (same names/rolls/IK) into Zero units (×7.76, sole z=-9); `anim/build_anim.py` = copy of zero-fem's with this body's constants + wider base stance → all 46 actions work (`anim/heroine_anim.glb`, poses_v3.png). Other actions still carry Zero's bent-knee/wide-elbow look: tune per episode.
+
+Faces done: `face/face_sheets.py` (system python: eye bands from Flow edits of the front face `gen/eyes_*`, mouths painted as 13-px pixel-art grids) → `face/face.py` (Blender: re-projects Head per variant → `face_eyes.png`/`face_mouth.png` 16 cells, SAME cell order/names as zero-fem so the Mechayuki engine works; eye/mouth polys UV x/16). Head face zone projects front view only (side view leaked profile lashes). Eyes `disgust` = copy of angry until Flow quota resets. Full pipeline: texture.py → face.py → rig.py (on heroine_face.blend) → anim/build_anim.py → `anim/heroine_anim.glb` (nearest filter, 46 anims).
+
+Episode 1 = shot-for-shot remake of the ref (`pieces/zombie-01-door`, LOG.md has the rebuild commands). Heroine/channel name: **AVA RESTFIELD** (user, 2026-10-28 ep2; ep1 used "Ava Bread"; voice profile still named "ava bread 2"). User style rules from its review rounds (full, current list: [[ava-rules]]):
+- Fonts: "Resident Evil" look everywhere (refont.js = Tahoma Bold no-AA stretched x1.25); captions pixelated (9px x3) and ~20 % smaller than first try; NO channel header at the top; end card text in typewriter (Courier) with an examined-object 3D model (e.g. boarded window) just above it, "NEXT:" not "NEXT WEEK:".
+- HUD = remake ECG mixed with the RE2 CONDITION panel (`Ref ava bread/re2-health.webp`): grey bevel, name plate, green screen, Fine/Caution/Danger.
+- No Russian text (translate to English); jokes in English; no "(the polite version)"-style sub-captions.
+- YOU DIED in classic RE style (red-tinted freeze, red serif with drips, CONTINUE?).
+- Props/sets need real low-poly texture detail (couch, window); check Ava's texture for stray lines.
+- SFX: user likes Dino Crisis sounds (`assets/dino-crisis-sfx`: default sound, radio beep, chapters of "The Sound Effects Of Dino Crisis"); use them creatively + Freesound CC0. Not monetized.
+- v1 review: transitions must be seamless (white flash ramps in/out, no hard pop); YOU DIED black is translucent (~86 %, scene visible behind, like the ref); opening with a pistol reload; RE props in sets (First Aid Sprays, green/red/yellow herb pots); zombie voices = Resident Evil sounds (`assets/zombie-sfx-yt/seg`, YouTube 4JCoB0GUIVs from 1:20).
+- Mix in STEREO measured at -14 LUFS (a mono file read 3 dB louder on platforms).
+
+**Format change (user, 2026-10-29, after ep2):** new series "AVA: DAY 1" adapting the niche winners the user listed (dontopenit.stories 7M, survivenight1 2.2M, drawn.tosurvive 1.76M, nionarratives 1.6M; analysis + transcripts in `fuentes/zombie-nicho/`): 2nd-person situation in a place with an advantage and a trap, clock/DAY counter, real survival facts with numbers, twist + binary choice ending ("comment, most comments decide Part 2"), serialized parts, a pet later. RE mechanics as the storytelling devices (ITEM screen = supplies math, typewriter save = clock, FILE = scary note, door-loading transition, YES/NO menu cursor for the choice, YOU DIED = bad ending) + RE easter eggs (visual only, no trademarked names in titles). Ep3 = "The Police Station" (RPD nod).
+
+Next: same 23-bone rig names as zero-fem so `pieces/zero-fem/anim/build_anim.py` actions can be reused; face expressions; voice design; first episode storyboard. Rejected alternatives (CC-BY Sketchfab models, list in `fuentes/zombie-models/`).
 
 
 ---
@@ -3874,6 +6139,181 @@ head.html SHOT engine → sets.js (15 sets) + props.js (~35 props) → 8 section
 - One glowing prop/opponent on the other side (bullet, IQ meter, the cat), an accent in red (tags "PART 2", a red word). Dark navy night, blurred bokeh background.
 - Template: `pieces/cats-thumb` (scene + `ivPost` override that draws face, bubble and caption on top of the grade, `IV.bar = 0`). Copy it, change the scene.
 
+## `styles/mechayuki/README.md`
+
+---
+type: spec
+status: active
+tags: [mechayuki, digger, ps1, megaman-legends, tiktok-shorts, youtube-expeditions, mac-handoff]
+relatedTo: [mechayuki-rules, mechayuki-expeditions, digger-channel, zero-fem-model, long-video-delivery]
+---
+
+# Mechayuki: guía completa para trabajar el estilo (PC o Mac)
+
+Leer este archivo entero antes de tocar un episodio. Las reglas detalladas, una por cada corrección del usuario, están en [memoria/](memoria/), copiadas tal cual de la memoria de Claude en la PC. Si hay conflicto, **manda la memoria más reciente**. Lo más importante: [memoria/mechayuki-rules.md](memoria/mechayuki-rules.md) para los shorts y [memoria/mechayuki-expeditions.md](memoria/mechayuki-expeditions.md) para los largos.
+
+**En la Mac:** copiar `memoria/*.md` a la carpeta de memoria de Claude Code del proyecto (`~/.claude/projects/<proyecto>/memory/`) y añadir sus líneas al `MEMORY.md` de allá, o pedirle a Claude que lea esta carpeta al empezar.
+
+## 1. El canal
+
+- **Personaje:** Mechayuki (@mechayuki), una androide del futuro lejano. Los humanos desaparecieron y ella desentierra "artefactos humanos" (refrigerador, inodoro, candado, cepillo de dientes…) para entenderlos.
+- **Al espectador** le dice "Operator".
+- **Estética:** PS1 / Mega Man Legends 2. Low poly, texturas chicas, campos verdes con cielo azul enorme.
+- **Modelo:** Zero Volnutt feminizado. Es un modelo COMPRADO, con derechos del usuario.
+- **Dos formatos:**
+  - **Shorts verticales** (TikTok, 1080x1920, **máximo 80 s**).
+  - **Expeditions:** largos horizontales para YouTube, 16:9, de 10 a 11 min.
+
+## 2. Formato vigente de los shorts: ARTEFACTO (desde 2026-11-05)
+
+El formato cat.explains.it ("How people did X before Y", shorts #06–#08) **no funcionó y se abandonó**. Se volvió al formato de artefacto de los ep01–#05, con lugares muy variados.
+
+**Estructura (unas 200 palabras, unos 2,7 palabras por segundo):**
+1. **Apertura:** "Operator… [cómo lo encontró]… another human artifact. Humans called it… a [X]." El "Operator…" es el clip aprobado `megagirl_operator.wav` pegado en un silencio, con una pausa de ~0.4 s.
+2. **Gancho** absurdo o con asco, en forma de pregunta que sube de tono al final.
+3. **Cadena** "If you [do X]… you have a [Y]." con rótulos "This is a…" (3 o más).
+4. **Comentario de "Operator [nombre] asks…"** entre el 35 y el 40 % del guion.
+5. **Personaje histórico + año**, con "The story goes" si la anécdota es dudosa.
+6. **Cierre:** una pregunta-remate, luego "Artifact understood. Logging off."
+7. **Outro** sobre el plano en que se despide (nunca pantalla negra): MECHAYUKI · ARTIFACT 00N: NOMBRE · FOLLOW.
+
+**Variedad obligatoria:**
+- **Hallazgo:** cada episodio, una forma nueva de encontrar el artefacto. Ya usados: pala (ep01–03), dron que sopla la arena (#09). Ideas: detector de metales, bloque de hielo que se derrite, quitanieves, cae de un árbol, pesca con caña…
+- **Lugar:** cada episodio, un bioma o lugar distinto, y en conjunto que domine el verde. Nieve solo si la historia lo pide.
+- **Principio y final:** nunca en el mismo lugar ni con el mismo plano.
+- **Formato:** algunos episodios pueden ser estilo sinaboto, abriendo directo con "If you [do X]… you have a Y." sin escena de hallazgo. Se decide por episodio.
+
+## 3. Flujo de trabajo (el usuario lo exige)
+
+1. **Proponer** de 3 a 5 temas de artefacto, cada uno con su lugar y su forma de hallazgo, y recomendar uno.
+2. **Guion:** usar el gancho puntuado (skill yt-script), pasar el texto por **humanizer**, verificar las fechas con fuentes y guardarlo en `guion.md`.
+3. **Storyboard** (planos con su línea) y style frames → **MOSTRAR Y ESPERAR APROBACIÓN.** Aunque diga "procede", primero el storyboard.
+   - Antes de mostrarlo, revisarlo uno mismo: ¿lugares repetidos?, ¿ella solo parada?, ¿se lee cada acción?, ¿ojos abiertos?, ¿algo plano?, ¿algo atraviesa la mano?, ¿errores históricos?
+4. **Voz:**
+   - VoiceStudio, voz **megagirl** (clon `baab32b2`), cadena limpia (filtro de graves ~170 Hz + compresión suave + −14 LUFS). Nunca el filtro "digger" ni retro.
+   - Revisar cada toma con Whisper contra el guion, más similitud de voz (`speaker_sim.py`) contra los párrafos aprobados.
+   - Las preguntas deben subir de tono; si no, rampa PSOLA en la última palabra.
+5. **Render:** el motor three.js PS1 renderiza sin pantalla con Playwright.
+6. **Revisión:** `python tools/revisar_render.py --estilo mechayuki video.mp4` (usa los créditos de la API) → **arreglar TODOS los fallos válidos uno mismo** → volver a renderizar → recién ahí mostrar. Una sola pasada propia; no encadenar v2, v3, v4…
+7. **Entrega:**
+   - Título viral (yt-package), más una portada vertical de 1080x1920 (shorts) o una miniatura de 1280x720 (largos) en el estilo A1.
+   - Los archivos se llaman como el título, sin `? : " /`.
+   - Va la versión share (libx264 CRF 24, AAC 192k, +faststart) a LucidLink, en `Renders finales claude/Mechayuki/<Título>.mp4`, y la portada a `Mechayuki/Miniaturas/<Título>.png`.
+   - Al lado va el caption `.txt`: título + emoji + hashtags (#history #… #mechayuki #shorts).
+   - Ya no se envía a Telegram.
+   - Después de entregar, borrar los renders superados.
+
+## 4. Reglas de imagen (resumen; el detalle está en mechayuki-rules)
+
+- **Animación:** ella siempre animada y el mundo reacciona. Cada acción se entiende (qué hace, qué tiene en la mano) y tiene su sonido.
+- **Que se lea:** cada acción en primer plano o encuadrada para que se vea. Las manivelas, las perillas y las herramientas van en contacto real con la mano.
+- **Contacto:** las manos nunca atraviesan objetos. Los objetos están APOYADOS en superficies, nada flota. Nunca cortada por el borde del cuadro.
+- **Cara:** ojos abiertos en los planos clave, cara visible (no de perfil ni tapada por el flequillo) y expresiones que coinciden con la línea (asco real en "Gross").
+- **Volumen:** NADA PLANO. Diagramas y paneles en 3D con volumen. Rótulos en letras 3D extruidas amarillas, legibles, nunca encima de su cara.
+- **Cada solución o época en su PROPIO lugar reconocible**, nunca el mismo cuarto. Ella prueba o usa cada objeto.
+- **Personajes históricos:** un NPC existente que se vea bien, más piezas de vestuario (corona, capa, abrigo). Nunca un modelo nuevo hecho a medida (el Enrique VIII a medida quedó horrible). Sombreros PS1 pegados al hueso de la cabeza.
+- **Caca:** siempre estilo anime, en espiral tipo emoji.
+- **Efectos:** muchos (líneas de temblor, chispas, polvo, destellos). Sombra bastante oscura.
+- **Subtítulos:** una palabra a la vez, fuente pixel tipo Pixelify, con el pop-in medido (0.86→1.05→0.98→1.0) y letras espaciadas.
+- **Prados:** como los de MML2 (lomas verdes, cielo grande, nubes, arcoíris, franja de acantilado tostado). Referencia: `pieces/expedition-01-bedroom/review/ref_mml2_prado.png`.
+- **Sin parpadeo** (z-fighting) en flores y pasto. Cámara continua, sin saltos hacia atrás.
+
+## 5. Sonido
+
+- **Música:** NO chiptune puro. Pista original juguetona, con bajo real y batería suave, de 105 a 112 BPM, en tono mayor. Hecha en código: `audio/scripts/music*.py`.
+- **Niveles:** voz unos 14 dB sobre la música mientras habla. Master a −12 LUFS, pico real ≤ −1 dBTP. Pausa de ~0.4 s después de "Operator…".
+- **SFX:** reales CC0 (Freesound, Openverse, real-sfx), uno en cada acción. Elegirlos y verificarlos con **earshot**.
+- **Créditos:** solo CC0 o CC-BY; los CC-BY van en la descripción.
+- **NUNCA "!" en ningún texto para la voz:** cambia el timbre y suena horrible. Usar "…" o ".".
+- **Cortes:** nunca cortar la voz dentro de una palabra ni la última palabra de una pregunta.
+
+## 6. Portadas y miniaturas (estilo A1 aprobado)
+
+- **Referencia:** `pieces/expedition-01-bedroom/miniatura_A1.png`, también en LucidLink `_assets-mac/referencias/`. El código está en `engine/thumb_shots*.js` + `thumb_compose*.py` (fuente Luckiest Guy).
+- **Fondo:** domo de cuadrícula cian/azul curvo. Puede variar: en el ep03 fue un muro de piedra con puerta marrón.
+- **Texto:** una línea corta en letras 3D grandes con jitter por letra, #FFE21A con extrusión ámbar #A87800, **sin contorno negro**.
+- **Ella:** cuerpo COMPLETO de cabeza a pies, **GRANDE (casi toda la altura)**, OJOS ABIERTOS, con una pose ligada al short (manos en la cintura, pensando, sosteniendo el objeto, manos a la cara…).
+- **Objeto:** un artefacto grande con destellos.
+- **Prohibido:** realce de brillo y la fuente de Ava.
+- **Antes de mostrarla:** revisarla al 100 % y en recortes ×4.
+
+## 7. Episodios hechos (estado al 2026-11-14)
+
+| # | Pieza | Título final | Formato | Estado |
+|---|---|---|---|---|
+| 01 | digger-01-fridge | (refrigerador) v3 | artefacto | **NIVEL APROBADO** ("perfect now") |
+| 02 | digger-02-toilet | (inodoro) v3 | artefacto | entregado |
+| 03 | digger-03-lock | The Unpickable Lock Lasted 51 Hours | artefacto | entregado + portada aprobada |
+| 04 | digger-04-alarm | People paid someone to shoot peas at their window | sinaboto/artefacto | entregado + portada aprobada |
+| 05 | digger-05-two-sleeps | You Wake Up at 3 AM Because of This 600-Year-Old Habit | sinaboto | entregado + portada aprobada |
+| 06 | digger-06-bathing | The 1767 Shower That Recycled Your Dirt | cat.explains (abandonado) | aceptado |
+| 07 | digger-07-navigation | 1,000 Years of Getting Lost Before GPS | cat.explains (abandonado) | aceptado |
+| 08 | digger-08-music | 300 Years of Music Before Spotify | cat.explains (abandonado) | entregado con fallos de manos sin arreglar |
+| 09 | digger-09-toothbrush | Your Toothbrush Was Pig Hair Until 1938 | **artefacto (vuelta)** | entregado; quedó pendiente preguntar si se hacía una pasada de arreglos (ver abajo) |
+| Exp01 | expedition-01-bedroom | How Did Humans Sleep Before Beds? An Android Digs Up 8 Clues | largo 16:9 | **NIVEL APROBADO para los largos** (v3) |
+
+**Pendiente del #09** (marcado por la revisión; el usuario no respondió si arreglarlo):
+- las cerdas no tocan el hueso en el chiste de "scrub your bones";
+- el borde la corta en 6 momentos breves;
+- la barrena de Addis queda por encima del hueso;
+- rayas rosas en el abrigo de Addis;
+- en "germs" gira la cara de perfil;
+- las hélices del dron le tocan el zapato;
+- la portada la muestra chica: debe ocupar casi toda la altura.
+
+## 8. Propuestas de próximos videos
+
+Ver [PROPUESTAS.md](PROPUESTAS.md).
+
+## 9. Dónde está cada cosa
+
+**En git** (público, solo código y docs):
+- `pieces/digger-0N-*/`: motor por episodio.
+  - `engine/film.js`, `main.js`, `shots.js`, `d0N_*.js` (planos), `fx.js`, `pixfont.js`, `menukit.js`, `render_film.mjs`
+  - `audio/scripts/`, `voz/`, `LOG.md` (tabla PASS por plano), `guion.md`, `DESCRIPCION.md`, `CREDITS.md`
+- **Para un short nuevo:** copiar la carpeta del último episodio (`digger-09-toothbrush`) como plantilla.
+- `pieces/expedition-01-bedroom/`: plantilla de los largos.
+- `pieces/voice-fx/`: `retro_voice.py`, el README con las mediciones y `splice_operator.py` (está en `digger-02-toilet/voz-studio/scripts/`).
+- `fuentes/`:
+  - `cat-explains-it/`: el análisis del formato abandonado;
+  - `mechayuki-largo/analisis-viralidad.md`: fórmulas de títulos y las 5 expediciones recomendadas;
+  - `tiktok-research/`: la investigación original del nicho;
+  - `megaman-legends2/` y `lowpolyshorts-style/`: la especificación de las letras 3D.
+
+**En LucidLink**, `Renders finales claude/Mechayuki/_assets-mac/`. Son cosas que **NO pueden ir a git** porque el repo es público: el modelo es comprado y hay audios.
+- `engine-models/*.glb`:
+  - incluye `zero_anim.glb`, la androide con sus 30 animaciones;
+  - en la Mac → `pieces/<pieza>/engine/models/`.
+- `engine-lib-models/*.glb`: los NPC y los vehículos → `pieces/<pieza>/engine/lib/models/`.
+- `voz/`:
+  - `megagirl_operator.wav` y su versión limpia → `pieces/voice-fx/`;
+  - `megagirl_clone_ref_baab32b2.m4a` = el audio de referencia para RE-CLONAR la voz megagirl en el VoiceStudio de la Mac; el profile_id nuevo cambiará, así que anotarlo.
+- `crashsune/`:
+  - el `.blend` original comprado de Zero Volnutt → `assets/crashsune/`.
+- `megaman legends sfx general/`:
+  - SFX de menú sacados del juego → `assets/`;
+  - posible reclamo de Content ID en YouTube monetizado: allí, cambiarlos por CC0.
+- `pieces/zero-fem/`: el pipeline de feminización, cara y animación con sus derivados (texturas, atlas, `anim/zero_anim.glb`) → `pieces/zero-fem/`.
+- `pieces/lib-mml/`: assets de relleno de MML2 recoloreados → `pieces/lib-mml/`.
+- `referencias/`: `digger01_megagirl_v3.mp4` (nivel aprobado), `digger02_toilet_v3.mp4` y `miniatura_A1.png`.
+- Los videos finales con su título están en `Mechayuki/` y sus portadas en `Mechayuki/Miniaturas/`.
+
+**Instalación en la Mac:**
+1. Ejecutar `npm install` en el `engine/` de cada pieza (hace falta Playwright con Chromium).
+2. Python: numpy, scipy, soundfile y pyloudnorm para la música y la mezcla; openai-whisper para revisar la voz.
+3. VoiceStudio con la voz re-clonada.
+4. earshot.
+5. La `ANTHROPIC_API_KEY` va en el `.env` de la raíz (nunca como variable del sistema), para `revisar_render.py`.
+
+## 10. Seguridad y límites
+
+- **Repo PÚBLICO:** nunca subir el modelo comprado, sus texturas, renders del modelo sin terminar, ni assets sacados de juegos. Revisar `git status` antes de cada commit; `*.glb`, `assets/` y `*.wav` ya están en el .gitignore.
+- **Voces:** nunca clonar la voz de las cuentas de referencia.
+- **Música:** nada de canciones con copyright; solo original o CC0.
+- **Marca:** evitar logos y nombres de Capcom en títulos y miniaturas.
+- **Publicación:** confirmar con el usuario cada publicación (Zernio).
+- **Créditos:** usar primero los créditos de la API (scripts) para revisiones y análisis.
+
 ## `styles/onebit/STYLE.md`
 
 # Onebit
@@ -4625,6 +7065,7 @@ Full detail is in STYLE.md. In short:
 ## Motion and people (user, 2026-11-13)
 - Creatures move uncannily: stop-motion holds (2–4 frames) then snaps, twitchy over-rotated head tilts, fingers out of sync, slow pulls then sudden bursts, a full freeze before a lunge. Never smooth, symmetric or bouncy (Teke Teke v1 looked funny).
 - Keep faces mostly hidden by hair or shadow, with one eye visible. Heavy hair with weight and lagging secondary motion, never straight strips.
+- People must never look like dolls or mannequins (user, 2026-11-16, SCP-087 janitor): realistic proportions, shoulder joints inside the torso (no arms glued on a box), hands with fingers, realistic faces with lids/irises/folds (no dots, holes or flat textures), clear readable headwear. Self-check each person alone (front/3-4/side/face expressions) before the board.
 - People: real walk cycles (heel strike, stance foot locked, no deep knee squat, arm counter-swing) and realistic faces (no dot eyes, no "O" mouths).
 - Night scenes: light pools from flickering street lamps, with dark gaps between them.
 
@@ -4981,6 +7422,13 @@ Script, then storyboard (wait for approval), then final, then QA (pop, flicker a
 - **Props:** briefcase case hangs 7.5 cm outside the hand (idle 0 mm into the thigh), mail bag 2.5 cm further out and 3 cm higher, coat skirt follows the thighs sooner. Check with `photo_tools/prop_check.py -- <name> <actions>` (worst penetration per accessory and the bone it hits).
 - Review for video 6: `pieces/zaw-dog-06/review/cast/` (`cast6_lineup.jpg`, `<name>_cast.jpg`, `<name>_selfcheck.jpg` = v5 vs v6 + walk + Kimodo + rest-pose sheet; v5 copies in `v5_before/`).
 
+## Kit v6.1 humans (2026-11-16, video 8, user: skin grey vs face, ragged seams, flap at the shoulder)
+- `humans/photo_tools/skin_match.py <name> <texmap_dir> [--src body_fix.png]`: every skin texel of `body.png` (head, ears, neck, hands, bare arms) takes the face photo's tone (`look.json` cheek) with the texture's own shading; garments untouched; `faces/mask.png` blurred a little wider (the old per-video mask^1.5). Backups: `body_v6.png`, `faces/mask_v6.png`.
+- `humans/photo_tools/kit_fix.py` (Blender, on `<name>.blend`): packs the new body.png + mask.png and reweights the shoulder (torso vertices < 18 cm from the upper-arm joint share shoulder01/upperarm01, smoothed). Backup `<name>_v6.blend` (what #6 / #7 rendered with).
+- Done for owner (body from #7's `owner_body_fix.png`: straight sleeve hems, collar line) and scientist. Texmaps: `pieces/zaw-dog-08/tools/texmap.py`.
+- Mocap first for hand actions (no raw IK on the arms): Kimodo clips `z8_sci_offer_pull`, `z8_owner_tease`, `z8_owner_fake` (+ unused `z8_sci_offer_drop`), prompts in `motions/kimodo/prompts_z8.txt`; run `tools/kimodo_cpp_batch.py --kimodo ~/kimodo-cpp/src`, retarget from a `src_<name>.bvh` copy (same-name BVH makes the action `<name>.001`). Pose-to-pose moves = per-bone slerp of two clip frames (`hpose_blend` in `pieces/zaw-dog-08/shots.py`).
+- QA adds arm-vs-torso: arm/hand vertices > 1.5 cm inside the torso surface, every frame (`shots.py feet`).
+
 ## `styles/zawdog/motions/README.md`
 
 # zawdog motions: mocap BVH starter library
@@ -5018,6 +7466,10 @@ The `kimodo/` folder was made by another session and is not part of this library
 ## Otros documentos de estilo (en el repo, no copiados aquí por tamaño: catálogos y análisis)
 
 - `styles/ali-abdaal-2/CATALOGO.md` (4 KB)
+- `styles/ava-restfield/ASSETS.md` (6 KB)
+- `styles/ava-restfield/GUIA.md` (41 KB)
+- `styles/ava-restfield/PROPUESTAS.md` (8 KB)
+- `styles/ava-restfield/STALKER.md` (8 KB)
 - `styles/bitpix/template/brief.md` (2 KB)
 - `styles/cartoon3d/memoria/api-credits-first.md` (0 KB)
 - `styles/cartoon3d/memoria/audio-recorded-sound.md` (1 KB)
@@ -5052,6 +7504,28 @@ The `kimodo/` folder was made by another session and is not part of this library
 - `styles/f1motion/CATALOGO.md` (97 KB)
 - `styles/ifverse/ANALISIS.md` (9 KB)
 - `styles/ifverse/REFS2.md` (39 KB)
+- `styles/mechayuki/PROPUESTAS.md` (3 KB)
+- `styles/mechayuki/memoria/api-credits-first.md` (0 KB)
+- `styles/mechayuki/memoria/digger-channel.md` (2 KB)
+- `styles/mechayuki/memoria/earshot.md` (0 KB)
+- `styles/mechayuki/memoria/final-renders-folders.md` (0 KB)
+- `styles/mechayuki/memoria/freesound.md` (0 KB)
+- `styles/mechayuki/memoria/humanizer.md` (0 KB)
+- `styles/mechayuki/memoria/links-clicables.md` (0 KB)
+- `styles/mechayuki/memoria/long-video-delivery.md` (3 KB)
+- `styles/mechayuki/memoria/lucidlink-renders.md` (1 KB)
+- `styles/mechayuki/memoria/mechayuki-expeditions.md` (2 KB)
+- `styles/mechayuki/memoria/mechayuki-rules.md` (8 KB)
+- `styles/mechayuki/memoria/openverse.md` (1 KB)
+- `styles/mechayuki/memoria/real-sfx.md` (0 KB)
+- `styles/mechayuki/memoria/script-format.md` (0 KB)
+- `styles/mechayuki/memoria/sinaboto-style.md` (3 KB)
+- `styles/mechayuki/memoria/sonido-pro.md` (1 KB)
+- `styles/mechayuki/memoria/storyboard-before-render.md` (0 KB)
+- `styles/mechayuki/memoria/voice-cuts-in-silence.md` (1 KB)
+- `styles/mechayuki/memoria/voicestudio.md` (2 KB)
+- `styles/mechayuki/memoria/youtube-skills.md` (1 KB)
+- `styles/mechayuki/memoria/zero-fem-model.md` (1 KB)
 - `styles/pov3d/template-luna/brief.md` (6 KB)
 - `styles/pov3d/template-ola/brief.md` (6 KB)
 - `styles/stimulus/analisis/Dariel Stimulus Video_32_estilo.md` (8 KB)
@@ -5065,6 +7539,7 @@ The `kimodo/` folder was made by another session and is not part of this library
 - `styles/yokai/template/brief.md` (1 KB)
 - `styles/yokai/template/sound/CREDITS.md` (1 KB)
 - `styles/zawdog/backup_STYLE_2026-11-13.md` (13 KB)
+- `styles/zawdog/backup_STYLE_2026-11-16.md` (15 KB)
 
 
 ---
@@ -5073,6 +7548,127 @@ The `kimodo/` folder was made by another session and is not part of this library
 
 ## Todas las piezas (más reciente primero)
 
+- 2026-11-18 `pieces/trapiche-cuautla` — docs: ESTADO.md
+- 2026-11-18 `pieces/puro-tuxtla` — docs: ESTADO.md
+- 2026-11-18 `pieces/luto-tacambaro` — docs: ESTADO.md
+- 2026-11-18 `pieces/llavero-saltillo` — docs: ESTADO.md
+- 2026-11-18 `pieces/hotel-mazamitla` — docs: ESTADO.md
+- 2026-11-18 `pieces/barrica-mascota` — docs: ESTADO.md
+- 2026-11-18 `pieces/vera-02` — docs: SCRIPT.md, SCRIPT_vera01_ref.md
+- 2026-11-18 `pieces/viajante-sombrerete` — docs: ESTADO.md
+- 2026-11-18 `pieces/zombie-03-station` — docs: shotlist.md, zombie03_station_v1_revision.md
+- 2026-11-18 `pieces/vendimia-ensenada` — docs: ESTADO.md
+- 2026-11-18 `pieces/yegua-jerez` — docs: ESTADO.md
+- 2026-11-18 `pieces/upnext-metalshadow`
+- 2026-11-18 `pieces/vainilla-papantla` — docs: ESTADO.md
+- 2026-11-18 `pieces/trajinera-xochimilco` — docs: ESTADO.md
+- 2026-11-18 `pieces/tienda-mineral` — docs: ESTADO.md
+- 2026-11-18 `pieces/talavera-cholula` — docs: ESTADO.md
+- 2026-11-18 `pieces/sombrero-sahuayo` — docs: ESTADO.md
+- 2026-11-18 `pieces/traje-zamora` — docs: ESTADO.md
+- 2026-11-18 `pieces/silla-izamal` — docs: ESTADO.md
+- 2026-11-18 `pieces/sarape-saltillo` — docs: guion.md, ESTADO.md
+- 2026-11-18 `pieces/sarape-saltillo-p2` — docs: guion.md, ESTADO.md
+- 2026-11-18 `pieces/sobre-alamos` — docs: ESTADO.md
+- 2026-11-18 `pieces/reloj-zacatlan` — docs: ESTADO.md
+- 2026-11-18 `pieces/relevo-ures` — docs: ESTADO.md
+- 2026-11-18 `pieces/red-janitzio` — docs: ESTADO.md
+- 2026-11-18 `pieces/pulsera-mexcaltitan-p2` — docs: guion.md, ESTADO.md
+- 2026-11-18 `pieces/rebozo-santamaria` — docs: guion.md, ESTADO.md
+- 2026-11-18 `pieces/prueba-penjamo` — docs: ESTADO.md
+- 2026-11-18 `pieces/pulsera-mexcaltitan` — docs: guion.md, ESTADO.md
+- 2026-11-18 `pieces/queso-tequisquiapan` — docs: ESTADO.md
+- 2026-11-18 `pieces/pipian-tlaxcala` — docs: ESTADO.md
+- 2026-11-18 `pieces/pinata-acolman` — docs: ESTADO.md
+- 2026-11-18 `pieces/panuelo-jalpan` — docs: ESTADO.md
+- 2026-11-18 `pieces/pan-comala` — docs: ESTADO.md
+- 2026-11-18 `pieces/paste-realdelmonte` — docs: ESTADO.md
+- 2026-11-18 `pieces/ojo-cienegas` — docs: ESTADO.md
+- 2026-11-18 `pieces/palofierro-kino` — docs: ESTADO.md
+- 2026-11-18 `pieces/nieve-tepoztlan` — docs: ESTADO.md
+- 2026-11-18 `pieces/nuez-parras` — docs: ESTADO.md
+- 2026-11-18 `pieces/moro-sabinas` — docs: ESTADO.md
+- 2026-11-18 `pieces/manteles-apan` — docs: ESTADO.md
+- 2026-11-18 `pieces/mole-atocpan` — docs: ESTADO.md
+- 2026-11-18 `pieces/manzana-cuauhtemoc` — docs: ESTADO.md
+- 2026-11-18 `pieces/mango-rosario` — docs: ESTADO.md
+- 2026-11-18 `pieces/lucero-parral` — docs: ESTADO.md
+- 2026-11-18 `pieces/jipi-becal` — docs: guion.md, ESTADO.md
+- 2026-11-18 `pieces/ladrillo-tecate` — docs: ESTADO.md
+- 2026-11-18 `pieces/jipi-becal-p2` — docs: guion.md, ESTADO.md
+- 2026-11-18 `pieces/junta-guadalajara` — docs: ESTADO.md
+- 2026-11-18 `pieces/laca-olinala` — docs: ESTADO.md
+- 2026-11-18 `pieces/jima-arandas` — docs: ESTADO.md
+- 2026-11-18 `pieces/jaiba-lagunamadre` — docs: ESTADO.md
+- 2026-11-18 `pieces/jarana-tlacotalpan` — docs: ESTADO.md
+- 2026-11-18 `pieces/hamaca-comalcalco-p2` — docs: guion.md, ESTADO.md
+- 2026-11-18 `pieces/guitarra-paracho` — docs: ESTADO.md
+- 2026-11-18 `pieces/hamaca-comalcalco` — docs: guion.md, ESTADO.md
+- 2026-11-18 `pieces/garrafon-bernal` — docs: guion.md, ESTADO.md
+- 2026-11-18 `pieces/garrafon-bernal-p2` — docs: guion.md, ESTADO.md
+- 2026-11-18 `pieces/flores-tapalpa` — docs: ESTADO.md
+- 2026-11-18 `pieces/frascos-sanignacio-p2` — docs: guion.md, ESTADO.md
+- 2026-11-18 `pieces/gloria-linares` — docs: ESTADO.md
+- 2026-11-18 `pieces/foto-cosala` — docs: ESTADO.md
+- 2026-11-18 `pieces/frascos-sanignacio` — docs: guion.md, ESTADO.md
+- 2026-11-18 `pieces/gaviota-bacalar` — docs: guion.md, ESTADO.md
+- 2026-11-18 `pieces/gaviota-bacalar-p2` — docs: guion.md, ESTADO.md
+- 2026-11-18 `pieces/domino-jerez` — docs: ESTADO.md
+- 2026-11-18 `pieces/danzon-cordoba` — docs: ESTADO.md
+- 2026-11-18 `pieces/dama-lagos` — docs: ESTADO.md
+- 2026-11-18 `pieces/cobre-santaclara` — docs: ESTADO.md
+- 2026-11-18 `pieces/compromiso-lagunillas` — docs: ESTADO.md
+- 2026-11-18 `pieces/costal-cuyutlan-p2` — docs: guion.md, ESTADO.md
+- 2026-11-18 `pieces/costal-cuyutlan` — docs: guion.md, ESTADO.md
+- 2026-11-18 `pieces/copita-matatlan` — docs: ESTADO.md
+- 2026-11-18 `pieces/cajeta-celaya` — docs: ESTADO.md
+- 2026-11-18 `pieces/carta-durango` — docs: ESTADO.md
+- 2026-11-18 `pieces/cantera-huichapan` — docs: guion.md, ESTADO.md
+- 2026-11-18 `pieces/cantera-huichapan-p2` — docs: guion.md, ESTADO.md
+- 2026-11-18 `pieces/cafetal-coatepec` — docs: ESTADO.md
+- 2026-11-18 `pieces/brindis-orizaba` — docs: ESTADO.md
+- 2026-11-18 `pieces/baul-sanmiguel` — docs: guion.md, ESTADO.md
+- 2026-11-18 `pieces/betun-zacatecas` — docs: guion.md, ESTADO.md
+- 2026-11-18 `pieces/baul-sanmiguel-p2` — docs: guion.md, ESTADO.md
+- 2026-11-18 `pieces/cacao-comalcalco` — docs: ESTADO.md
+- 2026-11-18 `pieces/bota-leon` — docs: ESTADO.md
+- 2026-11-18 `pieces/ate-calvillo` — docs: guion.md, ESTADO.md
+- 2026-11-18 `pieces/aretes-jojutla` — docs: ESTADO.md
+- 2026-11-18 `pieces/barro-coyotepec` — docs: ESTADO.md
+- 2026-11-18 `pieces/arbol-metepec` — docs: ESTADO.md
+- 2026-11-18 `pieces/aserrin-huamantla-p2` — docs: guion.md, ESTADO.md
+- 2026-11-18 `pieces/aserrin-huamantla` — docs: guion.md, ESTADO.md
+- 2026-11-18 `pieces/ate-calvillo-p2` — docs: guion.md, ESTADO.md
+- 2026-11-18 `pieces/ambar-simojovel` — docs: ESTADO.md
+- 2026-11-18 `pieces/alebrije-tilcajete` — docs: ESTADO.md
+- 2026-11-18 `pieces/agave-amatitan` — docs: ESTADO.md
+- 2026-11-18 `pieces/upnext-waitress`
+- 2026-11-17 `pieces/upnext-suitor`
+- 2026-11-17 `pieces/upnext-gnome`
+- 2026-11-17 `pieces/upnext-girl2`
+- 2026-11-17 `pieces/upnext-girl`
+- 2026-11-17 `pieces/zero-fem`
+- 2026-11-17 `pieces/vera-01` — docs: SCRIPT.md
+- 2026-11-17 `pieces/upnext-01` — docs: SCRIPT.md
+- 2026-11-17 `pieces/teke-teke` — docs: LOG.md, brief.md
+- 2026-11-17 `pieces/zombie-15-lasttrain3` — docs: LOG.md, FACTS.md
+- 2026-11-17 `pieces/ponche-zitacuaro`
+- 2026-11-17 `pieces/plata-taxco` — docs: guion.md, ESTADO.md
+- 2026-11-17 `pieces/obsidiana-teotihuacan`
+- 2026-11-17 `pieces/invernadero-atlixco` — docs: guion.md, ESTADO.md
+- 2026-11-17 `pieces/cantaro-tonala`
+- 2026-11-17 `pieces/camaron-escuinapa`
+- 2026-11-17 `pieces/cafe-pluma`
+- 2026-11-17 `pieces/barrica-valle`
+- 2026-11-17 `pieces/_marcas`
+- 2026-11-16 `pieces/zaw-dog-08` — docs: guion.md, CREDITS.md, borrador_v1_40s.md
+- 2026-11-16 `pieces/zombie-14-attic` — docs: LOG.md, FACTS.md
+- 2026-11-16 `pieces/gta6-story` — docs: comic_script.md, shotlist_v2.md, script_voice.md
+- 2026-11-16 `pieces/scp-087` — docs: LOG.md, brief.md
+- 2026-11-15 `pieces/black-cave` — docs: LOG.md, brief.md
+- 2026-11-14 `pieces/zombie-girl`
+- 2026-11-14 `pieces/voice-fx` — docs: README.md
+- 2026-11-14 `pieces/lib-mml` — docs: README.md
 - 2026-11-14 `pieces/zombie-13-gasstation` — docs: PLAN.md, brief.md
 - 2026-11-14 `pieces/zombie-12-radio` — docs: PLAN.md, brief.md
 - 2026-11-14 `pieces/zombie-11-xvirus` — docs: PLAN.md, brief.md
@@ -5080,8 +7676,6 @@ The `kimodo/` folder was made by another session and is not part of this library
 - 2026-11-14 `pieces/zombie-09-subway2` — docs: brief.md
 - 2026-11-14 `pieces/zombie-08-farm` — docs: DESCRIPCION.md, brief.md
 - 2026-11-14 `pieces/zombie-07-saferoom` — docs: brief.md
-- 2026-11-14 `pieces/zombie-03-station` — docs: shotlist.md, zombie03_station_v1_revision.md
-- 2026-11-14 `pieces/zaw-dog-08` — docs: guion.md, borrador_v1_40s.md
 - 2026-11-14 `pieces/viuda-aguacate` — docs: guion.md, ESTADO.md, qa_clips.md
 - 2026-11-14 `pieces/viuda-aguacate-p2` — docs: guion.md, ESTADO.md
 - 2026-11-14 `pieces/velorio-patron` — docs: guion.md, ESTADO.md, qa_clips.md
@@ -5115,7 +7709,6 @@ The `kimodo/` folder was made by another session and is not part of this library
 - 2026-11-14 `pieces/rbx-crossing` — docs: ESTADO.md, script.md
 - 2026-11-14 `pieces/pp-chihuahua` — docs: SPEC.md
 - 2026-11-14 `pieces/posada` — docs: guion.md, ESTADO.md, qa_clips.md
-- 2026-11-14 `pieces/plata-taxco` — docs: guion.md, ESTADO.md
 - 2026-11-14 `pieces/piloncillo-rio` — docs: guion.md, ESTADO.md
 - 2026-11-14 `pieces/pedida-mano` — docs: guion.md, ESTADO.md, qa_clips.md
 - 2026-11-14 `pieces/padre-veladoras` — docs: guion.md, ESTADO.md, qa_clips.md
@@ -5133,7 +7726,6 @@ The `kimodo/` folder was made by another session and is not part of this library
 - 2026-11-14 `pieces/mariachi-patron-p2` — docs: guion.md, ESTADO.md
 - 2026-11-14 `pieces/madrina-central` — docs: guion.md, ESTADO.md, qa_clips.md
 - 2026-11-14 `pieces/lost-luggage` — docs: shots.md
-- 2026-11-14 `pieces/invernadero-atlixco` — docs: guion.md, ESTADO.md
 - 2026-11-14 `pieces/intercambio` — docs: guion.md, ESTADO.md, qa_clips.md
 - 2026-11-14 `pieces/huipil-robado` — docs: guion.md, ESTADO.md, qa_clips.md
 - 2026-11-14 `pieces/hacienda-sangre` — docs: guion.md, ESTADO.md, qa_continuidad.md, qa_clips.md
@@ -5171,11 +7763,8 @@ The `kimodo/` folder was made by another session and is not part of this library
 - 2026-11-14 `pieces/ali-abdaal-2-test`
 - 2026-11-14 `pieces/agua-hacienda` — docs: guion.md
 - 2026-11-14 `pieces/agua-hacienda-p2` — docs: guion.md, ESTADO.md, qa_clips.md
-- 2026-11-14 `pieces/_marcas`
 - 2026-11-14 `pieces/_descartes`
-- 2026-11-14 `pieces/gta6-story` — docs: comic_script.md, script_voice.md
 - 2026-11-13 `pieces/zaw-dog-07` — docs: guion.md, CREDITS.md
-- 2026-11-13 `pieces/teke-teke` — docs: LOG.md, brief.md
 - 2026-11-13 `pieces/nvidia-huang` — docs: script-options.md, script.md, shots.md, facts.md
 - 2026-11-13 `pieces/gta6-16x9`
 - 2026-11-13 `pieces/gta6-boxart-16x9`
@@ -5188,7 +7777,6 @@ The `kimodo/` folder was made by another session and is not part of this library
 - 2026-11-11 `pieces/toon-test`
 - 2026-11-10 `pieces/rbx-library` — docs: script.md
 - 2026-11-10 `pieces/rbx-next` — docs: propuestas-3.md, propuestas.md, propuestas-2.md, propuestas-4.md
-- 2026-11-09 `pieces/black-cave` — docs: LOG.md, brief.md
 - 2026-11-09 `pieces/zelda-kakariko` — docs: script.md, youtube.md
 - 2026-11-09 `pieces/rig-test` — docs: RIG.md
 - 2026-11-09 `pieces/learning-faces` — docs: LOG.md, brief.md
@@ -5283,10 +7871,8 @@ The `kimodo/` folder was made by another session and is not part of this library
 - 2026-10-29 `pieces/lps-hombre` — docs: LOG.md
 - 2026-10-29 `pieces/zach-glass` — docs: LOG.md
 - 2026-10-29 `pieces/shrink` — docs: CREDITS.md, LOG.md
-- 2026-10-29 `pieces/zombie-girl`
 - 2026-10-29 `pieces/zombie-02-window` — docs: shotlist.md, LOG.md
 - 2026-10-29 `pieces/zombie-01-door` — docs: shotlist.md, LOG.md
-- 2026-10-29 `pieces/zero-fem`
 - 2026-10-29 `pieces/future-library` — docs: brief.md
 - 2026-10-29 `pieces/fl-room` — docs: brief.md
 - 2026-10-29 `pieces/fl-print` — docs: brief.md
@@ -5298,10 +7884,8 @@ The `kimodo/` folder was made by another session and is not part of this library
 - 2026-10-29 `pieces/digger-02-toilet` — docs: guion.md, storyboard.md, CREDITS.md, LOG.md
 - 2026-10-27 `pieces/elevator-game`
 - 2026-10-27 `pieces/zero-test` — docs: CREDITS.md, LOG.md
-- 2026-10-27 `pieces/voice-fx` — docs: README.md
 - 2026-10-27 `pieces/sina-test`
 - 2026-10-27 `pieces/sina-char`
-- 2026-10-27 `pieces/lib-mml` — docs: README.md
 - 2026-10-26 `pieces/universe` — docs: LOG.md
 - 2026-10-26 `pieces/ls-storm` — docs: brief.md
 - 2026-10-26 `pieces/ls-seahunt` — docs: brief.md
@@ -5404,6 +7988,2238 @@ The `kimodo/` folder was made by another session and is not part of this library
 - 2026-10-11 `pieces/reflejo` — docs: LOG.md, brief.md
 
 ## Archivos de estado / notas de piezas
+
+### `pieces/viajante-sombrerete/ESTADO.md`
+
+# viajante-sombrerete (El Viajante de Sombrerete · Parte 1): estado
+
+- **CATALOGO.md #12 "El viajante" [CAPO]. Familia: Doble vida y secretos. Cierre tipo 1: entra un personaje inesperado (Baltasar entra al despacho y encuentra al viajante en la silla del patrón).**
+- MAJESTIC. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN). Música cálida c03-c05. Dos locaciones (tienda + despacho).
+- 2026-11-17: escrita, en cola pendiente (GEN), sin clips aún.
+- 2026-11-17 18:24: REGEN c02 (cortaba la 1ª frase). share.mp4 45.0 s, 1.54 s/plano, LUFS -14.3. Transcripción y subtítulos revisados. Entregado a main.
+
+### `pieces/vendimia-ensenada/ESTADO.md`
+
+# vendimia-ensenada (La Vendimia de Ensenada · Parte 1): estado
+
+- **CATALOGO.md #55 "La capataz contra su padre" [CAPO]. Familia: Patronas y haciendas. Cierre tipo 6: mirada muda (Fernanda y Luca).**
+- VISTA. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN). Música cálida c05-c07.
+- 2026-11-17 15:30: PAUSA del usuario a mitad del GEN. Hechos c01-c06; FALTAN c07, r1, c08, i01, c09, r2, r3, c10. Al retomar: `REGEN vendimia-ensenada` (sin ids genera lo que falta; el proyecto Flow activo es el suyo).
+- 2026-11-17 17:42: REGEN completó c07-c10. 14 clips + 0 regens. share.mp4 47.0 s, 1.46 s/plano, LUFS -14.2, pico -2.2. Transcripción (0 frases bajas) y subtítulos revisados. Entregado a main.
+
+### `pieces/trapiche-cuautla/ESTADO.md`
+
+# trapiche-cuautla (El Trapiche de Cuautla · Parte 1): estado
+
+- **CATALOGO.md #58 "La viuda del trapiche" [CAPO] (premisa nueva tipo patrona, época ~1910). Familia: Patronas y haciendas. Cierre tipo 3: palabra reveladora ("Hijo…").**
+- VISTA. 25 clips (two-shots c07, c10). Proyecto Flow propio. En cola (GEN). Música cálida c10-c11.
+- Personajes: Fidelina Villaseñor (48, viuda patrona), Adalberto Larrea (62, hacendado vecino), Elías Cervera (34, administrador); Dominga, madre de Elías, difunta (solo nombrada).
+
+### `pieces/traje-zamora/ESTADO.md`
+
+# traje-zamora (El Sastre de Zamora · Parte 1): estado
+
+- **CATALOGO.md #5 "El sastre del pueblo" [CAPO]. Familia: Identidad oculta. Cierre tipo 1: entra un personaje inesperado (la novia Amparo).**
+- MAJESTIC. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN). Música cálida c07-c10.
+- 2026-11-17: 16 clips + 1 regen (i01 sin cicatriz visible). share.mp4 53.9 s, 1.73 s/plano, LUFS -14.2, pico -2.1. Transcripción y subtítulos revisados. Entregado a main.
+
+### `pieces/tienda-mineral/ESTADO.md`
+
+# tienda-mineral (La Tienda de Mineral del Chico · Parte 1): estado
+
+- **CATALOGO.md #30 "La ahijada del cacique" [CAPO] adaptada (sobrina, sin niños). Familia: Capos, caciques y patrones. Cierre tipo 1: entra el cacique con flores.**
+- MEXITV. 24 clips (formato largo pedido 2026-11-17). Proyecto Flow propio. En cola (GEN). Música cálida c05-c06.
+- Personajes: Itzel Ibáñez (28), Eutimio Soto (73), el Güero Valdés (35), Maximino Ugarte (66); tía Cuca (Refugio Ibáñez), difunta.
+- 2026-11-17 21:40: runner detenido a mitad del GEN: hechos c01-c05. Proyecto Flow nuevo vacío 4cf25b82 creado para retomar con REGEN (sube hojas y genera lo que falta).
+- 21:47 PAUSA del usuario: runner detenido. Hechos c01-c10 + r1 r2 (12/24). Faltan: c11 c12 c13 i01 c14 c15 r3 r4 c16 c17 r5 c18. El proyecto Flow activo 4cf25b82 ya tiene sus hojas; retomar con REGEN tienda-mineral (genera solo lo que falta).
+
+### `pieces/relevo-ures/ESTADO.md`
+
+# relevo-ures (El Relevo de Ures · Parte 1): estado
+
+- **CATALOGO.md #24 "El hermano que volvió" [CAPO]. Familia: Traición familiar. Cierre tipo 5: la acusación se vuelve contra quien acusa (la carta del padre).**
+- MEXITV. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN). Música cálida c03-c05.
+- 2026-11-17 15:30: clips completos (15), QA hecho: falta REGEN c02 (subtítulos quemados), luego post.py → strip → SendMessage. Pausado por el usuario.
+- 2026-11-17 17:45: REGEN c02 limpio (sin subtítulos quemados). 15 clips + 1 regen. share.mp4 49.1 s, 1.57 s/plano, LUFS -14.5, pico -2.2. Transcripción (solo Lisardo/Lizardo del ASR) y subtítulos revisados. Entregado a main.
+
+### `pieces/puro-tuxtla/ESTADO.md`
+
+# puro-tuxtla (El Puro de San Andrés · Parte 1): estado
+
+- **Premisa nueva tipo patrona [CAPO] (catálogo de patronas agotado). Familia: Patronas y haciendas. Cierre tipo 5: la acusación se vuelve contra quien acusa (el capataz Anacleto).**
+- MEXI. 24 clips. Proyecto Flow propio. En cola (GEN). Música cálida c08-c10.
+- Personajes: Elvira Santamaría (60), Azucena Mora (30), Anacleto Barrera (52), Iván Santamaría (33); rivales: los Rivadeneira.
+
+### `pieces/prueba-penjamo/ESTADO.md`
+
+# prueba-penjamo (La Prueba de la Sobremesa · Parte 1): estado
+
+- **CATALOGO.md #43 "La prueba de ADN en la sobremesa" [CAPO]. Familia: Chantajes y pruebas. Cierre tipo 5: la acusación se vuelve contra quien acusa.**
+- MEXITV. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN). Música cálida c07-c09.
+- Personajes: Evodio Salcedo (patrón, 68), Saúl Salcedo (hijo mayor, 41), Gerónimo Salcedo (hijo menor, 32). Portal de rancho en Pénjamo.
+- 2026-11-17 19:02: REGEN c04 (cortaba "a mis espaldas"; 1ª frase acortada). share.mp4 42.2 s, 1.55 s/plano, LUFS -14.4. Transcripción y subtítulos revisados. Entregado a main.
+
+### `pieces/panuelo-jalpan/ESTADO.md`
+
+# panuelo-jalpan (El Pañuelo de Jalpan · Parte 1): estado
+
+- **CATALOGO.md #56 "La señora de la hacienda y el administrador" [CAPO], época 1890s. Familia: Patronas y haciendas. Cierre tipo 6: mirada muda (Anastasio voltea y ve a Matías con el pañuelo).**
+- VISTA. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN). Música cálida c04-c09.
+- Personajes: Anastasio Echeverría (hacendado, 60), Mariana Echeverría (hija, 22), Matías Robledo (administrador, 30); se menciona a don Rafael Garduño (prometido, no aparece).
+- 2026-11-17 19:00: GEN sin regens. share.mp4 45.7 s, 1.51 s/plano, LUFS -14.2. Transcripción y subtítulos revisados. Entregado a main.
+
+### `pieces/ojo-cienegas/ESTADO.md`
+
+# ojo-cienegas (El Ojo de Agua · Parte 1): estado
+
+- **CATALOGO.md #51 "La cacica del Miedo" [CAPO]. Familia: Patronas y haciendas. Cierre tipo 2: documento leído, corte antes del dato (el ojo de agua).**
+- VISTA. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN). 22 clips (ampliado). Música cálida c04-c06.
+- Personajes: Tránsito Elizondo (58), Andrés Villarreal (35), Rosendo Ayala (54); se menciona a don Cosme Villarreal.
+- 2026-11-17 20:24: GEN 22 clips sin regens. share.mp4 70.1 s, 1.48 s/plano, LUFS -14.4. Transcripción y subtítulos revisados. Entregado a main.
+
+### `pieces/moro-sabinas/ESTADO.md`
+
+# moro-sabinas (El Moro de Sabinas · Parte 1): estado
+
+- **CATALOGO.md #54 "El patrón en otro cuerpo" [CAPO]. Familia: Patronas y haciendas. Cierre tipo 4: el villano descubre que lo oyeron.**
+- MEXI. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN). 22 clips (ampliado). Música cálida c11-c14.
+- Personajes: Marlene Salinas (viuda, 36), Darío Lozano (administrador, 41), Tobías Guerra (caballerango, 58); difunto don Rigoberto.
+- 2026-11-17 21:25: GEN 22 clips sin regens (r1: el caballo no se niega, plano usable). share.mp4 72.7 s, 1.61 s/plano, LUFS -14.4. Transcripción y subtítulos revisados. Entregado a main.
+
+### `pieces/manteles-apan/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi, parte1, patronas, hidalgo, apan, catalogo]
+relatedTo: [atrium-vista, novelas-variedad]
+---
+# manteles-apan (La Patrona de Apan · Parte 1): estado
+
+- **CATALOGO.md #48 "La que regresó convertida en patrona" [CAPO]. Familia: Patronas y haciendas. Cierre tipo 2: se lee un documento y se corta antes del dato clave.**
+- MEXI. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN).
+- 2026-11-17: clips OK a la primera (17 clips, 0 regens; i01/r2 "Suscríbete/Amara" = alucinación ASR en mudos). Render renders/share.mp4 59.8 s, 1.56 s/plano, LUFS -14.2, pico -2.3 dBTP, transcripción = lines.json, subtítulos revisados en qa/strip.jpg. Entregado a main (sin LucidLink/Telegram).
+
+### `pieces/luto-tacambaro/ESTADO.md`
+
+# luto-tacambaro (El Luto de Tacámbaro · Parte 1): estado
+
+- **CATALOGO.md #33 "La viuda del capo" [CAPO] adaptada (hacendado, sin armas). Familia: Capos, caciques y patrones. Cierre tipo 2: lee la libreta y se corta antes del nombre.**
+- MEXITV. 25 clips (3 two-shots: r1, c11, r4). Proyecto Flow propio. En cola (GEN). Música cálida c10-c11.
+- Personajes: Altagracia Sotelo (54, viuda), Prisciliano Sotelo (60, cuñado), Moisés Rangel (42, hombre de confianza), Areli Campos (31, la amante); don Aniceto, difunto (ataúd cerrado).
+
+### `pieces/lucero-parral/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexitv, parte1, capos, chihuahua, parral, catalogo]
+relatedTo: [atrium-vista, novelas-variedad]
+---
+# lucero-parral (El Caballo de Parral · Parte 1): estado
+
+- **CATALOGO.md #22 "El compadre" [CAPO]. Familia: Traición familiar. Cierre tipo 7: objeto que delata (el sombrero del compadre).**
+- MEXITV. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN).
+- 2026-11-17: GEN cortado + REGEN completó los 17 clips (0 regens de QA). Quitado el PUNCH de c06 (post.py --noedl si se re-renderiza). share.mp4 57.4 s, 1.73 s/plano, LUFS -14.3, pico -2.2. Transcripción OK ("con papel, con papel" del ASR del render es alucinación: partes y clip limpios). Entregado a main.
+
+### `pieces/llavero-saltillo/ESTADO.md`
+
+# llavero-saltillo (El Llavero de Saltillo · Parte 1): estado
+
+- **CATALOGO.md #8 "Las llaves de la bodega" (con figura de poder: don Gregorio, patrón de los camiones). Familia: Herencia y testamento. Cierre tipo 1: en la bodega la espera una señora desconocida.**
+- MAJESTIC. 24 clips (two-shots r1, r2, c13). Proyecto Flow propio. En cola (GEN). Música cálida c09-c10. Dos locaciones (despacho + bodega).
+- Personajes: Itzayana Cordero (32, nuera viuda), Zulema Montemayor (41), Reinaldo Montemayor (46), licenciado Olegario Zertuche (66, notario), la señora de la bodega (63, sin nombre); don Gregorio Montemayor, difunto.
+
+### `pieces/jima-arandas/ESTADO.md`
+
+# jima-arandas (La Jimadora de Arandas · Parte 1): estado
+
+- **CATALOGO.md #46 "La recolectora y el heredero" [CAPO]. Familia: Patronas y haciendas. Cierre tipo 3: palabra reveladora (el apellido "Olmos").**
+- VISTA. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN). Música cálida c07-c09.
+- 2026-11-17: 16 clips + 2 regens (c02 traía subtítulos quemados, c04 se comía una frase). share.mp4 49.5 s, 1.33 s/plano, LUFS -14.2, pico -2.2. Transcripción y subtítulos revisados. Entregado a main.
+
+### `pieces/hotel-mazamitla/ESTADO.md`
+
+# hotel-mazamitla (El Hotel de Mazamitla · Parte 1): estado
+
+- **CATALOGO.md #28 "La recepcionista del hotel" [CAPO]. Familia: Revancha del empleado humillado. Cierre tipo 3: palabra reveladora ("hermana").**
+- MAJESTIC. 25 clips. Proyecto Flow propio. En cola (GEN). Música cálida c14-c16.
+- Personajes: Sebastián Lozada (29), Liliana Cruz (27), Alfonso Lozada (62).
+
+### `pieces/foto-cosala/ESTADO.md`
+
+# foto-cosala (La Foto del Cumpleaños · Parte 1): estado
+
+- **CATALOGO.md #41 "La foto del cumpleaños" [CAPO]. Familia: Chantajes y pruebas. Cierre tipo 4: el villano descubre que lo oyeron (Fabián lo grabó con el celular).**
+- MAJESTIC. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN). Música cálida c06-c07.
+- Personajes: Benito Quiroga (socio, 52), Fabián Rosas (ayudante de banquetes, 24, ropa de diario). Se mencionan don Cipriano (patrón) y don Horacio Lugo (rival).
+- 2026-11-17 19:38: REGEN c07 (cortaba "hasta su firma"; línea acortada). share.mp4 37.6 s, 1.33 s/plano, LUFS -14.7. Transcripción y subtítulos revisados. Entregado a main.
+
+### `pieces/flores-tapalpa/ESTADO.md`
+
+# flores-tapalpa (Las Flores de Tapalpa · Parte 1): estado
+
+- **CATALOGO.md #16 "El pretendiente del mercado" [CAPO]. Familia: Bodas, compromisos y pretendientes. Cierre tipo 1: entra un personaje inesperado (don Patricio, padre de Gael).**
+- MEXITV. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17 (reemplaza a fierro-lagos, descartada por parecerse a lucero-parral); en cola (GEN). Música cálida c07-c09.
+- 2026-11-17: 16 clips a la primera, 0 regens. share.mp4 54.2 s, 1.50 s/plano, LUFS -14.2, pico -2.2. Transcripción y subtítulos revisados. Entregado a main.
+
+### `pieces/danzon-cordoba/ESTADO.md`
+
+# danzon-cordoba (El Danzón de Córdoba · Parte 1): estado
+
+- **CATALOGO.md #39 "La maestra de baile" [CAPO]. Familia: Regreso, amnesia y pasado. Cierre tipo 6: mirada muda (Hermelinda y Esperanza).**
+- MAJESTIC. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN). 26 clips (ampliado). Música cálida c11-c16.
+- Personajes: Feliciano Carranza (63), Esperanza Lara (58), Hermelinda Carranza (67).
+- 2026-11-17 20:56: GEN 26 clips sin regens. share.mp4 75.9 s, 1.61 s/plano, LUFS -14.3. Transcripción (solo cifras/ASR) y subtítulos revisados. Entregado a main.
+
+### `pieces/dama-lagos/ESTADO.md`
+
+# dama-lagos (La Dama de Compañía · Parte 1): estado
+
+- **CATALOGO.md #52 "La gata del rancho" [CAPO]. Familia: Patronas y haciendas. Cierre tipo 3: palabra reveladora (el nombre "Ventura Altamirano").**
+- MEXI. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN). Música cálida c04-c08.
+- Personajes: Benigna Altamirano (matriarca, 76), Paulina Altamirano (nieta, 26), Macrina Leal (dama de compañía, 23). Comedor de hacienda en Lagos de Moreno.
+- 2026-11-17 18:22: GEN sin regens. share.mp4 47.8 s, 1.44 s/plano, LUFS -14.3. Transcripción y subtítulos revisados. Entregado a main.
+
+### `pieces/copita-matatlan/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic, parte1, capos, oaxaca, matatlan, catalogo]
+relatedTo: [atrium-vista, novelas-variedad]
+---
+# copita-matatlan (El Catador de Matatlán · Parte 1): estado
+
+- **CATALOGO.md #1 "El catador" [CAPO]. Familia: Identidad oculta. Cierre tipo 1: entra un personaje inesperado (la compradora saluda a don Teófilo).**
+- MAJESTIC. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN).
+- 2026-11-17: 14 clips a la primera, 0 regens. share.mp4 55.9 s, 1.59 s/plano, LUFS -14.4, pico -2.2. Transcripción y subtítulos revisados. Entregado a main.
+
+### `pieces/compromiso-lagunillas/ESTADO.md`
+
+# compromiso-lagunillas (El Compromiso de Lagunillas · Parte 1): estado
+
+- **CATALOGO.md #34 "El hijo del hacendado y la hija del rival" [CAPO]. Familia: Capos, caciques y patrones. Cierre tipo 3: confesión ("Yo estuve comprometida con su padre").**
+- MEXITV. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN). Música cálida c09-c11.
+- Personajes: Lázaro Ugalde (66), Estela Ugalde (61), Marcelo Ugalde (30), Carolina Benavides (27).
+- 2026-11-17 19:58: GEN sin regens. share.mp4 46.8 s, 1.36 s/plano, LUFS -14.3. Transcripción y subtítulos revisados (c11 sin "Yo" en lines.json, como se dijo). Entregado a main.
+
+### `pieces/carta-durango/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi, parte1, patronas, durango, catalogo]
+relatedTo: [atrium-vista, novelas-variedad]
+---
+# carta-durango (La Carta de Durango · Parte 1): estado
+
+- **CATALOGO.md #49 "El hacendado y la hija del enemigo" [CAPO]. Familia: Patronas y haciendas. Cierre tipo 4: la descubren (Joaquín la encuentra abriendo el cajón).**
+- MEXI. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN).
+- 2026-11-17: 17 clips + 1 regen (c10 cortaba la frase; línea acortada a "Ya no confía en nadie."). share.mp4 51.7 s, 1.60 s/plano, LUFS -14.2, pico -2.2. Transcripción y subtítulos revisados. Entregado a main.
+
+### `pieces/cafetal-coatepec/ESTADO.md`
+
+# cafetal-coatepec (La Patrona del Cafetal · Parte 1): estado
+
+- **CATALOGO.md #45 "La patrona que dejaron en el altar" [CAPO]. Familia: Patronas y haciendas. Cierre tipo 7: objeto que delata (la foto de novia en la cartera).**
+- MEXI. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN). Música cálida c07-c09.
+- 2026-11-17: 15 clips + 1 regen (c12 CTA con sombrero duplicado). share.mp4 51.5 s, 1.55 s/plano, LUFS -14.3, pico -2.2. Transcripción y subtítulos revisados. Entregado a main.
+
+### `pieces/cacao-comalcalco/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista, parte1, patronas, tabasco, comalcalco, catalogo]
+relatedTo: [atrium-vista, novelas-variedad]
+---
+# cacao-comalcalco (La Heredera de Comalcalco · Parte 1): estado
+
+- **CATALOGO.md #53 "La heredera salvaje" [CAPO]. Familia: Patronas y haciendas. Cierre tipo 3: una palabra reveladora ("…y de Candelaria").**
+- VISTA. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN).
+- 2026-11-17: 15 clips a la primera, 0 regens. share.mp4 50.8 s, 1.48 s/plano, LUFS -14.2, pico -2.3. Transcripción y subtítulos revisados (strip). Entregado a main.
+
+### `pieces/brindis-orizaba/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic, parte1, capos, veracruz, orizaba, catalogo]
+relatedTo: [atrium-vista, novelas-variedad]
+---
+# brindis-orizaba (Parte 1): estado
+
+## Hecho (2026-11-17)
+- **CATALOGO.md #19 "El brindis" [CAPO]. Familia: Bodas, compromisos y pretendientes. Cierre tipo 5: se vuelve la acusación contra quien acusa ("Pregúntele a su esposa, don Clemente").**
+- MAJESTIC. Cuenta monetizadotiktok18, proyecto Flow propio. 18 clips + 1 regen (c01: el ASR no oía "Brindo por la novia"; tras regenerar se comprobó con audio acolchado que sí lo dice y se forzó el tramo c01 desde 0.0 s en la EDL y en renders/phr.json).
+- Render renders/share.mp4: 49.8 s, SPEED 1.15, subtítulos tamaño 38 revisados en qa/strip.jpg y renders/subs/*.json. LUFS -14.1, pico -2.1 dBTP.
+- QA: qa/report.txt, qa/render_report.txt (c03 "mija"→ASR "mi hija"). revisar_render.py NO corrió: la API se quedó sin créditos (400 credit balance too low); revisión visual hecha en sesión con qa/strip.jpg.
+
+## Pendiente
+- No entregado (main entrega). caption.txt listo. Si se re-renderiza con post.py SIN --noedl, se pierde el arreglo de c01.
+
+### `pieces/barrica-mascota/ESTADO.md`
+
+# barrica-mascota (La Barrica de Mascota · Parte 1): estado
+
+- **CATALOGO.md #50 "La viña de la discordia" [CAPO] trasladada a destilería de raicilla (foto en vez de cartas). Familia: Patronas y haciendas. Cierre tipo 7: objeto que delata (la foto de las dos madres).**
+- VISTA. 24 clips. Proyecto Flow propio. En cola (GEN). Música cálida c10-c12.
+- Personajes: Julio Montalvo (38), Héctor Montalvo (34), Conchita Ruelas (52).
+- 2026-11-17 21:40: GEN cortado en las hojas (proyecto ee739ba1 a medias, abandonado). Retomar con GEN normal (proyecto nuevo).
+
+### `pieces/aretes-jojutla/ESTADO.md`
+
+# aretes-jojutla (Los Aretes de Jojutla · Parte 1): estado
+
+- **CATALOGO.md #47 "La matriarca y los tres capataces" [CAPO]. Familia: Patronas y haciendas. Cierre tipo 7: objeto que delata (los aretes de Lucía en la hija de la patrona).**
+- MEXI. Cuenta monetizadotiktok18, proyecto Flow propio. Escrito 2026-11-17; en cola (GEN). Música cálida c04-c06.
+- Personajes: Leonarda Montoya (matriarca, 67), Isadora Montoya (hija, 28), Abel Cortés (33; sus dos hermanos solo se mencionan). Lucía = la hermana (no aparece).
+- 2026-11-17 19:35: GEN sin regens. share.mp4 43.6 s, 1.54 s/plano, LUFS -14.3. Transcripción y subtítulos revisados. Entregado a main.
+
+### `pieces/_HANDOFF_novelas.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, flow, monetizadotiktok18, cola]
+---
+# Handoff novelas (monetizadotiktok18), 2026-11-17
+
+## Estado de la cola
+- Runner: `nohup bash <scratchpad>/nov_q/queue.sh >/dev/null 2>&1 &` (scratchpad = C:/Users/ALANLE~1/AppData/Local/Temp/claude/c026b2981c42eeb2/50c3c1ee-af27-4bdd-ab17-c508335a8f8f/scratchpad). Cola viva: pieces/_cola_monetizado.txt; pendiente guardada: pieces/_cola_monetizado_pendiente.txt. Log: pieces/_cola_monetizado.log.
+- Ledger: pieces/_creditos_monetizadotiktok18.json (gastado 8600 al entregar junta).
+
+## AL RETOMAR (runner DETENIDO 15:30 por PAUSA del usuario; esperar el OK de main)
+1. `cp pieces/_cola_monetizado_pendiente.txt pieces/_cola_monetizado.txt` y arrancar el runner. Cola: `REGEN vendimia-ensenada` (GEN cortado: hechos c01-c06, faltan c07 r1 c08 i01 c09 r2 r3 c10; su proyecto Flow es el activo), `REGEN relevo-ures c02` (c02 traía subtítulos quemados), `GEN viajante-sombrerete`.
+2. Después de cada una: qa_clips → hoja → post.py → strip → ESTADO → SendMessage. relevo-ures ya tiene QA hecho (solo falta c02).
+3. **Créditos de la API de Anthropic agotados**: revisión en sesión con qa/strip.jpg + qa/render_report.txt (+ hoja de clips con stack.py). Ojo: Omni a veces quema subtítulos propios (jima c02, relevo c02) → regenerar; y a veces corta la última frase de un clip de 6 s (carta c10) → acortar la línea en lines.json y regenerar.
+4. gastado Flow al detener: 10460.
+5. Procesos: matar queue.sh/gen.sh (kill por PID en `ps -ef`), y en Windows python clips.py / make_sheets.py / node cli.js (Get-CimInstance Win32_Process por CommandLine). No tocar los bash de vera-01 (otra sesión).
+
+## Entregadas a main en esta sesión (renders listos, NO entregados a LucidLink/Telegram)
+| pieza | marca | # | cierre |
+|---|---|---|---|
+| domino-jerez | MEXI | 31 | 3 |
+| pipian-tlaxcala | MAJESTIC | 25 | 7 |
+| sobre-alamos | MEXITV | 7 | 2 |
+| junta-guadalajara | VISTA | 26 | 1 |
+| brindis-orizaba | MAJESTIC | 19 | 5 | (EDL c01 arreglada a mano: re-render solo con post.py --noedl)
+| manteles-apan | MEXI | 48 | 2 |
+| lucero-parral | MEXITV | 22 | 7 | (PUNCH de c06 quitado a mano: re-render solo con --noedl)
+| cacao-comalcalco | VISTA | 53 | 3 |
+| copita-matatlan | MAJESTIC | 1 | 1 |
+| flores-tapalpa | MEXITV | 16 | 1 |
+| carta-durango | MEXI | 49 | 4 | (c10 regenerada con línea acortada)
+| jima-arandas | VISTA | 46 | 3 |
+| traje-zamora | MAJESTIC | 5 | 1 |
+| cafetal-coatepec | MEXI | 45 | 7 |
+Pendientes de cerrar: relevo-ures MEXITV #24 (5), vendimia-ensenada VISTA #55 (6), viajante-sombrerete MAJESTIC #12 (1).
+
+## Escritas después (en cola, orden de rotación): flores-tapalpa MEXITV #16 cierre 1 (Bodas) · jima-arandas VISTA #46 cierre 3 (Patronas) · traje-zamora MAJESTIC #5 cierre 1 (Identidad) · cafetal-coatepec MEXI #45 cierre 7 (Patronas). Después: relevo-ures MEXITV #24 cierre 5 (Traición). Después: vendimia-ensenada VISTA #55 cierre 6 (Patronas). Después: viajante-sombrerete MAJESTIC #12 cierre 1 (Doble vida). Siguiente nueva: MEXI, Patronas, cierre ≠1. Usados además: #5,12,16,24,45,46,55. Nombres: Aurelio, Remigio, Baltasar; Nombres: Gustavo, Lisardo, Natividad, Silvestre, Fernanda, Luca. Nombres nuevos usados: Hortensia, Valentina, Gael, Patricio, Graciela, Santiago, Marisol, Eugenia, Rodrigo, Fulgencio, Abundio, Amparo, Griselda, Celestino, Felipa. OJO: lucero-parral ya es caballo+fierro (no repetir esa premisa).
+
+## Escritas (manteles con clips listos; el resto en la cola pendiente), en este orden
+| pieza | marca | # | familia | cierre |
+|---|---|---|---|---|
+| manteles-apan | MEXI | 48 | Patronas | 2 |
+| lucero-parral | MEXITV | 22 | Traición familiar | 7 |
+| cacao-comalcalco | VISTA | 53 | Patronas | 3 |
+| copita-matatlan | MAJESTIC | 1 | Identidad oculta | 1 |
+| carta-durango | MEXI | 49 | Patronas | 4 |
+Todas tienen sheets_spec.json, make_sheets.py, clips.src.py → clips.py, lines.json, edit.py (mkedit, SPEED 1.15, subtítulos), phr.py, mk_edl.py, caption.txt y ESTADO.md inicial.
+
+## Siguiente pieza nueva
+- Marca: MEXITV. Debe ser NO-patronas (la anterior, carta-durango, es patronas), cierre ≠ 4, familia ≠ Patronas. Usados hoy: #1,7,14,19,22,25,26,31,48,49,53. Saltar #44.
+- Nombres ya usados hoy (no repetir): Nicanor, Valeria, Mercedes, Arriaga, Clemencia, Renata, Bernardo, Tomasa, Rufino, Ismael, Ximena, Anselmo, Rosario, Arturo, Leonor, Eusebio, Julián, Candelaria, Teófilo, Iker, Daniela, Brígida, Fausto, Inés, Joaquín, Pilar.
+
+## Cómo escribir una pieza nueva (5 min)
+1. mkdir pieces/<p>; copiar phr.py y mk_edl.py de silla-izamal.
+2. sheets_spec.json → `python -I <sc>/nov_q/mksheets.py "F:/Claude Proyectos/pieces/<p>"` (ruta absoluta, no ".").
+3. lines.json + clips.src.py (copiar el de carta-durango o manteles-apan) → `python -I <sc>/nov_q/build.py <p>/clips.src.py <p>/clips.py` + py_compile.
+4. `python -I <sc>/nov_q/mkedit.py "F:/.../pieces/<p>" <BRAND> "<Título>" <t1cid> <t2cid>`.
+5. caption.txt, ESTADO.md, `echo "GEN <p>" >> pieces/_cola_monetizado.txt`.
+
+## Cerrar una pieza
+1. `python -I <sc>/nov_q/qa_clips.py "F:/.../pieces/<p>"` → REVISAR en clips mudos (r*, i*) suelen ser alucinaciones del ASR ("¡Suscríbete!"). Hoja: `python <sc>/stack.py <dir> c01,c02,... out.jpg 560` (ver subtítulos quemados, sobre todo en el CTA).
+2. Regens: insertar `REGEN <p> <ids>` al principio de la cola (`sed -i '1i ...'`).
+3. `python <sc>/nov_q/post.py <p>`; `bash <sc>/strip.sh <p>` → qa/strip.jpg; revisar_render.py (el "watermark" de MEXITV es falso positivo). Tiempos→clip: `python <sc>/tmap.py "F:/.../pieces/<p>"`.
+4. ESTADO.md + SendMessage a main con la línea estándar (leer gastado del ledger antes).
+
+## Sesión 17:30 (retomada)
+- Entregadas: vendimia-ensenada (VISTA #55, 6), relevo-ures (MEXITV #24, 5). viajante-sombrerete: falta REGEN c02 (cortó la 1ª frase) → post → entregar.
+- Escritas y en cola, en orden: dama-lagos MEXI #52 cierre 3 (Patronas) · prueba-penjamo MEXITV #43 cierre 5 (Chantajes) · panuelo-jalpan VISTA #56 cierre 6 (Patronas, época) · foto-cosala MAJESTIC #41 cierre 4 (Chantajes) · aretes-jojutla MEXI #47 cierre 7 (Patronas).
+- compromiso-lagunillas MEXITV #34 cierre 3 (Capos) también en cola. ojo-cienegas VISTA #51 cierre 2 (Patronas) en cola. danzon-cordoba MAJESTIC #39 cierre 6 en cola. moro-sabinas MEXI #54 cierre 4 en cola. tienda-mineral MEXITV #30 cierre 1 en cola (24 clips). Siguiente nueva: VISTA, Patronas (solo queda #50; si no, premisa nueva tipo patrona), cierre ≠1. DESDE AHORA 22-26 clips, 65-85 s.
+- Nombres nuevos: Benigna/Paulina Altamirano, Macrina Leal, Ventura; Evodio/Saúl/Gerónimo Salcedo; Anastasio/Mariana Echeverría, Matías Robledo, Rafael Garduño; Benito Quiroga, Fabián Rosas, Cipriano, Horacio Lugo; Leonarda/Isadora Montoya, Abel/Lucía Cortés.
+- barrica-mascota VISTA #50 cierre 7 (Patronas, 24 clips) en cola. Patronas del catálogo AGOTADAS (#45-#56 usados): inventar premisas nuevas tipo patrona/hacienda. Siguiente: MAJESTIC, no patronas, cierre ≠7.
+- hotel-mazamitla MAJESTIC #28 cierre 3 (25 clips) en cola. Siguiente: MEXI, patrona NUEVA (inventada), cierre ≠3.
+- puro-tuxtla MEXI (patrona nueva) cierre 5 (24 clips) en cola. Siguiente: MEXITV, no patronas, cierre ≠5.
+
+## AL RETOMAR (runner DETENIDO 21:40 por contexto del agente; gastado 12330)
+1. `cp pieces/_cola_monetizado_pendiente.txt pieces/_cola_monetizado.txt` + arrancar runner. Cola: REGEN tienda-mineral (hechos c01-c05; el proyecto Flow activo 4cf25b82 está vacío y es para ella) · GEN barrica-mascota · GEN hotel-mazamitla · GEN puro-tuxtla.
+2. Entregadas en esta tanda (main): vendimia-ensenada, relevo-ures, viajante-sombrerete, dama-lagos, prueba-penjamo, panuelo-jalpan, foto-cosala, aretes-jojutla, compromiso-lagunillas, ojo-cienegas, danzon-cordoba, moro-sabinas.
+3. Rotación: después de puro-tuxtla (MEXI, cierre 5) va MEXITV, no patronas, cierre ≠5, 22-26 clips. Catálogo [CAPO] libre: #3 (viñedo, evitar), #9 (medios hermanos, evitar tras barrica), #33, #35; o premisas nuevas.
+4. Kill de procesos: en ps -ef el usuario tiene espacio ("Alan Lei"), así que el PID es la columna 3 de awk, no la 2. Matar primero queue.sh y gen.sh, DESPUÉS los python/node (si no, el runner sigue con la pieza siguiente).
+5. Revisión ahorrando tokens: qa_clips.py → grep "r=0.[0-8]" del report; hoja stack.py a 360 px; post.py; tira de 6 fotogramas 3x2 a 120 px.
+
+## Sesión 21:36 (retomada por subagente)
+- Runner arrancado 21:36 con la cola pendiente. Escritas y en cola: luto-tacambaro MEXITV #33 cierre 2 (Capos) · trapiche-cuautla VISTA #58 cierre 3 (Patronas nueva, época) · llavero-saltillo MAJESTIC #8 cierre 1 (Herencia). puro-tuxtla agregada al catálogo como #57.
+- Siguiente nueva: MEXI, patrona NUEVA (#59), cierre ≠1.
+- Nombres nuevos: Altagracia/Prisciliano/Aniceto Sotelo, Moisés Rangel, Areli Campos; Fidelina Villaseñor, Adalberto Larrea, Elías Cervera, Dominga; Itzayana Cordero, Zulema/Reinaldo/Gregorio Montemayor, Olegario Zertuche.
+
+## AL RETOMAR (runner DETENIDO 21:47 por PAUSA del usuario; esperar el OK de main; gastado 12400)
+1. `cp pieces/_cola_monetizado_pendiente.txt pieces/_cola_monetizado.txt` + arrancar runner. Cola: REGEN tienda-mineral (hechos 12/24: c01-c10 r1 r2; proyecto Flow activo 4cf25b82 es el suyo) · GEN barrica-mascota · hotel-mazamitla · puro-tuxtla · luto-tacambaro · trapiche-cuautla · llavero-saltillo.
+2. Ninguna pieza entregada aún en esta tanda. Siguiente nueva: MEXI, patrona NUEVA (#59), cierre ≠1.
+
+### `pieces/yegua-jerez/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte1, humillacion-revancha, zacatecas, jerez, charreria, yegua]
+relatedTo: [agave-amatitan, guitarra-paracho, atrium-vista]
+---
+# yegua-jerez (La Yegua de Jerez · Parte 1): estado
+
+## Hecho (2026-11-17)
+- Primera pieza basada (transformada) en la ref de @alisorxomrb 7706249552289860896 (fuentes/atrium-vista/videos/7706249552289860896_analisis.md): Rosalba, escaramuza charra, defiende a la Duquesa, yegua campeona lastimada que el capataz Cutberto quiere vender; el patrón Arnulfo la corre con la yegua; la abuela Chayo la regaña; Rosalba promete ganar la charreada de Jerez; remate burlón del patrón.
+- Cuenta monetizadotiktok18, proyecto Flow propio; 7 hojas (4 personajes, la yegua DUQUESA y 2 locaciones) sin duplicados.
+- 23 clips a la primera, sin regens (230 créditos).
+- Render renders/share.mp4: 86.5 s, 54 planos (1.60 s/plano), VISTA, SPEED 1.15, subtítulos quemados (tamaño 38). Arranque cerrado con crop (el c01 abría en plano abierto). Verificado en qa/subs_check.jpg y qa/open.jpg.
+- QA: qa/report.txt, tiras qa/s1-s3.jpg, qa/render_report.txt, renders/share_revision.md (CASI: parche de marca en la chamarra del patrón y foto de la yegua que cambia entre el inserto y el plano, aceptados).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @vistastoriestv.
+
+### `pieces/vainilla-papantla/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexitv, parte1, capos, veracruz, papantla, vainilla]
+relatedTo: [manzana-cuauhtemoc, jaiba-lagunamadre, atrium-vista]
+---
+# vainilla-papantla (La Vainilla de Papantla · Parte 1): estado
+
+## Hecho (2026-11-16)
+- Capos transformado del modelo fuentes/atrium-vista/videos/7704056500502793502_analisis.md (traidor en casa), sin federales, armas ni dinero: llegan las camionetas de Fermín al beneficio de don Severiano, que acusa a su compadre Chava; Fermín da plazo "antes de que se seque la vainilla". Giro: la que le abrió la puerta fue su esposa Inés, y Ximena es hija de Fermín.
+- Cuenta monetizadotiktok18, proyecto Flow nuevo; 5 hojas sin duplicados.
+- 29 clips a la primera + 1 regen (c21: el plano de grupo ponía a Severiano al frente; rehecho en single de Fermín) = 30 clips (300 créditos).
+- Render renders/share.mp4: 88.7 s, 58 planos (1.52 s/plano), -14.3 LUFS, pico -2.1 dBTP, MEXITV (marca "MEXI TV"), SPEED 1.15.
+- QA: qa/report.txt, tiras qa/s1-s4.jpg, qa/render_report.txt, renders/share_revision.md (CASI; su punto 1 "marca equivocada" es un error del revisor: la pieza es MEXITV).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @mexitve.
+
+### `pieces/trajinera-xochimilco/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte1, capos, humillacion-revancha, cdmx, xochimilco, trajinera]
+relatedTo: [guitarra-paracho, yegua-jerez, atrium-vista]
+---
+# trajinera-xochimilco (La Trajinera de Xochimilco · Parte 1): estado
+
+## Hecho (2026-11-17)
+- Estructura de la ref @alisorxomrb (transformada): en el embarcadero de don Celso, el capataz Rubén quiere desarmar la Lupita, la trajinera que hizo el abuelo de Abril; Celso la corre con su trajinera; su abuelo Teodoro cuenta que Celso siempre la quiso desde que perdió una regata; Abril promete correr la regata; remate: Celso se burla.
+- Cuenta monetizadotiktok18, proyecto Flow propio; 6 hojas sin duplicados.
+- 21 clips a la primera + 1 regen (c13: subtítulos quemados por Omni) = 22 clips (220 créditos).
+- Render renders/share.mp4: 79.4 s, 50 planos (1.58 s/plano), MEXI, SPEED 1.15, subtítulos quemados (tamaño 38). Verificado en qa/subs_check.jpg.
+- QA: qa/report.txt, tiras qa/s1-s3.jpg + qa/c13.jpg, qa/render_report.txt, renders/share_revision.md (CASI: la espalda de Abril en el borde muestra la camiseta sin la camisa roja, aceptado).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @mexistories.
+
+### `pieces/talavera-cholula/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic, parte1, capos, puebla, cholula, talavera]
+relatedTo: [sombrero-sahuayo, atrium-vista]
+---
+# talavera-cholula (La Talavera de Cholula · Parte 1): estado
+
+## Hecho (2026-11-17)
+- Capos transformado (patrón acusa a su hombre de confianza; el traidor es su hijo): en su taller de talavera en Cholula, don Ezequiel acusa a su encargado Rubén; Leonor descubre que Adrián se fue; el rival Fausto Cuéllar llega con los papeles del taller firmados por Adrián, plazo "antes de que se apaguen los hornos".
+- Cuenta monetizadotiktok18. El proyecto Flow compartido perdió los assets EZEQUIEL_OSORIO y RUBEN_TAPIA (c03, c05, c07 salieron con NOREF, caras aceptables); se pasó a un proyecto nuevo con las hojas resubidas.
+- 22 clips + 3 regens (c07 y c08 por figuras en el borde, c11 por las gafas de Fausto).
+- c05: Omni cambió la 2.ª frase; lines.json se ajustó a lo que dice el audio ("Si me mientes, ya no hay nada entre tú y yo.").
+- c11 repetía "Ya tengo los papeles"; en la EDL se recortó a (0.72, 5.75).
+- Render renders/share.mp4: 63.0 s, 42 tramos, MAJESTIC, SPEED 1.15, subtítulos tamaño 38, revisados en qa/subs_check.jpg. LUFS -14.4, pico -0.7 dBTP.
+- QA: qa/report.txt, qa/s1-s3.jpg, qa/regen.jpg, qa/render_report.txt, renders/share_revision.md (CASI en v1; ya se regeneraron los bordes y las gafas).
+
+## Pendiente
+- No entregado. caption.txt listo. La P2 solo se hace si la P1 pasa 10k en @wepsychologic.
+
+### `pieces/sombrero-sahuayo/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexitv, parte1, capos, michoacan, sahuayo, sombreros]
+relatedTo: [pan-comala, palofierro-kino, atrium-vista]
+---
+# sombrero-sahuayo (El Sombrero de Sahuayo · Parte 1): estado
+
+## Hecho (2026-11-17)
+- Capos transformado: bajo el portal de Sahuayo, Joaquín Valencia quiere el local del sombrerero don Isidro, pisa un sombrero de encargo y le da plazo "antes de que termine la feria"; su hija Clara lo defiende. Isidro llama a don Honorio, padrino de Joaquín, que se casó con un sombrero tejido por Isidro. Plazo invertido. Giro: la madre de Clara no se fue de casa: se fue con el papá de Joaquín.
+- Cuenta monetizadotiktok18, proyecto Flow propio; 5 hojas sin duplicados.
+- 24 clips a la primera, sin regens (240 créditos).
+- Render renders/share.mp4: 75.7 s, 47 planos (1.60 s/plano), MEXITV (marca "MEXI TV"), SPEED 1.15, subtítulos quemados (tamaño 38). Verificado en qa/subs_check.jpg.
+- QA: qa/report.txt, tiras qa/s1-s3.jpg, qa/render_report.txt, renders/share_revision.md (CASI; su punto "marca equivocada" es error del revisor: la pieza es MEXITV; Clara alterna falda y jeans entre clips, aceptado).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @mexitve.
+
+### `pieces/sobre-alamos/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexitv, parte1, capos, sonora, alamos, catalogo]
+relatedTo: [atrium-vista, novelas-variedad]
+---
+# sobre-alamos (Parte 1): estado
+
+## Hecho (2026-11-17)
+- **CATALOGO.md #7 "La silla vacía" [CAPO]. Familia: Herencia y testamento. Cierre tipo 2: se lee un documento y se corta antes del dato clave ("Nicanor Durán es mi…").**
+- MEXITV. Cuenta monetizadotiktok18, proyecto Flow propio. 18 clips + 1 regen (c13, el CTA, traía subtítulos quemados).
+- Render renders/share.mp4: 55.5 s, SPEED 1.15, subtítulos tamaño 38 revisados en qa/strip.jpg. LUFS -14.3, pico -2.2 dBTP.
+- QA: qa/report.txt (i01/r1/r3/r4 = alucinaciones del ASR en clips mudos), qa/render_report.txt, renders/share_revision.md (CASI). Aceptados: "marca equivocada" (falso positivo: MEXI TV arriba a la izquierda es el kit MEXITV), una patilla de lentes en la nuca del borde en un OTS, el sombrero del CTA distinto del que sostiene en la mano (se lo pone a cámara).
+
+## Pendiente
+- No entregado (main entrega). caption.txt listo.
+
+### `pieces/silla-izamal/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista, parte1, capos, yucatan, izamal, catalogo]
+relatedTo: [atrium-vista, novelas-variedad]
+---
+# silla-izamal (La Silla de Izamal · Parte 1): estado
+
+## Hecho (2026-11-17)
+- **CATALOGO.md #14 "El esposo que no camina" [CAPO]. Familia: doble vida y secretos de pareja. Cierre tipo 4: el villano descubre que lo vieron.**
+- En su hacienda henequenera de Izamal, don Jacinto finge seguir en silla de ruedas y sin entender nada desde el accidente. Su esposa Graciela y el administrador Octavio planean poner la hacienda a nombre de ella con su huella; la cocinera Chabela lo defiende. A solas, Jacinto le aprieta la mano a Chabela, le habla, se pone de pie y llama al licenciado: "Son los dos." Graciela vuelve y lo ve de pie.
+- Sin desalojo ni plazo. Cuenta monetizadotiktok18, proyecto Flow propio. 19 clips + 1 regen (c03: "hacienda" sonaba "sienda"; ahora dice "toda la hacienda"). c10 se ajustó a "No haga ruido" en lines.json.
+- Render renders/share.mp4: 57.2 s, 35 tramos, VISTA, SPEED 1.15, subtítulos tamaño 38, revisados en qa/subs_check.jpg. LUFS -14.2, pico -2.2 dBTP.
+- QA: qa/report.txt, qa/s1-s2.jpg, qa/render_report.txt, renders/share_revision.md (CASI). Quedan aceptados un CTA que no es pregunta (el catálogo pide variar), la marca poco visible sobre fondo claro (alpha 80, regla vigente) y que el ASR oyera "sienda" en c03 (se regenera c03 con "toda la hacienda").
+
+## Pendiente
+- No entregado. caption.txt listo. La P2 solo se hace si la P1 pasa 10k en @vistastoriestv.
+
+### `pieces/sarape-saltillo/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte1, remake-transformado, padre-hijos-herencia, madre-hijos, saltillo, coahuila, sarape]
+relatedTo: [baul-sanmiguel, garrafon-bernal, jipi-becal, atrium-vista]
+---
+# sarape-saltillo (El Sarape de Saltillo · Parte 1): estado
+
+## Video base
+- Segunda versión, muy transformada, de la saga de **don Evaristo** de @atriumstories_ ("Su propio hijo le cerró la puerta", 7706224426399829279, 342K; P2 390K; la saga suma **1.06M**). La primera versión es `pieces/baul-sanmiguel`.
+- Por qué: padre-hijos es el 2.º tipo con mejor mediana de Atrium (276K) y el de más engagement, según `fuentes/atrium-vista/ranking2.md`.
+
+## Qué se cambió
+- Vínculo: madre, hija que se alinea (traidora) y yerno (villano); el hijo humilde es soltero y panadero.
+- Región y oficio: tejedora de sarapes retirada en Saltillo, Coahuila; casa moderna y panadería del centro.
+- Objeto: el sarape de Saltillo que el yerno tiró al escalón ("ese trapo de colores").
+- Excusa: a las nueve cena el jefe del yerno; "usted no combina con mi casa".
+- Sacrificio: Tereso le da su catre, duerme en los costales y le trabajará el domingo al patrón.
+- Giro: Clementina fue la nana del dueño de la fábrica y le pide que pase por ella antes de las nueve para llegar juntos a esa cena (plazo invertido).
+- CTA: "¿Qué cara creen que va a poner Fabián cuando me vea llegar?"
+- Nombres nuevos y únicos en pieces/: Clementina Ramos (74), Fabián Elizondo (46), Florinda Ramos (49), Tereso Ramos (41). Mauricio Arocha (el dueño) solo se nombra.
+(Detalle en guion.md, tabla "Qué cambia respecto al original y a baul-sanmiguel".)
+
+## Marca
+**VISTA STORIES**: edit.py, BRAND = "VISTA" (kit pieces/_marcas/VISTA, con su música).
+
+## Archivos
+guion.md, caption.txt, lines.json (fuente única, 381 palabras), clips.py (39 clips: 30 hablados c01-c30, 4 insertos i01-i04 y 5 reacciones r1-r5), make_sheets.py (4 personajes + LOC_CASASALTILLO + LOC_PANADERIASALT = 6 hojas), phr.py y edit.py (EDL vacía; música cálida de c16 a i03).
+- Copia de garrafon-bernal con todas sus defensas: gaze + ONE + ALONE, PRES, NOSUB + CLEAN + END, NODOUBLE; SAFE/SOFT con las frases fuertes primero, variant, NOREF, TRIES=6; gatito como IMAGEN, duplicados md5, reload_flow, new_project y la parada "LIMITE DE CREDITOS" en gen(). make_sheets.py con "ordinary non-famous face", DUPLICADO por md5 y --reupload que salta las carpetas sarape-saltillo*. Nuevo: vert() para la mirada al piso durante la llamada.
+- Comprobaciones: `python -m py_compile` OK en los 4 .py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); cada clip hablado llama a talk() con su propio ID; todos los @{ASSET} tienen hoja y no sobra ninguna; las frases en español de SOFT coinciden con lines.json; sin cifras en las líneas.
+
+## Avance
+- 2026-11-14: archivos escritos. No se generó nada en Flow.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no salga DUPLICADO, `md5sum chars/*.jpg` y hoja de contactos: caras comunes y distintas; Florinda y Clementina se parecen como madre e hija pero no son la misma cara.
+2. `python -I clips.py > clips_log.txt` y QA de cada clip: morphs y bordes; el sarape de franjas de colores igual en todos los planos (sobre el antebrazo izquierdo); Fabián rapado con candado y camisa blanca; Florinda con blusa verde esmeralda; Tereso con mandil blanco con harina; el celular viejo sin texto en pantalla; el carro negro sin logos ni placas; pronunciación de "Clementina", "Arocha", "Tereso" y "pan de pulque".
+3. phr.py → EDL en edit.py → montaje → verificación (sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca) → copia a LucidLink (carpeta Vista) con caption.txt.
+
+### `pieces/sarape-saltillo-p2/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte2, remake-transformado, padre-hijos-herencia, madre-hijos, saltillo, coahuila, sarape]
+relatedTo: [sarape-saltillo, atrium-vista]
+---
+# sarape-saltillo-p2 (El Sarape de Saltillo · Parte 2): estado
+
+## La historia
+Parte 2 de pieces/sarape-saltillo. Arranca desde el gancho de la P1 (el carro negro del dueño de la fábrica).
+- Gancho con recordatorio: Fabián ve a su suegra bajarse de ese carro a las nueve.
+- Mauricio Arocha (nuevo, 56) dice que Clementina fue su nana y la crió en la fábrica de su padre (desenlace del giro).
+- Florinda (la hija traidora) se hace la que no sabía; Tereso: "En mi panadería a mi amá nadie la corrió."
+- Castigo del villano: por el sarape tirado, Fabián entrega mañana la oficina de gerente. "Yo no combino con su casa."
+- Castigo de la traidora: su madre la perdona pero se queda con Tereso, y le da a él el sarape de la boda de Florinda. Florinda suelta a Fabián.
+- Gancho: Fabián, "todavía no sabe lo que yo sé de esa fábrica". CTA de Clementina: "¿Ustedes habrían perdonado a una hija así?"
+
+Sin armas, sangre, cifras de dinero, deudas, uniformes, niños ni Navidad. Detalle en guion.md.
+
+## Marca
+**VISTA STORIES**, la misma de la Parte 1 (no entra en la rotación): edit.py, BRAND = "VISTA", SPEED = 1.15.
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 2, #parte2).
+- lines.json, fuente única: 378 palabras.
+- clips.py, 32 clips: c01-c26 hablados (c26 = CTA de 10 s), i01-i02 insertos sin caras y r1-r4 mudos.
+  - Copia de pieces/jipi-becal-p2/clips.py: ots(), two(), MOUTH, tuplas (prompt_nuevo, prompt_one), ONE_FROM=3, --one, y todas las defensas (gatito en imagen, reload_flow, new_project, descarga corrupta, duplicados md5, TRIES=6, SAFE/SOFT con las frases fuertes primero, NOREF con Mauricio, parada "LIMITE DE CREDITOS"). Imprime "FIN P2".
+  - Reparto: 16 OTS (53 %), 7 single (23 %), 4 two-shot (13 %), 3 grupo (10 %) + 2 insertos. Geografía fija: Fabián y Florinda arriba a la derecha; Tereso, Clementina y Mauricio abajo a la izquierda. c01 es Fabián hablando.
+- make_sheets.py: reutiliza las 5 hojas de la P1 copiadas a chars/ (CLEMENTINA_RAMOS, FABIAN_ELIZONDO, FLORINDA_RAMOS, TERESO_RAMOS, LOC_CASASALTILLO) y **1 hoja nueva: MAURICIO_AROCHA**. `--reupload` salta las carpetas sarape-saltillo* en el control de duplicados.
+- phr.py y edit.py (copia del de jipi-becal-p2, EDL vacía, BRAND = "VISTA", SPEED = 1.15; música cálida de c19 a c24).
+- Comprobaciones: py_compile OK en los 4 .py; pyflakes sin avisos en clips.py y make_sheets.py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); cada clip hablado llama a talk() con su propio ID y los mudos no; todos los @{ASSET} tienen hoja y no sobra ninguna; frases de SOFT = lines.json; sin cifras; ninguna frase repetida de otra pieza.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py --reupload > sheets_log.txt`: sube las 5 copias, genera y sube MAURICIO_AROCHA, imprime "FIN HOJAS". Revisar md5 y que Mauricio no se parezca a Fabián ni a nadie de otra pieza.
+2. `python -I clips.py > clips_log.txt`, con Monitor sobre "^FIN P2", Traceback, "intento 6" y "LIMITE".
+3. QA: dobles en los OTS (regenerar con `--one`), ropa de la P1, el sarape (brazo de Clementina hasta i02, hombros de Tereso después), geografía arriba/abajo, carro sin placas, pronunciación.
+4. `python -I phr.py`, armar la EDL y `python -I edit.py`. Verificar sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca VISTA arriba al centro.
+5. Copiar a LucidLink (Vista/) con caption.txt.
+
+### `pieces/reloj-zacatlan/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte1, madrastra-justicia, puebla, zacatlan, relojeria]
+relatedTo: [paste-realdelmonte, ambar-simojovel, atrium-vista]
+---
+# reloj-zacatlan (El Reloj de Zacatlán · Parte 1): estado
+
+## Hecho (2026-11-17)
+- Madrastra transformada: Gisela tiene a Marisol componiendo relojes toda la noche; Ernesto llega antes, encuentra en el suelo el reloj cucú de su difunta Leonor y la corre "antes de que den las doce". Giro: el contrato del reloj de la parroquia se lo dio el primo de Gisela; es ella o el reloj.
+- Cuenta monetizadotiktok18, proyecto Flow propio; 4 hojas sin duplicados.
+- 27 clips (c12 al 2.º intento) + 1 regen (c21: el grupo salió con mal encuadre; rehecho en single de Gisela, con otra blusa morada — aceptado) = 28 clips (280 créditos).
+- Render renders/share.mp4: 88.7 s, 59 planos (1.50 s/plano), MAJESTIC, SPEED 1.15, subtítulos quemados (tamaño 38). Repeticiones de Omni cortadas por palabra (c04 "trabaja de noche", c14 "patrona de mi hija"). Verificado en qa/subs_check.jpg.
+- QA: qa/report.txt, tiras qa/s1-s3.jpg + qa/c21.jpg, qa/render_report.txt, renders/share_revision.md (CASI).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @wepsychologic.
+
+### `pieces/red-janitzio/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte1, capos, michoacan, patzcuaro, janitzio, pescadores]
+relatedTo: [jarana-tlacotalpan, agave-amatitan, atrium-vista]
+---
+# red-janitzio (La Red de Janitzio · Parte 1): estado
+
+## Hecho (2026-11-17)
+- Capos transformado: Ignacio, que maneja la cooperativa, le quita el lugar al viejo pescador don Severo, le avienta al agua la red que tejió su esposa y le da plazo "antes de que salgan las canoas"; su nieta Nayeli lo defiende. Severo hace una llamada: llega el gobernador, al que sacó del lago de niño. Giro: a ese niño lo dejaron en el agua... el papá de Ignacio, su tío.
+- Cuenta monetizadotiktok18, proyecto Flow propio; 5 hojas sin duplicados.
+- 23 clips, sin regens, pero con muchos reintentos por políticas de Flow (la palabra "gobernador" y la historia del niño en el agua): r2, c10, c12, c13, c16 al intento 5 (sin referencia para el gobernador, se ve consistente) y c14, c15 al 4. Las líneas de c15/c16 salieron en su versión suavizada. 230 créditos.
+- c13 se quedó sin "entregas la cooperativa" (Omni cortó la frase): en el montaje solo queda "Recoge la red, Ignacio."
+- Render renders/share.mp4: 69.0 s, 46 planos (1.49 s/plano), VISTA, SPEED 1.15, subtítulos quemados (tamaño 38). Verificado en qa/subs_check.jpg.
+- QA: qa/report.txt, tiras qa/s1-s3.jpg, qa/render_report.txt, renders/share_revision.md (CASI).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @vistastoriestv.
+
+### `pieces/rebozo-santamaria/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, mexitve, parte1, madrastra-justicia, san-luis-potosi, rebozos]
+relatedTo: [gaviota-bacalar, ate-calvillo, atrium-vista]
+---
+# rebozo-santamaria (El Rebozo de Santa María · Parte 1): estado
+
+## Hecho (2026-11-16)
+- Proyecto Flow nuevo f637bfe2-decf-4864-ad4f-4d38400e6355, hojas subidas (4, sin duplicados).
+- 34 clips a la primera; regenerados c19 y c27 (camisa sin cuello; CTA más orgánico). 36 clips = 360 créditos.
+- Render: renders/share.mp4, 104.0 s, 69 planos (1.50 s/plano), -14.4 LUFS, pico -2.3 dBFS, MEXI, SPEED 1.15.
+- Verificado: diálogos por Whisper (todos r>0.9), tiras de boca, revisar_render (renders/share_revision.md; los "labios cerrados" eran muestreo, se comprobó con recortes de boca).
+- EDL generada con mk_edl.py desde renders/phr.json.
+
+## Pendiente
+- No entregado (ni LucidLink, ni Telegram, ni TikTok). caption.txt listo.
+- P2 solo si la P1 pasa 10k vistas en @mexitve.
+
+### `pieces/queso-tequisquiapan/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte1, capos, queretaro, tequisquiapan, queso]
+relatedTo: [manzana-cuauhtemoc, paste-realdelmonte, atrium-vista]
+---
+# queso-tequisquiapan (El Queso de Tequisquiapan · Parte 1): estado
+
+## Hecho (2026-11-16)
+- Capos transformado: Vanesa, esposa del ranchero Fulgencio, le corta la leche a doña Petra, le tira los quesos y le da plazo "antes de que suenen las campanas"; Petra le manda saludos a su marido y Fulgencio llega en persona. Giro: Petra es su esposa (nunca se divorciaron) y Nicanor es su primer hijo.
+- Cuenta monetizadotiktok18, proyecto Flow propio; 5 hojas sin duplicados.
+- 26 clips a la primera + 1 regen (c18: en el two-shot movía los labios Nicanor; rehecho en single de Fulgencio, salió sin referencia en el intento 5 y se ve igual) = 27 clips (270 créditos).
+- Render renders/share.mp4: 76.1 s, 55 planos (1.38 s/plano), MEXI, SPEED 1.15, con subtítulos quemados (tamaño 38, el del CTA ya no se sale). Verificado en qa/subs_check.jpg.
+- QA: qa/report.txt, tiras qa/s1-s4.jpg + qa/c18.jpg, qa/render_report.txt, renders/share_revision.md (de la versión anterior; sus dos fallos —c18 y el subtítulo del CTA— quedaron corregidos). Detalle aceptado: Fulgencio con el sombrero en la mano en c11 y puesto en los planos de espaldas.
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @mexistories.
+
+### `pieces/pulsera-mexcaltitan/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte1, remake-transformado, capos, patrona, nayarit, mexcaltitan, pulsera]
+relatedTo: [medalla-mezcal, sarape-saltillo, atrium-vista]
+---
+# pulsera-mexcaltitan (La Pulsera del Estero · Parte 1): estado
+
+## Video base
+- Versión nueva y muy transformada de "Llegó buscando a la patrona… secreto de 20 años" de @atriumstories_ (7702501478056971550, **1.6M**, el pico de capos en `fuentes/atrium-vista/ranking2.md`). La primera versión es `pieces/medalla-mezcal`.
+- Del original queda solo el esqueleto: humillación con plazo → llega la figura de poder → plazo invertido → giro familiar → castigo en la Parte 2.
+
+## Qué se cambió
+- Región y oficio: muelle de la isla de Mexcaltitán, Nayarit; la patrona es dueña de las lanchas del estero. La víctima vende tamales.
+- Objeto: pulsera de chaquira azul y amarilla con un venado blanco, tejida por la patrona para su hijo.
+- Plazo: la última lancha, a las seis. Se invierte: "¿En la de las seis? Qué bueno, porque en esa te vas tú."
+- Giro: el villano (hijo de la patrona) es el padre de la muchacha que humilló; la nuera (traidora) lo sabía.
+- CTA: Eustolia a cámara, "¿Qué harían ustedes con un hijo así?"
+- Nombres nuevos y únicos en pieces/: Eustolia Lomelí (72), Arsenio Lomelí (47), Tamara Lomelí (44), Maura Graciano (24). Herlinda Graciano solo se nombra.
+(Tabla completa en guion.md, "Qué cambia respecto al original y a medalla-mezcal".)
+
+## Marca
+**MAJESTIC STORIES**: edit.py, BRAND = "MAJESTIC" (kit pieces/_marcas/MAJESTIC, con su música).
+
+## Archivos
+guion.md, caption.txt, lines.json (fuente única, 375 palabras), clips.py (38 clips: 28 hablados c01-c28, 4 insertos i01-i04 y 6 reacciones/presentaciones r1-r6), make_sheets.py (4 personajes + LOC_MUELLEMEXCAL = 5 hojas), phr.py y edit.py (EDL vacía; música cálida de c18 a r5).
+- Copia de sarape-saltillo con todas sus defensas: gaze + ONE + ALONE, PRES, NOSUB + CLEAN + END, NODOUBLE; SAFE/SOFT con las frases fuertes primero, variant, NOREF, TRIES=6; gatito como IMAGEN, duplicados md5, reload_flow, new_project y la parada "LIMITE DE CREDITOS" en gen(). make_sheets.py con "ordinary non-famous face", DUPLICADO por md5 y --reupload que salta las carpetas pulsera-mexcaltitan*.
+- Corrección del usuario aplicada: c01 es el primer clip y es Arsenio hablando en pleno conflicto (plano medio de presentación, habla desde el primer frame); ningún plano de objetos, manos o algo que cae al inicio; los insertos van solo en medio.
+- Comprobaciones: `python -m py_compile` OK en los 4 .py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); cada clip hablado llama a talk() con su propio ID y los mudos no; todos los @{ASSET} tienen hoja y no sobra ninguna; las frases en español de SOFT coinciden con lines.json; sin cifras en las líneas; ninguna frase aparece en lines.json ni guion.md de otra pieza.
+
+## Avance
+- 2026-11-14: archivos escritos. No se generó nada en Flow.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no salga DUPLICADO, `md5sum chars/*.jpg` y hoja de contactos: caras comunes y distintas; Arsenio y Eustolia pueden parecerse como madre e hijo, Maura con algo de los dos pero no la misma cara.
+2. `python -I clips.py > clips_log.txt` y QA de cada clip: morphs y bordes; la pulsera azul y amarilla siempre en la muñeca IZQUIERDA de Maura; Arsenio barbado de camisa blanca; Tamara rubia de rosa con abanico; la flor roja de Eustolia; la lancha blanca con franja azul; pronunciación de "Herlinda Graciano", "Arsenio", "arrimada", "remendaba".
+3. phr.py → EDL en edit.py → montaje → verificación (sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca) → copia a LucidLink (carpeta Majestic) con caption.txt.
+
+### `pieces/pulsera-mexcaltitan-p2/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte2, remake-transformado, capos, patrona, nayarit, mexcaltitan, pulsera]
+relatedTo: [pulsera-mexcaltitan, atrium-vista]
+---
+# pulsera-mexcaltitan-p2 (La Pulsera del Estero · Parte 2): estado
+
+## La historia
+Parte 2 de pieces/pulsera-mexcaltitan. Arranca donde terminó la P1 (Arsenio es el padre de Maura y Tamara lo sabía; la lancha de las seis espera).
+- Gancho con recordatorio: "Ya dieron las seis, Arsenio. Y tu lancha te está esperando."
+- Desenlace del giro: hace 24 años Herlinda vino al muelle a decírselo y Tamara la corrió: le dijo que Arsenio no quería saber nada y la subió a la lancha de las seis.
+- Castigo: Tamara se va en esa misma lancha ("Así corriste tú a Herlinda. Y no vuelvas a pisar mi isla"); Arsenio se queda pero ya no manda en el muelle (manda Maura) y remienda redes como Herlinda.
+- Reconocimiento: "Dime abuela"; Arsenio tiene que ganarse que le diga papá. Tamara voltea fría desde la lancha (gancho para el final). CTA de Maura: "¿Ustedes perdonarían a un papá que llegó veinticuatro años tarde?"
+
+Sin armas, sangre, cifras de dinero, deudas, uniformes, niños ni Navidad. Detalle en guion.md.
+
+## Marca
+**MAJESTIC STORIES**, la misma de la Parte 1 (no entra en la rotación): edit.py, BRAND = "MAJESTIC", SPEED = 1.15.
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 2, #parte2).
+- lines.json, fuente única: 366 palabras.
+- clips.py, 32 clips: c01-c28 hablados (c28 = CTA de 10 s), i01 inserto sin caras y r1-r3 mudos.
+  - Copia de pieces/costal-cuyutlan/clips.py: ots(), two(), MOUTH, tuplas (prompt_nuevo, prompt_one), ONE_FROM=3, --one, y todas las defensas (gatito en imagen, reload_flow, new_project, descarga corrupta, duplicados md5, TRIES=6, SAFE/SOFT con las frases fuertes primero, NOREF, parada "LIMITE DE CREDITOS"). Imprime "FIN P2".
+  - Reparto: 17 OTS (55 %), 7 single (23 %), 4 two-shot (13 %), 3 grupo (10 %) + 1 inserto. Geografía fija: Arsenio y Tamara derecha, Maura y Eustolia izquierda. c01 es Eustolia hablando.
+- make_sheets.py: reutiliza las 5 hojas de la P1 copiadas a chars/ (EUSTOLIA_LOMELI, ARSENIO_LOMELI, TAMARA_LOMELI, MAURA_GRACIANO, LOC_MUELLEMEXCAL). **Sin hojas nuevas.** `--reupload` salta las carpetas pulsera-mexcaltitan* en el control de duplicados.
+- phr.py y edit.py (copia del de costal-cuyutlan, EDL vacía, BRAND = "MAJESTIC", SPEED = 1.15; música cálida de c22 a c27).
+- Comprobaciones: py_compile OK en los 4 .py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); cada clip hablado llama a talk() con su propio ID y los mudos no; ningún nombre sin definir; todos los @{ASSET} tienen hoja; frases de SOFT = lines.json; sin cifras; ninguna frase repetida de otra pieza.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py --reupload > sheets_log.txt`: sube las 5 copias e imprime "FIN HOJAS".
+2. `python -I clips.py > clips_log.txt`, con Monitor sobre "^FIN P2", Traceback, "intento 6" y "LIMITE".
+3. QA: dobles en los OTS (regenerar con `--one`), ropa de la P1, pulsera en la muñeca izquierda, geografía izquierda/derecha, la lancha blanca con franja azul, pronunciación.
+4. `python -I phr.py`, armar la EDL y `python -I edit.py`. Verificar sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca MAJESTIC arriba a la izquierda.
+5. Copiar a LucidLink (Majestic/) con caption.txt.
+
+### `pieces/pipian-tlaxcala/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic, parte1, tlaxcala, catalogo]
+relatedTo: [atrium-vista, novelas-variedad]
+---
+# pipian-tlaxcala (Parte 1): estado
+
+## Hecho (2026-11-17)
+- **CATALOGO.md #25 "La suegra en la cocina". Familia: Traición familiar. Cierre tipo 7: objeto que delata (el cuaderno de recetas firmado por Amparo Juárez).**
+- MAJESTIC. Cuenta monetizadotiktok18, proyecto Flow propio. 19 clips + 4 regens (c14 dos veces: la primera traía subtítulos quemados; c03 por un morph de los lentes; c13 porque en el borde aparecía otra mujer con blusa floreada).
+- Render renders/share.mp4: 66.0 s, 35 tramos, SPEED 1.15, subtítulos tamaño 38 revisados en qa/strip.jpg y renders/subs/*.json. LUFS -14.2, pico -2.2 dBTP.
+- QA: qa/report.txt, qa/render_report.txt, renders/share_revision.md (CASI). Aceptado: Cristina lleva broche en c03/c14 y collar en el resto (la hoja admite las dos lecturas); "Es domingo" sí tiene subtítulo (14.42-15.10 s), el revisor muestreó en el hueco.
+
+## Pendiente
+- No entregado (main entrega). caption.txt listo.
+
+### `pieces/pinata-acolman/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte1, padre-hijos-herencia, navidad, estado-de-mexico, acolman, pinatas]
+relatedTo: [laca-olinala, gloria-linares, atrium-vista]
+---
+# pinata-acolman (La Piñata de Acolman · Parte 1): estado
+
+## Hecho (2026-11-17)
+- Padre-hijos con tema de Navidad: en Nochebuena, la nuera Yesenia le hace la maleta a don Pascual para mandarlo al asilo "antes de que empiece la posada"; su hijo Emilio dice que ya firmó. Llega la licenciada Eugenia, notaria, por las piñatas de la posada del barrio: la firma es falsa. Giro: quien la falsificó fue su propio hijo.
+- Cuenta monetizadotiktok18, proyecto Flow propio; 5 hojas sin duplicados.
+- 22 clips a la primera + 2 regens = 24 clips (240 créditos): c06 (subtítulos quemados por Omni) y c01 (la frase del gancho se cortaba antes de "se va al asilo"; salió en single al intento 4).
+- Render renders/share.mp4: 71.6 s, 49 planos (1.45 s/plano), MAJESTIC, SPEED 1.15, subtítulos quemados (tamaño 38). Verificado en qa/subs_check.jpg.
+- QA: qa/report.txt, tiras qa/s1-s3.jpg + qa/c01.jpg + qa/c06.jpg, qa/render_report.txt, renders/share_revision.md (de la versión anterior, CASI; maleta negra en un plano de Eugenia, aceptado).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @wepsychologic.
+
+### `pieces/paste-realdelmonte/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte1, madrastra-justicia, hidalgo, real-del-monte, pastes]
+relatedTo: [ambar-simojovel, rebozo-santamaria, atrium-vista]
+---
+# paste-realdelmonte (El Paste de Real del Monte · Parte 1): estado
+
+## Hecho (2026-11-16)
+- Madrastra transformada: Karla tiene a Daniela amasando sola desde las cuatro; Rogelio llega antes, encuentra el rodillo de su difunta Elvira en la basura y la corre "antes de que salga el turno de la mina". Giro: Rogelio firmó sin leer y el local ya está a nombre de Karla.
+- Cuenta monetizadotiktok18, proyecto Flow nuevo; 4 hojas sin duplicados.
+- 28 clips (c02 al 2.º intento), sin regens (280 créditos).
+- Render renders/share.mp4: 85.6 s, 56 planos (1.52 s/plano), MEXI, SPEED 1.15. r1 recortado (crop) para quitar un letrero con texto que Omni puso sobre la puerta.
+- QA: qa/report_part.txt, tiras qa/s1-s4.jpg, qa/r1chk.jpg, qa/render_report.txt, renders/share_revision.md (CASI: el "cambio de cara" de Karla es la luz, en las tiras es la misma; Rogelio se quita el gorro en su entrada y lo trae puesto después, aceptado).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @mexistories.
+
+### `pieces/pan-comala/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexitv, parte1, capos, colima, comala, panaderia]
+relatedTo: [palofierro-kino, cobre-santaclara, atrium-vista]
+---
+# pan-comala (El Pan de Comala · Parte 1): estado
+
+## Hecho (2026-11-17)
+- Capos transformado: Toño, hombre de don Horacio, se niega a pagar el pan, se lo tira a Matilde y le da plazo "antes de que cierre la feria"; la abuela Clemencia manda llamar a Horacio (ella le dio de comer cuando dormía en la plaza). Plazo invertido. Giro: Clemencia es la madre de Horacio; lo dejó en la iglesia cuando era muy joven.
+- Cuenta monetizadotiktok18, proyecto Flow propio; 5 hojas sin duplicados.
+- 24 clips (r2 al 2.º intento) + 1 regen (c05: el borde mostraba a la abuela con la ropa equivocada; rehecho en single de Toño) = 25 clips (250 créditos).
+- Render renders/share.mp4: 72.8 s, 49 planos (1.48 s/plano), MEXITV (marca "MEXI TV"), SPEED 1.15, subtítulos quemados (tamaño 38). Cortada la repetición de c09 ("¿Usted conoce a la señora?"). Verificado en qa/subs_check.jpg.
+- QA: qa/report.txt, tiras qa/s1-s3.jpg + qa/c05.jpg, qa/render_report.txt, renders/share_revision.md (CASI; su punto "marca equivocada" es error del revisor: la pieza es MEXITV; la cara de Horacio varía un poco entre clips, aceptado).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @mexitve.
+
+### `pieces/palofierro-kino/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexitv, parte1, capos, sonora, bahia-de-kino, palo-fierro]
+relatedTo: [vainilla-papantla, cobre-santaclara, atrium-vista]
+---
+# palofierro-kino (El Palo Fierro de Kino · Parte 1): estado
+
+## Hecho (2026-11-17)
+- Capos transformado ("le dio cinco minutos y no le creyó"): Brayan le tira las figuras de palo fierro a don Eliseo y le da plazo "antes de que se meta el sol"; Eliseo le da cinco minutos; Brayan llama a su papá Saúl, que llega y le pide perdón al viejo: Eliseo era "el patrón" de la costa. Giro: el que lo traicionó aquella noche sigue vivo.
+- Cuenta monetizadotiktok18, proyecto Flow propio; 5 hojas sin duplicados.
+- 25 clips a la primera, sin regens (250 créditos).
+- Render renders/share.mp4: 77.2 s, 51 planos (1.51 s/plano), MEXITV (marca "MEXI TV"), SPEED 1.15, subtítulos quemados (tamaño 38). r3 usa el tramo 0.2-1.4 (después de 3 s salía con dos sombreros). Verificado en qa/subs_check.jpg y qa/r3chk.jpg.
+- QA: qa/report.txt, tiras qa/s1-s3.jpg, qa/render_report.txt, renders/share_revision.md (CASI; su punto "marca equivocada" es error del revisor: la pieza es MEXITV).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @mexitve.
+
+### `pieces/nuez-parras/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte1, capos, coahuila, parras, nuez, nogalera]
+relatedTo: [manzana-cuauhtemoc, queso-tequisquiapan, atrium-vista]
+---
+# nuez-parras (La Nuez de Parras · Parte 1): estado
+
+## Hecho (2026-11-17)
+- Capos transformado: Ulises le tira la nuez a don Anacleto y le da plazo "antes de que acabe la cosecha"; Anacleto llama a Mateo, el hijo que no ve hace quince años, que llega en camionetas: Ulises trabaja para él. Giro: Ulises es hijo de Anacleto con otra mujer, hermano de Mateo.
+- Cuenta monetizadotiktok18, proyecto Flow propio; 5 hojas sin duplicados.
+- 26 clips (c17 al 2.º intento), sin regens (260 créditos).
+- Render renders/share.mp4: 76.7 s, 53 planos (1.44 s/plano), MEXI, SPEED 1.15, subtítulos quemados (tamaño 38). Quitada la repetición de c08 ("pero es tu hijo"). Verificado en qa/subs_check.jpg.
+- QA: qa/report_part.txt, tiras qa/s1-s3.jpg, qa/render_report.txt, renders/share_revision.md (CASI: sombrero de Anacleto que cambia de tejido, aceptado).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @mexistories.
+
+### `pieces/nieve-tepoztlan/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, mexitve, parte1, padre-hijos-herencia, morelos, tepoztlan, neveria]
+relatedTo: [rebozo-santamaria, ate-calvillo, atrium-vista]
+---
+# nieve-tepoztlan (La Nevería de Tepoztlán · Parte 1): estado
+
+## Hecho (2026-11-16)
+- Variante de la saga de don Evaristo (padre-hijos-herencia): la nuera le hace la maleta al suegro para el asilo "antes de que cierre el tianguis"; llega la notaria: local, receta y nombre son de él.
+- Proyecto Flow nuevo 08964667-7ca0-456c-97d4-98042c42e6ff; 5 hojas sin duplicados.
+- 32 clips (c13 al 2.º intento) + 1 regen (c13: peinado de Lizbeth) = 33 clips, 330 créditos.
+- Render renders/share.mp4: 103.8 s, 69 planos (1.50 s/plano), -14.2 LUFS, pico -2.1 dBFS, MEXI, SPEED 1.15.
+- Arreglos en montaje: repeticiones de c17 ("amigos del dominó") y c26 ("ahorita mismo") cortadas por palabra; c19 recortado a la izquierda (mano extra en el borde).
+- revisar_render: renders/share_revision.md (los puntos de labios eran muestreo; se comprobó en la transcripción y las tiras).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @mexitve.
+
+### `pieces/mole-atocpan/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte1, madrastra-justicia, cdmx, san-pedro-atocpan, mole]
+relatedTo: [paste-realdelmonte, reloj-zacatlan, atrium-vista]
+---
+# mole-atocpan (El Mole de Atocpan · Parte 1): estado
+
+## Hecho (2026-11-17)
+- Madrastra transformada: Mónica tiene a su hijastra Xóchitl moliendo chiles desde las tres y vende el mole de la difunta Rosario con su propio nombre; Gonzalo la corre "antes de que abra la feria". Giro: la marca del mole ya está registrada a nombre de Mónica; la firmó Patricia, la hija mayor.
+- Cuenta monetizadotiktok18, proyecto Flow propio; 4 hojas sin duplicados.
+- 21 clips a la primera, sin regens (210 créditos).
+- Render renders/share.mp4: 67.8 s, 45 planos (1.50 s/plano), MEXI, SPEED 1.15, subtítulos quemados (tamaño 38). Cortada la repetición del CTA ("para ver la segunda parte"). Verificado en qa/subs_check.jpg.
+- QA: qa/report.txt, tiras qa/s1-s3.jpg, qa/render_report.txt, renders/share_revision.md (CASI: pocos two-shots, aceptado).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @mexistories.
+
+### `pieces/manzana-cuauhtemoc/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte1, capos, chihuahua, cuauhtemoc, manzanas]
+relatedTo: [jaiba-lagunamadre, ambar-simojovel, atrium-vista]
+---
+# manzana-cuauhtemoc (La Manzana de Cuauhtémoc · Parte 1): estado
+
+## Hecho (2026-11-16)
+- Capos transformado: Kevin tira la cosecha de doña Herminia y le da plazo "antes de que caiga la helada"; ella llama a Anselmo (lo escondió en su sótano en una nevada hace 30 años), que es el padrino de Kevin; plazo invertido. Giro: Joel, el nieto de Herminia, es hijo de Anselmo (con Rebeca, la hija de Herminia).
+- Cuenta monetizadotiktok18, proyecto Flow nuevo; 5 hojas sin duplicados.
+- 31 clips a la primera + 2 regens = 33 clips (330 créditos): c09 (subtítulos quemados) y c22 (línea corregida "¿Este muchacho es mi hijo?"; salió en el intento 5 sin referencia, Anselmo se ve igual).
+- Render renders/share.mp4: 93.9 s, 64 planos (1.46 s/plano), -14.4 LUFS, pico -2.2 dBTP, MEXI, SPEED 1.15.
+- QA: qa/report.txt, tiras qa/s1-s5.jpg, qa/render_report.txt, renders/share_revision.md (CASI: CTA "rígido" era muestreo, en las tiras se toca el sombrero; pantalón negro en el inserto de la bota, aceptado).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @mexistories.
+
+### `pieces/mango-rosario/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista, parte1, madrastra, sinaloa, mango]
+relatedTo: [talavera-cholula, atrium-vista]
+---
+# mango-rosario (El Mango de El Rosario · Parte 1): estado
+
+## Hecho (2026-11-17)
+- Madrastra transformada: en un rancho de mangos de El Rosario, Sinaloa, Brenda tiene a su hijastra Ximena empacando sola. Arturo llega antes de tiempo, descubre que Brenda cortó el árbol de su difunta Lucía y la corre "antes de que se meta el sol". Giro: el testamento de Lucía deja el rancho a su hermano Gabino, que ya se lo vendió a Brenda.
+- Cuenta monetizadotiktok18. 28 clips + 4 regens: c01 (labios cerrados en el gancho), c05 (sombrero flotante en el borde), c08 (gafas de Brenda sobre los ojos; el prompt ahora las deja en la cabeza) y c14 (doble en el borde).
+- Render renders/share.mp4: 83.0 s, 50 tramos, VISTA, SPEED 1.15, subtítulos tamaño 38, revisados en qa/subs_check.jpg. LUFS -14.4, pico -2.3 dBTP.
+- QA: qa/report.txt, qa/regen.jpg, qa/hook_mouth.jpg, qa/render_report.txt, renders/share_revision.md (CASI en v1; ya se regeneraron los clips señalados).
+
+## Pendiente
+- No entregado. caption.txt listo. La P2 solo se hace si la P1 pasa 10k en @vistastoriestv.
+
+### `pieces/ladrillo-tecate/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte1, capos, baja-california, tecate, ladrillera]
+relatedTo: [gloria-linares, manzana-cuauhtemoc, atrium-vista]
+---
+# ladrillo-tecate (El Ladrillo de Tecate · Parte 1): estado
+
+## Hecho (2026-11-16)
+- Capos transformado (la figura de poder estaba de incógnito): Santiago le tira el ladrillo a don Clemente y le da plazo "antes de que se enfríe el horno"; el peón Teófilo hace una llamada: es "Don Teo", el que manda en Tecate; plazo invertido. Giro: Teo buscaba al hombre que embarazó a su madre Rosa hace 45 años... Clemente es su padre.
+- Cuenta monetizadotiktok18, proyecto Flow nuevo; 4 hojas sin duplicados.
+- 26 clips a la primera + 4 regens = 30 clips (300 créditos): c01 (sombrero flotando en el borde; quedó single de Santiago), c13 (pronunciación de "constructora", sigue sonando ligada), c15 y c19 (sombrero flotando; rehechos en single de Teo).
+- Render renders/share.mp4: 77.7 s, 53 planos (1.46 s/plano), MAJESTIC, SPEED 1.15.
+- QA: qa/report_part.txt, tiras qa/s1-s3.jpg + qa/rg.jpg, qa/render_report.txt, renders/share_revision.md (CASI; detalles menores aceptados).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @wepsychologic.
+
+### `pieces/laca-olinala/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexitv, parte1, padre-hijos-herencia, guerrero, olinala, laca]
+relatedTo: [gloria-linares, alebrije-tilcajete, atrium-vista]
+---
+# laca-olinala (La Laca de Olinalá · Parte 1): estado
+
+## Hecho (2026-11-16)
+- Padre-hijos transformado: en su cumpleaños 80, don Isauro recibe a Germán y Rocío después de veinte años; traen un papel para quedarse con la casa "antes de que se acabe la comida" y humillan a Chabela, la que lo cuida. Isauro saca el cofre rojo de laca: la casa ya es de Chabela. Giro: Chabela es su hija mayor.
+- Cuenta monetizadotiktok18, proyecto Flow propio; 5 hojas sin duplicados.
+- 24 clips a la primera + 1 regen (c11: subtítulos quemados por Omni) = 25 clips (250 créditos). c03 salió sin "en esta casa tan grande" (la frase queda bien; el subtítulo ya no muestra lo que no se oye).
+- Render renders/share.mp4: 71.9 s, 47 planos (1.52 s/plano), MEXITV (marca "MEXI TV"), SPEED 1.15, con subtítulos quemados (pieces/_subs.py, tamaño 38; renders/subs/subs.json). Verificado en qa/subs_check.jpg.
+- QA: qa/report.txt, tiras qa/s1-s3.jpg + qa/c11.jpg, qa/render_report.txt, renders/share_revision.md (CASI; su punto "marca equivocada" es error del revisor: la pieza es MEXITV).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @mexitve.
+
+### `pieces/junta-guadalajara/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista, parte1, capos, jalisco, guadalajara, catalogo]
+relatedTo: [atrium-vista, novelas-variedad]
+---
+# junta-guadalajara (Parte 1): estado
+
+## Hecho (2026-11-17)
+- **CATALOGO.md #26 "La secretaria que no olvidó" [CAPO]. Familia: Revancha del empleado humillado. Cierre tipo 1: entra un personaje inesperado (Beatriz).**
+- VISTA. Cuenta monetizadotiktok18, proyecto Flow propio. 19 clips, 0 regens.
+- Render renders/share.mp4: 57.2 s, SPEED 1.15, subtítulos tamaño 38 revisados en qa/strip.jpg. LUFS -14.2, pico -2.1 dBTP.
+- QA: qa/report.txt (r*/i01 = alucinaciones del ASR en clips mudos), qa/render_report.txt, renders/share_revision.md (CASI). Aceptados: pocos two-shots, Lucía pasa de pie a sentada entre escenas, marca poco legible sobre ventanal (alpha 80, regla vigente).
+
+## Pendiente
+- No entregado (main entrega). caption.txt listo.
+
+### `pieces/jipi-becal/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte1, remake-transformado, madrastra-justicia, suegra-nuera, becal, campeche, sombrero-jipi]
+relatedTo: [aserrin-huamantla, garrafon-bernal, sarape-saltillo, atrium-vista]
+---
+# jipi-becal (La Cueva de Bécal · Parte 1): estado
+
+## Video base
+- Segunda versión, muy transformada, de **"Llegó a casa y vio lo que su esposa le hacía a su hija (P1)"** de @atriumstories_ (7705076412604091678, **632K**; P2 336K). La primera versión es `pieces/aserrin-huamantla`.
+- Por qué: la madrastra es el tipo con mejor mediana de Atrium (336K) según `fuentes/atrium-vista/ranking2.md`, y casi todas las historias top ya tienen pieza.
+
+## Qué se cambió
+- Vínculo invertido: abuela (la autoridad) / suegra (villana) / nuera (víctima). La abusadora tiene su propia suegra.
+- Región y oficio: tejedoras de sombrero jipi en las cuevas de Bécal, Campeche.
+- Objeto: la escalera tirada arriba de la cueva; el celular confiscado.
+- Giro: Zoraida le dijo a su hijo que la nuera lo dejó por otro; ella también salió de esa cueva; plazo invertido (para el sábado los doce sombreros los teje ella).
+- Gancho de P2: Zoraida le marca a escondidas a su hijo ("tu abuela ya anda muy confundida").
+- CTA: "¿Ustedes creen que Lisandro le va a creer a su madre?"
+- Nombres nuevos y únicos en pieces/: Apolonia Chablé (81), Zoraida Canul (56), Nicté Ucán (27). Lisandro (el nieto) solo se nombra.
+(Detalle en guion.md, tabla "Qué cambia respecto al original y a aserrin-huamantla".)
+
+## Marca
+**MEXI STORIES**: edit.py, BRAND = "MEXI" (kit pieces/_marcas/MEXI, con su música).
+
+## Archivos
+guion.md, caption.txt, lines.json (fuente única, 387 palabras), clips.py (42 clips: 32 hablados c01-c32, 4 insertos i01-i04 y 6 reacciones r1-r6), make_sheets.py (3 personajes + LOC_CUEVABECAL + LOC_PATIOBECAL = 5 hojas), phr.py y edit.py (EDL vacía; música cálida de c30 a i04).
+- Copia de garrafon-bernal con todas sus defensas: gaze + ONE + ALONE, PRES, NOSUB + CLEAN + END, NODOUBLE; SAFE/SOFT con las frases fuertes primero, variant, NOREF, TRIES=6; gatito como IMAGEN, duplicados md5, reload_flow, new_project y la parada "LIMITE DE CREDITOS" en gen(). make_sheets.py con "ordinary non-famous face", DUPLICADO por md5 y --reupload que salta las carpetas jipi-becal*. Nuevo: vert() para las miradas arriba/abajo entre la boca de la cueva y el fondo.
+- Comprobaciones: `python -m py_compile` OK en los 4 .py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); cada clip hablado llama a talk() con su propio ID; todos los @{ASSET} tienen hoja y no sobra ninguna; las frases en español de SOFT coinciden con lines.json; sin cifras en las líneas.
+
+## Avance
+- 2026-11-14: archivos escritos. No se generó nada en Flow.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no salga DUPLICADO, `md5sum chars/*.jpg` y hoja de contactos: caras comunes y distintas.
+2. `python -I clips.py > clips_log.txt` y QA de cada clip: morphs y bordes; la escalera tirada en el suelo hasta c06 y metida en la boca de la cueva desde c07; Nicté con vestido azul cielo, mandil beige y dedos vendados, adulta; Zoraida con blusa de leopardo, pelo vino y abanico negro; Apolonia con huipil blanco bordado, rebozo negro y bastón en la mano derecha; celular rosa (Nicté) y dorado (Zoraida) sin texto en pantalla; pronunciación de "Nicté", "Zoraida", "Lisandro" y "plataforma".
+3. phr.py → EDL en edit.py → montaje → verificación (sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca) → copia a LucidLink (carpeta MexiTV) con caption.txt.
+
+### `pieces/jipi-becal-p2/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte2, remake-transformado, madrastra-justicia, suegra-nuera, becal, campeche, sombrero-jipi]
+relatedTo: [jipi-becal, atrium-vista]
+---
+# jipi-becal-p2 (La Cueva de Bécal · Parte 2): estado
+
+## La historia
+Parte 2 de pieces/jipi-becal. Arranca desde el gancho de la P1 (Zoraida le llama a su hijo a escondidas).
+- Gancho con recordatorio: Zoraida, castigada en la cueva, le pide a Lisandro que venga a sacarla.
+- Lisandro (nuevo, 30) baja un día antes de la plataforma. Zoraida se hace la víctima; Nicté dice que nunca le escribió; la abuela le da el celular rosa.
+- Desenlace del giro: los mensajes de "ya no me busques" salían cada noche del celular de Nicté y luego Zoraida le llamaba a su hijo para consolarlo.
+- Castigo: Lisandro le quita el celular dorado "para que rindas"; la abuela le da el cuartito de la palma y el petate; los doce sombreros siguen; Nicté deja la escalera abajo: "Yo no soy como usted."
+- Gancho: Zoraida en la cueva, "ya van a ver quién teje a quién". CTA de Nicté: "¿Ustedes la dejarían salir de esa cueva?"
+
+Sin armas, sangre, cifras de dinero, deudas, uniformes, niños ni Navidad. Detalle en guion.md.
+
+## Marca
+**MEXI STORIES**, la misma de la Parte 1 (no entra en la rotación): edit.py, BRAND = "MEXI", SPEED = 1.15.
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 2, #parte2).
+- lines.json, fuente única: 375 palabras.
+- clips.py, 35 clips: c01-c28 hablados (c28 = CTA de 10 s), i01-i03 insertos sin caras y r1-r4 mudos.
+  - Copia de pieces/costal-cuyutlan/clips.py: ots(), two(), MOUTH, tuplas (prompt_nuevo, prompt_one), ONE_FROM=3, --one, y todas las defensas (gatito en imagen, reload_flow, new_project, descarga corrupta, duplicados md5, TRIES=6, SAFE/SOFT con las frases fuertes primero, NOREF con Lisandro, parada "LIMITE DE CREDITOS"). Imprime "FIN P2".
+  - Reparto: 18 OTS (56 %), 7 single (22 %), 4 two-shot (12 %), 3 grupo (9 %) + 3 insertos. Geografía fija: Zoraida izquierda, Lisandro en medio, Nicté y la abuela derecha. c01 es Zoraida hablando.
+- make_sheets.py: reutiliza las 5 hojas de la P1 copiadas a chars/ (APOLONIA_CHABLE, ZORAIDA_CANUL, NICTE_UCAN, LOC_CUEVABECAL, LOC_PATIOBECAL) y **1 hoja nueva: LISANDRO_PECH**. `--reupload` salta las carpetas jipi-becal* en el control de duplicados.
+- phr.py y edit.py (copia del de costal-cuyutlan, EDL vacía, BRAND = "MEXI", SPEED = 1.15; música cálida de c24 a c27).
+- Comprobaciones: py_compile OK en los 4 .py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); cada clip hablado llama a talk() con su propio ID y los mudos no; ningún nombre sin definir; todos los @{ASSET} tienen hoja (LISANDRO_PECH la genera make_sheets.py); frases de SOFT = lines.json; sin cifras; ninguna frase repetida de otra pieza.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py --reupload > sheets_log.txt`: sube las 5 copias, genera y sube LISANDRO_PECH, imprime "FIN HOJAS". Revisar md5 y que Lisandro no se parezca a nadie de otra pieza.
+2. `python -I clips.py > clips_log.txt`, con Monitor sobre "^FIN P2", Traceback, "intento 6" y "LIMITE".
+3. QA: dobles en los OTS (regenerar con `--one`), ropa de la P1, Lisandro sin uniforme, escalera en la boca de la cueva, geografía izquierda/derecha, pantallas sin texto, pronunciación.
+4. `python -I phr.py`, armar la EDL y `python -I edit.py`. Verificar sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca MEXI arriba a la derecha.
+5. Copiar a LucidLink (MexiTV/) con caption.txt.
+
+### `pieces/jarana-tlacotalpan/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte1, capos, veracruz, tlacotalpan, jarana]
+relatedTo: [red-janitzio, agave-amatitan, atrium-vista]
+---
+# jarana-tlacotalpan (La Jarana de Tlacotalpan · Parte 1): estado
+
+## Hecho (2026-11-17)
+- Capos transformado: en la fiesta de Tlacotalpan, Lorena (organizadora, nuera de doña Cristina) quiere quitar el puesto del jaranero don Matías "antes de que salga la procesión" y le tira una jarana; su nieto Ismael lo defiende. La jarana era el encargo de doña Cristina (la de su difunto marido). Plazo invertido. Giro: Ismael no es nieto de Matías sino de Cristina (hijo de Rodolfo).
+- Cuenta monetizadotiktok18, proyecto Flow propio; 5 hojas sin duplicados.
+- 24 clips a la primera + 1 regen (c11: Lorena con boca cerrada mientras sonaba su voz) = 25 clips (250 créditos). La regen salió con otro vestido blanco y otro abanico (aceptado).
+- Render renders/share.mp4: 78.0 s, 51 planos (1.52 s/plano), VISTA, SPEED 1.15, subtítulos quemados (tamaño 38). Verificado en qa/subs_check.jpg.
+- QA: qa/report.txt, tiras qa/s1-s3.jpg + qa/c11.jpg, qa/render_report.txt, renders/share_revision.md (CASI).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @vistastoriestv.
+
+### `pieces/jaiba-lagunamadre/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, mexitve, parte1, capos, tamaulipas, laguna-madre, jaibas]
+relatedTo: [rebozo-santamaria, nieve-tepoztlan, atrium-vista]
+---
+# jaiba-lagunamadre (La Jaiba de la Laguna Madre · Parte 1): estado
+
+## Hecho (2026-11-16)
+- Capos transformado: Brandon tira las jaibas de Damiana y le da plazo "antes de que regresen las lanchas"; Odilón llama a Belisario (lo salvó del agua hace veinte años), que resulta ser tío de Brandon; plazo invertido; giro: la lancha que lo abandonó era de su propio hermano.
+- Proyecto Flow nuevo 5c4661e8-76d3-4245-9926-4340576ccf87; 5 hojas sin duplicados.
+- 30 clips a la primera (300 créditos), sin regens.
+- Render renders/share.mp4: 95.4 s, 59 planos (1.61 s/plano), -14.3 LUFS, pico -2.2 dBFS, MEXI, SPEED 1.15.
+- Arreglos en montaje: c07 repetía "jaiberos" (cortado por palabra); c12 traía subtítulo quemado en la 2.ª frase (recortado arriba).
+- revisar_render: renders/share_revision.md. Sus puntos de labios eran muestreo (CTA y c04 comprobados con tiras). Detalles menores aceptados: banda del sombrero de Belisario en el CTA, peinado de Damiana en c02, más singles que la meta en la parte de Belisario.
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @mexitve.
+
+### `pieces/hamaca-comalcalco/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte1, remake-transformado, padre-hijos-herencia, justicia-familiar, tabasco, comalcalco, cacao]
+relatedTo: [baul-sanmiguel, sarape-saltillo, atrium-vista]
+---
+# hamaca-comalcalco (La Hamaca de Comalcalco · Parte 1): estado
+
+## Video base
+- Variante transformada de la saga de don Evaristo de @atriumstories_, desde su P3 "Lo trataron como un estorbo… sin saber que era millonario" (7706316327023119647, 121K; saga 1.06M; tipo padre-hijos-herencia, mediana 276K en `fuentes/atrium-vista/ranking2.md`). Analizado por API el 2026-11-15: `fuentes/atrium-vista/videos/7706316327023119647_analisis.md`.
+- baul-sanmiguel y sarape-saltillo rehicieron la P1 (la puerta cerrada); esta toma la reunión con el abogado: la prueba revelada, el hijo ingrato que recula, la insinuación contra el hijo humilde y la defensa del mayor.
+
+## Qué se cambió
+- Vínculo y región: una madre cacaotera y su nuera, en una finca de cacao de Comalcalco, Tabasco.
+- Injusticia y plazo en c01: la nuera, en su mecedora, la manda a colgar su hamaca en el asoleadero y le da hasta el domingo para irse a una casa de reposo. Se invierte: "Pues el domingo, ustedes me entregan esta casa."
+- Poder: la finca de cacao del río y el terreno de la casa del hijo son de ella (sin cifras).
+- Sacrificio de la hija humilde: vendió su molino de nixtamal; la madre ya mandó recogerlo.
+- Giro nuevo: el hijo ya había ido con el notario a preguntar cómo quitarle las tierras; la nuera lo entrega.
+- CTA: Fortunata a cámara, "¿Le darían otra oportunidad a un hijo así?"
+- Nombres nuevos y únicos en pieces/: Fortunata Landero (73), Norberto Landero (47), Isaura Garduza (43), Zenobia Landero (40), Olegario Ochoa (61).
+
+## Marca
+**VISTA STORIES**: edit.py, BRAND = "VISTA" (kit pieces/_marcas/VISTA, con su música). SPEED = 1.15.
+
+## Archivos
+guion.md, caption.txt, lines.json (fuente única, 390 palabras), clips.py (38 clips: 29 hablados c01-c29, 2 insertos i01-i02 y 7 reacciones/presentaciones r1-r7), make_sheets.py (5 personajes + LOC_CACAOCOMALC = 6 hojas), phr.py y edit.py (EDL vacía; música cálida de r5 a c17).
+- Copia de costal-cuyutlan con todas sus defensas: ots(), two(), MOUTH (+ GMOUTH para los grupos que hablan), tuplas (prompt_nuevo, prompt_one), ONE_FROM=3 y --one; gaze + ONE + ALONE, PRES, NOSUB + CLEAN + END, NODOUBLE; SAFE/SOFT con las frases fuertes primero, variant, NOREF, TRIES=6; gatito como IMAGEN, duplicados md5, reload_flow, new_project y la parada "LIMITE DE CREDITOS" en gen(). make_sheets.py con "ordinary non-famous face", DUPLICADO por md5 y --reupload que salta las carpetas hamaca-comalcalco*.
+- Encuadres: OTS 19 (50 %), single 9 (24 %), two-shot 5 (13 %), grupo 3 (8 %), insertos 2. Geografía: corredor y mecedora a la DERECHA (Isaura sentada, Norberto de pie), asoleadero a la IZQUIERDA (Fortunata con la hamaca, Zenobia a su izquierda, Olegario en el camino). Cada espalda con su @{ASSET} y su ropa vista desde atrás.
+- Comprobaciones: `python -m py_compile` OK en los 4 .py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); cada clip hablado llama a talk() con su propio ID y los mudos no; todos los @{ASSET} tienen hoja y no sobra ninguna; sin nombres indefinidos; las frases en español de SOFT coinciden con lines.json; sin cifras en las líneas; ninguna frase aparece en lines.json ni guion.md de otra pieza.
+
+## Avance
+- 2026-11-15: archivos escritos. No se generó nada en Flow.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no salga DUPLICADO, `md5sum chars/*.jpg` y hoja de contactos: caras comunes y distintas; Norberto y Zenobia se parecen como hermanos pero no son la misma cara.
+2. `python -I clips.py > clips_log.txt` y QA de cada clip: morphs y bordes; Fortunata con la hamaca en todos sus planos; Isaura siempre sentada en la mecedora a la derecha; ningún texto legible en la carpeta; pronunciación de "Comalcalco", "asoleadero", "Fortunata", "Zenobia", "quitárselas".
+3. phr.py → EDL en edit.py → montaje → verificación (sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca) → copia a LucidLink (carpeta Vista) con caption.txt.
+
+### `pieces/hamaca-comalcalco-p2/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte2, remake-transformado, padre-hijos-herencia, justicia-familiar, tabasco, comalcalco, cacao]
+relatedTo: [hamaca-comalcalco, atrium-vista]
+---
+# hamaca-comalcalco-p2 (La Hamaca de Comalcalco · Parte 2): estado
+
+## La historia
+Parte 2 de pieces/hamaca-comalcalco. Arranca en el mismo instante del gancho de la P1 (el notario: Norberto fue a preguntar cómo quitarle las tierras a su madre; Isaura: "Eso fue idea de él").
+- Gancho: Norberto confiesa y culpa a Isaura. El notario: ella esperaba en la camioneta, abanicándose (desenlace del giro).
+- Zenobia, la hija humilde, no pide nada; Fortunata pone la finca del río a su nombre: "La tierra se le da a quien no la pide."
+- Castigo: el domingo le dejan las llaves de la casa (plazo de la P1 cumplido); a la mamá de Isaura, "en el asoleadero hay lugar de sobra"; Isaura deja a Norberto y Fortunata le pone a él su hamaca en los brazos.
+- Gancho: Isaura llama a su mamá: "Esa finca no va a ser de Zenobia por mucho tiempo." CTA de Fortunata: "Ya repartí el cacao. ¿Hice bien con mi hijo?"
+
+Sin armas, sangre, cifras de dinero, deudas, uniformes, niños ni Navidad. Detalle en guion.md.
+
+## Marca
+**VISTA STORIES**, la misma de la Parte 1 (no entra en la rotación): edit.py, BRAND = "VISTA", SPEED = 1.15.
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 2, #parte2).
+- lines.json, fuente única: 374 palabras.
+- clips.py, 30 clips: c01-c24 hablados (c24 = CTA de 10 s), i01 inserto sin caras y r1-r5 mudos.
+  - Copia de pieces/sarape-saltillo-p2/clips.py: ots(), two(), MOUTH, tuplas (prompt_nuevo, prompt_one), ONE_FROM=3, --one, y todas las defensas (gatito en imagen, reload_flow, new_project, descarga corrupta, duplicados md5, TRIES=6, SAFE/SOFT con las frases fuertes primero, NOREF, parada "LIMITE DE CREDITOS"). Imprime "FIN P2".
+  - Reparto: 15 OTS (52 %), 7 single (24 %), 4 two-shot (14 %), 3 grupo (10 %, los 3 mudos) + 1 inserto. Geografía fija de la P1: Isaura y Norberto a la derecha en el corredor; Zenobia, Fortunata y Olegario a la izquierda en el asoleadero. c01 es Norberto hablando.
+- make_sheets.py: reutiliza las 6 hojas de la P1 copiadas a chars/ (FORTUNATA_LANDERO, ISAURA_GARDUZA, NORBERTO_LANDERO, ZENOBIA_LANDERO, OLEGARIO_OCHOA, LOC_CACAOCOMALC). Sin hojas nuevas. `--reupload` salta las carpetas hamaca-comalcalco* en el control de duplicados.
+- phr.py y edit.py (copia del de sarape-saltillo-p2, EDL vacía, BRAND = "VISTA", SPEED = 1.15; música cálida de c12 a c15).
+- Comprobaciones: py_compile OK en los 4 .py; pyflakes sin avisos en clips.py y make_sheets.py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); cada clip hablado llama a talk() y D8() con su propio ID y los mudos no; todos los @{ASSET} tienen hoja y no sobra ninguna; frases de SOFT = lines.json; sin cifras; ninguna frase repetida de otra pieza.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py --reupload > sheets_log.txt`: sube las 6 copias, imprime "FIN HOJAS".
+2. `python -I clips.py > clips_log.txt`, con Monitor sobre "^FIN P2", Traceback, "intento 6" y "LIMITE".
+3. QA: dobles en los OTS (regenerar con `--one`), ropa de la P1, la hamaca (Fortunata hasta r4, Norberto después), Isaura sentada hasta r3, geografía izquierda/derecha, nada legible en la carpeta, pronunciación.
+4. `python -I phr.py`, armar la EDL y `python -I edit.py`. Verificar sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca VISTA arriba al centro.
+5. Copiar a LucidLink (Vista/) con caption.txt.
+
+### `pieces/guitarra-paracho/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte1, capos, humillacion-revancha, michoacan, paracho, guitarras]
+relatedTo: [yegua-jerez, reloj-zacatlan, atrium-vista]
+---
+# guitarra-paracho (La Guitarra de Paracho · Parte 1): estado
+
+## Hecho (2026-11-17)
+- Estructura de la ref @alisorxomrb (transformada): Ricardo Cuevas, hijo del patrón, se burla de la guitarra campeona del difunto padre de Efraín y la deja caer; el patrón Gilberto corre a Efraín; su madre Josefina lo regaña; Efraín promete arreglarla y ganar el festival; remate: Gilberto se ríe y apuesta su fábrica.
+- Cuenta monetizadotiktok18, proyecto Flow propio; 6 hojas sin duplicados.
+- 23 clips a la primera, sin regens (230 créditos).
+- Render renders/share.mp4: 83.9 s, 50 planos (1.67 s/plano), MAJESTIC, SPEED 1.15, subtítulos quemados (tamaño 38). Cortada la repetición de c16 ("con la guitarra rota"). Verificado en qa/subs_check.jpg y qa/subs_fix.jpg.
+- _subs.py mejorado con esta pieza: frases partidas entre tramos se subtitulan por palabra (Whisper por palabra) y los cortes de subtítulo prefieren fin de oración.
+- QA: qa/report.txt, tiras qa/s1-s3.jpg, qa/render_report.txt, renders/share_revision.md (CASI: la guitarra que toca Efraín en c15 se ve entera, aceptado).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @wepsychologic.
+
+### `pieces/gloria-linares/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte1, padre-hijos-herencia, nuevo-leon, linares, glorias]
+relatedTo: [nieve-tepoztlan, ambar-simojovel, atrium-vista]
+---
+# gloria-linares (La Gloria de Linares · Parte 1): estado
+
+## Hecho (2026-11-16)
+- Padre-hijos transformado: la nuera Fabiola le hace la maleta a don Abundio para que no lo vea la compradora de Monterrey; Mauricio lo deja ir. Llega Consuelo: solo compra las glorias de don Abundio, sin él no hay trato. Giro: Fabiola quiso venderle a escondidas la libreta de recetas... que está en blanco.
+- Cuenta monetizadotiktok18, proyecto Flow nuevo; 5 hojas sin duplicados.
+- 30 clips a la primera + 3 regens = 33 clips (330 créditos): c18 (doble de Mauricio en el borde; rehecho en single), c10 y c13 (borde con ropa equivocada). c10 sigue sin el "¿Don Abundio?" inicial (la frase queda bien) y con dos maletas en el two-shot (aceptado).
+- Render renders/share.mp4: 92.0 s, 65 planos (1.41 s/plano), -14.3 LUFS, pico -2.2 dBTP, MAJESTIC, SPEED 1.15. Insertos i01/i02 acortados a 0.9 s tras la revisión (hueco sin voz).
+- QA: qa/report.txt, tiras qa/s1-s4.jpg + qa/rg.jpg, qa/render_report.txt, renders/share_revision.md (CASI).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @wepsychologic.
+
+### `pieces/gaviota-bacalar/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte1, remake-transformado, madrastra-justicia, justicia-familiar, quintana-roo, bacalar, lanchas]
+relatedTo: [aserrin-huamantla, jipi-becal, aserrin-huamantla-p2, atrium-vista]
+---
+# gaviota-bacalar (La Gaviota de Bacalar · Parte 1): estado
+
+## Video base
+- Variante transformada del Final de la saga de la madrastra de @atriumstories_, "¡Quería quedarse con la casa de su hijastra! FINAL" (7705499092683590942, 105K; saga 1.07M; tipo madrastra-justicia, mediana 336K, el mejor de `fuentes/atrium-vista/ranking2.md`). Bajado con yt-dlp y analizado por API el 2026-11-15: `fuentes/atrium-vista/videos/7705499092683590942_analisis.md`.
+- aserrin-huamantla y jipi-becal rehicieron la P1 y aserrin-huamantla-p2 la P2; esta toma el Final: la expulsión de la madrastra, su reclamo, la hija que la desmiente y la humillación devuelta.
+
+## Qué se cambió
+- Región y oficio: el dueño de las lanchas del muelle de Bacalar, Quintana Roo.
+- Injusticia y plazo en c01: la madrastra se burla del plazo ("¿antes de que regrese la última lancha?") mientras la hija talla el muelle de rodillas al fondo.
+- Objeto: La Gaviota, la lancha de la madre, a la que la madrastra mandó borrar el nombre; el cepillo de tallar en lugar de la escoba.
+- Giro nuevo: la madrastra llama a Wilberto, el hermano del padre, que llega en la última lancha: "La mitad de este muelle es mía." El plazo se vuelve contra el padre.
+- CTA: Saturnino a cámara, "¿Ustedes qué harían con un hermano así?"
+- Nombres nuevos y únicos en pieces/: Saturnino Dzib (56), Araceli Bracamontes (45), Ixchel Dzib (24), Wilberto Dzib (52).
+
+## Marca
+**VISTA STORIES**: edit.py, BRAND = "VISTA" (kit pieces/_marcas/VISTA, con su música). SPEED = 1.15.
+
+## Archivos
+guion.md, caption.txt, lines.json (fuente única, 373 palabras), clips.py (38 clips: 29 hablados c01-c29, 2 insertos i01-i02 y 7 reacciones/presentaciones r1-r7), make_sheets.py (4 personajes + LOC_MUELLEBACALAR = 5 hojas), phr.py y edit.py (EDL vacía; música cálida de c11 a c13).
+- Copia de hamaca-comalcalco con todas sus defensas: ots(), two(), MOUTH, tuplas (prompt_nuevo, prompt_one), ONE_FROM=3 y --one; gaze + ONE + ALONE, PRES, NOSUB + CLEAN + END, NODOUBLE; SAFE/SOFT con las frases fuertes primero, variant, NOREF, TRIES=6; gatito como IMAGEN, duplicados md5, reload_flow, new_project y la parada "LIMITE DE CREDITOS" en gen(). make_sheets.py con "ordinary non-famous face", DUPLICADO por md5 y --reupload que salta las carpetas gaviota-bacalar*.
+- Encuadres: OTS 19 (53 %), single 10 (28 %), two-shot 4 (11 %), grupo 3 (8 %, todos mudos), insertos 2. c01 es un OTS con una tercera persona al fondo (Ixchel tallando, desenfocada y callada).
+- Comprobaciones: `python -m py_compile` OK en los 4 .py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); cada clip hablado llama a talk() con su propio ID y los mudos no; todos los @{ASSET} tienen hoja y no sobra ninguna; pyflakes sin nombres indefinidos; las frases en español de SOFT coinciden con lines.json; sin dígitos en las líneas; ninguna frase de más de 3 palabras aparece en el lines.json de otra pieza.
+
+## Avance
+- 2026-11-15: archivos escritos. No se generó nada en Flow.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no salga DUPLICADO, `md5sum chars/*.jpg` y hoja de contactos: Saturnino y Wilberto hermanos pero bien distintos.
+2. `python -I clips.py > clips_log.txt` y QA de cada clip: morphs y bordes; en c01 que Ixchel al fondo no mueva la boca; Ixchel descalza y con playera blanca; Araceli siempre a la derecha con la maleta dorada; La Gaviota sin letras legibles; pronunciación de "Bacalar", "Saturnino", "Ixchel", "Wilberto".
+3. phr.py → EDL en edit.py → montaje → verificación (sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca) → copia a LucidLink (carpeta Vista) con caption.txt.
+
+### `pieces/gaviota-bacalar-p2/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte2, remake-transformado, madrastra-justicia, quintana-roo, bacalar, lanchas, hermano-traidor]
+relatedTo: [gaviota-bacalar, costal-cuyutlan-p2, atrium-vista]
+---
+# gaviota-bacalar-p2 (La Gaviota de Bacalar · Parte 2): estado
+
+## La historia
+Parte 2 de pieces/gaviota-bacalar. Arranca desde el gancho de la P1 (Wilberto llega en la última lancha).
+- Gancho con recordatorio: Wilberto en la punta del muelle: "Ya llegó la última lancha, hermano. Y la mitad de este muelle es mía."
+- Desenlace del giro: Ixchel saca de debajo del asiento de La Gaviota el papel de su mamá: cuando Wilberto se fue a Cancún le cedió su mitad a ella; ahora es de Ixchel.
+- Araceli y Wilberto se culpan entre sí. Castigo: se van los dos en la misma última lancha, Wilberto entrega la llave de la bodega y Araceli arrastra la maleta dorada por las tablas recién talladas.
+- Cálida: mañana le pintan el nombre a La Gaviota; Saturnino le quita el cepillo y le pide perdón a su hija.
+- Gancho: Araceli en la lancha, "ya veremos cuando mis hijas lleguen a este muelle". CTA de Saturnino: "¿Ustedes le habrían quitado la llave a su propio hermano?"
+
+Ritmo emocional: Final de la madrastra (7705499092683590942) y la pareja que se culpa del Final de Evaristo (7706344565933985054). Sin armas, sangre, cifras de dinero, deudas, uniformes, niños ni Navidad. Detalle en guion.md.
+
+## Marca
+**VISTA STORIES**, la misma de la Parte 1 (no entra en la rotación): edit.py, BRAND = "VISTA", SPEED = 1.15.
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 2, #parte2).
+- lines.json, fuente única: 362 palabras.
+- clips.py, 30 clips: c01-c23 hablados (c23 = CTA de 10 s), i01 inserto sin caras y r1-r6 mudos.
+  - Copia de pieces/costal-cuyutlan-p2/clips.py: ots(), two(), MOUTH, tuplas (prompt_nuevo, prompt_one), ONE_FROM=3, --one y todas las defensas (gatito en imagen, reload_flow, new_project, descarga corrupta, duplicados md5, TRIES=6, SAFE/SOFT con las frases fuertes primero, NOREF, parada "LIMITE DE CREDITOS"). Imprime "FIN P2".
+  - Reparto: 15 OTS (52 %), 7 single (24 %), 4 two-shot (14 %), 3 grupo (10 %, mudos) + 1 inserto. Geografía fija: Ixchel y Saturnino a la izquierda (lanchas, La Gaviota); Araceli y Wilberto a la derecha (palapa, punta del muelle). c01 es Wilberto hablando.
+- make_sheets.py: reutiliza las 5 hojas de la P1 copiadas a chars/ (SATURNINO_DZIB, ARACELI_BRACAMONTES, IXCHEL_DZIB, WILBERTO_DZIB, LOC_MUELLEBACALAR). Sin hojas nuevas ni personajes nuevos. `--reupload` salta las carpetas gaviota-bacalar* en el control de duplicados.
+- phr.py y edit.py (copia del de costal-cuyutlan-p2, EDL vacía, BRAND = "VISTA", SPEED = 1.15; música cálida de c19 a c22).
+- Comprobaciones: py_compile OK en los 4 .py; pyflakes sin avisos en clips.py y make_sheets.py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); cada clip hablado llama a talk() con su propio ID y los mudos no; los @{ASSET} = los 5 jpg de chars/; frases de SOFT = lines.json; sin dígitos en las líneas; ninguna frase de más de 3 palabras repetida de otra pieza.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py --reupload > sheets_log.txt`: sube las 5 copias, imprime "FIN HOJAS".
+2. `python -I clips.py > clips_log.txt`, con Monitor sobre "^FIN P2", Traceback, "intento 6" y "LIMITE".
+3. QA: dobles en los OTS (regenerar con `--one`), ropa de la P1, Ixchel descalza, Araceli con la maleta dorada a la derecha, el papel y el sobre sin texto, en r6 la lancha lejos y sin caras nítidas, pronunciación ("Ixchel", "Cancún", "Bacalar").
+4. `python -I phr.py`, armar la EDL y `python -I edit.py`. Verificar sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca VISTA arriba al centro.
+5. Copiar a LucidLink (Vista/) con caption.txt.
+
+### `pieces/garrafon-bernal/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte1, remake-transformado, patron-injusticia, bernal, queretaro, vendimia]
+relatedTo: [aserrin-huamantla, garrafon-bernal, cantera-huichapan, atrium-vista]
+---
+# garrafon-bernal (Los Garrafones de Bernal · Parte 1): estado
+
+## Video base
+- Remake transformado de **"Su esposa les prohibió el agua a los empleados… (P1)"** de @atriumstories_ (7706934829392203039, 71K, 178 s, 73 planos). Su P2, "La siguió hasta una bodega abandonada" (7707034442048507166), hizo **192K**. Análisis nuevos (Whisper + API): `fuentes/atrium-vista/videos/7706934829392203039_analisis.md` y `7707034442048507166_analisis.md`.
+- Por qué este: es una de las 2 historias nuevas sin pieza que recomienda `fuentes/atrium-vista/ranking2.md`.
+- Pedido del usuario (2026-11-14): más cerca de las historias de Atrium, sin copiar. Se conservan la historia y su ritmo emocional (capas del misterio: agua → comida → miedo → cocina → la mitad del mandado → el carro vuelve vacío). Cambian el escenario y la región, el oficio, los objetos clave, los nombres, todos los diálogos y el CTA.
+
+## Qué se cambió
+- Región y escenario: la hacienda con piscina pasa a ser un viñedo familiar cerca de Bernal (Querétaro), en vendimia, con la Peña de Bernal.
+- Oficios: empleada doméstica → vendimiadora; patrón de traje → viñatero con chaleco de gamuza.
+- Objetos: la manguera → la tina de lavar cajas de uva y los garrafones azules con cadena y candado; las compras → el mandado del jueves y la camioneta blanca por el portón de atrás.
+- Plazo nuevo: "antes de que se meta el sol" (gancho y promesa final).
+- CTA: "¿A dónde creen que se lleva Lorena el mandado?"
+- Nombres nuevos y únicos en pieces/: Leoncio Ávalos, Jovita Reséndiz (26), Petronila Ocádiz (64). Lorena (la esposa) solo se nombra.
+(Detalle en guion.md, tabla "Qué cambia respecto al original".)
+
+## Marca
+**VISTA STORIES**: edit.py, BRAND = "VISTA" (kit pieces/_marcas/VISTA, con su música).
+
+## Archivos
+guion.md, caption.txt, lines.json (fuente única, 352 palabras), clips.py (38 clips: 29 hablados c01-c29, 5 insertos i01-i05 y 4 reacciones r1-r4), make_sheets.py (3 personajes + LOC_PATIOBERNAL + LOC_COCINABERNAL = 5 hojas), phr.py y edit.py (EDL vacía; música cálida de c14 a c15).
+- Copia de aserrin-huamantla con todas sus defensas: gaze + ONE + ALONE, PRES, NOSUB + CLEAN + END, NODOUBLE; SAFE/SOFT con las frases fuertes primero, variant, NOREF, TRIES=6; gatito como IMAGEN, duplicados md5, reload_flow, new_project y la parada "LIMITE DE CREDITOS" en gen(). make_sheets.py con "ordinary non-famous face", DUPLICADO por md5 y --reupload.
+- Comprobaciones: `python -m py_compile` OK en los 4 .py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); todos los @{ASSET} tienen hoja y no sobra ninguna; las frases en español de SOFT coinciden con lines.json; sin cifras en las líneas.
+
+## Avance
+- 2026-11-14: archivos escritos. No se generó nada en Flow.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no salga DUPLICADO, `md5sum chars/*.jpg` y hoja de contactos: caras comunes y distintas.
+2. `python -I clips.py > clips_log.txt` y QA de cada clip: morphs y bordes; Jovita a la izquierda junto a la tina, con paliacate rojo y camisa verde olivo, adulta; Leoncio con barba blanca y chaleco de gamuza; los garrafones con cadena y candado iguales en i01, i02 y el patio; Petronila con mandil de cuadros rojos; pronunciación de "Jovita", "Petronila", "Lorena" y "garrafones".
+3. phr.py → EDL en edit.py → montaje → verificación (sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca) → copia a LucidLink con caption.txt.
+
+### `pieces/garrafon-bernal-p2/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte2, remake-transformado, patron-injusticia, bernal, queretaro, vendimia]
+relatedTo: [garrafon-bernal, atrium-vista]
+---
+# garrafon-bernal-p2 (Los Garrafones de Bernal · Parte 2): estado
+
+## La historia
+Es la Parte 2 de pieces/garrafon-bernal y sigue el ritmo emocional de la P2 de Atrium "La siguió hasta una bodega abandonada" (7707034442048507166, 192K). Análisis: `fuentes/atrium-vista/videos/7707034442048507166_analisis.md`.
+- Gancho con recordatorio: la camioneta blanca en el portón; "Antes de que se meta el sol, la sigo."
+- Lorena le ordena a Ruperto cargar la mitad del mandado y los garrafones llenos, y le exige silencio. Ruperto, con miedo, no sabe a dónde va.
+- Bodega de adobe con puerta azul: "Abres tú, o abro yo." Adentro, el mandado y los garrafones: Lorena los vende en el tianguis.
+- Castigo: las llaves de la camioneta y del candado; "antes de que se meta el sol, te vas" (el plazo de la P1 al revés).
+- Desenlace: el candado se abre, Jovita toma agua limpia, Petronila manda en la cocina, cena de todos. CTA: "¿Ustedes habrían perdonado a Lorena? … para ver qué pasó con ella."
+
+No hay armas, sangre, cifras de dinero, deudas, uniformes, niños ni Navidad. Detalle en guion.md.
+
+## Marca
+**VISTA STORIES**, la misma de la Parte 1 (no entra en la rotación): edit.py, BRAND = "VISTA".
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 2, #parte2).
+- lines.json es la fuente única: 395 palabras.
+- clips.py tiene 46 clips: c01-c32 hablados (c32 = CTA de 10 s), i01-i09 insertos sin caras y r1-r5 mudos (r1 y r2 = presentaciones de Lorena y Ruperto).
+  - Es copia del clips.py de la Parte 1 con todas sus defensas: gatito en imagen, reload_flow, new_project, descarga corrupta, duplicados md5, TRIES=6, SAFE/SOFT (frases fuertes de la P2 primero), NOREF (con Lorena y Ruperto) y la parada "LIMITE DE CREDITOS" en gen(). Imprime "FIN P2".
+  - Anclas LEO, JOV y PET idénticas a la P1 (misma ropa).
+- make_sheets.py:
+  - Reutiliza las 5 hojas de la Parte 1 copiadas a chars/: LEONCIO_AVALOS, JOVITA_RESENDIZ, PETRONILA_OCADIZ, LOC_PATIOBERNAL y LOC_COCINABERNAL (lista REUSED: si falta una, la copia de la P1; nunca la regenera).
+  - **4 hojas nuevas: LORENA_ALDACO, RUPERTO_MENDIOLA, LOC_PORTONBERNAL y LOC_BODEGABERNAL.**
+  - En `--reupload` las copias no cuentan como DUPLICADO: se saltan las carpetas garrafon-bernal*. El make_sheets.py de la P1 también salta esas carpetas ahora, para que su --reupload no marque las copias de la P2.
+- phr.py y edit.py (copias de la P1, EDL vacía, BRAND = "VISTA"). Música: suspenso hasta i08, cálida de i08 a c32 (el candado, el agua, la cena), suspenso en el CTA.
+- Comprobaciones: `python -m py_compile` OK en los 4 .py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); todos los @{ASSET} tienen hoja.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py --reupload > sheets_log.txt`: sube las 5 copias, genera y sube las 4 nuevas e imprime "FIN HOJAS". Revisar md5 y que Lorena no se parezca a Jovita ni a Petronila, ni Ruperto a Leoncio.
+2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P2", Traceback, "intento 6" y "LIMITE".
+3. QA: misma ropa que la P1 en todos los planos; Lorena con blusa turquesa y moño bajo; camioneta y bodega sin letras ni placas; la cadena y el candado de i08 iguales a los de la P1; pronunciación de "Ruperto", "Lorena", "tianguis", "garrafones".
+4. `python -I phr.py`, armar la EDL y correr `python -I edit.py`.
+5. Verificar sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, y la marca VISTA arriba al centro.
+6. Copiar a LucidLink (Vista/) con caption.txt.
+
+### `pieces/frascos-sanignacio/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte1, remake-transformado, capos, baja-california-sur, san-ignacio, partera]
+relatedTo: [padre-veladoras, atrium-vista]
+---
+# frascos-sanignacio (Los Frascos de San Ignacio · Parte 1): estado
+
+## Video base
+- Variante transformada de "Se burlaron del padre… sin saber a quién iba a llamar" de @atriumstories_ (7702486655336320286, 231K, capos). Primera versión: `pieces/padre-veladoras`.
+- Se analizó por API "En el desierto no hay perdón" (7702121152491179294, 57K, el único P1 de capos sin pieza): `fuentes/atrium-vista/videos/7702121152491179294_analisis.md`. Se descartó: robo de dinero, amenazas a la familia y disparos.
+- Del original queda la historia y su ritmo: humillación a una persona de respeto, una sola llamada, burlas, en la camioneta el poderoso cuenta por qué le debe todo, convoy, cara a cara.
+
+## Qué se cambió
+- Región y oficio: plaza del oasis de San Ignacio, Baja California Sur; la humillada es una partera y hierbera de 76 años.
+- Injusticia y plazo en c01: el novio rico le tira los frascos para poner su boda, "antes de que llegue la novia". Se invierte: "Antes de que llegue, levantas cada frasco. Y le besas la mano a mi madrina."
+- Deuda moral: ella trajo al mundo a Belarmino y recibió a su hija caminando toda la noche por el desierto.
+- Giro nuevo: el novio que la humilló se casa hoy con la hija de Belarmino ("Mi suegro es don Belarmino Arciniega").
+- CTA: Tiburcia a cámara, "¿Ustedes lo dejarían casarse con su hija?"
+- Nombres nuevos y únicos en pieces/: Tiburcia Osuna (76), Bastián Talamantes (29), Iker Barajas (28), Belarmino Arciniega (63), Zacarías Magaña (41).
+
+## Marca
+**MAJESTIC STORIES**: edit.py, BRAND = "MAJESTIC" (kit pieces/_marcas/MAJESTIC, con su música). SPEED = 1.15.
+
+## Archivos
+guion.md, caption.txt, lines.json (fuente única, 371 palabras), clips.py (39 clips: 30 hablados c01-c30, 2 insertos i01-i02 y 7 reacciones/presentaciones r1-r7), make_sheets.py (5 personajes + LOC_PLAZASANIGN + LOC_DESIERTOBCS = 7 hojas), phr.py y edit.py (EDL vacía; música cálida de c15 a i01).
+- Copia de costal-cuyutlan con todas sus defensas: ots(), two(), MOUTH (+ GMOUTH para el grupo que habla), tuplas (prompt_nuevo, prompt_one), ONE_FROM=3 y --one; gaze + ONE + ALONE, PRES, NOSUB + CLEAN + END, NODOUBLE; SAFE/SOFT con las frases fuertes primero, variant, NOREF, TRIES=6; gatito como IMAGEN, duplicados md5, reload_flow, new_project y la parada "LIMITE DE CREDITOS" en gen(). make_sheets.py con "ordinary non-famous face", DUPLICADO por md5 y --reupload que salta las carpetas frascos-sanignacio*.
+- Encuadres: OTS 20 (51 %), single 10 (26 %), two-shot 5 (13 %), grupo 4 (10 %, con los 2 insertos amplios del convoy). Geografía: puesto a la IZQUIERDA (Tiburcia; Belarmino llega a su derecha), arco de flores a la DERECHA (Bastián; Iker un paso detrás). En la camioneta: Zacarías maneja a la IZQUIERDA y Belarmino va de copiloto a la DERECHA. Cada espalda con su @{ASSET} y su ropa vista desde atrás.
+- Comprobaciones: `python -m py_compile` OK en los 4 .py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); cada clip hablado llama a talk() con su propio ID y los mudos no; todos los @{ASSET} tienen hoja y no sobra ninguna; sin nombres indefinidos; las frases en español de SOFT coinciden con lines.json; sin cifras en las líneas; ninguna frase aparece en lines.json ni guion.md de otra pieza.
+
+## Avance
+- 2026-11-15: archivos escritos. No se generó nada en Flow.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no salga DUPLICADO, `md5sum chars/*.jpg` y hoja de contactos: caras comunes y distintas; Bastián e Iker claramente distintos.
+2. `python -I clips.py > clips_log.txt` y QA de cada clip: morphs y bordes; el atardecer coherente; el puesto a la izquierda y el arco a la derecha; Belarmino el único con sombrero; camionetas sin letras ni placas; que el OTS dentro de la camioneta (c15-c18) no meta un tercero; pronunciación de "Tiburcia", "Belarmino", "Arciniega", "hierbera".
+3. phr.py → EDL en edit.py → montaje → verificación (sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca) → copia a LucidLink (carpeta Majestic) con caption.txt.
+
+### `pieces/frascos-sanignacio-p2/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte2, remake-transformado, capos, baja-california-sur, san-ignacio, partera, boda]
+relatedTo: [frascos-sanignacio, atrium-vista]
+---
+# frascos-sanignacio-p2 (Los Frascos de San Ignacio · Parte 2): estado
+
+## La historia
+Parte 2 de pieces/frascos-sanignacio. Arranca en el mismo instante del gancho de la P1 ("¿Usted… es don Belarmino? Señor, yo no sabía.").
+- Gancho: Belarmino pone a Bastián a levantar los frascos "que la novia ya viene en camino"; Iker quiere irse y lo obliga a quedarse.
+- Llega Jimena (nueva, 27), la novia, hija de Belarmino: Tiburcia la recibió al nacer (desenlace del giro: el novio que humilló a la partera se casa hoy con ella).
+- Castigo: Bastián le besa la mano a Tiburcia ("me lo da el miedo que trae"); Jimena deja el anillo en el puesto, "Hoy en esta plaza no hay boda", y le da su ramo a Tiburcia; Belarmino manda quitar el arco.
+- Gancho: Bastián llama a su papá y Tiburcia: "A él también lo recibí yo." CTA de Jimena: "Me quedé sin boda, pero no sin madrina. ¿Ustedes lo habrían perdonado?"
+
+Sin armas, sangre, cifras de dinero, deudas, uniformes, niños ni Navidad. Detalle en guion.md.
+
+## Marca
+**MAJESTIC STORIES**, la misma de la Parte 1 (no entra en la rotación): edit.py, BRAND = "MAJESTIC", SPEED = 1.15.
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 2, #parte2).
+- lines.json, fuente única: 380 palabras.
+- clips.py, 32 clips: c01-c25 hablados (c25 = CTA de 10 s), i01 inserto sin caras y r1-r6 mudos.
+  - Copia de pieces/sarape-saltillo-p2/clips.py: ots(), two(), MOUTH, tuplas (prompt_nuevo, prompt_one), ONE_FROM=3, --one, y todas las defensas (gatito en imagen, reload_flow, new_project, descarga corrupta, duplicados md5, TRIES=6, SAFE/SOFT con las frases fuertes primero, NOREF con Jimena, parada "LIMITE DE CREDITOS"). Imprime "FIN P2".
+  - Reparto: 16 OTS (52 %), 7 single (23 %), 5 two-shot (16 %), 3 grupo (10 %, los 3 mudos) + 1 inserto. Geografía fija de la P1: Tiburcia, Belarmino y Jimena a la izquierda (puesto); Bastián e Iker a la derecha (arco). c01 es Belarmino hablando.
+- make_sheets.py: reutiliza 6 hojas de la P1 copiadas a chars/ (TIBURCIA_OSUNA, BASTIAN_TALAMANTES, IKER_BARAJAS, BELARMINO_ARCINIEGA, ZACARIAS_MAGANA, LOC_PLAZASANIGN; LOC_DESIERTOBCS no hace falta) y **1 hoja nueva: JIMENA_ARCINIEGA**. `--reupload` salta las carpetas frascos-sanignacio* en el control de duplicados.
+- phr.py y edit.py (copia del de sarape-saltillo-p2, EDL vacía, BRAND = "MAJESTIC", SPEED = 1.15; música cálida de c20 a c22).
+- Comprobaciones: py_compile OK en los 4 .py; pyflakes sin avisos en clips.py y make_sheets.py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); cada clip hablado llama a talk() y D8() con su propio ID y los mudos no; todos los @{ASSET} tienen hoja y no sobra ninguna; frases de SOFT = lines.json; sin cifras; ninguna frase repetida de otra pieza.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py --reupload > sheets_log.txt`: sube las 6 copias, genera y sube JIMENA_ARCINIEGA, imprime "FIN HOJAS". Revisar md5 y que Jimena no se parezca a nadie de otra pieza; vestido con cuello alto y mangas largas.
+2. `python -I clips.py > clips_log.txt`, con Monitor sobre "^FIN P2", Traceback, "intento 6" y "LIMITE".
+3. QA: dobles en los OTS (regenerar con `--one`), ropa de la P1, frascos tirados hasta r2 y de pie después, el ramo (Jimena hasta c20, Tiburcia después), geografía izquierda/derecha, camionetas sin placas, pronunciación.
+4. `python -I phr.py`, armar la EDL y `python -I edit.py`. Verificar sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca MAJESTIC arriba a la izquierda.
+5. Copiar a LucidLink (Majestic/) con caption.txt.
+
+### `pieces/domino-jerez/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi, parte1, capos, zacatecas, jerez, catalogo]
+relatedTo: [atrium-vista, novelas-variedad]
+---
+# domino-jerez (Parte 1): estado
+
+## Hecho (2026-11-17)
+- **CATALOGO.md #31 "La partida de dominó" [CAPO]. Familia: Capos, caciques y patrones. Cierre tipo 3: una palabra reveladora ("Ella se llamaba Rosario").**
+- MEXI. Cuenta monetizadotiktok18, proyecto Flow propio. 19 clips, 0 regens (c01 de la primera pasada; el resto con REGEN tras resubir hojas).
+- Render renders/share.mp4: 55.3 s, 32 tramos, SPEED 1.15, subtítulos tamaño 38 revisados en qa/strip.jpg. LUFS -14.4, pico -2.1 dBTP.
+- QA: qa/report.txt (r3/r4 = alucinaciones del ASR en clips mudos), qa/render_report.txt, renders/share_revision.md (CASI). Aceptados: la foto sobre la mesa en c10 no se distingue igual que en el inserto r3, fondo espejado en un plano, CTA no es pregunta (el catálogo pide variar), "nomás/Voltee" que el ASR oye distinto.
+
+## Pendiente
+- No entregado (main entrega). caption.txt listo.
+
+### `pieces/costal-cuyutlan/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte1, remake-transformado, capos, reten, colima, cuyutlan, salinas]
+relatedTo: [reten-sierra, cenote-campana, atrium-vista]
+---
+# costal-cuyutlan (La Sal de Cuyutlán · Parte 1): estado
+
+## Video base
+- Versión nueva y muy transformada de "Le pidió 200 mil en el retén… (El Retén)" de @atriumstories_ (7701749432621993246, **1.1M**, 2.º pico de capos en `fuentes/atrium-vista/ranking2.md`). Versiones anteriores: `pieces/reten-sierra` y `pieces/cenote-campana`.
+- Del original queda solo el esqueleto: humillación con plazo → llega la figura de poder → plazo invertido → giro familiar → castigo en la Parte 2.
+
+## Qué se cambió
+- Región y oficio: salinas de Cuyutlán, Colima; el protagonista es el salinero más viejo.
+- Bloqueo: una camioneta blanca atravesada en el bordo (sin retén, reja ni cadena) y un costal de sal reventado en el lodo.
+- Plazo: la lluvia que viene del mar. Se invierte: "Usted me dio hasta que lloviera, ¿no, señor? Ahora ese plazo es suyo."
+- Llamada: un chiflido; los salineros salen a pie de las charcas, con las manos vacías (sin radio, campana ni camionetas).
+- Giro: el que vendió la mitad del bordo es Evelio, el hermano de Atanasio (traidor), que baja de la camioneta del villano.
+- CTA: Atanasio a cámara con las primeras gotas, "¿Ustedes perdonarían a un hermano así?"
+- Nombres nuevos y únicos en pieces/: Atanasio Varela (69), Xóchitl Varela (31), Evelio Varela (62), Leónidas Pazos (52).
+(Tabla completa en guion.md, "Qué cambia respecto al original y a las versiones anteriores".)
+
+## Marca
+**MEXI STORIES**: edit.py, BRAND = "MEXI" (kit pieces/_marcas/MEXI, con su música).
+
+## Archivos
+guion.md, caption.txt, lines.json (fuente única, 368 palabras), clips.py (36 clips: 27 hablados c01-c27, 2 insertos i01-i02 y 7 reacciones/presentaciones r1-r7), make_sheets.py (4 personajes + LOC_SALINASCUYUT = 5 hojas), phr.py y edit.py (EDL vacía; música cálida de c16 a r5).
+- Copia de sarape-saltillo con todas sus defensas: gaze + ONE + ALONE, PRES, NOSUB + CLEAN + END, NODOUBLE; SAFE/SOFT con las frases fuertes primero, variant, NOREF, TRIES=6; gatito como IMAGEN, duplicados md5, reload_flow, new_project y la parada "LIMITE DE CREDITOS" en gen(). make_sheets.py con "ordinary non-famous face", DUPLICADO por md5 y --reupload que salta las carpetas costal-cuyutlan*.
+- Corrección del usuario aplicada: c01 es el primer clip y es Leónidas hablando en pleno conflicto (plano medio de presentación, habla desde el primer frame); ningún plano de objetos, manos o algo que cae al inicio; los insertos van solo en medio.
+- Comprobaciones: `python -m py_compile` OK en los 4 .py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); cada clip hablado llama a talk() con su propio ID y los mudos no; todos los @{ASSET} tienen hoja y no sobra ninguna; las frases en español de SOFT coinciden con lines.json; sin cifras en las líneas; ninguna frase aparece en lines.json ni guion.md de otra pieza.
+
+## Avance
+- 2026-11-14: archivos escritos. No se generó nada en Flow.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no salga DUPLICADO, `md5sum chars/*.jpg` y hoja de contactos: caras comunes y distintas; Atanasio y Evelio se parecen como hermanos pero no son la misma cara (Evelio bajito, calvo y con lentes).
+2. `python -I clips.py > clips_log.txt` y QA de cada clip: morphs y bordes; nubes negras sin lluvia hasta i02; la camioneta blanca a la derecha y la azul a la izquierda, sin letras ni placas; Leónidas el único con sombrero; los salineros sin herramientas; que el chiflido de r3 se vea natural; pronunciación de "Cuyutlán", "Xóchitl", "escampe", "rastrillar".
+3. phr.py → EDL en edit.py → montaje → verificación (sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca) → copia a LucidLink (carpeta MexiTV) con caption.txt.
+
+### `pieces/costal-cuyutlan-p2/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte2, remake-transformado, capos, colima, cuyutlan, salinas, hermano-traidor]
+relatedTo: [costal-cuyutlan, atrium-vista]
+---
+# costal-cuyutlan-p2 (La Sal de Cuyutlán · Parte 2): estado
+
+## La historia
+Parte 2 de pieces/costal-cuyutlan. Arranca desde el gancho de la P1 (Evelio bajó de la camioneta blanca y cayeron las primeras gotas).
+- Gancho con recordatorio: Leónidas, bajo la llovizna, presume que el bordo se lo vendió el hermano de Atanasio.
+- Remigia (nueva, 78), la salinera más vieja, trae el papel de la asamblea: el padre dejó el bordo al pueblo. Evelio vendió lo que no era suyo (desenlace del giro).
+- Leónidas y Evelio se culpan; Evelio confiesa que solo quería irse de la sal.
+- Castigo del villano: el plazo se cumplió, la camioneta se atasca, nadie la empuja y Leónidas se va a pie por la playa.
+- Castigo del traidor: Evelio carga los costales a la caseta, uno por uno, bajo la lluvia.
+- Gancho: Evelio solo en la caseta, "es quién me presentó a ese señor". CTA de Atanasio: "¿Ustedes lo pondrían a cargar sal o lo correrían del pueblo?"
+
+Sin armas, sangre, cifras de dinero, deudas, uniformes, niños ni Navidad. Detalle en guion.md.
+
+## Marca
+**MEXI STORIES**, la misma de la Parte 1 (no entra en la rotación): edit.py, BRAND = "MEXI", SPEED = 1.15.
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 2, #parte2).
+- lines.json, fuente única: 388 palabras.
+- clips.py, 33 clips: c01-c26 hablados (c26 = CTA de 10 s), i01-i02 insertos sin caras y r1-r5 mudos.
+  - Copia de pieces/jipi-becal-p2/clips.py: ots(), two(), MOUTH, tuplas (prompt_nuevo, prompt_one), ONE_FROM=3, --one, y todas las defensas (gatito en imagen, reload_flow, new_project, descarga corrupta, duplicados md5, TRIES=6, SAFE/SOFT con las frases fuertes primero, NOREF con Remigia, parada "LIMITE DE CREDITOS"). Imprime "FIN P2".
+  - Reparto: 16 OTS (52 %), 8 single (26 %), 4 two-shot (13 %), 3 grupo (10 %) + 2 insertos. Geografía fija: Atanasio, Xóchitl y Remigia a la izquierda; Leónidas y Evelio a la derecha. c01 es Leónidas hablando.
+- make_sheets.py: reutiliza las 5 hojas de la P1 copiadas a chars/ (ATANASIO_VARELA, XOCHITL_VARELA, LEONIDAS_PAZOS, EVELIO_VARELA, LOC_SALINASCUYUT) y **1 hoja nueva: REMIGIA_SOTELO**. `--reupload` salta las carpetas costal-cuyutlan* en el control de duplicados.
+- phr.py y edit.py (copia del de jipi-becal-p2, EDL vacía, BRAND = "MEXI", SPEED = 1.15; música cálida de c22 a c25).
+- Comprobaciones: py_compile OK en los 4 .py; pyflakes sin avisos en clips.py y make_sheets.py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); cada clip hablado llama a talk() con su propio ID y los mudos no; todos los @{ASSET} tienen hoja y no sobra ninguna; frases de SOFT = lines.json; sin cifras; ninguna frase repetida de otra pieza.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py --reupload > sheets_log.txt`: sube las 5 copias, genera y sube REMIGIA_SOTELO, imprime "FIN HOJAS". Revisar md5 y que Remigia no se parezca a nadie de otra pieza.
+2. `python -I clips.py > clips_log.txt`, con Monitor sobre "^FIN P2", Traceback, "intento 6" y "LIMITE".
+3. QA: dobles en los OTS (regenerar con `--one`), ropa de la P1, llovizna constante, Leónidas el único con sombrero, camionetas a su lado sin placas, el papel sin texto, pronunciación.
+4. `python -I phr.py`, armar la EDL y `python -I edit.py`. Verificar sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca MEXI arriba a la derecha.
+5. Copiar a LucidLink (MexiTV/) con caption.txt.
+
+### `pieces/cobre-santaclara/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexitv, parte1, capos, michoacan, santa-clara-del-cobre, cobre]
+relatedTo: [vainilla-papantla, atrium-vista]
+---
+# cobre-santaclara (El Cobre de Santa Clara · Parte 1): estado
+
+## Hecho (2026-11-16)
+- Capos transformado: Gerardo le tira a doña Celestina el cazo de cobre de un encargo y le da plazo "antes de que empiece la feria"; llega don Lázaro por el cazo de la boda de su hija: Gerardo es el novio. Plazo invertido y boda cancelada. Giro: viene un nieto en camino... y Gerardo ya tiene otra familia en Morelia.
+- Cuenta monetizadotiktok18, proyecto Flow propio. Pausa a mitad (16/25) por pedido del usuario; retomado a las 19:36 con make_sheets --reupload; los 9 restantes salieron a la primera.
+- 25 clips (c01 al 2.º intento), sin regens (250 créditos).
+- Render renders/share.mp4: 81.9 s, 51 planos (1.60 s/plano), -14.5 LUFS, pico -2.2 dBTP, MEXITV (marca "MEXI TV"), SPEED 1.15.
+- QA: qa/report.txt (todas las frases presentes), tiras qa/s1-s3.jpg, qa/render_report.txt, renders/share_revision.md (su punto "marca equivocada" es error del revisor: la pieza es MEXITV).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @mexitve.
+
+### `pieces/cantera-huichapan/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte1, remake-transformado, patron-injusticia, huichapan, hidalgo, cantera]
+relatedTo: [aserrin-huamantla, garrafon-bernal, cantera-huichapan, atrium-vista]
+---
+# cantera-huichapan (La Cantera de Huichapan · Parte 1): estado
+
+## Video base
+- Remake transformado de **"Le cobraba el equipo de seguridad a los obreros… (P1)"** de @atriumstories_ (7697405703966838046, 128K, 102 s, 37 planos). Su P2, "Su jefe les cobraba lo que era gratis" (7698054444662934815), hizo 141K. Análisis nuevos (Whisper + API): `fuentes/atrium-vista/videos/7697405703966838046_analisis.md` y `7698054444662934815_analisis.md`.
+- Por qué este: es una de las 2 historias nuevas sin pieza que recomienda `fuentes/atrium-vista/ranking2.md`.
+- Pedido del usuario (2026-11-14): más cerca de las historias de Atrium, sin copiar. Se conservan la historia y su ritmo emocional (el honesto devuelve lo que "no ha pagado" → era gratis → el villano miente con el reglamento → a solas se delata y amenaza → la patrona lo oyó todo y lo cita con plazo). Cambian el escenario y la región, el oficio, los objetos clave, los nombres, todos los diálogos, el detalle del giro y el CTA.
+
+## Qué se cambió
+- Región y escenario: obra en construcción → cantera de piedra rosa cerca de Huichapan (Hidalgo).
+- Oficio y ropa: obrero con casco y chaleco → cantero con camisa rojo ladrillo y paliacate; capataz con casco y chaleco naranja → supervisor calvo con piocha, lentes redondos y chaleco verde liso sin letras. Sin cascos ni chalecos con letras.
+- Objetos: casco, botas y guantes con cifra → guantes de carnaza, lentes y cubrebocas, sin cifras; lentes viejos pegados con cinta (injusticia visible en el gancho).
+- Giro: las cámaras con audio → el celular de Abdías en llamada con Rosalba.
+- Plazo nuevo: "antes de que acabe el turno" (gancho y vuelta contra Sotero).
+- CTA: "¿Ustedes qué le harían a Sotero?"
+- Nombres nuevos y únicos en pieces/: Rosalba Monroy (52), Abdías Carbajal (31), Sotero Verástegui (56).
+(Detalle en guion.md, tabla "Qué cambia respecto al original".)
+
+## Marca
+**MAJESTIC STORIES**: edit.py, BRAND = "MAJESTIC" (kit pieces/_marcas/MAJESTIC: marca arriba a la izquierda y su música).
+
+## Archivos
+guion.md, caption.txt, lines.json (fuente única, 319 palabras), clips.py (35 clips: 30 hablados c01-c30, 3 insertos i01-i03 y 2 reacciones r1-r2), make_sheets.py (3 personajes + LOC_CANTERAHUICH + LOC_CASETACANT = 5 hojas), phr.py y edit.py (EDL vacía; música cálida de c11 a c12).
+- Copia de aserrin-huamantla con todas sus defensas: gaze + ONE + ALONE, PRES, NOSUB + CLEAN + END, NODOUBLE; SAFE/SOFT con las frases fuertes primero, variant, NOREF, TRIES=6; gatito como IMAGEN, duplicados md5, reload_flow, new_project y la parada "LIMITE DE CREDITOS" en gen(). make_sheets.py con "ordinary non-famous face", DUPLICADO por md5 y --reupload.
+- Comprobaciones: `python -m py_compile` OK en los 4 .py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); todos los @{ASSET} tienen hoja y no sobra ninguna; las frases en español de SOFT coinciden con lines.json; sin cifras en las líneas.
+
+## Avance
+- 2026-11-14: archivos escritos. No se generó nada en Flow.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no salga DUPLICADO, `md5sum chars/*.jpg` y hoja de contactos: caras comunes; Sotero y Abdías muy distintos.
+2. `python -I clips.py > clips_log.txt` y QA de cada clip: morphs y bordes; Abdías a la izquierda en la mesa de labrado; el chaleco de Sotero sin letras; los lentes pegados con cinta iguales en i01 e i02; el celular de Rosalba en la mano derecha; i03 sin texto legible en la pantalla; pronunciación de "Abdías", "Sotero", "Rosalba" y "cantera".
+3. phr.py → EDL en edit.py → montaje → verificación (sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca) → copia a LucidLink con caption.txt.
+
+### `pieces/cantera-huichapan-p2/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte2, remake-transformado, patron-injusticia, huichapan, hidalgo, cantera]
+relatedTo: [cantera-huichapan, atrium-vista]
+---
+# cantera-huichapan-p2 (La Cantera de Huichapan · Parte 2): estado
+
+## La historia
+Es la Parte 2 de pieces/cantera-huichapan y sigue el ritmo emocional de la P2 de Atrium "Su jefe les cobraba lo que era gratis" (7698054444662934815, 141K). Análisis: `fuentes/atrium-vista/videos/7698054444662934815_analisis.md`.
+- Gancho con recordatorio: el celular en llamada en la bolsa de Abdías; "Les cobraste a todos lo que era gratis, Sotero. Hoy se te acaba el turno."
+- Sotero alega un malentendido y culpa a Abdías; Rosalba saca su libreta negra (el nombre de cada cantero que le pagó). Orgullo herido: "¿y así me lo paga?"
+- Castigo: despedido, las llaves del almacén en el escritorio, devolver lo de cada uno en su mano y delante de todos antes de que acabe el turno (el plazo de la P1), o la ley.
+- Patio: "Esto te lo voy a cobrar" / "Ya cobró bastante. Ahora le toca devolver." Rosalba: "Yo le creo a Abdías."
+- Desenlace: Abdías encargado del patio, reparte guantes y lentes; don Bonifacio recibe los suyos. CTA: "¿Ustedes le habrían dado otra oportunidad a Sotero? … para más historias de la cantera."
+
+No hay armas, sangre, cifras de dinero, deudas, uniformes, niños ni Navidad. Detalle en guion.md.
+
+## Marca
+**MAJESTIC STORIES**, la misma de la Parte 1 (no entra en la rotación): edit.py, BRAND = "MAJESTIC".
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 2, #parte2).
+- lines.json es la fuente única: 376 palabras.
+- clips.py tiene 41 clips: c01-c30 hablados (c30 = CTA de 10 s), i01-i06 insertos sin caras y r1-r5 mudos (r4 = presentación de Bonifacio).
+  - Es copia del clips.py de la Parte 1 con todas sus defensas: gatito en imagen, reload_flow, new_project, descarga corrupta, duplicados md5, TRIES=6, SAFE/SOFT (frases fuertes de la P2 primero), NOREF (con Bonifacio) y la parada "LIMITE DE CREDITOS" en gen(). Imprime "FIN P2".
+  - Anclas ROS, ABD y SOT idénticas a la P1 (misma ropa).
+- make_sheets.py:
+  - Reutiliza las 5 hojas de la Parte 1: ROSALBA_MONROY, ABDIAS_CARBAJAL, SOTERO_VERASTEGUI, LOC_CANTERAHUICH y LOC_CASETACANT (lista REUSED: las copia de pieces/cantera-huichapan/chars a chars/; nunca las regenera).
+  - **Ojo: la Parte 1 todavía no tiene chars/ (sus hojas no se han generado).** Por eso chars/ de la P2 está vacía: al correr la P2 sin las hojas de la P1 imprime "FALTA <hoja>" y no la inventa.
+  - **1 hoja nueva: BONIFACIO_URIBE.**
+  - En `--reupload` las copias no cuentan como DUPLICADO: se saltan las carpetas cantera-huichapan*. El make_sheets.py de la P1 también salta esas carpetas ahora.
+- phr.py y edit.py (copias de la P1, EDL vacía, BRAND = "MAJESTIC"). Música: suspenso hasta c20, cálida de c20 a c30 (las gracias, el ascenso, el equipo, los lentes de Bonifacio), suspenso en el CTA.
+- Comprobaciones: `python -m py_compile` OK en los 4 .py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); todos los @{ASSET} tienen hoja.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. Parte 1: `python -I make_sheets.py > sheets_log.txt` en pieces/cantera-huichapan (si no se hizo ya).
+2. P2: `python -I make_sheets.py --reupload > sheets_log.txt`: copia y sube las 5 hojas de la P1, genera y sube BONIFACIO_URIBE e imprime "FIN HOJAS". Revisar que no diga FALTA, el md5 y que Bonifacio no se parezca a Sotero ni a Abdías.
+3. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P2", Traceback, "intento 6" y "LIMITE".
+4. QA: misma ropa que la P1 en todos los planos; el chaleco de Sotero sin letras; la libreta negra sin nada legible (i02); Bonifacio con sombrero y lentes nuevos en c29; pronunciación de "Bonifacio", "Sotero", "Abdías", "revoltoso".
+5. `python -I phr.py`, armar la EDL y correr `python -I edit.py`.
+6. Verificar sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, y la marca MAJESTIC arriba a la izquierda.
+7. Copiar a LucidLink (Majestic/) con caption.txt.
+
+### `pieces/cajeta-celaya/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi, parte1, padre-hijos, guanajuato, celaya, cajeta]
+relatedTo: [talavera-cholula, mango-rosario, atrium-vista]
+---
+# cajeta-celaya (La Cajeta de Celaya · Parte 1): estado
+
+## Hecho (2026-11-17)
+- Padre que pone orden a los hijos, transformado: en su fábrica de cajeta en Celaya, Leticia le avisa a don Rogaciano que ella y su hermano ya vendieron la fábrica y que él se va a un cuarto atrás "antes de que acabe el mes". Llega el comprador, el licenciado Mendoza, y Rogaciano revela que la fábrica y la receta siguen a su nombre.
+- Cuenta monetizadotiktok18. 22 clips + 3 regens:
+  - c01: labios cerrados al arrancar el gancho.
+  - c06: cambio de frase. "Ustedes crecieron oliendo esta cajeta" pasó a "Ustedes comieron de esta cajeta toda la vida", para no aludir a la infancia.
+  - c17: CTA con carisma y la ropa de la hoja.
+- c15: lines.json se ajustó al audio ("Y lo que les adelanté, ¿dónde está?").
+- Render renders/share.mp4: 70.0 s, 39 tramos, MEXI, SPEED 1.15, subtítulos tamaño 38, revisados en qa/subs_check.jpg. Labios del gancho comprobados en qa/hook_mouth.jpg. LUFS -14.2, pico -2.3 dBTP.
+- QA: qa/report.txt, qa/s1-s2.jpg, qa/regen.jpg, renders/share_revision.md (CASI en v1). Queda aceptado que Rogaciano alterna playera y camisa bajo el chaleco.
+
+## Pendiente
+- No entregado. caption.txt listo. La P2 solo se hace si la P1 pasa 10k en @mexistories.
+
+### `pieces/bota-leon/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte1, capos, guanajuato, leon, botas]
+relatedTo: [ladrillo-tecate, gloria-linares, atrium-vista]
+---
+# bota-leon (La Bota de León · Parte 1): estado
+
+## Hecho (2026-11-16)
+- Capos transformado: Óscar le corta el cuero a Leticia, le tira unas botas de encargo y le da plazo "antes de que acabe la feria" para quedarse con los moldes de su padre; llega don Rodrigo, dueño del encargo, que levantó la curtiduría de Óscar; plazo invertido. Giro: el taller siempre estuvo a nombre de Rodrigo y ahora viene por los moldes.
+- Cuenta monetizadotiktok18, proyecto Flow propio; 5 hojas sin duplicados.
+- 26 clips a la primera, sin regens (260 créditos). c05 trae subtítulo quemado desde 5.0 s; la EDL corta en 4.89 s, no se ve.
+- Render renders/share.mp4: 84.5 s, 58 planos (1.45 s/plano), -14.3 LUFS, pico -2.1 dBTP, MAJESTIC, SPEED 1.15.
+- QA: qa/report_part.txt, tiras qa/s1-s3.jpg, qa/c05end.jpg, qa/render_report.txt, renders/share_revision.md (CASI: gafas dobles de Ramón en r1/c04, aceptado).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @wepsychologic.
+
+### `pieces/betun-zacatecas/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte1, remake-transformado, humillacion-revancha, herencia, zacatecas, bolero]
+relatedTo: [plata-taxco, aserrin-huamantla, baul-sanmiguel, betun-zacatecas, atrium-vista]
+---
+# betun-zacatecas (El Bolero de Zacatecas · Parte 1): estado
+
+## Video base
+- Remake transformado de **"Lo dejó por vender empanadas… sin saber que él heredaría todo"** de @atriumstories_ (7700349674628074783, **182K vistas**, 136 s, 53 planos). Análisis: `fuentes/atrium-vista/videos/7700349674628074783_analisis.md`.
+- Por qué este: es la P1 de humillación-revancha con más vistas que no tenía pieza. Ese tipo tiene el pico más alto de la cuenta. Ver `fuentes/atrium-vista/ranking2.md`.
+- Pedido del usuario (2026-11-14): más cerca de las historias de Atrium, pero sin copiar. Se conservan la historia y su ritmo emocional. Cambian el escenario y la región, el oficio, el objeto clave, los nombres, todos los diálogos, el detalle del giro y el CTA.
+
+## Qué se cambió
+- Región y escenario: la calle sin región pasa a ser la Plaza de Armas de Zacatecas, frente a la catedral de cantera rosa, más una notaría con vista al Cerro de la Bufa.
+- Oficio: el vendedor de empanadas pasa a ser Apolinar, bolero.
+- Objetos: el carrito de empanadas se cambia por la caja de bolear azul. Se suman la carpeta roja del divorcio y las botas vaqueras color vino de don Rosalío.
+- Plazo nuevo en el gancho: "Fírmalo antes de las doce campanadas". Al final vuelve invertido: "Ahora yo decido cuándo."
+- Herencia: no viene de un tío sino de un cliente viejo al que Apolinar le boleó las botas doce años. Son los Hoteles Bañuelos y no se dicen cifras.
+- Giro: la firma de la carpeta roja es de la gerente del hotel de la plaza, que trabaja para él. Además, el amante Fabricio quiso comprarle los hoteles a don Rosalío.
+- CTA: "¿Ustedes qué harían mañana con Noemí?"
+- Nombres nuevos y únicos en pieces/: Apolinar Escamilla, Noemí Monreal, Fabricio Urquidi, Teódulo Arizpe y don Rosalío Bañuelos (no sale en pantalla).
+(Detalle en guion.md, tabla "Qué cambia respecto al original".)
+
+## Marca
+**MEXI STORIES**: edit.py, BRAND = "MEXI" (kit pieces/_marcas/MEXI, con su música; la pieza no tiene carpeta music/ propia).
+
+## Archivos
+guion.md, caption.txt, lines.json (fuente única, unas 345 palabras), clips.py (39 clips: 34 hablados c01-c34, 3 insertos i01-i03 y 2 reacciones r1-r2), make_sheets.py (4 personajes + LOC_PLAZAZAC + LOC_NOTARIAZAC = 6 hojas), phr.py y edit.py (EDL vacía; música cálida de c24 a c28).
+- Es copia de la plantilla plata-taxco y conserva todas sus defensas:
+  - en los prompts: gaze + ONE + ALONE, PRES (un plano de presentación por personaje), NOSUB + CLEAN + END, NODOUBLE;
+  - en los reintentos: SAFE/SOFT con las frases fuertes primero, variant, NOREF, TRIES=6;
+  - contra fallos de Flow: gatito como IMAGEN, control de duplicados por md5, reload_flow, new_project y la parada "LIMITE DE CREDITOS" en gen().
+- make_sheets.py pide "ordinary non-famous face", controla duplicados por md5 (DUPLICADO) y acepta --reupload.
+- Comprobaciones:
+  - `python -m py_compile` OK en clips.py, make_sheets.py, edit.py y phr.py.
+  - Los IDs de CLIPS coinciden con las claves de lines.json, en el mismo orden (leído con ast, sin importar el módulo).
+  - Todos los @{ASSET} tienen hoja y no sobra ninguna hoja.
+  - Las frases en español de SOFT coinciden con lines.json.
+
+## Avance
+- 2026-11-14: archivos escritos. No se generó nada en Flow. Faltan las hojas, los clips, el QA, phr.py, la EDL y el montaje.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no salga DUPLICADO, correr `md5sum chars/*.jpg` y mirar la hoja de contactos: caras comunes y distintas entre sí.
+2. `python -I clips.py > clips_log.txt` y QA de cada clip. Revisar:
+   - morphs y bordes del cuadro;
+   - la caja azul con estribo de latón igual en todos los planos;
+   - la carpeta roja en la mano izquierda de Noemí y la verde en la mano izquierda de Teódulo;
+   - que Fabricio y Teódulo se distingan: traje gris claro y corbata vino contra pelo blanco y traje carbón;
+   - las botas color vino con puntas de plata;
+   - la pronunciación de "Apolinar", "Noemí", "Teódulo", "Bañuelos" y "Zacatecas".
+3. phr.py → EDL en edit.py → montaje → verificación (sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca) → copia a LucidLink con caption.txt.
+
+### `pieces/baul-sanmiguel/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte1, remake-transformado, padre-hijos-herencia, san-miguel-de-allende, guanajuato, cantera]
+relatedTo: [plata-taxco, aserrin-huamantla, baul-sanmiguel, betun-zacatecas, atrium-vista]
+---
+# baul-sanmiguel (El Baúl de San Miguel · Parte 1): estado
+
+## Video base
+- Remake transformado de **"Su propio hijo le cerró la puerta · Parte 1"** de @atriumstories_ (7706224426399829279, **342K vistas**, 190 s, 88 planos). Su P2 tiene 390K y la saga suma 1.06M. Análisis: `fuentes/atrium-vista/videos/7706224426399829279_analisis.md`.
+- Por qué este: es la saga nueva con más vistas que no tenía pieza, y su P2 superó a la P1. Ver `fuentes/atrium-vista/ranking2.md`.
+- Pedido del usuario (2026-11-14): más cerca de las historias de Atrium, pero sin copiar. Se conservan la historia y su ritmo emocional. Cambian el escenario y la región, el oficio, el objeto clave, los nombres, todos los diálogos, el detalle del giro y el CTA.
+
+## Qué se cambió
+- Región y escenario: la mansión moderna sin región pasa a ser una casona colonial de San Miguel de Allende (Guanajuato), y la casa del hijo pobre, una casita de cantera.
+- Oficios: el hijo pobre deja de ser repartidor en moto y pasa a ser Ciriaco, cantero. El hijo rico es Raymundo, arquitecto.
+- Objeto: la maleta de cuero se cambia por un baúl de lámina verde pintado de flores. Dentro lleva papeles atados con cordón rojo y un llavero de latón.
+- Plazo nuevo en el gancho: "Su baúl afuera antes de las ocho", porque a esa hora llega la mamá de Mirna.
+- Complicación sin cifras ni deudas: el dueño quiere el cuartito para su sobrino, así que Ciriaco piensa vender su cortadora.
+- Giro: Hilario abre el baúl y llama al notario: "Ya sé cuál de mis hijos se va a quedar con todo."
+- CTA a cámara: "¿Ustedes a cuál de los dos le dejarían todo?"
+- Nombres nuevos y únicos en pieces/: Hilario, Raymundo y Ciriaco Peñaloza, Mirna Olguín, Felícitas Canchola y el licenciado Villagómez.
+(Detalle en guion.md, tabla "Qué cambia respecto al original".)
+
+## Marca
+**MAJESTIC STORIES**: edit.py, BRAND = "MAJESTIC" (kit pieces/_marcas/MAJESTIC, con su música; la pieza no tiene carpeta music/ propia).
+
+## Archivos
+guion.md, caption.txt, lines.json (fuente única, unas 380 palabras), clips.py (45 clips: 38 hablados c01-c38, 4 insertos i01-i04 y 3 reacciones r1-r3), make_sheets.py (5 personajes + LOC_CASONASM + LOC_CUARTOCANTERA = 7 hojas), phr.py y edit.py (EDL vacía; música cálida de c22 a c32). Es el más largo de la tanda: si el montaje pasa de unos 2:20, se recortan frases de c13 a c18.
+- Es copia de la plantilla plata-taxco y conserva todas sus defensas:
+  - en los prompts: gaze + ONE + ALONE, PRES (un plano de presentación por personaje), NOSUB + CLEAN + END, NODOUBLE;
+  - en los reintentos: SAFE/SOFT con las frases fuertes primero, variant, NOREF, TRIES=6;
+  - contra fallos de Flow: gatito como IMAGEN, control de duplicados por md5, reload_flow, new_project y la parada "LIMITE DE CREDITOS" en gen().
+- make_sheets.py pide "ordinary non-famous face", controla duplicados por md5 (DUPLICADO) y acepta --reupload.
+- Comprobaciones:
+  - `python -m py_compile` OK en clips.py, make_sheets.py, edit.py y phr.py.
+  - Los IDs de CLIPS coinciden con las claves de lines.json, en el mismo orden (leído con ast, sin importar el módulo).
+  - Todos los @{ASSET} tienen hoja y no sobra ninguna hoja.
+  - Las frases en español de SOFT coinciden con lines.json.
+
+## Avance
+- 2026-11-14: archivos escritos. No se generó nada en Flow. Faltan las hojas, los clips, el QA, phr.py, la EDL y el montaje.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no salga DUPLICADO, correr `md5sum chars/*.jpg` y mirar la hoja de contactos: caras comunes y distintas entre sí.
+2. `python -I clips.py > clips_log.txt` y QA de cada clip. Revisar:
+   - morphs y bordes del cuadro;
+   - el baúl verde con flores rojas igual en todos los planos y el bastón siempre en la mano izquierda;
+   - que solo Hilario lleve sombrero, y que de noche (c36, c37 y r3) no lo lleve;
+   - Mirna arriba a la derecha y Raymundo arriba a la izquierda;
+   - la cortina floreada en la escena de noche y el celular de tapa en la mano derecha;
+   - la pronunciación de "Hilario", "Ciriaco", "Felícitas" y "Villagómez".
+3. phr.py → EDL en edit.py → montaje → verificación (sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca) → copia a LucidLink con caption.txt.
+
+### `pieces/baul-sanmiguel-p2/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, majestic-stories, parte2, remake-transformado, padre-hijos-herencia, san-miguel-de-allende, guanajuato, cantera]
+relatedTo: [baul-sanmiguel, atrium-vista]
+---
+# baul-sanmiguel-p2 (El Baúl de San Miguel · Parte 2): estado
+
+## La historia
+Es la Parte 2 de pieces/baul-sanmiguel y sigue el ritmo emocional de la P2 de Atrium "Le dio otra oportunidad a su hijo… y lo volvió a humillar" (7706270980758441247, 390K). Análisis nuevo hecho por API: `fuentes/atrium-vista/videos/7706270980758441247_analisis.md`.
+- De noche, Hilario oyó todo: "La cortadora no se vende, mijo." Pide que Raymundo venga mañana a las nueve.
+- Reunión en el patio de la casita: Mirna lo trata de "una boca más", Raymundo propone una casa de reposo, Ciriaco le recuerda que él le labró la cantera de la casona. "Me recibieron, hijo. No me recogieron."
+- Hilario abre el baúl y llega el notario Villagómez: la casona siempre fue de Hilario.
+- Castigo (el gancho de la P1 al revés): "Sus cosas afuera antes de las ocho. Esa casa no es pensión."
+- Reconocimiento: Ciriaco firma; la casona y la cantera del abuelo son suyas; el llavero de latón pasa a su mano. CTA: "¿Ustedes creen que Raymundo merece otra oportunidad? … para ver el final."
+
+No hay armas, sangre, cifras de dinero, deudas, uniformes, niños ni Navidad. Detalle en guion.md.
+
+## Marca
+**MAJESTIC STORIES**, la misma de la Parte 1 (no entra en la rotación): edit.py, BRAND = "MAJESTIC".
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 2, #parte2).
+- lines.json es la fuente única: 457 palabras.
+- clips.py tiene 49 clips: c01-c41 hablados (c41 = CTA de 10 s), i01-i05 insertos sin caras y r1-r3 reacciones mudas.
+  - Es copia del clips.py de aserrin-huamantla-p2, con todas sus defensas: gatito en imagen, reload_flow, new_project, descarga corrupta, duplicados md5, TRIES=6, SAFE/SOFT (frases fuertes de la P2 primero), NOREF (con el notario) y la parada "LIMITE DE CREDITOS" en gen().
+  - Imprime "FIN P2". Presentación del notario en c26. Hilario lleva el sombrero en todos los planos (ancla HIL).
+- make_sheets.py:
+  - Reutiliza las 7 hojas de la Parte 1 copiadas a chars/: HILARIO_PENALOZA, RAYMUNDO_PENALOZA, MIRNA_OLGUIN, CIRIACO_PENALOZA, FELICITAS_CANCHOLA, LOC_CASONASM y LOC_CUARTOCANTERA (LOC_CASONASM no sale en ningún plano de la P2).
+  - **1 hoja nueva: ANSELMO_VILLAGOMEZ** (el notario).
+  - En `--reupload` las copias no cuentan como DUPLICADO: se saltan todas las carpetas baul-*.
+  - Ojo: el `--reupload` del make_sheets.py de la P1 no salta la carpeta p2 y ahora marcaría sus hojas como DUPLICADO.
+- phr.py.
+- edit.py: copia del de aserrin-huamantla-p2 con la EDL vacía y BRAND = "MAJESTIC". Música: suspenso hasta c35, cálida de c35 a c40 (el reconocimiento), suspenso en el CTA.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py --reupload > sheets_log.txt`: sube las 7 copias, genera y sube ANSELMO_VILLAGOMEZ e imprime "FIN HOJAS". Revisar md5 y que el notario no se parezca a Raymundo ni a Hilario.
+2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P2", Traceback, "intento 6" y "LIMITE".
+3. QA:
+   - Hilario con sombrero en todos los planos, también de noche (c01-c07);
+   - el baúl igual que en la P1 y el bastón en la mano izquierda;
+   - Mirna y Raymundo a la derecha, Ciriaco y Felícitas a la izquierda;
+   - el notario el único calvo con lentes de carey;
+   - papeles sin texto legible; pronunciación de "Villagómez", "arrimado", "labré".
+4. `python -I phr.py`, armar la EDL y correr `python -I edit.py`.
+5. Verificar sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, y la marca MAJESTIC arriba a la izquierda.
+6. Copiar a LucidLink (Majestic/) con caption.txt.
+
+### `pieces/barro-coyotepec/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexitv, parte1, capos, oaxaca, coyotepec, barro-negro]
+relatedTo: [talavera-cholula, atrium-vista]
+---
+# barro-coyotepec (El Barro de Coyotepec · Parte 1): estado
+
+## Hecho (2026-11-17)
+- Capos transformado (fórmula vieja de desalojo con plazo). Los clips ya estaban generados cuando el usuario prohibió esa fórmula, así que se terminó tal cual, como pidió. En San Bartolo Coyotepec, el licenciado Efrén quiere el taller de barro negro de doña Fidela y le pone plazo "antes de que empiece la Guelaguetza". Llega el poderoso agradecido, Matías, y el plazo se invierte. Giro: el hombre que le incendió el taller hace treinta años.
+- Cuenta monetizadotiktok18, proyecto Flow propio. 24 clips a la primera, sin regens.
+- Render renders/share.mp4: 67.6 s, 44 tramos, MEXITV ("MEXI TV" arriba a la izquierda, correcto), SPEED 1.15, subtítulos tamaño 38, revisados en qa/subs_check.jpg. LUFS -14.4, pico -2.2 dBTP.
+- QA: qa/report.txt, qa/s1-s2.jpg, qa/render_report.txt, renders/share_revision.md (NO LISTO). La marca equivocada es un falso positivo. La fórmula prohibida se sabía de antemano. Quedan aceptados el rebozo y la blusa de Fidela, que cambian entre clips, y dos subtítulos que entran tarde.
+
+## Pendiente
+- No entregado. caption.txt listo. La P2 solo se hace si la P1 pasa 10k en @mexitve, y si se hace, sin la fórmula del plazo.
+
+### `pieces/ate-calvillo/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte1, remake-transformado, padre-hijos-herencia, justicia-familiar, aguascalientes, calvillo, guayaba]
+relatedTo: [baul-sanmiguel, sarape-saltillo, hamaca-comalcalco, atrium-vista]
+---
+# ate-calvillo (El Ate de Calvillo · Parte 1): estado
+
+## Video base
+- Variante transformada del Final de la saga de don Evaristo de @atriumstories_, "Su padre por fin tomó una decisión" (7706344565933985054, 210K; saga 1.06M; tipo padre-hijos-herencia, mediana 276K en `fuentes/atrium-vista/ranking2.md`). Bajado con yt-dlp y analizado por API el 2026-11-15: `fuentes/atrium-vista/videos/7706344565933985054_analisis.md`.
+- baul-sanmiguel y sarape-saltillo rehicieron la P1 y hamaca-comalcalco la P3; esta toma el Final: anuncio de la herencia frente al hijo ingrato, el reproche, la pareja que se culpa entre sí y el hijo que se quiebra.
+
+## Qué se cambió
+- Vínculo y región: un guayabero y su hija humilde, en un patio de adobe de Calvillo, Aguascalientes.
+- Injusticia y plazo en c01: la nuera viene por el suegro "antes de que cuaje el ate" porque ya supo de las huertas. Se invierte: "Antes de que cuaje el ate, Marcela, me dejas las llaves."
+- Herida: el hijo lo subió a un camión sin bajarse del carro (en vez de la puerta cerrada).
+- Giro nuevo: la camioneta está a nombre del padre y la empacadora donde el hijo es gerente también es suya ("el lunes conoces a tu patrón").
+- CTA: Cleofas a cámara, "¿Ustedes le devolverían las llaves a un hijo así?"
+- Nombres nuevos y únicos en pieces/: Cleofas Elizalde (74), Eleazar Elizalde (48), Marcela Collado (44), Gertrudis Elizalde (41).
+
+## Marca
+**MEXI STORIES**: edit.py, BRAND = "MEXI" (kit pieces/_marcas/MEXI, con su música). SPEED = 1.15.
+
+## Archivos
+guion.md, caption.txt, lines.json (fuente única, 387 palabras), clips.py (38 clips: 29 hablados c01-c29, 2 insertos i01-i02 y 7 reacciones/presentaciones r1-r7), make_sheets.py (4 personajes + LOC_ATECALVILLO = 5 hojas), phr.py y edit.py (EDL vacía; música cálida de c14 a c19).
+- Copia de hamaca-comalcalco con todas sus defensas: ots(), two(), MOUTH (+ GMOUTH en c25), tuplas (prompt_nuevo, prompt_one), ONE_FROM=3 y --one; gaze + ONE + ALONE, PRES, NOSUB + CLEAN + END, NODOUBLE; SAFE/SOFT con las frases fuertes primero, variant, NOREF, TRIES=6; gatito como IMAGEN, duplicados md5, reload_flow, new_project y la parada "LIMITE DE CREDITOS" en gen(). make_sheets.py con "ordinary non-famous face", DUPLICADO por md5 y --reupload que salta las carpetas ate-calvillo*.
+- Encuadres: OTS 18 (50 %), single 9 (25 %), two-shot 5 (14 %), grupo 4 (11 %, solo c25 hablado), insertos 2.
+- Comprobaciones: `python -m py_compile` OK en los 4 .py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); cada clip hablado llama a talk() con su propio ID y los mudos no; todos los @{ASSET} tienen hoja y no sobra ninguna; pyflakes sin nombres indefinidos; las frases en español de SOFT coinciden con lines.json; sin dígitos en las líneas; ninguna frase de más de 3 palabras aparece en el lines.json de otra pieza.
+
+## Avance
+- 2026-11-15: archivos escritos. No se generó nada en Flow.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no salga DUPLICADO, `md5sum chars/*.jpg` y hoja de contactos: caras comunes y distintas; Eleazar y Gertrudis se parecen como hermanos pero no son la misma cara.
+2. `python -I clips.py > clips_log.txt` y QA de cada clip: morphs y bordes; Cleofas con sombrero y paliacate en todos sus planos; Marcela y Eleazar siempre en el portón a la derecha; la camioneta gris oscuro; pronunciación de "Calvillo", "Cleofas", "Gertrudis", "Eleazar", "cuaje".
+3. phr.py → EDL en edit.py → montaje → verificación (sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca) → copia a LucidLink (carpeta MexiTV) con caption.txt.
+
+### `pieces/ate-calvillo-p2/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, mexi-stories, parte2, remake-transformado, padre-hijos-herencia, aguascalientes, calvillo, guayaba, empacadora]
+relatedTo: [ate-calvillo, costal-cuyutlan-p2, atrium-vista]
+---
+# ate-calvillo-p2 (El Ate de Calvillo · Parte 2): estado
+
+## La historia
+Parte 2 de pieces/ate-calvillo. Arranca desde el gancho de la P1 ("el lunes te presentas en la empacadora: ya es hora de que conozcas a tu patrón").
+- Gancho con recordatorio: Eleazar, pálido: "¿Mi patrón? ¿La empacadora es suya, apá?"
+- Desenlace del giro: Cleofas la compró con la guayaba del cañón y pidió el puesto para su hijo; el lunes Eleazar empieza desde abajo, cortando guayaba en la huerta de su hermana.
+- Castigo de la villana: cuaja el ate (la pala queda parada), las llaves se quedan en la mesa de Cleofas y Marcela se va a pie, en tacones, a la central de camiones, como lo mandaron a él.
+- Eleazar se queda, llora y pide perdón; Cleofas lo perdona sin cambiar su decisión ("volver a confiar en ti me va a tomar tiempo"). Se quita el reloj dorado y carga guayaba.
+- Gancho: Marcela al teléfono en la calle, "el viejo no sabe lo que firmó Eleazar". CTA de Cleofas: "Si fuera su hijo, ¿le darían la canasta o el boleto de camión?"
+
+Ritmo emocional: Final de Evaristo (7706344565933985054, bloques 5-9) y salida de la villana del Final de la madrastra (7705499092683590942). Sin armas, sangre, cifras de dinero, deudas, uniformes, niños ni Navidad. Detalle en guion.md.
+
+## Marca
+**MEXI STORIES**, la misma de la Parte 1 (no entra en la rotación): edit.py, BRAND = "MEXI", SPEED = 1.15.
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 2, #parte2).
+- lines.json, fuente única: 369 palabras.
+- clips.py, 30 clips: c01-c24 hablados (c24 = CTA de 10 s), i01 inserto sin caras y r1-r5 mudos.
+  - Copia de pieces/costal-cuyutlan-p2/clips.py: ots(), two(), MOUTH, tuplas (prompt_nuevo, prompt_one), ONE_FROM=3, --one y todas las defensas (gatito en imagen, reload_flow, new_project, descarga corrupta, duplicados md5, TRIES=6, SAFE/SOFT con las frases fuertes primero, NOREF, parada "LIMITE DE CREDITOS"). Imprime "FIN P2".
+  - Reparto: 15 OTS (52 %), 7 single (24 %), 4 two-shot (14 %), 3 grupo (10 %, mudos) + 1 inserto. Geografía fija: Gertrudis y Cleofas a la izquierda (fogón); Marcela y Eleazar a la derecha (portón). c01 es Eleazar hablando.
+- make_sheets.py: reutiliza las 5 hojas de la P1 copiadas a chars/ (CLEOFAS_ELIZALDE, GERTRUDIS_ELIZALDE, MARCELA_COLLADO, ELEAZAR_ELIZALDE, LOC_ATECALVILLO). Sin hojas nuevas ni personajes nuevos. `--reupload` salta las carpetas ate-calvillo* en el control de duplicados.
+- phr.py y edit.py (copia del de costal-cuyutlan-p2, EDL vacía, BRAND = "MEXI", SPEED = 1.15; música cálida de c19 a c23).
+- Comprobaciones: py_compile OK en los 4 .py; pyflakes sin avisos en clips.py y make_sheets.py; IDs de CLIPS = claves de lines.json en el mismo orden (leído con ast, sin importar); cada clip hablado llama a talk() con su propio ID y los mudos no; los @{ASSET} = los 5 jpg de chars/; frases de SOFT = lines.json; sin dígitos en las líneas; ninguna frase de más de 3 palabras repetida de otra pieza.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py --reupload > sheets_log.txt`: sube las 5 copias, imprime "FIN HOJAS".
+2. `python -I clips.py > clips_log.txt`, con Monitor sobre "^FIN P2", Traceback, "intento 6" y "LIMITE".
+3. QA: dobles en los OTS (regenerar con `--one`), ropa de la P1, Cleofas con sombrero y paliacate, Eleazar sin la llave y con reloj hasta r4, la pala parada en i01, pronunciación ("Calvillo", "cuajó", "terracería").
+4. `python -I phr.py`, armar la EDL y `python -I edit.py`. Verificar sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca MEXI arriba a la derecha.
+5. Copiar a LucidLink (MexiTV/) con caption.txt.
+
+### `pieces/aserrin-huamantla/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte1, remake-transformado, madrastra-justicia, huamantla, tlaxcala, alfombras-de-aserrin]
+relatedTo: [plata-taxco, aserrin-huamantla, baul-sanmiguel, betun-zacatecas, atrium-vista]
+---
+# aserrin-huamantla (La Alfombra de Huamantla · Parte 1): estado
+
+## Video base
+- Remake transformado de **"Llegó a casa y vio lo que su esposa le hacía a su hija | PARTE 1"** de @atriumstories_ (7705076412604091678, **632K vistas**, 150 s, 54 planos). Análisis: `fuentes/atrium-vista/videos/7705076412604091678_analisis.md`.
+- Por qué este: es el video de Atrium con más vistas que no tenía pieza (el 4.º de la cuenta). Ver `fuentes/atrium-vista/ranking2.md`.
+- Pedido del usuario (2026-11-14): más cerca de las historias de Atrium, pero sin copiar. Se conservan la historia y su ritmo emocional. Cambian el escenario y la región, el oficio, el objeto clave, los nombres, todos los diálogos, el detalle del giro y el CTA.
+
+## Qué se cambió
+- Región y escenario: una sala sin región pasa a ser el patio de una casa de Huamantla (Tlaxcala) el día de las alfombras de aserrín, con La Malinche al fondo.
+- Oficio y objetos: el padre sin oficio definido pasa a ser Delfino, maestro alfombrista. El trapeador se cambia por la escobeta, el aserrín teñido y la plantilla del colibrí; se suma la carpeta azul con las escrituras.
+- Mentira: "yo hice la comida" pasa a "yo teñí el aserrín de tu alfombra".
+- Plazo nuevo en el gancho: la procesión de esta noche, que vuelve invertida al final.
+- Giro: la casa es de Abigail, porque su madre se la dejó escriturada. Cleotilde manda a su hija Kenia por la carpeta azul.
+- CTA: "¿Ustedes creen que Cleotilde se sale con la suya?"
+- Nombres nuevos y únicos en pieces/: Delfino Cuapio, Abigail Cuapio (21) y Cleotilde Tenopala. Kenia y Dayana solo se nombran.
+(Detalle en guion.md, tabla "Qué cambia respecto al original".)
+
+## Marca
+**VISTA STORIES**: edit.py, BRAND = "VISTA" (kit pieces/_marcas/VISTA, con su música; la pieza no tiene carpeta music/ propia).
+
+## Archivos
+guion.md, caption.txt, lines.json (fuente única, unas 340 palabras), clips.py (39 clips: 31 hablados c01-c31, 4 insertos i01-i04 y 4 reacciones r1-r4), make_sheets.py (3 personajes + LOC_PATIOHUAM = 4 hojas), phr.py y edit.py (EDL vacía; música cálida de c13 a c15).
+- Es copia de la plantilla plata-taxco y conserva todas sus defensas:
+  - en los prompts: gaze + ONE + ALONE, PRES (un plano de presentación por personaje), NOSUB + CLEAN + END, NODOUBLE;
+  - en los reintentos: SAFE/SOFT con las frases fuertes primero, variant, NOREF, TRIES=6;
+  - contra fallos de Flow: gatito como IMAGEN, control de duplicados por md5, reload_flow, new_project y la parada "LIMITE DE CREDITOS" en gen().
+- make_sheets.py pide "ordinary non-famous face", controla duplicados por md5 (DUPLICADO) y acepta --reupload.
+- Comprobaciones:
+  - `python -m py_compile` OK en clips.py, make_sheets.py, edit.py y phr.py.
+  - Los IDs de CLIPS coinciden con las claves de lines.json, en el mismo orden (leído con ast, sin importar el módulo).
+  - Todos los @{ASSET} tienen hoja y no sobra ninguna hoja.
+  - Las frases en español de SOFT coinciden con lines.json.
+
+## Avance
+- 2026-11-14: archivos escritos. No se generó nada en Flow. Faltan las hojas, los clips, el QA, phr.py, la EDL y el montaje.
+
+## Siguiente
+1. `python -I make_sheets.py > sheets_log.txt` (imprime "FIN HOJAS"). Revisar que no salga DUPLICADO, correr `md5sum chars/*.jpg` y mirar la hoja de contactos: caras comunes y distintas entre sí.
+2. `python -I clips.py > clips_log.txt` y QA de cada clip. Revisar:
+   - morphs y bordes del cuadro;
+   - Cleotilde siempre a la derecha en la hamaca (acostada hasta c14, sentada desde c15), con tubos rosas y bata fucsia;
+   - Abigail a la izquierda, con trenza, mandil de lunares y manos teñidas, y que se vea adulta;
+   - la plantilla del colibrí igual en i02 y r2, y el celular dorado en la mano derecha;
+   - la pronunciación de "Cleotilde", "Abigail", "Delfino" y "aserrín".
+3. phr.py → EDL en edit.py → montaje → verificación (sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, marca) → copia a LucidLink con caption.txt.
+
+### `pieces/aserrin-huamantla-p2/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte2, remake-transformado, madrastra-justicia, huamantla, tlaxcala, alfombras-de-aserrin]
+relatedTo: [aserrin-huamantla, atrium-vista]
+---
+# aserrin-huamantla-p2 (La Alfombra de Huamantla · Parte 2): estado
+
+## La historia
+Es la Parte 2 de pieces/aserrin-huamantla y sigue el ritmo emocional de la P2 de Atrium "¡La echó de la casa por cómo trataba a su hija!" (7705479449055169822, 336K). Análisis nuevo hecho por API: `fuentes/atrium-vista/videos/7705479449055169822_analisis.md`.
+- Delfino le pide perdón a Abigail y le quita la escobeta de la mano.
+- Cleotilde reclama su "autoridad" y dice que sus hijas "son de otra clase".
+- Kenia trae la carpeta azul: las escrituras dicen Abigail Cuapio. Kenia se pone del lado de Abigail y le pide perdón.
+- Castigo: Cleotilde tiene que irse con sus cosas y las de sus princesas antes de la procesión. Sale con su maleta por la orilla de la alfombra ("la alfombra de la Virgen no se pisa") y amenaza con volver.
+- Payoff: esta noche el colibrí lo pone Abigail. Moraleja y CTA "¿Ustedes creen que Cleotilde va a regresar? … para ver el final."
+
+No hay armas, sangre, cifras de dinero, deudas, uniformes, niños ni Navidad. Detalle en guion.md.
+
+## Marca
+**VISTA STORIES**, la misma de la Parte 1 (no entra en la rotación): edit.py, BRAND = "VISTA".
+
+## Archivos listos
+- guion.md y caption.txt (formato Parte 2, #parte2).
+- lines.json es la fuente única: 325 palabras.
+- clips.py tiene 39 clips: c01-c30 hablados (c30 = CTA de 10 s), i01-i06 insertos sin caras y r1-r3 reacciones mudas.
+  - Es copia del clips.py de la Parte 1, con todas sus defensas: gatito en imagen, reload_flow, new_project, descarga corrupta, duplicados md5, TRIES=6, SAFE/SOFT (con las frases fuertes de la P2 primero), NOREF con Kenia y la parada "LIMITE DE CREDITOS" en gen().
+  - Imprime "FIN P2".
+  - Presentación de Kenia en c14.
+- make_sheets.py:
+  - Reutiliza 4 hojas de la Parte 1 copiadas a chars/, las vigentes: DELFINO_CUAPIO, ABIGAIL_CUAPIO, CLEOTILDE_TENOPALA2 y LOC_PATIOHUAM2.
+  - **1 hoja nueva: KENIA_TENOPALA**.
+  - Las copias no cuentan como DUPLICADO porque se saltan aserrin-huamantla y aserrin-huamantla-p2.
+  - Ojo: el `--reupload` del make_sheets.py de la P1 no salta la carpeta p2 y ahora marcaría sus hojas como DUPLICADO.
+- phr.py.
+- edit.py: copia del de la P1 con la EDL vacía y BRAND = "VISTA". Música: suspenso hasta c02, cálida de c02 a c07 (el perdón) y suspenso hasta el final.
+- Comprobaciones:
+  - `python -m py_compile` OK en los 4 .py.
+  - Los IDs de CLIPS coinciden con las claves de lines.json, en el mismo orden (leído con ast, sin importar el módulo).
+  - Todos los @{ASSET} tienen hoja y no sobra ninguna.
+  - Las frases en español de SOFT están en lines.json.
+
+Nada generado en Flow todavía.
+
+## Siguiente
+1. `python -I make_sheets.py --reupload > sheets_log.txt`: sube las 4 copias, genera y sube KENIA_TENOPALA e imprime "FIN HOJAS". Revisar md5 y que Kenia no se parezca a Abigail ni a Cleotilde más allá de un aire de madre e hija.
+2. `python -I clips.py > clips_log.txt`, con un Monitor sobre "^FIN P2", Traceback, "intento 6" y "LIMITE".
+3. QA:
+   - Abigail con el mandil todo el video;
+   - Cleotilde con tubos y bata, también al salir;
+   - Kenia la única con cola y sudadera lila;
+   - la carpeta azul sin texto legible;
+   - en i05 la maleta no pisa la alfombra.
+4. `python -I phr.py`, armar la EDL y correr `python -I edit.py`.
+5. Verificar sincronía en 5 puntos, ≤2 s por tramo, LUFS y pico, y la marca VISTA arriba al centro.
+6. Copiar a LucidLink (Vista/) con caption.txt.
+
+### `pieces/arbol-metepec/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte1, capos, estado-de-mexico, metepec, arbol-de-la-vida]
+relatedTo: [ambar-simojovel, vainilla-papantla, atrium-vista]
+---
+# arbol-metepec (El Árbol de Metepec · Parte 1): estado
+
+## Hecho (2026-11-16)
+- Capos transformado: Uriel le rompe a Jazmín el árbol de la vida de un encargo y le da plazo "antes de que acabe la feria"; llega doña Amparo, dueña del encargo, para quien trabaja el papá de Uriel; plazo invertido. Giro (traidor en casa): Ramiro, el marido de Jazmín, ya había firmado el puesto a escondidas.
+- Cuenta monetizadotiktok18, proyecto Flow nuevo; 5 hojas sin duplicados.
+- 26 clips (c04 y c05 al 2.º intento), sin regens (260 créditos).
+- Render renders/share.mp4: 75.0 s, 52 planos (1.44 s/plano), VISTA, SPEED 1.15.
+- QA: qa/report_part.txt, tiras qa/s1-s3.jpg, qa/render_report.txt, renders/share_revision.md (CASI: "Samparo" = "se llama Amparo" ligado; labios del CTA eran muestreo).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @vistastoriestv.
+
+### `pieces/ambar-simojovel/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte1, madrastra-justicia, chiapas, simojovel, ambar]
+relatedTo: [rebozo-santamaria, nieve-tepoztlan, jaiba-lagunamadre, atrium-vista]
+---
+# ambar-simojovel (El Ámbar de Simojovel · Parte 1): estado
+
+## Hecho (2026-11-16)
+- Madrastra transformada: Rosaura tiene a Itzel puliendo ámbar sola desde las cinco; Fidencio regresa antes de la feria, descubre que vendió el ámbar de la libélula de su difunta Amalia y la corre "antes de que se meta el sol". Giro: la compradora fue Amalia, viva en Comitán, y Fidencio lo sabía.
+- Cuenta Flow monetizadotiktok18, proyecto nuevo b5ed8919-7fc7-4010-913f-994141f5b8d0; 4 hojas sin duplicados.
+- 29 clips a la primera, sin regens (290 créditos).
+- Render renders/share.mp4: 94.0 s, 60 planos (1.56 s/plano), -14.2 LUFS, pico -2.3 dBTP, VISTA, SPEED 1.15.
+- QA: qa/report.txt (todos los diálogos r>0.95), tiras qa/s1-s4.jpg y qa/mouths.jpg, qa/render_report.txt (todas las frases presentes), renders/share_revision.md (CASI: los "labios" son muestreo; "Malia" = Amalia segmentada por Whisper; morral de Fidencio ausente en algunos planos, aceptado).
+- clips.py se arma desde clips.src.py con el build del scratchpad (bloques comunes de jaiba-lagunamadre).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @vistastoriestv.
+
+### `pieces/alebrije-tilcajete/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte1, capos, padre-hijos, oaxaca, tilcajete, alebrijes]
+relatedTo: [arbol-metepec, ambar-simojovel, atrium-vista]
+---
+# alebrije-tilcajete (El Alebrije de Tilcajete · Parte 1): estado
+
+## Hecho (2026-11-16)
+- Capos + padre-hijos: la licenciada Paulina quiere el terreno del tallador don Crispín para un hotel, le rompe un alebrije y da plazo "antes de que acabe la Guelaguetza"; llama a su jefe: llega Ezequiel, el hijo que se fue hace veinte años. Giro: fue el propio Ezequiel quien la mandó a apretar "al viejo terco".
+- Cuenta monetizadotiktok18, proyecto Flow propio; 4 hojas sin duplicados.
+- 24 clips (c05 al 2.º intento, línea suavizada "Usted sabe hacerlo mejor") + 1 regen (c09: subtítulos quemados; la regen se cortó por la pausa del usuario y se rehízo al retomar) = 25 clips (250 créditos).
+- Render renders/share.mp4: 71.3 s, 52 planos (1.36 s/plano), VISTA, SPEED 1.15. Re-render 2026-11-16 con subtítulos quemados (pieces/_subs.py, texto de lines.json; renders/subs/subs.json) y sin el tramo repetido de c06 (frases de Whisper solapadas; mk_edl ahora las une). Verificado en qa/subs_check.jpg.
+- QA: qa/report.txt, tiras qa/s1-s3.jpg + qa/c09.jpg, qa/render_report.txt, renders/share_revision.md (CASI: alebrijes que se multiplican en la mesa y lentes de Crispín que cambian de forma; aceptados).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @vistastoriestv.
+
+### `pieces/agave-amatitan/ESTADO.md`
+
+---
+type: handoff
+status: active
+tags: [atrium, novelas, vista-stories, parte1, capos, jalisco, amatitan, agave, jimador]
+relatedTo: [arbol-metepec, alebrije-tilcajete, atrium-vista]
+---
+# agave-amatitan (El Agave de Amatitán · Parte 1): estado
+
+## Hecho (2026-11-16)
+- Capos transformado: la licenciada Mariela, gerente de la tequilera, despide al viejo jimador don Tobías, pisa el sombrero de su padre y le da plazo "antes de que se acabe la temporada"; llega el dueño, don Leandro: plazo invertido. Giro: Tobías rechaza su ayuda; el padre de Leandro se quedó con esas tierras con un papel falso.
+- Cuenta monetizadotiktok18, proyecto Flow propio; 5 hojas sin duplicados.
+- 25 clips a la primera, sin regens (250 créditos). i02 traía una mujer dentro de una camioneta en los primeros 2.5 s (se usa solo el tramo 3.3-4.7 de las camionetas); c18 tenía una tercera persona en el borde izquierdo (recortada con crop).
+- Render renders/share.mp4: 77.0 s, 55 planos (1.39 s/plano), VISTA, SPEED 1.15, subtítulos quemados (tamaño 38). Verificado en qa/subs_check.jpg y qa/c18chk.jpg.
+- QA: qa/report_part.txt, tiras qa/s1-s4.jpg, qa/render_report.txt, renders/share_revision.md (CASI: detalles de continuidad de sombreros, lentes y camisa de Tobías aceptados).
+
+## Pendiente
+- No entregado. caption.txt listo. P2 solo si la P1 pasa 10k en @vistastoriestv.
 
 ### `pieces/viuda-aguacate/ESTADO.md`
 
@@ -7781,7 +12597,7 @@ Puntos marcados: V2 00:39, 00:52 · V3 00:35–36, 00:45 · V4 00:25 (extender b
 
 # PARTE 5 — Historial completo de instrucciones del usuario (todas las sesiones)
 
-Todos los mensajes que el usuario escribió en 58 sesiones de Claude Code en esta máquina (Darwin), en orden cronológico. Las instrucciones más recientes mandan sobre las viejas.
+Todos los mensajes que el usuario escribió en 61 sesiones de Claude Code en esta máquina (Darwin), en orden cronológico. Las instrucciones más recientes mandan sobre las viejas.
 
 
 ## Sesión 2026-10-12 — `-Users-alanleiva-Documents-claude-proyectos`
@@ -8459,6 +13275,7 @@ Todos los mensajes que el usuario escribió en 58 sesiones de Claude Code en est
 - **2026-11-13 22:30** — mmm me gusta la 1, podemos empezar con esa
 - **2026-11-14 16:29** — ok quedaron bien. ok si apruebo el guion. y con respecto a la voz, estaba pensando en no usar voz, sino que los personajes tengan tipo burbujas de texto estilo comics, pero que sean bastante dinamicas y con estilo. Lo de las fechas del guion no te entiendo a lo que te refieres.. osea no importa a cuando salga gta 6
 - **2026-11-14 16:40** — si me gusta, adelante. Si, busca tu una con onda GTA asi como dices
+- **2026-11-16 19:05** — Okay, verdaderamente todo me parece muy flojo. Aún tienes que hacer muchísimas más poses de cada personaje, no me convencen. Lo único que me gusta realmente es cómo pintaste a los personajes. O sea, de verdad que sí tienen ese estilo artístico de GTA 6. Te felicito por eso. Pero lo demás verdaderamente que está muy flojo. O sea, la intención no es que tengan solamente una pose durante muchos segundos. O sea, no. Esto es una historia. O sea, tienen que estar cambiando frecuentemente de pose. Cada vez que digan algo es una pose diferente. Un plano distinto. Todo eso. Todo eso. Tienes que recrear bastantes escenarios. La burbuja de texto que usas está fea. Porque tiene como una puntilla cortada. Si no puedes hacer una burbuja de texto, pues créala en Flow. La fuente que estás usando no me gusta para nada tampoco. Para los títulos tienes que buscar cuál es la fuente que usa oficialmente todos los GTA en sus títulos. Y para los subtítulos y todo eso y todo el texto que va dentro de las burbujas de texto, pues busca otro. Ese no me gusta. Intenta no usar fondos que hayan salido en los trailers osea debes es usar muy parecidos e inspirados en ellos y con esos colores, pero no los mismos. Y tampoco me lo imaginaba tan enfocado en una versión cómic, me lo imaginaba más como una versión cinematográfica. Que a veces usara cositas de cómics pero generalmente que fuese cinematográfico. También tiene que tener mucho cuidado con la posición en donde pones a los personajes, con respecto al fondo. Por ejemplo, cuando Lucía y el guardia están en la celda, o sea, de verdad es que no entiendo dónde están, sentados. Porque atrás se ven unas camas. Y ellos están sentados de alguna manera en algún lugar que no sé dónde es. O sea, tienes que adaptarlos a ellos al fondo, ¿ok? Corrige todas estas cosas y usa un agente en high en lo que consideres que necesitas.
 
 ## Sesión 2026-10-20 — `-Users-alanleiva-Documents-claude-proyectos`
 
@@ -8565,6 +13382,7 @@ Todos los mensajes que el usuario escribió en 58 sesiones de Claude Code en est
 - **2026-11-06 00:41** — ok cual video vendria? pero primero haz un commit y un push por favor
 - **2026-11-10 11:00** — siguiehte video
 - **2026-11-13 14:24** — tienes que mejorar varias cosas, mejora el diseño del teke teke que se se vea perturbador, su cabello, sus animaciones, todo eso porque actualmente se ve como que da risa. y tambien mejora la animacion de caminar de los chicos, y un poco su diseño... el escenario como tal esta bien, solo quisiera un poco mas de oscuridad o quizas que sea de noche con luces de postas que parpadeen
+- **2026-11-16 03:08** — vamos con el sifguiente, cual viene?
 
 ## Sesión 2026-10-22 — `-Users-alanleiva-Documents-claude-proyectos`
 
@@ -9814,6 +14632,13 @@ Todos los mensajes que el usuario escribió en 58 sesiones de Claude Code en est
   So lie to your dog, and he'll trust the mailman more than you.
   
   cambie ciertas cosas tambien para mejor
+- **2026-11-16 03:10** — si adelanter
+- **2026-11-16 17:44** — a partir de ahora ya no envies los renders finales pieces, envialos a su respectiva carpeta dentro de trabajo y tambien a su respectiva carpeta dentro de esta ruta mira: /Users/Shared/Contenido
+  alli dentro estan, y la que no veas la creas
+- **2026-11-16 17:50** — no, agente davis y agent reyes son canales diferentes. ok genial, ahora vamos con el siguiente video del doggo
+- **2026-11-16 19:30** — adelante
+- **2026-11-16 21:08** — corrije lo que dices que esta flojo y tambien: en el seg 10 cuando la cientifica mueve su mano se mueve horrible. tambien mejora la union de la cara de la cientifica con su cabeza porque su cuerpo esta gris y su cara de color normal carne. y al final el hombre su brazo le atraviesa el cuerpo
+- **2026-11-16 23:40** — si adelante exporta, recuerda que ahora deben ir a trabajo
 
 ## Sesión 2026-11-03 — `-Users-alanleiva-claude-proyectos`
 
@@ -9953,6 +14778,118 @@ Todos los mensajes que el usuario escribió en 58 sesiones de Claude Code en est
 ## Sesión 2026-11-14 — `-Users-alanleiva-claude-proyectos`
 
 - **2026-11-14 17:03** — Haz git pull. Después corre python3 tools/exportar_contexto.py MIGRACION_MAC.md y dime cuántas sesiones y mensajes juntó. Luego agrega en .claude/settings.local.json de este repo un hook Stop asíncrono (async: true, timeout 120) que corra python3 "<ruta absoluta del repo>/tools/exportar_contexto.py" "<ruta absoluta del repo>/MIGRACION_MAC.md", para que se regenere solo al final de cada respuesta. Guarda en tu memoria que MIGRACION_MAC.md se mantiene actualizado para la migración a Antigravity y se commitea junto con los commits normales. Al final haz commit de MIGRACION_MAC.md y push.
+- **2026-11-17 15:45** — ok haz esto ahora para traerte un monton de cosas de la pc e instrucciones nuevas:
+- **2026-11-17 15:46** — ok haz esto ahora para traerte un monton de cosas de la pc e instrucciones nuevas:
+  Haz git pull.
+  Copia esa carpeta encima del repo con el rsync que está en el LEEME.
+  Si la Mac va a manejar los teléfonos, agrega VMOS_AK y VMOS_SK a su .env.
+- **2026-11-17 17:35** — ok que necesitas que haga? o como hago lo de vmos? para que los manejes con la api
+- **2026-11-17 17:37** — donde esta ese .env aqui en la mac? no lo veo en claude poryectos
+- **2026-11-17 17:39** — ok ya los copie alli verifica a ver
+- **2026-11-17 18:21** — ok, te trajiste tambien las instrucciones de todo lo que estamos haciendo en la pc con el agente? con las estrategias para vender guias, lo de los videos todo eso?
+- **2026-11-17 18:23** — pero quieres que pida a la pc que te los envie? es mejor asi?
+- **2026-11-17 18:33** — si exacto es que yo he trabajado mas cosas luego de eso, dame las palabras exactas que debo decirle a alla a la pc en el chat para que te mande lo que necesitas
+- **2026-11-18 02:03** — ok, mientras instala alguna actualizacion nueva que tenga voice studio https://github.com/debpalash/VoiceStudio
+  porque desde la app no deja, se queda pegado
+- **2026-11-18 14:49** — listo ya la reconecte el conector de voice studio
+- **2026-11-18 18:03** — ok cpn respecto a lo del commit la pc dijo esto:
+  
+  <pasted_content id="b7ae">
+  Sincroniza con lo que trabajé en la PC:
+  Haz git pull.
+  Copia las imágenes pesadas encima del repo: rsync -a "/Volumes/alanwork/trabajo/para_mac/sync-2026-11-18/" "<ruta absoluta de este repo>/". Antes de copiar, revisa que el disco /Volumes/alanwork esté montado.
+  En memoria_pc/ está toda la memoria de Claude Code de la PC. Fusiónala con tu memoria de este proyecto:
+  Si un archivo no existe en tu memoria, cópialo.
+  Si existe con otro contenido, júntalos en uno solo sin perder nada de ninguno de los dos. Si una regla se contradice, manda la más reciente.
+  Actualiza tu MEMORY.md con una línea por cada archivo nuevo.
+  La memoria de la PC usa rutas de Windows (F:\Claude Proyectos, C:\Volumes\alanwork). Cuando lo apliques en la Mac, tradúcelas a las rutas de la Mac.
+  Revisa si tu .env tiene GEMINI_API_KEY, TELEGRAM_BOT_TOKEN y TELEGRAM_CHAT_ID. Dime cuáles faltan, pero no me pidas los valores en el chat.
+  Corre python3 tools/exportar_contexto.py MIGRACION_MAC.md, haz commit de MIGRACION_MAC.md y de cualquier cambio pendiente, y haz push.
+  Al final dime cuántos archivos de memoria agregaste, cuántos fusionaste y el hash del commit.
+  </pasted_content id="b7ae">
+
+## Sesión 2026-11-14 — `-Users-alanleiva-claude-proyectos`
+
+- **2026-11-14 18:21** — haz git pull
+- **2026-11-14 18:21** — <pasted_content id="abf6">
+  Lee styles/mechayuki/README.md completo y prepara esta Mac para trabajar el estilo Mechayuki:
+  1. Copia todos los archivos de styles/mechayuki/memoria/ a tu carpeta de memoria de este proyecto y agrega sus líneas al MEMORY.md (si ya existe una memoria con el mismo nombre, quédate con la más reciente).
+  2. Desde "/Volumes/alanwork/trabajo/Renders finales claude/Mechayuki/_assets-mac/" copia:
+     - engine-models/*.glb → engine/models/ de cada pieza pieces/digger-0*/ y pieces/expedition-01-bedroom/
+     - engine-lib-models/*.glb → engine/lib/models/ de esas mismas piezas
+     - voz/megagirl_operator*.wav → pieces/voice-fx/
+     - crashsune/ y "megaman legends sfx general/" → assets/
+     - pieces/zero-fem/ y pieces/lib-mml/ → pieces/
+  3. Corre npm install en pieces/digger-09-toothbrush/engine y pieces/expedition-01-bedroom/engine, e instala Chromium de Playwright.
+  4. Instala lo de Python que pide el README (numpy, scipy, soundfile, pyloudnorm, openai-whisper).
+  5. Prueba renderizando 2 segundos del short digger-09 para confirmar que el motor funciona.
+  6. Dime qué falta (VoiceStudio con la voz megagirl re-clonada desde voz/megagirl_clone_ref_baab32b2.m4a, earshot, ANTHROPIC_API_KEY en .env).
+  Nunca subas a git nada de lo copiado desde LucidLink: el repo es público.
+  </pasted_content id="abf6">
+- **2026-11-18 01:35** — <pasted_content id="abf6">
+  Trae todo lo de Airy y Vera (formato UpNext de Mechayuki) a esta Mac:
+  1. En el repo: git pull (debe incluir el commit c954b97a).
+  2. Lee /Volumes/alanwork/trabajo/Renders finales claude/_mac_sync/upnext-airy-vera/README_MAC.md y sigue sus pasos: copia esa carpeta encima de la raíz del repo con rsync -a (sin borrar nada), y corre npm install en los engines de pieces/upnext-01 y pieces/vera-01.
+  3. Ajusta las rutas de Windows (F:/Claude Proyectos/..., la ruta de blender.exe) en los scripts de pieces/upnext-girl2/tools y donde aparezcan, a las rutas de esta Mac.
+  4. Verifica que todo quedó bien: que se abran los GLB (pieces/upnext-girl2/out, upnext-waitress/out, upnext-suitor/out) y que pieces/vera-01 haga un render corto de prueba.
+  5. Guarda en memoria: Airy (ex Ashley, voz "Ashley 2 clean"), Pip ("Voz gnomo pip"), Vera (cuenta @askforvera, "Voz mesera clean"), Theo ("Voz theo pretendiente clean"). Los modelos ripeados o comprados NUNCA van a git (el repo es público); se pasan por LucidLink.
+  </pasted_content id="abf6">
+- **2026-11-18 01:58** — ok, que te hace falta y dime que escribo en el chat de la pc para que te lo mande
+- **2026-11-18 16:18** — ok las voces ya las grabe en voice studio, son: la de Airy se llama Voz ashley clean limpia, la de pip es voz pip gnomo, la de Vera es Voz mesera clean y la de theo es voz theo pretendiente clean... y cualquier cosa la de mechayuki es Mechayuki por volvemos a hacer videos de ella.
+  
+  Verificalas todas y dime que es lo que le escribo a la pc para que te pase lo que te falte
+- **2026-11-18 16:41** — ok listo Las licencias de Voice Studio. Verifícalas y pruébalas a ver. Ahorita te digo del otro.
+- **2026-11-18 16:48** — la pc dijo esto:
+  Ya están las fuentes en LucidLink: /Volumes/alanwork/trabajo/Renders finales claude/_mac_sync/fuentes/ (Newsreader/static/... y Montserrat-ExtraBold/montserrat/...). Cópialas a una carpeta local de fuentes de esta Mac (fuera de git) y en pieces/upnext-waitress/tools/branding.py línea 12 cambia FONTS (ahora apunta a D:\Alan\...\Fuentes) a esa ruta. Verifica corriendo branding.py que el banner de Vera salga con Newsreader y Montserrat y no con la fuente de respaldo (arialbd). No subas las fuentes a git.
+- **2026-11-18 17:07** — ok, puedes hacer una nueva version del video 1 que hicimos ya de Vera? quiza en otro lugar o algo asi, necesito que sea parecido pero diferente, mismos personajes obviamente, y asi sexy y coqueto todo, usa para esta la version de ella con pantalones
+- **2026-11-18 17:15** — la 1 hazla
+- **2026-11-18 17:22** — genial adelante
+- **2026-11-18 17:53** — si adelante, lo unico es que mejora la lluvia como se ve desde dentro porque se ve rara en las ventanas y puerta. y recuerda que cuando necesites crearle una animacion puedes hacerlo
+
+## Sesión 2026-11-14 — `-Users-alanleiva-claude-proyectos`
+
+- **2026-11-14 18:24** — <pasted_content id="c19e">
+  Vamos a traer el estilo "Ava Restfield" (videos de zombies estilo PS1/Resident Evil) desde la PC. Haz esto en orden:
+  
+  1. git pull en el repo de Claude Proyectos (commit 56738481 o posterior).
+  2. Lee completo styles/ava-restfield/GUIA.md: ahí están TODAS las reglas, mis preferencias, el flujo de trabajo, la receta de voz y la continuidad de la serie. Esa guía manda. Lee también styles/ava-restfield/PROPUESTAS.md y styles/ava-restfield/ASSETS.md.
+  3. Guarda en tu memoria las reglas de la GUIA (reglas de Ava, flujo, voz, entrega por LucidLink, sin duplicados, storyboard antes del render, links clicables), para que se apliquen en cada sesión.
+  4. Trae el kit desde LucidLink: /Volumes/alanwork/trabajo/Renders finales claude/Ava Restfield/_kit/
+     - Descomprime pieces_zombie_media.zip y assets_ava.zip en la raíz del repo (las rutas son relativas al repo).
+     - Sigue los pasos de ASSETS.md (npm install, fuentes, herramientas que falten).
+  5. Cambia las rutas de Windows (F:/, C:/Windows/Fonts) por rutas de Mac en los scripts de mezcla, voz y storyboard (mix13.py, mix_largo.py, assemble.py, storyboard.py y los que encuentres).
+  6. Voces en VoiceStudio: vuelve a clonar la voz de Ava desde _kit/voces_ref/f2a102da.m4a (velocidad 0.88, steps 32, wav), y las demás voces desde sus archivos en voces_ref. Marla se diseña con los parámetros de la GUIA. Anota los IDs nuevos en la GUIA y en voz/gen.py.
+  7. Prueba que todo funcione: renderiza 3 o 4 fotogramas fijos del motor (stills) de pieces/zombie-13-gasstation y del largo pieces/zombie-03-station/largo2, y genera una línea de voz de prueba. Muéstrame los resultados.
+  8. Cuando todo esté listo, dime qué falta (si falta algo) y muéstrame las propuestas de PROPUESTAS.md para elegir el próximo video. No produzcas nada sin mi OK: primero guion y tabla de escenas, después storyboard, después render.
+  
+  Los archivos pesados que falten se pasan por LucidLink, carpeta Ava Restfield. Los renders finales van a /Volumes/alanwork/trabajo/Renders finales claude/Ava Restfield/ y las miniaturas a su subcarpeta Miniaturas/.
+  </pasted_content id="c19e">
+- **2026-11-16 18:47** — ok ya te guarde la voz de Ava en voice studio, se llama Ava Restfield usa esa. Y vamos a darle con shorts, pero hantes has pull y traete todo lo nuevo que hay instrucciones y nuevos detalles de este estilo
+- **2026-11-16 18:54** — aqui esta el canal: https://www.youtube.com/@AvaRestfield/shorts
+  mira los shorts y haz la continuacion de los que tengan mas views, adelante
+- **2026-11-16 19:06** — ok vas a incluir al gigante tipo nemesis? lo quiero en el short
+- **2026-11-16 19:07** — adelante
+- **2026-11-16 19:10** — Está bien, pero no podemos empezar con ese inicio así tan directo a you set stay quiet, so you stay quiet. Tienes que darle un intro debido al short. Y ya luego sí continúa.
+- **2026-11-16 19:11** — Genial, ahora sí, procede.
+- **2026-11-16 21:05** — esta genial, corrije lo que dices que ves flojo, y tambien haz mas cortas las pausas en el audio, estan muy largas. Y luego procede al render
+- **2026-11-16 23:20** — si esta bien, lo unico que me gustaria que mejoraras es la animacion de ella subiendo la escalera que est fea
+- **2026-11-17 03:30** — genial quedo bien, vamos con el siguiente
+- **2026-11-17 03:32** — ok me gusta, pero recuerda que esos videos del tren hay que tomar la referencia de play malo este usuario https://www.instagram.com/play.malo/
+- **2026-11-17 03:34** — adelante, puedes agregar el rewind si quieres, como consideres que queda mejor, si en la ultima tuvo bastantes vistas es porque gusto esoo
+- **2026-11-17 11:16** — Genial adelante
+- **2026-11-17 15:09** — Me gusta solo que yo creo que podemos cambiar la criatura que la persigue, que es esa que se ve negra, por el gigante que se parece a Némesis que tenemos, ¿no? Haz eso y también corrige lo que dices que se ve flojo.
+- **2026-11-17 15:44** — genial, corrije esos detalles y procede al render. Recuerda agregarle un sonido de monstruo o gruñido cuando aparezca el gigante parecido a nemesis, y tambien cada vez que salga el agregale esta bgm https://www.youtube.com/watch?v=nHx2FLQQDSM&list=RDnHx2FLQQDSM&start_radio=1
+  que este mientras el este obviamente, si cambia la cosa regresa a la otra
+- **2026-11-17 17:18** — esta perfecto, pero corrije eso que ella dice cuando se refiere al hunter le llama "the smile" y ya no es ninguna sonrisa recuerda que se cambio por el gigante, puedes llamarle asi osea the hunter. y otra cosa, ahora vamos a mejorar las miniaturas, a partir de ahora hazlas asi tipo el poster que te adjunto con el hunter nuestro arriba, y ava en esa posicion y tal y con zombies por alli, y en vez de la ciudad pones la estacion del metro donde esta osea ese fondo que se ve en esa miniatura que me diste, pero que sea asi todo cinematografico con la niebla y eso, y tambien manten el indicador de CONDITION ponlo debajo de Ava
+- **2026-11-17 17:46** — otra cosa que se me olvido que debes hacer en el video, debes colocar esa cancion que te pase de fondo para cuando haya que tomar la decision al final y dejarla hasta al final. y tambien para cuando sale la cuestion de tomar la decision hacerlo como lo hacemos en la pc en los videos largos que sale un destello en negativo y eso... tienes esas intrucciones para saber como hacerlo o te paso el video de referencia? Eso mientras el hunter toca la puerta para poder entrar
+- **2026-11-17 18:14** — esta bien, lo unico es que con la musica estas siguiendola desde el mismo punto que la dejaste cada vez que vuelve a salir el, y la verdad lo que quiero es que cada vez que el salga la inicies desde el segundo 0.5 y asi, me entiendes?
+
+## Sesión 2026-11-17 — `-Users-alanleiva-claude-proyectos`
+
+- **2026-11-17 20:09** — quiero que instales todos estos repos, pero antes quiero que me digas que hace cada uno y como lo adaptarias a mi workspace para sacarles provecho
+- **2026-11-17 20:16** — ok instala: Ponytail (siempre y cuando no afectara la calidad de los resultados que me das en videos), Hallmark, last30days, impeccable, scrapling y Diagram design. solo esos
+- **2026-11-17 20:32** — genial. ahora vamos a instalar algo que nos va a ayudar muchisimo a en las previstas de los videos que me generas en general y tambien trae varias otras herramientas como miniaturas y más. Es esta instalala: https://github.com/TensaikunYT/Videohub
+- **2026-11-17 20:38** — no entiendo muchas cosas, dime como puedo usarlo paso por paso, y pon un acceso directo en el dock o en apps para yo poder verlo y abrirlo facilmente... otra cosa, no podre ver las previsualizaciones en la linea de tiempo? para eso lo instale. Mira el video y como el lo enseña todo, eso es lo que quiero https://www.youtube.com/watch?v=ZyCmtt7_xMM
 
 
 ---
@@ -9965,9 +14902,12 @@ Todos los mensajes que el usuario escribió en 58 sesiones de Claude Code en est
 - **srz-google-flow-mcp** — stdio: `node /Users/alanleiva/claude-proyectos/Tools/srzGoogleFlowMCP/src/mcp.js`
 - **earshot** — stdio: `/Users/alanleiva/tools/earshot/.venv/bin/python -m earshot mcp`
 - **apify** — http: `https://mcp.apify.com`
+- **scrapling** — stdio: `/Users/alanleiva/.local/bin/scrapling mcp`
+- **videohub** — stdio: `node /Users/alanleiva/tools/VideoHub/server/mcp.js`
 
 ## Scripts propios en `tools/`
 
+- `tools/agente_publicar.py` — Publica en TikTok (@agentedavis, teléfono VMOS V06 ATP63362YSJXJF2F) el siguiente video de la cola.
 - `tools/analizar_camara.py` — Qué encuadra la cámara en cada salto, comparado con lo que dice la voz en ese momento (créditos de la API).
 - `tools/analizar_estilo_edicion.py` — Desarma el ESTILO DE EDICIÓN de videos talking head con Claude por API (créditos del plan Max).
 - `tools/analizar_novela.py` — Desarma un video de novela corta (TikTok) plano por plano con Claude por API (créditos del plan Max).
@@ -9979,6 +14919,12 @@ Todos los mensajes que el usuario escribió en 58 sesiones de Claude Code en est
 - `tools/flow_reload.js` — Recarga las pestañas de Google Flow en la Chrome por CDP que usa srz-google-flow-mcp.
 - `tools/flow_snapshot.js` — Captura real de un proyecto de Google Flow (la misma Chrome por CDP que usa srz-google-flow-mcp).
 - `tools/flow_tabs.js` — 
+- `tools/mexitv_publicar.py` — Publica en TikTok (@mexitve, Pixel VMOS) el siguiente video de la cola, segun el horario.
+- `tools/patrick.py` — Control a mano del V06 (TikTok de Patrick). Uso:
+- `tools/patrick_ai_inbox.py` — Lee los chats del V06 con capturas + Claude (créditos API) y responde llevando al link.
+- `tools/patrick_dm.py` — Responde un chat de la bandeja de Mensajes del V06 (TikTok de Patrick).
+- `tools/patrick_inbox.py` — Lee todas las conversaciones de la pestaña de Mensajes abierta en el V06.
+- `tools/patrick_sync.py` — Alinea la voz de VoiceStudio a un clip de Omni frase por frase (lipsync aproximado).
 - `tools/prores_to_cutout.py` — ProRes 4444 alpha (Premiere object mask) -> VP9 alpha webm, keeping only the largest alpha blob per frame (drops neon leaks).
 - `tools/revisar_render.py` — Revisa un render contra las reglas de su estilo con Claude (API, créditos del plan Max).
 - `tools/stimulus_cut_check.py` — Stimulus cut check: python tools/stimulus_cut_check.py <piece>/index.html <piece>/prep/cuts.json
@@ -9992,12 +14938,18 @@ Todos los mensajes que el usuario escribió en 58 sesiones de Claude Code en est
 
 - `~/.claude/skills/animate/SKILL.md` — Make a short procedural animation in any style — an explainer, a history, a little story — as a single-file canvas video with a synthesized score, rendered to MP4. Ships with styles (cut paper, crosshatch ink, riso print
 - `~/.claude/skills/base-help/SKILL.md` — 'Coach mode for the `base` CLI: teaches what to do and why, rather than just answering. Use for any question about base (how to use it, what it can do for me, star commands, handoffs, forks, rules, domains, recall, AST q
+- `~/.claude/skills/diagram-design/SKILL.md` — Create branded architecture, architecture delta, IT current-state, flowchart, sequence, state machine, ER/data model, steps, timeline, swimlane, quadrant, radar/spider, polar chart (polar/radial lollipop), loop/flywheel,
 - `~/.claude/skills/earshot/SKILL.md` — Listen with earshot whenever you must judge, choose, trim, verify or compare sound you cannot hear - picking a sound effect, music or ambience from candidates, finding the cleanest moment in a recording, checking whether
 - `~/.claude/skills/flow-generate/SKILL.md` — |
+- `~/.claude/skills/hallmark/SKILL.md` — "Design skill for websites and new pages that look designed, not generated. Use when the user asks to build or design something new, or names Hallmark. Never use it on an existing design unless the user names Hallmark, a
 - `~/.claude/skills/humanizer/SKILL.md` — |
 - `~/.claude/skills/hypit/SKILL.md` — Direct and produce videos with Hypit, primarily through generated media and authored components while incorporating briefs, references or supplied material; includes SVML/SVS/SVRun authoring and Runtime or credential set
+- `~/.claude/skills/impeccable/SKILL.md` — "Use when the user wants to design, redesign, shape, critique, audit, polish, simplify, harden, animate, or otherwise improve a frontend interface: websites, landing pages, dashboards, product UI, components, forms, sett
+- `~/.claude/skills/last30days/SKILL.md` — "Research what people actually say about any topic in the last 30 days. Pulls posts and engagement from Reddit, X, YouTube, TikTok, Hacker News, Polymarket, GitHub, and the web. Includes a doctor health check to diagnose
+- `~/.claude/skills/ponytail/SKILL.md` — >
 - `~/.claude/skills/real-sfx/SKILL.md` — Sound design for motion videos with REAL recorded sounds from the user's own libraries (a sorted main pack of whooshes, hits, risers, pops, chimes, keystrokes, foley, ambiences plus fallback libraries) and UI cues from u
 - `~/.claude/skills/real-sound/SKILL.md` — Build premium, realistic soundtracks for code-made videos and animations from real licensed recordings - launch films, product and feature videos, UI walkthroughs, logo stings, explainers, trailers and animated shorts ma
+- `~/.claude/skills/videohub/SKILL.md` — How an agent makes and reviews videos with VideoHub, the user's local hub for videos written as code (project catalog, live preview that plays a film from its code with no render, review notes on frames, a protected one-
 - `~/.claude/skills/vox-doc-sound/SKILL.md` — Voiceover and sound design for Vox-style documentary explainers on any topic (narration over maps, cut-out PNGs, charts, archive). Makes the narration (Kokoro for English and other languages, Indic Parler-TTS for Hindi a
 - `~/.claude/skills/vox-doc/SKILL.md` — Make a complete Vox-style documentary explainer video on any topic, end to end. It covers one-time tool setup, the script, the voiceover, word timing, a scene plan, bespoke cut-out PNG art from Google Flow, rough maps wi
 - `~/.claude/skills/yt-audit/SKILL.md` — >-
@@ -11345,11 +16297,73 @@ Las mezclas usan `ffmpeg` y el `.venv` del paso 4. Lo que el PC genere (`.wav`, 
 
 | decision | rationale | recall |
 |----------|-----------|--------|
-| Long-form channel: whole myths in 16:9 (25-40 min) in their own era's art; shorts = chapters; pilot = The Odyssey in amphora-bf | yt-viral: Odyssey/whole-myth videos 3-19x channel median; nobody does long vase/tapestry style | - |
 | gta6 characters v4 = code block-in (make_character.py: per-material parsing, dual split light shapes, vector print, strokes) -> Flow NB2 render pass on the block-in -> finish_character.py (key, multiply/screen relight, silhouette, grade) | Code-only reads as vector trace; Flow straight on the photo goes generic comic; Flow over the designed block-in keeps palette, print, face and hands and adds paint quality. Matches the paint-over method of Artwod, Rising67 and 21DPS tutorials. | - |
+| Long-form channel: whole myths in 16:9 (25-40 min) in their own era's art; shorts = chapters; pilot = The Odyssey in amphora-bf | yt-viral: Odyssey/whole-myth videos 3-19x channel median; nobody does long vase/tapestry style | - |
+| Only Way Out v2: titles Pricedown Black (Typodermic free desktop licence), cards Barlow Condensed ExtraBold, dialogue Outfit SemiBold subtitles with speaker name; plates repainted from the same Flow photo as each pose | GTA VI site uses proprietary GTA Art Deco; Outfit/Barlow are closest OFL matches. Same-photo plates give correct support, perspective and contact shadow by construction (user's v1 staging complaint). | - |
 
 | type | text | context | plan/date |
 |------|------|---------|----------|
+| insight | VoiceStudio profile IDs on the Mac (2026-11-18): Airy = 'Voz ashley clean limpia' 60ea9b99; Pip = 'voz pip gnomo' b63fd159; Vera = 'Voz mesera clean' cf0b8ddb; Theo = 'voz theo pretendiente clean' a66e21f8; Mechayuki = 'Mechayuki' edb5f666 (newer; older duplicate b5360257). Set in pieces/upnext-01/tools/voice_final.py and pieces/vera-01/tools/voice_final.py. PC IDs differ. | - | 2026-11-18T12:18:57-04:00 |
+| insight | Airy + Vera (Mechayuki "UpNext" format) — characters, VoiceStudio voices, pieces, and the never-to-git rule for ripped/bought models
+
+UpNext format (Mechayuki family), code in commit c954b97a, synced to the Mac 2026-11-17 from LucidLink `_mac_sync/upnext-airy-vera/`.
+
+| Character | Role | Piece | VoiceStudio voice |
+|---|---|---|---|
+| Airy (ex Ashley) | lead | pieces/upnext-girl2 (episode pieces/upnext-01) | "Ashley 2 clean" |
+| Pip | Airy's co-star (gnome) | pieces/upnext-gnome | "Voz gnomo pip" |
+| Vera (account @askforvera) | lead (waitress) | pieces/upnext-waitress (episode pieces/vera-01) | "Voz mesera clean" |
+| Theo | Vera's co-star (suitor) | pieces/upnext-suitor | "Voz theo pretendiente clean" |
+
+Airy and Pip are rigged on pieces/zero-fem/anim/zero_anim.glb. Blender on Mac: /Applications/Blender.app/Contents/MacOS/Blender (5.2).
+
+**Rule:** ripped or bought models (GLB/blend/textures, assets/ rips), voices, music and renders NEVER go to git — the repo is public. They move between PC and Mac through LucidLink (`/Volumes/alanwork/trabajo/Renders finales claude/_mac_sync/`).
+
+**Why:** public repo + purchased/ripped assets.
+**How to apply:** before any commit touching these pieces, check `git status` for out/, ref/, tex/, voz*/, audio/, *.glb. Related: [[mechayuki-rules]], [[zero-fem-model]], [[voicestudio]].
+ | - | 2026-11-17T21:37:19-04:00 |
+| insight | Flow MCP: an uploaded reference stops resolving (No asset named X) once ~10 newer assets exist in the project; open a new Flow project every 3-4 shots and re-upload refs. Wide shots: render a 16:9 crop of the block-in or NB2 redraws the pose. | - | 2026-11-16T17:21:23-04:00 |
+| correction | GTA6 fan-story video rules from the 2026-11-16 storyboard review — cinematic not comic, new pose+shot per line, original sets, Pricedown-type titles
+
+Rules for the GTA6 story video (pieces/gta6-story), from the user's review of storyboard v1:
+- The KEPT part is the character painting (v4 hybrid pipeline): the look is right.
+- **Cinematic, not comic**: mostly film shots (wide/medium/close-up/OTS, camera moves); comic elements (panels, SFX) only as occasional accents.
+- **A new pose AND a new shot every time a character speaks.** Never one pose held for many seconds. Many poses per character.
+- **Many sets**, inspired by the trailers' places and colours but NOT the trailer backgrounds themselves.
+- Characters must be **staged inside the set** (sitting on the actual bunk, feet on the floor, correct scale/perspective). v1 cell: Lucia and the guard sat on nothing, with beds behind them.
+- Speech bubbles: v1 had an ugly cut-off tail. Make clean ones (or generate them in Flow).
+- Fonts: titles = the official GTA title font (Pricedown-style); dialogue/subtitles = a different font, NOT Bangers.
+
+**Why:** v1 felt "muy flojo" (very weak): static, comic-like, characters floating in sets.
+**How to apply:** check every point before each GTA6 board or render. Related: [[storyboard-before-render]], [[feedback-clean-cutouts]].
+ | - | 2026-11-16T15:05:56-04:00 |
+| correction | Standing rules for every Ava Restfield video — workflow gates, voice recipe, delivery, no duplicates; details in styles/ava-restfield/GUIA.md
+
+Every rule here is a correction the user already had to ask for; repeating it costs a round.
+
+1. **Order, with a stop at each gate:** beat table → OK → script (`voz/guion.md`, 2nd person, US units, facts with sources in FACTS.md) → humanizer pass → voice → **storyboard with real engine frames, STOP for OK even if they said "go ahead and render"** → render + mix → my own frame-by-frame QA of the exported mp4 (≥5 fps, 4× crops) → `tools/revisar_render.py --estilo ava` (on the Mac `--reglas styles/ava-restfield/GUIA.md`), max 2 rounds.
+2. **Voice:** VoiceStudio Ava `31ce93c1`, steps 32, wav, speed 0.88, 8+ seeds per take, exact Whisper match, falling final F0. [PIENSA]=whisper dry, [RESPIRA]=real CC0 breath, (···)=1.5–2 s ambience. Never split a take at "…", cut only in silence. Ava never says onomatopoeia, never shouted reads. "Oh, fudge" = the ep1 take.
+3. **Format:** shorts 1080x1920 ~62 s (never <61), long-form 16:9 ≥8 min. Choice endings on a live RE menu; shorts "FOLLOW FOR MORE!", long-form "SUBSCRIBE!". Ava never trembles, looks at camera in front shots, no clipping, nothing still >4 s.
+4. **Audio:** real SFX on the exact frame, CC0 music 10–11 LU under the voice per section, horror hook 0–10 s, stereo −14 LUFS, ≤ −1 dBTP; choose/verify with earshot.
+5. **Delivery:** share encode (x264 CRF 24 slow, yuv420p, AAC 192k, +faststart) → `/Volumes/alanwork/trabajo/Renders finales claude/Ava Restfield/<title>.mp4`, thumbnail in `Ava Restfield/Miniaturas/<title>.png`; long-form = viral title + 1280x720 thumb + DESCRIPCION.md. Delete superseded renders, one file per video, no copies, no Telegram.
+6. Always give clickable markdown links (relative to the workspace root) to every file to look at.
+
+**Why:** the user set these over 13 episodes and 2 long-form videos on the PC; the GUIA is the source of truth.
+**How to apply:** for any Ava/zombie piece, read GUIA.md §6 before the storyboard and before the final render; never produce without the user's OK at each gate.
+
+Related: [[project-ava-restfield]], [[storyboard-before-render]], [[lucidlink-renders]], [[links-clicables]].
+ | - | 2026-11-14T14:30:56-04:00 |
+| insight | Ava Restfield = PS1 Resident Evil zombie survival channel; full rules live in styles/ava-restfield/GUIA.md (the guide rules); set up on the Mac 2026-11-14
+
+Ava Restfield channel (zombie survival with real facts, PS1 RE / Parasite Eve 2 look, US English, 2nd person "you"). Brought from the PC to the Mac on 2026-11-14.
+
+- **The guide rules:** `styles/ava-restfield/GUIA.md` (all rules + user corrections §6), `PROPUESTAS.md` (next videos), `ASSETS.md` (kit). Re-read §6 before every storyboard and every final render.
+- Templates: shorts `pieces/zombie-13-gasstation/`, long-form `pieces/zombie-03-station/largo2/`. Heavy media from LucidLink `Ava Restfield/_kit/` (already unzipped on the Mac; Windows paths already switched to Mac paths).
+- Mac voice IDs (VoiceStudio): Ava `31ce93c1` (steps 32, wav, speed 0.88), stranger `c5f333e5`, Vickers `0142e2dc`, Dutch `504bcb20`, Marla `73886ef4`. "Oh, fudge" = always `pieces/zombie-01-door/voz/lines/13_fudge.wav`.
+- Mac venv needs `av<16` for faster-whisper (av 19 breaks `metadata_errors`).
+
+Related: [[feedback-ava-restfield-rules]], [[storyboard-before-render]], [[lucidlink-renders]], [[links-clicables]], [[humanizer]].
+ | - | 2026-11-14T14:30:46-04:00 |
 | insight | MIGRACION_MAC.md is kept up to date for the Antigravity migration and committed with normal commits
 
 MIGRACION_MAC.md (repo root) is the context export for the migration to Antigravity. It is regenerated by `tools/exportar_contexto.py` (Stop hook, async, in `.claude/settings.local.json`, set 2026-11-14).
@@ -11491,7 +16505,9 @@ From 2026-10-25 the user adapts every @scroll.engineer TikTok to Spanish in the 
 - Replicate shots/camera moves, improve the animation, change some elements (place, colours, props) so it is not a copy.
  | - | 2026-10-25T15:40:32-04:00 |
 | decision | Code-only reads as vector trace; Flow straight on the photo goes generic comic; Flow over the designed block-in keeps palette, print, face and hands and adds paint quality. Matches the paint-over method of Artwod, Rising67 and 21DPS tutorials. | gta6 characters v4 = code block-in (make_character.py: per-material parsing, dual split light shapes, vector print, strokes) -> Flow NB2 render pass on the block-in -> finish_character.py (key, multiply/screen relight, silhouette, grade) | - |
+| decision | GTA VI site uses proprietary GTA Art Deco; Outfit/Barlow are closest OFL matches. Same-photo plates give correct support, perspective and contact shadow by construction (user's v1 staging complaint). | Only Way Out v2: titles Pricedown Black (Typodermic free desktop licence), cards Barlow Condensed ExtraBold, dialogue Outfit SemiBold subtitles with speaker name; plates repainted from the same Flow photo as each pose | - |
 | decision | Long-form channel: whole myths in 16:9 (25-40 min) in their own era's art; shorts = chapters; pilot = The Odyssey in amphora-bf | yt-viral: Odyssey/whole-myth videos 3-19x channel median; nobody does long vase/tapestry style | - |
+| decision | Only Way Out v2: titles Pricedown Black (Typodermic free desktop licence), cards Barlow Condensed ExtraBold, dialogue Outfit SemiBold subtitles with speaker name; plates repainted from the same Flow photo as each pose | GTA VI site uses proprietary GTA Art Deco; Outfit/Barlow are closest OFL matches. Same-photo plates give correct support, perspective and contact shadow by construction (user's v1 staging complaint). | - |
 | decision | gta6 characters v4 = code block-in (make_character.py: per-material parsing, dual split light shapes, vector print, strokes) -> Flow NB2 render pass on the block-in -> finish_character.py (key, multiply/screen relight, silhouette, grade) | Code-only reads as vector trace; Flow straight on the photo goes generic comic; Flow over the designed block-in keeps palette, print, face and hands and adds paint quality. Matches the paint-over method of Artwod, Rising67 and 21DPS tutorials. | - |
 | decision | yt-viral: Odyssey/whole-myth videos 3-19x channel median; nobody does long vase/tapestry style | Long-form channel: whole myths in 16:9 (25-40 min) in their own era's art; shorts = chapters; pilot = The Odyssey in amphora-bf | - |
 
@@ -11512,6 +16528,13 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 ## Historial de commits
 
 ```
+2026-11-18 438b883b Sync to Mac: memory copy (memoria_pc/), refreshed migration export, pending scripts/docs/novelas/styles
+2026-11-17 c954b97a Airy + Vera styles: character pipelines, episode 1 engines and analysis docs
+2026-11-17 29d6f417 VMOS Cloud + TikTok publishing, novelas (MEXITV/VISTA/MAJESTIC), new plots/styles, tools and docs
+2026-11-16 cff4b270 Ava Day 3 long video v3: user fixes + Stalker docs for the Mac
+2026-11-14 56738481 Ava Restfield: style guide, proposals and asset list for the Mac
+2026-11-14 b135f8aa mechayuki: full style guide, user rules (memory copy) and video proposals for working on the Mac
+2026-11-14 fe571270 MIGRACION_MAC.md: exported Mac context for the Antigravity migration
 2026-11-14 3b9f1aa1 Pending pieces work, batch 3/3
 2026-11-14 e0b65806 Pending pieces work, batch 2/3
 2026-11-14 e94e3e88 Pending pieces work, batch 1/3
@@ -11595,6 +16618,8 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
  M .base-ast/.tree-size
  M .base/graph.nq
  M .gitignore
+ M CLAUDE.md
+ M MIGRACION_MAC.md
  M Tools/srzGoogleFlowMCP/state.json
  M pieces/teke-teke/LOG.md
  M pieces/teke-teke/index.html
@@ -11622,6 +16647,77 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
  M pieces/teke-teke/src/tex.js
  M pieces/teke-teke/src/world.js
  M pieces/teke-teke/storyboard.png
+ M pieces/upnext-01/engine/rsb.sh
+ M pieces/upnext-01/tools/girl_clips.py
+ M pieces/upnext-01/tools/voice_final.py
+ M pieces/upnext-girl/build.py
+ M pieces/upnext-girl/build_v5.py
+ M pieces/upnext-girl/export.py
+ M pieces/upnext-girl/face_atlas.py
+ M pieces/upnext-girl/overlay_renders.py
+ M pieces/upnext-girl/poses.py
+ M pieces/upnext-girl/render.py
+ M pieces/upnext-girl/review_renders.py
+ M pieces/upnext-girl/tools/cmp_head.py
+ M pieces/upnext-girl/tools/compare.py
+ M pieces/upnext-girl/tools/extract_face_cells.py
+ M pieces/upnext-girl/tools/overlay.py
+ M pieces/upnext-girl/tools/render_engine.mjs
+ M pieces/upnext-girl/tools/sheet.py
+ M pieces/upnext-girl/tools/trace_profiles.py
+ M pieces/upnext-girl/v5/bl_actions.py
+ M pieces/upnext-girl/v5/bl_dump.py
+ M pieces/upnext-girl/v5/bl_front.py
+ M pieces/upnext-girl/v5/bl_girlsweep.py
+ M pieces/upnext-girl/v5/bl_io.py
+ M pieces/upnext-girl/v5/bl_loop.py
+ M pieces/upnext-girl/v5/bl_piecefit.py
+ M pieces/upnext-girl/v5/bl_pieces.py
+ M pieces/upnext-girl/v5/bl_posefit.py
+ M pieces/upnext-girl/v5/bl_refcams.py
+ M pieces/upnext-girl/v5/bl_sheet_renders.py
+ M pieces/upnext-girl/v5/bl_shrink.py
+ M pieces/upnext-girl/v5/face_measure.py
+ M pieces/upnext-girl/v5/fit.py
+ M pieces/upnext-girl/v5/his_cells.py
+ M pieces/upnext-girl/v5/masks.py
+ M pieces/upnext-girl/v5/ov_turn.py
+ M pieces/upnext-girl/v5/sheet_v5.py
+ M pieces/upnext-girl/v5/sheet_v6.py
+ M pieces/upnext-girl/v5/sheet_v7.py
+ M pieces/upnext-girl/v5/sheet_v8.py
+ M pieces/upnext-girl/v5/sheet_v8_tex.py
+ M pieces/upnext-girl/v5/split_v4.py
+ M pieces/upnext-girl/v5/theta0.py
+ M pieces/upnext-girl/v5/turn_masks.py
+ M pieces/upnext-girl/v5/wire_views.py
+ M pieces/upnext-girl2/build_final.sh
+ M pieces/upnext-girl2/build_lowpoly.sh
+ M pieces/upnext-girl2/build_variants.sh
+ M pieces/upnext-girl2/build_variants_lp.sh
+ M pieces/upnext-girl2/tools/anim/build_anims.py
+ M pieces/upnext-girl2/tools/anim/one.sh
+ M pieces/upnext-girl2/tools/anim/qr.py
+ M pieces/upnext-girl2/tools/anim/qs.sh
+ M pieces/upnext-girl2/tools/anim/qshot.sh
+ M pieces/upnext-girl2/tools/anim/refs_sheet.py
+ M pieces/upnext-girl2/tools/bl_rig.py
+ M pieces/upnext-girl2/tools/export_meta.py
+ M pieces/upnext-girl2/tools/texture.py
+ M pieces/upnext-gnome/sheet.py
+ M pieces/upnext-metalshadow/compare.py
+ M pieces/upnext-metalshadow/contact.py
+ M pieces/upnext-suitor/build.sh
+ M pieces/upnext-suitor/tools/anim/anim_review.py
+ M pieces/upnext-suitor/tools/anim/pose_sheet.py
+ M pieces/upnext-suitor/tools/review.py
+ M pieces/upnext-waitress/build.sh
+ M pieces/upnext-waitress/build_v2.sh
+ M pieces/upnext-waitress/tools/branding.py
+ M pieces/upnext-waitress/tools/review.py
+ M pieces/upnext-waitress/tools/wanim/anim_review.py
+ M pieces/vera-01/tools/voice_final.py
+ M pieces/zaw-dog-07/CREDITS.md
  M pieces/zaw-dog-07/assemble.py
  M pieces/zaw-dog-07/board.py
  M pieces/zaw-dog-07/final_post.py
@@ -11631,6 +16727,8 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
  M pieces/zaw-dog-07/review/board/board_2.jpg
  M pieces/zaw-dog-07/review/board/motion07.jpg
  M pieces/zaw-dog-07/review/feet_check.txt
+ M pieces/zaw-dog-07/review/flicker_final.txt
+ M pieces/zaw-dog-07/review/flipflop_final.txt
  M pieces/zaw-dog-07/review/flipflop_preview.txt
  M pieces/zaw-dog-07/review/logs/board_01a.log
  M pieces/zaw-dog-07/review/logs/board_01b.log
@@ -11656,6 +16754,19 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
  M pieces/zaw-dog-07/review/logs/feet_05b.log
  M pieces/zaw-dog-07/review/logs/feet_06a.log
  M pieces/zaw-dog-07/review/logs/feet_06b.log
+ M pieces/zaw-dog-07/review/logs/final_01a.log
+ M pieces/zaw-dog-07/review/logs/final_01b.log
+ M pieces/zaw-dog-07/review/logs/final_02a.log
+ M pieces/zaw-dog-07/review/logs/final_02b.log
+ M pieces/zaw-dog-07/review/logs/final_03a.log
+ M pieces/zaw-dog-07/review/logs/final_03b.log
+ M pieces/zaw-dog-07/review/logs/final_04a.log
+ M pieces/zaw-dog-07/review/logs/final_04b.log
+ M pieces/zaw-dog-07/review/logs/final_05a.log
+ M pieces/zaw-dog-07/review/logs/final_05b.log
+ M pieces/zaw-dog-07/review/logs/final_06a.log
+ M pieces/zaw-dog-07/review/logs/final_06b.log
+ M pieces/zaw-dog-07/review/logs/final_all.out
  M pieces/zaw-dog-07/review/logs/frames_01a.log
  M pieces/zaw-dog-07/review/logs/frames_01b.log
  M pieces/zaw-dog-07/review/logs/frames_02a.log
@@ -11669,9 +16780,12 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
  M pieces/zaw-dog-07/review/logs/frames_06a.log
  M pieces/zaw-dog-07/review/logs/frames_06b.log
  M pieces/zaw-dog-07/review/logs/iso.log
+ M pieces/zaw-dog-07/review/logs/thumb.log
+ M pieces/zaw-dog-07/review/popcheck_final.txt
  M pieces/zaw-dog-07/review/popcheck_preview.txt
  M pieces/zaw-dog-07/review/preview_moves_revision.md
  M pieces/zaw-dog-07/review/qa.txt
+ M pieces/zaw-dog-07/review/qa_final.txt
  M pieces/zaw-dog-07/review/selfcheck_sheet.jpg
  M pieces/zaw-dog-07/shots.py
  M pieces/zaw-dog-07/sound/mix_zaw.py
@@ -11681,18 +16795,2028 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
  M pieces/zaw-dog-07/voice/lines.json
  M pieces/zaw-dog-07/voice/script.json
  M pieces/zaw-dog-07/voice/timing.json
+ M pieces/zaw-dog-08/guion.md
+ M pieces/zombie-01-door/audio/scripts/fs_fetch.py
+ M pieces/zombie-01-door/audio/scripts/mix.py
+ M pieces/zombie-01-door/audio/scripts/music.py
+ M pieces/zombie-01-door/voz/assemble.py
+ M pieces/zombie-02-window/audio/scripts/fs_fetch.py
+ M pieces/zombie-02-window/audio/scripts/mix.py
+ M pieces/zombie-02-window/audio/scripts/music.py
+ M pieces/zombie-02-window/voz/assemble.py
+ M pieces/zombie-03-station/audio/scripts/fs_fetch.py
+ M pieces/zombie-03-station/audio/scripts/mix.py
+ M pieces/zombie-03-station/audio/scripts/mix3.py
+ M pieces/zombie-03-station/audio/scripts/music.py
+ M pieces/zombie-03-station/largo/audio/mix_largo.py
+ M pieces/zombie-03-station/largo/audio/scripts/fs_fetch.py
+ M pieces/zombie-03-station/largo/audio/scripts/rank_picks.py
+ M pieces/zombie-03-station/largo/engine/thumb_compose.py
+ M pieces/zombie-03-station/largo/engine/thumb_compose2.py
+ M pieces/zombie-03-station/largo/engine/thumb_compose3.py
+ M pieces/zombie-03-station/largo/engine/thumb_compose4.py
+ M pieces/zombie-03-station/largo/engine/thumb_compose5.py
+ M pieces/zombie-03-station/largo/engine/thumb_compose6.py
+ M pieces/zombie-03-station/largo/engine/thumb_compose7.py
+ M pieces/zombie-03-station/largo/engine/thumb_compose8.py
+ M pieces/zombie-03-station/largo/engine/thumb_compose9.py
+ M pieces/zombie-03-station/largo/voz/gen.py
+ M pieces/zombie-03-station/largo2/audio/mix_largo.py
+ M pieces/zombie-03-station/largo2/review/qc_sheets.py
+ M pieces/zombie-03-station/largo2/review/storyboard.py
+ M pieces/zombie-03-station/largo2/voz/takes.py
+ M pieces/zombie-03-station/largo2/voz/takes_v2.bak.py
+ M pieces/zombie-03-station/largo3/audio/mix_largo.py
+ M pieces/zombie-03-station/largo3/voz/takes.py
+ M pieces/zombie-03-station/voz/assemble.py
+ M pieces/zombie-03-station/voz/prep.py
+ M pieces/zombie-04-subway/audio/scripts/fs_fetch.py
+ M pieces/zombie-04-subway/audio/scripts/fs_fetch4.py
+ M pieces/zombie-04-subway/audio/scripts/mix.py
+ M pieces/zombie-04-subway/audio/scripts/mix3.py
+ M pieces/zombie-04-subway/audio/scripts/mix4.py
+ M pieces/zombie-04-subway/audio/scripts/music.py
+ M pieces/zombie-04-subway/objects/tools/prep_tex.py
+ M pieces/zombie-04-subway/review/storyboard.py
+ M pieces/zombie-04-subway/voz/assemble.py
+ M pieces/zombie-04-subway/voz/build_cues.py
+ M pieces/zombie-04-subway/voz/fix_caps.py
+ M pieces/zombie-04-subway/voz/gen.py
+ M pieces/zombie-05-pt/audio/scripts/fs_fetch5.py
+ M pieces/zombie-05-pt/audio/scripts/mix5.py
+ M pieces/zombie-05-pt/objects/tools/prep_tex.py
+ M pieces/zombie-05-pt/review/storyboard.py
+ M pieces/zombie-05-pt/voz/assemble.py
+ M pieces/zombie-05-pt/voz/build_cues.py
+ M pieces/zombie-05-pt/voz/gen.py
+ M pieces/zombie-06-floor30/audio/scripts/fs_fetch5.py
+ M pieces/zombie-06-floor30/audio/scripts/mix5.py
+ M pieces/zombie-06-floor30/audio/scripts/mix6.py
+ M pieces/zombie-06-floor30/objects/tools/prep_tex.py
+ M pieces/zombie-06-floor30/review/storyboard.py
+ M pieces/zombie-06-floor30/voz/assemble.py
+ M pieces/zombie-06-floor30/voz/build_cues.py
+ M pieces/zombie-06-floor30/voz/fix_words.py
+ M pieces/zombie-06-floor30/voz/gen.py
+ M pieces/zombie-07-saferoom/audio/scripts/fs_fetch5.py
+ M pieces/zombie-07-saferoom/audio/scripts/fs_fetch7.py
+ M pieces/zombie-07-saferoom/audio/scripts/fs_fetch7b.py
+ M pieces/zombie-07-saferoom/audio/scripts/mix6.py
+ M pieces/zombie-07-saferoom/audio/scripts/mix7.py
+ M pieces/zombie-07-saferoom/objects/tools/prep_tex.py
+ M pieces/zombie-07-saferoom/review/storyboard.py
+ M pieces/zombie-07-saferoom/voz/assemble.py
+ M pieces/zombie-07-saferoom/voz/build_cues.py
+ M pieces/zombie-07-saferoom/voz/fix_words.py
+ M pieces/zombie-07-saferoom/voz/gen.py
+ M pieces/zombie-08-farm/audio/scripts/fs_fetch8.py
+ M pieces/zombie-08-farm/audio/scripts/mix8.py
+ M pieces/zombie-08-farm/audio/scripts/rank8.py
+ M pieces/zombie-08-farm/engine/thumb8.mjs
+ M pieces/zombie-08-farm/engine/thumb_compose8.py
+ M pieces/zombie-08-farm/review/mugtest.mjs
+ M pieces/zombie-08-farm/voz/gen.py
+ M pieces/zombie-09-subway2/audio/scripts/fs_fetch9.py
+ M pieces/zombie-09-subway2/audio/scripts/mix9.py
+ M pieces/zombie-09-subway2/review/storyboard.py
+ M pieces/zombie-09-subway2/voz/assemble.py
+ M pieces/zombie-09-subway2/voz/build_cues.py
+ M pieces/zombie-09-subway2/voz/fix_caps.py
+ M pieces/zombie-09-subway2/voz/fix_words.py
+ M pieces/zombie-09-subway2/voz/gen.py
+ M pieces/zombie-10-stairs/audio/scripts/fs_fetch10.py
+ M pieces/zombie-10-stairs/audio/scripts/fs_fetch10b.py
+ M pieces/zombie-10-stairs/audio/scripts/fs_fetch5.py
+ M pieces/zombie-10-stairs/audio/scripts/fs_fetch7.py
+ M pieces/zombie-10-stairs/audio/scripts/fs_fetch7b.py
+ M pieces/zombie-10-stairs/audio/scripts/mix10.py
+ M pieces/zombie-10-stairs/audio/scripts/mix6.py
+ M pieces/zombie-10-stairs/audio/scripts/mix7.py
+ M pieces/zombie-10-stairs/audio/scripts/mix9.py
+ M pieces/zombie-10-stairs/objects/tools/prep_tex.py
+ M pieces/zombie-10-stairs/review/storyboard.py
+ M pieces/zombie-10-stairs/voz/assemble.py
+ M pieces/zombie-10-stairs/voz/build_cues.py
+ M pieces/zombie-10-stairs/voz/fix_caps.py
+ M pieces/zombie-10-stairs/voz/fix_words.py
+ M pieces/zombie-10-stairs/voz/gen.py
+ M pieces/zombie-11-xvirus/audio/scripts/fs_fetch11.py
+ M pieces/zombie-11-xvirus/audio/scripts/mix11.py
+ M pieces/zombie-11-xvirus/review/storyboard.py
+ M pieces/zombie-11-xvirus/voz/assemble.py
+ M pieces/zombie-11-xvirus/voz/build_cues.py
+ M pieces/zombie-11-xvirus/voz/fix_caps.py
+ M pieces/zombie-11-xvirus/voz/fix_words.py
+ M pieces/zombie-11-xvirus/voz/gen.py
+ M pieces/zombie-12-radio/audio/scripts/fs_fetch12.py
+ M pieces/zombie-12-radio/audio/scripts/fs_fetch12b.py
+ M pieces/zombie-12-radio/audio/scripts/mix12.py
+ M pieces/zombie-12-radio/review/storyboard.py
+ M pieces/zombie-12-radio/voz/assemble.py
+ M pieces/zombie-12-radio/voz/build_cues.py
+ M pieces/zombie-12-radio/voz/fix_caps.py
+ M pieces/zombie-12-radio/voz/fix_words.py
+ M pieces/zombie-12-radio/voz/gen.py
+ M pieces/zombie-13-gasstation/audio/scripts/fs_fetch13.py
+ M pieces/zombie-13-gasstation/audio/scripts/fs_fetch13b.py
+ M pieces/zombie-13-gasstation/audio/scripts/mix13.py
+ M pieces/zombie-13-gasstation/review/storyboard.py
+ M pieces/zombie-13-gasstation/voz/assemble.py
+ M pieces/zombie-13-gasstation/voz/build_cues.py
+ M pieces/zombie-13-gasstation/voz/fix_caps.py
+ M pieces/zombie-13-gasstation/voz/fix_words.py
+ M pieces/zombie-13-gasstation/voz/gen.py
+ M styles/ava-restfield/GUIA.md
+ M styles/ava-restfield/STALKER.md
  M styles/yokai/RULES.md
+ M styles/yokai/kit.js
+ M styles/zawdog/STYLE.md
+ M styles/zawdog/humans/owner/body.png
+ M styles/zawdog/humans/owner/faces/mask.png
+ M styles/zawdog/humans/owner/owner.blend
+ M styles/zawdog/humans/scientist/body.png
+ M styles/zawdog/humans/scientist/faces/mask.png
+ M styles/zawdog/humans/scientist/scientist.blend
 ?? .log
-?? Tools/srzGoogleFlowMCP/.flow.lock/
+?? "Sinaboto voz 15 seg.m4a"
+?? agente-davis/tiktok/piloto01/2026-11-15T23-59-38-patrick_src-recreate-this-exact-same-ima-1.jpg
+?? agente-davis/tiktok/piloto01/frame_a.png
+?? agente-davis/tiktok/piloto01/frame_b.png
+?? agente-davis/tiktok/piloto01/maestra/ov/
+?? agente-davis/tiktok/piloto01/maestra/sb/
+?? agente-davis/tiktok/piloto01/patrick_src.png
+?? agente-davis/tiktok/piloto01/r1.png
+?? agente-davis/tiktok/piloto01/r2.png
+?? agente-davis/tiktok/piloto01/ref/
+?? agente-davis/tiktok/piloto01/rr.png
+?? agente-davis/tiktok/piloto01/s1.png
+?? agente-davis/tiktok/piloto01/s2.png
+?? agente-davis/tiktok/piloto01/s3.png
+?? agente-davis/tiktok/piloto01/s4.png
+?? agente-davis/tiktok/piloto01/sheet.png
+?? agente-davis/tiktok/piloto01/v2/
+?? agente-davis/tiktok/piloto01/v3/
 ?? fuentes/cartoon3d-famosos/
 ?? fuentes/gta6-style/
+?? pieces/agave-amatitan/chars/
+?? pieces/agave-amatitan/qa/c01.jpg
+?? pieces/agave-amatitan/qa/c02.jpg
+?? pieces/agave-amatitan/qa/c03.jpg
+?? pieces/agave-amatitan/qa/c04.jpg
+?? pieces/agave-amatitan/qa/c05.jpg
+?? pieces/agave-amatitan/qa/c06.jpg
+?? pieces/agave-amatitan/qa/c07.jpg
+?? pieces/agave-amatitan/qa/c08.jpg
+?? pieces/agave-amatitan/qa/c09.jpg
+?? pieces/agave-amatitan/qa/c10.jpg
+?? pieces/agave-amatitan/qa/c11.jpg
+?? pieces/agave-amatitan/qa/c12.jpg
+?? pieces/agave-amatitan/qa/c13.jpg
+?? pieces/agave-amatitan/qa/c14.jpg
+?? pieces/agave-amatitan/qa/c15.jpg
+?? pieces/agave-amatitan/qa/c16.jpg
+?? pieces/agave-amatitan/qa/c17.jpg
+?? pieces/agave-amatitan/qa/c18.jpg
+?? pieces/agave-amatitan/qa/c18chk.jpg
+?? pieces/agave-amatitan/qa/c18s.jpg
+?? pieces/agave-amatitan/qa/c19.jpg
+?? pieces/agave-amatitan/qa/i01.jpg
+?? pieces/agave-amatitan/qa/i02.jpg
+?? pieces/agave-amatitan/qa/mouth0.jpg
+?? pieces/agave-amatitan/qa/mouth1.jpg
+?? pieces/agave-amatitan/qa/mouth2.jpg
+?? pieces/agave-amatitan/qa/mouth3.jpg
+?? pieces/agave-amatitan/qa/mouth4.jpg
+?? pieces/agave-amatitan/qa/mouth5.jpg
+?? pieces/agave-amatitan/qa/r1.jpg
+?? pieces/agave-amatitan/qa/r2.jpg
+?? pieces/agave-amatitan/qa/r3.jpg
+?? pieces/agave-amatitan/qa/r4.jpg
+?? pieces/agave-amatitan/qa/s1.jpg
+?? pieces/agave-amatitan/qa/s2.jpg
+?? pieces/agave-amatitan/qa/s3.jpg
+?? pieces/agave-amatitan/qa/s4.jpg
+?? pieces/agave-amatitan/qa/sub0.jpg
+?? pieces/agave-amatitan/qa/sub1.jpg
+?? pieces/agave-amatitan/qa/sub2.jpg
+?? pieces/agave-amatitan/qa/sub3.jpg
+?? pieces/agave-amatitan/qa/sub4.jpg
+?? pieces/agave-amatitan/qa/sub5.jpg
+?? pieces/agave-amatitan/qa/sub6.jpg
+?? pieces/agave-amatitan/qa/sub7.jpg
+?? pieces/agave-amatitan/qa/subs_check.jpg
+?? pieces/alebrije-tilcajete/chars/
+?? pieces/alebrije-tilcajete/qa/c01.jpg
+?? pieces/alebrije-tilcajete/qa/c02.jpg
+?? pieces/alebrije-tilcajete/qa/c03.jpg
+?? pieces/alebrije-tilcajete/qa/c04.jpg
+?? pieces/alebrije-tilcajete/qa/c05.jpg
+?? pieces/alebrije-tilcajete/qa/c06.jpg
+?? pieces/alebrije-tilcajete/qa/c07.jpg
+?? pieces/alebrije-tilcajete/qa/c08.jpg
+?? pieces/alebrije-tilcajete/qa/c09.jpg
+?? pieces/alebrije-tilcajete/qa/c10.jpg
+?? pieces/alebrije-tilcajete/qa/c11.jpg
+?? pieces/alebrije-tilcajete/qa/c12.jpg
+?? pieces/alebrije-tilcajete/qa/c13.jpg
+?? pieces/alebrije-tilcajete/qa/c14.jpg
+?? pieces/alebrije-tilcajete/qa/c15.jpg
+?? pieces/alebrije-tilcajete/qa/c16.jpg
+?? pieces/alebrije-tilcajete/qa/c17.jpg
+?? pieces/alebrije-tilcajete/qa/c18.jpg
+?? pieces/alebrije-tilcajete/qa/c19.jpg
+?? pieces/alebrije-tilcajete/qa/i01.jpg
+?? pieces/alebrije-tilcajete/qa/i02.jpg
+?? pieces/alebrije-tilcajete/qa/mouth0.jpg
+?? pieces/alebrije-tilcajete/qa/mouth1.jpg
+?? pieces/alebrije-tilcajete/qa/mouth2.jpg
+?? pieces/alebrije-tilcajete/qa/mouth3.jpg
+?? pieces/alebrije-tilcajete/qa/mouth4.jpg
+?? pieces/alebrije-tilcajete/qa/mouth5.jpg
+?? pieces/alebrije-tilcajete/qa/r1.jpg
+?? pieces/alebrije-tilcajete/qa/r2.jpg
+?? pieces/alebrije-tilcajete/qa/r3.jpg
+?? pieces/alebrije-tilcajete/qa/s1.jpg
+?? pieces/alebrije-tilcajete/qa/s2.jpg
+?? pieces/alebrije-tilcajete/qa/s3.jpg
+?? pieces/alebrije-tilcajete/qa/sl0.jpg
+?? pieces/alebrije-tilcajete/qa/sl1.jpg
+?? pieces/alebrije-tilcajete/qa/sl2.jpg
+?? pieces/alebrije-tilcajete/qa/sl3.jpg
+?? pieces/alebrije-tilcajete/qa/sl4.jpg
+?? pieces/alebrije-tilcajete/qa/sl5.jpg
+?? pieces/alebrije-tilcajete/qa/sub0.jpg
+?? pieces/alebrije-tilcajete/qa/sub1.jpg
+?? pieces/alebrije-tilcajete/qa/sub2.jpg
+?? pieces/alebrije-tilcajete/qa/sub3.jpg
+?? pieces/alebrije-tilcajete/qa/sub4.jpg
+?? pieces/alebrije-tilcajete/qa/sub5.jpg
+?? pieces/alebrije-tilcajete/qa/sub6.jpg
+?? pieces/alebrije-tilcajete/qa/sub7.jpg
+?? pieces/alebrije-tilcajete/qa/subs_check.jpg
+?? pieces/alebrije-tilcajete/qa/subs_long.jpg
+?? pieces/alebrije-tilcajete/qa/subs_strip.jpg
+?? pieces/ambar-simojovel/chars/
+?? pieces/ambar-simojovel/qa/c01.jpg
+?? pieces/ambar-simojovel/qa/c02.jpg
+?? pieces/ambar-simojovel/qa/c03.jpg
+?? pieces/ambar-simojovel/qa/c04.jpg
+?? pieces/ambar-simojovel/qa/c05.jpg
+?? pieces/ambar-simojovel/qa/c06.jpg
+?? pieces/ambar-simojovel/qa/c07.jpg
+?? pieces/ambar-simojovel/qa/c08.jpg
+?? pieces/ambar-simojovel/qa/c09.jpg
+?? pieces/ambar-simojovel/qa/c10.jpg
+?? pieces/ambar-simojovel/qa/c11.jpg
+?? pieces/ambar-simojovel/qa/c12.jpg
+?? pieces/ambar-simojovel/qa/c13.jpg
+?? pieces/ambar-simojovel/qa/c14.jpg
+?? pieces/ambar-simojovel/qa/c15.jpg
+?? pieces/ambar-simojovel/qa/c16.jpg
+?? pieces/ambar-simojovel/qa/c17.jpg
+?? pieces/ambar-simojovel/qa/c18.jpg
+?? pieces/ambar-simojovel/qa/c19.jpg
+?? pieces/ambar-simojovel/qa/c20.jpg
+?? pieces/ambar-simojovel/qa/c21.jpg
+?? pieces/ambar-simojovel/qa/c22.jpg
+?? pieces/ambar-simojovel/qa/c23.jpg
+?? pieces/ambar-simojovel/qa/c24.jpg
+?? pieces/ambar-simojovel/qa/i01.jpg
+?? pieces/ambar-simojovel/qa/mouth0.jpg
+?? pieces/ambar-simojovel/qa/mouth1.jpg
+?? pieces/ambar-simojovel/qa/mouth2.jpg
+?? pieces/ambar-simojovel/qa/mouth3.jpg
+?? pieces/ambar-simojovel/qa/mouth4.jpg
+?? pieces/ambar-simojovel/qa/mouth5.jpg
+?? pieces/ambar-simojovel/qa/mouths.jpg
+?? pieces/ambar-simojovel/qa/r1.jpg
+?? pieces/ambar-simojovel/qa/r2.jpg
+?? pieces/ambar-simojovel/qa/r3.jpg
+?? pieces/ambar-simojovel/qa/r4.jpg
+?? pieces/ambar-simojovel/qa/s1.jpg
+?? pieces/ambar-simojovel/qa/s2.jpg
+?? pieces/ambar-simojovel/qa/s3.jpg
+?? pieces/ambar-simojovel/qa/s4.jpg
+?? pieces/ambar-simojovel/qa/sheets.jpg
+?? pieces/ambar-simojovel/qa/wm.jpg
+?? pieces/arbol-metepec/chars/
+?? pieces/arbol-metepec/qa/c01.jpg
+?? pieces/arbol-metepec/qa/c02.jpg
+?? pieces/arbol-metepec/qa/c03.jpg
+?? pieces/arbol-metepec/qa/c04.jpg
+?? pieces/arbol-metepec/qa/c05.jpg
+?? pieces/arbol-metepec/qa/c06.jpg
+?? pieces/arbol-metepec/qa/c07.jpg
+?? pieces/arbol-metepec/qa/c08.jpg
+?? pieces/arbol-metepec/qa/c09.jpg
+?? pieces/arbol-metepec/qa/c10.jpg
+?? pieces/arbol-metepec/qa/c11.jpg
+?? pieces/arbol-metepec/qa/c12.jpg
+?? pieces/arbol-metepec/qa/c13.jpg
+?? pieces/arbol-metepec/qa/c14.jpg
+?? pieces/arbol-metepec/qa/c15.jpg
+?? pieces/arbol-metepec/qa/c16.jpg
+?? pieces/arbol-metepec/qa/c17.jpg
+?? pieces/arbol-metepec/qa/c18.jpg
+?? pieces/arbol-metepec/qa/c19.jpg
+?? pieces/arbol-metepec/qa/c20.jpg
+?? pieces/arbol-metepec/qa/c21.jpg
+?? pieces/arbol-metepec/qa/i01.jpg
+?? pieces/arbol-metepec/qa/mouth0.jpg
+?? pieces/arbol-metepec/qa/mouth1.jpg
+?? pieces/arbol-metepec/qa/mouth2.jpg
+?? pieces/arbol-metepec/qa/mouth3.jpg
+?? pieces/arbol-metepec/qa/mouth4.jpg
+?? pieces/arbol-metepec/qa/mouth5.jpg
+?? pieces/arbol-metepec/qa/r1.jpg
+?? pieces/arbol-metepec/qa/r2.jpg
+?? pieces/arbol-metepec/qa/r3.jpg
+?? pieces/arbol-metepec/qa/r4.jpg
+?? pieces/arbol-metepec/qa/s1.jpg
+?? pieces/arbol-metepec/qa/s2.jpg
+?? pieces/arbol-metepec/qa/s3.jpg
+?? pieces/aretes-jojutla/chars/
+?? pieces/aretes-jojutla/qa/c01.jpg
+?? pieces/aretes-jojutla/qa/c02.jpg
+?? pieces/aretes-jojutla/qa/c03.jpg
+?? pieces/aretes-jojutla/qa/c04.jpg
+?? pieces/aretes-jojutla/qa/c05.jpg
+?? pieces/aretes-jojutla/qa/c06.jpg
+?? pieces/aretes-jojutla/qa/c07.jpg
+?? pieces/aretes-jojutla/qa/c08.jpg
+?? pieces/aretes-jojutla/qa/c09.jpg
+?? pieces/aretes-jojutla/qa/c10.jpg
+?? pieces/aretes-jojutla/qa/c11.jpg
+?? pieces/aretes-jojutla/qa/i01.jpg
+?? pieces/aretes-jojutla/qa/mouth0.jpg
+?? pieces/aretes-jojutla/qa/mouth1.jpg
+?? pieces/aretes-jojutla/qa/mouth2.jpg
+?? pieces/aretes-jojutla/qa/mouth3.jpg
+?? pieces/aretes-jojutla/qa/mouth4.jpg
+?? pieces/aretes-jojutla/qa/mouth5.jpg
+?? pieces/aretes-jojutla/qa/r1.jpg
+?? pieces/aretes-jojutla/qa/r2.jpg
+?? pieces/aserrin-huamantla-p2/chars/
+?? pieces/aserrin-huamantla/chars/
+?? pieces/ate-calvillo-p2/chars/
+?? pieces/ate-calvillo/chars/
+?? pieces/barro-coyotepec/chars/
+?? pieces/barro-coyotepec/qa/c01.jpg
+?? pieces/barro-coyotepec/qa/c02.jpg
+?? pieces/barro-coyotepec/qa/c03.jpg
+?? pieces/barro-coyotepec/qa/c04.jpg
+?? pieces/barro-coyotepec/qa/c05.jpg
+?? pieces/barro-coyotepec/qa/c06.jpg
+?? pieces/barro-coyotepec/qa/c07.jpg
+?? pieces/barro-coyotepec/qa/c08.jpg
+?? pieces/barro-coyotepec/qa/c09.jpg
+?? pieces/barro-coyotepec/qa/c10.jpg
+?? pieces/barro-coyotepec/qa/c11.jpg
+?? pieces/barro-coyotepec/qa/c12.jpg
+?? pieces/barro-coyotepec/qa/c13.jpg
+?? pieces/barro-coyotepec/qa/c14.jpg
+?? pieces/barro-coyotepec/qa/c15.jpg
+?? pieces/barro-coyotepec/qa/c16.jpg
+?? pieces/barro-coyotepec/qa/c17.jpg
+?? pieces/barro-coyotepec/qa/c18.jpg
+?? pieces/barro-coyotepec/qa/hook_mouth.jpg
+?? pieces/barro-coyotepec/qa/i01.jpg
+?? pieces/barro-coyotepec/qa/i02.jpg
+?? pieces/barro-coyotepec/qa/mouth0.jpg
+?? pieces/barro-coyotepec/qa/mouth1.jpg
+?? pieces/barro-coyotepec/qa/mouth2.jpg
+?? pieces/barro-coyotepec/qa/mouth3.jpg
+?? pieces/barro-coyotepec/qa/mouth4.jpg
+?? pieces/barro-coyotepec/qa/mouth5.jpg
+?? pieces/barro-coyotepec/qa/r1.jpg
+?? pieces/barro-coyotepec/qa/r2.jpg
+?? pieces/barro-coyotepec/qa/r3.jpg
+?? pieces/barro-coyotepec/qa/r4.jpg
+?? pieces/barro-coyotepec/qa/s1.jpg
+?? pieces/barro-coyotepec/qa/s2.jpg
+?? pieces/barro-coyotepec/qa/subs_check.jpg
+?? pieces/baul-sanmiguel-p2/chars/
+?? pieces/baul-sanmiguel/chars/
+?? pieces/betun-zacatecas/chars/
+?? pieces/bota-leon/chars/
+?? pieces/bota-leon/qa/c01.jpg
+?? pieces/bota-leon/qa/c02.jpg
+?? pieces/bota-leon/qa/c03.jpg
+?? pieces/bota-leon/qa/c04.jpg
+?? pieces/bota-leon/qa/c05.jpg
+?? pieces/bota-leon/qa/c05end.jpg
+?? pieces/bota-leon/qa/c06.jpg
+?? pieces/bota-leon/qa/c07.jpg
+?? pieces/bota-leon/qa/c08.jpg
+?? pieces/bota-leon/qa/c09.jpg
+?? pieces/bota-leon/qa/c10.jpg
+?? pieces/bota-leon/qa/c11.jpg
+?? pieces/bota-leon/qa/c12.jpg
+?? pieces/bota-leon/qa/c13.jpg
+?? pieces/bota-leon/qa/c14.jpg
+?? pieces/bota-leon/qa/c15.jpg
+?? pieces/bota-leon/qa/c16.jpg
+?? pieces/bota-leon/qa/c17.jpg
+?? pieces/bota-leon/qa/c18.jpg
+?? pieces/bota-leon/qa/c19.jpg
+?? pieces/bota-leon/qa/c20.jpg
+?? pieces/bota-leon/qa/i01.jpg
+?? pieces/bota-leon/qa/i02.jpg
+?? pieces/bota-leon/qa/mouth0.jpg
+?? pieces/bota-leon/qa/mouth1.jpg
+?? pieces/bota-leon/qa/mouth2.jpg
+?? pieces/bota-leon/qa/mouth3.jpg
+?? pieces/bota-leon/qa/mouth4.jpg
+?? pieces/bota-leon/qa/mouth5.jpg
+?? pieces/bota-leon/qa/r1.jpg
+?? pieces/bota-leon/qa/r2.jpg
+?? pieces/bota-leon/qa/r3.jpg
+?? pieces/bota-leon/qa/r4.jpg
+?? pieces/bota-leon/qa/s1.jpg
+?? pieces/bota-leon/qa/s2.jpg
+?? pieces/bota-leon/qa/s3.jpg
+?? pieces/brindis-orizaba/chars/
+?? pieces/brindis-orizaba/qa/c01.jpg
+?? pieces/brindis-orizaba/qa/c02.jpg
+?? pieces/brindis-orizaba/qa/c03.jpg
+?? pieces/brindis-orizaba/qa/c04.jpg
+?? pieces/brindis-orizaba/qa/c05.jpg
+?? pieces/brindis-orizaba/qa/c06.jpg
+?? pieces/brindis-orizaba/qa/c07.jpg
+?? pieces/brindis-orizaba/qa/c08.jpg
+?? pieces/brindis-orizaba/qa/c09.jpg
+?? pieces/brindis-orizaba/qa/c10.jpg
+?? pieces/brindis-orizaba/qa/c11.jpg
+?? pieces/brindis-orizaba/qa/c12.jpg
+?? pieces/brindis-orizaba/qa/c13.jpg
+?? pieces/brindis-orizaba/qa/i01.jpg
+?? pieces/brindis-orizaba/qa/mouth0.jpg
+?? pieces/brindis-orizaba/qa/mouth1.jpg
+?? pieces/brindis-orizaba/qa/mouth2.jpg
+?? pieces/brindis-orizaba/qa/mouth3.jpg
+?? pieces/brindis-orizaba/qa/mouth4.jpg
+?? pieces/brindis-orizaba/qa/mouth5.jpg
+?? pieces/brindis-orizaba/qa/r1.jpg
+?? pieces/brindis-orizaba/qa/r2.jpg
+?? pieces/brindis-orizaba/qa/r3.jpg
+?? pieces/brindis-orizaba/qa/strip.jpg
+?? pieces/cacao-comalcalco/chars/
+?? pieces/cacao-comalcalco/qa/c01.jpg
+?? pieces/cacao-comalcalco/qa/c02.jpg
+?? pieces/cacao-comalcalco/qa/c03.jpg
+?? pieces/cacao-comalcalco/qa/c04.jpg
+?? pieces/cacao-comalcalco/qa/c05.jpg
+?? pieces/cacao-comalcalco/qa/c06.jpg
+?? pieces/cacao-comalcalco/qa/c07.jpg
+?? pieces/cacao-comalcalco/qa/c08.jpg
+?? pieces/cacao-comalcalco/qa/c09.jpg
+?? pieces/cacao-comalcalco/qa/c10.jpg
+?? pieces/cacao-comalcalco/qa/c11.jpg
+?? pieces/cacao-comalcalco/qa/c12.jpg
+?? pieces/cacao-comalcalco/qa/c13.jpg
+?? pieces/cacao-comalcalco/qa/mouth0.jpg
+?? pieces/cacao-comalcalco/qa/mouth1.jpg
+?? pieces/cacao-comalcalco/qa/mouth2.jpg
+?? pieces/cacao-comalcalco/qa/mouth3.jpg
+?? pieces/cacao-comalcalco/qa/mouth4.jpg
+?? pieces/cacao-comalcalco/qa/mouth5.jpg
+?? pieces/cacao-comalcalco/qa/r1.jpg
+?? pieces/cacao-comalcalco/qa/r2.jpg
+?? pieces/cacao-comalcalco/qa/strip.jpg
+?? pieces/cafetal-coatepec/chars/
+?? pieces/cafetal-coatepec/qa/c01.jpg
+?? pieces/cafetal-coatepec/qa/c02.jpg
+?? pieces/cafetal-coatepec/qa/c03.jpg
+?? pieces/cafetal-coatepec/qa/c04.jpg
+?? pieces/cafetal-coatepec/qa/c05.jpg
+?? pieces/cafetal-coatepec/qa/c06.jpg
+?? pieces/cafetal-coatepec/qa/c07.jpg
+?? pieces/cafetal-coatepec/qa/c08.jpg
+?? pieces/cafetal-coatepec/qa/c09.jpg
+?? pieces/cafetal-coatepec/qa/c10.jpg
+?? pieces/cafetal-coatepec/qa/c11.jpg
+?? pieces/cafetal-coatepec/qa/c12.jpg
+?? pieces/cafetal-coatepec/qa/i01.jpg
+?? pieces/cafetal-coatepec/qa/mouth0.jpg
+?? pieces/cafetal-coatepec/qa/mouth1.jpg
+?? pieces/cafetal-coatepec/qa/mouth2.jpg
+?? pieces/cafetal-coatepec/qa/mouth3.jpg
+?? pieces/cafetal-coatepec/qa/mouth4.jpg
+?? pieces/cafetal-coatepec/qa/mouth5.jpg
+?? pieces/cafetal-coatepec/qa/r1.jpg
+?? pieces/cafetal-coatepec/qa/r2.jpg
+?? pieces/cafetal-coatepec/qa/strip.jpg
+?? pieces/cajeta-celaya/chars/
+?? pieces/cajeta-celaya/qa/c01.jpg
+?? pieces/cajeta-celaya/qa/c02.jpg
+?? pieces/cajeta-celaya/qa/c03.jpg
+?? pieces/cajeta-celaya/qa/c04.jpg
+?? pieces/cajeta-celaya/qa/c05.jpg
+?? pieces/cajeta-celaya/qa/c06.jpg
+?? pieces/cajeta-celaya/qa/c07.jpg
+?? pieces/cajeta-celaya/qa/c08.jpg
+?? pieces/cajeta-celaya/qa/c09.jpg
+?? pieces/cajeta-celaya/qa/c10.jpg
+?? pieces/cajeta-celaya/qa/c11.jpg
+?? pieces/cajeta-celaya/qa/c12.jpg
+?? pieces/cajeta-celaya/qa/c13.jpg
+?? pieces/cajeta-celaya/qa/c14.jpg
+?? pieces/cajeta-celaya/qa/c15.jpg
+?? pieces/cajeta-celaya/qa/c16.jpg
+?? pieces/cajeta-celaya/qa/c17.jpg
+?? pieces/cajeta-celaya/qa/hook_mouth.jpg
+?? pieces/cajeta-celaya/qa/i01.jpg
+?? pieces/cajeta-celaya/qa/mouth0.jpg
+?? pieces/cajeta-celaya/qa/mouth1.jpg
+?? pieces/cajeta-celaya/qa/mouth2.jpg
+?? pieces/cajeta-celaya/qa/mouth3.jpg
+?? pieces/cajeta-celaya/qa/mouth4.jpg
+?? pieces/cajeta-celaya/qa/mouth5.jpg
+?? pieces/cajeta-celaya/qa/r1.jpg
+?? pieces/cajeta-celaya/qa/r2.jpg
+?? pieces/cajeta-celaya/qa/r3.jpg
+?? pieces/cajeta-celaya/qa/r4.jpg
+?? pieces/cajeta-celaya/qa/regen.jpg
+?? pieces/cajeta-celaya/qa/s1.jpg
+?? pieces/cajeta-celaya/qa/s2.jpg
+?? pieces/cajeta-celaya/qa/subs_check.jpg
+?? pieces/cantera-huichapan-p2/chars/
+?? pieces/cantera-huichapan/chars/
+?? pieces/carta-durango/chars/
+?? pieces/carta-durango/qa/c01.jpg
+?? pieces/carta-durango/qa/c02.jpg
+?? pieces/carta-durango/qa/c03.jpg
+?? pieces/carta-durango/qa/c04.jpg
+?? pieces/carta-durango/qa/c05.jpg
+?? pieces/carta-durango/qa/c06.jpg
+?? pieces/carta-durango/qa/c07.jpg
+?? pieces/carta-durango/qa/c08.jpg
+?? pieces/carta-durango/qa/c09.jpg
+?? pieces/carta-durango/qa/c10.jpg
+?? pieces/carta-durango/qa/c11.jpg
+?? pieces/carta-durango/qa/c12.jpg
+?? pieces/carta-durango/qa/c13.jpg
+?? pieces/carta-durango/qa/i01.jpg
+?? pieces/carta-durango/qa/mouth0.jpg
+?? pieces/carta-durango/qa/mouth1.jpg
+?? pieces/carta-durango/qa/mouth2.jpg
+?? pieces/carta-durango/qa/mouth3.jpg
+?? pieces/carta-durango/qa/mouth4.jpg
+?? pieces/carta-durango/qa/mouth5.jpg
+?? pieces/carta-durango/qa/r1.jpg
+?? pieces/carta-durango/qa/r2.jpg
+?? pieces/carta-durango/qa/r3.jpg
+?? pieces/carta-durango/qa/strip.jpg
+?? pieces/cobre-santaclara/chars/
+?? pieces/cobre-santaclara/qa/c01.jpg
+?? pieces/cobre-santaclara/qa/c02.jpg
+?? pieces/cobre-santaclara/qa/c03.jpg
+?? pieces/cobre-santaclara/qa/c04.jpg
+?? pieces/cobre-santaclara/qa/c05.jpg
+?? pieces/cobre-santaclara/qa/c06.jpg
+?? pieces/cobre-santaclara/qa/c07.jpg
+?? pieces/cobre-santaclara/qa/c08.jpg
+?? pieces/cobre-santaclara/qa/c09.jpg
+?? pieces/cobre-santaclara/qa/c10.jpg
+?? pieces/cobre-santaclara/qa/c11.jpg
+?? pieces/cobre-santaclara/qa/c12.jpg
+?? pieces/cobre-santaclara/qa/c13.jpg
+?? pieces/cobre-santaclara/qa/c14.jpg
+?? pieces/cobre-santaclara/qa/c15.jpg
+?? pieces/cobre-santaclara/qa/c16.jpg
+?? pieces/cobre-santaclara/qa/c17.jpg
+?? pieces/cobre-santaclara/qa/c18.jpg
+?? pieces/cobre-santaclara/qa/c19.jpg
+?? pieces/cobre-santaclara/qa/i01.jpg
+?? pieces/cobre-santaclara/qa/i02.jpg
+?? pieces/cobre-santaclara/qa/mouth0.jpg
+?? pieces/cobre-santaclara/qa/mouth1.jpg
+?? pieces/cobre-santaclara/qa/mouth2.jpg
+?? pieces/cobre-santaclara/qa/mouth3.jpg
+?? pieces/cobre-santaclara/qa/mouth4.jpg
+?? pieces/cobre-santaclara/qa/mouth5.jpg
+?? pieces/cobre-santaclara/qa/r1.jpg
+?? pieces/cobre-santaclara/qa/r2.jpg
+?? pieces/cobre-santaclara/qa/r3.jpg
+?? pieces/cobre-santaclara/qa/r4.jpg
+?? pieces/cobre-santaclara/qa/s1.jpg
+?? pieces/cobre-santaclara/qa/s2.jpg
+?? pieces/cobre-santaclara/qa/s3.jpg
+?? pieces/compromiso-lagunillas/chars/
+?? pieces/compromiso-lagunillas/qa/c01.jpg
+?? pieces/compromiso-lagunillas/qa/c02.jpg
+?? pieces/compromiso-lagunillas/qa/c03.jpg
+?? pieces/compromiso-lagunillas/qa/c04.jpg
+?? pieces/compromiso-lagunillas/qa/c05.jpg
+?? pieces/compromiso-lagunillas/qa/c06.jpg
+?? pieces/compromiso-lagunillas/qa/c07.jpg
+?? pieces/compromiso-lagunillas/qa/c08.jpg
+?? pieces/compromiso-lagunillas/qa/c09.jpg
+?? pieces/compromiso-lagunillas/qa/c10.jpg
+?? pieces/compromiso-lagunillas/qa/c11.jpg
+?? pieces/compromiso-lagunillas/qa/c12.jpg
+?? pieces/compromiso-lagunillas/qa/mouth0.jpg
+?? pieces/compromiso-lagunillas/qa/mouth1.jpg
+?? pieces/compromiso-lagunillas/qa/mouth2.jpg
+?? pieces/compromiso-lagunillas/qa/mouth3.jpg
+?? pieces/compromiso-lagunillas/qa/mouth4.jpg
+?? pieces/compromiso-lagunillas/qa/mouth5.jpg
+?? pieces/compromiso-lagunillas/qa/r1.jpg
+?? pieces/compromiso-lagunillas/qa/r2.jpg
+?? pieces/compromiso-lagunillas/qa/r3.jpg
+?? pieces/copita-matatlan/chars/
+?? pieces/copita-matatlan/qa/c01.jpg
+?? pieces/copita-matatlan/qa/c02.jpg
+?? pieces/copita-matatlan/qa/c03.jpg
+?? pieces/copita-matatlan/qa/c04.jpg
+?? pieces/copita-matatlan/qa/c05.jpg
+?? pieces/copita-matatlan/qa/c06.jpg
+?? pieces/copita-matatlan/qa/c07.jpg
+?? pieces/copita-matatlan/qa/c08.jpg
+?? pieces/copita-matatlan/qa/c09.jpg
+?? pieces/copita-matatlan/qa/c10.jpg
+?? pieces/copita-matatlan/qa/c11.jpg
+?? pieces/copita-matatlan/qa/c12.jpg
+?? pieces/copita-matatlan/qa/mouth0.jpg
+?? pieces/copita-matatlan/qa/mouth1.jpg
+?? pieces/copita-matatlan/qa/mouth2.jpg
+?? pieces/copita-matatlan/qa/mouth3.jpg
+?? pieces/copita-matatlan/qa/mouth4.jpg
+?? pieces/copita-matatlan/qa/mouth5.jpg
+?? pieces/copita-matatlan/qa/r1.jpg
+?? pieces/copita-matatlan/qa/r2.jpg
+?? pieces/copita-matatlan/qa/strip.jpg
+?? pieces/costal-cuyutlan-p2/chars/
+?? pieces/costal-cuyutlan/chars/
+?? pieces/dama-lagos/chars/
+?? pieces/dama-lagos/qa/c01.jpg
+?? pieces/dama-lagos/qa/c02.jpg
+?? pieces/dama-lagos/qa/c03.jpg
+?? pieces/dama-lagos/qa/c04.jpg
+?? pieces/dama-lagos/qa/c05.jpg
+?? pieces/dama-lagos/qa/c06.jpg
+?? pieces/dama-lagos/qa/c07.jpg
+?? pieces/dama-lagos/qa/c08.jpg
+?? pieces/dama-lagos/qa/c09.jpg
+?? pieces/dama-lagos/qa/c10.jpg
+?? pieces/dama-lagos/qa/c11.jpg
+?? pieces/dama-lagos/qa/c12.jpg
+?? pieces/dama-lagos/qa/i01.jpg
+?? pieces/dama-lagos/qa/mouth0.jpg
+?? pieces/dama-lagos/qa/mouth1.jpg
+?? pieces/dama-lagos/qa/mouth2.jpg
+?? pieces/dama-lagos/qa/mouth3.jpg
+?? pieces/dama-lagos/qa/mouth4.jpg
+?? pieces/dama-lagos/qa/mouth5.jpg
+?? pieces/dama-lagos/qa/r1.jpg
+?? pieces/dama-lagos/qa/r2.jpg
+?? pieces/danzon-cordoba/chars/
+?? pieces/danzon-cordoba/qa/c01.jpg
+?? pieces/danzon-cordoba/qa/c02.jpg
+?? pieces/danzon-cordoba/qa/c03.jpg
+?? pieces/danzon-cordoba/qa/c04.jpg
+?? pieces/danzon-cordoba/qa/c05.jpg
+?? pieces/danzon-cordoba/qa/c06.jpg
+?? pieces/danzon-cordoba/qa/c07.jpg
+?? pieces/danzon-cordoba/qa/c08.jpg
+?? pieces/danzon-cordoba/qa/c09.jpg
+?? pieces/danzon-cordoba/qa/c10.jpg
+?? pieces/danzon-cordoba/qa/c11.jpg
+?? pieces/danzon-cordoba/qa/c12.jpg
+?? pieces/danzon-cordoba/qa/c13.jpg
+?? pieces/danzon-cordoba/qa/c14.jpg
+?? pieces/danzon-cordoba/qa/c15.jpg
+?? pieces/danzon-cordoba/qa/c16.jpg
+?? pieces/danzon-cordoba/qa/c17.jpg
+?? pieces/danzon-cordoba/qa/c18.jpg
+?? pieces/danzon-cordoba/qa/c19.jpg
+?? pieces/danzon-cordoba/qa/c20.jpg
+?? pieces/danzon-cordoba/qa/i01.jpg
+?? pieces/danzon-cordoba/qa/mouth0.jpg
+?? pieces/danzon-cordoba/qa/mouth1.jpg
+?? pieces/danzon-cordoba/qa/mouth2.jpg
+?? pieces/danzon-cordoba/qa/mouth3.jpg
+?? pieces/danzon-cordoba/qa/mouth4.jpg
+?? pieces/danzon-cordoba/qa/mouth5.jpg
+?? pieces/danzon-cordoba/qa/r1.jpg
+?? pieces/danzon-cordoba/qa/r2.jpg
+?? pieces/danzon-cordoba/qa/r3.jpg
+?? pieces/danzon-cordoba/qa/r4.jpg
+?? pieces/danzon-cordoba/qa/r5.jpg
+?? pieces/domino-jerez/chars/
+?? pieces/domino-jerez/qa/c01.jpg
+?? pieces/domino-jerez/qa/c02.jpg
+?? pieces/domino-jerez/qa/c03.jpg
+?? pieces/domino-jerez/qa/c04.jpg
+?? pieces/domino-jerez/qa/c05.jpg
+?? pieces/domino-jerez/qa/c06.jpg
+?? pieces/domino-jerez/qa/c07.jpg
+?? pieces/domino-jerez/qa/c08.jpg
+?? pieces/domino-jerez/qa/c09.jpg
+?? pieces/domino-jerez/qa/c10.jpg
+?? pieces/domino-jerez/qa/c11.jpg
+?? pieces/domino-jerez/qa/c12.jpg
+?? pieces/domino-jerez/qa/c13.jpg
+?? pieces/domino-jerez/qa/c14.jpg
+?? pieces/domino-jerez/qa/i01.jpg
+?? pieces/domino-jerez/qa/mouth0.jpg
+?? pieces/domino-jerez/qa/mouth1.jpg
+?? pieces/domino-jerez/qa/mouth2.jpg
+?? pieces/domino-jerez/qa/mouth3.jpg
+?? pieces/domino-jerez/qa/mouth4.jpg
+?? pieces/domino-jerez/qa/mouth5.jpg
+?? pieces/domino-jerez/qa/r1.jpg
+?? pieces/domino-jerez/qa/r2.jpg
+?? pieces/domino-jerez/qa/r3.jpg
+?? pieces/domino-jerez/qa/r4.jpg
+?? pieces/domino-jerez/qa/strip.jpg
+?? pieces/flores-tapalpa/chars/
+?? pieces/flores-tapalpa/qa/c01.jpg
+?? pieces/flores-tapalpa/qa/c02.jpg
+?? pieces/flores-tapalpa/qa/c03.jpg
+?? pieces/flores-tapalpa/qa/c04.jpg
+?? pieces/flores-tapalpa/qa/c05.jpg
+?? pieces/flores-tapalpa/qa/c06.jpg
+?? pieces/flores-tapalpa/qa/c07.jpg
+?? pieces/flores-tapalpa/qa/c08.jpg
+?? pieces/flores-tapalpa/qa/c09.jpg
+?? pieces/flores-tapalpa/qa/c10.jpg
+?? pieces/flores-tapalpa/qa/c11.jpg
+?? pieces/flores-tapalpa/qa/c12.jpg
+?? pieces/flores-tapalpa/qa/i01.jpg
+?? pieces/flores-tapalpa/qa/mouth0.jpg
+?? pieces/flores-tapalpa/qa/mouth1.jpg
+?? pieces/flores-tapalpa/qa/mouth2.jpg
+?? pieces/flores-tapalpa/qa/mouth3.jpg
+?? pieces/flores-tapalpa/qa/mouth4.jpg
+?? pieces/flores-tapalpa/qa/mouth5.jpg
+?? pieces/flores-tapalpa/qa/r1.jpg
+?? pieces/flores-tapalpa/qa/r2.jpg
+?? pieces/flores-tapalpa/qa/r3.jpg
+?? pieces/flores-tapalpa/qa/strip.jpg
+?? pieces/foto-cosala/chars/
+?? pieces/foto-cosala/qa/c01.jpg
+?? pieces/foto-cosala/qa/c02.jpg
+?? pieces/foto-cosala/qa/c03.jpg
+?? pieces/foto-cosala/qa/c04.jpg
+?? pieces/foto-cosala/qa/c05.jpg
+?? pieces/foto-cosala/qa/c06.jpg
+?? pieces/foto-cosala/qa/c07.jpg
+?? pieces/foto-cosala/qa/c08.jpg
+?? pieces/foto-cosala/qa/c09.jpg
+?? pieces/foto-cosala/qa/c10.jpg
+?? pieces/foto-cosala/qa/i01.jpg
+?? pieces/foto-cosala/qa/mouth0.jpg
+?? pieces/foto-cosala/qa/mouth1.jpg
+?? pieces/foto-cosala/qa/mouth2.jpg
+?? pieces/foto-cosala/qa/mouth3.jpg
+?? pieces/foto-cosala/qa/mouth4.jpg
+?? pieces/foto-cosala/qa/mouth5.jpg
+?? pieces/foto-cosala/qa/r1.jpg
+?? pieces/foto-cosala/qa/r2.jpg
+?? pieces/frascos-sanignacio-p2/chars/
+?? pieces/frascos-sanignacio/chars/
+?? pieces/garrafon-bernal-p2/chars/
+?? pieces/garrafon-bernal/chars/
+?? pieces/gaviota-bacalar-p2/chars/
+?? pieces/gaviota-bacalar/chars/
+?? pieces/gloria-linares/chars/
+?? pieces/gloria-linares/qa/c01.jpg
+?? pieces/gloria-linares/qa/c02.jpg
+?? pieces/gloria-linares/qa/c03.jpg
+?? pieces/gloria-linares/qa/c04.jpg
+?? pieces/gloria-linares/qa/c05.jpg
+?? pieces/gloria-linares/qa/c06.jpg
+?? pieces/gloria-linares/qa/c07.jpg
+?? pieces/gloria-linares/qa/c08.jpg
+?? pieces/gloria-linares/qa/c09.jpg
+?? pieces/gloria-linares/qa/c10.jpg
+?? pieces/gloria-linares/qa/c11.jpg
+?? pieces/gloria-linares/qa/c12.jpg
+?? pieces/gloria-linares/qa/c13.jpg
+?? pieces/gloria-linares/qa/c14.jpg
+?? pieces/gloria-linares/qa/c15.jpg
+?? pieces/gloria-linares/qa/c16.jpg
+?? pieces/gloria-linares/qa/c17.jpg
+?? pieces/gloria-linares/qa/c18.jpg
+?? pieces/gloria-linares/qa/c18start.jpg
+?? pieces/gloria-linares/qa/c19.jpg
+?? pieces/gloria-linares/qa/c20.jpg
+?? pieces/gloria-linares/qa/c21.jpg
+?? pieces/gloria-linares/qa/c22.jpg
+?? pieces/gloria-linares/qa/c23.jpg
+?? pieces/gloria-linares/qa/c24.jpg
+?? pieces/gloria-linares/qa/i01.jpg
+?? pieces/gloria-linares/qa/i02.jpg
+?? pieces/gloria-linares/qa/mouth0.jpg
+?? pieces/gloria-linares/qa/mouth1.jpg
+?? pieces/gloria-linares/qa/mouth2.jpg
+?? pieces/gloria-linares/qa/mouth3.jpg
+?? pieces/gloria-linares/qa/mouth4.jpg
+?? pieces/gloria-linares/qa/mouth5.jpg
+?? pieces/gloria-linares/qa/mouths.jpg
+?? pieces/gloria-linares/qa/r1.jpg
+?? pieces/gloria-linares/qa/r2.jpg
+?? pieces/gloria-linares/qa/r3.jpg
+?? pieces/gloria-linares/qa/r4.jpg
+?? pieces/gloria-linares/qa/rg.jpg
+?? pieces/gloria-linares/qa/s1.jpg
+?? pieces/gloria-linares/qa/s2.jpg
+?? pieces/gloria-linares/qa/s3.jpg
+?? pieces/gloria-linares/qa/s4.jpg
 ?? pieces/gta6-16x9/
 ?? pieces/gta6-boxart-16x9/
 ?? pieces/gta6-look/
 ?? pieces/gta6-parallax-16x9/
 ?? pieces/gta6-story/
+?? pieces/guitarra-paracho/chars/
+?? pieces/guitarra-paracho/qa/c01.jpg
+?? pieces/guitarra-paracho/qa/c02.jpg
+?? pieces/guitarra-paracho/qa/c03.jpg
+?? pieces/guitarra-paracho/qa/c04.jpg
+?? pieces/guitarra-paracho/qa/c05.jpg
+?? pieces/guitarra-paracho/qa/c06.jpg
+?? pieces/guitarra-paracho/qa/c07.jpg
+?? pieces/guitarra-paracho/qa/c08.jpg
+?? pieces/guitarra-paracho/qa/c09.jpg
+?? pieces/guitarra-paracho/qa/c10.jpg
+?? pieces/guitarra-paracho/qa/c11.jpg
+?? pieces/guitarra-paracho/qa/c12.jpg
+?? pieces/guitarra-paracho/qa/c13.jpg
+?? pieces/guitarra-paracho/qa/c14.jpg
+?? pieces/guitarra-paracho/qa/c15.jpg
+?? pieces/guitarra-paracho/qa/c16.jpg
+?? pieces/guitarra-paracho/qa/c17.jpg
+?? pieces/guitarra-paracho/qa/c18.jpg
+?? pieces/guitarra-paracho/qa/i01.jpg
+?? pieces/guitarra-paracho/qa/i02.jpg
+?? pieces/guitarra-paracho/qa/mouth0.jpg
+?? pieces/guitarra-paracho/qa/mouth1.jpg
+?? pieces/guitarra-paracho/qa/mouth2.jpg
+?? pieces/guitarra-paracho/qa/mouth3.jpg
+?? pieces/guitarra-paracho/qa/mouth4.jpg
+?? pieces/guitarra-paracho/qa/mouth5.jpg
+?? pieces/guitarra-paracho/qa/r1.jpg
+?? pieces/guitarra-paracho/qa/r2.jpg
+?? pieces/guitarra-paracho/qa/r3.jpg
+?? pieces/guitarra-paracho/qa/s1.jpg
+?? pieces/guitarra-paracho/qa/s2.jpg
+?? pieces/guitarra-paracho/qa/s3.jpg
+?? pieces/guitarra-paracho/qa/sub0.jpg
+?? pieces/guitarra-paracho/qa/sub1.jpg
+?? pieces/guitarra-paracho/qa/sub2.jpg
+?? pieces/guitarra-paracho/qa/sub3.jpg
+?? pieces/guitarra-paracho/qa/sub4.jpg
+?? pieces/guitarra-paracho/qa/sub5.jpg
+?? pieces/guitarra-paracho/qa/sub6.jpg
+?? pieces/guitarra-paracho/qa/sub7.jpg
+?? pieces/guitarra-paracho/qa/subs_check.jpg
+?? pieces/guitarra-paracho/qa/subs_fix.jpg
+?? pieces/hamaca-comalcalco-p2/chars/
+?? pieces/hamaca-comalcalco/chars/
+?? pieces/jaiba-lagunamadre/chars/
+?? pieces/jaiba-lagunamadre/contact.jpg
+?? pieces/jaiba-lagunamadre/qa/c01.jpg
+?? pieces/jaiba-lagunamadre/qa/c02.jpg
+?? pieces/jaiba-lagunamadre/qa/c03.jpg
+?? pieces/jaiba-lagunamadre/qa/c04.jpg
+?? pieces/jaiba-lagunamadre/qa/c05.jpg
+?? pieces/jaiba-lagunamadre/qa/c06.jpg
+?? pieces/jaiba-lagunamadre/qa/c07.jpg
+?? pieces/jaiba-lagunamadre/qa/c08.jpg
+?? pieces/jaiba-lagunamadre/qa/c09.jpg
+?? pieces/jaiba-lagunamadre/qa/c10.jpg
+?? pieces/jaiba-lagunamadre/qa/c11.jpg
+?? pieces/jaiba-lagunamadre/qa/c12.jpg
+?? pieces/jaiba-lagunamadre/qa/c12sub.jpg
+?? pieces/jaiba-lagunamadre/qa/c12subs.jpg
+?? pieces/jaiba-lagunamadre/qa/c13.jpg
+?? pieces/jaiba-lagunamadre/qa/c14.jpg
+?? pieces/jaiba-lagunamadre/qa/c15.jpg
+?? pieces/jaiba-lagunamadre/qa/c16.jpg
+?? pieces/jaiba-lagunamadre/qa/c17.jpg
+?? pieces/jaiba-lagunamadre/qa/c18.jpg
+?? pieces/jaiba-lagunamadre/qa/c19.jpg
+?? pieces/jaiba-lagunamadre/qa/c20.jpg
+?? pieces/jaiba-lagunamadre/qa/c21.jpg
+?? pieces/jaiba-lagunamadre/qa/c22.jpg
+?? pieces/jaiba-lagunamadre/qa/c23.jpg
+?? pieces/jaiba-lagunamadre/qa/g0.jpg
+?? pieces/jaiba-lagunamadre/qa/g1.jpg
+?? pieces/jaiba-lagunamadre/qa/g2.jpg
+?? pieces/jaiba-lagunamadre/qa/g3.jpg
+?? pieces/jaiba-lagunamadre/qa/g4.jpg
+?? pieces/jaiba-lagunamadre/qa/i01.jpg
+?? pieces/jaiba-lagunamadre/qa/i02.jpg
+?? pieces/jaiba-lagunamadre/qa/r1.jpg
+?? pieces/jaiba-lagunamadre/qa/r2.jpg
+?? pieces/jaiba-lagunamadre/qa/r3.jpg
+?? pieces/jaiba-lagunamadre/qa/r4.jpg
+?? pieces/jaiba-lagunamadre/qa/r5.jpg
+?? pieces/jaiba-lagunamadre/qa/s_1.jpg
+?? pieces/jaiba-lagunamadre/qa/s_2.jpg
+?? pieces/jaiba-lagunamadre/qa/s_3.jpg
+?? pieces/jaiba-lagunamadre/qa/s_4.8.jpg
+?? pieces/jaiba-lagunamadre/qa/s_4.jpg
+?? pieces/jaiba-lagunamadre/qa/s_5.5.jpg
+?? pieces/jaiba-lagunamadre/qa/t.jpg
+?? pieces/jaiba-lagunamadre/qa/t05.jpg
+?? pieces/jaiba-lagunamadre/qa/t17.jpg
+?? pieces/jaiba-lagunamadre/qa/t23.jpg
+?? pieces/jarana-tlacotalpan/chars/
+?? pieces/jarana-tlacotalpan/qa/c01.jpg
+?? pieces/jarana-tlacotalpan/qa/c02.jpg
+?? pieces/jarana-tlacotalpan/qa/c03.jpg
+?? pieces/jarana-tlacotalpan/qa/c04.jpg
+?? pieces/jarana-tlacotalpan/qa/c05.jpg
+?? pieces/jarana-tlacotalpan/qa/c06.jpg
+?? pieces/jarana-tlacotalpan/qa/c07.jpg
+?? pieces/jarana-tlacotalpan/qa/c08.jpg
+?? pieces/jarana-tlacotalpan/qa/c09.jpg
+?? pieces/jarana-tlacotalpan/qa/c10.jpg
+?? pieces/jarana-tlacotalpan/qa/c11.jpg
+?? pieces/jarana-tlacotalpan/qa/c12.jpg
+?? pieces/jarana-tlacotalpan/qa/c13.jpg
+?? pieces/jarana-tlacotalpan/qa/c14.jpg
+?? pieces/jarana-tlacotalpan/qa/c15.jpg
+?? pieces/jarana-tlacotalpan/qa/c16.jpg
+?? pieces/jarana-tlacotalpan/qa/c17.jpg
+?? pieces/jarana-tlacotalpan/qa/c18.jpg
+?? pieces/jarana-tlacotalpan/qa/i01.jpg
+?? pieces/jarana-tlacotalpan/qa/i02.jpg
+?? pieces/jarana-tlacotalpan/qa/mouth0.jpg
+?? pieces/jarana-tlacotalpan/qa/mouth1.jpg
+?? pieces/jarana-tlacotalpan/qa/mouth2.jpg
+?? pieces/jarana-tlacotalpan/qa/mouth3.jpg
+?? pieces/jarana-tlacotalpan/qa/mouth4.jpg
+?? pieces/jarana-tlacotalpan/qa/mouth5.jpg
+?? pieces/jarana-tlacotalpan/qa/r1.jpg
+?? pieces/jarana-tlacotalpan/qa/r2.jpg
+?? pieces/jarana-tlacotalpan/qa/r3.jpg
+?? pieces/jarana-tlacotalpan/qa/r4.jpg
+?? pieces/jarana-tlacotalpan/qa/s1.jpg
+?? pieces/jarana-tlacotalpan/qa/s2.jpg
+?? pieces/jarana-tlacotalpan/qa/s3.jpg
+?? pieces/jarana-tlacotalpan/qa/sub0.jpg
+?? pieces/jarana-tlacotalpan/qa/sub1.jpg
+?? pieces/jarana-tlacotalpan/qa/sub2.jpg
+?? pieces/jarana-tlacotalpan/qa/sub3.jpg
+?? pieces/jarana-tlacotalpan/qa/sub4.jpg
+?? pieces/jarana-tlacotalpan/qa/sub5.jpg
+?? pieces/jarana-tlacotalpan/qa/sub6.jpg
+?? pieces/jarana-tlacotalpan/qa/sub7.jpg
+?? pieces/jarana-tlacotalpan/qa/subs_check.jpg
+?? pieces/jima-arandas/chars/
+?? pieces/jima-arandas/qa/c01.jpg
+?? pieces/jima-arandas/qa/c02.jpg
+?? pieces/jima-arandas/qa/c03.jpg
+?? pieces/jima-arandas/qa/c04.jpg
+?? pieces/jima-arandas/qa/c05.jpg
+?? pieces/jima-arandas/qa/c06.jpg
+?? pieces/jima-arandas/qa/c07.jpg
+?? pieces/jima-arandas/qa/c08.jpg
+?? pieces/jima-arandas/qa/c09.jpg
+?? pieces/jima-arandas/qa/c10.jpg
+?? pieces/jima-arandas/qa/c11.jpg
+?? pieces/jima-arandas/qa/c12.jpg
+?? pieces/jima-arandas/qa/c13.jpg
+?? pieces/jima-arandas/qa/i01.jpg
+?? pieces/jima-arandas/qa/mouth0.jpg
+?? pieces/jima-arandas/qa/mouth1.jpg
+?? pieces/jima-arandas/qa/mouth2.jpg
+?? pieces/jima-arandas/qa/mouth3.jpg
+?? pieces/jima-arandas/qa/mouth4.jpg
+?? pieces/jima-arandas/qa/mouth5.jpg
+?? pieces/jima-arandas/qa/r1.jpg
+?? pieces/jima-arandas/qa/r2.jpg
+?? pieces/jima-arandas/qa/strip.jpg
+?? pieces/jipi-becal-p2/chars/
+?? pieces/jipi-becal/chars/
+?? pieces/junta-guadalajara/chars/
+?? pieces/junta-guadalajara/qa/c01.jpg
+?? pieces/junta-guadalajara/qa/c02.jpg
+?? pieces/junta-guadalajara/qa/c03.jpg
+?? pieces/junta-guadalajara/qa/c04.jpg
+?? pieces/junta-guadalajara/qa/c05.jpg
+?? pieces/junta-guadalajara/qa/c06.jpg
+?? pieces/junta-guadalajara/qa/c07.jpg
+?? pieces/junta-guadalajara/qa/c08.jpg
+?? pieces/junta-guadalajara/qa/c09.jpg
+?? pieces/junta-guadalajara/qa/c10.jpg
+?? pieces/junta-guadalajara/qa/c11.jpg
+?? pieces/junta-guadalajara/qa/c12.jpg
+?? pieces/junta-guadalajara/qa/c13.jpg
+?? pieces/junta-guadalajara/qa/c14.jpg
+?? pieces/junta-guadalajara/qa/c15.jpg
+?? pieces/junta-guadalajara/qa/i01.jpg
+?? pieces/junta-guadalajara/qa/mouth0.jpg
+?? pieces/junta-guadalajara/qa/mouth1.jpg
+?? pieces/junta-guadalajara/qa/mouth2.jpg
+?? pieces/junta-guadalajara/qa/mouth3.jpg
+?? pieces/junta-guadalajara/qa/mouth4.jpg
+?? pieces/junta-guadalajara/qa/mouth5.jpg
+?? pieces/junta-guadalajara/qa/r1.jpg
+?? pieces/junta-guadalajara/qa/r2.jpg
+?? pieces/junta-guadalajara/qa/r3.jpg
+?? pieces/junta-guadalajara/qa/strip.jpg
+?? pieces/laca-olinala/chars/
+?? pieces/laca-olinala/qa/c01.jpg
+?? pieces/laca-olinala/qa/c02.jpg
+?? pieces/laca-olinala/qa/c03.jpg
+?? pieces/laca-olinala/qa/c04.jpg
+?? pieces/laca-olinala/qa/c05.jpg
+?? pieces/laca-olinala/qa/c06.jpg
+?? pieces/laca-olinala/qa/c07.jpg
+?? pieces/laca-olinala/qa/c08.jpg
+?? pieces/laca-olinala/qa/c09.jpg
+?? pieces/laca-olinala/qa/c10.jpg
+?? pieces/laca-olinala/qa/c11.jpg
+?? pieces/laca-olinala/qa/c12.jpg
+?? pieces/laca-olinala/qa/c13.jpg
+?? pieces/laca-olinala/qa/c14.jpg
+?? pieces/laca-olinala/qa/c15.jpg
+?? pieces/laca-olinala/qa/c16.jpg
+?? pieces/laca-olinala/qa/c17.jpg
+?? pieces/laca-olinala/qa/c18.jpg
+?? pieces/laca-olinala/qa/i01.jpg
+?? pieces/laca-olinala/qa/mouth0.jpg
+?? pieces/laca-olinala/qa/mouth1.jpg
+?? pieces/laca-olinala/qa/mouth2.jpg
+?? pieces/laca-olinala/qa/mouth3.jpg
+?? pieces/laca-olinala/qa/mouth4.jpg
+?? pieces/laca-olinala/qa/mouth5.jpg
+?? pieces/laca-olinala/qa/r1.jpg
+?? pieces/laca-olinala/qa/r2.jpg
+?? pieces/laca-olinala/qa/r3.jpg
+?? pieces/laca-olinala/qa/r4.jpg
+?? pieces/laca-olinala/qa/s1.jpg
+?? pieces/laca-olinala/qa/s2.jpg
+?? pieces/laca-olinala/qa/s3.jpg
+?? pieces/laca-olinala/qa/sub0.jpg
+?? pieces/laca-olinala/qa/sub1.jpg
+?? pieces/laca-olinala/qa/sub2.jpg
+?? pieces/laca-olinala/qa/sub3.jpg
+?? pieces/laca-olinala/qa/sub4.jpg
+?? pieces/laca-olinala/qa/sub5.jpg
+?? pieces/laca-olinala/qa/sub6.jpg
+?? pieces/laca-olinala/qa/sub7.jpg
+?? pieces/laca-olinala/qa/subs_check.jpg
+?? pieces/ladrillo-tecate/chars/
+?? pieces/ladrillo-tecate/qa/c01.jpg
+?? pieces/ladrillo-tecate/qa/c02.jpg
+?? pieces/ladrillo-tecate/qa/c03.jpg
+?? pieces/ladrillo-tecate/qa/c04.jpg
+?? pieces/ladrillo-tecate/qa/c05.jpg
+?? pieces/ladrillo-tecate/qa/c06.jpg
+?? pieces/ladrillo-tecate/qa/c07.jpg
+?? pieces/ladrillo-tecate/qa/c08.jpg
+?? pieces/ladrillo-tecate/qa/c09.jpg
+?? pieces/ladrillo-tecate/qa/c10.jpg
+?? pieces/ladrillo-tecate/qa/c11.jpg
+?? pieces/ladrillo-tecate/qa/c12.jpg
+?? pieces/ladrillo-tecate/qa/c13.jpg
+?? pieces/ladrillo-tecate/qa/c14.jpg
+?? pieces/ladrillo-tecate/qa/c15.jpg
+?? pieces/ladrillo-tecate/qa/c16.jpg
+?? pieces/ladrillo-tecate/qa/c17.jpg
+?? pieces/ladrillo-tecate/qa/c18.jpg
+?? pieces/ladrillo-tecate/qa/c19.jpg
+?? pieces/ladrillo-tecate/qa/c20.jpg
+?? pieces/ladrillo-tecate/qa/i01.jpg
+?? pieces/ladrillo-tecate/qa/i02.jpg
+?? pieces/ladrillo-tecate/qa/mouth0.jpg
+?? pieces/ladrillo-tecate/qa/mouth1.jpg
+?? pieces/ladrillo-tecate/qa/mouth2.jpg
+?? pieces/ladrillo-tecate/qa/mouth3.jpg
+?? pieces/ladrillo-tecate/qa/mouth4.jpg
+?? pieces/ladrillo-tecate/qa/mouth5.jpg
+?? pieces/ladrillo-tecate/qa/r1.jpg
+?? pieces/ladrillo-tecate/qa/r2.jpg
+?? pieces/ladrillo-tecate/qa/r3.jpg
+?? pieces/ladrillo-tecate/qa/r4.jpg
+?? pieces/ladrillo-tecate/qa/rg.jpg
+?? pieces/ladrillo-tecate/qa/s1.jpg
+?? pieces/ladrillo-tecate/qa/s2.jpg
+?? pieces/ladrillo-tecate/qa/s3.jpg
+?? pieces/lucero-parral/chars/
+?? pieces/lucero-parral/qa/c01.jpg
+?? pieces/lucero-parral/qa/c02.jpg
+?? pieces/lucero-parral/qa/c03.jpg
+?? pieces/lucero-parral/qa/c04.jpg
+?? pieces/lucero-parral/qa/c05.jpg
+?? pieces/lucero-parral/qa/c06.jpg
+?? pieces/lucero-parral/qa/c07.jpg
+?? pieces/lucero-parral/qa/c08.jpg
+?? pieces/lucero-parral/qa/c09.jpg
+?? pieces/lucero-parral/qa/c10.jpg
+?? pieces/lucero-parral/qa/c11.jpg
+?? pieces/lucero-parral/qa/c12.jpg
+?? pieces/lucero-parral/qa/c13.jpg
+?? pieces/lucero-parral/qa/c14.jpg
+?? pieces/lucero-parral/qa/i01.jpg
+?? pieces/lucero-parral/qa/mouth0.jpg
+?? pieces/lucero-parral/qa/mouth1.jpg
+?? pieces/lucero-parral/qa/mouth2.jpg
+?? pieces/lucero-parral/qa/mouth3.jpg
+?? pieces/lucero-parral/qa/mouth4.jpg
+?? pieces/lucero-parral/qa/mouth5.jpg
+?? pieces/lucero-parral/qa/r1.jpg
+?? pieces/lucero-parral/qa/r2.jpg
+?? pieces/lucero-parral/qa/strip.jpg
+?? pieces/mango-rosario/chars/
+?? pieces/mango-rosario/qa/c01.jpg
+?? pieces/mango-rosario/qa/c01_mouth.jpg
+?? pieces/mango-rosario/qa/c01mouth.jpg
+?? pieces/mango-rosario/qa/c02.jpg
+?? pieces/mango-rosario/qa/c03.jpg
+?? pieces/mango-rosario/qa/c04.jpg
+?? pieces/mango-rosario/qa/c05.jpg
+?? pieces/mango-rosario/qa/c06.jpg
+?? pieces/mango-rosario/qa/c07.jpg
+?? pieces/mango-rosario/qa/c08.jpg
+?? pieces/mango-rosario/qa/c09.jpg
+?? pieces/mango-rosario/qa/c10.jpg
+?? pieces/mango-rosario/qa/c11.jpg
+?? pieces/mango-rosario/qa/c12.jpg
+?? pieces/mango-rosario/qa/c13.jpg
+?? pieces/mango-rosario/qa/c14.jpg
+?? pieces/mango-rosario/qa/c15.jpg
+?? pieces/mango-rosario/qa/c16.jpg
+?? pieces/mango-rosario/qa/c17.jpg
+?? pieces/mango-rosario/qa/c18.jpg
+?? pieces/mango-rosario/qa/c19.jpg
+?? pieces/mango-rosario/qa/c20.jpg
+?? pieces/mango-rosario/qa/c21.jpg
+?? pieces/mango-rosario/qa/c22.jpg
+?? pieces/mango-rosario/qa/hook_mouth.jpg
+?? pieces/mango-rosario/qa/i01.jpg
+?? pieces/mango-rosario/qa/i02.jpg
+?? pieces/mango-rosario/qa/mouth0.jpg
+?? pieces/mango-rosario/qa/mouth1.jpg
+?? pieces/mango-rosario/qa/mouth2.jpg
+?? pieces/mango-rosario/qa/mouth3.jpg
+?? pieces/mango-rosario/qa/mouth4.jpg
+?? pieces/mango-rosario/qa/mouth5.jpg
+?? pieces/mango-rosario/qa/r1.jpg
+?? pieces/mango-rosario/qa/r2.jpg
+?? pieces/mango-rosario/qa/r3.jpg
+?? pieces/mango-rosario/qa/r4.jpg
+?? pieces/mango-rosario/qa/regen.jpg
+?? pieces/mango-rosario/qa/s1.jpg
+?? pieces/mango-rosario/qa/s2.jpg
+?? pieces/mango-rosario/qa/s3.jpg
+?? pieces/mango-rosario/qa/sub0.jpg
+?? pieces/mango-rosario/qa/sub1.jpg
+?? pieces/mango-rosario/qa/sub2.jpg
+?? pieces/mango-rosario/qa/sub3.jpg
+?? pieces/mango-rosario/qa/sub4.jpg
+?? pieces/mango-rosario/qa/sub5.jpg
+?? pieces/mango-rosario/qa/sub6.jpg
+?? pieces/mango-rosario/qa/sub7.jpg
+?? pieces/mango-rosario/qa/subs_check.jpg
+?? pieces/manteles-apan/chars/
+?? pieces/manteles-apan/qa/c01.jpg
+?? pieces/manteles-apan/qa/c02.jpg
+?? pieces/manteles-apan/qa/c03.jpg
+?? pieces/manteles-apan/qa/c04.jpg
+?? pieces/manteles-apan/qa/c05.jpg
+?? pieces/manteles-apan/qa/c06.jpg
+?? pieces/manteles-apan/qa/c07.jpg
+?? pieces/manteles-apan/qa/c08.jpg
+?? pieces/manteles-apan/qa/c09.jpg
+?? pieces/manteles-apan/qa/c10.jpg
+?? pieces/manteles-apan/qa/c11.jpg
+?? pieces/manteles-apan/qa/c12.jpg
+?? pieces/manteles-apan/qa/c13.jpg
+?? pieces/manteles-apan/qa/c14.jpg
+?? pieces/manteles-apan/qa/i01.jpg
+?? pieces/manteles-apan/qa/mouth0.jpg
+?? pieces/manteles-apan/qa/mouth1.jpg
+?? pieces/manteles-apan/qa/mouth2.jpg
+?? pieces/manteles-apan/qa/mouth3.jpg
+?? pieces/manteles-apan/qa/mouth4.jpg
+?? pieces/manteles-apan/qa/mouth5.jpg
+?? pieces/manteles-apan/qa/r1.jpg
+?? pieces/manteles-apan/qa/r2.jpg
+?? pieces/manteles-apan/qa/strip.jpg
+?? pieces/manzana-cuauhtemoc/chars/
+?? pieces/manzana-cuauhtemoc/qa/c01.jpg
+?? pieces/manzana-cuauhtemoc/qa/c02.jpg
+?? pieces/manzana-cuauhtemoc/qa/c03.jpg
+?? pieces/manzana-cuauhtemoc/qa/c04.jpg
+?? pieces/manzana-cuauhtemoc/qa/c05.jpg
+?? pieces/manzana-cuauhtemoc/qa/c06.jpg
+?? pieces/manzana-cuauhtemoc/qa/c07.jpg
+?? pieces/manzana-cuauhtemoc/qa/c08.jpg
+?? pieces/manzana-cuauhtemoc/qa/c09.jpg
+?? pieces/manzana-cuauhtemoc/qa/c10.jpg
+?? pieces/manzana-cuauhtemoc/qa/c11.jpg
+?? pieces/manzana-cuauhtemoc/qa/c12.jpg
+?? pieces/manzana-cuauhtemoc/qa/c13.jpg
+?? pieces/manzana-cuauhtemoc/qa/c14.jpg
+?? pieces/manzana-cuauhtemoc/qa/c15.jpg
+?? pieces/manzana-cuauhtemoc/qa/c16.jpg
+?? pieces/manzana-cuauhtemoc/qa/c17.jpg
+?? pieces/manzana-cuauhtemoc/qa/c18.jpg
+?? pieces/manzana-cuauhtemoc/qa/c19.jpg
+?? pieces/manzana-cuauhtemoc/qa/c20.jpg
+?? pieces/manzana-cuauhtemoc/qa/c21.jpg
+?? pieces/manzana-cuauhtemoc/qa/c22.jpg
+?? pieces/manzana-cuauhtemoc/qa/c23.jpg
+?? pieces/manzana-cuauhtemoc/qa/c24.jpg
+?? pieces/manzana-cuauhtemoc/qa/i01.jpg
+?? pieces/manzana-cuauhtemoc/qa/i02.jpg
+?? pieces/manzana-cuauhtemoc/qa/mouth0.jpg
+?? pieces/manzana-cuauhtemoc/qa/mouth1.jpg
+?? pieces/manzana-cuauhtemoc/qa/mouth2.jpg
+?? pieces/manzana-cuauhtemoc/qa/mouth3.jpg
+?? pieces/manzana-cuauhtemoc/qa/mouth4.jpg
+?? pieces/manzana-cuauhtemoc/qa/mouth5.jpg
+?? pieces/manzana-cuauhtemoc/qa/r1.jpg
+?? pieces/manzana-cuauhtemoc/qa/r2.jpg
+?? pieces/manzana-cuauhtemoc/qa/r3.jpg
+?? pieces/manzana-cuauhtemoc/qa/r4.jpg
+?? pieces/manzana-cuauhtemoc/qa/r5.jpg
+?? pieces/manzana-cuauhtemoc/qa/s1.jpg
+?? pieces/manzana-cuauhtemoc/qa/s2.jpg
+?? pieces/manzana-cuauhtemoc/qa/s3.jpg
+?? pieces/manzana-cuauhtemoc/qa/s4.jpg
+?? pieces/manzana-cuauhtemoc/qa/s5.jpg
+?? pieces/mole-atocpan/chars/
+?? pieces/mole-atocpan/qa/c01.jpg
+?? pieces/mole-atocpan/qa/c02.jpg
+?? pieces/mole-atocpan/qa/c03.jpg
+?? pieces/mole-atocpan/qa/c04.jpg
+?? pieces/mole-atocpan/qa/c05.jpg
+?? pieces/mole-atocpan/qa/c06.jpg
+?? pieces/mole-atocpan/qa/c07.jpg
+?? pieces/mole-atocpan/qa/c08.jpg
+?? pieces/mole-atocpan/qa/c09.jpg
+?? pieces/mole-atocpan/qa/c10.jpg
+?? pieces/mole-atocpan/qa/c11.jpg
+?? pieces/mole-atocpan/qa/c12.jpg
+?? pieces/mole-atocpan/qa/c13.jpg
+?? pieces/mole-atocpan/qa/c14.jpg
+?? pieces/mole-atocpan/qa/c15.jpg
+?? pieces/mole-atocpan/qa/c16.jpg
+?? pieces/mole-atocpan/qa/c17.jpg
+?? pieces/mole-atocpan/qa/i01.jpg
+?? pieces/mole-atocpan/qa/mouth0.jpg
+?? pieces/mole-atocpan/qa/mouth1.jpg
+?? pieces/mole-atocpan/qa/mouth2.jpg
+?? pieces/mole-atocpan/qa/mouth3.jpg
+?? pieces/mole-atocpan/qa/mouth4.jpg
+?? pieces/mole-atocpan/qa/mouth5.jpg
+?? pieces/mole-atocpan/qa/r1.jpg
+?? pieces/mole-atocpan/qa/r2.jpg
+?? pieces/mole-atocpan/qa/r3.jpg
+?? pieces/mole-atocpan/qa/s1.jpg
+?? pieces/mole-atocpan/qa/s2.jpg
+?? pieces/mole-atocpan/qa/s3.jpg
+?? pieces/mole-atocpan/qa/sub0.jpg
+?? pieces/mole-atocpan/qa/sub1.jpg
+?? pieces/mole-atocpan/qa/sub2.jpg
+?? pieces/mole-atocpan/qa/sub3.jpg
+?? pieces/mole-atocpan/qa/sub4.jpg
+?? pieces/mole-atocpan/qa/sub5.jpg
+?? pieces/mole-atocpan/qa/sub6.jpg
+?? pieces/mole-atocpan/qa/sub7.jpg
+?? pieces/mole-atocpan/qa/subs_check.jpg
+?? pieces/moro-sabinas/chars/
+?? pieces/moro-sabinas/qa/c01.jpg
+?? pieces/moro-sabinas/qa/c02.jpg
+?? pieces/moro-sabinas/qa/c03.jpg
+?? pieces/moro-sabinas/qa/c04.jpg
+?? pieces/moro-sabinas/qa/c05.jpg
+?? pieces/moro-sabinas/qa/c06.jpg
+?? pieces/moro-sabinas/qa/c07.jpg
+?? pieces/moro-sabinas/qa/c08.jpg
+?? pieces/moro-sabinas/qa/c09.jpg
+?? pieces/moro-sabinas/qa/c10.jpg
+?? pieces/moro-sabinas/qa/c11.jpg
+?? pieces/moro-sabinas/qa/c12.jpg
+?? pieces/moro-sabinas/qa/c13.jpg
+?? pieces/moro-sabinas/qa/c14.jpg
+?? pieces/moro-sabinas/qa/c15.jpg
+?? pieces/moro-sabinas/qa/c16.jpg
+?? pieces/moro-sabinas/qa/c17.jpg
+?? pieces/moro-sabinas/qa/c18.jpg
+?? pieces/moro-sabinas/qa/mouth0.jpg
+?? pieces/moro-sabinas/qa/mouth1.jpg
+?? pieces/moro-sabinas/qa/mouth2.jpg
+?? pieces/moro-sabinas/qa/mouth3.jpg
+?? pieces/moro-sabinas/qa/mouth4.jpg
+?? pieces/moro-sabinas/qa/mouth5.jpg
+?? pieces/moro-sabinas/qa/r1.jpg
+?? pieces/moro-sabinas/qa/r2.jpg
+?? pieces/moro-sabinas/qa/r3.jpg
+?? pieces/moro-sabinas/qa/r4.jpg
+?? pieces/nieve-tepoztlan/chars/
+?? pieces/nieve-tepoztlan/contact.jpg
+?? pieces/nieve-tepoztlan/qa/c01.jpg
+?? pieces/nieve-tepoztlan/qa/c02.jpg
+?? pieces/nieve-tepoztlan/qa/c03.jpg
+?? pieces/nieve-tepoztlan/qa/c04.jpg
+?? pieces/nieve-tepoztlan/qa/c05.jpg
+?? pieces/nieve-tepoztlan/qa/c06.jpg
+?? pieces/nieve-tepoztlan/qa/c07.jpg
+?? pieces/nieve-tepoztlan/qa/c08.jpg
+?? pieces/nieve-tepoztlan/qa/c09.jpg
+?? pieces/nieve-tepoztlan/qa/c10.jpg
+?? pieces/nieve-tepoztlan/qa/c11.jpg
+?? pieces/nieve-tepoztlan/qa/c12.jpg
+?? pieces/nieve-tepoztlan/qa/c13.jpg
+?? pieces/nieve-tepoztlan/qa/c14.jpg
+?? pieces/nieve-tepoztlan/qa/c15.jpg
+?? pieces/nieve-tepoztlan/qa/c16.jpg
+?? pieces/nieve-tepoztlan/qa/c17.jpg
+?? pieces/nieve-tepoztlan/qa/c18.jpg
+?? pieces/nieve-tepoztlan/qa/c19.jpg
+?? pieces/nieve-tepoztlan/qa/c19chk.jpg
+?? pieces/nieve-tepoztlan/qa/c19f.jpg
+?? pieces/nieve-tepoztlan/qa/c20.jpg
+?? pieces/nieve-tepoztlan/qa/c21.jpg
+?? pieces/nieve-tepoztlan/qa/c22.jpg
+?? pieces/nieve-tepoztlan/qa/c23.jpg
+?? pieces/nieve-tepoztlan/qa/c24.jpg
+?? pieces/nieve-tepoztlan/qa/c25.jpg
+?? pieces/nieve-tepoztlan/qa/c26.jpg
+?? pieces/nieve-tepoztlan/qa/c27.jpg
+?? pieces/nieve-tepoztlan/qa/g0.jpg
+?? pieces/nieve-tepoztlan/qa/g1.jpg
+?? pieces/nieve-tepoztlan/qa/g2.jpg
+?? pieces/nieve-tepoztlan/qa/g3.jpg
+?? pieces/nieve-tepoztlan/qa/g4.jpg
+?? pieces/nieve-tepoztlan/qa/g5.jpg
+?? pieces/nieve-tepoztlan/qa/i01.jpg
+?? pieces/nieve-tepoztlan/qa/r1.jpg
+?? pieces/nieve-tepoztlan/qa/r2.jpg
+?? pieces/nieve-tepoztlan/qa/r3.jpg
+?? pieces/nieve-tepoztlan/qa/r4.jpg
+?? pieces/nuez-parras/chars/
+?? pieces/nuez-parras/qa/c01.jpg
+?? pieces/nuez-parras/qa/c01g.jpg
+?? pieces/nuez-parras/qa/c02.jpg
+?? pieces/nuez-parras/qa/c03.jpg
+?? pieces/nuez-parras/qa/c04.jpg
+?? pieces/nuez-parras/qa/c05.jpg
+?? pieces/nuez-parras/qa/c06.jpg
+?? pieces/nuez-parras/qa/c07.jpg
+?? pieces/nuez-parras/qa/c08.jpg
+?? pieces/nuez-parras/qa/c09.jpg
+?? pieces/nuez-parras/qa/c10.jpg
+?? pieces/nuez-parras/qa/c11.jpg
+?? pieces/nuez-parras/qa/c12.jpg
+?? pieces/nuez-parras/qa/c13.jpg
+?? pieces/nuez-parras/qa/c14.jpg
+?? pieces/nuez-parras/qa/c15.jpg
+?? pieces/nuez-parras/qa/c16.jpg
+?? pieces/nuez-parras/qa/c17.jpg
+?? pieces/nuez-parras/qa/c18.jpg
+?? pieces/nuez-parras/qa/c19.jpg
+?? pieces/nuez-parras/qa/i01.jpg
+?? pieces/nuez-parras/qa/i02.jpg
+?? pieces/nuez-parras/qa/mouth0.jpg
+?? pieces/nuez-parras/qa/mouth1.jpg
+?? pieces/nuez-parras/qa/mouth2.jpg
+?? pieces/nuez-parras/qa/mouth3.jpg
+?? pieces/nuez-parras/qa/mouth4.jpg
+?? pieces/nuez-parras/qa/mouth5.jpg
+?? pieces/nuez-parras/qa/r1.jpg
+?? pieces/nuez-parras/qa/r2.jpg
+?? pieces/nuez-parras/qa/r3.jpg
+?? pieces/nuez-parras/qa/r4.jpg
+?? pieces/nuez-parras/qa/r5.jpg
+?? pieces/nuez-parras/qa/s1.jpg
+?? pieces/nuez-parras/qa/s2.jpg
+?? pieces/nuez-parras/qa/s3.jpg
+?? pieces/nuez-parras/qa/sub0.jpg
+?? pieces/nuez-parras/qa/sub1.jpg
+?? pieces/nuez-parras/qa/sub2.jpg
+?? pieces/nuez-parras/qa/sub3.jpg
+?? pieces/nuez-parras/qa/sub4.jpg
+?? pieces/nuez-parras/qa/sub5.jpg
+?? pieces/nuez-parras/qa/sub6.jpg
+?? pieces/nuez-parras/qa/sub7.jpg
+?? pieces/nuez-parras/qa/subs_check.jpg
 ?? pieces/nvidia-huang/qa/
 ?? pieces/nvidia-huang/storyboard.png
+?? pieces/ojo-cienegas/chars/
+?? pieces/ojo-cienegas/qa/c01.jpg
+?? pieces/ojo-cienegas/qa/c02.jpg
+?? pieces/ojo-cienegas/qa/c03.jpg
+?? pieces/ojo-cienegas/qa/c04.jpg
+?? pieces/ojo-cienegas/qa/c05.jpg
+?? pieces/ojo-cienegas/qa/c06.jpg
+?? pieces/ojo-cienegas/qa/c07.jpg
+?? pieces/ojo-cienegas/qa/c08.jpg
+?? pieces/ojo-cienegas/qa/c09.jpg
+?? pieces/ojo-cienegas/qa/c10.jpg
+?? pieces/ojo-cienegas/qa/c11.jpg
+?? pieces/ojo-cienegas/qa/c12.jpg
+?? pieces/ojo-cienegas/qa/c13.jpg
+?? pieces/ojo-cienegas/qa/c14.jpg
+?? pieces/ojo-cienegas/qa/c15.jpg
+?? pieces/ojo-cienegas/qa/c16.jpg
+?? pieces/ojo-cienegas/qa/c17.jpg
+?? pieces/ojo-cienegas/qa/i01.jpg
+?? pieces/ojo-cienegas/qa/mouth0.jpg
+?? pieces/ojo-cienegas/qa/mouth1.jpg
+?? pieces/ojo-cienegas/qa/mouth2.jpg
+?? pieces/ojo-cienegas/qa/mouth3.jpg
+?? pieces/ojo-cienegas/qa/mouth4.jpg
+?? pieces/ojo-cienegas/qa/mouth5.jpg
+?? pieces/ojo-cienegas/qa/r1.jpg
+?? pieces/ojo-cienegas/qa/r2.jpg
+?? pieces/ojo-cienegas/qa/r3.jpg
+?? pieces/ojo-cienegas/qa/r4.jpg
+?? pieces/palofierro-kino/chars/
+?? pieces/palofierro-kino/qa/c01.jpg
+?? pieces/palofierro-kino/qa/c02.jpg
+?? pieces/palofierro-kino/qa/c03.jpg
+?? pieces/palofierro-kino/qa/c04.jpg
+?? pieces/palofierro-kino/qa/c05.jpg
+?? pieces/palofierro-kino/qa/c06.jpg
+?? pieces/palofierro-kino/qa/c07.jpg
+?? pieces/palofierro-kino/qa/c08.jpg
+?? pieces/palofierro-kino/qa/c09.jpg
+?? pieces/palofierro-kino/qa/c10.jpg
+?? pieces/palofierro-kino/qa/c11.jpg
+?? pieces/palofierro-kino/qa/c12.jpg
+?? pieces/palofierro-kino/qa/c13.jpg
+?? pieces/palofierro-kino/qa/c14.jpg
+?? pieces/palofierro-kino/qa/c15.jpg
+?? pieces/palofierro-kino/qa/c16.jpg
+?? pieces/palofierro-kino/qa/c17.jpg
+?? pieces/palofierro-kino/qa/c18.jpg
+?? pieces/palofierro-kino/qa/c19.jpg
+?? pieces/palofierro-kino/qa/i01.jpg
+?? pieces/palofierro-kino/qa/i02.jpg
+?? pieces/palofierro-kino/qa/mouth0.jpg
+?? pieces/palofierro-kino/qa/mouth1.jpg
+?? pieces/palofierro-kino/qa/mouth2.jpg
+?? pieces/palofierro-kino/qa/mouth3.jpg
+?? pieces/palofierro-kino/qa/mouth4.jpg
+?? pieces/palofierro-kino/qa/mouth5.jpg
+?? pieces/palofierro-kino/qa/r1.jpg
+?? pieces/palofierro-kino/qa/r2.jpg
+?? pieces/palofierro-kino/qa/r3.jpg
+?? pieces/palofierro-kino/qa/r3chk.jpg
+?? pieces/palofierro-kino/qa/r4.jpg
+?? pieces/palofierro-kino/qa/s1.jpg
+?? pieces/palofierro-kino/qa/s2.jpg
+?? pieces/palofierro-kino/qa/s3.jpg
+?? pieces/palofierro-kino/qa/sub0.jpg
+?? pieces/palofierro-kino/qa/sub1.jpg
+?? pieces/palofierro-kino/qa/sub2.jpg
+?? pieces/palofierro-kino/qa/sub3.jpg
+?? pieces/palofierro-kino/qa/sub4.jpg
+?? pieces/palofierro-kino/qa/sub5.jpg
+?? pieces/palofierro-kino/qa/sub6.jpg
+?? pieces/palofierro-kino/qa/sub7.jpg
+?? pieces/palofierro-kino/qa/subs_check.jpg
+?? pieces/pan-comala/chars/
+?? pieces/pan-comala/qa/c01.jpg
+?? pieces/pan-comala/qa/c02.jpg
+?? pieces/pan-comala/qa/c03.jpg
+?? pieces/pan-comala/qa/c04.jpg
+?? pieces/pan-comala/qa/c05.jpg
+?? pieces/pan-comala/qa/c06.jpg
+?? pieces/pan-comala/qa/c06all.jpg
+?? pieces/pan-comala/qa/c07.jpg
+?? pieces/pan-comala/qa/c08.jpg
+?? pieces/pan-comala/qa/c09.jpg
+?? pieces/pan-comala/qa/c10.jpg
+?? pieces/pan-comala/qa/c11.jpg
+?? pieces/pan-comala/qa/c12.jpg
+?? pieces/pan-comala/qa/c13.jpg
+?? pieces/pan-comala/qa/c14.jpg
+?? pieces/pan-comala/qa/c15.jpg
+?? pieces/pan-comala/qa/c16.jpg
+?? pieces/pan-comala/qa/c17.jpg
+?? pieces/pan-comala/qa/c18.jpg
+?? pieces/pan-comala/qa/i01.jpg
+?? pieces/pan-comala/qa/i02.jpg
+?? pieces/pan-comala/qa/mouth0.jpg
+?? pieces/pan-comala/qa/mouth1.jpg
+?? pieces/pan-comala/qa/mouth2.jpg
+?? pieces/pan-comala/qa/mouth3.jpg
+?? pieces/pan-comala/qa/mouth4.jpg
+?? pieces/pan-comala/qa/mouth5.jpg
+?? pieces/pan-comala/qa/r1.jpg
+?? pieces/pan-comala/qa/r2.jpg
+?? pieces/pan-comala/qa/r3.jpg
+?? pieces/pan-comala/qa/r4.jpg
+?? pieces/pan-comala/qa/s1.jpg
+?? pieces/pan-comala/qa/s2.jpg
+?? pieces/pan-comala/qa/s3.jpg
+?? pieces/pan-comala/qa/sub0.jpg
+?? pieces/pan-comala/qa/sub1.jpg
+?? pieces/pan-comala/qa/sub2.jpg
+?? pieces/pan-comala/qa/sub3.jpg
+?? pieces/pan-comala/qa/sub4.jpg
+?? pieces/pan-comala/qa/sub5.jpg
+?? pieces/pan-comala/qa/sub6.jpg
+?? pieces/pan-comala/qa/sub7.jpg
+?? pieces/pan-comala/qa/subs_check.jpg
+?? pieces/panuelo-jalpan/chars/
+?? pieces/panuelo-jalpan/qa/c01.jpg
+?? pieces/panuelo-jalpan/qa/c02.jpg
+?? pieces/panuelo-jalpan/qa/c03.jpg
+?? pieces/panuelo-jalpan/qa/c04.jpg
+?? pieces/panuelo-jalpan/qa/c05.jpg
+?? pieces/panuelo-jalpan/qa/c06.jpg
+?? pieces/panuelo-jalpan/qa/c07.jpg
+?? pieces/panuelo-jalpan/qa/c08.jpg
+?? pieces/panuelo-jalpan/qa/c09.jpg
+?? pieces/panuelo-jalpan/qa/c10.jpg
+?? pieces/panuelo-jalpan/qa/c11.jpg
+?? pieces/panuelo-jalpan/qa/i01.jpg
+?? pieces/panuelo-jalpan/qa/mouth0.jpg
+?? pieces/panuelo-jalpan/qa/mouth1.jpg
+?? pieces/panuelo-jalpan/qa/mouth2.jpg
+?? pieces/panuelo-jalpan/qa/mouth3.jpg
+?? pieces/panuelo-jalpan/qa/mouth4.jpg
+?? pieces/panuelo-jalpan/qa/mouth5.jpg
+?? pieces/panuelo-jalpan/qa/r1.jpg
+?? pieces/panuelo-jalpan/qa/r2.jpg
+?? pieces/panuelo-jalpan/qa/r3.jpg
+?? pieces/paste-realdelmonte/chars/
+?? pieces/paste-realdelmonte/qa/c01.jpg
+?? pieces/paste-realdelmonte/qa/c02.jpg
+?? pieces/paste-realdelmonte/qa/c03.jpg
+?? pieces/paste-realdelmonte/qa/c04.jpg
+?? pieces/paste-realdelmonte/qa/c05.jpg
+?? pieces/paste-realdelmonte/qa/c06.jpg
+?? pieces/paste-realdelmonte/qa/c07.jpg
+?? pieces/paste-realdelmonte/qa/c08.jpg
+?? pieces/paste-realdelmonte/qa/c09.jpg
+?? pieces/paste-realdelmonte/qa/c10.jpg
+?? pieces/paste-realdelmonte/qa/c11.jpg
+?? pieces/paste-realdelmonte/qa/c12.jpg
+?? pieces/paste-realdelmonte/qa/c13.jpg
+?? pieces/paste-realdelmonte/qa/c14.jpg
+?? pieces/paste-realdelmonte/qa/c15.jpg
+?? pieces/paste-realdelmonte/qa/c16.jpg
+?? pieces/paste-realdelmonte/qa/c17.jpg
+?? pieces/paste-realdelmonte/qa/c18.jpg
+?? pieces/paste-realdelmonte/qa/c19.jpg
+?? pieces/paste-realdelmonte/qa/c20.jpg
+?? pieces/paste-realdelmonte/qa/c21.jpg
+?? pieces/paste-realdelmonte/qa/c22.jpg
+?? pieces/paste-realdelmonte/qa/c23.jpg
+?? pieces/paste-realdelmonte/qa/i01.jpg
+?? pieces/paste-realdelmonte/qa/mouth0.jpg
+?? pieces/paste-realdelmonte/qa/mouth1.jpg
+?? pieces/paste-realdelmonte/qa/mouth2.jpg
+?? pieces/paste-realdelmonte/qa/mouth3.jpg
+?? pieces/paste-realdelmonte/qa/mouth4.jpg
+?? pieces/paste-realdelmonte/qa/mouth5.jpg
+?? pieces/paste-realdelmonte/qa/r1.jpg
+?? pieces/paste-realdelmonte/qa/r1chk.jpg
+?? pieces/paste-realdelmonte/qa/r2.jpg
+?? pieces/paste-realdelmonte/qa/r3.jpg
+?? pieces/paste-realdelmonte/qa/r4.jpg
+?? pieces/paste-realdelmonte/qa/s1.jpg
+?? pieces/paste-realdelmonte/qa/s2.jpg
+?? pieces/paste-realdelmonte/qa/s3.jpg
+?? pieces/paste-realdelmonte/qa/s4.jpg
+?? pieces/pinata-acolman/chars/
+?? pieces/pinata-acolman/qa/c01.jpg
+?? pieces/pinata-acolman/qa/c02.jpg
+?? pieces/pinata-acolman/qa/c03.jpg
+?? pieces/pinata-acolman/qa/c04.jpg
+?? pieces/pinata-acolman/qa/c05.jpg
+?? pieces/pinata-acolman/qa/c06.jpg
+?? pieces/pinata-acolman/qa/c07.jpg
+?? pieces/pinata-acolman/qa/c08.jpg
+?? pieces/pinata-acolman/qa/c09.jpg
+?? pieces/pinata-acolman/qa/c10.jpg
+?? pieces/pinata-acolman/qa/c11.jpg
+?? pieces/pinata-acolman/qa/c12.jpg
+?? pieces/pinata-acolman/qa/c13.jpg
+?? pieces/pinata-acolman/qa/c14.jpg
+?? pieces/pinata-acolman/qa/c15.jpg
+?? pieces/pinata-acolman/qa/c16.jpg
+?? pieces/pinata-acolman/qa/c17.jpg
+?? pieces/pinata-acolman/qa/i01.jpg
+?? pieces/pinata-acolman/qa/mouth0.jpg
+?? pieces/pinata-acolman/qa/mouth1.jpg
+?? pieces/pinata-acolman/qa/mouth2.jpg
+?? pieces/pinata-acolman/qa/mouth3.jpg
+?? pieces/pinata-acolman/qa/mouth4.jpg
+?? pieces/pinata-acolman/qa/mouth5.jpg
+?? pieces/pinata-acolman/qa/r1.jpg
+?? pieces/pinata-acolman/qa/r2.jpg
+?? pieces/pinata-acolman/qa/r3.jpg
+?? pieces/pinata-acolman/qa/r4.jpg
+?? pieces/pinata-acolman/qa/s1.jpg
+?? pieces/pinata-acolman/qa/s2.jpg
+?? pieces/pinata-acolman/qa/s3.jpg
+?? pieces/pinata-acolman/qa/sub0.jpg
+?? pieces/pinata-acolman/qa/sub1.jpg
+?? pieces/pinata-acolman/qa/sub2.jpg
+?? pieces/pinata-acolman/qa/sub3.jpg
+?? pieces/pinata-acolman/qa/sub4.jpg
+?? pieces/pinata-acolman/qa/sub5.jpg
+?? pieces/pinata-acolman/qa/sub6.jpg
+?? pieces/pinata-acolman/qa/sub7.jpg
+?? pieces/pinata-acolman/qa/subs_check.jpg
+?? pieces/pipian-tlaxcala/chars/
+?? pieces/pipian-tlaxcala/qa/c01.jpg
+?? pieces/pipian-tlaxcala/qa/c02.jpg
+?? pieces/pipian-tlaxcala/qa/c03.jpg
+?? pieces/pipian-tlaxcala/qa/c04.jpg
+?? pieces/pipian-tlaxcala/qa/c05.jpg
+?? pieces/pipian-tlaxcala/qa/c06.jpg
+?? pieces/pipian-tlaxcala/qa/c07.jpg
+?? pieces/pipian-tlaxcala/qa/c08.jpg
+?? pieces/pipian-tlaxcala/qa/c09.jpg
+?? pieces/pipian-tlaxcala/qa/c10.jpg
+?? pieces/pipian-tlaxcala/qa/c11.jpg
+?? pieces/pipian-tlaxcala/qa/c12.jpg
+?? pieces/pipian-tlaxcala/qa/c13.jpg
+?? pieces/pipian-tlaxcala/qa/c14.jpg
+?? pieces/pipian-tlaxcala/qa/c15.jpg
+?? pieces/pipian-tlaxcala/qa/i01.jpg
+?? pieces/pipian-tlaxcala/qa/mouth0.jpg
+?? pieces/pipian-tlaxcala/qa/mouth1.jpg
+?? pieces/pipian-tlaxcala/qa/mouth2.jpg
+?? pieces/pipian-tlaxcala/qa/mouth3.jpg
+?? pieces/pipian-tlaxcala/qa/mouth4.jpg
+?? pieces/pipian-tlaxcala/qa/mouth5.jpg
+?? pieces/pipian-tlaxcala/qa/r1.jpg
+?? pieces/pipian-tlaxcala/qa/r2.jpg
+?? pieces/pipian-tlaxcala/qa/r3.jpg
+?? pieces/pipian-tlaxcala/qa/s1.jpg
+?? pieces/pipian-tlaxcala/qa/s1s.jpg
+?? pieces/pipian-tlaxcala/qa/s2.jpg
+?? pieces/pipian-tlaxcala/qa/s2s.jpg
+?? pieces/pipian-tlaxcala/qa/strip.jpg
+?? pieces/prueba-penjamo/chars/
+?? pieces/prueba-penjamo/qa/c01.jpg
+?? pieces/prueba-penjamo/qa/c02.jpg
+?? pieces/prueba-penjamo/qa/c03.jpg
+?? pieces/prueba-penjamo/qa/c04.jpg
+?? pieces/prueba-penjamo/qa/c05.jpg
+?? pieces/prueba-penjamo/qa/c06.jpg
+?? pieces/prueba-penjamo/qa/c07.jpg
+?? pieces/prueba-penjamo/qa/c08.jpg
+?? pieces/prueba-penjamo/qa/c09.jpg
+?? pieces/prueba-penjamo/qa/c10.jpg
+?? pieces/prueba-penjamo/qa/c11.jpg
+?? pieces/prueba-penjamo/qa/mouth0.jpg
+?? pieces/prueba-penjamo/qa/mouth1.jpg
+?? pieces/prueba-penjamo/qa/mouth2.jpg
+?? pieces/prueba-penjamo/qa/mouth3.jpg
+?? pieces/prueba-penjamo/qa/mouth4.jpg
+?? pieces/prueba-penjamo/qa/mouth5.jpg
+?? pieces/prueba-penjamo/qa/r1.jpg
+?? pieces/prueba-penjamo/qa/r2.jpg
+?? pieces/prueba-penjamo/qa/r3.jpg
+?? pieces/pulsera-mexcaltitan-p2/chars/
+?? pieces/pulsera-mexcaltitan/chars/
+?? pieces/queso-tequisquiapan/chars/
+?? pieces/queso-tequisquiapan/qa/c01.jpg
+?? pieces/queso-tequisquiapan/qa/c02.jpg
+?? pieces/queso-tequisquiapan/qa/c03.jpg
+?? pieces/queso-tequisquiapan/qa/c04.jpg
+?? pieces/queso-tequisquiapan/qa/c05.jpg
+?? pieces/queso-tequisquiapan/qa/c06.jpg
+?? pieces/queso-tequisquiapan/qa/c07.jpg
+?? pieces/queso-tequisquiapan/qa/c08.jpg
+?? pieces/queso-tequisquiapan/qa/c09.jpg
+?? pieces/queso-tequisquiapan/qa/c10.jpg
+?? pieces/queso-tequisquiapan/qa/c11.jpg
+?? pieces/queso-tequisquiapan/qa/c12.jpg
+?? pieces/queso-tequisquiapan/qa/c13.jpg
+?? pieces/queso-tequisquiapan/qa/c14.jpg
+?? pieces/queso-tequisquiapan/qa/c15.jpg
+?? pieces/queso-tequisquiapan/qa/c16.jpg
+?? pieces/queso-tequisquiapan/qa/c17.jpg
+?? pieces/queso-tequisquiapan/qa/c18.jpg
+?? pieces/queso-tequisquiapan/qa/c19.jpg
+?? pieces/queso-tequisquiapan/qa/c20.jpg
+?? pieces/queso-tequisquiapan/qa/i01.jpg
+?? pieces/queso-tequisquiapan/qa/i02.jpg
+?? pieces/queso-tequisquiapan/qa/mouth0.jpg
+?? pieces/queso-tequisquiapan/qa/mouth1.jpg
+?? pieces/queso-tequisquiapan/qa/mouth2.jpg
+?? pieces/queso-tequisquiapan/qa/mouth3.jpg
+?? pieces/queso-tequisquiapan/qa/mouth4.jpg
+?? pieces/queso-tequisquiapan/qa/mouth5.jpg
+?? pieces/queso-tequisquiapan/qa/r1.jpg
+?? pieces/queso-tequisquiapan/qa/r2.jpg
+?? pieces/queso-tequisquiapan/qa/r3.jpg
+?? pieces/queso-tequisquiapan/qa/r4.jpg
+?? pieces/queso-tequisquiapan/qa/s1.jpg
+?? pieces/queso-tequisquiapan/qa/s2.jpg
+?? pieces/queso-tequisquiapan/qa/s3.jpg
+?? pieces/queso-tequisquiapan/qa/s4.jpg
+?? pieces/queso-tequisquiapan/qa/sub0.jpg
+?? pieces/queso-tequisquiapan/qa/sub1.jpg
+?? pieces/queso-tequisquiapan/qa/sub2.jpg
+?? pieces/queso-tequisquiapan/qa/sub3.jpg
+?? pieces/queso-tequisquiapan/qa/sub4.jpg
+?? pieces/queso-tequisquiapan/qa/sub5.jpg
+?? pieces/queso-tequisquiapan/qa/sub6.jpg
+?? pieces/queso-tequisquiapan/qa/sub7.jpg
+?? pieces/queso-tequisquiapan/qa/subs_check.jpg
+?? pieces/rebozo-santamaria/chars/
+?? pieces/rebozo-santamaria/contact.jpg
+?? pieces/rebozo-santamaria/qa/c01.jpg
+?? pieces/rebozo-santamaria/qa/c02.jpg
+?? pieces/rebozo-santamaria/qa/c03.jpg
+?? pieces/rebozo-santamaria/qa/c04.jpg
+?? pieces/rebozo-santamaria/qa/c05.jpg
+?? pieces/rebozo-santamaria/qa/c06.jpg
+?? pieces/rebozo-santamaria/qa/c07.jpg
+?? pieces/rebozo-santamaria/qa/c08.jpg
+?? pieces/rebozo-santamaria/qa/c09.jpg
+?? pieces/rebozo-santamaria/qa/c10.jpg
+?? pieces/rebozo-santamaria/qa/c11.jpg
+?? pieces/rebozo-santamaria/qa/c12.jpg
+?? pieces/rebozo-santamaria/qa/c13.jpg
+?? pieces/rebozo-santamaria/qa/c14.jpg
+?? pieces/rebozo-santamaria/qa/c15.jpg
+?? pieces/rebozo-santamaria/qa/c16.jpg
+?? pieces/rebozo-santamaria/qa/c17.jpg
+?? pieces/rebozo-santamaria/qa/c18.jpg
+?? pieces/rebozo-santamaria/qa/c19.jpg
+?? pieces/rebozo-santamaria/qa/c20.jpg
+?? pieces/rebozo-santamaria/qa/c21.jpg
+?? pieces/rebozo-santamaria/qa/c22.jpg
+?? pieces/rebozo-santamaria/qa/c23.jpg
+?? pieces/rebozo-santamaria/qa/c24.jpg
+?? pieces/rebozo-santamaria/qa/c25.jpg
+?? pieces/rebozo-santamaria/qa/c26.jpg
+?? pieces/rebozo-santamaria/qa/c27.jpg
+?? pieces/rebozo-santamaria/qa/g0.jpg
+?? pieces/rebozo-santamaria/qa/g1.jpg
+?? pieces/rebozo-santamaria/qa/g2.jpg
+?? pieces/rebozo-santamaria/qa/g3.jpg
+?? pieces/rebozo-santamaria/qa/g4.jpg
+?? pieces/rebozo-santamaria/qa/g5.jpg
+?? pieces/rebozo-santamaria/qa/i01.jpg
+?? pieces/rebozo-santamaria/qa/i02.jpg
+?? pieces/rebozo-santamaria/qa/m.jpg
+?? pieces/rebozo-santamaria/qa/m04.jpg
+?? pieces/rebozo-santamaria/qa/m17.jpg
+?? pieces/rebozo-santamaria/qa/m25.jpg
+?? pieces/rebozo-santamaria/qa/r1.jpg
+?? pieces/rebozo-santamaria/qa/r2.jpg
+?? pieces/rebozo-santamaria/qa/r3.jpg
+?? pieces/rebozo-santamaria/qa/r4.jpg
+?? pieces/rebozo-santamaria/qa/r5.jpg
+?? pieces/red-janitzio/chars/
+?? pieces/red-janitzio/qa/c01.jpg
+?? pieces/red-janitzio/qa/c02.jpg
+?? pieces/red-janitzio/qa/c03.jpg
+?? pieces/red-janitzio/qa/c04.jpg
+?? pieces/red-janitzio/qa/c05.jpg
+?? pieces/red-janitzio/qa/c06.jpg
+?? pieces/red-janitzio/qa/c07.jpg
+?? pieces/red-janitzio/qa/c08.jpg
+?? pieces/red-janitzio/qa/c09.jpg
+?? pieces/red-janitzio/qa/c10.jpg
+?? pieces/red-janitzio/qa/c11.jpg
+?? pieces/red-janitzio/qa/c12.jpg
+?? pieces/red-janitzio/qa/c13.jpg
+?? pieces/red-janitzio/qa/c14.jpg
+?? pieces/red-janitzio/qa/c15.jpg
+?? pieces/red-janitzio/qa/c16.jpg
+?? pieces/red-janitzio/qa/c17.jpg
+?? pieces/red-janitzio/qa/c18.jpg
+?? pieces/red-janitzio/qa/i01.jpg
+?? pieces/red-janitzio/qa/i02.jpg
+?? pieces/red-janitzio/qa/mouth0.jpg
+?? pieces/red-janitzio/qa/mouth1.jpg
+?? pieces/red-janitzio/qa/mouth2.jpg
+?? pieces/red-janitzio/qa/mouth3.jpg
+?? pieces/red-janitzio/qa/mouth4.jpg
+?? pieces/red-janitzio/qa/mouth5.jpg
+?? pieces/red-janitzio/qa/r1.jpg
+?? pieces/red-janitzio/qa/r2.jpg
+?? pieces/red-janitzio/qa/r3.jpg
+?? pieces/red-janitzio/qa/s1.jpg
+?? pieces/red-janitzio/qa/s2.jpg
+?? pieces/red-janitzio/qa/s3.jpg
+?? pieces/red-janitzio/qa/sub0.jpg
+?? pieces/red-janitzio/qa/sub1.jpg
+?? pieces/red-janitzio/qa/sub2.jpg
+?? pieces/red-janitzio/qa/sub3.jpg
+?? pieces/red-janitzio/qa/sub4.jpg
+?? pieces/red-janitzio/qa/sub5.jpg
+?? pieces/red-janitzio/qa/sub6.jpg
+?? pieces/red-janitzio/qa/sub7.jpg
+?? pieces/red-janitzio/qa/subs_check.jpg
+?? pieces/relevo-ures/chars/
+?? pieces/relevo-ures/qa/c01.jpg
+?? pieces/relevo-ures/qa/c02.jpg
+?? pieces/relevo-ures/qa/c03.jpg
+?? pieces/relevo-ures/qa/c04.jpg
+?? pieces/relevo-ures/qa/c05.jpg
+?? pieces/relevo-ures/qa/c06.jpg
+?? pieces/relevo-ures/qa/c07.jpg
+?? pieces/relevo-ures/qa/c08.jpg
+?? pieces/relevo-ures/qa/c09.jpg
+?? pieces/relevo-ures/qa/c10.jpg
+?? pieces/relevo-ures/qa/c11.jpg
+?? pieces/relevo-ures/qa/c12.jpg
+?? pieces/relevo-ures/qa/i01.jpg
+?? pieces/relevo-ures/qa/mouth0.jpg
+?? pieces/relevo-ures/qa/mouth1.jpg
+?? pieces/relevo-ures/qa/mouth2.jpg
+?? pieces/relevo-ures/qa/mouth3.jpg
+?? pieces/relevo-ures/qa/mouth4.jpg
+?? pieces/relevo-ures/qa/mouth5.jpg
+?? pieces/relevo-ures/qa/r1.jpg
+?? pieces/relevo-ures/qa/r2.jpg
+?? pieces/relevo-ures/qa/strip.jpg
+?? pieces/reloj-zacatlan/chars/
+?? pieces/reloj-zacatlan/qa/c01.jpg
+?? pieces/reloj-zacatlan/qa/c02.jpg
+?? pieces/reloj-zacatlan/qa/c03.jpg
+?? pieces/reloj-zacatlan/qa/c04.jpg
+?? pieces/reloj-zacatlan/qa/c05.jpg
+?? pieces/reloj-zacatlan/qa/c06.jpg
+?? pieces/reloj-zacatlan/qa/c07.jpg
+?? pieces/reloj-zacatlan/qa/c08.jpg
+?? pieces/reloj-zacatlan/qa/c09.jpg
+?? pieces/reloj-zacatlan/qa/c10.jpg
+?? pieces/reloj-zacatlan/qa/c11.jpg
+?? pieces/reloj-zacatlan/qa/c12.jpg
+?? pieces/reloj-zacatlan/qa/c13.jpg
+?? pieces/reloj-zacatlan/qa/c13z.jpg
+?? pieces/reloj-zacatlan/qa/c14.jpg
+?? pieces/reloj-zacatlan/qa/c15.jpg
+?? pieces/reloj-zacatlan/qa/c16.jpg
+?? pieces/reloj-zacatlan/qa/c17.jpg
+?? pieces/reloj-zacatlan/qa/c18.jpg
+?? pieces/reloj-zacatlan/qa/c19.jpg
+?? pieces/reloj-zacatlan/qa/c20.jpg
+?? pieces/reloj-zacatlan/qa/c21.jpg
+?? pieces/reloj-zacatlan/qa/c22.jpg
+?? pieces/reloj-zacatlan/qa/i01.jpg
+?? pieces/reloj-zacatlan/qa/mouth0.jpg
+?? pieces/reloj-zacatlan/qa/mouth1.jpg
+?? pieces/reloj-zacatlan/qa/mouth2.jpg
+?? pieces/reloj-zacatlan/qa/mouth3.jpg
+?? pieces/reloj-zacatlan/qa/mouth4.jpg
+?? pieces/reloj-zacatlan/qa/mouth5.jpg
+?? pieces/reloj-zacatlan/qa/r1.jpg
+?? pieces/reloj-zacatlan/qa/r2.jpg
+?? pieces/reloj-zacatlan/qa/r3.jpg
+?? pieces/reloj-zacatlan/qa/r4.jpg
+?? pieces/reloj-zacatlan/qa/s1.jpg
+?? pieces/reloj-zacatlan/qa/s2.jpg
+?? pieces/reloj-zacatlan/qa/s3.jpg
+?? pieces/reloj-zacatlan/qa/sub0.jpg
+?? pieces/reloj-zacatlan/qa/sub1.jpg
+?? pieces/reloj-zacatlan/qa/sub2.jpg
+?? pieces/reloj-zacatlan/qa/sub3.jpg
+?? pieces/reloj-zacatlan/qa/sub4.jpg
+?? pieces/reloj-zacatlan/qa/sub5.jpg
+?? pieces/reloj-zacatlan/qa/sub6.jpg
+?? pieces/reloj-zacatlan/qa/sub7.jpg
+?? pieces/reloj-zacatlan/qa/subs_check.jpg
+?? pieces/sarape-saltillo-p2/chars/
+?? pieces/sarape-saltillo/chars/
+?? pieces/scp-087/
+?? pieces/silla-izamal/chars/
+?? pieces/silla-izamal/qa/c01.jpg
+?? pieces/silla-izamal/qa/c02.jpg
+?? pieces/silla-izamal/qa/c03.jpg
+?? pieces/silla-izamal/qa/c03r.jpg
+?? pieces/silla-izamal/qa/c04.jpg
+?? pieces/silla-izamal/qa/c05.jpg
+?? pieces/silla-izamal/qa/c06.jpg
+?? pieces/silla-izamal/qa/c07.jpg
+?? pieces/silla-izamal/qa/c08.jpg
+?? pieces/silla-izamal/qa/c09.jpg
+?? pieces/silla-izamal/qa/c10.jpg
+?? pieces/silla-izamal/qa/c11.jpg
+?? pieces/silla-izamal/qa/c12.jpg
+?? pieces/silla-izamal/qa/c13.jpg
+?? pieces/silla-izamal/qa/c14.jpg
+?? pieces/silla-izamal/qa/c15.jpg
+?? pieces/silla-izamal/qa/i01.jpg
+?? pieces/silla-izamal/qa/mouth0.jpg
+?? pieces/silla-izamal/qa/mouth1.jpg
+?? pieces/silla-izamal/qa/mouth2.jpg
+?? pieces/silla-izamal/qa/mouth3.jpg
+?? pieces/silla-izamal/qa/mouth4.jpg
+?? pieces/silla-izamal/qa/mouth5.jpg
+?? pieces/silla-izamal/qa/r1.jpg
+?? pieces/silla-izamal/qa/r2.jpg
+?? pieces/silla-izamal/qa/r3.jpg
+?? pieces/silla-izamal/qa/s1.jpg
+?? pieces/silla-izamal/qa/s2.jpg
+?? pieces/silla-izamal/qa/subs_check.jpg
+?? pieces/sobre-alamos/chars/
+?? pieces/sobre-alamos/qa/c01.jpg
+?? pieces/sobre-alamos/qa/c02.jpg
+?? pieces/sobre-alamos/qa/c03.jpg
+?? pieces/sobre-alamos/qa/c04.jpg
+?? pieces/sobre-alamos/qa/c05.jpg
+?? pieces/sobre-alamos/qa/c06.jpg
+?? pieces/sobre-alamos/qa/c07.jpg
+?? pieces/sobre-alamos/qa/c08.jpg
+?? pieces/sobre-alamos/qa/c09.jpg
+?? pieces/sobre-alamos/qa/c10.jpg
+?? pieces/sobre-alamos/qa/c11.jpg
+?? pieces/sobre-alamos/qa/c12.jpg
+?? pieces/sobre-alamos/qa/c13.jpg
+?? pieces/sobre-alamos/qa/i01.jpg
+?? pieces/sobre-alamos/qa/mouth0.jpg
+?? pieces/sobre-alamos/qa/mouth1.jpg
+?? pieces/sobre-alamos/qa/mouth2.jpg
+?? pieces/sobre-alamos/qa/mouth3.jpg
+?? pieces/sobre-alamos/qa/mouth4.jpg
+?? pieces/sobre-alamos/qa/mouth5.jpg
+?? pieces/sobre-alamos/qa/r1.jpg
+?? pieces/sobre-alamos/qa/r2.jpg
+?? pieces/sobre-alamos/qa/r3.jpg
+?? pieces/sobre-alamos/qa/r4.jpg
+?? pieces/sobre-alamos/qa/strip.jpg
+?? pieces/sombrero-sahuayo/chars/
+?? pieces/sombrero-sahuayo/qa/c01.jpg
+?? pieces/sombrero-sahuayo/qa/c02.jpg
+?? pieces/sombrero-sahuayo/qa/c03.jpg
+?? pieces/sombrero-sahuayo/qa/c04.jpg
+?? pieces/sombrero-sahuayo/qa/c05.jpg
+?? pieces/sombrero-sahuayo/qa/c06.jpg
+?? pieces/sombrero-sahuayo/qa/c07.jpg
+?? pieces/sombrero-sahuayo/qa/c08.jpg
+?? pieces/sombrero-sahuayo/qa/c09.jpg
+?? pieces/sombrero-sahuayo/qa/c10.jpg
+?? pieces/sombrero-sahuayo/qa/c11.jpg
+?? pieces/sombrero-sahuayo/qa/c12.jpg
+?? pieces/sombrero-sahuayo/qa/c13.jpg
+?? pieces/sombrero-sahuayo/qa/c14.jpg
+?? pieces/sombrero-sahuayo/qa/c15.jpg
+?? pieces/sombrero-sahuayo/qa/c16.jpg
+?? pieces/sombrero-sahuayo/qa/c17.jpg
+?? pieces/sombrero-sahuayo/qa/c18.jpg
+?? pieces/sombrero-sahuayo/qa/i01.jpg
+?? pieces/sombrero-sahuayo/qa/i02.jpg
+?? pieces/sombrero-sahuayo/qa/mouth0.jpg
+?? pieces/sombrero-sahuayo/qa/mouth1.jpg
+?? pieces/sombrero-sahuayo/qa/mouth2.jpg
+?? pieces/sombrero-sahuayo/qa/mouth3.jpg
+?? pieces/sombrero-sahuayo/qa/mouth4.jpg
+?? pieces/sombrero-sahuayo/qa/mouth5.jpg
+?? pieces/sombrero-sahuayo/qa/r1.jpg
+?? pieces/sombrero-sahuayo/qa/r2.jpg
+?? pieces/sombrero-sahuayo/qa/r3.jpg
+?? pieces/sombrero-sahuayo/qa/r4.jpg
+?? pieces/sombrero-sahuayo/qa/s1.jpg
+?? pieces/sombrero-sahuayo/qa/s2.jpg
+?? pieces/sombrero-sahuayo/qa/s3.jpg
+?? pieces/sombrero-sahuayo/qa/sub0.jpg
+?? pieces/sombrero-sahuayo/qa/sub1.jpg
+?? pieces/sombrero-sahuayo/qa/sub2.jpg
+?? pieces/sombrero-sahuayo/qa/sub3.jpg
+?? pieces/sombrero-sahuayo/qa/sub4.jpg
+?? pieces/sombrero-sahuayo/qa/sub5.jpg
+?? pieces/sombrero-sahuayo/qa/sub6.jpg
+?? pieces/sombrero-sahuayo/qa/sub7.jpg
+?? pieces/sombrero-sahuayo/qa/subs_check.jpg
+?? pieces/talavera-cholula/chars/
+?? pieces/talavera-cholula/qa/c01.jpg
+?? pieces/talavera-cholula/qa/c02.jpg
+?? pieces/talavera-cholula/qa/c03.jpg
+?? pieces/talavera-cholula/qa/c04.jpg
+?? pieces/talavera-cholula/qa/c05.jpg
+?? pieces/talavera-cholula/qa/c06.jpg
+?? pieces/talavera-cholula/qa/c07.jpg
+?? pieces/talavera-cholula/qa/c08.jpg
+?? pieces/talavera-cholula/qa/c09.jpg
+?? pieces/talavera-cholula/qa/c10.jpg
+?? pieces/talavera-cholula/qa/c11.jpg
+?? pieces/talavera-cholula/qa/c12.jpg
+?? pieces/talavera-cholula/qa/c13.jpg
+?? pieces/talavera-cholula/qa/c14.jpg
+?? pieces/talavera-cholula/qa/c15.jpg
+?? pieces/talavera-cholula/qa/c16.jpg
+?? pieces/talavera-cholula/qa/c17.jpg
+?? pieces/talavera-cholula/qa/i01.jpg
+?? pieces/talavera-cholula/qa/i02.jpg
+?? pieces/talavera-cholula/qa/mouth0.jpg
+?? pieces/talavera-cholula/qa/mouth1.jpg
+?? pieces/talavera-cholula/qa/mouth2.jpg
+?? pieces/talavera-cholula/qa/mouth3.jpg
+?? pieces/talavera-cholula/qa/mouth4.jpg
+?? pieces/talavera-cholula/qa/mouth5.jpg
+?? pieces/talavera-cholula/qa/r1.jpg
+?? pieces/talavera-cholula/qa/r2.jpg
+?? pieces/talavera-cholula/qa/r3.jpg
+?? pieces/talavera-cholula/qa/regen.jpg
+?? pieces/talavera-cholula/qa/s1.jpg
+?? pieces/talavera-cholula/qa/s2.jpg
+?? pieces/talavera-cholula/qa/s3.jpg
+?? pieces/talavera-cholula/qa/subs_check.jpg
+?? pieces/teke-teke/.videohub/
 ?? pieces/teke-teke/flow/2026-11-13T14-49-21-an-authentic-old-japanese-woodblock-prin-1.jpg
 ?? pieces/teke-teke/flow/2026-11-13T14-49-50-a-single-meiji-era-japanese-woodblock-pr-1.jpg
 ?? pieces/teke-teke/flow/2026-11-13T14-50-33-a-single-meiji-era-japanese-woodblock-pr-1.jpg
@@ -11706,8 +18830,205 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 ?? pieces/teke-teke/sound/cues.json
 ?? pieces/teke-teke/sound/mix_v1.py
 ?? pieces/teke-teke/src/beings.js
+?? pieces/tienda-mineral/chars/
+?? pieces/traje-zamora/chars/
+?? pieces/traje-zamora/qa/c01.jpg
+?? pieces/traje-zamora/qa/c02.jpg
+?? pieces/traje-zamora/qa/c03.jpg
+?? pieces/traje-zamora/qa/c04.jpg
+?? pieces/traje-zamora/qa/c05.jpg
+?? pieces/traje-zamora/qa/c06.jpg
+?? pieces/traje-zamora/qa/c07.jpg
+?? pieces/traje-zamora/qa/c08.jpg
+?? pieces/traje-zamora/qa/c09.jpg
+?? pieces/traje-zamora/qa/c10.jpg
+?? pieces/traje-zamora/qa/c11.jpg
+?? pieces/traje-zamora/qa/c12.jpg
+?? pieces/traje-zamora/qa/i01.jpg
+?? pieces/traje-zamora/qa/mouth0.jpg
+?? pieces/traje-zamora/qa/mouth1.jpg
+?? pieces/traje-zamora/qa/mouth2.jpg
+?? pieces/traje-zamora/qa/mouth3.jpg
+?? pieces/traje-zamora/qa/mouth4.jpg
+?? pieces/traje-zamora/qa/mouth5.jpg
+?? pieces/traje-zamora/qa/r1.jpg
+?? pieces/traje-zamora/qa/r2.jpg
+?? pieces/traje-zamora/qa/r3.jpg
+?? pieces/traje-zamora/qa/strip.jpg
+?? pieces/trajinera-xochimilco/chars/
+?? pieces/trajinera-xochimilco/qa/c01.jpg
+?? pieces/trajinera-xochimilco/qa/c02.jpg
+?? pieces/trajinera-xochimilco/qa/c03.jpg
+?? pieces/trajinera-xochimilco/qa/c04.jpg
+?? pieces/trajinera-xochimilco/qa/c05.jpg
+?? pieces/trajinera-xochimilco/qa/c06.jpg
+?? pieces/trajinera-xochimilco/qa/c07.jpg
+?? pieces/trajinera-xochimilco/qa/c08.jpg
+?? pieces/trajinera-xochimilco/qa/c09.jpg
+?? pieces/trajinera-xochimilco/qa/c10.jpg
+?? pieces/trajinera-xochimilco/qa/c11.jpg
+?? pieces/trajinera-xochimilco/qa/c12.jpg
+?? pieces/trajinera-xochimilco/qa/c13.jpg
+?? pieces/trajinera-xochimilco/qa/c14.jpg
+?? pieces/trajinera-xochimilco/qa/c15.jpg
+?? pieces/trajinera-xochimilco/qa/c16.jpg
+?? pieces/trajinera-xochimilco/qa/c17.jpg
+?? pieces/trajinera-xochimilco/qa/i01.jpg
+?? pieces/trajinera-xochimilco/qa/mouth0.jpg
+?? pieces/trajinera-xochimilco/qa/mouth1.jpg
+?? pieces/trajinera-xochimilco/qa/mouth2.jpg
+?? pieces/trajinera-xochimilco/qa/mouth3.jpg
+?? pieces/trajinera-xochimilco/qa/mouth4.jpg
+?? pieces/trajinera-xochimilco/qa/mouth5.jpg
+?? pieces/trajinera-xochimilco/qa/r1.jpg
+?? pieces/trajinera-xochimilco/qa/r2.jpg
+?? pieces/trajinera-xochimilco/qa/r3.jpg
+?? pieces/trajinera-xochimilco/qa/s1.jpg
+?? pieces/trajinera-xochimilco/qa/s2.jpg
+?? pieces/trajinera-xochimilco/qa/s3.jpg
+?? pieces/trajinera-xochimilco/qa/sub0.jpg
+?? pieces/trajinera-xochimilco/qa/sub1.jpg
+?? pieces/trajinera-xochimilco/qa/sub2.jpg
+?? pieces/trajinera-xochimilco/qa/sub3.jpg
+?? pieces/trajinera-xochimilco/qa/sub4.jpg
+?? pieces/trajinera-xochimilco/qa/sub5.jpg
+?? pieces/trajinera-xochimilco/qa/sub6.jpg
+?? pieces/trajinera-xochimilco/qa/sub7.jpg
+?? pieces/trajinera-xochimilco/qa/subs_check.jpg
 ?? pieces/trash-library/qa/
 ?? pieces/trash-library/storyboard.png
+?? pieces/upnext-metalshadow/engine/ref/
+?? pieces/vainilla-papantla/chars/
+?? pieces/vainilla-papantla/qa/c01.jpg
+?? pieces/vainilla-papantla/qa/c02.jpg
+?? pieces/vainilla-papantla/qa/c03.jpg
+?? pieces/vainilla-papantla/qa/c04.jpg
+?? pieces/vainilla-papantla/qa/c05.jpg
+?? pieces/vainilla-papantla/qa/c06.jpg
+?? pieces/vainilla-papantla/qa/c07.jpg
+?? pieces/vainilla-papantla/qa/c08.jpg
+?? pieces/vainilla-papantla/qa/c09.jpg
+?? pieces/vainilla-papantla/qa/c10.jpg
+?? pieces/vainilla-papantla/qa/c11.jpg
+?? pieces/vainilla-papantla/qa/c12.jpg
+?? pieces/vainilla-papantla/qa/c13.jpg
+?? pieces/vainilla-papantla/qa/c14.jpg
+?? pieces/vainilla-papantla/qa/c15.jpg
+?? pieces/vainilla-papantla/qa/c16.jpg
+?? pieces/vainilla-papantla/qa/c16s.jpg
+?? pieces/vainilla-papantla/qa/c17.jpg
+?? pieces/vainilla-papantla/qa/c18.jpg
+?? pieces/vainilla-papantla/qa/c19.jpg
+?? pieces/vainilla-papantla/qa/c20.jpg
+?? pieces/vainilla-papantla/qa/c21.jpg
+?? pieces/vainilla-papantla/qa/c22.jpg
+?? pieces/vainilla-papantla/qa/c23.jpg
+?? pieces/vainilla-papantla/qa/i01.jpg
+?? pieces/vainilla-papantla/qa/mouth0.jpg
+?? pieces/vainilla-papantla/qa/mouth1.jpg
+?? pieces/vainilla-papantla/qa/mouth2.jpg
+?? pieces/vainilla-papantla/qa/mouth3.jpg
+?? pieces/vainilla-papantla/qa/mouth4.jpg
+?? pieces/vainilla-papantla/qa/mouth5.jpg
+?? pieces/vainilla-papantla/qa/r1.jpg
+?? pieces/vainilla-papantla/qa/r2.jpg
+?? pieces/vainilla-papantla/qa/r3.jpg
+?? pieces/vainilla-papantla/qa/r4.jpg
+?? pieces/vainilla-papantla/qa/r5.jpg
+?? pieces/vainilla-papantla/qa/s1.jpg
+?? pieces/vainilla-papantla/qa/s2.jpg
+?? pieces/vainilla-papantla/qa/s3.jpg
+?? pieces/vainilla-papantla/qa/s4.jpg
+?? pieces/vendimia-ensenada/chars/
+?? pieces/vendimia-ensenada/qa/c01.jpg
+?? pieces/vendimia-ensenada/qa/c02.jpg
+?? pieces/vendimia-ensenada/qa/c03.jpg
+?? pieces/vendimia-ensenada/qa/c04.jpg
+?? pieces/vendimia-ensenada/qa/c05.jpg
+?? pieces/vendimia-ensenada/qa/c06.jpg
+?? pieces/vendimia-ensenada/qa/c07.jpg
+?? pieces/vendimia-ensenada/qa/c08.jpg
+?? pieces/vendimia-ensenada/qa/c09.jpg
+?? pieces/vendimia-ensenada/qa/c10.jpg
+?? pieces/vendimia-ensenada/qa/i01.jpg
+?? pieces/vendimia-ensenada/qa/mouth0.jpg
+?? pieces/vendimia-ensenada/qa/mouth1.jpg
+?? pieces/vendimia-ensenada/qa/mouth2.jpg
+?? pieces/vendimia-ensenada/qa/mouth3.jpg
+?? pieces/vendimia-ensenada/qa/mouth4.jpg
+?? pieces/vendimia-ensenada/qa/mouth5.jpg
+?? pieces/vendimia-ensenada/qa/r1.jpg
+?? pieces/vendimia-ensenada/qa/r2.jpg
+?? pieces/vendimia-ensenada/qa/r3.jpg
+?? pieces/vendimia-ensenada/qa/strip.jpg
+?? pieces/vera-01/engine/package-lock.json
+?? pieces/vera-02/
+?? pieces/viajante-sombrerete/chars/
+?? pieces/viajante-sombrerete/qa/c01.jpg
+?? pieces/viajante-sombrerete/qa/c02.jpg
+?? pieces/viajante-sombrerete/qa/c03.jpg
+?? pieces/viajante-sombrerete/qa/c04.jpg
+?? pieces/viajante-sombrerete/qa/c05.jpg
+?? pieces/viajante-sombrerete/qa/c06.jpg
+?? pieces/viajante-sombrerete/qa/c07.jpg
+?? pieces/viajante-sombrerete/qa/c08.jpg
+?? pieces/viajante-sombrerete/qa/c09.jpg
+?? pieces/viajante-sombrerete/qa/c10.jpg
+?? pieces/viajante-sombrerete/qa/i01.jpg
+?? pieces/viajante-sombrerete/qa/mouth0.jpg
+?? pieces/viajante-sombrerete/qa/mouth1.jpg
+?? pieces/viajante-sombrerete/qa/mouth2.jpg
+?? pieces/viajante-sombrerete/qa/mouth3.jpg
+?? pieces/viajante-sombrerete/qa/mouth4.jpg
+?? pieces/viajante-sombrerete/qa/mouth5.jpg
+?? pieces/viajante-sombrerete/qa/r1.jpg
+?? pieces/viajante-sombrerete/qa/r2.jpg
+?? pieces/viajante-sombrerete/qa/r3.jpg
+?? pieces/yegua-jerez/chars/
+?? pieces/yegua-jerez/qa/c01.jpg
+?? pieces/yegua-jerez/qa/c02.jpg
+?? pieces/yegua-jerez/qa/c03.jpg
+?? pieces/yegua-jerez/qa/c04.jpg
+?? pieces/yegua-jerez/qa/c05.jpg
+?? pieces/yegua-jerez/qa/c06.jpg
+?? pieces/yegua-jerez/qa/c07.jpg
+?? pieces/yegua-jerez/qa/c08.jpg
+?? pieces/yegua-jerez/qa/c09.jpg
+?? pieces/yegua-jerez/qa/c10.jpg
+?? pieces/yegua-jerez/qa/c11.jpg
+?? pieces/yegua-jerez/qa/c12.jpg
+?? pieces/yegua-jerez/qa/c13.jpg
+?? pieces/yegua-jerez/qa/c14.jpg
+?? pieces/yegua-jerez/qa/c15.jpg
+?? pieces/yegua-jerez/qa/c16.jpg
+?? pieces/yegua-jerez/qa/c17.jpg
+?? pieces/yegua-jerez/qa/c18.jpg
+?? pieces/yegua-jerez/qa/duquesa.jpg
+?? pieces/yegua-jerez/qa/i01.jpg
+?? pieces/yegua-jerez/qa/i02.jpg
+?? pieces/yegua-jerez/qa/mouth0.jpg
+?? pieces/yegua-jerez/qa/mouth1.jpg
+?? pieces/yegua-jerez/qa/mouth2.jpg
+?? pieces/yegua-jerez/qa/mouth3.jpg
+?? pieces/yegua-jerez/qa/mouth4.jpg
+?? pieces/yegua-jerez/qa/mouth5.jpg
+?? pieces/yegua-jerez/qa/open.jpg
+?? pieces/yegua-jerez/qa/r1.jpg
+?? pieces/yegua-jerez/qa/r2.jpg
+?? pieces/yegua-jerez/qa/r3.jpg
+?? pieces/yegua-jerez/qa/s1.jpg
+?? pieces/yegua-jerez/qa/s2.jpg
+?? pieces/yegua-jerez/qa/s3.jpg
+?? pieces/yegua-jerez/qa/sub0.jpg
+?? pieces/yegua-jerez/qa/sub1.jpg
+?? pieces/yegua-jerez/qa/sub2.jpg
+?? pieces/yegua-jerez/qa/sub3.jpg
+?? pieces/yegua-jerez/qa/sub4.jpg
+?? pieces/yegua-jerez/qa/sub5.jpg
+?? pieces/yegua-jerez/qa/sub6.jpg
+?? pieces/yegua-jerez/qa/sub7.jpg
+?? pieces/yegua-jerez/qa/subs_check.jpg
+?? pieces/zaw-dog-07/review/final_revision.md
 ?? pieces/zaw-dog-07/review/logs/board_01c.log
 ?? pieces/zaw-dog-07/review/logs/board_07a.log
 ?? pieces/zaw-dog-07/review/logs/board_07b.log
@@ -11716,12 +19037,148 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 ?? pieces/zaw-dog-07/review/logs/feet_07a.log
 ?? pieces/zaw-dog-07/review/logs/feet_07b.log
 ?? pieces/zaw-dog-07/review/logs/feet_07c.log
+?? pieces/zaw-dog-07/review/logs/final_01c.log
+?? pieces/zaw-dog-07/review/logs/final_07a.log
+?? pieces/zaw-dog-07/review/logs/final_07b.log
+?? pieces/zaw-dog-07/review/logs/final_07c.log
 ?? pieces/zaw-dog-07/review/logs/frames_01c.log
 ?? pieces/zaw-dog-07/review/logs/frames_07a.log
 ?? pieces/zaw-dog-07/review/logs/frames_07b.log
 ?? pieces/zaw-dog-07/review/logs/frames_07c.log
+?? pieces/zaw-dog-07/review/logs/revisar_final.log
 ?? pieces/zaw-dog-07/v2/
+?? pieces/zaw-dog-08/CREDITS.md
+?? pieces/zaw-dog-08/assemble.py
+?? pieces/zaw-dog-08/board.py
+?? pieces/zaw-dog-08/final_post.py
+?? pieces/zaw-dog-08/review/
+?? pieces/zaw-dog-08/shots.py
+?? pieces/zaw-dog-08/sound/
+?? pieces/zaw-dog-08/tex/
+?? pieces/zaw-dog-08/thumb.py
+?? pieces/zaw-dog-08/tools/
+?? pieces/zaw-dog-08/v1/
+?? pieces/zaw-dog-08/voice/
+?? pieces/zombie-03-station/largo3/miniaturas_v2/_flow/
+?? pieces/zombie-03-station/largo3/miniaturas_v2/_hoja.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/_layers/avaA.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/_layers/avaB.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/_layers/avaC.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/_layers/stA.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/_layers/stB.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/_layers/stC.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/_layers/zA.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/_layers/zB.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/_layers/zC.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/code_A1_text.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/code_A2_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/code_A3_text.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/flow_B1_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/flow_B2_text.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/flow_B3_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/flow_B4_text.png
+?? pieces/zombie-03-station/largo3/miniaturas_v2/flow_B5_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v3/G1a_stalker_ps1_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v3/G1b_stalker_ps1_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v3/G1c_stalker_ps1_close_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v3/G2a_b3giant_hexbox_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v3/G2b_b3giant_coat_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v3/G2c_b3giant_tubes_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v3/_flow/
+?? pieces/zombie-03-station/largo3/miniaturas_v3/_hoja.png
+?? pieces/zombie-03-station/largo3/miniaturas_v3/_layers/bustA.png
+?? pieces/zombie-03-station/largo3/miniaturas_v3/_layers/bustA_ref.png
+?? pieces/zombie-03-station/largo3/miniaturas_v3/_layers/bustB.png
+?? pieces/zombie-03-station/largo3/miniaturas_v3/_layers/bustC.png
+?? pieces/zombie-03-station/largo3/miniaturas_v4/_flow/
+?? pieces/zombie-03-station/largo3/miniaturas_v4/_hoja.png
+?? pieces/zombie-03-station/largo3/miniaturas_v4/_layers/bA_34.png
+?? pieces/zombie-03-station/largo3/miniaturas_v4/_layers/bB_low.png
+?? pieces/zombie-03-station/largo3/miniaturas_v4/_layers/bC_front.png
+?? pieces/zombie-03-station/largo3/miniaturas_v4/_layers/bD_34L.png
+?? pieces/zombie-03-station/largo3/miniaturas_v4/v4_A_34_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v4/v4_B_low_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v4/v4_C_front_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v4/v4_D_34L_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v5/_hoja.png
+?? pieces/zombie-03-station/largo3/miniaturas_v5/_layers/bA_34.png
+?? pieces/zombie-03-station/largo3/miniaturas_v5/_layers/bB_low.png
+?? pieces/zombie-03-station/largo3/miniaturas_v5/_layers/bC_front.png
+?? pieces/zombie-03-station/largo3/miniaturas_v5/_layers/bD_34L.png
+?? pieces/zombie-03-station/largo3/miniaturas_v5/v5_A_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v5/v5_B_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v5/v5_C_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v5/v5_D_notext.png
+?? pieces/zombie-03-station/largo3/miniaturas_v6/_flow/
+?? pieces/zombie-03-station/largo3/miniaturas_v6/_hoja.png
+?? pieces/zombie-03-station/largo3/miniaturas_v6/_layers/hA.png
+?? pieces/zombie-03-station/largo3/miniaturas_v6/_layers/hB.png
+?? pieces/zombie-03-station/largo3/miniaturas_v6/_layers/hB_ref.png
+?? pieces/zombie-03-station/largo3/miniaturas_v6/_layers/hC.png
+?? pieces/zombie-03-station/largo3/miniaturas_v6/v6_A_flowhead_red.png
+?? pieces/zombie-03-station/largo3/miniaturas_v6/v6_B_flowhead_white.png
+?? pieces/zombie-03-station/largo3/miniaturas_v6/v6_C_codehead_red.png
+?? pieces/zombie-03-station/largo3/miniaturas_v6/v6_D_codehead_white.png
+?? pieces/zombie-03-station/largo3/stalker/compare.png
+?? pieces/zombie-03-station/largo3/stalker/compare_v2.png
+?? pieces/zombie-03-station/largo3/stalker/compare_v3.png
+?? pieces/zombie-03-station/largo3/stalker/concept/
+?? pieces/zombie-03-station/largo3/stalker/renders/
+?? pieces/zombie-03-station/largo3/stalker/tex/
+?? pieces/zombie-03-station/largo3/stalker/v3/mesh_back.png
+?? pieces/zombie-03-station/largo3/stalker/v3/mesh_cmp.png
+?? pieces/zombie-03-station/largo3/stalker/v3/mesh_front.png
+?? pieces/zombie-03-station/largo3/stalker/v3/mesh_side.png
+?? pieces/zombie-03-station/largo3/stalker/v3/sheet.jpg
+?? pieces/zombie-03-station/largo3/stalker/v3/tex/
+?? pieces/zombie-03-station/largo3/stalker/v3/tex_back.png
+?? pieces/zombie-03-station/largo3/stalker/v3/tex_cmp.png
+?? pieces/zombie-03-station/largo3/stalker/v3/tex_front.png
+?? pieces/zombie-03-station/largo3/stalker/v3/tex_side.png
+?? pieces/zombie-03-station/largo3/storyboard_v1_1.png
+?? pieces/zombie-03-station/largo3/storyboard_v1_2.png
+?? pieces/zombie-03-station/largo3/storyboard_v1_3.png
+?? pieces/zombie-03-station/largo3/storyboard_v1_4.png
+?? pieces/zombie-03-station/largo3/storyboard_v1_5.png
+?? pieces/zombie-03-station/largo3/storyboard_v1_6.png
+?? pieces/zombie-03-station/largo3/storyboard_v1_7.png
+?? pieces/zombie-03-station/largo3/storyboard_v1_8.png
+?? pieces/zombie-03-station/largo3/storyboard_v1_9.png
+?? pieces/zombie-03-station/largo3/storyboard_v2_1.png
+?? pieces/zombie-03-station/largo3/storyboard_v2_2.png
+?? pieces/zombie-03-station/largo3/storyboard_v2_3.png
+?? pieces/zombie-03-station/largo3/storyboard_v2_4.png
+?? pieces/zombie-03-station/largo3/storyboard_v2_5.png
+?? pieces/zombie-03-station/largo3/storyboard_v2_6.png
+?? pieces/zombie-03-station/largo3/storyboard_v2_7.png
+?? pieces/zombie-03-station/largo3/storyboard_v2_8.png
+?? pieces/zombie-03-station/largo3/storyboard_v2_9.png
+?? pieces/zombie-14-attic/
+?? pieces/zombie-15-lasttrain3/
 ?? styles/gta6/
+?? styles/zawdog/backup_STYLE_2026-11-16.md
+?? styles/zawdog/humans/owner/body_v6.png
+?? styles/zawdog/humans/owner/faces/mask_v6.png
+?? styles/zawdog/humans/owner/photo/skin_match_cmp.jpg
+?? styles/zawdog/humans/photo_tools/kit_fix.py
+?? styles/zawdog/humans/photo_tools/skin_match.py
+?? styles/zawdog/humans/scientist/body_v6.png
+?? styles/zawdog/humans/scientist/faces/mask_v6.png
+?? styles/zawdog/humans/scientist/photo/skin_match_cmp.jpg
+?? styles/zawdog/motions/baked/z8_owner_fake.json
+?? styles/zawdog/motions/baked/z8_owner_tease.json
+?? styles/zawdog/motions/baked/z8_sci_offer_drop.json
+?? styles/zawdog/motions/baked/z8_sci_offer_pull.json
+?? styles/zawdog/motions/kimodo/prompts_z8.txt
+?? styles/zawdog/motions/kimodo/src_z8_owner_fake.bvh
+?? styles/zawdog/motions/kimodo/src_z8_owner_tease.bvh
+?? styles/zawdog/motions/kimodo/src_z8_sci_offer_drop.bvh
+?? styles/zawdog/motions/kimodo/src_z8_sci_offer_pull.bvh
+?? styles/zawdog/motions/kimodo/z8_owner_fake.bvh
+?? styles/zawdog/motions/kimodo/z8_owner_tease.bvh
+?? styles/zawdog/motions/kimodo/z8_sci_offer_drop.bvh
+?? styles/zawdog/motions/kimodo/z8_sci_offer_pull.bvh
+?? "voz ava bread LIMPIA.m4a"
 ```
 
 ## Estructura de primer nivel
@@ -11740,10 +19197,12 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 - `CLAUDE.md`
 - `Imagenes google flow`
 - `MIGRACION_ANTIGRAVITY.md`
+- `MIGRACION_MAC.md`
 - `Ref 1 bit pixelated junji ito madfable`
 - `Ref 3D cartoon animations`
 - `Ref Scroll animations`
 - `Ref amphora mitologia`
+- `Ref ava bread`
 - `Ref bit y pixels`
 - `Ref earlobe horror`
 - `Ref ifverse`
@@ -11753,8 +19212,11 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 - `Ref roblox`
 - `Ref volt y amps`
 - `Ref zach3dfilms`
+- `Sinaboto voz 15 seg.m4a`
 - `Tiktok cuentas`
 - `Tools`
+- `Voz ashley clean limpia.wav`
+- `Voz mesera clean.wav`
 - `_claude`
 - `agente-davis`
 - `assets`
@@ -11762,6 +19224,7 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 - `every=7`
 - `fonts`
 - `fuentes`
+- `memoria_pc`
 - `opuscar`
 - `para_pc`
 - `pieces`
@@ -11777,4 +19240,7 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 - `tile.png`
 - `videos-pov3d.txt`
 - `voces`
+- `voz ava bread LIMPIA.m4a`
+- `voz pip gnomo.wav`
+- `voz theo pretendiente clean.wav`
 - `yt-editor`

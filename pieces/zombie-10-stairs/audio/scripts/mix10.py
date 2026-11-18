@@ -4,8 +4,8 @@
 import json, subprocess, numpy as np, soundfile as sf, pyloudnorm as pyln
 from scipy.ndimage import uniform_filter1d, minimum_filter1d
 SR = 48000
-P = r"F:/Claude Proyectos/pieces/zombie-10-stairs"; C = f"{P}/audio/cand"; DC = r"F:/Claude Proyectos/assets/dino-crisis-sfx"
-C4 = r"F:/Claude Proyectos/pieces/zombie-04-subway/audio/cand"; C7 = r"F:/Claude Proyectos/pieces/zombie-07-saferoom/audio/cand"; E3 = r"F:/Claude Proyectos/pieces/zombie-03-station/audio/cand"
+P = r"/Users/alanleiva/claude-proyectos/pieces/zombie-10-stairs"; C = f"{P}/audio/cand"; DC = r"/Users/alanleiva/claude-proyectos/assets/dino-crisis-sfx"
+C4 = r"/Users/alanleiva/claude-proyectos/pieces/zombie-04-subway/audio/cand"; C7 = r"/Users/alanleiva/claude-proyectos/pieces/zombie-07-saferoom/audio/cand"; E3 = r"/Users/alanleiva/claude-proyectos/pieces/zombie-03-station/audio/cand"
 CU = json.load(open(f"{P}/engine/cues.json", encoding="utf8")); W, T = CU["W"], CU["T"]; DUR = CU["END"]; N = int(DUR * SR); VEND = CU["VOICE_END"]
 def load(path, a=None, b=None, trim=True, norm=True):
     cmd = ["ffmpeg", "-v", "quiet"] + (["-ss", str(a)] if a is not None else []) + ["-i", path] + (["-t", str(b - a)] if b is not None else []) + ["-f", "f32le", "-ac", "1", "-ar", str(SR), "-"]
@@ -28,14 +28,14 @@ def put(buf, x, t, db, maxlen=None, fade=0.05, fin=0.0):
     if fin: f = min(len(x), int(fin * SR)); x[:f] *= np.linspace(0, 1, f)
     i = int(t * SR); j = min(N, i + len(x))
     if 0 <= i < N: buf[i:j] += x[:j - i] * 10 ** (db / 20)
-C10 = f"{P}/audio/cand"; C5 = r"F:/Claude Proyectos/pieces/zombie-05-pt/audio/cand"; C6 = r"F:/Claude Proyectos/pieces/zombie-06-floor30/audio/cand"
+C10 = f"{P}/audio/cand"; C5 = r"/Users/alanleiva/claude-proyectos/pieces/zombie-05-pt/audio/cand"; C6 = r"/Users/alanleiva/claude-proyectos/pieces/zombie-06-floor30/audio/cand"
 DEFAULT = load(f"{DC}/9PdkWu31Xwo.wav"); INV = load(f"{DC}/ch/inventory.wav", 1.78, 2.6); ALARM = load(f"{DC}/ch/rick_calling_beep.wav", 3.45, 4.1)
 KEY = load(f"{DC}/ch/bonus_2_rick_typing.wav", 2.17, 2.40); SUCCESS = load(f"{DC}/ch/keypad_unlock.wav", 26.5, 28.2)
 STEP = hits(load(f"{C4}/steps_run/817387.mp3", trim=False), 8, 0.28, gapf=25); WSTEP = hits(load(f"{C5}/steps_wood/546362.mp3", trim=False), 8, 0.35, gapf=25)
 STING = load(f"{C4}/stinger/271945.mp3"); BREATH = load(f"{C4}/breath/482827.mp3"); ROOM = load(f"{C7}/room_tone/144046.mp3", trim=False); WIND = load(f"{C7}/wind/438862.mp3", trim=False)
 WHOOSH = load(f"{C7}/whoosh/855844.mp3"); TH = hits(load(f"{C7}/wood_thunk/803551.mp3", trim=False), 4, 0.4, 0.05); DRILL = load(f"{C7}/drill_screw/871631.mp3")
 KN = hits(load(f"{C7}/knock/193835.mp3", trim=False), 4, 0.25, 0.05, gapf=8) or [load(f"{C7}/knock/193835.mp3")[:int(0.25 * SR)]]
-ZS = r"F:/Claude Proyectos/assets/zombie-sfx-yt/seg"; ZGROWL = load(f"{ZS}/z07_107.5.wav"); ZGROAN = load(f"{ZS}/z05_103.1.wav")
+ZS = r"/Users/alanleiva/claude-proyectos/assets/zombie-sfx-yt/seg"; ZGROWL = load(f"{ZS}/z07_107.5.wav"); ZGROAN = load(f"{ZS}/z05_103.1.wav")
 WIN = load(f"{C10}/window_slide2/51047.mp3"); ROPE = load(f"{C10}/rope_ladder/527410.mp3"); RATTLE = load(f"{C4}/chain_rattle/831768.mp3")
 SOFA = load(f"{C10}/furniture_fall/809862.mp3"); BODY = load(f"{C10}/body_fall/346692.mp3"); BURST = load(f"{C10}/door_burst/485436.mp3")
 DRAG = load(f"{C6}/furniture_drag/832998.mp3"); CREAK = load(f"{C10}/stair_creak/214871.mp3"); SHUF = load(f"{C10}/zombie_shuffle/804982.mp3", trim=False)

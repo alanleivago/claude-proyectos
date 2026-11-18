@@ -18,7 +18,7 @@ variants = "bare,tights"
 if "--variants" in args: variants = args[args.index("--variants") + 1]; only = None if only == [variants] else only
 TAG = args[args.index("--tag") + 1] if "--tag" in args else None      # test build: ref/anim2_<tag>.npz, out/_<tag>_<variant>.glb
 if TAG and only == [TAG]: only = None
-BL = r"C:/Program Files/Blender Foundation/Blender 5.2/blender.exe"
+BL = r"/Applications/Blender.app/Contents/MacOS/Blender"
 data = {}; acts = {}; faces = {}; report = []
 for c in ORDER:
     if only and c.name not in only: continue

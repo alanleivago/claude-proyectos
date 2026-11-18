@@ -4,7 +4,7 @@ cams.json stores per view: theta (deg, 0 = from the front -Y), phi (deg up), dis
 the camera right/up axes around (0,0,ZC)), roll (deg), f (mm)."""
 import json, sys, math, numpy as np
 from PIL import Image, ImageDraw
-V5 = "F:/Claude Proyectos/pieces/upnext-girl/v5/"
+V5 = "/Users/alanleiva/claude-proyectos/pieces/upnext-girl/v5/"
 W0, H0 = 1920, 1080
 ZC = -2.4
 S = 0.5                     # raster scale for speed
@@ -132,7 +132,7 @@ def raster_cls(tris, col, p, scale=S):
 
 
 FRAMES = {"runA": "run_764.0.png", "runB": "run_764.4.png", "front": "front_rest.png", "q3": "q3.png", "side": "side.png", "back": "back.png", "front_idle": "front_idle.png"}
-FR = "F:/Claude Proyectos/fuentes/mml2-girl-tutorial/frames/cam/"
+FR = "/Users/alanleiva/claude-proyectos/fuentes/mml2-girl-tutorial/frames/cam/"
 
 
 def his_cls(view, scale=S):

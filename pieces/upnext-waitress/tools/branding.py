@@ -9,7 +9,7 @@ sys.path.insert(0, os.path.join(HERE, "wanim"))
 import anim_review as AR
 
 OUT = os.path.join(ROOT, "branding"); os.makedirs(OUT, exist_ok=True)
-FONTS = r"D:\Alan\Fiverr Upwork trabajo fotos y videos\Fuentes"
+FONTS = os.path.expanduser("~/Fonts-proyectos")
 F_SERIF = os.path.join(FONTS, "Newsreader", "static")
 F_MONT = os.path.join(FONTS, "Montserrat-ExtraBold", "montserrat")
 TAG = "Table for two? Just ask."

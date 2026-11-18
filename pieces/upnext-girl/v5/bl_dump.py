@@ -1,8 +1,8 @@
 """Blender side: dump the evaluated (posed) triangles of the girl pieces to an npz for v5/fit.py.
-exec(open(r"F:/Claude Proyectos/pieces/upnext-girl/v5/bl_dump.py").read()); dump("rest", None)"""
+exec(open(r"/Users/alanleiva/claude-proyectos/pieces/upnext-girl/v5/bl_dump.py").read()); dump("rest", None)"""
 import bpy, numpy as np
 from mathutils import Vector
-V5 = r"F:/Claude Proyectos/pieces/upnext-girl/v5/"
+V5 = r"/Users/alanleiva/claude-proyectos/pieces/upnext-girl/v5/"
 
 
 def pose_to(action=None, frame=1):

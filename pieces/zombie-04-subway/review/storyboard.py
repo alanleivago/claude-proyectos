@@ -1,6 +1,6 @@
 # storyboard_v1.png: un panel por beat (frames reales del motor, review/sbv/f_<t>.png) con su texto
 import os; from PIL import Image, ImageDraw, ImageFont
-H = os.path.dirname(os.path.abspath(__file__)); F = ImageFont.truetype("C:/Windows/Fonts/arialbd.ttf", 15); f2 = ImageFont.truetype("C:/Windows/Fonts/arial.ttf", 13)
+H = os.path.dirname(os.path.abspath(__file__)); F = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial Bold.ttf", 15); f2 = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial.ttf", 13)
 B = [(1.2, "1  0:00", "You miss the last train... platform MERCY STREET, sign + leaving train"),
      (7.0, "2  0:05", "Phone: NO SERVICE, 3%, 11:42 -> board NEXT TRAIN 5:30 AM"),
      (23.0, "3  0:12", "Sheet in the booth -> RE FILE: rule 1, rule 2 torn 'don't-'"),

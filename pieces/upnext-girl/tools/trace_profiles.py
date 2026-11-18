@@ -2,7 +2,7 @@
 Prints rows in model units (z, with sole = -9 and top = figure top) so build.py can copy the hair/head profile."""
 import sys, json, numpy as np
 from PIL import Image
-F = "F:/Claude Proyectos/fuentes/mml2-girl-tutorial/frames/f1/"
+F = "/Users/alanleiva/claude-proyectos/fuentes/mml2-girl-tutorial/frames/f1/"
 
 def masks(t):
     a = np.asarray(Image.open(F + f"t{t}.png").convert("RGB")).astype(int)

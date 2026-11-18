@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SCP-087</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #020306; overflow: hidden; }
+  body { display: flex; align-items: center; justify-content: center; }
+  canvas { height: min(100vh, calc(100vw * 16 / 9)); width: auto; aspect-ratio: 9 / 16; display: block; cursor: pointer; image-rendering: pixelated; }
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+"use strict";
+// =====================================================================
+//  SCP-087 — 9:16, 71s, 24fps. A first-person tale in on-screen paragraphs: the night janitor of a school in Sendai
+//  finds a grey door that was not there, and a concrete stairwell that only goes down. A mouthless face waits below.
+//  Style: yokai (three.js, dithered).
+// =====================================================================
+const FPS = 24, W = 1080, H = 1920;
+const BPM = 120, BEAT = 60 / BPM, E8 = BEAT / 2, E16 = BEAT / 4;
+const DURATION = 71.0;
+const NFRAMES = Math.round(DURATION * FPS);
+const LOOP_T = NFRAMES / FPS;
+const SAFE = { top: 240, bottom: 420, right: 140 };
+const HAND = 'Georgia, serif';
+const CX = 540;
+
+const ERA_LIST = [[0, 71, () => sceneTale()]];
+const SHOTS = [
+  ['hook',  0, 0.0,  4.5,  'looking down the well: a pale mouthless face looks up from far below; on the flicker it is a landing closer'],
+  ['card',  0, 4.5,  8.5,  'the card: SCP-087'],
+  ['hall',  0, 8.5,  14.6, 'the school corridor at night, moonlight through the windows; the janitor walks with his flashlight'],
+  ['door',  0, 14.6, 20.6, 'a grey door at the end of the hall: STAIRS'],
+  ['down',  0, 20.6, 26.6, 'the first flight down: feet on the steps, the beam on B1; tilt down to B3'],
+  ['reach', 0, 26.6, 32.6, 'over his shoulder: the light reaches one flight; below, nothing'],
+  ['b12',   0, 32.6, 38.6, 'B12: he leans over the rail and listens'],
+  ['b30',   0, 38.6, 45.6, 'down to B30; he stops; the flashlight stutters; black'],
+  ['hit',   0, 45.6, 51.6, 'THE HIT: the face on the landing below, looking up at me'],
+  ['run',   0, 51.6, 58.6, 'running up, two steps at a time, the numbers falling'],
+  ['dawn',  0, 58.6, 71.0, 'cold dawn in the corridor, no door; he mops; badge'],
+];
+const TIMELINE = {
+  width: W, height: H, fps: FPS, bpm: BPM, duration: DURATION, frames: NFRAMES, loop: LOOP_T, safe: SAFE,
+  format: 'F5',
+  shots: SHOTS.map(([key, era, t0, t1, title], i) => ({ id: i + 1, key, era, t0, t1, title })),
+  cuts: [],
+  morphs: [],
+  cues: { flick: 1.55, jump: 1.8, card: 4.5, hall: 8.5, door: 14.6, down: 20.6, b2: 23.0, b3: 24.8, reach: 26.6, b12: 32.6, b30: 38.6, stop: 42.4, stutter: 43.55, black: 45.0, hit: 45.6, run: 51.6, run2: 53.35, run3: 55.1, run4: 56.85, dawn: 58.6, badge: 66.2 },
+  acts: [
+    { name: '1 The rule',      role: 'build',   t0: 0.0,  t1: 8.5 },
+    { name: '2 The door',      role: 'turn',    t0: 8.5,  t1: 20.6 },
+    { name: '3 Down',          role: 'peak',    t0: 20.6, t1: 45.0 },
+    { name: '4 Silence',       role: 'silence', t0: 45.0, t1: 45.6 },
+    { name: '5 The face',      role: 'gift',    t0: 45.6, t1: 58.6 },
+    { name: '6 Under the tiles', role: 'goodbye', t0: 58.6, t1: 71.0 },
+  ],
+  board: [
+    { t: 1.0,  title: 'Hook: the face far below', sound: 'stairwell room tone, a bulb buzzing and ticking; flashlight click-off at 1.55, one heartbeat of dark', next: 'continuous' },
+    { t: 3.2,  title: 'A landing closer', sound: 'click back on at 1.8 + a low sting; it is closer; the bulb filament stutters; a single far drip', next: 'dither' },
+    { t: 6.9,  title: 'Card: SCP-087', sound: 'card hit, a breathy shakuhachi note, a far concrete echo', next: 'dither in' },
+    { t: 12.0, title: 'Night janitor, Sendai', sound: 'empty school corridor tone, rubber soles on linoleum on the walk cycle, keys jingling on his belt, wind on the windows', next: 'cut' },
+    { t: 19.0, title: 'A new door: STAIRS', sound: 'steps slow and stop (≈18.0); fluorescent silence; a faint draft whistling under the door', next: 'cut' },
+    { t: 22.4, title: 'B1', sound: 'the stairwell: big dry concrete reverb; each step on a tread lands on the walk cycle; flashlight buzz', next: 'cut' },
+    { t: 24.3, title: 'B2', sound: 'steps on the treads, the reverb a little longer; a bulb ticks', next: 'cut' },
+    { t: 26.1, title: 'B3', sound: 'steps, breath; the reverb tail grows longer the deeper he goes', next: 'cut' },
+    { t: 30.0, title: 'One flight of light', sound: 'slow steps, his breath; below the beam a low wind moving up the shaft (no music)', next: 'cut' },
+    { t: 36.4, title: 'B12: a child crying', sound: 'a distant child crying for help, far below, heavy reverb; the B12 bulb buzzing on and off', next: 'cut' },
+    { t: 41.4, title: 'Down to B30', sound: 'faster steps, the crying constant and never closer; at B30 (≈42.4) it cuts off mid-sob → near silence', next: 'continuous' },
+    { t: 43.75, title: 'The light stutters', sound: 'flashlight clicks / filament stutter 43.55–45.0, breath held', next: 'black, 0.6 s silence' },
+    { t: 48.4, title: 'The face below', sound: 'THE HIT (45.6): sub drop + a concrete boom + a dissonant cluster; then only the bulb hum; a dry neck creak on the slow tilt; no mouth, no voice', next: 'cut' },
+    { t: 52.6, title: 'I ran', sound: 'running steps two at a time on concrete (run cycle), hard breathing, the flashlight rattling in his fist; a whoosh on each cut', next: 'cut' },
+    { t: 57.6, title: 'Ninety flights', sound: 'steps and breath climbing in pitch and speed; the last cut swallowed by silence', next: 'dither' },
+    { t: 63.0, title: 'No door', sound: 'cold dawn: a few crows, the wet mop swishing on the swing cycle, the bucket wringer creak', next: 'end' },
+    { t: 68.6, title: 'Under the tiles + kodamashorts', sound: 'under the mop swish, a faint child crying, muffled as if under the floor; fades out', next: 'end' },
+  ],
+  narration: [],
+};
+window.TIMELINE = TIMELINE;

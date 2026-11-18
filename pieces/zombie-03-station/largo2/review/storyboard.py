@@ -3,7 +3,7 @@
 import json, glob, os, textwrap
 from PIL import Image, ImageDraw, ImageFont
 H = os.path.dirname(os.path.abspath(__file__)); E = os.path.join(H, "..", "engine")
-F = ImageFont.truetype("C:/Windows/Fonts/arialbd.ttf", 15); f2 = ImageFont.truetype("C:/Windows/Fonts/arial.ttf", 13)
+F = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial Bold.ttf", 15); f2 = ImageFont.truetype("/System/Library/Fonts/Supplemental/Arial.ttf", 13)
 f = json.load(open(f"{H}/cuts.json")); c = f["cuts"]; notes = {x[0]: (x[1], x[3]) for x in json.load(open(f"{E}/shots.json", encoding="utf8"))}
 TL = json.load(open(f"{E}/timeline.json", encoding="utf8"))
 times = [float(x) for x in open(f"{H}/sb_times.txt").read().split(",")]
