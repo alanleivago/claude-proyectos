@@ -97,7 +97,8 @@ function prepChar(root) {
 function faceSet(root, eyes, mouth, kind) {
   const meta = kind === 'girl' ? GFACE._meta : (MENTOR.face_lists ? null : NFACE._meta);
   const cols = meta ? (meta.cols || meta.cells) : MENTOR.face_cols, rows = meta ? (meta.rows || 1) : MENTOR.face_rows;
-  if (kind !== 'girl') { eyes = (MENTOR.eyes_map || {})[eyes] || eyes; mouth = (MENTOR.mouth_map || {})[mouth] || mouth; }
+  if (kind !== 'girl') { eyes = (MENTOR.eyes_map || {})[eyes] || eyes; mouth = (MENTOR.mouth_map || {})[mouth] || mouth;
+    if (!MENTOR.mouth_material && MENTOR.talk_suffix && /^talk/.test(mouth || '')) eyes = eyes + MENTOR.talk_suffix; }   // no mouth: talking = pupil pulse cells
   root.traverse((o) => {
     if (!o.isMesh) return;
     const list = Array.isArray(o.material) ? o.material : [o.material];
@@ -120,7 +121,7 @@ function character(kind, { tint = 0xffffff, shadow = 0.55 } = {}) {
   model.traverse((o) => { if (o.isMesh) (Array.isArray(o.material) ? o.material : [o.material]).forEach((m) => m.color.set(tint)); });
   const mixer = new THREE.AnimationMixer(model); let cur = null;
   const ch = {
-    root, model, kind, shadow: sh,
+    root, model, kind, shadow: sh, clipsAll: clips,
     pose(clip, t, eyes, mouth) {
       if (kind !== 'girl') clip = (MENTOR.clip_map || {})[clip] || clip;
       const c = THREE.AnimationClip.findByName(clips, clip); if (!c) { console.log('NO CLIP', kind, clip); return ch; }
@@ -262,6 +263,56 @@ function bedroom(light = 'day', { clock = '11:52', phoneOnNS = false, phoneOnDes
     return g;
   }
   quilt();
+  // v2: the quilt DRAPED over her real pose: her skinned vertices -> a height map over the bed (max per cell, dilated, then
+  // smoothed upward only, + 4 cm), the cloth rides it so nothing of her passes through it; z0 (the top edge) can slide
+  // (to the waist when she sits up). drape(ch, opts) -> update(z0) to call after each pose.
+  function drape(ch, { z0 = -1.62, z1 = zf - 0.01, tint = 0xffffff } = {}) {
+    if (quiltObj) scene.remove(quiltObj);
+    const g = new THREE.Group(); quiltObj = g; scene.add(g);
+    const HO = 0.6, VO = 0.35, hang = 0.27, W2 = BED.w / 2 + 0.01, GX = 28, GZ = 44;
+    const gx0 = BED.x - W2 - 0.06, gw = 2 * W2 + 0.12, gz0 = BED.z0 + 0.05, gl = zf + 0.1 - gz0;
+    const hm = new Float32Array(GX * GZ), tmp = new Float32Array(GX * GZ), v = new THREE.Vector3(), meshes = [];
+    ch.model.traverse((o) => { if (o.isSkinnedMesh) meshes.push(o); });
+    function heights() {
+      hm.fill(0); ch.root.updateMatrixWorld(true);
+      for (const m of meshes) { const p = m.geometry.attributes.position;
+        for (let i = 0; i < p.count; i++) { v.fromBufferAttribute(p, i); m.applyBoneTransform(i, v); v.applyMatrix4(m.matrixWorld);
+          const ix = Math.floor((v.x - gx0) / gw * GX), iz = Math.floor((v.z - gz0) / gl * GZ); if (ix < 0 || ix >= GX || iz < 0 || iz >= GZ) continue;
+          const h = v.y - BED.top; if (h > hm[iz * GX + ix]) hm[iz * GX + ix] = h; } }
+      for (let pass = 0; pass < 4; pass++) { tmp.set(hm);
+        for (let z = 0; z < GZ; z++) for (let x = 0; x < GX; x++) { let mx = 0, sum = 0, n = 0;
+          for (let dz = -1; dz <= 1; dz++) for (let dx = -1; dx <= 1; dx++) { const xx = x + dx, zz = z + dz; if (xx < 0 || xx >= GX || zz < 0 || zz >= GZ) continue; const h = tmp[zz * GX + xx]; if (h > mx) mx = h; sum += h; n++; }
+          hm[z * GX + x] = pass === 0 ? mx : Math.max(tmp[z * GX + x], sum / n); } }
+    }
+    const H = (x, z) => { const fx = (x - gx0) / gw * GX - 0.5, fz = (z - gz0) / gl * GZ - 0.5;
+      const a = Math.max(0, Math.min(GX - 1, Math.floor(fx))), b = Math.max(0, Math.min(GZ - 1, Math.floor(fz))), a1 = Math.min(GX - 1, a + 1), b1 = Math.min(GZ - 1, b + 1);
+      const tx = Math.min(1, Math.max(0, fx - a)), tz = Math.min(1, Math.max(0, fz - b));
+      return (hm[b * GX + a] * (1 - tx) + hm[b * GX + a1] * tx) * (1 - tz) + (hm[b1 * GX + a] * (1 - tx) + hm[b1 * GX + a1] * tx) * tz; };
+    function strip(lift, mtl, footHang, NX, NZ) {
+      const n = (NX + 1) * (NZ + 1), idx = [], uv = [];
+      for (let j = 0; j <= NZ; j++) for (let i = 0; i <= NX; i++) uv.push(i / NX * 3, j / NZ * 3);
+      for (let j = 0; j < NZ; j++) for (let i = 0; i < NX; i++) { const a = j * (NX + 1) + i, b = a + 1, c = a + NX + 1, d = c + 1; idx.push(a, c, b, b, c, d); }
+      const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.Float32BufferAttribute(new Float32Array(n * 3), 3)); geo.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2)); geo.setIndex(idx);
+      const o = mesh(geo, mtl, 0, 0, 0, g); o.frustumCulled = false;
+      o.userData.fill = (za, zb) => { const P = geo.attributes.position.array, VV = footHang ? VO : 0; let k = 0;
+        for (let j = 0; j <= NZ; j++) for (let i = 0; i <= NX; i++) {
+          const u = -1 - HO + (2 + 2 * HO) * i / NX, w = (1 + VV) * j / NZ, au = Math.abs(u), su = Math.sign(u) || 1;
+          const hu = au > 1 ? (au - 1) / HO : 0, hv = w > 1 ? (w - 1) / VO : 0, h = Math.max(hu, hv);
+          let x = BED.x + (au <= 1 ? u * W2 : su * (W2 + 0.03 * hu)), z = w <= 1 ? za + w * (zb - za) : zb + 0.03 * hv;
+          const zz = Math.min(z, zb), xx = BED.x + Math.max(-W2, Math.min(W2, x - BED.x));
+          const top = BED.top + lift + Math.max(0.028, H(xx, zz) + 0.04) + 0.006 * Math.sin(xx * 23 + zz * 7);
+          let y = top - h * (top - BED.top + hang);
+          if (hu > 0) x += su * (0.014 * Math.sin(z * 26) + lift) * hu;
+          if (hv > 0) z += 0.014 * Math.sin(x * 24) * hv;
+          P[k++] = x; P[k++] = y; P[k++] = z; }
+        geo.attributes.position.needsUpdate = true; geo.computeVertexNormals(); geo.computeBoundingSphere(); };
+      return o;
+    }
+    const q = strip(0, lam(rep(TX.quilt, 1, 1), tint, { side: THREE.DoubleSide }), true, 22, 24);
+    const band = strip(0.012, lam(TX.sheet, tint, { side: THREE.DoubleSide }), false, 22, 3);
+    const update = (zTop = z0) => { heights(); q.userData.fill(zTop, z1); band.userData.fill(zTop - 0.015, zTop + 0.11); };
+    update(z0); return update;
+  }
   // rug (round, grey) in the middle of the room
   if (rug) { const r = mesh(new THREE.CircleGeometry(0.85, 16), lam(TX.rug), -0.55, 0.004, 0.55, scene); r.rotation.x = -Math.PI / 2; }
   // nightstand + LED clock
@@ -279,7 +330,7 @@ function bedroom(light = 'day', { clock = '11:52', phoneOnNS = false, phoneOnDes
   const crt = new THREE.Group(); crt.position.set(DESK.x - 0.08, DESK.h, DESK.z + 0.25); crt.rotation.y = Math.PI / 2; scene.add(crt);
   const cm = lam(TX.crt);
   box(0.42, 0.36, 0.3, cm, 0, 0.2, 0, crt); box(0.32, 0.28, 0.2, cm, 0, 0.2, -0.2, crt); box(0.26, 0.04, 0.24, cm, 0, 0.02, 0, crt);
-  plane(0.34, 0.26, emissive(basic(TX.screen, night ? 0x8090b0 : 0xffffff)), 0, 0.21, 0.151, crt);
+  plane(0.34, 0.26, emissive(basic(TX.screen, night ? 0x8090b0 : 0xffffff, { polygonOffset: true, polygonOffsetFactor: -4, polygonOffsetUnits: -4 })), 0, 0.21, 0.162, crt);   // v2: 12 mm proud of the bezel + polygon offset (v1 flickered: z-fight 1 mm)
   const kb = box(0.12, 0.025, 0.38, lam(null, 0xd8ccae), DESK.x + 0.22, DESK.h + 0.012, DESK.z + 0.25, scene);
   // sticky notes on the wall above the desk (yellow, pink, blue)
   [['#f4d84a', 0.95, -0.05], ['#f08ab0', 1.2, 0.18], ['#7ab8e8', 0.95, 0.4]].forEach(([c, y, dz2], i) => { const n = box(0.012, 0.11, 0.11, lam(noteTex(c)), -1.99, y + 0.3, DESK.z + dz2, scene); n.rotation.x = (i - 1) * 0.08; n.material = [lam(null, new THREE.Color(c).getHex()), lam(null, new THREE.Color(c).getHex()), lam(null, new THREE.Color(c).getHex()), lam(null, new THREE.Color(c).getHex()), lam(noteTex(c)), lam(noteTex(c))]; n.material.forEach((m) => m.map && (m.map.center.set(0.5, 0.5), m.map.rotation = Math.PI / 2)); });
@@ -298,7 +349,7 @@ function bedroom(light = 'day', { clock = '11:52', phoneOnNS = false, phoneOnDes
   if (phoneOnNS) { ph = phone(false); ph.rotation.set(-Math.PI / 2, 0, 0.4); ph.position.set(NS.x - 0.12, NS.h + 0.006, NS.z + 0.06); scene.add(ph); }
   if (phoneOnDesk) { ph = phone(true); ph.rotation.set(-Math.PI / 2, 0, 1.3); ph.position.set(DESK.x + 0.14, DESK.h + 0.006, DESK.z - 0.12); scene.add(ph);
     const cable = box(0.006, 0.006, 0.3, lam(null, 0xf0f0f0), DESK.x + 0.0, DESK.h + 0.004, DESK.z + 0.02, scene); cable.rotation.y = 0.5; }
-  return { scene, door, clock: clk, phone: ph, mat: matObj, quilt };
+  return { scene, door, clock: clk, phone: ph, mat: matObj, quilt, drape, lights: scene.children.filter((o) => o.isLight) };
 }
 
 // ---------- shot helpers ----------
@@ -332,6 +383,10 @@ export async function loadAll() {
   const g = await gl.loadAsync('models/upnext/girl_up01_tights.glb'); GIRL = g.scene; GCLIPS = g.animations;
   MENTOR = await (await fetch(QS.get('mentor') || 'mentor.json')).json();
   const n = await gl.loadAsync(MENTOR.glb); GNOME = n.scene; NCLIPS = n.animations;
+  // optional body-texture override (mentor.json "tex_override": {material: png}; ?mtex=<png> wins) - e.g. Pip's v2 palette
+  { const ov = Object.assign({}, MENTOR.tex_override || {}); if (QS.get('mtex')) for (const k of Object.keys(ov).length ? Object.keys(ov) : ['Gnome']) ov[k] = QS.get('mtex');
+    for (const [mat, url] of Object.entries(ov)) { const t = await new THREE.TextureLoader().loadAsync(url); t.flipY = false; t.colorSpace = THREE.SRGBColorSpace; nearest(t);
+      GNOME.traverse((o) => { if (o.isMesh) (Array.isArray(o.material) ? o.material : [o.material]).forEach((m) => { if (m.name === mat) m.map = t; }); }); } }
   GFACE = await (await fetch('models/upnext/girl_face_tracks.json')).json();
   NFACE = MENTOR.face_tracks ? await (await fetch(MENTOR.face_tracks)).json() : {};
   // scales from the bind pose: girl 1.6 m (feet at y = 0), gnome GNOME_H
@@ -347,6 +402,13 @@ export async function loadAll() {
     return;
   }
   if (QS.has('probe')) { probe(); const sc = new THREE.Scene(); addShot(sc, cam(40, [0, 1, 3], [0, 1, 0])); return; }
+  if (QS.has('film')) {   // the film: shots from film_shots.js on the voice timeline
+    const TL = await (await fetch('film_timeline.json')).json();
+    const { buildFilm } = await import('./film_shots.js');
+    buildFilm({ TL, SHOTS, MENTOR, GFACE, bedroom, character, phone, cam, box, plane, mesh, lam, basic, blob, cvs, TX, BED, NS, DESK, V3, THREE });
+    window.FILM = { dur: TL.dur, frames: Math.round(TL.dur * 30), shots: TL.shots.map((s) => [s.id, s.t0]) };
+    return;
+  }
   const { buildShots } = await import('./sb_shots.js');
   buildShots({ MENTOR, addShot, bedroom, character, holdAt, phone, ledClock, plant, cam, box, plane, mesh, lam, basic, blob, cvs, TX, BED, NS, DESK, V3, THREE });
 }

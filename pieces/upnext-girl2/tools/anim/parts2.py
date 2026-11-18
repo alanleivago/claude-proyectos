@@ -107,7 +107,7 @@ def build_arms(V, F, W0, lab, comp_dom, J):
         hand = np.array([W0[i].get("Hand." + s, 0) >= 0.5 for i in range(len(V))]) & (lab == cf)
         fface = np.isin(lab[F[:, 0]], [cf]); hface = hand[F].all(1)
         Tu = V[F[np.isin(lab[F[:, 0]], [cu])]]; Tf = V[F[fface & ~hface]]
-        keepv &= ~(np.isin(lab, [cu, cf]) & ~hand)
+        keepv &= ~(np.isin(lab, [cu, cf]) & ~hand)            # v9: the ORIGINAL fitted hands are kept (user's choice)
         U, Fo, H, C, Cl = f"UpperArm.{s}", f"Forearm.{s}", f"Hand.{s}", "Chest", f"Clavicle.{s}"
         BR = 0.0032                                            # bracelet relief (m)
         bo = 0.022 if s == "R" else 0.0                        # her right fist wraps back over the wrist: bracelets sit higher

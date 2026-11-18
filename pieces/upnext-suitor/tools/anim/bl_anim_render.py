@@ -14,6 +14,11 @@ ob = next(o for o in sc.objects if o.type == "MESH")
 ad = arm.animation_data
 for t in ad.nla_tracks: t.mute = True
 me = ob.data; uvl = me.uv_layers.active
+for mname, ipath in S.get("img_override", {}).items():          # e.g. render an older face atlas for a before / after sheet
+    m = bpy.data.materials.get(mname)
+    if m and m.node_tree:
+        for nd in m.node_tree.nodes:
+            if nd.type == "TEX_IMAGE": nd.image = bpy.data.images.load(ipath)
 mi = {m.name: i for i, m in enumerate(me.materials)}
 meta = S["meta"]; cols, rows = meta["cols"], meta["rows"]
 face_loops = {k: [li for p in me.polygons if p.material_index == mi.get(k, -9) for li in p.loop_indices] for k in ("face_eyes", "face_mouth")}

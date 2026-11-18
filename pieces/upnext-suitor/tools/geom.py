@@ -24,7 +24,7 @@ F0 = RAW["faces"]
 TW, TH = 256, 128
 PX = 175.0
 
-EYE_RECT = (5, 22, 28, 46)            # px in the body texture: half face (u 28 = face centre), brows + eyes + blush band
+EYE_RECT = (5, 22, 28, 50)            # px in the body texture: half face (u 28 = face centre), brows + eyes + cheek blush band
 MOUTH_RECT = (17, 52, 28, 64)
 UC = 28.0
 FACE_COLS, FACE_ROWS = 16, 4
@@ -672,8 +672,17 @@ def run(opt, lower_done=[False]):
         c = lower_col(part, P, N, at)
         return band_sweater(opt, P, N, at.get("bt", 0)) if c is None else c
     paint(M, MAT_LOWER, lfn, lw, BLACK[3], ("band", "pelvis", "leg"))
-    faces = []
-    for f in M.F:
+    faces = []; keep = {}
+    hc = np.mean([M.V[v] for f in M.F if f["part"] in ("head", "face") for v in f["v"]], 0)
+    def outward(f):
+        P = [M.V[v] for v in f["v"]]; n = np.cross(P[1] - P[0], P[2] - P[0]); return float(n @ (np.mean(P, 0) - hc))
+    for i, f in enumerate(M.F):                     # double-sided duplicates of the rip (Blender drops one): keep the outward one
+        k = tuple(sorted(f["v"]))
+        if k not in keep or outward(f) > outward(M.F[keep[k]]): keep[k] = i
+    kept = set(keep.values())
+    for i, f in enumerate(M.F):
+        P = [M.V[v] for v in f["v"]]
+        if i not in kept or np.linalg.norm(np.cross(P[1] - P[0], P[2] - P[0])) < 1e-12: continue   # + zero-area slivers of the face-split fans
         uv = f["uv"] if f["mat"] in (MAT_BODY, MAT_EYES, MAT_MOUTH) else [[u / TW, 1 - v / TH] for u, v in f["uv"]]
         faces.append({"v": f["v"], "uv": uv, "mat": f["mat"], "part": f["part"]})
     K = HEIGHT_OUT / HEIGHT                              # final size (the layout constants above are in 1.82 m units)

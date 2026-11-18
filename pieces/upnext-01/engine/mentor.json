@@ -1,21 +1,74 @@
 {
-  "_doc": "Mentor character for every shot. Swap the mentor by editing this file only (or sb.html?mentor=<other.json>). Shots ask for SEMANTIC clips/faces (left side of clip_map / eyes_map / mouth_map); a missing key falls back to the same name. face_lists = the atlas cells per face material (cell k = column k % cols, row k // cols); without face_lists the model's face_tracks.json _meta is used.",
-  "name": "Pip",
-  "glb": "models/upnext/gnome_anim.glb",
-  "face_tracks": "models/upnext/gnome_face_tracks.json",
-  "height_m": 0.7,
-  "head_bone": "Head",
-  "eyes_material": "gnome_eyes",
-  "mouth_material": "gnome_mouth",
-  "face_cols": 16,
-  "face_rows": 1,
-  "face_lists": {
-    "gnome_eyes": ["deadpan", "open", "unimpressed", "blink", "skeptical", "surprised", "annoyed", "sleepy", "happy", "lookside"],
-    "gnome_mouth": ["neutral", "smile", "talkA", "talkO", "talkE", "talkM", "surprised", "frown", "smirk", "sleepy"]
-  },
-  "clip_map": { "idle": "idle", "talk": "talk", "point": "point", "shrug": "shrug", "arms_crossed": "arms_crossed", "walk": "walk", "nod": "nod", "shake_head": "shake_head", "sit": "sit" },
-  "eyes_map": { "deadpan": "deadpan", "unimpressed": "unimpressed", "skeptical": "skeptical", "sleepy": "sleepy", "happy": "happy", "blink": "blink" },
-  "mouth_map": { "neutral": "neutral", "talkA": "talkA", "talkE": "talkE", "talkM": "talkM", "smile": "smile", "smirk": "smirk", "frown": "frown" },
-  "shadow_r": 0.2,
-  "unit_note": "height_m scales the bind-pose bounding box; origin = feet"
+ "_doc": "Mentor character for every shot. Swap the mentor by editing this file only (or sb.html?mentor=<other.json>). Shots ask for SEMANTIC clips/faces (left side of clip_map / eyes_map / mouth_map); a missing key falls back to the same name. face_lists = the atlas cells per face material (cell k = column k % cols, row k // cols); without face_lists the model's face_tracks.json _meta is used.",
+ "name": "Pip",
+ "glb": "models/upnext/gnome_anim.glb",
+ "face_tracks": "models/upnext/gnome_face_tracks.json",
+ "height_m": 0.7,
+ "head_bone": "Head",
+ "eyes_material": "gnome_eyes",
+ "mouth_material": "gnome_mouth",
+ "face_cols": 16,
+ "face_rows": 1,
+ "face_lists": {
+  "gnome_eyes": [
+   "deadpan",
+   "open",
+   "unimpressed",
+   "blink",
+   "skeptical",
+   "surprised",
+   "annoyed",
+   "sleepy",
+   "happy",
+   "lookside"
+  ],
+  "gnome_mouth": [
+   "neutral",
+   "smile",
+   "talkA",
+   "talkO",
+   "talkE",
+   "talkM",
+   "surprised",
+   "frown",
+   "smirk",
+   "sleepy"
+  ]
+ },
+ "clip_map": {
+  "idle": "idle",
+  "talk": "talk",
+  "point": "point",
+  "shrug": "shrug",
+  "arms_crossed": "arms_crossed",
+  "walk": "walk",
+  "nod": "nod",
+  "shake_head": "shake_head",
+  "sit": "sit"
+ },
+ "eyes_map": {
+  "deadpan": "deadpan",
+  "unimpressed": "unimpressed",
+  "skeptical": "skeptical",
+  "sleepy": "sleepy",
+  "happy": "happy",
+  "blink": "blink"
+ },
+ "mouth_map": {
+  "neutral": "neutral",
+  "talkA": "talkA",
+  "talkE": "talkE",
+  "talkM": "talkM",
+  "smile": "smile",
+  "smirk": "smirk",
+  "frown": "frown"
+ },
+ "shadow_r": 0.2,
+ "unit_note": "height_m scales the bind-pose bounding box; origin = feet",
+ "walk_speed_m": 0.25,
+ "cam_dist": {},
+ "cam_dy": {},
+ "tex_override": {
+  "Gnome": "models/upnext/pip_tex_A.png"
+ }
 }

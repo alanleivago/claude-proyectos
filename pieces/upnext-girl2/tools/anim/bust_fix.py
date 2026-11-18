@@ -106,3 +106,30 @@ def finger_lines(img, V, F, FUV, FMAT, hand_faces, wrist, d0, p0, n_lines=0, fra
     flat[pix] = np.clip(col, 0, 255).astype(np.uint8)
     if verbose: print("FINGERS: texels lined", int(hit.sum()), "old dark texels cleaned", int(bad.sum()))
     return flat.reshape(img.shape)
+
+
+def pixel_finger_lines(img, V, F, FUV, FMAT, hand_faces, wrist, d0, p0, s, n_lines=3, frac=(0.74, 0.93), cell=0.0032,
+                       col_k=(0.87, 0.80, 0.78), u_clean=0.045, verbose=True):
+    """v9: a few short PIXELATED finger lines (PS1 style) on her original hand texture: lines run along the fingers
+    near the tips, built on a coarse 3D grid (cell m) so they read as crisp blocky pixels on the back and the front;
+    the old bracelet ticks next to the wrist are cleaned to skin first"""
+    from bake import texels
+    TS = img.shape[0]; pix, fid, B = texels(F, FUV, TS, hand_faces)
+    P = (V[F[fid]] * B[..., None]).sum(1)
+    t = np.cross(d0, p0) if s == "R" else np.cross(p0, d0); t /= np.linalg.norm(t)
+    u = (P - wrist) @ d0; v = (P - wrist) @ t
+    flat = img.reshape(-1, 3).copy(); col = flat[pix].astype(float)
+    lum = col @ [0.3, 0.59, 0.11]; skin = np.median(col[lum > np.percentile(lum, 40)], 0)
+    bad = (lum < 0.72 * (skin @ [0.3, 0.59, 0.11])) & (u < u_clean); col[bad] = skin * 0.95
+    Vh = V[np.unique(F[hand_faces])]; uu = (Vh - wrist) @ d0; vv = (Vh - wrist) @ t
+    dist = uu > 0.55 * uu.max(); vmin, vmax = np.percentile(vv[dist], 10), np.percentile(vv[dist], 90)
+    u0, u1 = frac[0] * uu.max(), frac[1] * uu.max()
+    qv = np.floor(v / cell); hit = np.zeros(len(P), bool)
+    for k in range(1, n_lines + 1):
+        vk = vmin + (vmax - vmin) * k / (n_lines + 1)
+        lo = u0 + (0.0 if k == 2 else 0.6 * cell)                 # middle line a pixel longer
+        hit |= (qv == np.floor(vk / cell)) & (u > lo) & (u < u1)
+    col[hit] = skin * np.array(col_k)
+    flat[pix] = np.clip(col, 0, 255).astype(np.uint8)
+    if verbose: print("FINGERS (pixel) side", s, "texels", int(hit.sum()), "cleaned", int(bad.sum()))
+    return flat.reshape(img.shape)

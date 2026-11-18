@@ -158,8 +158,8 @@ SH = M(cp("L", 0.9), clL_up=17, clR_up=17, hy=15, hx=-3, cx=-4, hz=4,
 c.k(13, **plus(SH, clL_up=2, clR_up=2, hy=1)).k(18, **SH).k(27, **plus(SH, hy=2, clL_up=-1, clR_up=-1)).k(37, **B0).k(40, **B0)
 
 # ================================================================ ARM POSES
-HIPL = W("L", 0.198, 0.03, 0.968, "pelvis", pole=(1, 0.75, 0.0), hand=H_HIP)
-HIPR = W("R", 0.198, 0.03, 0.968, "pelvis", pole=(-1, 0.75, 0.0), hand=H_HIP)
+HIPL = W("L", 0.212, 0.03, 0.972, "pelvis", pole=(1, 0.75, 0.0), hand=H_HIP)
+HIPR = W("R", 0.212, 0.03, 0.972, "pelvis", pole=(-1, 0.75, 0.0), hand=H_HIP)
 
 c = one_shot(clip("arms_crossed", 50, note="'hmph': huff in, arms cross under the bust, hip popped, chin up and head turned away (holds)"))
 c.k(8, **plus(M(B0), cx=-4, clL_up=4, clR_up=4, hx=-3))
@@ -172,7 +172,7 @@ c.add = hold_life(50, 0.7, 0.5)
 
 c = one_shot(clip("hand_on_hip", 45, note="fist on her left hip, elbow back, hip popped out, head tilts to the hip, free hand soft (holds)"))
 c.k(7, **plus(M(B0), pz=-0.006))
-HH = M(cp("L", 1.3), hy=11, hz=5, hx=2, clL_up=3, aL=HIPL, aR=hang("R", 0.02, 0.0))
+HH = M(cp("L", 1.3), hy=11, hz=5, hx=2, clL_up=3, aL=HIPL, aR=hang("R", 0.045, 0.0))
 c.k(16, **plus(HH, hy=2)).k(21, **HH).k(45, **plus(HH, hy=1))
 c.drag = {"L": 0.0, "R": 0.5}
 c.add = hold_life(45, 0.6, 0.4)
@@ -213,7 +213,7 @@ c = one_shot(clip("sad_slump", 50, note="deflate (UpNext #8): a sigh in, then sh
 c.k(8, **plus(M(B0), cx=-5, clL_up=5, clR_up=5, hx=-4))
 SD_FEET = dict(fL=pivot("L", FEET["fL"], -24), fR=FEET["fR"])
 SD = M(cp("R", 0.5, SD_FEET, heel=20, knee_in=0.55), cx=15, sx=6, hx=25, hy=-7, clL_up=-8, clR_up=-8, clL_fw=7, clR_fw=7, pz=-0.014,
-       aL=W("L", 0.17, -0.09, 0.79, "pelvis", pole=(0.4, 0.9, 0.1), hand=H_HANG), aR=W("R", 0.17, -0.09, 0.79, "pelvis", pole=(-0.4, 0.9, 0.1), hand=H_HANG))
+       aL=W("L", 0.19, -0.09, 0.79, "pelvis", pole=(0.4, 0.9, 0.1), hand=H_HANG), aR=W("R", 0.22, -0.09, 0.79, "pelvis", pole=(-0.4, 0.9, 0.1), hand=H_HANG))
 c.k(19, **plus(SD, hx=4, cx=3, clL_up=-2, clR_up=-2)).k(27, **SD).k(50, **plus(SD, hx=2))
 c.drag = {"L": 0.8, "R": 0.8}
 c.add = hold_life(50, 1.3, 0.3)
@@ -236,7 +236,7 @@ c.add = addf(osc("hy", 11, 60), osc("hz", 8, 60, 0.1), osc("cz", 5, 60, 0.05), o
 
 c = one_shot(clip("sheepish", 45, note="'hehe' (UpNext #13): hand to the back of the head, head tilts into it, knee in, little scratch"))
 SP = M(cp("L", 0.85), hy=-12, hx=6, hz=-4, clR_up=10,
-       aR=W("R", 0.10, 0.14, 1.50, pole=(-0.7, -1, 0.4), hand=H_BACKHEAD), aL=W("L", 0.10, -0.12, 0.84, "pelvis", pole=(0.6, 0.8, -0.2), hand=H_HANG))
+       aR=W("R", 0.115, 0.165, 1.50, pole=(-0.7, -1, 0.4), hand=H_BACKHEAD), aL=W("L", 0.10, -0.12, 0.84, "pelvis", pole=(0.6, 0.8, -0.2), hand=H_HANG))
 c.k(9, aR=W("R", 0.17, -0.10, 1.24, pole=(-0.8, 0.0, -1), hand=((0.2, -0.2, 1), (-0.5, -0.8, 0))))
 c.k(15, **plus(SP, hy=-3)).k(20, **SP).k(45, **plus(SP, hy=-2))
 c.drag = {"L": 0.5, "R": 0.0}
@@ -274,7 +274,7 @@ c.add = hold_life(40, 0.7, 0.3)
 
 c = one_shot(clip("cheer", 36, note="'yay!': crouch to load, then springs up onto her toes with arms up in a V, eyes closed, little bounce (feet stay planted)"), settle=3)
 CH0 = M(B0, pz=-0.04, cx=6, hx=4, kL=(-0.3, -1, 0), kR=(0.3, -1, 0),
-        aL=W("L", 0.17, 0.02, 0.86, "pelvis", pole=(0.4, 0.9, 0), hand=H_HANG), aR=W("R", 0.17, 0.02, 0.86, "pelvis", pole=(-0.4, 0.9, 0), hand=H_HANG))
+        aL=W("L", 0.20, 0.0, 0.86, "pelvis", pole=(0.4, 0.9, 0), hand=H_HANG), aR=W("R", 0.20, 0.0, 0.86, "pelvis", pole=(-0.4, 0.9, 0), hand=H_HANG))
 fL0, fR0 = list(FEET["fL"]), list(FEET["fR"])
 CH = dict(sz=-4, cz=-6, fL=(fL0[0], fL0[1], fL0[2], 26, 0, 0), fR=(fR0[0], fR0[1], fR0[2], 26, 0, 0), kL=(-0.25, -1, 0), kR=(0.25, -1, 0),
           pz=0.02, cx=-7, hx=-9, clL_up=13, clR_up=13, hy=6,
@@ -330,8 +330,8 @@ c.add = hold_life(50, 0.8, 0.2)
 c = clip("hands_on_knees", 40, loop=True, note="UpNext #12: out of breath, bent over with hands on the knees, knees in, toes in, panting")
 HK_FEET = dict(fL=Fo("L", CX + SW + 0.012, -0.02, 0), fR=Fo("R", CX - SW - 0.012, 0.035, 0))
 HK = M(dict(sz=-4, cz=-6), HK_FEET, prx=38, sx=17, cx=13, hx=-30, py=0.12, pz=-0.15, kL=(0.05, -1, 0), kR=(-0.05, -1, 0),
-       aL=A(C.Tr[C.BI["Thigh.L"]] + [0.015, -0.075, 0.13], "thighL", (1, 0.6, 0.3), (0, 0, 0), HD("L", (-0.3, -0.5, -0.8), (0, 0.3, -1))),
-       aR=A(C.Tr[C.BI["Thigh.R"]] + [-0.015, -0.075, 0.13], "thighR", (-1, 0.6, 0.3), (0, 0, 0), HD("R", (-0.3, -0.5, -0.8), (0, 0.3, -1))))
+       aL=A(np.array([0.125, -0.215, 0.53]), "world", (1, 0.6, 0.3), (0, 0, 0), HD("L", (-0.1, -0.55, -0.83), (0, 0.5, -0.85))),
+       aR=A(np.array([-0.102, -0.225, 0.53]), "world", (-1, 0.6, 0.3), (0, 0, 0), HD("R", (-0.1, -0.55, -0.83), (0, 0.5, -0.85))))
 c.k(0, **HK)
 c.drag = {"L": 0.0, "R": 0.0}
 c.add = addf(osc("cx", -4, 20), osc("clL_up", 4, 20), osc("clR_up", 4, 20), osc("hx", 3, 20, 0.1), osc("hy", 3, 40))
@@ -340,7 +340,7 @@ c = one_shot(clip("crouch_pickup", 50, note="squat down knees together angled to
 c.cam = (24, -4.0)
 CR = M(dict(sz=-4, cz=-6), pz=-0.40, py=0.05, prx=22, sx=8, cx=10, hx=-10, prz=14, pry=-3,
        fL=Fo("L", CX + SW + 0.01, -0.035, 10, 24), fR=Fo("R", CX - SW - 0.01, 0.045, 6, 34), kL=(-0.55, -1, 0.1), kR=(-0.6, -1, 0.1),
-       aR=W("R", 0.05, -0.33, 0.12, "world", pole=(-1, 0.4, 0), hand=((0.1, -0.6, -1), (0, 0.3, -1))),
+       aR=W("R", 0.08, -0.35, 0.12, "world", pole=(-1, 0.4, 0), hand=((0.1, -0.6, -1), (0, 0.3, -1))),
        aL=W("L", 0.02, -0.25, 0.42, "world", pole=(1, 0.4, 0), hand=H_LAP))
 c.k(8, **plus(M(B0), pz=-0.02, cx=3)).k(18, **CR).k(24, **M(CR, aR=W("R", 0.05, -0.32, 0.105, "world", pole=(-1, 0.4, 0), hand=((0.1, -0.6, -1), (0, 0.3, -1)))))
 c.k(31, **M(CR, aR=W("R", 0.05, -0.30, 0.24, "world", pole=(-1, 0.4, 0), hand=H_CUP), hx=-14))

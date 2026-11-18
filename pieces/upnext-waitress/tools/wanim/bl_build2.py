@@ -35,7 +35,7 @@ for poly, f in zip(me.polygons, J["faces"]):
 parts = sorted({f["part"] for f in J["faces"]}); at = me.attributes.new("part", "INT", "FACE")
 for i, f in enumerate(J["faces"]): at.data[i].value = parts.index(f["part"])
 ob = bpy.data.objects.new("waitress", me); sc.collection.objects.link(ob); ob["parts"] = json.dumps(parts)
-MATN = {"waitress_face_eyes": "face_eyes", "waitress_face_mouth": "face_mouth"}
+MATN = {"waitress_face_eyes": "face_eyes", "waitress_face_mouth": "face_mouth", "waitress_face_cheeks": "face_cheeks"}
 for name, path, alpha in J["mats"]:
     m = bpy.data.materials.new(MATN.get(name, name)); m.use_nodes = True; nt = m.node_tree
     for nd_ in list(nt.nodes): nt.nodes.remove(nd_)

@@ -22,7 +22,7 @@ c.add = _shy
 # ================================================================ idle_sway: contrapposto weight shift
 c = clip("idle_sway", 150, loop=True, note="contrapposto weight shift R -> L -> R: hip pop, S-curve, shoulders counter-tilt, soft hanging hands")
 # weight on R: her left (free side) hand rests on the front of the thigh at the hem, right arm hangs; and mirrored
-THIGH = lambda s: W(s, 0.105, -0.16, 0.795, "pelvis", pole=((0.7 if s == "L" else -0.7), 0.7, 0.0), hand=((-0.35, -0.5, -0.8), (-0.3, 0.9, 0.0)))
+THIGH = lambda s: W(s, 0.115 if s == "L" else 0.13, -0.19 if s == "L" else -0.225, 0.80 if s == "L" else 0.785, "pelvis", pole=((0.7 if s == "L" else -0.7), 0.7, 0.0), hand=((-0.35, -0.5, -0.8), (-0.3, 0.9, 0.0)))
 SWAY_ARMS_R = dict(aL=THIGH("L"), aR=hang("R", 0.01, 0.0, 0.0))
 SWAY_ARMS_L = dict(aL=hang("L", 0.01, 0.0, 0.0), aR=THIGH("R"))
 c.k(0, **M(cp("R", 1.0), SWAY_ARMS_R, hy=8, hx=5))

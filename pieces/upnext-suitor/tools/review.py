@@ -51,10 +51,12 @@ import rig as RG
 S = RG.S_ENGINE
 u = lambda c: [c[0] * S, c[1] * S, c[2] * S + RG.FLOOR]
 BODY = dict(ctr=u([0, 0, 0.90]), ext=1.95 * S)
+BODY2 = dict(ctr=u([0, 0, 0.90]), ext=1.95 * S)
 VIEWS = [("front", "front"), ("3q", "3/4"), ("side", "side"), ("back", "back")]
 cr = lambda i: (64, 0, i.width - 64, i.height)
 ORIG = os.path.join(ROOT, "ref", "orig.blend")
 ORIG_ENGINE = os.path.join(ROOT, "ref", "orig_engine.blend")
+ORIG_ENGINE_V2 = os.path.join(ROOT, "ref", "orig_engine_v2.blend")
 
 
 def blend(opt): return os.path.join(ROOT, "ref", f"s_{opt}.blend")
@@ -108,6 +110,48 @@ def turntable(opt="wine"):
     grid([[s["out"] for s in so], [s["out"] for s in sm]], os.path.join(ROOT, "review", "turntable.png"),
          ["original\n(rip)", f"modified\n({opt})"], [l for _, l in VIEWS],
          "Suitor (MML Artillery rip): original vs modified, flat unlit", cr)
+
+
+def turntable_v2():
+    rows = []
+    for tag, bl in (("o", ORIG_ENGINE_V2), ("v1", blend("wine")), ("v2", os.path.join(ROOT, "ref", "s2_forest.blend"))):
+        sh = [dict(out=os.path.join(TMP, f"tt_{tag}_{v}.png"), view=v, **BODY) for v, _ in VIEWS]
+        run(bl, sh); rows.append([x["out"] for x in sh])
+    grid(rows, os.path.join(ROOT, "review", "turntable_v2.png"), ["original (scaled)", "v1", "v2"], [l for _, l in VIEWS],
+         "Suitor: original | v1 | v2 (original lower body, bare fists, original belly shading, forest green, 1.52 m), flat unlit", cr)
+
+
+def height_pair():
+    WS = os.path.abspath(os.path.join(ROOT, "..", "upnext-waitress", "out", "waitress_shorts.blend"))
+    shots = [dict(out=os.path.join(TMP, f"hp_{v}.png"), view=v, ctr=u([0.28, 0, 0.92]), ext=2.0 * S, aspect=1.3) for v in ("front", "3q", "back")]
+    spec = os.path.join(TMP, "pspec.json"); json.dump({"size": 560, "shots": shots}, open(spec, "w"))
+    r = subprocess.run([BL, "-b", os.path.join(ROOT, "ref", "s2_forest.blend"), "--factory-startup", "--python", os.path.join(ROOT, "tools", "bl_pair.py"), "--",
+                        WS, str(0.56 * S), spec], capture_output=True, text=True, timeout=900)
+    if "REVIEW done" not in r.stdout: print(r.stdout[-3000:], r.stderr[-2000:]); raise SystemExit("render failed")
+    grid([[x["out"] for x in shots]], os.path.join(ROOT, "review", "height_pair.png"), None, ["front", "3/4", "back"],
+         "Height: suitor v2 (1.52 m) next to the waitress (1.75 m, shorts GLB): she is clearly taller", None)
+
+
+def turntable_v3():
+    rows = []
+    for tag, bl in (("o", os.path.join(ROOT, "ref", "orig_engine_v3.blend")), ("v2", os.path.join(ROOT, "ref", "s2_forest.blend")),
+                    ("v3", os.path.join(ROOT, "ref", "s3_forest.blend"))):
+        sh = [dict(out=os.path.join(TMP, f"t3_{tag}_{v}.png"), view=v, **BODY) for v, _ in VIEWS]
+        run(bl, sh); rows.append([x["out"] for x in sh])
+    grid(rows, os.path.join(ROOT, "review", "turntable_v3.png"), ["original (1.67)", "v2 (1.52)", "v3 (1.67)"], [l for _, l in VIEWS],
+         "Suitor: original | v2 | v3 (1.67 m, smaller fists, blended knees, green collar, pocket openings), flat unlit", cr)
+
+
+def height_pair_v3():
+    WS = os.path.abspath(os.path.join(ROOT, "..", "upnext-waitress", "out", "waitress_shorts.blend"))
+    shots = [dict(out=os.path.join(TMP, f"hp3_{v}.png"), view=v, ctr=u([0.28, 0, 0.92]), ext=2.0 * S, aspect=1.3) for v in ("front", "3q", "back")]
+    shots.append(dict(out=os.path.join(TMP, "hp3_head.png"), view="front", ctr=u([0.28, 0, 1.55]), ext=0.6 * S, aspect=1.3))
+    spec = os.path.join(TMP, "pspec.json"); json.dump({"size": 560, "shots": shots}, open(spec, "w"))
+    r = subprocess.run([BL, "-b", os.path.join(ROOT, "ref", "s3_forest.blend"), "--factory-startup", "--python", os.path.join(ROOT, "tools", "bl_pair.py"), "--",
+                        WS, str(0.56 * S), spec], capture_output=True, text=True, timeout=900)
+    if "REVIEW done" not in r.stdout: print(r.stdout[-3000:], r.stderr[-2000:]); raise SystemExit("render failed")
+    grid([[x["out"] for x in shots]], os.path.join(ROOT, "review", "height_pair_v3.png"), None, ["front", "3/4", "back", "close-up: his hair top vs her brow"],
+         "Height v3: suitor 1.67 m next to the waitress 1.75 m (shorts GLB): she is slightly taller", None)
 
 
 if __name__ == "__main__":

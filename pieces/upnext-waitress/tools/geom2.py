@@ -15,7 +15,8 @@ D = json.load(open(os.path.join(ROOT, "ref", "orig.json")))
 V0 = np.array(D["verts"], float)
 F0 = D["faces"]
 
-EYE_RECT = (8, 21, 54, 47)          # px in ST1AT_40 (x0, y0, x1, y1), brows + eyes + blush band
+EYE_RECT = (8, 21, 54, 47)          # px in ST1AT_40 (x0, y0, x1, y1), brows + eyes (unchanged since v7)
+CHEEK_RECT = (8, 47, 54, 52)        # v8b: cheek band under the eyes, its own atlas (blush follows the mouth's +blush cell)
 MOUTH_RECT = (18, 53, 43, 66)       # px, mouth + mole (strictly inside the face polygons)
 FACE_COLS, FACE_ROWS = 16, 4
 
@@ -38,12 +39,12 @@ C = float(np.median(pairs))
 
 PX = 175.0
 TW, TH = 256, 128
-HIP = {"F": (0.128, 1.011, 0.066), "S": (0.180, 0.992, -0.012), "B": (0.136, 0.992, -0.152)}   # v3 flat stomach, v4 curvier   # v3: flat stomach
+HIP = {"F": (0.128, 1.011, 0.066), "S": (0.188, 0.992, -0.012), "B": (0.140, 0.992, -0.158)}   # v3 flat stomach, v4 curvier   # v3: flat stomach
 # leg rings: y, lateral centre offset, centre z, rx, rz   (r0 is slanted: back verts lower, back radius bigger = butt)
 RINGS = [
-    (0.862, 0.099, -0.020, 0.096, 0.099),
-    (0.720, 0.097, -0.028, 0.090, 0.092),
-    (0.560, 0.089, -0.033, 0.066, 0.068),
+    (0.862, 0.106, -0.020, 0.104, 0.106),
+    (0.720, 0.102, -0.028, 0.098, 0.099),
+    (0.560, 0.091, -0.033, 0.071, 0.073),
     (0.480, 0.085, -0.035, 0.050, 0.054),
     (0.360, 0.083, -0.058, 0.056, 0.062),
     (0.270, 0.081, -0.074, 0.040, 0.043),
@@ -64,8 +65,8 @@ JEANS_HEM = 0.262
 def ring_pt(k, j, s):
     y, off, cz, rx, rz = RINGS[k]
     p = math.radians(PHI[j]); c = math.cos(p)
-    if k == 0 and c < 0: y -= 0.034 * (-c); rz *= 1.0 + 0.73 * (-c)       # gluteal fold lower, butt flows into the thigh (v4)
-    if k == 1 and c < 0: rz *= 1.0 + 0.25 * (-c)
+    if k == 0 and c < 0: y -= 0.034 * (-c); rz *= 1.0 + 0.76 * (-c)       # gluteal fold lower, butt flows into the thigh (v5 body)
+    if k == 1 and c < 0: rz *= 1.0 + 0.26 * (-c)
     return np.array([C + s * (off + rx * math.sin(p)), y, cz + rz * c])
 
 
@@ -105,7 +106,7 @@ def rotz(p, piv, deg):
 def mirror(p): return np.array([2 * C - p[0], p[1], p[2]])
 
 
-MAT_TEX0, MAT_LOWER, MAT_EYES, MAT_MOUTH = 0, 1, 2, 3
+MAT_TEX0, MAT_LOWER, MAT_EYES, MAT_MOUTH, MAT_CHEEK = 0, 1, 2, 3, 4
 px2uv = lambda u, v: [u / 256.0, 1 - v / 128.0]
 
 
@@ -286,7 +287,7 @@ def build(opt):
                 n = len(f["v"]); left = []
                 for t in range(1, n - 1):
                     sub = {"v": [f["v"][0], f["v"][t], f["v"][t + 1]], "uv": [f["uv"][0], f["uv"][t], f["uv"][t + 1]]}
-                    if not add_head_face(M, sub, [(MAT_EYES, EYE_RECT), (MAT_MOUTH, MOUTH_RECT)]): left.append(sub)
+                    if not add_head_face(M, sub, [(MAT_EYES, EYE_RECT), (MAT_MOUTH, MOUTH_RECT), (MAT_CHEEK, CHEEK_RECT)]): left.append(sub)
                 if len(left) == n - 2: left = [f]
                 for sub in left:
                     ids = [M.vert(("o", v), orig_pos(nm, v), orig_weight(nm, v, None, "R")) for v in sub["v"]]
@@ -380,8 +381,8 @@ def build(opt):
     L = lambda sn, lab: leg[(sn, 0, LAB.index(lab))]
     CF = M.vert(("pel", "CF"), [C, 0.905, 0.060], {"Pelvis": 0.8, "Thigh.L": 0.1, "Thigh.R": 0.1})
     CC = M.vert(("pel", "CC"), [C, 0.846, -0.022], {"Pelvis": 0.5, "Thigh.L": 0.25, "Thigh.R": 0.25})
-    CB = M.vert(("pel", "CB"), [C, 0.890, -0.164], {"Pelvis": 0.8, "Thigh.L": 0.1, "Thigh.R": 0.1})
-    CK = {sn: M.vert(("pel", "CK", sn), [C + (0.078 if sn == "L" else -0.078), 0.885, -0.182], {"Pelvis": 0.6, "Thigh." + sn: 0.4}) for sn in "LR"}
+    CB = M.vert(("pel", "CB"), [C, 0.890, -0.178], {"Pelvis": 0.8, "Thigh.L": 0.1, "Thigh.R": 0.1})
+    CK = {sn: M.vert(("pel", "CK", sn), [C + (0.082 if sn == "L" else -0.082), 0.885, -0.198], {"Pelvis": 0.6, "Thigh." + sn: 0.4}) for sn in "LR"}
     PU = UV["pel"]
     def F_(vs, isl): M.face(vs, [PU[isl](M.V[v]) for v in vs], MAT_LOWER, "pelvis", pel_in)
     for sn in "LR":
@@ -431,13 +432,13 @@ def uv_layout():
         d = [0.0]
         for a, b in zip(pts, pts[1:]): d.append(d[-1] + float(np.linalg.norm(b - a)))
         P = d[-1]
-        for j in range(7): UV["leg"][(k, j)] = (52 + (d[j] - P / 2) * PX * 0.86, 1.5 + (RINGS[0][0] + 0.004 - pts[j][1]) * 168)
+        for j in range(7): UV["leg"][(k, j)] = (52 + (d[j] - P / 2) * PX * 0.78, 1.5 + (RINGS[0][0] + 0.004 - pts[j][1]) * 168)
     UV["leg"]["cap"] = (52, 127)
     UV["pel"] = {
-        "front": lambda p: (106 + (p[0] - C + 0.14) * PX, 50 + (1.015 - p[1]) * PX),
-        "back": lambda p: (160 + (p[0] - C + 0.14) * PX, 50 + (1.015 - p[1]) * PX),
+        "front": lambda p: (106 + (p[0] - C + 0.16) * PX, 50 + (1.015 - p[1]) * PX),
+        "back": lambda p: (166 + (p[0] - C + 0.16) * PX, 50 + (1.015 - p[1]) * PX),
         "side": lambda p: (106 + (0.12 - p[2]) * PX, 84 + (1.015 - p[1]) * PX),
-        "crotch": lambda p: (172 + (p[0] - C) * PX, 88 + (0.065 - p[2]) * PX),
+        "crotch": lambda p: (172 + (p[0] - C) * PX, 86 + (0.065 - p[2]) * 165),
     }
     return UV
 
@@ -664,13 +665,14 @@ def run(opt):
     paint(M, opt, tex)
     faces = []
     for f in M.F:
-        uv = f["uv"] if f["mat"] in (MAT_TEX0, MAT_EYES, MAT_MOUTH) else [[u / TW, 1 - v / TH] for u, v in f["uv"]]
+        uv = f["uv"] if f["mat"] in (MAT_TEX0, MAT_EYES, MAT_MOUTH, MAT_CHEEK) else [[u / TW, 1 - v / TH] for u, v in f["uv"]]
         faces.append({"v": f["v"], "uv": uv, "mat": f["mat"], "part": f["part"]})
     out = {"centre_x": C, "verts": [list(map(float, p)) for p in M.V], "weights": M.W, "faces": faces, "bones": bones(),
            "mats": [["waitress_body", os.path.join(ASSET, "ST1AT_40.png"), True],
                     ["waitress_lower", os.path.abspath(tex), False],
                     ["waitress_face_eyes", os.path.abspath(os.path.join(ROOT, "tex", "face_eyes.png")), False],
-                    ["waitress_face_mouth", os.path.abspath(os.path.join(ROOT, "tex", "face_mouth.png")), False]]}
+                    ["waitress_face_mouth", os.path.abspath(os.path.join(ROOT, "tex", "face_mouth.png")), False],
+                    ["waitress_face_cheeks", os.path.abspath(os.path.join(ROOT, "tex", "face_cheeks.png")), False]]}
     json.dump(out, open(os.path.join(ROOT, "ref", f"build2_{opt}.json"), "w"))
     print(f"GEOM2 {opt}: verts {len(M.V)} tris {len(M.F)} face tris {sum(1 for f in M.F if f['part'] == 'face')}")
 

@@ -142,7 +142,8 @@ H_ACROSS = ((-1, -0.25, -0.1), (0, 1, 0.1))         # forearm across the belly, 
 def hang(s, out=0.0, fwd=0.0, up=0.0, soft=1.0):
     """relaxed arm: hand beside the thigh, elbow soft (target in pelvis space)"""
     sg = 1 if s == "L" else -1
-    return A((CX + sg * (0.20 + out), -0.06 - fwd, 0.805 + up), "pelvis", (sg * 0.45, 0.85, 0.2), (0, 0, 0), HD(s, *H_HANG))
+    if s == "R": out += 0.025                  # v6: her right hand is a fist (thicker towards the palm): hangs a bit further out
+    return A((CX + sg * (0.215 + out), -0.065 - fwd, 0.81 + up), "pelvis", (sg * 0.45, 0.85, 0.2), (0, 0, 0), HD(s, *H_HANG))
 
 
 B0 = dict(**cp("R", 0.7), aL=hang("L"), aR=hang("R"))          # neutral standing base: one-shots start and end here

@@ -13,18 +13,28 @@ const server = http.createServer((req, res) => {
 }).listen(0);
 const port = server.address().port;
 const out = path.resolve(HERE, '..', '..', 'review', 'engine2', mode === 'video' ? 'vid' : ''); fs.mkdirSync(out, { recursive: true });
+const BGQ = process.env.BG === 'none' ? '&bg=none' : '';
 const browser = await chromium.launch({ args: ['--use-angle=d3d11', '--ignore-gpu-blocklist', '--enable-unsafe-swiftshader'] });
 const w = +(wArg || (mode === 'video' ? 540 : 360)), h = +(hArg || (mode === 'video' ? 960 : 560));
 const page = await browser.newPage({ viewport: { width: w, height: h } });
 page.on('pageerror', (e) => console.log('[pageerror]', e.message));
 const GLB = process.env.GLB || 'girl2_curvy_bare.glb';
-await page.goto(`http://localhost:${port}/upnext-girl2/tools/anim/viewer2.html?w=${w}&h=${h}&glb=${GLB}&r=${process.env.CAMR || 25}&ch=${process.env.CAMH || -3.2}&t=${Date.now()}`);
+await page.goto(`http://localhost:${port}/upnext-girl2/tools/anim/viewer2.html?w=${w}&h=${h}&glb=${GLB}&r=${process.env.CAMR || 25}&ch=${process.env.CAMH || -3.2}${BGQ}&t=${Date.now()}`);
 await page.waitForFunction(() => window.READY === true, null, { timeout: 120000 });
 const grab = async () => Buffer.from((await page.evaluate(() => document.querySelector('canvas').toDataURL('image/png'))).split(',')[1], 'base64');
 const acts = await page.evaluate(() => window.ACTIONS);
 const meta = JSON.parse(fs.readFileSync(path.resolve(HERE, '..', '..', 'out', 'actions.json')));
 if (process.env.NOCAM) for (const k of Object.keys(meta)) if (meta[k] && meta[k].cam) delete meta[k].cam;
 if (process.env.FRONT) for (const k of Object.keys(meta)) if (meta[k] && meta[k].cam) { meta[k].cam = meta[k].cam.slice(); meta[k].cam[2] = 1e-6; if (k === 'lie_side') meta[k].cam[0] = 46; if (k === 'lie_back') meta[k].cam[0] = 32; }   // frontal camera, keep distance / height / elevation (lying clips pulled back to fit the portrait frame)
+if (mode === 'brand') {            // brand <jobs.json>: [{name, his:k | clip,f,pos,tgt,fov,yaw, eyes, mouth}] -> review/engine2/brand_<name>.png
+  const jobs = JSON.parse(fs.readFileSync(clipArg, 'utf8'));
+  for (const j of jobs) {
+    if (j.his !== undefined) await page.evaluate((j) => window.hisShot(j.his, j.eyes || 'open', j.mouth || 'neutral'), j);
+    else await page.evaluate((j) => window.camShot(j.clip, j.f, j.pos, j.tgt, j.fov, j.yaw || 0, j.eyes || null, j.mouth || null), j);
+    fs.writeFileSync(path.join(out, `brand_${j.name}.png`), await grab());
+  }
+  await browser.close(); server.close(); process.exit(0);
+}
 if (mode === 'focus') {            // focus clip:frame:bone:dist:yaw:elev;...  -> review/engine2/focus_<i>.png
   const specs = clipArg.split(';');
   for (let i = 0; i < specs.length; i++) {

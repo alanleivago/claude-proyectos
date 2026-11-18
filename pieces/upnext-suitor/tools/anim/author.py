@@ -13,10 +13,11 @@ HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(os.pat
 sys.path.insert(0, HERE)
 import rig as RG
 
-R_ = RG.load(os.path.join(ROOT, "ref", "build_wine.json"))
+R_ = RG.load(os.path.join(ROOT, "ref", "build3_forest.json"))
 NAMES = R_["names"]; BI = R_["BI"]; PAR = R_["par"]; Hr = R_["Hr"]; Tr = R_["Tr"]; Rb = R_["Rb"]; Vr = R_["Vr"]; W = R_["W"]; NB = len(NAMES)
 VPART = R_["vpart"]
 K = R_["J"]["height"] / 1.82                                 # landmark constants below are in 1.82 m units
+RS = R_["J"]["height"] / 1.86                                # clip offsets (root, feet, arm 't') are authored for 1.86 m
 FPS = 30
 nrm = RG.nrm
 MX = np.diag([-1.0, 1, 1])
@@ -66,10 +67,16 @@ ARMLEN = blen("UpperArm.L") + blen("Forearm.L")
 SHOE = {s: np.nonzero((VPART == "shoe") & ((Vr[:, 0] > 0) == (s == "L")))[0] for s in "LR"}
 
 
-def lift_for(Rf, s):
-    """ankle height that puts the lowest sole vertex on the floor for a foot rotation Rf"""
-    P = (Vr[SHOE[s]] - ANK0[s]) @ Rf.T
-    return -P[:, 2].min()
+def lift_for(Rf, s, anchor=False, Rp=None):
+    """ankle height that puts the lowest sole vertex on the floor for a foot rotation Rf; anchor=True also returns the
+    horizontal ankle shift that keeps that contact vertex where it is with the foot flat (heel / toe roll, no slide)"""
+    P0 = Vr[SHOE[s]] - ANK0[s]; P = P0 @ Rf.T
+    j = int(np.argmin(P[:, 2]))
+    if not anchor: return -P[j, 2]
+    Pp = P0 @ Rp.T; k = int(np.argmin(Pp[:, 2]))                    # roll contact from the pitch alone (yaw is a pure turn)
+    d = Pp[k] - P0[k]; d[2] = 0.0
+    yaw_only = Rf @ Rp.T
+    return -P[j, 2], -(yaw_only @ d)
 
 
 ANK_H = lift_for(np.eye(3), "L")
@@ -77,15 +84,15 @@ ANK_H = lift_for(np.eye(3), "L")
 # ------------------------------------------------------------------ landmarks (bone, geom-1.82 coords x left / y up / z front, L side)
 LM = {
     "hip": ("Pelvis", (0.200, 0.935, -0.005)),       # wrist spot for a fist / hand on the hip
-    "pocket": ("Pelvis", (0.122, 0.885, 0.090)),     # wrist at the front pocket opening (hand goes in, pointing down)
-    "back": ("Pelvis", (0.060, 0.930, -0.150)),      # wrists clasped behind the back
-    "nape": ("Head", (0.140, 1.560, -0.110)),        # wrist below / behind the ear: hand rubs the back of the head
-    "face": ("Head", (0.050, 1.500, 0.230)),         # facepalm wrist (hand up over the eyes)
-    "chin": ("Head", (0.040, 1.400, 0.200)),         # think: fist under the chin
+    "pocket": ("Pelvis", (0.130, 0.965, 0.100)),     # wrist at the painted pocket opening on the hip piece (fist tucks in)
+    "back": ("Pelvis", (0.055, 0.960, -0.128)),      # wrists clasped behind the back
+    "nape": ("Head", (0.200, 1.530, -0.070)),        # wrist below / behind the ear: hand rubs the back of the head
+    "face": ("Head", (0.050, 1.490, 0.255)),         # facepalm wrist (hand up over the eyes)
+    "chin": ("Head", (0.040, 1.330, 0.180)),         # think: fist under the chin
     "chest": ("Chest", (0.000, 1.260, 0.150)),       # in front of the chest centre
     "elbow_rest": ("Chest", (0.150, 1.220, 0.150)),  # arms crossed: wrist sits near the other elbow
     "belly": ("Spine", (0.020, 1.080, 0.140)),
-    "knee": ("Thigh", (0.090, 0.420, 0.110)),        # on top of the knee (side picks L/R thigh)
+    "knee": ("Thigh", (0.085, 0.585, 0.090)),        # on top of the knee (side picks L/R thigh)
 }
 
 
@@ -104,13 +111,15 @@ STAND = dict(
     root=(0, 0, -0.012), pel=(0, 0, 0), spine=(0, 0, 0), chest=(0, 0, 0), neck=(0, 0, 0), head=(0, 0, 0),
     clavL=(0, 0), clavR=(0, 0),
     # arm: ("aim", abduct deg, flex fwd deg, elbow bend deg) | ("lm", name, (dx out, df, dz)) | ("t", (out, f, z) from the shoulder, chest frame)
-    armL=("aim", 7, 4, 12), armR=("aim", 7, 4, 12),
-    poleL=(0.45, -1.0, 0.0), poleR=(0.45, -1.0, 0.0),             # elbow direction hint (out, fwd, up) in the chest frame
+    armL=("aim", 11, 4, 10), armR=("aim", 11, 4, 10),
+    poleL=(0.1, -1.0, 0.0), poleR=(0.1, -1.0, 0.0),             # elbow direction hint (out, fwd, up) in the chest frame
     handL=(0, 0, 0), handR=(0, 0, 0),                              # twist (+ = palm forward), flex (+ = palm-ward), deviation (+ = thumb-ward)
     footL=(0.022, 0.0, 0.0, 7, 0), footR=(0.022, 0.0, 0.0, 7, 0),  # ankle (out, f, z above the floor contact), yaw out deg, pitch toe up deg
     kneeL=0.15, kneeR=0.15,                                        # knee pole outward bias
+    kdownL=0.0, kdownR=0.0,                                        # 1 = knee pole straight down (kneeling leg)
 )
-SCAL = ["root", "pel", "spine", "chest", "neck", "head", "clavL", "clavR", "poleL", "poleR", "handL", "handR", "footL", "footR", "kneeL", "kneeR"]
+SCAL = ["root", "pel", "spine", "chest", "neck", "head", "clavL", "clavR", "poleL", "poleR", "handL", "handR", "footL", "footR", "kneeL", "kneeR",
+        "kdownL", "kdownR"]
 
 
 def flat(p):
@@ -124,52 +133,46 @@ def unflat(v):
     return out
 
 
-def key_weights(frames, n, loop, ease_ends=True):
-    """W[f, k]: Catmull-Rom weights of each key at frame f (keys at the given frames; loop: period n, key 0 repeats at n)"""
-    fr = list(frames); m = len(fr); Wt = np.zeros((n, m))
-    for f in range(n):
-        for k in range(m):
-            e = np.zeros(m); e[k] = 1.0; Wt[f, k] = cr_eval(fr, e, f, n, loop, ease_ends)
-    return Wt
-
-
-def cr_eval(fr, vals, t, n, loop, ease_ends):
-    m = len(fr)
-    if m == 1: return vals[0]
-    if loop:
-        X = list(fr) + [fr[0] + n]; Y = list(vals) + [vals[0]]
-        t = t % n
-        if t < X[0]: t += n
-    else:
-        X, Y = list(fr), list(vals)
-        if t <= X[0]: return Y[0]
-        if t >= X[-1]: return Y[-1]
-    j = max(i for i in range(len(X) - 1) if X[i] <= t)
-    x0, x1 = X[j], X[j + 1]; y0, y1 = Y[j], Y[j + 1]; h = x1 - x0; u = (t - x0) / h
-    def slope(i):
+def key_weights(fr, n, loop, flat_keys, ease_ends=True):
+    """W[f, k]: cubic Hermite weights of each key at frame f (Catmull-Rom tangents, zero tangent on hold keys and, for
+    one-shots, on the first / last key). Linear in the key values, so anything (targets evaluated per frame) can be blended."""
+    m = len(fr); Wt = np.zeros((n, m)); I = np.eye(m)
+    if m == 1: Wt[:, 0] = 1; return Wt
+    def tan(i):
+        if flat_keys[i]: return np.zeros(m)
         if loop:
             ip, inn = (i - 1) % m, (i + 1) % m
-            xp = X[i] - (fr[i % m] - fr[ip]) % n if True else 0
-            dxp = (fr[i % m] - fr[ip]) % n or n; dxn = (fr[inn] - fr[i % m]) % n or n
-            return (vals[inn] - vals[ip]) / (dxp + dxn)
-        if i == 0 or i == len(X) - 1:
-            return 0.0 if ease_ends else (Y[min(i + 1, len(X) - 1)] - Y[max(i - 1, 0)]) / (X[min(i + 1, len(X) - 1)] - X[max(i - 1, 0)])
-        if Y[i - 1] == Y[i] or Y[i] == Y[i + 1]: return 0.0          # holds stay flat (no overshoot into contacts)
-        return (Y[i + 1] - Y[i - 1]) / (X[i + 1] - X[i - 1])
-    m0, m1 = slope(j) * h, slope(j + 1) * h
-    u2, u3 = u * u, u * u * u
-    return (2 * u3 - 3 * u2 + 1) * y0 + (u3 - 2 * u2 + u) * m0 + (-2 * u3 + 3 * u2) * y1 + (u3 - u2) * m1
+            d = ((fr[i] - fr[ip]) % n or n) + ((fr[inn] - fr[i]) % n or n)
+            return (I[inn] - I[ip]) / d
+        if i == 0 or i == m - 1:
+            if ease_ends: return np.zeros(m)
+            j0, j1 = max(i - 1, 0), min(i + 1, m - 1); return (I[j1] - I[j0]) / (fr[j1] - fr[j0])
+        return (I[i + 1] - I[i - 1]) / (fr[i + 1] - fr[i - 1])
+    T = [tan(i) for i in range(m)]
+    for t in range(n):
+        if loop:
+            tt = t % n
+            segs = [(j, (j + 1) % m, fr[j], fr[j + 1] if j + 1 < m else fr[0] + n) for j in range(m)]
+            if tt < fr[0]: tt += n
+            j, j2, x0, x1 = next(sg for sg in segs if sg[2] <= tt <= sg[3])
+        else:
+            if t <= fr[0]: Wt[t] = I[0]; continue
+            if t >= fr[-1]: Wt[t] = I[m - 1]; continue
+            j = max(i for i in range(m - 1) if fr[i] <= t); j2 = j + 1; x0, x1 = fr[j], fr[j2]; tt = t
+        h = x1 - x0; u = (tt - x0) / h; u2, u3 = u * u, u * u * u
+        Wt[t] = (2 * u3 - 3 * u2 + 1) * I[j] + (u3 - 2 * u2 + u) * h * T[j] + (-2 * u3 + 3 * u2) * I[j2] + (u3 - u2) * h * T[j2]
+    return Wt
 
 
 # ------------------------------------------------------------------ solve one frame
 def body(pv):
     Q = np.tile(np.eye(3), (NB, 1, 1))
-    rx, rf, rz = pv["root"]; Hp = Hr[0] + B(rx, rf, rz)
+    rx, rf, rz = np.array(pv["root"]) * RS; Hp = Hr[0] + B(rx, rf, rz)
     Q[0] = euler(*pv["pel"])
     for n, k in (("Spine", "spine"), ("Chest", "chest"), ("Neck", "neck"), ("Head", "head")):
         Q[BI[n]] = Q[PAR[BI[n]]] @ euler(*pv[k])
     for s in "LR":
-        up, fw = pv["clav" + s]; L = axang(EY, -up) @ axang(EZ, fw)          # raise = roll the clavicle up, fwd = swing forward
+        up, fw = pv["clav" + s]; L = axang(EY, -up) @ axang(EZ, -fw)          # raise = roll the clavicle up, fwd = swing forward
         if s == "R": L = MX @ L @ MX
         Q[BI[f"Clavicle.{s}"]] = Q[BI["Chest"]] @ L
         for n in ("UpperArm", "Forearm", "Hand"): Q[BI[f"{n}.{s}"]] = Q[BI[f"Clavicle.{s}"]]
@@ -180,12 +183,16 @@ def body(pv):
 def solve_legs(Q, Hp, pv):
     H = fk(Q, Hp)
     for s in "LR":
-        out, f, z, yaw, pit = pv["foot" + s]; sg = 1 if s == "L" else -1
-        Rf = axang(EZ, sg * yaw) @ axang(EX, -pit)
-        a0 = ANK0[s] + B(sg * out, f, 0); a0[2] = lift_for(Rf, s) + z
+        out, f, z, yaw, pit = pv["foot" + s]; sg = 1 if s == "L" else -1; out, f, z = out * RS, f * RS, z * RS
+        Rp = axang(EX, -pit); Rf = axang(EZ, sg * yaw) @ Rp
+        lz, dxy = lift_for(Rf, s, anchor=True, Rp=Rp)
+        w = 1.0                                                       # always roll about the contact point (no blend on landing = no slide)
+        a0 = ANK0[s] + B(sg * out, f, 0) + dxy * w; a0[2] = lz + z
         it, ic, i_f = BI[f"Thigh.{s}"], BI[f"Calf.{s}"], BI[f"Foot.{s}"]
         hip = H[it]
         fwd = Q[0] @ (-EY); pole = nrm(fwd + Q[0] @ (EX * sg) * pv["knee" + s])
+        kd = float(np.clip(pv["kdown" + s], -1, 1))
+        if kd: pole = nrm((1 - abs(kd)) * pole + kd * np.array([0, 0, -1.0]))      # + kneeling leg (knee down), - knees up (sitting on the floor)
         e, t, v = two_bone(hip, a0, blen(f"Thigh.{s}"), blen(f"Calf.{s}"), pole)
         u0, f0, n0 = LIMB[("leg", s)]; u = nrm(t - hip); n1 = nrm(np.cross(v, u))
         Q[it] = frame_map(u0, n0, nrm(e - hip), n1); Q[ic] = frame_map(f0, n0, nrm(t - e), n1); Q[i_f] = Rf
@@ -204,24 +211,48 @@ def arm_target(spec, s, Q, H):
     if kind == "lm":
         _, name, off = spec
         return lm_world(name, s, Q, H) + Q[ic] @ B(sg * off[0], off[1], off[2])
+    if kind == "w":                                           # absolute world point (out from the centre line, fwd, up), e.g. a floor contact
+        o = np.array(spec[1]) * RS; return B(sg * o[0], o[1], o[2])
     if kind == "t":
-        o = spec[1]; return sh + Q[ic] @ B(sg * o[0], o[1], o[2])
+        o = np.array(spec[1]) * RS; return sh + Q[ic] @ B(sg * o[0], o[1], o[2])
     raise ValueError(spec)
 
 
+CLAV_AUTO = {"on": True}
+
+
+def clav_lift(Q, Hp, targets):
+    """raise each clavicle with the arm elevation above ~55 deg (0 below, up to 22 deg straight up)"""
+    H = fk(Q, Hp); ic = BI["Chest"]
+    for s in "LR":
+        sg = 1 if s == "L" else -1; sh = H[BI[f"UpperArm.{s}"]]
+        d = Q[ic].T @ nrm(targets[s] - sh); elev = math.degrees(math.acos(np.clip(-d[2], -1, 1)))      # 0 = hanging, 180 = up
+        lift = 22.0 * float(np.clip((elev - 55) / 110, 0, 1)) ** 1.3
+        if lift <= 0: continue
+        L = axang(EY, -lift); L = MX @ L @ MX if s == "R" else L
+        icl = BI[f"Clavicle.{s}"]; Q[icl] = Q[icl] @ L
+        for n in ("UpperArm", "Forearm", "Hand"): Q[BI[f"{n}.{s}"]] = Q[icl]
+    return Q
+
+
 def solve_arms(Q, Hp, pv, targets):
+    if CLAV_AUTO["on"]: Q = clav_lift(Q, Hp, targets)
     H = fk(Q, Hp); ic = BI["Chest"]
     for s in "LR":
         sg = 1 if s == "L" else -1
         iu, il, ih = BI[f"UpperArm.{s}"], BI[f"Forearm.{s}"], BI[f"Hand.{s}"]
         sh = H[iu]; po = pv["pole" + s]; pole = Q[ic] @ nrm(B(sg * po[0], po[1], po[2]))
+        u = nrm(targets[s] - sh); v = pole - (pole @ u) * u; vn = np.linalg.norm(v)
+        if vn < 0.6:                                     # pole close to the arm line: blend in a down-back reference (stateless, smooth)
+            ref = Q[ic] @ nrm(np.array([0.25 * sg, 1.0, -0.6])); ref = ref - (ref @ u) * u
+            if np.linalg.norm(ref) < 0.3: ref = Q[ic] @ np.array([0, 0, -1.0]); ref = ref - (ref @ u) * u
+            w = (0.6 - vn) / 0.6; w = w * w * (3 - 2 * w); pole = nrm((1 - w) * (v / max(vn, 1e-9)) + w * nrm(ref))
         e, t, v = two_bone(sh, targets[s], blen(f"UpperArm.{s}"), blen(f"Forearm.{s}"), pole)
         u0, f0, n0 = LIMB[("arm", s)]; u = nrm(t - sh); n1 = nrm(np.cross(v, u))
         Q[iu] = frame_map(u0, n0, nrm(e - sh), n1); Q[il] = frame_map(f0, n0, nrm(t - e), n1)
         tw, fl, dv = pv["hand" + s]
-        d0 = REST_DIR[f"Hand.{s}"]; palm0 = np.array([-sg, 0, 0.0]); thumb0 = -EY
-        E = axang(d0, -sg * tw) @ axang(thumb0 * sg, fl) @ axang(palm0, dv * 0)    # twist about the hand axis, flex about the thumb axis
-        if dv: E = E @ axang(nrm(np.cross(d0, palm0)), dv)
+        E = axang(REST_DIR["Hand.L"], -tw) @ axang(EY, fl) @ axang(-EX, dv)     # authored for the left hand, mirrored for the right
+        if s == "R": E = MX @ E @ MX
         Q[ih] = Q[il] @ E
     return Q
 
@@ -249,14 +280,30 @@ def resolve(p):
 
 
 def run_clip(c):
-    n = c["frames"]; loop = c.get("loop", False)
+    n = c["frames"]; loop = c.get("loop", False); CLAV_AUTO["on"] = c.get("clav_auto", True)
+    if "pose_fn" in c:                                        # procedural clip (walk): one full pose per frame
+        c = dict(c, keys=[(f, c["pose_fn"](f, n)) for f in range(n)], loop=False, ease=False, _direct=True)
     keys = [(f, resolve(p)) for f, p in c["keys"]]
     fr = [f for f, _ in keys]
-    Wt = key_weights(fr, n, loop, c.get("ease", True))
     vals = np.array([flat(p) for _, p in keys])
+    same = lambda a, b: np.allclose(vals[a], vals[b]) and all(keys[a][1]["arm" + s] == keys[b][1]["arm" + s] for s in "LR")
+    m = len(keys)
+    flat_keys = [(same(i, (i - 1) % m) if (loop or i > 0) else False) or (same(i, (i + 1) % m) if (loop or i < m - 1) else False)
+                 for i in range(m)]
+    Wt = np.eye(n) if c.get("_direct") else key_weights(fr, n, loop, flat_keys, c.get("ease", True))
+    if c.get("_direct"): SV = vals
+    else:                                                     # scalar channels: monotone cubic per channel (no overshoot: feet stay on the floor)
+        from scipy.interpolate import PchipInterpolator
+        X = np.array(fr, float); Y = vals
+        if loop:
+            X = np.concatenate([X - n, X, X + n]); Y = np.concatenate([vals, vals, vals])
+            if fr[0] != 0 or True:
+                order = np.argsort(X); X, Y = X[order], Y[order]
+        if len(X) == 1: SV = np.repeat(Y, n, 0)
+        else: SV = PchipInterpolator(X, Y, axis=0, extrapolate=True)(np.clip(np.arange(n, dtype=float), None if loop else X[0], None if loop else X[-1]))
     out = []
     for f in range(n):
-        v = Wt[f] @ vals; pv = unflat(v)
+        v = SV[f]; pv = unflat(v)
         for ov in c.get("overlay", []): ov(pv, f, n)
         Q, Hp = body(pv); Q = solve_legs(Q, Hp, pv); H = fk(Q, Hp)
         tg = {}
@@ -264,9 +311,14 @@ def run_clip(c):
             T = sum(w * arm_target(p["arm" + s], s, Q, H) for w, (_, p) in zip(Wt[f], keys))
             for ov in c.get("arm_overlay", []): T = ov(T, s, f, n, Q, H)
             tg[s] = T
-        Q = solve_arms(Q, Hp, pv, tg); H = fk(Q, Hp)
-        out.append((Q, H))
-    return out
+        out.append((Q.copy(), Hp, pv, tg))
+    if c.get("push", True):
+        import push as PU
+        return PU.push_clip(c, out)
+    res = []
+    for Qb, Hp, pv, tg in out:
+        Q = solve_arms(Qb.copy(), Hp, pv, tg); res.append((Q, fk(Q, Hp)))
+    return res
 
 
 def sinw(f, n, cycles=1, phase=0.0): return math.sin(2 * math.pi * (cycles * f / n + phase))

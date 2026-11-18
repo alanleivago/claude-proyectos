@@ -45,7 +45,8 @@ def zigzag(P, Pa):
 
 def measure(npz):
     A = np.load(npz, allow_pickle=True); clips = json.loads(str(A["clips"])); res = {}
-    for c in clips:
+    ash = set(json.loads(str(T.AN["clips"])))
+    for c in [c for c in clips if c in ash]:                      # authored clips: see flirty_check.py
         Pw, Pa = joints_w(A["q_" + c], A["l_" + c]), joints_a(c)
         aw = acc(Pw); aa = acc(Pa)
         ex = aw - (1.5 * aa + 0.002)

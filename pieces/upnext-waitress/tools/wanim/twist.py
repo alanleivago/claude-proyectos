@@ -40,7 +40,8 @@ def world_Q(q):
 def measure(npz, thr=6.0):
     A = np.load(npz, allow_pickle=True); clips = json.loads(str(A["clips"])); out = {}
     iw = [T.BI[b] for b in BONES]; ia = [T.BA[b] for b in BONES]
-    for c in clips:
+    ash = set(json.loads(str(T.AN["clips"])))
+    for c in [c for c in clips if c in ash]:                      # authored clips: see flirty_check.py
         sw = np.abs(spins(world_Q(A["q_" + c]), T.RbW, iw))
         sa = np.abs(spins([Q for Q, H in T.decode(c)], T.RbA, ia))
         bad = (sw > thr) & (sw > 2 * sa + 3)

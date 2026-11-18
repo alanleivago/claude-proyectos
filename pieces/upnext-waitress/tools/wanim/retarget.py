@@ -344,7 +344,7 @@ BODYF = _F[np.isin(_FP, ["torso", "band", "pelvis", "head", "face", "neck", "leg
 ARMV = {s: np.nonzero(np.isin(VPART, ["forearm" if s == "R" else "forearm_m"]))[0] for s in "LR"}
 HANDV = {s: ARMV[s][VrW[ARMV[s], 2] < 0.93] for s in "LR"}
 LEGF = {s: _F[(_FP == "leg") & ((_XS > 0) == (s == "L"))] for s in "LR"}
-LEGLOW = {s: np.unique(LEGF[s][VrW[LEGF[s]].mean(1)[:, 2] < 0.78]) for s in "LR"}
+LEGLOW = {s: (lambda v: v[VrW[v, 2] < 0.80])(np.unique(LEGF[s][VrW[LEGF[s]].mean(1)[:, 2] < 0.78])) for s in "LR"}   # crotch ring excluded
 
 
 def _closest(p, a, b, c):
@@ -480,6 +480,12 @@ def run_clip(clip, loop):
             sm = gsmooth([L[s][key] for L in loc], loop, sig)
             for L, v in zip(loc, sm): L[s][key] = v
 
+    return backend(clip, loop, rec, base, loc)
+
+
+def backend(clip, loop, rec, base, loc):
+    """shared back end: elbow-path smoothing, peak-keeping push-out rounds, final solve with floor pass, twist calming"""
+    ic = BI["Chest"]
     cur = [{s: dict(L[s]) for s in "LR"} for L in loc]
     # elbow path smoothing: solve, take the elbow in the chest frame, smooth it, re-aim the poles at it
     for _ in range(2):
@@ -600,8 +606,9 @@ def main():
     clips = json.loads(str(AN["clips"]))
     only = sys.argv[1].split(",") if len(sys.argv) > 1 else None
     npz = os.path.join(ROOT, "ref", "anim_w.npz")
-    data = dict(np.load(npz, allow_pickle=True)) if (only and os.path.exists(npz)) else {}
+    data = dict(np.load(npz, allow_pickle=True)) if os.path.exists(npz) else {}
     data.pop("clips", None)
+    if not only: data = {k: v for k, v in data.items() if k[2:] not in clips}      # keep authored (non-Ashley) clips
     lines = []
     for c in clips:
         if only and c not in only: continue
@@ -614,8 +621,10 @@ def main():
     names = sorted(k[2:] for k in data if k.startswith("q_"))
     np.savez(npz, clips=json.dumps(names), **data)
     # actions / face tracks (same clip names, speeds scaled to her legs, engine units = Ashley's)
-    acts = {}
-    for c in names:
+    old_a = json.load(open(os.path.join(ROOT, "out", "actions.json"))) if os.path.exists(os.path.join(ROOT, "out", "actions.json")) else {}
+    old_f = json.load(open(os.path.join(ROOT, "out", "face_tracks.json"))) if os.path.exists(os.path.join(ROOT, "out", "face_tracks.json")) else {}
+    acts = {c: old_a[c] for c in names if c not in clips and c in old_a}
+    for c in [c for c in names if c in clips]:
         a = dict(A0.get(c, {})); a["frames"] = len(data["q_" + c]) - 1 if c != "his_idle" else a.get("frames", 99)
         if "speed_m_per_s" in a:
             a["speed_m_per_s"] = round(a["speed_m_per_s"] * K, 4); a["speed_units_per_s"] = round(a["speed_m_per_s"] * RG.S_ENGINE, 3)
@@ -623,7 +632,15 @@ def main():
         acts[c] = a
     json.dump(acts, open(os.path.join(ROOT, "out", "actions.json"), "w"), indent=1)
     meta = json.load(open(os.path.join(ROOT, "ref", "face_meta.json")))
-    ft = {"_meta": meta}; ft.update({c: F0.get(c, [[1, "open", "neutral"]]) for c in names})
+    REMAP = {"oh": "surprised", "parted": "talkSmall", "kissBlow": "kiss", "bedroomSide": "bedroom", "winkL": "winkR", "eyeRoll": "lookUp",
+             "dreamy": "soft", "glance": "gazeR"}                                # cells replaced by the flirty set
+    def fix(n, lst):
+        b = n.replace("+blush", ""); sfx = n[len(b):]
+        return n if n in lst else REMAP.get(b, b) + sfx
+    ft = {"_meta": meta}
+    for c in names:
+        if c in clips: ft[c] = [[k[0], fix(k[1], meta["face_eyes"]), fix(k[2], meta["face_mouth"])] for k in F0.get(c, [[1, "open", "neutral"]])]
+        elif c in old_f: ft[c] = old_f[c]
     json.dump(ft, open(os.path.join(ROOT, "out", "face_tracks.json"), "w"), indent=1)
     if not only: open(os.path.join(ROOT, "ref", "checks.txt"), "w").write("\n".join(lines) + "\n")
     print("RETARGET K", round(K, 4), "clips", len(names))

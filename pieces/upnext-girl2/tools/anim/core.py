@@ -51,7 +51,8 @@ def _hand0(s):
     return d0, p0
 
 
-HAND0 = {s: _hand0(s) for s in "LR"}
+HAND0 = ({s: (np.asarray(G["hand0"][k][0]), np.asarray(G["hand0"][k][1])) for k, s in enumerate("LR")} if "hand0" in G.files
+         else {s: _hand0(s) for s in "LR"})          # v6: fixed hand frames (the rebuilt hands are modelled in them)
 
 
 def two_bone(s0, t, a, b, pole):

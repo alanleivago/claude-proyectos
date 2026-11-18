@@ -13,7 +13,7 @@ ARM = {s: np.nonzero(np.isin(T.VPART, ["forearm" if s == "R" else "forearm_m"]))
 BODYF = F[np.isin(FP, ["torso", "band", "pelvis", "head", "face", "neck", "leg"])]
 XS = np.array([T.VrW[f[0], 0] for f in F])
 LEGF = {s: F[(FP == "leg") & ((XS > 0) == (s == "L"))] for s in "LR"}
-LEGV = {s: np.unique(LEGF[s][T.VrW[LEGF[s]].mean(1)[:, 2] < 0.78]) for s in "LR"}   # below the crotch (thighs touch at the top by design)
+LEGV = {s: (lambda v: v[T.VrW[v, 2] < 0.80])(np.unique(LEGF[s][T.VrW[LEGF[s]].mean(1)[:, 2] < 0.78])) for s in "LR"}   # below the crotch (thighs touch at the top by design)
 
 
 def closest(p, a, b, c):

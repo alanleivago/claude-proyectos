@@ -74,6 +74,17 @@ def brow_mask(img):
 EM = eye_mask(E0)
 OPEN = EM & np.array([[is_c(E0, x, y, "ghjk") or (is_c(E0, x, y, "f") and y >= 11 and IRIS[0] <= x <= IRIS[1]) for x in range(EW)] for y in range(EH)])
 BM = brow_mask(E0)
+# eye interior (sclera + iris) per row, tex coords -> cell coords (x - 5, y - 22); the outline (lashes, outer rim) stays
+_ROWS = {34: (10, 20), 35: (9, 20), 36: (9, 20), 37: (9, 20), 38: (9, 20), 39: (9, 20), 40: (9, 20), 41: (9, 20), 42: (10, 19), 43: (11, 18)}
+INT = [(y - 22, x - 5) for y, (a, b) in _ROWS.items() for x in range(a, b + 1)]
+INT_MASK = np.zeros(E0.shape[:2], bool)
+for _y, _x in INT: INT_MASK[_y, _x] = True
+INT_SHADE = {}
+for _y, _x in INT:
+    a = _ROWS[_y + 22][0] - 5
+    INT_SHADE[(_y, _x)] = "g" if _y == 12 else ("h" if (_y == 13 or _y == 21 or _x == a) else "j")
+IRIS_BLOCK = {(y, x): E0[y, x].copy() for y in range(12, 22) for x in range(8, 16)
+              if INT_MASK[y, x] and not is_c(E0, x, y, "hj")}
 
 
 def skin_at(x, y):                      # erased skin: shaded forehead band above, light cheek below (his split)
@@ -125,22 +136,20 @@ def eye_draw(img, lid=0, low=0, closed=None, gx=0, gy=0, iris="n", spark=False):
     src = E0.copy()
     eye_open(img)
     if gx or gy or iris != "n":
-        ix0, ix1 = IRIS
-        for y in range(EY0 + 2, EY1 + 1):                                     # iris -> sclera
-            for x in range(ix0, ix1 + 1):
-                if OPEN[y, x]: img[y, x] = P["j"] if y < EY1 else P["h"]
-        cx, cy = (ix0 + ix1) // 2 + gx, 16 + gy
+        # v3: the whole eye interior is rebuilt (clean sclera, then the iris), so no column of the old iris rim
+        # (the grey 'g' line at tex x 13) survives as a vertical line in shocked / surprised / gaze cells
+        for (y, x) in INT: img[y, x] = P[INT_SHADE[(y, x)]]
+        cx, cy = 12 + gx, 16 + gy
         if iris == "n":
-            for y in range(EY0 + 2, EY1 + 1):
-                for x in range(ix0, ix1 + 1):
-                    xs, ys = x + gx, y + gy
-                    if OPEN[y, x] and 0 <= xs < EW and 0 <= ys < EH and OPEN[ys, xs]: img[ys, xs] = src[y, x]
+            for (y, x), c in IRIS_BLOCK.items():
+                ys, xs = y + gy, x + gx
+                if (ys, xs) in INT: img[ys, xs] = c
         elif iris == "small":
-            stamp(img, [".ff.", "fkkf", "fkkf", ".ff."], cx - 2, cy - 1, OPEN)
+            stamp(img, [".ff.", "fkkf", "fKKf", ".ff."], cx - 2, cy - 1, INT_MASK)
         elif iris == "tiny":
-            stamp(img, ["ll", "ll"], cx - 1, cy - 1, OPEN)
+            stamp(img, ["ll", "ll"], cx - 1, cy - 1, INT_MASK)
         elif iris == "heart":
-            stamp(img, [".r.r.", "rrrrr", "rRrrr", ".rrr.", "..r.."], cx - 2, cy - 2, None)
+            stamp(img, [".r.r.", "rrrrr", "rRrrr", ".rrr.", "..r.."], cx - 2, cy - 2, INT_MASK)
         elif iris == "spiral":
             for y, x in zip(*np.nonzero(EM)): img[y, x] = BASE0[y, x]
             stamp(img, [".llll..", "l....l.", "l.ll..l", "l.l.l.l", "l..l..l", ".l...l.", "..lll.."], cx - 4, 12)
@@ -183,15 +192,30 @@ def both(img, eye=None, brow=None, eye1=None, brow1=None):
     side(img, 1, lambda c: (eye_draw(c, **eye1), draw_brow(c, **brow1)))
 
 
+BLUSH_ALPHA = 0.68           # v5: ~32 % lighter than the old opaque blush
 def blush_eyes(img):
+    """soft blush on the cheeks (same place as v4): pink blended over the skin with a feathered edge (core alpha, half
+    alpha on the outer ring, a 1-texel checker dither beyond it) and the three hatch strokes at the same reduced alpha"""
     for s in (0, 1):
         def f(c):
-            for y in (EH - 2, EH - 1):
-                for x in range(3, 15):
-                    if is_c(c, x, y, "eb"): put(c, x, y, "y")
+            r0 = EY1 + 3                                          # 2 clear rows below the lower lash line (cell row 21)
+            x0, x1, y0, y1 = 4, 14, r0, r0 + 2
+            src = c.copy()
+            def mix(x, y, col, a):
+                if 0 <= y < c.shape[0] and 0 <= x < c.shape[1] and is_c(src, x, y, "eb"):
+                    c[y, x] = np.round(src[y, x] * (1 - a) + P[col] * a).astype(int)
+            for y in range(y0 - 1, y1 + 2):
+                for x in range(x0 - 1, x1 + 2):
+                    edge = (y in (y0, y1)) or (x in (x0, x1))
+                    out = y < y0 or y > y1 or x < x0 or x > x1
+                    if out: a = BLUSH_ALPHA * 0.30 if (x + y) % 2 == 0 else 0.0           # dither ring
+                    else: a = BLUSH_ALPHA * (0.55 if edge else 1.0)
+                    if a > 0: mix(x, y, "y", a)
+            src2 = c.copy()
             for k in range(3):
                 bx = 5 + 3 * k
-                put(c, bx + 1, EH - 2, "Y"); put(c, bx, EH - 1, "Y")
+                for (x, y) in ((bx + 2, r0), (bx + 1, r0 + 1), (bx, r0 + 2)):
+                    c[y, x] = np.round(src2[y, x] * (1 - BLUSH_ALPHA) + P["Y"] * BLUSH_ALPHA).astype(int)
         side(img, s, f)
 
 

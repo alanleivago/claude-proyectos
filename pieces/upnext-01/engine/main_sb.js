@@ -28,7 +28,9 @@ const QB = new URLSearchParams(location.search);
 //   k = 0.011-0.020 (median 0.016), straightness rms 2.2 -> 1.2 px after undistortion
 //   ANIM_FPS 30: inside motion the ref has only 2.4 % held duplicate frames (12 fps would hold 60 %, 24 fps pulldown 20 %):
 //   characters and camera move every frame; only texture-swap expressions step
-export const LENS_K = Number(QB.get('lens') ?? 0.016), ANIM_FPS = Number(QB.get('afps') ?? 30);
+export const LENS_K = Number(QB.get('lens') ?? 0.016), ANIM_FPS = Number(QB.get('afps') ?? (QB.has('film') ? 15 : 30));
+// v2: DenXjPdN-UE (same series) animates its characters ON TWOS (15 fps; even/odd frame-difference ratio 3.1, 67 % of moving
+// seconds) while the camera keeps moving at 30 -> film mode steps characters at 15 fps, cameras stay at 30
 // emissive-only (HDR-style) bloom like the ref: only surfaces flagged emissive (alpha 2 in the HDR target: LED clock, phone
 // screen, window sky, hallway light, CRT) feed it; two gaussians fitted to the ref halos (door edge: sigma ~18 px @1080 with
 // half-plane excess 18 % at 6.5 px; LED digits: tighter core) -> sigma 1.5 + 4.5 low-res px, gains k1 + k2.
@@ -195,7 +197,7 @@ export function drawText(s, x, y, size, fill, opts = {}) {
 }
 
 const DBG = new URLSearchParams(location.search).get('cam')?.split(',').map(Number);   // debug: ?cam=x,y,z,lx,ly,lz[,fov]
-const TR = 0.0; // dissolve length (s), centred on each shot boundary
+const TR = 0.6; // dissolve length (s) for shots with hard: false (film: 11 -> 12); storyboard shots are all hard
 function shotAt(t) { let i = 0; while (i < SHOTS.length - 1 && t >= SHOTS[i + 1].t0) i++; return i; }
 
 window.renderFrame = (f) => {
@@ -205,11 +207,11 @@ window.renderFrame = (f) => {
   const next = SHOTS[i + 1], cur = SHOTS[i];
   if (next && !next.hard && t > next.t0 - TR / 2) { b = i + 1; m = (t - (next.t0 - TR / 2)) / TR; }
   else if (i > 0 && !cur.hard && t < cur.t0 + TR / 2) { a = i - 1; m = (t - (cur.t0 - TR / 2)) / TR; }
-  if (a !== b) blk = Math.max(1, Math.round(1 + 9 * Math.sin(Math.PI * m)));
+  // upnext: plain cross-dissolve (no PS1 mosaic)
   for (const [k, rt] of [[a, rtA], [b, rtB]]) {
     const s = SHOTS[k];
     const ta = Math.floor(t * ANIM_FPS + 1e-6) / ANIM_FPS;   // character / camera animation clock (ANIM_FPS steps; container stays 30 fps)
-    s.update(ta - s.t0, ta);
+    s.update(ta - s.t0, ta, t - s.t0);
     if (DBG) { s.camera.position.set(DBG[0], DBG[1], DBG[2]); s.camera.lookAt(DBG[3], DBG[4], DBG[5]); if (DBG[6]) { s.camera.fov = DBG[6]; s.camera.updateProjectionMatrix(); } }
     renderer.setRenderTarget(rt); renderer.render(s.scene, s.camera);
     if (s.fx) { s.fx.draw(fctx, t, s.camera); fxTex.needsUpdate = true; renderer.autoClear = false; renderer.render(fxScene, fxCam); renderer.autoClear = true; }

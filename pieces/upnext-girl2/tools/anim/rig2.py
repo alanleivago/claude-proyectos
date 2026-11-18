@@ -11,6 +11,10 @@ from scipy.spatial.transform import Rotation as Rot
 import scipy.sparse as sp, scipy.sparse.csgraph as cg
 
 REST_ABD = 3.0
+HAND_K = 0.87                 # v9: original hands scaled down 13 %
+import sys as _sys9, os as _os9
+_sys9.path.insert(0, _os9.path.dirname(__file__))
+import hands2 as _H2pre
 SKIRT_WIDEN = 0.13
 R = np.load("ref/rig_in_v2.npz", allow_pickle=True)
 V = R["V"].astype(float).copy(); F = R["F"]; W0 = json.loads(str(R["weights"]))
@@ -188,6 +192,15 @@ for s_ in "LR":                                              # hands: rigid on t
     cf_ = [c for c, d in comp_dom.items() if d == "Forearm." + s_][0]
     for i in np.nonzero((lab == cf_) & keep_arm)[0]: W0[i] = {f"Hand.{s_}": 1.0}
     for i in ARMS["hand_rim"][s_]: W0[i] = {f"Hand.{s_}": 0.55, f"Forearm.{s_}": 0.45}
+# v9: original hands, a bit smaller (scaled about the wrist; the wrist rim scales less so the join stays closed);
+# the arm loft's last ring / cap inside the hand scales with it
+for s_ in "LR":
+    cf_ = [c for c, d in comp_dom.items() if d == "Forearm." + s_][0]; w_ = J["wrist" + s_]
+    for i in np.nonzero((lab == cf_) & keep_arm)[0]:
+        hw_ = W0[i].get(f"Hand.{s_}", 0); k_ = 1 - (1 - HAND_K) * min(1.0, hw_)
+        V[i] = w_ + (V[i] - w_) * k_
+    for j, wj in enumerate(ARMS["W"]):
+        if wj.get(f"Hand.{s_}", 0) >= 0.999: ARMS["V"][j] = w_ + (ARMS["V"][j] - w_) * HAND_K
 replace_parts(~keep_arm, ARMS)
 FOOTDIR_ = {s_: J["toe" + s_] - J["ankle" + s_] for s_ in "LR"}
 BOOTS = P2.build_boots(V, F, lab, comp_dom, J, FOOTDIR_)
@@ -357,16 +370,18 @@ for v_ in ("bare", "tights"):
     paint_legs(src, dst, SKIN[v_])
     im_ = _Image.open(dst).convert("RGB")
     im_ = BF.mirror_texture(np.asarray(im_), V, F, FUV, FMAT, lab, comp_dom, ARM_R_ORIG, BCX)
-    for s_ in "LR":                                          # faint finger lines on the fist / hand
+    for s_ in "LR":                                          # v9: original hand texture + a few pixelated finger lines
         hf_ = np.nonzero(np.array([all(W0[v_i].get(f"Hand.{s_}", 0) >= 0.5 for v_i in f_) for f_ in F]) & (FMAT == 0))[0]
-        hv_ = np.unique(F[hf_]); c_ = V[hv_].mean(0); ax_ = np.linalg.svd(V[hv_] - c_)[2]
-        d0_ = J["handtip" + s_] - J["wrist" + s_]; d0_ /= np.linalg.norm(d0_); p0_ = ax_[2] - (ax_[2] @ d0_) * d0_; p0_ /= np.linalg.norm(p0_)
-        im_ = BF.finger_lines(im_, V, F, FUV, FMAT, hf_, J["wrist" + s_], d0_, p0_)
+        d0_, p0_ = (np.asarray(x_) for x_ in _H2pre.HAND0_FIX[s_])
+        im_ = BF.pixel_finger_lines(im_, V, F, FUV, FMAT, hf_, J["wrist" + s_], d0_, p0_, s_)
     im_ = _Image.fromarray(im_)
-    P2.paint_arms(im_, ARMS, ARM_PAL); P2.paint_boots(im_, BOOTS, BOOT_PAL)
+    import hands2 as _H2
+    P2.paint_arms(im_, ARMS, ARM_PAL); P2.paint_boots(im_, BOOTS, BOOT_PAL); _H2.paint_hands(im_, ARM_PAL[0])
     P2.paint_neck(im_, NECKP, ((247, 194, 180), (238, 182, 168)), ((184, 125, 66), (150, 98, 50), (160, 108, 56)))
     im_.save(dst, quality=96); tex[v_][0] = dst
-np.savez("ref/rig2.npz", V=V, Vr=Vr, F=F, FUV=FUV, FMAT=FMAT, W=Wm, names=np.array(names), par=par, Hr=Hr, Tr=Tr, Hp=Hp, Tp=Tp,
+import hands2 as _H2b
+HAND0_SAVE = np.array([[_H2b.HAND0_FIX[s_][0], _H2b.HAND0_FIX[s_][1]] for s_ in "LR"])
+np.savez("ref/rig2.npz", hand0=HAND0_SAVE, V=V, Vr=Vr, F=F, FUV=FUV, FMAT=FMAT, W=Wm, names=np.array(names), par=par, Hr=Hr, Tr=Tr, Hp=Hp, Tp=Tp,
          Rb=Rb, Qidle=Q, S=S, zmin=zmin, tex=json.dumps(tex), joints=json.dumps({k: v.tolist() for k, v in J.items()}), lab=lab,
          comp_dom=json.dumps({int(k): str(v) for k, v in comp_dom.items()}))
 # check: forward skin of rest with Qidle == posed

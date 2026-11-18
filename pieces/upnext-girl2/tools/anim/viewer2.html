@@ -15,10 +15,12 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 const q = new URLSearchParams(location.search);
 const W = +(q.get('w') || 1080), H = +(q.get('h') || 1920);
-const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+const ALPHA = q.get('bg') === 'none';
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true, alpha: ALPHA });
 renderer.setPixelRatio(1); renderer.setSize(W, H); renderer.outputColorSpace = THREE.SRGBColorSpace;
 document.body.appendChild(renderer.domElement);
-const scene = new THREE.Scene(); scene.background = new THREE.Color().setRGB(235 / 255, 221 / 255, 199 / 255, THREE.SRGBColorSpace);
+const scene = new THREE.Scene(); scene.background = ALPHA ? null : new THREE.Color().setRGB(235 / 255, 221 / 255, 199 / 255, THREE.SRGBColorSpace);
+if (ALPHA) renderer.setClearColor(0x000000, 0);
 const cam = new THREE.PerspectiveCamera(30, W / H, 0.5, 400);
 const gltf = await new GLTFLoader().loadAsync('../../out/' + (q.get('glb') || 'girl2_anim.glb'));
 const char = gltf.scene;
@@ -80,6 +82,13 @@ window.focusShot = (n, f, bone, dist, yaw, elev) => {
   cam.position.set(p.x + Math.sin(a) * dist, p.y + elev, p.z + Math.cos(a) * dist); cam.lookAt(p);
   const k = faceAt(n, f + 1); window.setFace(k[1], k[2]); renderer.render(scene, cam);
 };
+// branding: any clip / frame with an explicit camera (position, target in three units), fov, optional yaw of the model
+window.camShot = (n, f, pos, tgt, fov, yaw = 0, eyes = null, mouth = null) => {
+  window.CAMOV = null; window.setAction(n, 'front'); pivot.rotation.y = yaw; action.time = f / 30; mixer.update(0);
+  cam.fov = fov; cam.aspect = W / H; cam.up.set(0, 1, 0); cam.updateProjectionMatrix(); cam.position.set(...pos); cam.lookAt(...tgt);
+  const k = faceAt(n, f + 1); window.setFace(eyes || k[1], mouth || k[2]); renderer.render(scene, cam);
+};
+window.hisShot = (k, eyes = 'open', mouth = 'neutral') => { window.hisView(k, eyes, mouth); };
 window.READY = true;
 </script>
 </body>

@@ -9,6 +9,10 @@ from mathutils import Vector
 
 S = json.load(open(sys.argv[sys.argv.index("--") + 1]))
 sc = R.setup(S.get("size", 400))
+if S.get("transparent"):
+    sc.render.film_transparent = True; sc.render.image_settings.color_mode = "RGBA"
+if S.get("aa"):
+    sc.display.render_aa = S["aa"]
 arm = next(o for o in sc.objects if o.type == "ARMATURE"); arm.hide_render = True
 ob = next(o for o in sc.objects if o.type == "MESH")
 ad = arm.animation_data
@@ -16,12 +20,13 @@ for t in ad.nla_tracks: t.mute = True
 me = ob.data; uvl = me.uv_layers.active
 mi = {m.name: i for i, m in enumerate(me.materials)}
 meta = S["meta"]; cols, rows = meta["cols"], meta["rows"]
-face_loops = {k: [li for p in me.polygons if p.material_index == mi.get(k, -9) for li in p.loop_indices] for k in ("face_eyes", "face_mouth")}
+face_loops = {k: [li for p in me.polygons if p.material_index == mi.get(k, -9) for li in p.loop_indices] for k in ("face_eyes", "face_mouth", "face_cheeks")}
 base = {li: tuple(uvl.data[li].uv) for k in face_loops for li in face_loops[k]}
 
 
 def set_face(eyes, mouth):
-    for key, name in (("face_eyes", eyes), ("face_mouth", mouth)):
+    for key, name in (("face_eyes", eyes), ("face_mouth", mouth), ("face_cheeks", mouth)):     # cheeks follow the mouth cell (engine setFace does the same)
+        if key not in meta: continue
         names = meta[key]; k = names.index(name) if name in names else 0
         du, dv = (k % cols) / cols, -(k // cols) / rows
         for li in face_loops[key]:

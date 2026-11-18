@@ -24,7 +24,7 @@ class A(_AL.A):
 # his_idle's right fist, moved slightly out from the (rebuilt, full) bust so it rests on it instead of sinking in;
 # same fist orientation as his_idle (the whole fist translates)
 BUST_GAIN, BUST_CAP, BUST_ARM = 0.45, 10.0, 0.12     # spring gain, soft cap (deg), coupling to the same-side hand
-FIST_OUT = np.array([0.004, -0.035, 0.006])
+FIST_OUT = np.array([0.004, -0.032, 0.006])
 REST_OUT_R = A(REST_A["R"].t + FIST_OUT, "chest", REST_A["R"].pole, (0, 0, 0), C.HAND0["R"])
 
 FPS = 30.0
