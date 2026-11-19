@@ -14834,6 +14834,7 @@ Todos los mensajes que el usuario escribió en 61 sesiones de Claude Code en est
 - **2026-11-19 02:05** — si arranca, revisa el router. otra cosa: con respecto a si me compro otro router para conectar la fibra por cable, la cuestion es que yo tengo conectado el router Olax en ese unico puerto porque es un puerto de un adaptador que le adapte a la mac por usb, porque como sabes las macbooks no tienen puerto de internet rj4 (o como se llame), solo tienen wifi. Entonces, donde conectaria ese otro cable? o como? Y otra pregunta, todo eso que harias en adspower, no influiria en nada que aqui yo siga con hablando contigo y manejando claude con la fibra? osea podrias hacer eso por alla unicamente con digitel y afuera de adspower usar la fibra en paralelo al mismo tiempo si se puede? Otro detalle importante: Yo uso vpn para hablar contigo aqui, asi que no quiero que ese vpn toque los perfiles tampoco, muy importante eso
 - **2026-11-19 02:43** — ok voy a comprar el adaptador y te aviso cuando lo tenga entonces
 - **2026-11-19 11:04** — ok mientras tanto has commit y push y sube todo esta configuracion e instrucciones que hablamos, porque en la pc quiero hacer algo parecido pero sin las cuestiones de los routers y tal, osea alla lo que quiero es configurar claude para que me publique el contenido en mis canales de youtube (que no estan en adspower alla) pero sin que el vpn toque los navegadores en donde estan los canales
+- **2026-11-19 11:06** — si tapa esos nombres en el archivo
 
 ## Sesión 2026-11-14 — `-Users-alanleiva-claude-proyectos`
 
@@ -16337,14 +16338,14 @@ Las mezclas usan `ffmpeg` y el `.venv` del paso 4. Lo que el PC genere (`.wav`, 
 
 | decision | rationale | recall |
 |----------|-----------|--------|
-| gta6 characters v4 = code block-in (make_character.py: per-material parsing, dual split light shapes, vector print, strokes) -> Flow NB2 render pass on the block-in -> finish_character.py (key, multiply/screen relight, silhouette, grade) | Code-only reads as vector trace; Flow straight on the photo goes generic comic; Flow over the designed block-in keeps palette, print, face and hands and adds paint quality. Matches the paint-over method of Artwod, Rising67 and 21DPS tutorials. | - |
-| Long-form channel: whole myths in 16:9 (25-40 min) in their own era's art; shorts = chapters; pilot = The Odyssey in amphora-bf | yt-viral: Odyssey/whole-myth videos 3-19x channel median; nobody does long vase/tapestry style | - |
 | Only Way Out v2: titles Pricedown Black (Typodermic free desktop licence), cards Barlow Condensed ExtraBold, dialogue Outfit SemiBold subtitles with speaker name; plates repainted from the same Flow photo as each pose | GTA VI site uses proprietary GTA Art Deco; Outfit/Barlow are closest OFL matches. Same-photo plates give correct support, perspective and contact shadow by construction (user's v1 staging complaint). | - |
+| Long-form channel: whole myths in 16:9 (25-40 min) in their own era's art; shorts = chapters; pilot = The Odyssey in amphora-bf | yt-viral: Odyssey/whole-myth videos 3-19x channel median; nobody does long vase/tapestry style | - |
+| gta6 characters v4 = code block-in (make_character.py: per-material parsing, dual split light shapes, vector print, strokes) -> Flow NB2 render pass on the block-in -> finish_character.py (key, multiply/screen relight, silhouette, grade) | Code-only reads as vector trace; Flow straight on the photo goes generic comic; Flow over the designed block-in keeps palette, print, face and hands and adds paint quality. Matches the paint-over method of Artwod, Rising67 and 21DPS tutorials. | - |
 
 | type | text | context | plan/date |
 |------|------|---------|----------|
 | decision | Estado 2026-11-18: router Olax 192.168.150.1 se maneja con tools/olax.py (API /hbapi-json, login challenge md5; funciones: mobile_setbandlock, mobile_setnetmode, router at_send/at_recv para AT+CFUN modo avion = IP nueva, system_getnetoverview). Hoy fibra = WAN del Olax (ONT da DHCP 192.168.1.x), banda bloqueada en BAND13 para apagar Digitel. PLAN: usuario compra 2o adaptador USB-C Ethernet -> ONT directo a la Mac (fibra = ruta por defecto, VPN Surfshark ahi) y Olax solo con SIM en el adaptador actual (en7); proxy local atado a en7 para AdsPower + guardia ASN Digitel/IP nueva + watchdog. Nada probado aun en escritura; esperar adaptador antes de pasar el router a Digitel. | - | 2026-11-18T22:44:02-04:00 |
-| correction | ADSPOWER REGLA ABSOLUTA: nunca abrir un perfil de AdsPower (salvo EXPERIMENTOS k1girwxq) si la IP publica no es de Digitel y no es una IP nueva nunca usada por otro perfil; jamas la fibra Network Speed dentro de un perfil (el canal se dana). Router Olax AX8 Pro en 192.168.150.1 (credenciales y ADSPOWER_API_KEY en .env). Perfiles = canales de YouTube venezolanos. Plan: tools/perfiles.py con guardia de IP + watchdog que cierra el perfil al instante; fibra fuera del Olax; WebRTC y geolocalizacion por IP en cada perfil; no usar el MCP de AdsPower para abrir perfiles, solo la API via la guardia. | - | 2026-11-18T21:53:11-04:00 |
+| correction | ADSPOWER REGLA ABSOLUTA: nunca abrir un perfil de AdsPower (salvo EXPERIMENTOS [PRIVADO]) si la IP publica no es de Digitel y no es una IP nueva nunca usada por otro perfil; jamas la fibra Network Speed dentro de un perfil (el canal se dana). Router Olax AX8 Pro en 192.168.150.1 (credenciales y ADSPOWER_API_KEY en .env). Perfiles = canales de YouTube venezolanos. Plan: tools/perfiles.py con guardia de IP + watchdog que cierra el perfil al instante; fibra fuera del Olax; WebRTC y geolocalizacion por IP en cada perfil; no usar el MCP de AdsPower para abrir perfiles, solo la API via la guardia. | - | 2026-11-18T21:53:11-04:00 |
 | correction | Vera/UpNext covers (from 2026-11-18): NO words on the thumbnail except the episode card 'EPISODE N' + title (e.g. 'The Last Cup'), with EPISODE N sitting just above the title; Vera's image takes more space than Theo's, framed to show a bit of her chest/cleavage; keep the pink diagonal divider line, and Theo's image must be cut along the same diagonal (no black gaps in corners). Music in Vera films must be clearly audible (ep 'Last Cup' v1 was too low). | - | 2026-11-18T14:58:29-04:00 |
 | insight | VoiceStudio profile IDs on the Mac (2026-11-18): Airy = 'Voz ashley clean limpia' 60ea9b99; Pip = 'voz pip gnomo' b63fd159; Vera = 'Voz mesera clean' cf0b8ddb; Theo = 'voz theo pretendiente clean' a66e21f8; Mechayuki = 'Mechayuki' edb5f666 (newer; older duplicate b5360257). Set in pieces/upnext-01/tools/voice_final.py and pieces/vera-01/tools/voice_final.py. PC IDs differ. | - | 2026-11-18T12:18:57-04:00 |
 | insight | Airy + Vera (Mechayuki "UpNext" format) — characters, VoiceStudio voices, pieces, and the never-to-git rule for ripped/bought models
@@ -16571,6 +16572,7 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 ## Historial de commits
 
 ```
+2026-11-19 d128eb6f YouTube publishing plan (AdsPower + Digitel guard, PC VPN bypass) + Olax router client
 2026-11-18 4c73208b Mac sync: pending pieces work, MIGRACION_MAC.md refresh
 2026-11-18 438b883b Sync to Mac: memory copy (memoria_pc/), refreshed migration export, pending scripts/docs/novelas/styles
 2026-11-17 c954b97a Airy + Vera styles: character pipelines, episode 1 engines and analysis docs
@@ -16659,7 +16661,9 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 
 ```
  M .base/graph.nq
+ M .gitignore
  M MIGRACION_MAC.md
+ M Tools/exportar_contexto.py
  M pieces/vera-02/SCRIPT.md
  M pieces/vera-02/engine/film_timeline.json
  M pieces/vera-02/engine/sb.js
@@ -16691,7 +16695,6 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 ?? agente-davis/tiktok/piloto01/sheet.png
 ?? agente-davis/tiktok/piloto01/v2/
 ?? agente-davis/tiktok/piloto01/v3/
-?? docs/
 ?? fuentes/gta6-style/tutorial/
 ?? pieces/agave-amatitan/chars/
 ?? pieces/agave-amatitan/qa/c01.jpg
@@ -19832,6 +19835,7 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 - `.base-ast-cache`
 - `.claude`
 - `.env`
+- `.export_redact.txt`
 - `.log`
 - `.mcp.json`
 - `.venv`
