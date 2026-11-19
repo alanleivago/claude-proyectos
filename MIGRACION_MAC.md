@@ -6,7 +6,7 @@ relatedTo: [CLAUDE.md, CLAUDE.local.md, tools/exportar_contexto.py]
 ---
 # Contexto completo para continuar el trabajo en Antigravity
 
-Generado el 2026-11-18 en la máquina Darwin con `tools/exportar_contexto.py`, a partir de todo lo trabajado con Claude Code: instrucciones, memoria, estilos, estado de piezas, el historial completo de mensajes del usuario, herramientas y git. Solo incluye texto: los videos, audios y modelos 3D están en el repo y en los discos.
+Generado el 2026-11-19 en la máquina Darwin con `tools/exportar_contexto.py`, a partir de todo lo trabajado con Claude Code: instrucciones, memoria, estilos, estado de piezas, el historial completo de mensajes del usuario, herramientas y git. Solo incluye texto: los videos, audios y modelos 3D están en el repo y en los discos.
 
 ## 0. Léeme primero (instrucciones para el agente de Antigravity)
 
@@ -7548,13 +7548,14 @@ The `kimodo/` folder was made by another session and is not part of this library
 
 ## Todas las piezas (más reciente primero)
 
+- 2026-11-18 `pieces/zombie-16-floor30-2` — docs: LOG.md, FACTS.md
+- 2026-11-18 `pieces/vera-02` — docs: SCRIPT.md, SCRIPT_vera01_ref.md
 - 2026-11-18 `pieces/trapiche-cuautla` — docs: ESTADO.md
 - 2026-11-18 `pieces/puro-tuxtla` — docs: ESTADO.md
 - 2026-11-18 `pieces/luto-tacambaro` — docs: ESTADO.md
 - 2026-11-18 `pieces/llavero-saltillo` — docs: ESTADO.md
 - 2026-11-18 `pieces/hotel-mazamitla` — docs: ESTADO.md
 - 2026-11-18 `pieces/barrica-mascota` — docs: ESTADO.md
-- 2026-11-18 `pieces/vera-02` — docs: SCRIPT.md, SCRIPT_vera01_ref.md
 - 2026-11-18 `pieces/viajante-sombrerete` — docs: ESTADO.md
 - 2026-11-18 `pieces/zombie-03-station` — docs: shotlist.md, zombie03_station_v1_revision.md
 - 2026-11-18 `pieces/vendimia-ensenada` — docs: ESTADO.md
@@ -14807,6 +14808,32 @@ Todos los mensajes que el usuario escribió en 61 sesiones de Claude Code en est
   Corre python3 tools/exportar_contexto.py MIGRACION_MAC.md, haz commit de MIGRACION_MAC.md y de cualquier cambio pendiente, y haz push.
   Al final dime cuántos archivos de memoria agregaste, cuántos fusionaste y el hash del commit.
   </pasted_content id="b7ae">
+- **2026-11-18 18:27** — que falta? solo las 3 claves? si es asi abreme el env aqui para pegarlas
+- **2026-11-18 18:30** — ya pegue las 3 que me pediste anteriormente, cual necesitas ahora
+- **2026-11-18 18:31** — pero esas son las mismas, no se han modificado..
+- **2026-11-18 23:19** — ok instala esto ahora https://striped-thief-c4a.notion.site/Obscura-The-Free-AI-Browser-for-Claude-40773bd1b02b81c78387f7a0e98769e8
+  
+  en la PC ya lo instalé y me dijo que te pusiera esto: 
+  Para instalarlo en la Mac (Apple Silicon), pídele al chat de allá:
+  curl -LO https://github.com/h4ckf0r0day/obscura/releases/latest/download/obscura-aarch64-macos.tar.gz && tar xzf obscura-aarch64-macos.tar.gz
+  Y que después lo registre con claude mcp add --scope user obscura -- <ruta>/obscura mcp.
+- **2026-11-18 23:22** — ya conecte el voice studio pero el mcp de obscura no me sale en mcps
+- **2026-11-19 00:22** — Ok ahora instala el plugin de Craft Anything desde github.com/storytold/craft-anything  y walk me through using it.
+  
+  y antes dime si es mejor que reverse engeneer anything osea: https://github.com/morluto/rea   ... o si hace lo mismo y mejor o si el reverse es mejor?
+- **2026-11-19 00:57** — ok pero no lo veo en los mcps para reconectarlo
+- **2026-11-19 01:22** — listo ahora si. ok te explico que es lo que quiero hacer: Tengo varios canales de youtube que manejo en adspower en perfiles con diferentes ips cada uno, y cada uno tiene su huella digital diferente. Para tener una ip diferente en cada perfil utilizo una sim card digitel que le meti a un router marca Olax modelo AX8 Pro que me permite meterle una sim card y usar su internet como wifi, pero no uso su wifi sino que lo tengo conectado a esta macbook por Lan y unicamente uso el internet del digitel y tambien uso una internet de fibra de network speed que tengo conectada al mismo router. La ventaja de usar el internet de la sim digitel es que cada vez que reseteo el router (o se pone en modo avion es lo mismo) me da una ip diferente, con lo cual aprovecho para usarla en otro de mis perfiles de adspower. Es decir que ningun perfil se usa con una misma ip, siempre antes de entrar en otro perfil reseteo el router para que me de una ip diferente. Y lo hago asi porque necesito ips venezolanas ya que los perfiles tienen canales de youtube venezolanos. Asi que que es lo que yo hago: que para todas las actividades normales utilizo mi internet de fibra de network speed, y para entrar a cualquier perfil de adspower utilizo la sim digitel y verifico que tenga una ip diferente antes de entrar en el perfil que voy a entrar. Este cambio lo hago dentro de la direccion tipica que todos los routers tienen de admin, entonces si quiero usar el internet de la fibra tengo que bloquear las bandas al internet de digitel para que no use ese internet de digitel porque otro detalles es que solo tiene 30 gb de datos, y asi me aseguro que se este usando el internet de la fibra, y cuando quiero usar el internet de digitel tengo que desconectarle el cable de la fibra para asegurarme que se esta usando es el internet digitel e igual verifico que tenga una ip diferente siempre. Entonces como puedes ver es toooodo un proceso, el cual quiero que me ayudes a solucionar. El objetivo es que me soluciones ese proceso problematico de alguna manera y tu puedas entrar al adspower, y entrar en cada perfil usando la internet de digitel pero asegurandote de que sea una ip diferente para cada vez que vayas a entrar, osea que tu mismo lo resetees o lo prendas y apagues no se... Porque el objetivo con esto es que tu me publiques los videos en los canales de youtube y tal. Adspower tiene su mcp o api, asi que no se dime tu como lo harias? Si necesitas crear un programa o app nuevo para poder manejar el router puedes hacerlo, lo que sea necesario. Ojo muy importante: Con esta ip (de network speed) que tengo en este momento no puedes entrar a ningun perfil de adspower, unicamente al que se llama EXPERIMENTOS por si acaso, por lo que ya te explique. Dime si quieres y te paso la direccion de la pagina del router para que le hagas reverse engeneer o lo que necesites. Dime tu.
+  
+  Si consideras que para esto si necesitas el reverse engeneer everything puedes instalarlo.
+- **2026-11-19 01:37** — me parece bien, pero algo muy importante es que ya dentro de un perfil NO se puede poner JAMAS la internet e ip de la fibra network speed, eso es inaceptable, porque si eso pasa el perfil se daña de inmediato, y con el mi canal de youtube que tanto trabajo le he dedicado que esta dentro de ese perfil
+  Ponme el link del env aqui para ponerte las claves. El modem de network speed no tiene su propio wifi, es uno de esos modems que se les debe conectar a un router. te adjunto una foto. 
+  Y ponme el env para pegarte la clave
+- **2026-11-19 01:52** — entiendo, no hay ningun posibilidad entonces de hacer algun programa o algo que deshabilite el internet del la fibra unicamente para todo el entorno y adspowers por ejemplo? tipo que si se cae el internet de digitel no se pase para el internet de network speed.. por eso era que te instale lo de craft anything y ver si te funcionaba lo de reverse engeneer anything.... y otra pregunta, si escogemos la opcion 1, lei en gemini que google puede utilizar conexiones cercanas con el wifi activado para identificar si hay otro wifi cercano o cuales son los wifi cercanos.. y la cueston es que yo tengo otro wifi en esta casa que no quiero que google sepa que tengo porque dentro de esa ip de ese wifi tengo un canal ya monetizado, y no quiero que google linkee esto con eso.
+  
+  ya te grabe las claves en el env. otra cosa, en el settings del API de adspower hay otras varias opciones interesantes que me dices si te funcionan para algo, dice MPC, Skill, Adspower CLI y mas
+- **2026-11-19 02:05** — si arranca, revisa el router. otra cosa: con respecto a si me compro otro router para conectar la fibra por cable, la cuestion es que yo tengo conectado el router Olax en ese unico puerto porque es un puerto de un adaptador que le adapte a la mac por usb, porque como sabes las macbooks no tienen puerto de internet rj4 (o como se llame), solo tienen wifi. Entonces, donde conectaria ese otro cable? o como? Y otra pregunta, todo eso que harias en adspower, no influiria en nada que aqui yo siga con hablando contigo y manejando claude con la fibra? osea podrias hacer eso por alla unicamente con digitel y afuera de adspower usar la fibra en paralelo al mismo tiempo si se puede? Otro detalle importante: Yo uso vpn para hablar contigo aqui, asi que no quiero que ese vpn toque los perfiles tampoco, muy importante eso
+- **2026-11-19 02:43** — ok voy a comprar el adaptador y te aviso cuando lo tenga entonces
+- **2026-11-19 11:04** — ok mientras tanto has commit y push y sube todo esta configuracion e instrucciones que hablamos, porque en la pc quiero hacer algo parecido pero sin las cuestiones de los routers y tal, osea alla lo que quiero es configurar claude para que me publique el contenido en mis canales de youtube (que no estan en adspower alla) pero sin que el vpn toque los navegadores en donde estan los canales
 
 ## Sesión 2026-11-14 — `-Users-alanleiva-claude-proyectos`
 
@@ -14845,6 +14872,8 @@ Todos los mensajes que el usuario escribió en 61 sesiones de Claude Code en est
 - **2026-11-18 17:15** — la 1 hazla
 - **2026-11-18 17:22** — genial adelante
 - **2026-11-18 17:53** — si adelante, lo unico es que mejora la lluvia como se ve desde dentro porque se ve rara en las ventanas y puerta. y recuerda que cuando necesites crearle una animacion puedes hacerlo
+- **2026-11-18 18:58** — si esta bueno, solo un detalle: este es el episodio 1 de nuevo osea cambia episode 2 por episode 1, porque estoy probando algo. tambien subele el volumen a la musica porque se escucha muy baja. tambien en las miniaturas, quitales todas las palabras, solo deja siempre el Episode 1 the last cup (o el numero de episodio que sea) y baja el episode 1 para que este encima de The last cup en la miniatura y tambien que la imagen de ella tenga mas espacio que la de el, si es posibe que se le vean los pechos a ella un poco, o el inicio, y tambien  me gusta esa linea rosada en diagonal que pones para la division, pero verifica que la imagen de el este cortada en diagonal como la linea, porque mira en la esquina derecha superior de su imagen se ve un lado negro
+- **2026-11-18 19:23** — genial si ahora si esta bien. si ponlos en Vera
 
 ## Sesión 2026-11-14 — `-Users-alanleiva-claude-proyectos`
 
@@ -14883,6 +14912,12 @@ Todos los mensajes que el usuario escribió en 61 sesiones de Claude Code en est
 - **2026-11-17 17:18** — esta perfecto, pero corrije eso que ella dice cuando se refiere al hunter le llama "the smile" y ya no es ninguna sonrisa recuerda que se cambio por el gigante, puedes llamarle asi osea the hunter. y otra cosa, ahora vamos a mejorar las miniaturas, a partir de ahora hazlas asi tipo el poster que te adjunto con el hunter nuestro arriba, y ava en esa posicion y tal y con zombies por alli, y en vez de la ciudad pones la estacion del metro donde esta osea ese fondo que se ve en esa miniatura que me diste, pero que sea asi todo cinematografico con la niebla y eso, y tambien manten el indicador de CONDITION ponlo debajo de Ava
 - **2026-11-17 17:46** — otra cosa que se me olvido que debes hacer en el video, debes colocar esa cancion que te pase de fondo para cuando haya que tomar la decision al final y dejarla hasta al final. y tambien para cuando sale la cuestion de tomar la decision hacerlo como lo hacemos en la pc en los videos largos que sale un destello en negativo y eso... tienes esas intrucciones para saber como hacerlo o te paso el video de referencia? Eso mientras el hunter toca la puerta para poder entrar
 - **2026-11-17 18:14** — esta bien, lo unico es que con la musica estas siguiendola desde el mismo punto que la dejaste cada vez que vuelve a salir el, y la verdad lo que quiero es que cada vez que el salga la inicies desde el segundo 0.5 y asi, me entiendes?
+- **2026-11-18 18:37** — ok ahora si quedo genial, vamos con el siguiente
+- **2026-11-18 18:45** — genial, comienza igual con esa entrada como en el anterior video de este que era un movimiento de camara desde abajo hasta la ventana del apartamento con ella, y tambien si puedes introducirlo en algun punto a el hunter seria bueno
+- **2026-11-18 18:53** — si genial, a partir de ahora cambia la musica de cuando sale el gigante por esta https://www.youtube.com/watch?v=0KqffiEc3zk&list=RD0KqffiEc3zk&start_radio=1
+  usala de la misma manera osea comienza desde los 0.5 s cada vez que el sale
+- **2026-11-18 23:03** — no puedo verlo en videohub?
+- **2026-11-19 02:46** — pero mira como se ve la imagen de pequeña en el reproductor de videohub, y otra cosa como que youtube bloqueo la descarga de la musica??? no puedes descargarla?
 
 ## Sesión 2026-11-17 — `-Users-alanleiva-claude-proyectos`
 
@@ -14890,6 +14925,7 @@ Todos los mensajes que el usuario escribió en 61 sesiones de Claude Code en est
 - **2026-11-17 20:16** — ok instala: Ponytail (siempre y cuando no afectara la calidad de los resultados que me das en videos), Hallmark, last30days, impeccable, scrapling y Diagram design. solo esos
 - **2026-11-17 20:32** — genial. ahora vamos a instalar algo que nos va a ayudar muchisimo a en las previstas de los videos que me generas en general y tambien trae varias otras herramientas como miniaturas y más. Es esta instalala: https://github.com/TensaikunYT/Videohub
 - **2026-11-17 20:38** — no entiendo muchas cosas, dime como puedo usarlo paso por paso, y pon un acceso directo en el dock o en apps para yo poder verlo y abrirlo facilmente... otra cosa, no podre ver las previsualizaciones en la linea de tiempo? para eso lo instale. Mira el video y como el lo enseña todo, eso es lo que quiero https://www.youtube.com/watch?v=ZyCmtt7_xMM
+- **2026-11-19 03:01** — ok, dime como se llama el skill para buscar skills que instalamos hace dias, y dame su direccion en github
 
 
 ---
@@ -14904,6 +14940,8 @@ Todos los mensajes que el usuario escribió en 61 sesiones de Claude Code en est
 - **apify** — http: `https://mcp.apify.com`
 - **scrapling** — stdio: `/Users/alanleiva/.local/bin/scrapling mcp`
 - **videohub** — stdio: `node /Users/alanleiva/tools/VideoHub/server/mcp.js`
+- **obscura** — stdio: `/Users/alanleiva/tools/obscura/obscura mcp`
+- **craft-anything** — stdio: `/Applications/Craft Anything.app/Contents/MacOS/craft-anything-cli mcp`
 
 ## Scripts propios en `tools/`
 
@@ -14920,6 +14958,7 @@ Todos los mensajes que el usuario escribió en 61 sesiones de Claude Code en est
 - `tools/flow_snapshot.js` — Captura real de un proyecto de Google Flow (la misma Chrome por CDP que usa srz-google-flow-mcp).
 - `tools/flow_tabs.js` — 
 - `tools/mexitv_publicar.py` — Publica en TikTok (@mexitve, Pixel VMOS) el siguiente video de la cola, segun el horario.
+- `tools/olax.py` — Cliente del router Olax AX8 Pro (API /hbapi-json, la misma que usa su panel web).
 - `tools/patrick.py` — Control a mano del V06 (TikTok de Patrick). Uso:
 - `tools/patrick_ai_inbox.py` — Lee los chats del V06 con capturas + Claude (créditos API) y responde llevando al link.
 - `tools/patrick_dm.py` — Responde un chat de la bandeja de Mensajes del V06 (TikTok de Patrick).
@@ -14938,6 +14977,7 @@ Todos los mensajes que el usuario escribió en 61 sesiones de Claude Code en est
 
 - `~/.claude/skills/animate/SKILL.md` — Make a short procedural animation in any style — an explainer, a history, a little story — as a single-file canvas video with a synthesized score, rendered to MP4. Ships with styles (cut paper, crosshatch ink, riso print
 - `~/.claude/skills/base-help/SKILL.md` — 'Coach mode for the `base` CLI: teaches what to do and why, rather than just answering. Use for any question about base (how to use it, what it can do for me, star commands, handoffs, forks, rules, domains, recall, AST q
+- `~/.claude/skills/craft-anything/SKILL.md` — Investigate how shipped software works (programs, apps, packages, firmware, web bundles) with evidence-backed answers through the Craft Anything MCP tools, keeping a durable brief, plan, hypotheses, findings and handoff 
 - `~/.claude/skills/diagram-design/SKILL.md` — Create branded architecture, architecture delta, IT current-state, flowchart, sequence, state machine, ER/data model, steps, timeline, swimlane, quadrant, radar/spider, polar chart (polar/radial lollipop), loop/flywheel,
 - `~/.claude/skills/earshot/SKILL.md` — Listen with earshot whenever you must judge, choose, trim, verify or compare sound you cannot hear - picking a sound effect, music or ambience from candidates, finding the cleanest moment in a recording, checking whether
 - `~/.claude/skills/flow-generate/SKILL.md` — |
@@ -16303,6 +16343,9 @@ Las mezclas usan `ffmpeg` y el `.venv` del paso 4. Lo que el PC genere (`.wav`, 
 
 | type | text | context | plan/date |
 |------|------|---------|----------|
+| decision | Estado 2026-11-18: router Olax 192.168.150.1 se maneja con tools/olax.py (API /hbapi-json, login challenge md5; funciones: mobile_setbandlock, mobile_setnetmode, router at_send/at_recv para AT+CFUN modo avion = IP nueva, system_getnetoverview). Hoy fibra = WAN del Olax (ONT da DHCP 192.168.1.x), banda bloqueada en BAND13 para apagar Digitel. PLAN: usuario compra 2o adaptador USB-C Ethernet -> ONT directo a la Mac (fibra = ruta por defecto, VPN Surfshark ahi) y Olax solo con SIM en el adaptador actual (en7); proxy local atado a en7 para AdsPower + guardia ASN Digitel/IP nueva + watchdog. Nada probado aun en escritura; esperar adaptador antes de pasar el router a Digitel. | - | 2026-11-18T22:44:02-04:00 |
+| correction | ADSPOWER REGLA ABSOLUTA: nunca abrir un perfil de AdsPower (salvo EXPERIMENTOS k1girwxq) si la IP publica no es de Digitel y no es una IP nueva nunca usada por otro perfil; jamas la fibra Network Speed dentro de un perfil (el canal se dana). Router Olax AX8 Pro en 192.168.150.1 (credenciales y ADSPOWER_API_KEY en .env). Perfiles = canales de YouTube venezolanos. Plan: tools/perfiles.py con guardia de IP + watchdog que cierra el perfil al instante; fibra fuera del Olax; WebRTC y geolocalizacion por IP en cada perfil; no usar el MCP de AdsPower para abrir perfiles, solo la API via la guardia. | - | 2026-11-18T21:53:11-04:00 |
+| correction | Vera/UpNext covers (from 2026-11-18): NO words on the thumbnail except the episode card 'EPISODE N' + title (e.g. 'The Last Cup'), with EPISODE N sitting just above the title; Vera's image takes more space than Theo's, framed to show a bit of her chest/cleavage; keep the pink diagonal divider line, and Theo's image must be cut along the same diagonal (no black gaps in corners). Music in Vera films must be clearly audible (ep 'Last Cup' v1 was too low). | - | 2026-11-18T14:58:29-04:00 |
 | insight | VoiceStudio profile IDs on the Mac (2026-11-18): Airy = 'Voz ashley clean limpia' 60ea9b99; Pip = 'voz pip gnomo' b63fd159; Vera = 'Voz mesera clean' cf0b8ddb; Theo = 'voz theo pretendiente clean' a66e21f8; Mechayuki = 'Mechayuki' edb5f666 (newer; older duplicate b5360257). Set in pieces/upnext-01/tools/voice_final.py and pieces/vera-01/tools/voice_final.py. PC IDs differ. | - | 2026-11-18T12:18:57-04:00 |
 | insight | Airy + Vera (Mechayuki "UpNext" format) — characters, VoiceStudio voices, pieces, and the never-to-git rule for ripped/bought models
 
@@ -16528,6 +16571,7 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 ## Historial de commits
 
 ```
+2026-11-18 4c73208b Mac sync: pending pieces work, MIGRACION_MAC.md refresh
 2026-11-18 438b883b Sync to Mac: memory copy (memoria_pc/), refreshed migration export, pending scripts/docs/novelas/styles
 2026-11-17 c954b97a Airy + Vera styles: character pipelines, episode 1 engines and analysis docs
 2026-11-17 29d6f417 VMOS Cloud + TikTok publishing, novelas (MEXITV/VISTA/MAJESTIC), new plots/styles, tools and docs
@@ -16614,331 +16658,22 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 ## Cambios sin commitear al generar este archivo
 
 ```
- M .base-ast/.needs-confirm
- M .base-ast/.tree-size
  M .base/graph.nq
- M .gitignore
- M CLAUDE.md
  M MIGRACION_MAC.md
- M Tools/srzGoogleFlowMCP/state.json
- M pieces/teke-teke/LOG.md
- M pieces/teke-teke/index.html
- M pieces/teke-teke/piece.json
- M pieces/teke-teke/review/fs.json
- M pieces/teke-teke/review/phone.jpg
- M pieces/teke-teke/review/scan.mjs
- M pieces/teke-teke/review/shot01-sheet.jpg
- M pieces/teke-teke/review/shot02-sheet.jpg
- M pieces/teke-teke/review/shot03-sheet.jpg
- M pieces/teke-teke/review/shot04-sheet.jpg
- M pieces/teke-teke/review/shot05-sheet.jpg
- M pieces/teke-teke/review/shot06-sheet.jpg
- M pieces/teke-teke/review/shot07-sheet.jpg
- M pieces/teke-teke/review/shot08-sheet.jpg
- M pieces/teke-teke/review/shot09-sheet.jpg
- M pieces/teke-teke/review/shot10-sheet.jpg
- M pieces/teke-teke/review/shot11-sheet.jpg
- M pieces/teke-teke/sound/CREDITS.md
- M pieces/teke-teke/sound/audio/levels.txt
- M pieces/teke-teke/sound/mix.py
- M pieces/teke-teke/sound/picks.json
- M pieces/teke-teke/src/head.html
- M pieces/teke-teke/src/run.js
- M pieces/teke-teke/src/tex.js
- M pieces/teke-teke/src/world.js
- M pieces/teke-teke/storyboard.png
- M pieces/upnext-01/engine/rsb.sh
- M pieces/upnext-01/tools/girl_clips.py
- M pieces/upnext-01/tools/voice_final.py
- M pieces/upnext-girl/build.py
- M pieces/upnext-girl/build_v5.py
- M pieces/upnext-girl/export.py
- M pieces/upnext-girl/face_atlas.py
- M pieces/upnext-girl/overlay_renders.py
- M pieces/upnext-girl/poses.py
- M pieces/upnext-girl/render.py
- M pieces/upnext-girl/review_renders.py
- M pieces/upnext-girl/tools/cmp_head.py
- M pieces/upnext-girl/tools/compare.py
- M pieces/upnext-girl/tools/extract_face_cells.py
- M pieces/upnext-girl/tools/overlay.py
- M pieces/upnext-girl/tools/render_engine.mjs
- M pieces/upnext-girl/tools/sheet.py
- M pieces/upnext-girl/tools/trace_profiles.py
- M pieces/upnext-girl/v5/bl_actions.py
- M pieces/upnext-girl/v5/bl_dump.py
- M pieces/upnext-girl/v5/bl_front.py
- M pieces/upnext-girl/v5/bl_girlsweep.py
- M pieces/upnext-girl/v5/bl_io.py
- M pieces/upnext-girl/v5/bl_loop.py
- M pieces/upnext-girl/v5/bl_piecefit.py
- M pieces/upnext-girl/v5/bl_pieces.py
- M pieces/upnext-girl/v5/bl_posefit.py
- M pieces/upnext-girl/v5/bl_refcams.py
- M pieces/upnext-girl/v5/bl_sheet_renders.py
- M pieces/upnext-girl/v5/bl_shrink.py
- M pieces/upnext-girl/v5/face_measure.py
- M pieces/upnext-girl/v5/fit.py
- M pieces/upnext-girl/v5/his_cells.py
- M pieces/upnext-girl/v5/masks.py
- M pieces/upnext-girl/v5/ov_turn.py
- M pieces/upnext-girl/v5/sheet_v5.py
- M pieces/upnext-girl/v5/sheet_v6.py
- M pieces/upnext-girl/v5/sheet_v7.py
- M pieces/upnext-girl/v5/sheet_v8.py
- M pieces/upnext-girl/v5/sheet_v8_tex.py
- M pieces/upnext-girl/v5/split_v4.py
- M pieces/upnext-girl/v5/theta0.py
- M pieces/upnext-girl/v5/turn_masks.py
- M pieces/upnext-girl/v5/wire_views.py
- M pieces/upnext-girl2/build_final.sh
- M pieces/upnext-girl2/build_lowpoly.sh
- M pieces/upnext-girl2/build_variants.sh
- M pieces/upnext-girl2/build_variants_lp.sh
- M pieces/upnext-girl2/tools/anim/build_anims.py
- M pieces/upnext-girl2/tools/anim/one.sh
- M pieces/upnext-girl2/tools/anim/qr.py
- M pieces/upnext-girl2/tools/anim/qs.sh
- M pieces/upnext-girl2/tools/anim/qshot.sh
- M pieces/upnext-girl2/tools/anim/refs_sheet.py
- M pieces/upnext-girl2/tools/bl_rig.py
- M pieces/upnext-girl2/tools/export_meta.py
- M pieces/upnext-girl2/tools/texture.py
- M pieces/upnext-gnome/sheet.py
- M pieces/upnext-metalshadow/compare.py
- M pieces/upnext-metalshadow/contact.py
- M pieces/upnext-suitor/build.sh
- M pieces/upnext-suitor/tools/anim/anim_review.py
- M pieces/upnext-suitor/tools/anim/pose_sheet.py
- M pieces/upnext-suitor/tools/review.py
- M pieces/upnext-waitress/build.sh
- M pieces/upnext-waitress/build_v2.sh
- M pieces/upnext-waitress/tools/branding.py
- M pieces/upnext-waitress/tools/review.py
- M pieces/upnext-waitress/tools/wanim/anim_review.py
- M pieces/vera-01/tools/voice_final.py
- M pieces/zaw-dog-07/CREDITS.md
- M pieces/zaw-dog-07/assemble.py
- M pieces/zaw-dog-07/board.py
- M pieces/zaw-dog-07/final_post.py
- M pieces/zaw-dog-07/guion.md
- M pieces/zaw-dog-07/review/beats.json
- M pieces/zaw-dog-07/review/board/board_1.jpg
- M pieces/zaw-dog-07/review/board/board_2.jpg
- M pieces/zaw-dog-07/review/board/motion07.jpg
- M pieces/zaw-dog-07/review/feet_check.txt
- M pieces/zaw-dog-07/review/flicker_final.txt
- M pieces/zaw-dog-07/review/flipflop_final.txt
- M pieces/zaw-dog-07/review/flipflop_preview.txt
- M pieces/zaw-dog-07/review/logs/board_01a.log
- M pieces/zaw-dog-07/review/logs/board_01b.log
- M pieces/zaw-dog-07/review/logs/board_02a.log
- M pieces/zaw-dog-07/review/logs/board_02b.log
- M pieces/zaw-dog-07/review/logs/board_03a.log
- M pieces/zaw-dog-07/review/logs/board_03b.log
- M pieces/zaw-dog-07/review/logs/board_04a.log
- M pieces/zaw-dog-07/review/logs/board_04b.log
- M pieces/zaw-dog-07/review/logs/board_05a.log
- M pieces/zaw-dog-07/review/logs/board_05b.log
- M pieces/zaw-dog-07/review/logs/board_06a.log
- M pieces/zaw-dog-07/review/logs/board_06b.log
- M pieces/zaw-dog-07/review/logs/feet_01a.log
- M pieces/zaw-dog-07/review/logs/feet_01b.log
- M pieces/zaw-dog-07/review/logs/feet_02a.log
- M pieces/zaw-dog-07/review/logs/feet_02b.log
- M pieces/zaw-dog-07/review/logs/feet_03a.log
- M pieces/zaw-dog-07/review/logs/feet_03b.log
- M pieces/zaw-dog-07/review/logs/feet_04a.log
- M pieces/zaw-dog-07/review/logs/feet_04b.log
- M pieces/zaw-dog-07/review/logs/feet_05a.log
- M pieces/zaw-dog-07/review/logs/feet_05b.log
- M pieces/zaw-dog-07/review/logs/feet_06a.log
- M pieces/zaw-dog-07/review/logs/feet_06b.log
- M pieces/zaw-dog-07/review/logs/final_01a.log
- M pieces/zaw-dog-07/review/logs/final_01b.log
- M pieces/zaw-dog-07/review/logs/final_02a.log
- M pieces/zaw-dog-07/review/logs/final_02b.log
- M pieces/zaw-dog-07/review/logs/final_03a.log
- M pieces/zaw-dog-07/review/logs/final_03b.log
- M pieces/zaw-dog-07/review/logs/final_04a.log
- M pieces/zaw-dog-07/review/logs/final_04b.log
- M pieces/zaw-dog-07/review/logs/final_05a.log
- M pieces/zaw-dog-07/review/logs/final_05b.log
- M pieces/zaw-dog-07/review/logs/final_06a.log
- M pieces/zaw-dog-07/review/logs/final_06b.log
- M pieces/zaw-dog-07/review/logs/final_all.out
- M pieces/zaw-dog-07/review/logs/frames_01a.log
- M pieces/zaw-dog-07/review/logs/frames_01b.log
- M pieces/zaw-dog-07/review/logs/frames_02a.log
- M pieces/zaw-dog-07/review/logs/frames_02b.log
- M pieces/zaw-dog-07/review/logs/frames_03a.log
- M pieces/zaw-dog-07/review/logs/frames_03b.log
- M pieces/zaw-dog-07/review/logs/frames_04a.log
- M pieces/zaw-dog-07/review/logs/frames_04b.log
- M pieces/zaw-dog-07/review/logs/frames_05a.log
- M pieces/zaw-dog-07/review/logs/frames_05b.log
- M pieces/zaw-dog-07/review/logs/frames_06a.log
- M pieces/zaw-dog-07/review/logs/frames_06b.log
- M pieces/zaw-dog-07/review/logs/iso.log
- M pieces/zaw-dog-07/review/logs/thumb.log
- M pieces/zaw-dog-07/review/popcheck_final.txt
- M pieces/zaw-dog-07/review/popcheck_preview.txt
- M pieces/zaw-dog-07/review/preview_moves_revision.md
- M pieces/zaw-dog-07/review/qa.txt
- M pieces/zaw-dog-07/review/qa_final.txt
- M pieces/zaw-dog-07/review/selfcheck_sheet.jpg
- M pieces/zaw-dog-07/shots.py
- M pieces/zaw-dog-07/sound/mix_zaw.py
- M pieces/zaw-dog-07/tools/anim_all.sh
- M pieces/zaw-dog-07/tools/board_all.sh
- M pieces/zaw-dog-07/tools/selfcheck_sheet.py
- M pieces/zaw-dog-07/voice/lines.json
- M pieces/zaw-dog-07/voice/script.json
- M pieces/zaw-dog-07/voice/timing.json
- M pieces/zaw-dog-08/guion.md
- M pieces/zombie-01-door/audio/scripts/fs_fetch.py
- M pieces/zombie-01-door/audio/scripts/mix.py
- M pieces/zombie-01-door/audio/scripts/music.py
- M pieces/zombie-01-door/voz/assemble.py
- M pieces/zombie-02-window/audio/scripts/fs_fetch.py
- M pieces/zombie-02-window/audio/scripts/mix.py
- M pieces/zombie-02-window/audio/scripts/music.py
- M pieces/zombie-02-window/voz/assemble.py
- M pieces/zombie-03-station/audio/scripts/fs_fetch.py
- M pieces/zombie-03-station/audio/scripts/mix.py
- M pieces/zombie-03-station/audio/scripts/mix3.py
- M pieces/zombie-03-station/audio/scripts/music.py
- M pieces/zombie-03-station/largo/audio/mix_largo.py
- M pieces/zombie-03-station/largo/audio/scripts/fs_fetch.py
- M pieces/zombie-03-station/largo/audio/scripts/rank_picks.py
- M pieces/zombie-03-station/largo/engine/thumb_compose.py
- M pieces/zombie-03-station/largo/engine/thumb_compose2.py
- M pieces/zombie-03-station/largo/engine/thumb_compose3.py
- M pieces/zombie-03-station/largo/engine/thumb_compose4.py
- M pieces/zombie-03-station/largo/engine/thumb_compose5.py
- M pieces/zombie-03-station/largo/engine/thumb_compose6.py
- M pieces/zombie-03-station/largo/engine/thumb_compose7.py
- M pieces/zombie-03-station/largo/engine/thumb_compose8.py
- M pieces/zombie-03-station/largo/engine/thumb_compose9.py
- M pieces/zombie-03-station/largo/voz/gen.py
- M pieces/zombie-03-station/largo2/audio/mix_largo.py
- M pieces/zombie-03-station/largo2/review/qc_sheets.py
- M pieces/zombie-03-station/largo2/review/storyboard.py
- M pieces/zombie-03-station/largo2/voz/takes.py
- M pieces/zombie-03-station/largo2/voz/takes_v2.bak.py
- M pieces/zombie-03-station/largo3/audio/mix_largo.py
- M pieces/zombie-03-station/largo3/voz/takes.py
- M pieces/zombie-03-station/voz/assemble.py
- M pieces/zombie-03-station/voz/prep.py
- M pieces/zombie-04-subway/audio/scripts/fs_fetch.py
- M pieces/zombie-04-subway/audio/scripts/fs_fetch4.py
- M pieces/zombie-04-subway/audio/scripts/mix.py
- M pieces/zombie-04-subway/audio/scripts/mix3.py
- M pieces/zombie-04-subway/audio/scripts/mix4.py
- M pieces/zombie-04-subway/audio/scripts/music.py
- M pieces/zombie-04-subway/objects/tools/prep_tex.py
- M pieces/zombie-04-subway/review/storyboard.py
- M pieces/zombie-04-subway/voz/assemble.py
- M pieces/zombie-04-subway/voz/build_cues.py
- M pieces/zombie-04-subway/voz/fix_caps.py
- M pieces/zombie-04-subway/voz/gen.py
- M pieces/zombie-05-pt/audio/scripts/fs_fetch5.py
- M pieces/zombie-05-pt/audio/scripts/mix5.py
- M pieces/zombie-05-pt/objects/tools/prep_tex.py
- M pieces/zombie-05-pt/review/storyboard.py
- M pieces/zombie-05-pt/voz/assemble.py
- M pieces/zombie-05-pt/voz/build_cues.py
- M pieces/zombie-05-pt/voz/gen.py
- M pieces/zombie-06-floor30/audio/scripts/fs_fetch5.py
- M pieces/zombie-06-floor30/audio/scripts/mix5.py
- M pieces/zombie-06-floor30/audio/scripts/mix6.py
- M pieces/zombie-06-floor30/objects/tools/prep_tex.py
- M pieces/zombie-06-floor30/review/storyboard.py
- M pieces/zombie-06-floor30/voz/assemble.py
- M pieces/zombie-06-floor30/voz/build_cues.py
- M pieces/zombie-06-floor30/voz/fix_words.py
- M pieces/zombie-06-floor30/voz/gen.py
- M pieces/zombie-07-saferoom/audio/scripts/fs_fetch5.py
- M pieces/zombie-07-saferoom/audio/scripts/fs_fetch7.py
- M pieces/zombie-07-saferoom/audio/scripts/fs_fetch7b.py
- M pieces/zombie-07-saferoom/audio/scripts/mix6.py
- M pieces/zombie-07-saferoom/audio/scripts/mix7.py
- M pieces/zombie-07-saferoom/objects/tools/prep_tex.py
- M pieces/zombie-07-saferoom/review/storyboard.py
- M pieces/zombie-07-saferoom/voz/assemble.py
- M pieces/zombie-07-saferoom/voz/build_cues.py
- M pieces/zombie-07-saferoom/voz/fix_words.py
- M pieces/zombie-07-saferoom/voz/gen.py
- M pieces/zombie-08-farm/audio/scripts/fs_fetch8.py
- M pieces/zombie-08-farm/audio/scripts/mix8.py
- M pieces/zombie-08-farm/audio/scripts/rank8.py
- M pieces/zombie-08-farm/engine/thumb8.mjs
- M pieces/zombie-08-farm/engine/thumb_compose8.py
- M pieces/zombie-08-farm/review/mugtest.mjs
- M pieces/zombie-08-farm/voz/gen.py
- M pieces/zombie-09-subway2/audio/scripts/fs_fetch9.py
- M pieces/zombie-09-subway2/audio/scripts/mix9.py
- M pieces/zombie-09-subway2/review/storyboard.py
- M pieces/zombie-09-subway2/voz/assemble.py
- M pieces/zombie-09-subway2/voz/build_cues.py
- M pieces/zombie-09-subway2/voz/fix_caps.py
- M pieces/zombie-09-subway2/voz/fix_words.py
- M pieces/zombie-09-subway2/voz/gen.py
- M pieces/zombie-10-stairs/audio/scripts/fs_fetch10.py
- M pieces/zombie-10-stairs/audio/scripts/fs_fetch10b.py
- M pieces/zombie-10-stairs/audio/scripts/fs_fetch5.py
- M pieces/zombie-10-stairs/audio/scripts/fs_fetch7.py
- M pieces/zombie-10-stairs/audio/scripts/fs_fetch7b.py
- M pieces/zombie-10-stairs/audio/scripts/mix10.py
- M pieces/zombie-10-stairs/audio/scripts/mix6.py
- M pieces/zombie-10-stairs/audio/scripts/mix7.py
- M pieces/zombie-10-stairs/audio/scripts/mix9.py
- M pieces/zombie-10-stairs/objects/tools/prep_tex.py
- M pieces/zombie-10-stairs/review/storyboard.py
- M pieces/zombie-10-stairs/voz/assemble.py
- M pieces/zombie-10-stairs/voz/build_cues.py
- M pieces/zombie-10-stairs/voz/fix_caps.py
- M pieces/zombie-10-stairs/voz/fix_words.py
- M pieces/zombie-10-stairs/voz/gen.py
- M pieces/zombie-11-xvirus/audio/scripts/fs_fetch11.py
- M pieces/zombie-11-xvirus/audio/scripts/mix11.py
- M pieces/zombie-11-xvirus/review/storyboard.py
- M pieces/zombie-11-xvirus/voz/assemble.py
- M pieces/zombie-11-xvirus/voz/build_cues.py
- M pieces/zombie-11-xvirus/voz/fix_caps.py
- M pieces/zombie-11-xvirus/voz/fix_words.py
- M pieces/zombie-11-xvirus/voz/gen.py
- M pieces/zombie-12-radio/audio/scripts/fs_fetch12.py
- M pieces/zombie-12-radio/audio/scripts/fs_fetch12b.py
- M pieces/zombie-12-radio/audio/scripts/mix12.py
- M pieces/zombie-12-radio/review/storyboard.py
- M pieces/zombie-12-radio/voz/assemble.py
- M pieces/zombie-12-radio/voz/build_cues.py
- M pieces/zombie-12-radio/voz/fix_caps.py
- M pieces/zombie-12-radio/voz/fix_words.py
- M pieces/zombie-12-radio/voz/gen.py
- M pieces/zombie-13-gasstation/audio/scripts/fs_fetch13.py
- M pieces/zombie-13-gasstation/audio/scripts/fs_fetch13b.py
- M pieces/zombie-13-gasstation/audio/scripts/mix13.py
- M pieces/zombie-13-gasstation/review/storyboard.py
- M pieces/zombie-13-gasstation/voz/assemble.py
- M pieces/zombie-13-gasstation/voz/build_cues.py
- M pieces/zombie-13-gasstation/voz/fix_caps.py
- M pieces/zombie-13-gasstation/voz/fix_words.py
- M pieces/zombie-13-gasstation/voz/gen.py
+ M pieces/vera-02/SCRIPT.md
+ M pieces/vera-02/engine/film_timeline.json
+ M pieces/vera-02/engine/sb.js
+ M pieces/vera-02/engine/sb_shots.js
+ M pieces/vera-02/tools/cover.py
+ M pieces/vera-02/tools/film_timeline.py
+ M pieces/vera-02/tools/mix_film.py
+ M pieces/vera-02/tools/post_film.py
+ M pieces/vera-02/tools/sfx_fetch.py
  M styles/ava-restfield/GUIA.md
  M styles/ava-restfield/STALKER.md
- M styles/yokai/RULES.md
- M styles/yokai/kit.js
- M styles/zawdog/STYLE.md
- M styles/zawdog/humans/owner/body.png
- M styles/zawdog/humans/owner/faces/mask.png
- M styles/zawdog/humans/owner/owner.blend
- M styles/zawdog/humans/scientist/body.png
- M styles/zawdog/humans/scientist/faces/mask.png
- M styles/zawdog/humans/scientist/scientist.blend
 ?? .log
 ?? "Sinaboto voz 15 seg.m4a"
+?? Tools/olax.py
 ?? agente-davis/tiktok/piloto01/2026-11-15T23-59-38-patrick_src-recreate-this-exact-same-ima-1.jpg
 ?? agente-davis/tiktok/piloto01/frame_a.png
 ?? agente-davis/tiktok/piloto01/frame_b.png
@@ -16956,8 +16691,8 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 ?? agente-davis/tiktok/piloto01/sheet.png
 ?? agente-davis/tiktok/piloto01/v2/
 ?? agente-davis/tiktok/piloto01/v3/
-?? fuentes/cartoon3d-famosos/
-?? fuentes/gta6-style/
+?? docs/
+?? fuentes/gta6-style/tutorial/
 ?? pieces/agave-amatitan/chars/
 ?? pieces/agave-amatitan/qa/c01.jpg
 ?? pieces/agave-amatitan/qa/c02.jpg
@@ -17624,11 +17359,550 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 ?? pieces/gloria-linares/qa/s2.jpg
 ?? pieces/gloria-linares/qa/s3.jpg
 ?? pieces/gloria-linares/qa/s4.jpg
-?? pieces/gta6-16x9/
-?? pieces/gta6-boxart-16x9/
-?? pieces/gta6-look/
-?? pieces/gta6-parallax-16x9/
-?? pieces/gta6-story/
+?? pieces/gta6-16x9/compare/
+?? pieces/gta6-16x9/flow/
+?? pieces/gta6-16x9/id/boobie.jpg
+?? pieces/gta6-16x9/id/brian.jpg
+?? pieces/gta6-16x9/id/cal.jpg
+?? pieces/gta6-16x9/id/dimez.jpg
+?? pieces/gta6-16x9/id/drequan.jpg
+?? pieces/gta6-16x9/id/jason.jpg
+?? pieces/gta6-16x9/id/lucia.jpg
+?? pieces/gta6-16x9/id/lucia_faces.jpg
+?? pieces/gta6-16x9/id/lucia_roof.jpg
+?? pieces/gta6-16x9/id/lucia_shot10.jpg
+?? pieces/gta6-16x9/id/lucia_shot11.jpg
+?? pieces/gta6-16x9/id/raul.jpg
+?? pieces/gta6-16x9/old_cutout_assets/
+?? pieces/gta6-16x9/old_cutout_panels/
+?? pieces/gta6-16x9/poses/2026-11-13T21-19-37-photorealistic-cinematic-photograph-35mm-1.jpg
+?? pieces/gta6-16x9/poses/2026-11-13T21-23-51-edit-bkjason-keep-this-image-exactly-as--1.jpg
+?? pieces/gta6-16x9/poses/2026-11-13T21-24-57-edit-bkjason-keep-this-image-exactly-as--1.jpg
+?? pieces/gta6-16x9/poses/2026-11-13T21-26-16-photorealistic-cinematic-photograph-35mm-1.jpg
+?? pieces/gta6-16x9/poses/2026-11-13T21-26-37-photorealistic-cinematic-photograph-35mm-1.jpg
+?? pieces/gta6-16x9/poses/2026-11-13T21-26-57-photorealistic-cinematic-photograph-35mm-1.jpg
+?? pieces/gta6-16x9/poses/2026-11-13T21-27-18-photorealistic-cinematic-photograph-35mm-1.jpg
+?? pieces/gta6-16x9/poses/2026-11-13T21-27-40-photorealistic-cinematic-photograph-35mm-1.jpg
+?? pieces/gta6-16x9/poses/2026-11-13T21-28-03-photorealistic-cinematic-photograph-35mm-1.jpg
+?? pieces/gta6-16x9/poses/2026-11-13T21-28-23-photorealistic-cinematic-photograph-35mm-1.jpg
+?? pieces/gta6-16x9/poses/2026-11-13T21-29-47-photorealistic-cinematic-photograph-35mm-1.jpg
+?? pieces/gta6-16x9/poses/2026-11-13T21-30-05-photorealistic-cinematic-photograph-35mm-1.jpg
+?? pieces/gta6-16x9/poses/2026-11-13T21-30-33-photorealistic-cinematic-photograph-35mm-1.jpg
+?? pieces/gta6-16x9/poses/2026-11-13T21-37-21-edit-bkdrequan-keep-the-composition-pose-1.jpg
+?? pieces/gta6-16x9/poses/2026-11-13T21-40-36-edit-bklucia-repaint-as-a-polished-loadi-1.jpg
+?? pieces/gta6-16x9/poses/2026-11-13T21-42-06-edit-bklucia-keep-the-composition-pose-s-1.jpg
+?? pieces/gta6-16x9/poses/2026-11-13T21-45-06-edit-bkcal-keep-the-composition-pose-sil-1.jpg
+?? pieces/gta6-16x9/poses/2026-11-13T21-45-32-edit-bkboobie-keep-the-composition-pose--1.jpg
+?? pieces/gta6-16x9/poses/2026-11-13T21-46-00-edit-bkdimez-keep-the-composition-poses--1.jpg
+?? pieces/gta6-16x9/poses/2026-11-13T21-46-47-edit-bkraul-keep-the-composition-pose-si-1.jpg
+?? pieces/gta6-16x9/poses/2026-11-13T21-47-18-edit-bkbrian-keep-the-composition-pose-s-1.jpg
+?? pieces/gta6-16x9/poses/2026-11-13T21-48-32-edit-phcal-keep-the-exact-pose-hands-bin-1.jpg
+?? pieces/gta6-16x9/poses/2026-11-13T21-49-09-edit-bkdimez-keep-the-composition-poses--1.jpg
+?? pieces/gta6-16x9/poses/2026-11-13T21-50-09-edit-bkdimez-keep-the-composition-poses--1.jpg
+?? pieces/gta6-16x9/poses/2026-11-13T21-55-39-edit-idcal-keep-this-exact-man-his-exact-1.jpg
+?? pieces/gta6-16x9/poses/2026-11-13T22-27-45-photorealistic-cinematic-photograph-169--1.jpg
+?? pieces/gta6-16x9/poses/2026-11-13T22-29-02-edit-bkl3-keep-the-composition-pose-silh-1.jpg
+?? pieces/gta6-16x9/poses/2026-11-13T22-29-52-photorealistic-cinematic-photograph-169--1.jpg
+?? pieces/gta6-16x9/poses/2026-11-13T22-31-34-edit-bkl4-keep-the-composition-pose-silh-1.jpg
+?? pieces/gta6-16x9/poses/2026-11-13T22-32-13-edit-bkl4-keep-the-composition-pose-silh-1.jpg
+?? pieces/gta6-16x9/poses/2026-11-13T22-34-09-edit-idcal-keep-this-exact-man-his-exact-1.jpg
+?? pieces/gta6-16x9/poses/boobie_studio.png
+?? pieces/gta6-16x9/poses/boobie_studio_final.png
+?? pieces/gta6-16x9/poses/boobie_studio_flat.jpg
+?? pieces/gta6-16x9/poses/boobie_studio_painted.jpg
+?? pieces/gta6-16x9/poses/boobie_studio_parse.npz
+?? pieces/gta6-16x9/poses/boobie_studio_photo.jpg
+?? pieces/gta6-16x9/poses/brian_phone.png
+?? pieces/gta6-16x9/poses/brian_phone_final.bak.png
+?? pieces/gta6-16x9/poses/brian_phone_final.png
+?? pieces/gta6-16x9/poses/brian_phone_flat.jpg
+?? pieces/gta6-16x9/poses/brian_phone_painted.jpg
+?? pieces/gta6-16x9/poses/brian_phone_parse.npz
+?? pieces/gta6-16x9/poses/brian_phone_photo.jpg
+?? pieces/gta6-16x9/poses/cal2_photo.jpg
+?? pieces/gta6-16x9/poses/calB_painted.jpg
+?? pieces/gta6-16x9/poses/calC_painted.jpg
+?? pieces/gta6-16x9/poses/cal_bino.png
+?? pieces/gta6-16x9/poses/cal_bino2_final.bak.png
+?? pieces/gta6-16x9/poses/cal_bino2_final.png
+?? pieces/gta6-16x9/poses/cal_bino2_painted.jpg
+?? pieces/gta6-16x9/poses/cal_bino3_final.png
+?? pieces/gta6-16x9/poses/cal_bino3_painted.jpg
+?? pieces/gta6-16x9/poses/cal_bino_flat.jpg
+?? pieces/gta6-16x9/poses/cal_bino_painted.jpg
+?? pieces/gta6-16x9/poses/cal_bino_parse.npz
+?? pieces/gta6-16x9/poses/cal_bino_photo.jpg
+?? pieces/gta6-16x9/poses/dimez2_photo.jpg
+?? pieces/gta6-16x9/poses/dimezB_painted.jpg
+?? pieces/gta6-16x9/poses/dimezC_painted.jpg
+?? pieces/gta6-16x9/poses/dimez_selfie.png
+?? pieces/gta6-16x9/poses/dimez_selfie_final.bak.png
+?? pieces/gta6-16x9/poses/dimez_selfie_final.png
+?? pieces/gta6-16x9/poses/dimez_selfie_flat.jpg
+?? pieces/gta6-16x9/poses/dimez_selfie_painted.jpg
+?? pieces/gta6-16x9/poses/dimez_selfie_parse.npz
+?? pieces/gta6-16x9/poses/dimez_selfie_photo.jpg
+?? pieces/gta6-16x9/poses/drequan_cash.png
+?? pieces/gta6-16x9/poses/drequan_cash_final.png
+?? pieces/gta6-16x9/poses/drequan_cash_flat.jpg
+?? pieces/gta6-16x9/poses/drequan_cash_painted.jpg
+?? pieces/gta6-16x9/poses/drequan_cash_parse.npz
+?? pieces/gta6-16x9/poses/drequan_cash_photo.jpg
+?? pieces/gta6-16x9/poses/jason_aim.png
+?? pieces/gta6-16x9/poses/jason_aim_dbg_lines.jpg
+?? pieces/gta6-16x9/poses/jason_aim_dbg_materials.jpg
+?? pieces/gta6-16x9/poses/jason_aim_dbg_nkey.jpg
+?? pieces/gta6-16x9/poses/jason_aim_dbg_shadow.jpg
+?? pieces/gta6-16x9/poses/jason_aim_final.png
+?? pieces/gta6-16x9/poses/jason_aim_flat.jpg
+?? pieces/gta6-16x9/poses/jason_aim_painted.jpg
+?? pieces/gta6-16x9/poses/jason_aim_parse.npz
+?? pieces/gta6-16x9/poses/jason_aim_photo.jpg
+?? pieces/gta6-16x9/poses/lucia2_photo.jpg
+?? pieces/gta6-16x9/poses/lucia3_photo.jpg
+?? pieces/gta6-16x9/poses/lucia4_photo.jpg
+?? pieces/gta6-16x9/poses/lucia5.png
+?? pieces/gta6-16x9/poses/lucia5_final.bak.png
+?? pieces/gta6-16x9/poses/lucia5_final.png
+?? pieces/gta6-16x9/poses/lucia5_painted.jpg
+?? pieces/gta6-16x9/poses/lucia_look.png
+?? pieces/gta6-16x9/poses/lucia_look3.png
+?? pieces/gta6-16x9/poses/lucia_look3_flat.jpg
+?? pieces/gta6-16x9/poses/lucia_look3_painted.jpg
+?? pieces/gta6-16x9/poses/lucia_look3_parse.npz
+?? pieces/gta6-16x9/poses/lucia_look4.png
+?? pieces/gta6-16x9/poses/lucia_look4_flat.jpg
+?? pieces/gta6-16x9/poses/lucia_look4_painted.jpg
+?? pieces/gta6-16x9/poses/lucia_look4_parse.npz
+?? pieces/gta6-16x9/poses/lucia_look_final.png
+?? pieces/gta6-16x9/poses/lucia_look_flat.jpg
+?? pieces/gta6-16x9/poses/lucia_look_painted.jpg
+?? pieces/gta6-16x9/poses/lucia_look_parse.npz
+?? pieces/gta6-16x9/poses/lucia_look_photo.jpg
+?? pieces/gta6-16x9/poses/raul_light.png
+?? pieces/gta6-16x9/poses/raul_light_final.png
+?? pieces/gta6-16x9/poses/raul_light_final_qa.jpg
+?? pieces/gta6-16x9/poses/raul_light_flat.jpg
+?? pieces/gta6-16x9/poses/raul_light_painted.jpg
+?? pieces/gta6-16x9/poses/raul_light_parse.npz
+?? pieces/gta6-16x9/poses/raul_light_photo.jpg
+?? pieces/gta6-16x9/sheets/
+?? pieces/gta6-boxart-16x9/index.html
+?? pieces/gta6-boxart-16x9/review/
+?? pieces/gta6-look/assets_v1/
+?? pieces/gta6-look/assets_v2/
+?? pieces/gta6-look/assets_v3/
+?? pieces/gta6-look/flow/
+?? pieces/gta6-look/flow2/
+?? pieces/gta6-look/flow3/
+?? pieces/gta6-look/flow4/
+?? pieces/gta6-look/index.html
+?? pieces/gta6-look/review/
+?? pieces/gta6-look/work3/
+?? pieces/gta6-look/work4/barman4.png
+?? pieces/gta6-look/work4/barman4_dbg_lines.jpg
+?? pieces/gta6-look/work4/barman4_dbg_materials.jpg
+?? pieces/gta6-look/work4/barman4_dbg_nkey.jpg
+?? pieces/gta6-look/work4/barman4_dbg_shadow.jpg
+?? pieces/gta6-look/work4/barman4_dbg_tones.jpg
+?? pieces/gta6-look/work4/barman4_final.png
+?? pieces/gta6-look/work4/barman4_flat.jpg
+?? pieces/gta6-look/work4/barman4_painted.jpg
+?? pieces/gta6-look/work4/barman4_parse.npz
+?? pieces/gta6-look/work4/ref_brian.jpg
+?? pieces/gta6-look/work4/ref_tut.jpg
+?? pieces/gta6-look/work4/ref_vcbg.jpg
+?? pieces/gta6-look/work4/womancar4.png
+?? pieces/gta6-look/work4/womancar4_dbg_lines.jpg
+?? pieces/gta6-look/work4/womancar4_dbg_materials.jpg
+?? pieces/gta6-look/work4/womancar4_dbg_nkey.jpg
+?? pieces/gta6-look/work4/womancar4_dbg_shadow.jpg
+?? pieces/gta6-look/work4/womancar4_final.png
+?? pieces/gta6-look/work4/womancar4_flat.jpg
+?? pieces/gta6-look/work4/womancar4_painted.jpg
+?? pieces/gta6-look/work4/womancar4_parse.npz
+?? pieces/gta6-parallax-16x9/index.html
+?? pieces/gta6-parallax-16x9/review/
+?? pieces/gta6-story/bg/
+?? pieces/gta6-story/chars/boobie_booth.png
+?? pieces/gta6-story/chars/boobie_booth_final.png
+?? pieces/gta6-story/chars/boobie_booth_final_qa.jpg
+?? pieces/gta6-story/chars/boobie_booth_flat.jpg
+?? pieces/gta6-story/chars/boobie_booth_painted.jpg
+?? pieces/gta6-story/chars/boobie_booth_painted1.jpg
+?? pieces/gta6-story/chars/boobie_booth_painted2.jpg
+?? pieces/gta6-story/chars/boobie_booth_painted3.jpg
+?? pieces/gta6-story/chars/boobie_booth_parse.npz
+?? pieces/gta6-story/chars/brian_beers.png
+?? pieces/gta6-story/chars/brian_beers_final.png
+?? pieces/gta6-story/chars/brian_beers_final_qa.jpg
+?? pieces/gta6-story/chars/brian_beers_flat.jpg
+?? pieces/gta6-story/chars/brian_beers_painted.jpg
+?? pieces/gta6-story/chars/brian_beers_parse.npz
+?? pieces/gta6-story/chars/cal_scanner.png
+?? pieces/gta6-story/chars/cal_scanner_final.png
+?? pieces/gta6-story/chars/cal_scanner_final_qa.jpg
+?? pieces/gta6-story/chars/cal_scanner_flat.jpg
+?? pieces/gta6-story/chars/cal_scanner_flat1.jpg
+?? pieces/gta6-story/chars/cal_scanner_painted.jpg
+?? pieces/gta6-story/chars/cal_scanner_painted1.jpg
+?? pieces/gta6-story/chars/cal_scanner_painted2.jpg
+?? pieces/gta6-story/chars/cal_scanner_painted3.jpg
+?? pieces/gta6-story/chars/cal_scanner_parse.npz
+?? pieces/gta6-story/chars/cal_tape.png
+?? pieces/gta6-story/chars/cal_tape_final.png
+?? pieces/gta6-story/chars/cal_tape_final_qa.jpg
+?? pieces/gta6-story/chars/cal_tape_flat.jpg
+?? pieces/gta6-story/chars/cal_tape_painted.jpg
+?? pieces/gta6-story/chars/cal_tape_painted1.jpg
+?? pieces/gta6-story/chars/cal_tape_painted2.jpg
+?? pieces/gta6-story/chars/cal_tape_painted3.jpg
+?? pieces/gta6-story/chars/cal_tape_painted4.jpg
+?? pieces/gta6-story/chars/cal_tape_parse.npz
+?? pieces/gta6-story/chars/drequan_film.png
+?? pieces/gta6-story/chars/drequan_film_final.png
+?? pieces/gta6-story/chars/drequan_film_final_qa.jpg
+?? pieces/gta6-story/chars/drequan_film_flat.jpg
+?? pieces/gta6-story/chars/drequan_film_painted.jpg
+?? pieces/gta6-story/chars/drequan_film_painted2.jpg
+?? pieces/gta6-story/chars/drequan_film_painted3.jpg
+?? pieces/gta6-story/chars/drequan_film_painted4.jpg
+?? pieces/gta6-story/chars/drequan_film_parse.npz
+?? pieces/gta6-story/chars/jason_bed.png
+?? pieces/gta6-story/chars/jason_bed_final.bak.png
+?? pieces/gta6-story/chars/jason_bed_final.png
+?? pieces/gta6-story/chars/jason_bed_final_qa.jpg
+?? pieces/gta6-story/chars/jason_bed_flat.jpg
+?? pieces/gta6-story/chars/jason_bed_flat1.jpg
+?? pieces/gta6-story/chars/jason_bed_painted.jpg
+?? pieces/gta6-story/chars/jason_bed_painted1.jpg
+?? pieces/gta6-story/chars/jason_bed_painted2.jpg
+?? pieces/gta6-story/chars/jason_bed_painted3.jpg
+?? pieces/gta6-story/chars/jason_bed_painted4.jpg
+?? pieces/gta6-story/chars/jason_bed_parse.npz
+?? pieces/gta6-story/chars/jason_bills.png
+?? pieces/gta6-story/chars/jason_bills_final.png
+?? pieces/gta6-story/chars/jason_bills_final_qa.jpg
+?? pieces/gta6-story/chars/jason_bills_flat.jpg
+?? pieces/gta6-story/chars/jason_bills_painted.jpg
+?? pieces/gta6-story/chars/jason_bills_parse.npz
+?? pieces/gta6-story/chars/jason_club.png
+?? pieces/gta6-story/chars/jason_club_final.png
+?? pieces/gta6-story/chars/jason_club_final_qa.jpg
+?? pieces/gta6-story/chars/jason_club_flat.jpg
+?? pieces/gta6-story/chars/jason_club_painted.jpg
+?? pieces/gta6-story/chars/jason_club_parse.npz
+?? pieces/gta6-story/chars/jason_dock.png
+?? pieces/gta6-story/chars/jason_dock_final.png
+?? pieces/gta6-story/chars/jason_dock_final_qa.jpg
+?? pieces/gta6-story/chars/jason_dock_flat.jpg
+?? pieces/gta6-story/chars/jason_dock_painted.jpg
+?? pieces/gta6-story/chars/jason_dock_parse.npz
+?? pieces/gta6-story/chars/jason_drive.png
+?? pieces/gta6-story/chars/jason_drive_final.png
+?? pieces/gta6-story/chars/jason_drive_final_qa.jpg
+?? pieces/gta6-story/chars/jason_drive_flat.jpg
+?? pieces/gta6-story/chars/jason_drive_painted.jpg
+?? pieces/gta6-story/chars/jason_drive_parse.npz
+?? pieces/gta6-story/chars/jason_lean.png
+?? pieces/gta6-story/chars/jason_lean_final.png
+?? pieces/gta6-story/chars/jason_lean_final_qa.jpg
+?? pieces/gta6-story/chars/jason_lean_flat.jpg
+?? pieces/gta6-story/chars/jason_lean_flat1.jpg
+?? pieces/gta6-story/chars/jason_lean_painted.jpg
+?? pieces/gta6-story/chars/jason_lean_painted1.jpg
+?? pieces/gta6-story/chars/jason_lean_painted2.jpg
+?? pieces/gta6-story/chars/jason_lean_painted3.jpg
+?? pieces/gta6-story/chars/jason_lean_parse.npz
+?? pieces/gta6-story/chars/jason_swamp.png
+?? pieces/gta6-story/chars/jason_swamp_final.png
+?? pieces/gta6-story/chars/jason_swamp_final_qa.jpg
+?? pieces/gta6-story/chars/jason_swamp_flat.jpg
+?? pieces/gta6-story/chars/jason_swamp_painted.jpg
+?? pieces/gta6-story/chars/jason_swamp_painted1.jpg
+?? pieces/gta6-story/chars/jason_swamp_painted2.jpg
+?? pieces/gta6-story/chars/jason_swamp_parse.npz
+?? pieces/gta6-story/chars/lori_shrimp.png
+?? pieces/gta6-story/chars/lori_shrimp_final.png
+?? pieces/gta6-story/chars/lori_shrimp_final_qa.jpg
+?? pieces/gta6-story/chars/lori_shrimp_flat.jpg
+?? pieces/gta6-story/chars/lori_shrimp_painted.jpg
+?? pieces/gta6-story/chars/lori_shrimp_parse.npz
+?? pieces/gta6-story/chars/lucia_bunk.png
+?? pieces/gta6-story/chars/lucia_bunk_final.png
+?? pieces/gta6-story/chars/lucia_bunk_final_qa.jpg
+?? pieces/gta6-story/chars/lucia_bunk_flat.jpg
+?? pieces/gta6-story/chars/lucia_bunk_painted.jpg
+?? pieces/gta6-story/chars/lucia_bunk_painted1.jpg
+?? pieces/gta6-story/chars/lucia_bunk_painted2.jpg
+?? pieces/gta6-story/chars/lucia_bunk_painted3.jpg
+?? pieces/gta6-story/chars/lucia_bunk_painted4.jpg
+?? pieces/gta6-story/chars/lucia_bunk_parse.npz
+?? pieces/gta6-story/chars/lucia_car.png
+?? pieces/gta6-story/chars/lucia_car_final.png
+?? pieces/gta6-story/chars/lucia_car_final_qa.jpg
+?? pieces/gta6-story/chars/lucia_car_flat.jpg
+?? pieces/gta6-story/chars/lucia_car_flat1.jpg
+?? pieces/gta6-story/chars/lucia_car_painted.jpg
+?? pieces/gta6-story/chars/lucia_car_painted1.jpg
+?? pieces/gta6-story/chars/lucia_car_painted2.jpg
+?? pieces/gta6-story/chars/lucia_car_painted3.jpg
+?? pieces/gta6-story/chars/lucia_car_painted4.jpg
+?? pieces/gta6-story/chars/lucia_car_parse.npz
+?? pieces/gta6-story/chars/lucia_club.png
+?? pieces/gta6-story/chars/lucia_club_final.png
+?? pieces/gta6-story/chars/lucia_club_final_qa.jpg
+?? pieces/gta6-story/chars/lucia_club_flat.jpg
+?? pieces/gta6-story/chars/lucia_club_flat1.jpg
+?? pieces/gta6-story/chars/lucia_club_painted.jpg
+?? pieces/gta6-story/chars/lucia_club_painted1.jpg
+?? pieces/gta6-story/chars/lucia_club_painted2.jpg
+?? pieces/gta6-story/chars/lucia_club_painted3.jpg
+?? pieces/gta6-story/chars/lucia_club_painted4.jpg
+?? pieces/gta6-story/chars/lucia_club_parse.npz
+?? pieces/gta6-story/chars/lucia_mirror.png
+?? pieces/gta6-story/chars/lucia_mirror_final.png
+?? pieces/gta6-story/chars/lucia_mirror_final_qa.jpg
+?? pieces/gta6-story/chars/lucia_mirror_flat.jpg
+?? pieces/gta6-story/chars/lucia_mirror_painted.jpg
+?? pieces/gta6-story/chars/lucia_mirror_parse.npz
+?? pieces/gta6-story/chars/lucia_phone.png
+?? pieces/gta6-story/chars/lucia_phone_final.png
+?? pieces/gta6-story/chars/lucia_phone_final_qa.jpg
+?? pieces/gta6-story/chars/lucia_phone_flat.jpg
+?? pieces/gta6-story/chars/lucia_phone_painted.jpg
+?? pieces/gta6-story/chars/lucia_phone_painted1.jpg
+?? pieces/gta6-story/chars/lucia_phone_painted2.jpg
+?? pieces/gta6-story/chars/lucia_phone_painted3.jpg
+?? pieces/gta6-story/chars/lucia_phone_parse.npz
+?? pieces/gta6-story/chars/lucia_shout.png
+?? pieces/gta6-story/chars/lucia_shout_final.png
+?? pieces/gta6-story/chars/lucia_shout_final_qa.jpg
+?? pieces/gta6-story/chars/lucia_shout_flat.jpg
+?? pieces/gta6-story/chars/lucia_shout_flat1.jpg
+?? pieces/gta6-story/chars/lucia_shout_flat2.jpg
+?? pieces/gta6-story/chars/lucia_shout_painted.jpg
+?? pieces/gta6-story/chars/lucia_shout_painted1.jpg
+?? pieces/gta6-story/chars/lucia_shout_painted2.jpg
+?? pieces/gta6-story/chars/lucia_shout_painted3.jpg
+?? pieces/gta6-story/chars/lucia_shout_painted4.jpg
+?? pieces/gta6-story/chars/lucia_shout_parse.npz
+?? pieces/gta6-story/chars/lucia_swamp.png
+?? pieces/gta6-story/chars/lucia_swamp_final.png
+?? pieces/gta6-story/chars/lucia_swamp_final_qa.jpg
+?? pieces/gta6-story/chars/lucia_swamp_flat.jpg
+?? pieces/gta6-story/chars/lucia_swamp_painted.jpg
+?? pieces/gta6-story/chars/lucia_swamp_painted1.jpg
+?? pieces/gta6-story/chars/lucia_swamp_painted2.jpg
+?? pieces/gta6-story/chars/lucia_swamp_painted3.jpg
+?? pieces/gta6-story/chars/lucia_swamp_painted4.jpg
+?? pieces/gta6-story/chars/lucia_swamp_parse.npz
+?? pieces/gta6-story/chars/lucia_walk.png
+?? pieces/gta6-story/chars/lucia_walk_final.png
+?? pieces/gta6-story/chars/lucia_walk_final_qa.jpg
+?? pieces/gta6-story/chars/lucia_walk_flat.jpg
+?? pieces/gta6-story/chars/lucia_walk_flat2.jpg
+?? pieces/gta6-story/chars/lucia_walk_painted.jpg
+?? pieces/gta6-story/chars/lucia_walk_painted1.jpg
+?? pieces/gta6-story/chars/lucia_walk_painted2.jpg
+?? pieces/gta6-story/chars/lucia_walk_painted3.jpg
+?? pieces/gta6-story/chars/lucia_walk_painted4.jpg
+?? pieces/gta6-story/chars/lucia_walk_parse.npz
+?? pieces/gta6-story/chars/mendez_cell.png
+?? pieces/gta6-story/chars/mendez_cell_final.png
+?? pieces/gta6-story/chars/mendez_cell_final_qa.jpg
+?? pieces/gta6-story/chars/mendez_cell_flat.jpg
+?? pieces/gta6-story/chars/mendez_cell_painted.jpg
+?? pieces/gta6-story/chars/mendez_cell_parse.npz
+?? pieces/gta6-story/chars/mendez_phone.png
+?? pieces/gta6-story/chars/mendez_phone_final.png
+?? pieces/gta6-story/chars/mendez_phone_final_qa.jpg
+?? pieces/gta6-story/chars/mendez_phone_flat.jpg
+?? pieces/gta6-story/chars/mendez_phone_flat_used.jpg
+?? pieces/gta6-story/chars/mendez_phone_painted.jpg
+?? pieces/gta6-story/chars/mendez_phone_painted1.jpg
+?? pieces/gta6-story/chars/mendez_phone_painted2.jpg
+?? pieces/gta6-story/chars/mendez_phone_painted3.jpg
+?? pieces/gta6-story/chars/mendez_phone_painted4.jpg
+?? pieces/gta6-story/chars/mendez_phone_parse.npz
+?? pieces/gta6-story/chars/raul_booth.png
+?? pieces/gta6-story/chars/raul_booth_final.png
+?? pieces/gta6-story/chars/raul_booth_final_qa.jpg
+?? pieces/gta6-story/chars/raul_booth_flat.jpg
+?? pieces/gta6-story/chars/raul_booth_painted.jpg
+?? pieces/gta6-story/chars/raul_booth_parse.npz
+?? pieces/gta6-story/chars/raul_shout.png
+?? pieces/gta6-story/chars/raul_shout_final.png
+?? pieces/gta6-story/chars/raul_shout_final_qa.jpg
+?? pieces/gta6-story/chars/raul_shout_flat.jpg
+?? pieces/gta6-story/chars/raul_shout_painted.jpg
+?? pieces/gta6-story/chars/raul_shout_parse.npz
+?? pieces/gta6-story/flow/
+?? pieces/gta6-story/fonts/Bangers-Regular.ttf
+?? pieces/gta6-story/fonts/BarlowCondensed-ExtraBold.ttf
+?? pieces/gta6-story/fonts/BarlowCondensed-SemiBold.ttf
+?? pieces/gta6-story/fonts/BarlowSemiCondensed-SemiBold.ttf
+?? pieces/gta6-story/fonts/LICENSE-Pricedown-Typodermic-EULA-2026.pdf
+?? pieces/gta6-story/fonts/LuckiestGuy-Regular.ttf
+?? pieces/gta6-story/fonts/Outfit-ExtraBold.ttf
+?? pieces/gta6-story/fonts/Outfit-SemiBold.ttf
+?? pieces/gta6-story/fonts/PricedownBl.otf
+?? pieces/gta6-story/fonts/RedHatDisplay-Bold.ttf
+?? pieces/gta6-story/id/
+?? pieces/gta6-story/index.html
+?? pieces/gta6-story/review/bg_sheet.jpg
+?? pieces/gta6-story/review/board_s0.jpg
+?? pieces/gta6-story/review/board_s1.jpg
+?? pieces/gta6-story/review/board_s2.jpg
+?? pieces/gta6-story/review/board_s3.jpg
+?? pieces/gta6-story/review/board_s4.jpg
+?? pieces/gta6-story/review/board_s5.jpg
+?? pieces/gta6-story/review/board_s6.jpg
+?? pieces/gta6-story/review/board_s7.jpg
+?? pieces/gta6-story/review/board_s8.jpg
+?? pieces/gta6-story/review/board_s9.jpg
+?? pieces/gta6-story/review/chars_sheet.jpg
+?? pieces/gta6-story/review/keys/
+?? pieces/gta6-story/review/v2_board_s0.jpg
+?? pieces/gta6-story/review/v2_board_s1.jpg
+?? pieces/gta6-story/review/v2_keys/
+?? pieces/gta6-story/v2/chars/s0_02.png
+?? pieces/gta6-story/v2/chars/s0_02_final.png
+?? pieces/gta6-story/v2/chars/s0_02_final_qa.jpg
+?? pieces/gta6-story/v2/chars/s0_02_flat.jpg
+?? pieces/gta6-story/v2/chars/s0_02_painted.jpg
+?? pieces/gta6-story/v2/chars/s0_02_parse.npz
+?? pieces/gta6-story/v2/chars/s0_05.png
+?? pieces/gta6-story/v2/chars/s0_05_final.png
+?? pieces/gta6-story/v2/chars/s0_05_final_qa.jpg
+?? pieces/gta6-story/v2/chars/s0_05_flat.jpg
+?? pieces/gta6-story/v2/chars/s0_05_painted.jpg
+?? pieces/gta6-story/v2/chars/s0_05_parse.npz
+?? pieces/gta6-story/v2/chars/s1_02.png
+?? pieces/gta6-story/v2/chars/s1_02_final.png
+?? pieces/gta6-story/v2/chars/s1_02_final_qa.jpg
+?? pieces/gta6-story/v2/chars/s1_02_flat.jpg
+?? pieces/gta6-story/v2/chars/s1_02_painted.jpg
+?? pieces/gta6-story/v2/chars/s1_02_parse.npz
+?? pieces/gta6-story/v2/chars/s1_03.png
+?? pieces/gta6-story/v2/chars/s1_03_final.png
+?? pieces/gta6-story/v2/chars/s1_03_final_b.png
+?? pieces/gta6-story/v2/chars/s1_03_final_qa.jpg
+?? pieces/gta6-story/v2/chars/s1_03_flat.jpg
+?? pieces/gta6-story/v2/chars/s1_03_painted.jpg
+?? pieces/gta6-story/v2/chars/s1_03_painted_b.jpg
+?? pieces/gta6-story/v2/chars/s1_03_parse.npz
+?? pieces/gta6-story/v2/chars/s1_05.png
+?? pieces/gta6-story/v2/chars/s1_05_final.png
+?? pieces/gta6-story/v2/chars/s1_05_final_qa.jpg
+?? pieces/gta6-story/v2/chars/s1_05_flat.jpg
+?? pieces/gta6-story/v2/chars/s1_05_painted.jpg
+?? pieces/gta6-story/v2/chars/s1_05_parse.npz
+?? pieces/gta6-story/v2/chars/s1_06.png
+?? pieces/gta6-story/v2/chars/s1_06_final.png
+?? pieces/gta6-story/v2/chars/s1_06_final_qa.jpg
+?? pieces/gta6-story/v2/chars/s1_06_flat.jpg
+?? pieces/gta6-story/v2/chars/s1_06_flatcrop.jpg
+?? pieces/gta6-story/v2/chars/s1_06_painted.jpg
+?? pieces/gta6-story/v2/chars/s1_06_parse.npz
+?? pieces/gta6-story/v2/chars/s1_07.png
+?? pieces/gta6-story/v2/chars/s1_07_final.png
+?? pieces/gta6-story/v2/chars/s1_07_final_qa.jpg
+?? pieces/gta6-story/v2/chars/s1_07_flat.jpg
+?? pieces/gta6-story/v2/chars/s1_07_painted.jpg
+?? pieces/gta6-story/v2/chars/s1_07_parse.npz
+?? pieces/gta6-story/v2/chars/s1_08.png
+?? pieces/gta6-story/v2/chars/s1_08_final.png
+?? pieces/gta6-story/v2/chars/s1_08_final_qa.jpg
+?? pieces/gta6-story/v2/chars/s1_08_flat.jpg
+?? pieces/gta6-story/v2/chars/s1_08_painted.jpg
+?? pieces/gta6-story/v2/chars/s1_08_parse.npz
+?? pieces/gta6-story/v2/chars/s1_09.png
+?? pieces/gta6-story/v2/chars/s1_09_final.png
+?? pieces/gta6-story/v2/chars/s1_09_final_qa.jpg
+?? pieces/gta6-story/v2/chars/s1_09_flat.jpg
+?? pieces/gta6-story/v2/chars/s1_09_painted.jpg
+?? pieces/gta6-story/v2/chars/s1_09_parse.npz
+?? pieces/gta6-story/v2/chars/s1_11.png
+?? pieces/gta6-story/v2/chars/s1_11_final.png
+?? pieces/gta6-story/v2/chars/s1_11_final_qa.jpg
+?? pieces/gta6-story/v2/chars/s1_11_flat.jpg
+?? pieces/gta6-story/v2/chars/s1_11_painted.jpg
+?? pieces/gta6-story/v2/chars/s1_11_parse.npz
+?? pieces/gta6-story/v2/chars/s1_12.png
+?? pieces/gta6-story/v2/chars/s1_12_final.png
+?? pieces/gta6-story/v2/chars/s1_12_final_qa.jpg
+?? pieces/gta6-story/v2/chars/s1_12_flat.jpg
+?? pieces/gta6-story/v2/chars/s1_12_painted.jpg
+?? pieces/gta6-story/v2/chars/s1_12_parse.npz
+?? pieces/gta6-story/v2/chars/s1_13.png
+?? pieces/gta6-story/v2/chars/s1_13_final.png
+?? pieces/gta6-story/v2/chars/s1_13_final_qa.jpg
+?? pieces/gta6-story/v2/chars/s1_13_flat.jpg
+?? pieces/gta6-story/v2/chars/s1_13_painted.jpg
+?? pieces/gta6-story/v2/chars/s1_13_parse.npz
+?? pieces/gta6-story/v2/chars/s1_14.png
+?? pieces/gta6-story/v2/chars/s1_14_final.png
+?? pieces/gta6-story/v2/chars/s1_14_final_qa.jpg
+?? pieces/gta6-story/v2/chars/s1_14_flat.jpg
+?? pieces/gta6-story/v2/chars/s1_14_painted.jpg
+?? pieces/gta6-story/v2/chars/s1_14_parse.npz
+?? pieces/gta6-story/v2/chars/s1_15.png
+?? pieces/gta6-story/v2/chars/s1_15_final.png
+?? pieces/gta6-story/v2/chars/s1_15_final_qa.jpg
+?? pieces/gta6-story/v2/chars/s1_15_flat.jpg
+?? pieces/gta6-story/v2/chars/s1_15_painted.jpg
+?? pieces/gta6-story/v2/chars/s1_15_parse.npz
+?? pieces/gta6-story/v2/chars/s1_17.png
+?? pieces/gta6-story/v2/chars/s1_17_final.png
+?? pieces/gta6-story/v2/chars/s1_17_final_qa.jpg
+?? pieces/gta6-story/v2/chars/s1_17_flat.jpg
+?? pieces/gta6-story/v2/chars/s1_17_painted.jpg
+?? pieces/gta6-story/v2/chars/s1_17_parse.npz
+?? pieces/gta6-story/v2/chars/s1_19.png
+?? pieces/gta6-story/v2/chars/s1_19_final.png
+?? pieces/gta6-story/v2/chars/s1_19_final_qa.jpg
+?? pieces/gta6-story/v2/chars/s1_19_flat.jpg
+?? pieces/gta6-story/v2/chars/s1_19_painted.jpg
+?? pieces/gta6-story/v2/chars/s1_19_parse.npz
+?? pieces/gta6-story/v2/chars/s1_21.png
+?? pieces/gta6-story/v2/chars/s1_21_final.png
+?? pieces/gta6-story/v2/chars/s1_21_final_qa.jpg
+?? pieces/gta6-story/v2/chars/s1_21_flat.jpg
+?? pieces/gta6-story/v2/chars/s1_21_painted.jpg
+?? pieces/gta6-story/v2/chars/s1_21_parse.npz
+?? pieces/gta6-story/v2/chars/s1_22.png
+?? pieces/gta6-story/v2/chars/s1_22_final.png
+?? pieces/gta6-story/v2/chars/s1_22_final_qa.jpg
+?? pieces/gta6-story/v2/chars/s1_22_flat.jpg
+?? pieces/gta6-story/v2/chars/s1_22_flatcrop.jpg
+?? pieces/gta6-story/v2/chars/s1_22_paintcrop.jpg
+?? pieces/gta6-story/v2/chars/s1_22_painted.jpg
+?? pieces/gta6-story/v2/chars/s1_22_parse.npz
+?? pieces/gta6-story/v2/flow/
+?? pieces/gta6-story/v2/ins/
+?? pieces/gta6-story/v2/old/s0_05_plate_bad.jpg
+?? pieces/gta6-story/v2/old/s1_06_final_a.png
+?? pieces/gta6-story/v2/old/s1_06_painted_a.jpg
+?? pieces/gta6-story/v2/old/s1_21_final_a.png
+?? pieces/gta6-story/v2/old/s1_21_painted_a.jpg
+?? pieces/gta6-story/v2/old/s1_21_plate.jpg
+?? pieces/gta6-story/v2/old/s1_22.jpg
+?? pieces/gta6-story/v2/old/s1_22.png
+?? pieces/gta6-story/v2/old/s1_22_final.png
+?? pieces/gta6-story/v2/old/s1_22_final_qa.jpg
+?? pieces/gta6-story/v2/old/s1_22_flat.jpg
+?? pieces/gta6-story/v2/old/s1_22_flatcrop.jpg
+?? pieces/gta6-story/v2/old/s1_22_paintcrop.jpg
+?? pieces/gta6-story/v2/old/s1_22_painted.jpg
+?? pieces/gta6-story/v2/old/s1_22_painted_bad.jpg
+?? pieces/gta6-story/v2/old/s1_22_parse.npz
+?? pieces/gta6-story/v2/old/s1_22_photo.jpg
+?? pieces/gta6-story/v2/pilot/index.html
+?? pieces/gta6-story/v2/plates/
+?? pieces/gta6-story/v2/refs/
+?? pieces/gta6-story/v2/sets/
+?? pieces/gta6-story/v2/typesheet/index.html
 ?? pieces/guitarra-paracho/chars/
 ?? pieces/guitarra-paracho/qa/c01.jpg
 ?? pieces/guitarra-paracho/qa/c02.jpg
@@ -18199,7 +18473,184 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 ?? pieces/nuez-parras/qa/sub6.jpg
 ?? pieces/nuez-parras/qa/sub7.jpg
 ?? pieces/nuez-parras/qa/subs_check.jpg
-?? pieces/nvidia-huang/qa/
+?? pieces/nvidia-huang/qa/board/cam/qa_preview_cam.csv
+?? pieces/nvidia-huang/qa/board/hair_check.png
+?? pieces/nvidia-huang/qa/board/sheet_01.jpg
+?? pieces/nvidia-huang/qa/board/sheet_02.jpg
+?? pieces/nvidia-huang/qa/board/sheet_03.jpg
+?? pieces/nvidia-huang/qa/board/sheet_04.jpg
+?? pieces/nvidia-huang/qa/board/sheet_05.jpg
+?? pieces/nvidia-huang/qa/board/sheet_06.jpg
+?? pieces/nvidia-huang/qa/board/shortqa/perframe.npz
+?? pieces/nvidia-huang/qa/board/shortqa/sheet_0000.jpg
+?? pieces/nvidia-huang/qa/board/shortqa/sheet_0060.jpg
+?? pieces/nvidia-huang/qa/board/shortqa/sheet_0120.jpg
+?? pieces/nvidia-huang/qa/board/shortqa/sheet_0180.jpg
+?? pieces/nvidia-huang/qa/board/shortqa/sheet_0240.jpg
+?? pieces/nvidia-huang/qa/board/shortqa/sheet_0300.jpg
+?? pieces/nvidia-huang/qa/board/shortqa/sheet_0360.jpg
+?? pieces/nvidia-huang/qa/board/shortqa/sheet_0420.jpg
+?? pieces/nvidia-huang/qa/board/shortqa/sheet_0480.jpg
+?? pieces/nvidia-huang/qa/board/shortqa/sheet_0540.jpg
+?? pieces/nvidia-huang/qa/board/shortqa/sheet_0600.jpg
+?? pieces/nvidia-huang/qa/board/shortqa/sheet_0660.jpg
+?? pieces/nvidia-huang/qa/board/shortqa/sheet_0720.jpg
+?? pieces/nvidia-huang/qa/board/shortqa/sheet_0780.jpg
+?? pieces/nvidia-huang/qa/board/shortqa/sheet_0840.jpg
+?? pieces/nvidia-huang/qa/board/shortqa/sheet_0900.jpg
+?? pieces/nvidia-huang/qa/board/shortqa/sheet_0960.jpg
+?? pieces/nvidia-huang/qa/board/shortqa/sheet_1020.jpg
+?? pieces/nvidia-huang/qa/board/shortqa/sheet_1080.jpg
+?? pieces/nvidia-huang/qa/board/shortqa/sheet_1140.jpg
+?? pieces/nvidia-huang/qa/board/shortqa/sheet_1200.jpg
+?? pieces/nvidia-huang/qa/board/shortqa/sheet_1260.jpg
+?? pieces/nvidia-huang/qa/board/shortqa/sheet_1320.jpg
+?? pieces/nvidia-huang/qa/board/shortqa/sheet_1380.jpg
+?? pieces/nvidia-huang/qa/board/shortqa/sheet_1440.jpg
+?? pieces/nvidia-huang/qa/board/shortqa/sheet_1500.jpg
+?? pieces/nvidia-huang/qa/board/shortqa/sheet_1560.jpg
+?? pieces/nvidia-huang/qa/board/shortqa/sheet_1620.jpg
+?? pieces/nvidia-huang/qa/board/shortqa/sheet_1680.jpg
+?? pieces/nvidia-huang/qa/board/shortqa/sheet_1740.jpg
+?? pieces/nvidia-huang/qa/board/shortqa/sheet_1800.jpg
+?? pieces/nvidia-huang/qa/board/shortqa/sheet_1860.jpg
+?? pieces/nvidia-huang/qa/board/storyboard_1.png
+?? pieces/nvidia-huang/qa/board/storyboard_2.png
+?? pieces/nvidia-huang/qa/final/perframe.npz
+?? pieces/nvidia-huang/qa/final/sheet_0000.jpg
+?? pieces/nvidia-huang/qa/final/sheet_0060.jpg
+?? pieces/nvidia-huang/qa/final/sheet_0120.jpg
+?? pieces/nvidia-huang/qa/final/sheet_0180.jpg
+?? pieces/nvidia-huang/qa/final/sheet_0240.jpg
+?? pieces/nvidia-huang/qa/final/sheet_0300.jpg
+?? pieces/nvidia-huang/qa/final/sheet_0360.jpg
+?? pieces/nvidia-huang/qa/final/sheet_0420.jpg
+?? pieces/nvidia-huang/qa/final/sheet_0480.jpg
+?? pieces/nvidia-huang/qa/final/sheet_0540.jpg
+?? pieces/nvidia-huang/qa/final/sheet_0600.jpg
+?? pieces/nvidia-huang/qa/final/sheet_0660.jpg
+?? pieces/nvidia-huang/qa/final/sheet_0720.jpg
+?? pieces/nvidia-huang/qa/final/sheet_0780.jpg
+?? pieces/nvidia-huang/qa/final/sheet_0840.jpg
+?? pieces/nvidia-huang/qa/final/sheet_0900.jpg
+?? pieces/nvidia-huang/qa/final/sheet_0960.jpg
+?? pieces/nvidia-huang/qa/final/sheet_1020.jpg
+?? pieces/nvidia-huang/qa/final/sheet_1080.jpg
+?? pieces/nvidia-huang/qa/final/sheet_1140.jpg
+?? pieces/nvidia-huang/qa/final/sheet_1200.jpg
+?? pieces/nvidia-huang/qa/final/sheet_1260.jpg
+?? pieces/nvidia-huang/qa/final/sheet_1320.jpg
+?? pieces/nvidia-huang/qa/final/sheet_1380.jpg
+?? pieces/nvidia-huang/qa/final/sheet_1440.jpg
+?? pieces/nvidia-huang/qa/final/sheet_1500.jpg
+?? pieces/nvidia-huang/qa/final/sheet_1560.jpg
+?? pieces/nvidia-huang/qa/final/sheet_1620.jpg
+?? pieces/nvidia-huang/qa/final/sheet_1680.jpg
+?? pieces/nvidia-huang/qa/final/sheet_1740.jpg
+?? pieces/nvidia-huang/qa/final/sheet_1800.jpg
+?? pieces/nvidia-huang/qa/final/sheet_1860.jpg
+?? pieces/nvidia-huang/qa/final4/perframe.npz
+?? pieces/nvidia-huang/qa/final4/sheet_0000.jpg
+?? pieces/nvidia-huang/qa/final4/sheet_0060.jpg
+?? pieces/nvidia-huang/qa/final4/sheet_0120.jpg
+?? pieces/nvidia-huang/qa/final4/sheet_0180.jpg
+?? pieces/nvidia-huang/qa/final4/sheet_0240.jpg
+?? pieces/nvidia-huang/qa/final4/sheet_0300.jpg
+?? pieces/nvidia-huang/qa/final4/sheet_0360.jpg
+?? pieces/nvidia-huang/qa/final4/sheet_0420.jpg
+?? pieces/nvidia-huang/qa/final4/sheet_0480.jpg
+?? pieces/nvidia-huang/qa/final4/sheet_0540.jpg
+?? pieces/nvidia-huang/qa/final4/sheet_0600.jpg
+?? pieces/nvidia-huang/qa/final4/sheet_0660.jpg
+?? pieces/nvidia-huang/qa/final4/sheet_0720.jpg
+?? pieces/nvidia-huang/qa/final4/sheet_0780.jpg
+?? pieces/nvidia-huang/qa/final4/sheet_0840.jpg
+?? pieces/nvidia-huang/qa/final4/sheet_0900.jpg
+?? pieces/nvidia-huang/qa/final4/sheet_0960.jpg
+?? pieces/nvidia-huang/qa/final4/sheet_1020.jpg
+?? pieces/nvidia-huang/qa/final4/sheet_1080.jpg
+?? pieces/nvidia-huang/qa/final4/sheet_1140.jpg
+?? pieces/nvidia-huang/qa/final4/sheet_1200.jpg
+?? pieces/nvidia-huang/qa/final4/sheet_1260.jpg
+?? pieces/nvidia-huang/qa/final4/sheet_1320.jpg
+?? pieces/nvidia-huang/qa/final4/sheet_1380.jpg
+?? pieces/nvidia-huang/qa/final4/sheet_1440.jpg
+?? pieces/nvidia-huang/qa/final4/sheet_1500.jpg
+?? pieces/nvidia-huang/qa/final4/sheet_1560.jpg
+?? pieces/nvidia-huang/qa/final4/sheet_1620.jpg
+?? pieces/nvidia-huang/qa/final4/sheet_1680.jpg
+?? pieces/nvidia-huang/qa/final4/sheet_1740.jpg
+?? pieces/nvidia-huang/qa/final4/sheet_1800.jpg
+?? pieces/nvidia-huang/qa/final4/sheet_1860.jpg
+?? pieces/nvidia-huang/qa/final4/sheet_1920.jpg
+?? pieces/nvidia-huang/qa/snd/perframe.npz
+?? pieces/nvidia-huang/qa/snd/sheet_0000.jpg
+?? pieces/nvidia-huang/qa/snd/sheet_0060.jpg
+?? pieces/nvidia-huang/qa/snd/sheet_0120.jpg
+?? pieces/nvidia-huang/qa/snd/sheet_0180.jpg
+?? pieces/nvidia-huang/qa/snd/sheet_0240.jpg
+?? pieces/nvidia-huang/qa/snd/sheet_0300.jpg
+?? pieces/nvidia-huang/qa/snd/sheet_0360.jpg
+?? pieces/nvidia-huang/qa/snd/sheet_0420.jpg
+?? pieces/nvidia-huang/qa/snd/sheet_0480.jpg
+?? pieces/nvidia-huang/qa/snd/sheet_0540.jpg
+?? pieces/nvidia-huang/qa/snd/sheet_0600.jpg
+?? pieces/nvidia-huang/qa/snd/sheet_0660.jpg
+?? pieces/nvidia-huang/qa/snd/sheet_0720.jpg
+?? pieces/nvidia-huang/qa/snd/sheet_0780.jpg
+?? pieces/nvidia-huang/qa/snd/sheet_0840.jpg
+?? pieces/nvidia-huang/qa/snd/sheet_0900.jpg
+?? pieces/nvidia-huang/qa/snd/sheet_0960.jpg
+?? pieces/nvidia-huang/qa/snd/sheet_1020.jpg
+?? pieces/nvidia-huang/qa/snd/sheet_1080.jpg
+?? pieces/nvidia-huang/qa/snd/sheet_1140.jpg
+?? pieces/nvidia-huang/qa/snd/sheet_1200.jpg
+?? pieces/nvidia-huang/qa/snd/sheet_1260.jpg
+?? pieces/nvidia-huang/qa/snd/sheet_1320.jpg
+?? pieces/nvidia-huang/qa/snd/sheet_1380.jpg
+?? pieces/nvidia-huang/qa/snd/sheet_1440.jpg
+?? pieces/nvidia-huang/qa/snd/sheet_1500.jpg
+?? pieces/nvidia-huang/qa/snd/sheet_1560.jpg
+?? pieces/nvidia-huang/qa/snd/sheet_1620.jpg
+?? pieces/nvidia-huang/qa/snd/sheet_1680.jpg
+?? pieces/nvidia-huang/qa/snd/sheet_1740.jpg
+?? pieces/nvidia-huang/qa/snd/sheet_1800.jpg
+?? pieces/nvidia-huang/qa/snd/sheet_1860.jpg
+?? pieces/nvidia-huang/qa/snd4/perframe.npz
+?? pieces/nvidia-huang/qa/snd4/sheet_0000.jpg
+?? pieces/nvidia-huang/qa/snd4/sheet_0060.jpg
+?? pieces/nvidia-huang/qa/snd4/sheet_0120.jpg
+?? pieces/nvidia-huang/qa/snd4/sheet_0180.jpg
+?? pieces/nvidia-huang/qa/snd4/sheet_0240.jpg
+?? pieces/nvidia-huang/qa/snd4/sheet_0300.jpg
+?? pieces/nvidia-huang/qa/snd4/sheet_0360.jpg
+?? pieces/nvidia-huang/qa/snd4/sheet_0420.jpg
+?? pieces/nvidia-huang/qa/snd4/sheet_0480.jpg
+?? pieces/nvidia-huang/qa/snd4/sheet_0540.jpg
+?? pieces/nvidia-huang/qa/snd4/sheet_0600.jpg
+?? pieces/nvidia-huang/qa/snd4/sheet_0660.jpg
+?? pieces/nvidia-huang/qa/snd4/sheet_0720.jpg
+?? pieces/nvidia-huang/qa/snd4/sheet_0780.jpg
+?? pieces/nvidia-huang/qa/snd4/sheet_0840.jpg
+?? pieces/nvidia-huang/qa/snd4/sheet_0900.jpg
+?? pieces/nvidia-huang/qa/snd4/sheet_0960.jpg
+?? pieces/nvidia-huang/qa/snd4/sheet_1020.jpg
+?? pieces/nvidia-huang/qa/snd4/sheet_1080.jpg
+?? pieces/nvidia-huang/qa/snd4/sheet_1140.jpg
+?? pieces/nvidia-huang/qa/snd4/sheet_1200.jpg
+?? pieces/nvidia-huang/qa/snd4/sheet_1260.jpg
+?? pieces/nvidia-huang/qa/snd4/sheet_1320.jpg
+?? pieces/nvidia-huang/qa/snd4/sheet_1380.jpg
+?? pieces/nvidia-huang/qa/snd4/sheet_1440.jpg
+?? pieces/nvidia-huang/qa/snd4/sheet_1500.jpg
+?? pieces/nvidia-huang/qa/snd4/sheet_1560.jpg
+?? pieces/nvidia-huang/qa/snd4/sheet_1620.jpg
+?? pieces/nvidia-huang/qa/snd4/sheet_1680.jpg
+?? pieces/nvidia-huang/qa/snd4/sheet_1740.jpg
+?? pieces/nvidia-huang/qa/snd4/sheet_1800.jpg
+?? pieces/nvidia-huang/qa/snd4/sheet_1860.jpg
+?? pieces/nvidia-huang/qa/snd4/sheet_1920.jpg
+?? pieces/nvidia-huang/qa/v1/
 ?? pieces/nvidia-huang/storyboard.png
 ?? pieces/ojo-cienegas/chars/
 ?? pieces/ojo-cienegas/qa/c01.jpg
@@ -18682,7 +19133,23 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 ?? pieces/reloj-zacatlan/qa/subs_check.jpg
 ?? pieces/sarape-saltillo-p2/chars/
 ?? pieces/sarape-saltillo/chars/
-?? pieces/scp-087/
+?? pieces/scp-087/flow/
+?? pieces/scp-087/index.html
+?? pieces/scp-087/renders_export.log
+?? pieces/scp-087/renders_export2.log
+?? pieces/scp-087/review/phone.jpg
+?? pieces/scp-087/review/shot01-sheet.jpg
+?? pieces/scp-087/review/shot02-sheet.jpg
+?? pieces/scp-087/review/shot03-sheet.jpg
+?? pieces/scp-087/review/shot04-sheet.jpg
+?? pieces/scp-087/review/shot05-sheet.jpg
+?? pieces/scp-087/review/shot06-sheet.jpg
+?? pieces/scp-087/review/shot07-sheet.jpg
+?? pieces/scp-087/review/shot08-sheet.jpg
+?? pieces/scp-087/review/shot09-sheet.jpg
+?? pieces/scp-087/review/shot10-sheet.jpg
+?? pieces/scp-087/review/shot11-sheet.jpg
+?? pieces/scp-087/storyboard.png
 ?? pieces/silla-izamal/chars/
 ?? pieces/silla-izamal/qa/c01.jpg
 ?? pieces/silla-izamal/qa/c02.jpg
@@ -18816,20 +19283,11 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 ?? pieces/talavera-cholula/qa/s2.jpg
 ?? pieces/talavera-cholula/qa/s3.jpg
 ?? pieces/talavera-cholula/qa/subs_check.jpg
-?? pieces/teke-teke/.videohub/
 ?? pieces/teke-teke/flow/2026-11-13T14-49-21-an-authentic-old-japanese-woodblock-prin-1.jpg
 ?? pieces/teke-teke/flow/2026-11-13T14-49-50-a-single-meiji-era-japanese-woodblock-pr-1.jpg
 ?? pieces/teke-teke/flow/2026-11-13T14-50-33-a-single-meiji-era-japanese-woodblock-pr-1.jpg
 ?? pieces/teke-teke/renders_export3.log
-?? pieces/teke-teke/review/events.mjs
-?? pieces/teke-teke/review/framescan3.json
-?? pieces/teke-teke/review/mp4diff2.txt
 ?? pieces/teke-teke/review/revisar2.log
-?? pieces/teke-teke/review/scan5.json
-?? pieces/teke-teke/review/selfcheck3.js
-?? pieces/teke-teke/sound/cues.json
-?? pieces/teke-teke/sound/mix_v1.py
-?? pieces/teke-teke/src/beings.js
 ?? pieces/tienda-mineral/chars/
 ?? pieces/traje-zamora/chars/
 ?? pieces/traje-zamora/qa/c01.jpg
@@ -18895,7 +19353,179 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 ?? pieces/trajinera-xochimilco/qa/sub6.jpg
 ?? pieces/trajinera-xochimilco/qa/sub7.jpg
 ?? pieces/trajinera-xochimilco/qa/subs_check.jpg
-?? pieces/trash-library/qa/
+?? pieces/trash-library/qa/v1/perframe.npz
+?? pieces/trash-library/qa/v1/sheet_0000.jpg
+?? pieces/trash-library/qa/v1/sheet_0060.jpg
+?? pieces/trash-library/qa/v1/sheet_0120.jpg
+?? pieces/trash-library/qa/v1/sheet_0180.jpg
+?? pieces/trash-library/qa/v1/sheet_0240.jpg
+?? pieces/trash-library/qa/v1/sheet_0300.jpg
+?? pieces/trash-library/qa/v1/sheet_0360.jpg
+?? pieces/trash-library/qa/v1/sheet_0420.jpg
+?? pieces/trash-library/qa/v1/sheet_0480.jpg
+?? pieces/trash-library/qa/v1/sheet_0540.jpg
+?? pieces/trash-library/qa/v1/sheet_0600.jpg
+?? pieces/trash-library/qa/v1/sheet_0660.jpg
+?? pieces/trash-library/qa/v1/sheet_0720.jpg
+?? pieces/trash-library/qa/v1/sheet_0780.jpg
+?? pieces/trash-library/qa/v1/sheet_0840.jpg
+?? pieces/trash-library/qa/v1/sheet_0900.jpg
+?? pieces/trash-library/qa/v1/sheet_0960.jpg
+?? pieces/trash-library/qa/v1/sheet_1020.jpg
+?? pieces/trash-library/qa/v1/sheet_1080.jpg
+?? pieces/trash-library/qa/v1/sheet_1140.jpg
+?? pieces/trash-library/qa/v1/sheet_1200.jpg
+?? pieces/trash-library/qa/v1/sheet_1260.jpg
+?? pieces/trash-library/qa/v1/sheet_1320.jpg
+?? pieces/trash-library/qa/v1/sheet_1380.jpg
+?? pieces/trash-library/qa/v1/sheet_1440.jpg
+?? pieces/trash-library/qa/v1/sheet_1500.jpg
+?? pieces/trash-library/qa/v1/sheet_1560.jpg
+?? pieces/trash-library/qa/v1/sheet_1620.jpg
+?? pieces/trash-library/qa/v1/sheet_1680.jpg
+?? pieces/trash-library/qa/v1/sheet_1740.jpg
+?? pieces/trash-library/qa/v1/sheet_1800.jpg
+?? pieces/trash-library/qa/v2/bag_flap.jpg
+?? pieces/trash-library/qa/v2/bag_flap2.png
+?? pieces/trash-library/qa/v2/cam/trash-library_silent_v1_cam.csv
+?? pieces/trash-library/qa/v2/cam/trash-library_silent_v2_cam.csv
+?? pieces/trash-library/qa/v2/cast_v3.png
+?? pieces/trash-library/qa/v2/class_v3.png
+?? pieces/trash-library/qa/v2/colour_ref_v1_v2.jpg
+?? pieces/trash-library/qa/v2/end_close.png
+?? pieces/trash-library/qa/v2/end_close_video.jpg
+?? pieces/trash-library/qa/v2/end_crop.png
+?? pieces/trash-library/qa/v2/end_dot.png
+?? pieces/trash-library/qa/v2/end_final.jpg
+?? pieces/trash-library/qa/v2/end_v2.jpg
+?? pieces/trash-library/qa/v2/fix_14_57.png
+?? pieces/trash-library/qa/v2/fix_14_57b.png
+?? pieces/trash-library/qa/v2/fix_14c.png
+?? pieces/trash-library/qa/v2/fix_14d.png
+?? pieces/trash-library/qa/v2/fix_14e.png
+?? pieces/trash-library/qa/v2/fix_14f.png
+?? pieces/trash-library/qa/v2/fix_14g.png
+?? pieces/trash-library/qa/v2/g0.png
+?? pieces/trash-library/qa/v2/g1.png
+?? pieces/trash-library/qa/v2/haze32.jpg
+?? pieces/trash-library/qa/v2/haze32b.png
+?? pieces/trash-library/qa/v2/haze32c.png
+?? pieces/trash-library/qa/v2/kid_crop.png
+?? pieces/trash-library/qa/v2/kid_crop2.png
+?? pieces/trash-library/qa/v2/kid_full.png
+?? pieces/trash-library/qa/v2/kid_t.png
+?? pieces/trash-library/qa/v2/kid_v3.png
+?? pieces/trash-library/qa/v2/kid_v3b.png
+?? pieces/trash-library/qa/v2/kid_v3c.png
+?? pieces/trash-library/qa/v2/kid_v3d.png
+?? pieces/trash-library/qa/v2/kid_v3e.png
+?? pieces/trash-library/qa/v2/kid_v3f.png
+?? pieces/trash-library/qa/v2/kid_v3g.png
+?? pieces/trash-library/qa/v2/kid_v3h.png
+?? pieces/trash-library/qa/v2/kid_v3i.png
+?? pieces/trash-library/qa/v2/merge_check.png
+?? pieces/trash-library/qa/v2/rev3_fix.png
+?? pieces/trash-library/qa/v2/rev3_issues.jpg
+?? pieces/trash-library/qa/v2/rev_14_57.jpg
+?? pieces/trash-library/qa/v2/sheets/
+?? pieces/trash-library/qa/v2/shortqa/perframe.npz
+?? pieces/trash-library/qa/v2/shortqa/sheet_0000.jpg
+?? pieces/trash-library/qa/v2/shortqa/sheet_0060.jpg
+?? pieces/trash-library/qa/v2/shortqa/sheet_0120.jpg
+?? pieces/trash-library/qa/v2/shortqa/sheet_0180.jpg
+?? pieces/trash-library/qa/v2/shortqa/sheet_0240.jpg
+?? pieces/trash-library/qa/v2/shortqa/sheet_0300.jpg
+?? pieces/trash-library/qa/v2/shortqa/sheet_0360.jpg
+?? pieces/trash-library/qa/v2/shortqa/sheet_0420.jpg
+?? pieces/trash-library/qa/v2/shortqa/sheet_0480.jpg
+?? pieces/trash-library/qa/v2/shortqa/sheet_0540.jpg
+?? pieces/trash-library/qa/v2/shortqa/sheet_0600.jpg
+?? pieces/trash-library/qa/v2/shortqa/sheet_0660.jpg
+?? pieces/trash-library/qa/v2/shortqa/sheet_0720.jpg
+?? pieces/trash-library/qa/v2/shortqa/sheet_0780.jpg
+?? pieces/trash-library/qa/v2/shortqa/sheet_0840.jpg
+?? pieces/trash-library/qa/v2/shortqa/sheet_0900.jpg
+?? pieces/trash-library/qa/v2/shortqa/sheet_0960.jpg
+?? pieces/trash-library/qa/v2/shortqa/sheet_1020.jpg
+?? pieces/trash-library/qa/v2/shortqa/sheet_1080.jpg
+?? pieces/trash-library/qa/v2/shortqa/sheet_1140.jpg
+?? pieces/trash-library/qa/v2/shortqa/sheet_1200.jpg
+?? pieces/trash-library/qa/v2/shortqa/sheet_1260.jpg
+?? pieces/trash-library/qa/v2/shortqa/sheet_1320.jpg
+?? pieces/trash-library/qa/v2/shortqa/sheet_1380.jpg
+?? pieces/trash-library/qa/v2/shortqa/sheet_1440.jpg
+?? pieces/trash-library/qa/v2/shortqa/sheet_1500.jpg
+?? pieces/trash-library/qa/v2/shortqa/sheet_1560.jpg
+?? pieces/trash-library/qa/v2/shortqa/sheet_1620.jpg
+?? pieces/trash-library/qa/v2/shortqa/sheet_1680.jpg
+?? pieces/trash-library/qa/v2/shortqa/sheet_1740.jpg
+?? pieces/trash-library/qa/v2/shortqa/sheet_1800.jpg
+?? pieces/trash-library/qa/v2/v1look/
+?? pieces/trash-library/qa/v2/v4_kidA.png
+?? pieces/trash-library/qa/v3snd/perframe.npz
+?? pieces/trash-library/qa/v3snd/sheet_0000.jpg
+?? pieces/trash-library/qa/v3snd/sheet_0060.jpg
+?? pieces/trash-library/qa/v3snd/sheet_0120.jpg
+?? pieces/trash-library/qa/v3snd/sheet_0180.jpg
+?? pieces/trash-library/qa/v3snd/sheet_0240.jpg
+?? pieces/trash-library/qa/v3snd/sheet_0300.jpg
+?? pieces/trash-library/qa/v3snd/sheet_0360.jpg
+?? pieces/trash-library/qa/v3snd/sheet_0420.jpg
+?? pieces/trash-library/qa/v3snd/sheet_0480.jpg
+?? pieces/trash-library/qa/v3snd/sheet_0540.jpg
+?? pieces/trash-library/qa/v3snd/sheet_0600.jpg
+?? pieces/trash-library/qa/v3snd/sheet_0660.jpg
+?? pieces/trash-library/qa/v3snd/sheet_0720.jpg
+?? pieces/trash-library/qa/v3snd/sheet_0780.jpg
+?? pieces/trash-library/qa/v3snd/sheet_0840.jpg
+?? pieces/trash-library/qa/v3snd/sheet_0900.jpg
+?? pieces/trash-library/qa/v3snd/sheet_0960.jpg
+?? pieces/trash-library/qa/v3snd/sheet_1020.jpg
+?? pieces/trash-library/qa/v3snd/sheet_1080.jpg
+?? pieces/trash-library/qa/v3snd/sheet_1140.jpg
+?? pieces/trash-library/qa/v3snd/sheet_1200.jpg
+?? pieces/trash-library/qa/v3snd/sheet_1260.jpg
+?? pieces/trash-library/qa/v3snd/sheet_1320.jpg
+?? pieces/trash-library/qa/v3snd/sheet_1380.jpg
+?? pieces/trash-library/qa/v3snd/sheet_1440.jpg
+?? pieces/trash-library/qa/v3snd/sheet_1500.jpg
+?? pieces/trash-library/qa/v3snd/sheet_1560.jpg
+?? pieces/trash-library/qa/v3snd/sheet_1620.jpg
+?? pieces/trash-library/qa/v3snd/sheet_1680.jpg
+?? pieces/trash-library/qa/v3snd/sheet_1740.jpg
+?? pieces/trash-library/qa/v3snd/sheet_1800.jpg
+?? pieces/trash-library/qa/v4/perframe.npz
+?? pieces/trash-library/qa/v4/sheet_0000.jpg
+?? pieces/trash-library/qa/v4/sheet_0060.jpg
+?? pieces/trash-library/qa/v4/sheet_0120.jpg
+?? pieces/trash-library/qa/v4/sheet_0180.jpg
+?? pieces/trash-library/qa/v4/sheet_0240.jpg
+?? pieces/trash-library/qa/v4/sheet_0300.jpg
+?? pieces/trash-library/qa/v4/sheet_0360.jpg
+?? pieces/trash-library/qa/v4/sheet_0420.jpg
+?? pieces/trash-library/qa/v4/sheet_0480.jpg
+?? pieces/trash-library/qa/v4/sheet_0540.jpg
+?? pieces/trash-library/qa/v4/sheet_0600.jpg
+?? pieces/trash-library/qa/v4/sheet_0660.jpg
+?? pieces/trash-library/qa/v4/sheet_0720.jpg
+?? pieces/trash-library/qa/v4/sheet_0780.jpg
+?? pieces/trash-library/qa/v4/sheet_0840.jpg
+?? pieces/trash-library/qa/v4/sheet_0900.jpg
+?? pieces/trash-library/qa/v4/sheet_0960.jpg
+?? pieces/trash-library/qa/v4/sheet_1020.jpg
+?? pieces/trash-library/qa/v4/sheet_1080.jpg
+?? pieces/trash-library/qa/v4/sheet_1140.jpg
+?? pieces/trash-library/qa/v4/sheet_1200.jpg
+?? pieces/trash-library/qa/v4/sheet_1260.jpg
+?? pieces/trash-library/qa/v4/sheet_1320.jpg
+?? pieces/trash-library/qa/v4/sheet_1380.jpg
+?? pieces/trash-library/qa/v4/sheet_1440.jpg
+?? pieces/trash-library/qa/v4/sheet_1500.jpg
+?? pieces/trash-library/qa/v4/sheet_1560.jpg
+?? pieces/trash-library/qa/v4/sheet_1620.jpg
+?? pieces/trash-library/qa/v4/sheet_1680.jpg
+?? pieces/trash-library/qa/v4/sheet_1740.jpg
+?? pieces/trash-library/qa/v4/sheet_1800.jpg
 ?? pieces/trash-library/storyboard.png
 ?? pieces/upnext-metalshadow/engine/ref/
 ?? pieces/vainilla-papantla/chars/
@@ -18961,8 +19591,8 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 ?? pieces/vendimia-ensenada/qa/r2.jpg
 ?? pieces/vendimia-ensenada/qa/r3.jpg
 ?? pieces/vendimia-ensenada/qa/strip.jpg
-?? pieces/vera-01/engine/package-lock.json
-?? pieces/vera-02/
+?? pieces/vera-02/engine/fonts/PixelifySans.ttf
+?? pieces/vera-02/storyboard/
 ?? pieces/viajante-sombrerete/chars/
 ?? pieces/viajante-sombrerete/qa/c01.jpg
 ?? pieces/viajante-sombrerete/qa/c02.jpg
@@ -19028,7 +19658,6 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 ?? pieces/yegua-jerez/qa/sub6.jpg
 ?? pieces/yegua-jerez/qa/sub7.jpg
 ?? pieces/yegua-jerez/qa/subs_check.jpg
-?? pieces/zaw-dog-07/review/final_revision.md
 ?? pieces/zaw-dog-07/review/logs/board_01c.log
 ?? pieces/zaw-dog-07/review/logs/board_07a.log
 ?? pieces/zaw-dog-07/review/logs/board_07b.log
@@ -19046,19 +19675,14 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 ?? pieces/zaw-dog-07/review/logs/frames_07b.log
 ?? pieces/zaw-dog-07/review/logs/frames_07c.log
 ?? pieces/zaw-dog-07/review/logs/revisar_final.log
-?? pieces/zaw-dog-07/v2/
-?? pieces/zaw-dog-08/CREDITS.md
-?? pieces/zaw-dog-08/assemble.py
-?? pieces/zaw-dog-08/board.py
-?? pieces/zaw-dog-08/final_post.py
-?? pieces/zaw-dog-08/review/
-?? pieces/zaw-dog-08/shots.py
-?? pieces/zaw-dog-08/sound/
+?? pieces/zaw-dog-08/review/board/
+?? pieces/zaw-dog-08/review/logs/
+?? pieces/zaw-dog-08/review/selfcheck_sheet.jpg
 ?? pieces/zaw-dog-08/tex/
-?? pieces/zaw-dog-08/thumb.py
-?? pieces/zaw-dog-08/tools/
-?? pieces/zaw-dog-08/v1/
-?? pieces/zaw-dog-08/voice/
+?? pieces/zaw-dog-08/v1/board_1.jpg
+?? pieces/zaw-dog-08/v1/board_2.jpg
+?? pieces/zaw-dog-08/v1/motion08.jpg
+?? pieces/zaw-dog-08/v1/selfcheck_sheet_v1.jpg
 ?? pieces/zombie-03-station/largo3/miniaturas_v2/_flow/
 ?? pieces/zombie-03-station/largo3/miniaturas_v2/_hoja.png
 ?? pieces/zombie-03-station/largo3/miniaturas_v2/_layers/avaA.png
@@ -19153,23 +19777,42 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 ?? pieces/zombie-03-station/largo3/storyboard_v2_7.png
 ?? pieces/zombie-03-station/largo3/storyboard_v2_8.png
 ?? pieces/zombie-03-station/largo3/storyboard_v2_9.png
-?? pieces/zombie-14-attic/
-?? pieces/zombie-15-lasttrain3/
-?? styles/gta6/
-?? styles/zawdog/backup_STYLE_2026-11-16.md
+?? pieces/zombie-14-attic/engine/fonts/PixelifySans.ttf
+?? pieces/zombie-14-attic/engine/fonts/cands.png
+?? pieces/zombie-14-attic/engine/fonts/chicagoflf/
+?? pieces/zombie-14-attic/engine/fonts/chicagogo/Chicagogo-RJpl.ttf
+?? pieces/zombie-14-attic/engine/fonts/chicagogo/cg.zip
+?? pieces/zombie-14-attic/engine/fonts/chicagogo/misc/
+?? pieces/zombie-14-attic/engine/fonts/chicagogo/preview.png
+?? pieces/zombie-14-attic/engine/fonts/chicpix/CHICPIX_.TTF
+?? pieces/zombie-14-attic/engine/fonts/chicpix/chicpix.zip
+?? pieces/zombie-14-attic/engine/fonts/chicpix/preview.png
+?? pieces/zombie-14-attic/engine/models/Textures/
+?? pieces/zombie-14-attic/engine/tex/
+?? pieces/zombie-14-attic/storyboard_v1.png
+?? pieces/zombie-14-attic/storyboard_v2.png
+?? pieces/zombie-15-lasttrain3/engine/fonts/PixelifySans.ttf
+?? pieces/zombie-15-lasttrain3/engine/fonts/cands.png
+?? pieces/zombie-15-lasttrain3/engine/fonts/chicagoflf/
+?? pieces/zombie-15-lasttrain3/engine/fonts/chicagogo/Chicagogo-RJpl.ttf
+?? pieces/zombie-15-lasttrain3/engine/fonts/chicagogo/cg.zip
+?? pieces/zombie-15-lasttrain3/engine/fonts/chicagogo/misc/
+?? pieces/zombie-15-lasttrain3/engine/fonts/chicagogo/preview.png
+?? pieces/zombie-15-lasttrain3/engine/fonts/chicpix/CHICPIX_.TTF
+?? pieces/zombie-15-lasttrain3/engine/fonts/chicpix/chicpix.zip
+?? pieces/zombie-15-lasttrain3/engine/fonts/chicpix/preview.png
+?? pieces/zombie-15-lasttrain3/engine/models/Textures/
+?? pieces/zombie-15-lasttrain3/engine/tex/
+?? pieces/zombie-15-lasttrain3/storyboard_v1.png
+?? pieces/zombie-15-lasttrain3/storyboard_v2.png
+?? pieces/zombie-16-floor30-2/
+?? styles/gta6/tools/models/.gitignore
 ?? styles/zawdog/humans/owner/body_v6.png
 ?? styles/zawdog/humans/owner/faces/mask_v6.png
 ?? styles/zawdog/humans/owner/photo/skin_match_cmp.jpg
-?? styles/zawdog/humans/photo_tools/kit_fix.py
-?? styles/zawdog/humans/photo_tools/skin_match.py
 ?? styles/zawdog/humans/scientist/body_v6.png
 ?? styles/zawdog/humans/scientist/faces/mask_v6.png
 ?? styles/zawdog/humans/scientist/photo/skin_match_cmp.jpg
-?? styles/zawdog/motions/baked/z8_owner_fake.json
-?? styles/zawdog/motions/baked/z8_owner_tease.json
-?? styles/zawdog/motions/baked/z8_sci_offer_drop.json
-?? styles/zawdog/motions/baked/z8_sci_offer_pull.json
-?? styles/zawdog/motions/kimodo/prompts_z8.txt
 ?? styles/zawdog/motions/kimodo/src_z8_owner_fake.bvh
 ?? styles/zawdog/motions/kimodo/src_z8_owner_tease.bvh
 ?? styles/zawdog/motions/kimodo/src_z8_sci_offer_drop.bvh
@@ -19221,6 +19864,7 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 - `agente-davis`
 - `assets`
 - `capturas`
+- `docs`
 - `every=7`
 - `fonts`
 - `fuentes`
