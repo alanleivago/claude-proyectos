@@ -2,7 +2,7 @@
 // window.SB[i] = { id, who, line, clip, face, lens, note } (times come from work/timeline.json in tools/compose.py).
 // Lenses (9:16 vertical): 28 mm = 66 deg vertical FOV (wides), 35 mm = 54, 50 mm = 40 (close-ups, bg blurred via shot.dof).
 export function buildShots(L) {
-  const { addShot, diner, character, holdAt, mug, coffeePot, umbrella, towel, rag, cam, box, lam, basic, mesh, POT, DOOR, BOOTH, JUKE, TABLE_H, WX, V3, THREE } = L;
+  const { addShot, diner, character, holdAt, mug, coffeePot, umbrella, towel, rag, cam, box, lam, basic, mesh, TX, POT, DOOR, BOOTH, JUKE, TABLE_H, WX, V3, THREE } = L;
   const SB = window.SB = [];
   const QS = new URLSearchParams(location.search);
   const F28 = 66, F35 = 54, F50 = 40;
@@ -30,7 +30,7 @@ export function buildShots(L) {
         if (lv > 0) mouth = (lv === 1 ? 'talkSmall' : ['talkA', 'talkO', 'talkSmall'][(fr >> 2) % 3]) + blush;
         else if (/^talk/.test(mouth)) mouth = (a.kind === 'vera' ? 'smirk' : 'neutral') + blush;
         const per = 3.4 + (a.kind === 'vera' ? 0.0 : 0.9), ph = (T + (a.kind === 'vera' ? 0.4 : 1.7)) % per;
-        if (ph < 0.12 && !/blink|happy|wink|hearts|closed|relaxed/.test(eyes)) eyes = 'blink' + (/\+blush/.test(eyes) ? '+blush' : '');
+        if (ph < 0.12 && !['22', '25', '26'].includes(id) && !/blink|happy|wink|hearts|closed|relaxed/.test(eyes)) eyes = 'blink' + (/\+blush/.test(eyes) ? '+blush' : '');
         c.pose(a.clip, ct, eyes, mouth);
         if (a.seat) { const P = c.world('Pelvis'); c.root.position.x += a.seat[0] - P.x; c.root.position.z += a.seat[1] - P.z; c.root.updateMatrixWorld(true); }
         for (const f of c.fix || []) f();
@@ -136,11 +136,12 @@ export function buildShots(L) {
   const TJ = [-1.78, 0.18];   // in front of the jukebox's glowing face         // Theo at the jukebox
   const VSEAT = [2.3, BOOTH.tz - BOOTH.seatOff], TSEAT = [2.3, BOOTH.tz + BOOTH.seatOff];   // her bench faces +z, his faces -z
   const MUG = [2.28, TABLE_H, BOOTH.tz + 0.16];   // his cup on the booth table
-  const UMB_T = { pos: V3(2.0, TABLE_H + 0.06, BOOTH.tz - 0.2), q: new THREE.Quaternion().setFromEuler(new THREE.Euler(-Math.PI / 2, 1.9, 0, 'YXZ')) };   // hook + tag toward her, canopy to the window
+  const UMB_T = { pos: V3(2.0, TABLE_H + 0.05, BOOTH.tz - 0.2), q: new THREE.Quaternion().setFromEuler(new THREE.Euler(-Math.PI / 2, 1.9, 0, 'YXZ')) };   // hook + tag toward her, canopy to the window
+  const TOWEL_T = V3(2.4, TABLE_H, BOOTH.tz - 0.3);   // the folded towel on the table (18-24), picked up in 25
   const tableProps = (R, { mugOn = true, umbOn = false, towelOn = true } = {}) => {
     if (mugOn) { const m = mug({ coffee: true }); m.position.set(...MUG); m.rotation.y = -0.6; R.scene.add(m); }
     let u = null; if (umbOn) { u = umbrella('read'); u.quaternion.copy(UMB_T.q); u.position.copy(UMB_T.pos); R.scene.add(u); u.updateMatrixWorld(true); }
-    if (towelOn) { const t = towel(); t.position.set(2.62, TABLE_H, BOOTH.tz - 0.18); t.rotation.y = 0.3; R.scene.add(t); }
+    if (towelOn) { const t = towel(); t.position.copy(TOWEL_T); R.scene.add(t); }
     return u; };
 
   if (QS.has('set')) {   // set stills: empty diner, wide + window/booth + counter + exterior
@@ -198,20 +199,32 @@ export function buildShots(L) {
     shot({ id: '05', who: 'VERA', line: 'You’re dripping on my floor.', clip: 'Vera toss_towel (NEW engine clip, underhand toss, release 0.62 s); Theo receive_object (catch synced)', face: 'Vera smug / talkSmall; Theo surprised / parted',
       lens: '28 mm, profile two-shot across the counter', note: 'The towel flies on an arc from her palm to his catching hand.' },
       R.scene, cam(76, [2.6, 1.5, -1.6], [0.1, 1.28, -1.74])); }
-  // 06 Theo dries his hair with the towel, embarrassed
-  { const R = diner(); const t = put(R.scene, 'theo', 'scratch_head', 1.1, 'shy+blush', 'talkSmall+blush', TF[0], TF[1], faceTo(TF, VB), WET);
-    hold(R.scene, t, 'Hand.R', towel(true), [0, 0.7, 0.1], [0, 0, 1.4]);
-    const c = cu(t, 1.4, -0.5, 0.12, F50, [0, -0.2, 0]);
-    shot({ id: '06', who: 'THEO', line: 'Right. Sorry. Thank you.', clip: 'scratch_head (1.1 s, hand at the head) with the towel in Hand.R', face: 'shy+blush / talkSmall+blush', lens: '50 mm 3/4', note: 'Towel on his hair.' }, R.scene, c, dofAt(c, t)); }
+  // 06 (v2: new clip dry_hair): both hands rub the open towel over his hair (towel = an arch over the crown, hands on its ends)
+  { const R = diner(); const t = put(R.scene, 'theo', 'idle_stiff', 0.6, 'shy+blush', 'talkSmall+blush', TF[0], TF[1], faceTo(TF, VB), WET);
+    const arch = new THREE.Group(); R.scene.add(arch); const AR = 0.22, tm = lam(TX.towel);
+    for (let k = 0; k < 7; k++) { const a = Math.PI * (k + 0.5) / 7; const b = box(0.082, 0.014, 0.24, tm, Math.cos(a) * AR, Math.sin(a) * AR, 0, arch); b.rotation.z = a - Math.PI / 2; }
+    let E0 = null;
+    const archAt = (tt) => { const ry = t.root.rotation.y, E = E0 || head(t); arch.position.copy(E).add(V3(0, 0.0, 0)).add(V3(Math.sin(ry), 0, Math.cos(ry)).multiplyScalar(-0.03));
+      arch.rotation.set(0, ry + Math.PI / 2, 0); arch.rotateZ(0.0); arch.rotateX(0.18 * Math.sin(tt * 9)); arch.updateMatrixWorld(true);
+      return [arch.localToWorld(V3(0, 0.02, AR + 0.01)), arch.localToWorld(V3(0, 0.02, -AR - 0.01))]; };
+    t.pose('idle_stiff', 0.6); E0 = head(t); const side = ld(t, 1, 0, 0);
+    const archPose = (tt) => { const ry = t.root.rotation.y; arch.position.copy(E0).add(V3(0, 0.1, 0)).add(V3(Math.sin(ry), 0, Math.cos(ry)).multiplyScalar(-0.08)); arch.rotation.set(0, ry, 0); arch.rotateX(0.18 * Math.sin(tt * 9)); arch.updateMatrixWorld(true); };
+    bake(t, 'dry_hair', 2.6, (tt) => { t.pose('idle_stiff', 0.6); archPose(tt);
+      const PL = arch.localToWorld(V3(AR + 0.01, 0.02, 0)), PRr = arch.localToWorld(V3(-AR - 0.01, 0.02, 0));
+      const e1 = reachPalm(t, 'L', PL, V3(0, 1, 0), side.clone().negate(), lp(t, 0.6, 1.2, -0.2));
+      const e2 = reachPalm(t, 'R', PRr, V3(0, 1, 0), side.clone(), lp(t, -0.6, 1.2, -0.2)); return Math.max(e1, e2); });
+    useClip(t, 'dry_hair', 1.0, 0.1, 'shy+blush', 'talkSmall+blush'); t.onT = archPose; archPose(1.0);
+    const c = cu(t, 1.45, -0.5, 0.1, F50, [0, -0.1, 0]);
+    shot({ id: '06', who: 'THEO', line: 'Right. Sorry. Thank you.', clip: 'dry_hair (NEW engine clip: both palms on the towel ends, rubbing it over his hair)', face: 'shy+blush / talkSmall+blush', lens: '50 mm 3/4', note: 'The towel arches over his crown, clear of the hair.' }, R.scene, c, dofAt(c, t)); }
   // 07 Vera low angle, the pot in the foreground
   { const R = diner(); const VP = [-0.2, -2.42]; const v = put(R.scene, 'vera', 'flirt_hip_tilt', 1.6, 'smug', 'talkA', VP[0], VP[1], faceTo(VP, TF));
     const tw = towel(); tw.position.set(0.3, 1.02, -1.55); R.scene.add(tw);
-    const c = cam(F35, [-0.62, 1.1, -1.18], [-0.16, 1.5, -2.42]);
+    const c = cam(F35, [-0.5, 1.22, -1.0], [-0.22, 1.38, -2.42]);
     shot({ id: '07', who: 'VERA', line: 'The last cup comes with conditions.', clip: 'flirt_hip_tilt (1.6 s)', face: 'smug / talkA', lens: '35 mm, low, pot in the foreground', note: 'The carafe (one cup left) big in the lower frame, Vera rising above it.' }, R.scene, c); void v; }
   // 08 Theo frozen, towel round his neck... (towel on the counter by his hand)
   { const R = diner(); const t = put(R.scene, 'theo', 'shock_freeze', 1.15, 'shocked', 'oh', TF[0], TF[1], faceTo(TF, VB), WET);
     const tw = towel(); tw.position.set(0.3, 1.02, -1.55); R.scene.add(tw);
-    const c = cu(t, 1.15, 0.05, 0.08, F50, [0, -0.14, 0]);
+    const c = cu(t, 1.4, 0.05, 0.08, F50, [0, -0.05, 0]);
     shot({ id: '08', who: 'THEO', line: 'Conditions? For coffee?', clip: 'shock_freeze (1.15 s, held)', face: 'shocked / oh', lens: '50 mm, straight on', note: '' }, R.scene, c, dofAt(c, t)); }
   // 09 (v2): over Vera's shoulder from behind the counter: she points at the glowing jukebox, Theo walks over to it
   { const R = diner(); const v = put(R.scene, 'vera', 'point', 0.9, 'smug', 'talkSmall', VB[0], VB[1], faceTo(VB, [JUKE.x, JUKE.z]));
@@ -240,7 +253,7 @@ export function buildShots(L) {
   { const R = diner({ pot: false }); const VP = [1.62, BOOTH.tz + 0.1]; const v = put(R.scene, 'vera', 'lean_reach', 0.9, 'smug', 'talkSmall', VP[0], VP[1], Math.PI / 2 - 0.15);
     const m = mug({ coffee: true }); R.scene.add(m);
     fix(v, () => { const h = v.bone('Hand.R').localToWorld(V3(0, 0.75, 0.2)); m.position.set(Math.max(h.x, 2.06), TABLE_H, h.z); });
-    const E = head(v); const c = cam(F35, [2.85, 1.4, 1.75], [E.x, E.y - 0.22, E.z]);
+    const E = head(v); const c = cam(F35, [2.85, 1.12, 1.75], [E.x, E.y - 0.3, E.z]);
     shot({ id: '14', who: 'VERA', line: 'Two. You sit in my booth.', clip: 'lean_reach (0.9 s), the cup under Hand.R on the table', face: 'smug / talkSmall', lens: '35 mm, from the booth', note: 'Pixel-mosaic IN (time skip: the pot is empty, the cup is at the booth). Condition 2.' },
       R.scene, c, { dof: { focus: c.position.distanceTo(E), range: 0.5, max: 1.4 } }); }
   // 15 Theo in the aisle: "Which one is yours?" (the empty booths)
@@ -295,7 +308,7 @@ export function buildShots(L) {
   { const R = diner({ pot: false, umb: 'none' }); tableProps(R);
     const v = seat(R.scene, 'vera', 'sit_chair', 1.0, 'bedroom', 'talkSmall', VSEAT[0], VSEAT[1], 0);
     const u = umbrella('away'); R.scene.add(u);
-    const A = V3(1.93, 0.9, 0.74), QA = new THREE.Quaternion().setFromEuler(new THREE.Euler(-0.1, 0.4, 0)), B = UMB_T.pos, QB = UMB_T.q;
+    const A = V3(1.8, 0.9, 0.6), QA = new THREE.Quaternion().setFromEuler(new THREE.Euler(-0.1, 0.4, 0)), B = UMB_T.pos, QB = UMB_T.q;
     const umbAt = (tt) => { const k = kv(tt, [[0.22, 0], [0.98, 1]]); u.position.copy(A.clone().lerp(B, k)); u.position.y += 0.3 * Math.sin(Math.PI * k); u.quaternion.copy(QA).slerp(QB, k); u.updateMatrixWorld(true);
       const T = u.getObjectByName('tag'); if (T) T.rotation.y = Math.PI * (1 - k); return u.localToWorld(V3(0, -0.1, 0)); };
     let rest = null;
@@ -318,11 +331,11 @@ export function buildShots(L) {
     shot({ id: '22', who: 'VERA', line: 'You left it here… last Tuesday.', clip: 'sit_chair', face: 'smug / talkSmall', lens: '50 mm, umbrella in the foreground', note: '' }, R.scene, c, dofAt(c, v)); }
   // 23 Theo: shock + blush
   { const R = diner({ pot: false, umb: 'none' }); tableProps(R, { umbOn: true }); const t = seat(R.scene, 'theo', 'sit_talk', 1.4, 'shocked+blush', 'talkO+blush', TSEAT[0], TSEAT[1], Math.PI);
-    const c = cu(t, 1.1, 0.05, 0.06, F50, [0, -0.13, 0]);
+    const c = cu(t, 1.35, 0.05, 0.06, F50, [0, -0.05, 0]);
     shot({ id: '23', who: 'THEO', line: 'You kept it? For a week?', clip: 'sit_talk (1.4 s)', face: 'shocked+blush / talkO+blush', lens: '50 mm, straight on', note: '' }, R.scene, c, dofAt(c, t)); }
   // 24 Vera: her only blush, eye level
   { const R = diner({ pot: false, umb: 'none' }); tableProps(R, { umbOn: true }); const v = seat(R.scene, 'vera', 'sit_chair', 1.0, 'soft+blush', 'sweetSmile+blush', VSEAT[0], VSEAT[1], 0);
-    const c = cu(v, 0.95, -0.42, 0.04, F50, [0, -0.1, 0]);
+    const c = cu(v, 1.15, -0.42, 0.04, F50, [0, -0.06, 0]);
     shot({ id: '24', who: 'VERA', line: 'I kept the booth too.', clip: 'sit_chair', face: 'soft+blush / sweetSmile+blush', lens: '50 mm, eye level (equal for once)', note: '0.9 s pause before the line. Her only blush. Music dips.' }, R.scene, c, dofAt(c, v)); }
   // 24b INSERT (v2): the door sign swings on its string, now CLOSED (flipped off screen), rain running down the door glass
   { const R = diner({ pot: false, umb: 'none', sign: 'closed' }); const c = cam(F50, [1.6, 1.47, -0.75], [2.93, 1.5, -1.2]);
@@ -331,14 +344,14 @@ export function buildShots(L) {
   { const R = diner({ pot: false, umb: 'none', sign: 'closed' }); tableProps(R, { umbOn: true, towelOn: false });
     const t = seat(R.scene, 'theo', 'sit_talk', 0.5, 'open', 'neutral', TSEAT[0], TSEAT[1], Math.PI);
     const v = seat(R.scene, 'vera', 'sit_chair', 1.0, 'bedroom', 'talkSmall', VSEAT[0], VSEAT[1], 0);
-    const tw = towel(); R.scene.add(tw); const T0 = V3(2.12, TABLE_H, BOOTH.tz - 0.32), T1 = V3(2.22, TABLE_H + 0.15, BOOTH.tz - 0.12);
+    const tw = towel(); R.scene.add(tw); const T0 = TOWEL_T.clone(), T1 = V3(2.22, TABLE_H + 0.15, BOOTH.tz - 0.12);
     const twAt = (tt) => { const k = kv(tt, [[0.5, 0], [1.3, 1]]); tw.position.copy(T0.clone().lerp(T1, k)); tw.position.y += 0.06 * Math.sin(Math.PI * k); tw.rotation.set(0, 0.25 * k, 0); tw.updateMatrixWorld(true); return tw.localToWorld(V3(0, 0.04, 0)); };
     let rest = null;
     bake(v, 'hand_towel', 2.0, (tt) => { v.pose('sit_chair', 1.0); if (!rest) rest = palmAt(v, 'R'); { const lk = kv(tt, [[0, 0], [0.5, 0.4], [1.3, 1], [2.0, 1]]); lean(v, 0.42 * lk); lean(v, 0.2 * lk, 'Chest'); lean(v, -0.5 * lk, 'Neck'); }
       const G = twAt(tt), reach = kv(tt, [[0, 0], [0.5, 1]]);
       const e = reachPalm(v, 'R', rest.clone().lerp(G, reach), V3(0.05, -0.25, 1), V3(0, -1, 0).lerp(V3(-0.3, 0.3, 0.2), 1 - reach), V3(VSEAT[0] - 0.75, 0.6, VSEAT[1])); return reach > 0.99 ? e : 0; });
     useClip(v, 'hand_towel', 1.6, 0.6, 'bedroom', 'talkSmall'); v.onT = twAt; twAt(1.6);
-    const TH = head(t), E = head(v); const c = cam(F50, [TH.x + 0.27, TH.y + 0.26, TH.z + 0.42], [E.x + 0.02, E.y - 0.3, E.z]);
+    const TH = head(t), E = head(v); const c = cam(F50, [TH.x + 0.33, TH.y + 0.24, TH.z + 0.45], [E.x - 0.1, E.y - 0.3, E.z]);
     shot({ id: '25', who: 'VERA', line: 'Dry off first, Theo?', clip: 'Vera hand_towel (NEW engine clip: palm on the towel, lift, hold it out to him); Theo sit_talk (shoulder, foreground)', face: 'Vera bedroom / talkSmall', lens: '50 mm over his shoulder from his seat', note: 'CALLBACK, the first time she says his name. The song he picked is playing (24b).' },
       R.scene, c, { dof: { focus: c.position.distanceTo(E), range: 0.4, max: 1.8 } }); }
   // 26 Theo, heart eyes, both hands round the cup
@@ -346,7 +359,7 @@ export function buildShots(L) {
     const t = seat(R.scene, 'theo', 'sit_talk', 0.3, 'hearts+blush', 'blushSmile+blush', TSEAT[0], TSEAT[1], Math.PI);
     fix(t, graft(t, 'hold_cup', 0.6, ['R', 'L'], ['sit_talk', 0.3, 'hearts+blush', 'blushSmile+blush']));
     hold(R.scene, t, 'Hand.R', mug({ coffee: true }), [-0.4, 0.75, 0.25], [0, 0, 0], 0.5);
-    const c = cu(t, 1.0, 0.2, 0.05, F50, [0, -0.15, 0]);
+    const c = cu(t, 1.3, 0.2, 0.05, F50, [0, -0.07, 0]);
     shot({ id: '26', who: 'THEO', line: 'Make it two cups.', clip: 'sit_talk + hold_cup arms grafted, the cup in his hands', face: 'hearts+blush / blushSmile+blush', lens: '50 mm, slow push-in', note: 'Pink "ding" on the hearts.' }, R.scene, c, dofAt(c, t)); }
   // 27 TAIL: exterior in the rain, neon, the two of them in the booth through the streaked window
   { const R = diner({ pot: false, umb: 'none', sign: 'closed' }); tableProps(R, { umbOn: true });

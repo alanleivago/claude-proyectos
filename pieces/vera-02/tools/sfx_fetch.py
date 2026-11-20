@@ -1,4 +1,4 @@
-"""vera-01: fetch CC0 foley from Freesound (HQ mp3 previews, filter license = Creative Commons 0) into audio/sfx_dl/<cue>/.
+"""vera-01/02: fetch CC0 foley from Freesound (HQ mp3 previews, filter license = Creative Commons 0) into audio/sfx_dl/<cue>/.
 Each download sits in its own folder (untrusted data; only ever decoded by ffmpeg). Writes audio/sfx_dl/catalog.json.
 usage: python tools/sfx_fetch.py"""
 import json
@@ -21,6 +21,15 @@ CUES = {   # cue: (query, min s, max s, how many)
     'ding': ('magic ding chime', 0.3, 4, 4),
     'street_night': ('city street night ambience', 10, 120, 3),
     'cloth': ('clothes rustle', 0.3, 3, 3),
+    # vera-02
+    'rain_window': ('rain window', 20, 300, 3),
+    'pour': ('pouring coffee cup', 1, 8, 4),
+    'jukebox': ('coin slot', 0.3, 6, 4),
+    'needle': ('vinyl record needle drop crackle', 0.5, 8, 3),
+    'umbrella': ('umbrella', 0.3, 8, 4),
+    'vinyl_seat': ('leather squeak', 0.3, 5, 4),
+    'towel': ('towel', 0.2, 5, 4),
+    'mug_table': ('mug table', 0.2, 4, 4),
 }
 
 

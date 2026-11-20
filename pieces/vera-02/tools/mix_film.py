@@ -1,9 +1,11 @@
-"""vera-01 mix: voice (audio/voice.wav, tools/film_timeline.py) + licensed music bed + real CC0 foley -> audio/mix_v1.wav,
-master -14 LUFS integrated, true peak <= -1 dBTP (4x oversampled check). Cue list -> audio/cues_v1.json.
-Music: "Lo-Fi - Morning Breeze" by noel.wav (Freesound 678119, CC0, ~89 BPM, A major); credit in render/*.txt anyway.
-SFX (all Freesound CC0, audio/sfx_dl/catalog.json): shop door bell 192761, heels on wood 117608, glass clink 104815, saucer 138345,
-chair on wood 593180, espresso brew 344452, kitchen night room tone 473718, city noise 473698, woosh 683096, shine chime 879797, cloth 334219.
-v2: the bed plays continuously (ducked under the voices) through the tail.
+"""vera-02 mix: voice (audio/voice.wav, tools/film_timeline.py) + CC0 music + real CC0 foley -> audio/mix_<tag>.wav,
+master -14 LUFS integrated, true peak <= -1 dBTP (4x oversampled check). Cue list -> audio/cues_<tag>.json.
+Music (Freesound, CC0): diner radio bed "Chill Lofi - lost stars" by noel.wav (680400) until the jukebox; the song he picked
+"TheEternalLighthouse - a soft slow piano..." by jcmbo369 (819108) from the needle drop in 24b to the end.
+SFX (Freesound CC0, audio/sfx_dl/catalog.json, picked with earshot rank/find): raindrops on window sill 394935 (inside bed),
+light rain on street 380651 (open door + exterior), room tone 473718, shop door bell 192761, steps 480610, cloth whip 19291,
+cloth 334219, mug on table 404922, wooden knock 179997, leather couch sit 593145, pouring coffee 432775, coin in jukebox 637369,
+needle drop 556722, woosh 683096, shine chime 879797.
 usage: python tools/mix_film.py [tag=v1]"""
 import json
 import subprocess
@@ -61,62 +63,70 @@ def bed(x, t0, t1, db, fin=0.6, fout=0.8, name=''):   # looped ambience between 
 
 
 # ---- sources
-bell = norm(fs('door_bell', 192761)); heels = norm(fs('steps_wood', 117608)); clink = norm(fs('glass_lid', 104815)); saucer = norm(fs('plate', 138345))
-chair = norm(fs('chair', 593180)); brew = norm(fs('espresso', 344452)); room = norm(fs('street_night', 473718)); city = norm(fs('street_night', 473698))
-woosh = norm(fs('whoosh', 683096)); chime = norm(fs('ding', 879797)); cloth = norm(fs('cloth', 334219))
-hs = onsets(heels); print('heel onsets', len(hs))
-
+bell = norm(fs('door_bell', 192761)); room = norm(fs('street_night', 473718)); rainIn = norm(fs('rain_window', 394935)); rainOut = norm(fs('rain_window', 380651))
+steps = norm(fs('steps_wood', 480610)); whip = norm(fs('cloth', 19291)); cloth = norm(fs('cloth', 334219)); mugd = norm(fs('mug_table', 404922)); knock = norm(fs('mug_table', 179997))
+sit = norm(fs('vinyl_seat', 593145)); pour = norm(fs('pour', 432775)); coin = norm(fs('jukebox', 637369)); needle = norm(fs('needle', 556722))
+woosh = norm(fs('whoosh', 683096)); chime = norm(fs('ding', 879797))
 T0 = lambda k: S[k]['t0']
-# ambience: room tone everywhere inside, street through the open door in 01, espresso machine murmur at the counter, street outside at the tail
-bed(room, 0.0, T0('29'), -40, 1.0, 1.0, 'room tone (kitchen at night)')
-bed(city, 0.45, T0('03'), -30, 0.15, 1.2, 'street through the open door (opens at 0.5 s)')
-bed(clip(brew, 2.0, 14.0, 0.3, 0.3), T0('03'), T0('14'), -37, 1.0, 1.5, 'espresso machine murmur')
-bed(city, T0('29') - 0.3, DUR, -26, 0.5, 2.2, 'street at night (exterior tail)')
+# ambience: rain on the windows + room tone inside, the open door lets the street rain in (01), the exterior tail is all rain
+bed(room, 0.0, T0('27'), -42, 1.0, 1.0, 'room tone')
+bed(rainIn, 0.0, T0('27') + 0.3, -29, 0.6, 1.0, 'rain on the windows (inside)')
+bed(rainOut, 0.25, T0('03'), -27, 0.3, 1.2, 'rain through the open door')
+bed(rainOut, T0('27') - 0.3, DUR, -21, 0.5, 2.0, 'rain outside (exterior tail)')
 # events
-cue(0.5, clip(bell, 0, 1.0), -11, 0.4, 'door bell: the door opens (hook)')
-for k in range(4): cue(0.05 + k * 0.45, clip(cloth, 0.1 + 0.2 * (k % 2), 0.4, 0.02, 0.1), -27, -0.2, 'rag wiping the table')
-steps = norm(fs('steps_wood', 480610)); ss = onsets(steps)
-for k in range(3): cue(0.75 + k * 0.5, clip(steps, ss[(k + 1) % len(ss)] - 0.02, 0.35), -21, 0.35, 'Theo steps in')
-for t in (T0('02'), T0('14'), T0('21')): cue(t - 0.12, clip(woosh, 0, 0.9), -22, 0, 'mosaic woosh')
-cue(T0('04') + 0.1, clip(cloth, 0, 0.6), -24, 0, 'cloth: neck scratch')
-cue(T0('12') + 0.1, clip(cloth, 0.2, 0.8), -25, 0, 'cloth: collar fanning')
-cue(T0('14') + 0.15, clip(clink, 0, 0.9), -21, 0.2, 'glass dome lifted')
-cue(T0('17') + 1.45, clip(saucer, 0, 0.6), -20, 0.3, 'plate set on the window table (off screen)')
-for k in range(3): cue(T0('17') + 0.6 + k * 0.38, clip(heels, hs[k + 1] - 0.02, 0.3), -23, 0.3, 'heels: she rounds the counter')
-cue(T0('21') + 0.25, clip(chair, 0.3, 1.1), -22, 0.1, 'chair: they sit')
-cue(T0('24') + 1.3, clip(saucer, 0, 0.5), -24, 0, 'plate turned')
-cue(T0('25') + 0.9, clip(chime, 0, 2.2), -17, 0, 'ding: the label')
-cue(T0('27') - 0.05, clip(chair, 0.2, 0.7), -25, 0.2, 'chair: she gets up')
-for k in range(3): cue(T0('27') + 0.15 + k * 0.4, clip(heels, hs[(k + 3) % len(hs)] - 0.02, 0.3), -23, 0.2, 'heels: to the door')
-cue(T0('28') + 0.35, clip(chime, 0, 2.2), -15, 0, 'ding: heart eyes')
+cue(0.3, clip(bell, 0, 1.0), -11, 0.4, 'door bell: the door opens')
+ss = onsets(steps)
+for k in range(3): cue(0.75 + k * 0.5, clip(steps, ss[(k + 1) % len(ss)] - 0.02, 0.35), -22, 0.35, 'Theo steps in, wet')
+for t in (T0('02'), T0('14'), T0('18')): cue(t - 0.12, clip(woosh, 0, 0.9), -22, 0, 'mosaic woosh')
+cue(T0('05') + 0.3 + 0.5, clip(whip, 0, 0.7), -19, 0.1, 'towel toss (whip)')
+cue(T0('05') + 0.3 + 1.1, clip(cloth, 0.1, 0.4), -21, -0.2, 'towel caught')
+cue(T0('06') + 0.15, clip(cloth, 0, 1.2), -23, 0, 'towel on his hair')
+cue(T0('14') + 1.2, clip(mugd, 0, 0.8), -19, 0.2, 'mug set on the booth table')
+for k in range(3): cue(T0('16') + 0.4 + 0.7 + 0.3 * k, clip(knock, 0, 0.3), -25 - 2 * k, 0.1, 'pat on the table')
+cue(T0('17') + 0.35, clip(sit, 0.2, 1.4), -21, 0.1, 'booth seat: he sits')
+cue(T0('18') + 0.35 + 0.5, clip(knock, 0, 0.3), -27, 0, 'carafe lifted')
+cue(T0('18') + 0.35 + 1.3, clip(pour, 0.44, 1.5, 0.05, 0.25), -18, 0, 'pouring the last cup')
+cue(T0('18') + 0.35 + 3.45, clip(mugd, 0, 0.6), -22, 0, 'carafe set down')
+cue(T0('20') + 0.15 + 0.35, clip(cloth, 0.2, 0.6), -24, -0.1, 'umbrella lifted (fabric)')
+cue(T0('20') + 0.15 + 0.98, clip(knock, 0, 0.35), -19, 0, 'umbrella laid on the table')
+cue(T0('21') + 0.3, clip(chime, 0, 2.2), -17, 0, 'ding: the tag')
+cue(T0('24b') + 0.05, clip(coin, 0, 0.8), -24, -0.3, 'jukebox: coin')
+cue(T0('24b') + 0.55, clip(needle, 2.95, 1.2, 0.005, 0.3), -21, -0.3, 'jukebox: needle drop')
+cue(T0('25') + 0.6 + 0.4, clip(cloth, 0, 0.6), -25, 0, 'towel picked up')
+cue(T0('26') + 0.35, clip(chime, 0, 2.2), -15, 0, 'ding: heart eyes')
 
 # ---- voice
 v, sr = sf.read(str(AUD / 'voice.wav'), dtype='float32', always_2d=True); v = v.mean(1)
 voice = np.zeros((N, 2), np.float32); voice[:min(N, len(v))] = v[:N, None]
 
-# ---- music bed: ducked under the voice, out before the key lines, dip under the confession, fade under the tail
-mt = load(PIECE / 'audio' / 'music_dl' / 'fs678119' / 'track.mp3')
-# v2: the track is sparse (plucks with near-silent dips): a gentle bus compressor fills it so the bed is heard as continuous
-_t = Path(tempfile.mkdtemp()); sf.write(str(_t / 'm.wav'), mt, SR, subtype='FLOAT')
-subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', str(_t / 'm.wav'), '-af', 'acompressor=threshold=-30dB:ratio=3:attack=15:release=350:makeup=2', str(_t / 'c.wav')], check=True, timeout=120)
-mt, _ = sf.read(str(_t / 'c.wav'), dtype='float32', always_2d=True); music = np.zeros((N, 2), np.float32); n = min(N, len(mt)); music[:n] = mt[:n]
+# ---- music: diner radio bed until the jukebox, then the slow song he picked (from the needle drop in 24b) through the tail
+def track(fid, comp=True):
+    mt = load(PIECE / 'audio' / 'music_dl' / fid / 'track.mp3')
+    if not comp: return mt
+    _t = Path(tempfile.mkdtemp()); sf.write(str(_t / 'm.wav'), mt, SR, subtype='FLOAT')
+    subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', str(_t / 'm.wav'), '-af', 'acompressor=threshold=-30dB:ratio=3:attack=15:release=350:makeup=2', str(_t / 'c.wav')], check=True, timeout=120)
+    return sf.read(str(_t / 'c.wav'), dtype='float32', always_2d=True)[0]
+meter = pyln.Meter(SR)
+SW = T0('24b') + 0.75
+radio, song = track('fs680400'), track('fs819108')
+music = np.zeros((N, 2), np.float32)
+def place(x, t0, t1, fin, fout, lufs):
+    a = x[:int((t1 - t0) * SR)].copy(); a *= 10 ** ((lufs - meter.integrated_loudness(x[:min(len(x), 30 * SR)])) / 20)
+    fi, fo = int(fin * SR), int(fout * SR); a[:fi] *= np.linspace(0, 1, fi)[:, None]; a[-fo:] *= np.linspace(1, 0, fo)[:, None]
+    i0 = int(t0 * SR); music[i0:i0 + len(a)] += a[:N - i0]
+voice_l = meter.integrated_loudness(voice)
+place(radio, 0.0, SW - 0.1, 0.25, 0.7, voice_l - 6.0)   # v2 (user): the BGM was too quiet
+place(song, SW, DUR, 0.05, 1.0, voice_l - 5.0)
 g = np.ones(N, np.float32)
 def ramp(t0, t1, a, b):
     i0, i1 = int(t0 * SR), int(t1 * SR); g[i0:i1] *= np.linspace(a, b, max(1, i1 - i0))
 def hold(t0, t1, a): g[int(t0 * SR):int(t1 * SR)] *= a
-# v2 (user): the BGM plays the whole film: no drops or silences, only the duck under the voices, a light dip under the confession,
-# and it runs through the silent tail (out with the picture's fade in the last second)
-ramp(0.0, 0.25, 0.4, 1.0)
-ramp(LN['22']['on'] - 0.4, LN['22']['on'], 1.0, 0.75); hold(LN['22']['on'], T0('24') - 0.4, 0.75); ramp(T0('24') - 0.4, T0('24'), 0.75, 1.0)   # -2.5 dB under the confession
-ramp(DUR - 1.0, DUR, 1.0, 0.0)
+ramp(LN['24']['on'] - 0.6, LN['24']['on'], 1.0, 0.7); hold(LN['24']['on'], T0('24b') - 0.2, 0.7); ramp(T0('24b') - 0.2, T0('24b'), 0.7, 1.0)   # -3 dB dip under her blush line
 music *= g[:, None]
 spk = np.zeros(N, np.float32)
 for L in TL['lines']:
     for a, b in L['spans']: spk[int((a - 0.08) * SR):int((b + 0.12) * SR)] = 1
 duck = uniform_filter1d(spk, int(0.12 * SR))
-meter = pyln.Meter(SR)
-mL = meter.integrated_loudness(mt[:n]); vL = meter.integrated_loudness(voice)
-music *= 10 ** ((vL - 9.0 - mL) / 20)                                      # v2: bed ~9 LU under the voice (always heard)
 music *= (10 ** (-5.0 / 20) * duck + (1 - duck))[:, None]                  # 5 dB more while someone talks (~14 dB under)
 mix = voice + music + sfx[:N]
 

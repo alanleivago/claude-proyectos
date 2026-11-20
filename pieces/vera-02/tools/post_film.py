@@ -1,6 +1,6 @@
-"""vera-01 film post: engine intermediate (render_film_up.mjs "film=1") -> UpNext subtitle cards (typewriter, Pixelify Sans Bold 66 px x0.84,
+"""vera-02 film post: engine intermediate (render_film_up.mjs "film=1") -> UpNext subtitle cards (typewriter, Pixelify Sans Bold 66 px x0.84,
 4 px outline + (4,4) hard shadow + glow, line 1 at y 1325; white = Vera, #F3DF6A = Theo), the episode title card on top (0-3.4 s,
-"EPISODE 1" coral + "THE LAST SLICE" white), vignette (interior -30 %, street -45 %), animated grain. No rounded frame (the ref has none).
+"EPISODE 2" coral + "The Last Cup" white), vignette (interior -30 %, street -45 %), animated grain. No rounded frame (the ref has none).
 Muxed with the mix -> share encode (libx264 CRF 24 slow, yuv420p, AAC 192k, +faststart).
 usage: python tools/post_film.py work/engine_v1.mkv audio/mix_v1.wav render/vera01_v1.mp4"""
 import json
@@ -18,7 +18,7 @@ FONT = str(ENG / 'fonts' / 'PixelifySans.ttf')
 W, H, FPS = 1080, 1920, 30
 WHITE, YELLOW, BLACK, CORAL = (255, 255, 255), (0xF3, 0xDF, 0x6A), (0x0A, 0x0A, 0x10), (0xF0, 0x8A, 0xA0)
 TL = json.loads((ENG / 'film_timeline.json').read_text(encoding='utf-8'))
-NIGHT = {'29'}   # the street tail gets the stronger vignette
+NIGHT = {'27'}   # the street tail gets the stronger vignette
 TITLE_END = 3.4
 _f = ImageFont.truetype(FONT, 66)
 try: _f.set_variation_by_name(b'Bold')
@@ -97,7 +97,7 @@ def pixelify_mask(text, size):
 
 def title_layer():
     L = Image.new('RGBA', (W, 560), (0, 0, 0, 0))
-    for m, col, cy, ow in ((pixelify_mask('EPISODE 2', 48), CORAL, 300, 9), (title_mask(), WHITE, 405, 15)):
+    for m, col, cy, ow in ((pixelify_mask('EPISODE 1', 48), CORAL, 300, 9), (title_mask(), WHITE, 405, 15)):
         o = m.filter(ImageFilter.MaxFilter(ow)); x0, y0 = W // 2 - m.width // 2, cy - m.height // 2
         pad = Image.new('L', (o.width + 60, o.height + 60), 0); pad.paste(o, (30, 30)); gl = pad.filter(ImageFilter.GaussianBlur(11)).point(lambda v: int(v * GLOW))
         L.paste(Image.new('RGBA', gl.size, (255, 255, 250, 255)), (x0 - 30, y0 - 30), gl)

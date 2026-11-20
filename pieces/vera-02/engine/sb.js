@@ -27,7 +27,7 @@ function rainGlass(w, h, seed = 0) {
         float dy = uSize.y * 0.5 + 0.25 - mod(uT * sp * 0.5 + rc * 37.0, H);                       // drop centre height (falls)
         float xc = (cx + 0.5) * cw + 0.008 * sin(m.y * 23.0 + rc * 40.0) + 0.006 * sin(m.y * 7.0 + rc * 11.0);
         vec2 q = vec2((m.x - xc) / 0.0075, (m.y - dy) / 0.011); float d = length(q);
-        if (d < 1.0) { a = max(a, 0.8); lit = q.y > 0.15 ? 1.0 : (q.y < -0.45 ? -1.0 : 0.25); }
+        if (d < 1.0) { a = max(a, 0.65); lit = q.y > 0.15 ? 1.0 : (q.y < -0.45 ? -1.0 : 0.25); }
         float tr = m.y - dy;                                                              // trail above the drop
         if (tr > 0.01 && tr < 0.3 && abs(m.x - xc) < 0.0032 && fract(m.y * 34.0 + rc * 5.0) < 0.55) a = max(a, 0.42 * (1.0 - tr / 0.3));
       }
@@ -37,7 +37,7 @@ function rainGlass(w, h, seed = 0) {
         vec2 o = vec2(r - 0.5, fract(r * 7.3) - 0.5) * 0.5; float bd = length(f - o);
         if (r > 0.62 && bd < 0.08 + 0.12 * fract(r * 13.7)) { a = 0.3; lit = (f.y - o.y) > 0.03 ? 0.3 : -0.6; }
         drops(m, 0.055, 7.0, a, lit); drops(m + vec2(0.021, 0.0), 0.041, 3.0, a, lit);
-        vec3 col = lit > 0.5 ? vec3(0.92, 0.96, 1.0) : (lit < -0.5 ? vec3(0.10, 0.12, 0.2) : vec3(0.62, 0.72, 0.86));
+        vec3 col = lit > 0.5 ? vec3(0.78, 0.86, 0.96) : (lit < -0.5 ? vec3(0.10, 0.12, 0.2) : vec3(0.62, 0.72, 0.86));
         gl_FragColor = vec4(col, a);
       }` }));
 }
@@ -112,7 +112,7 @@ function makeTextures() {
     c.fillStyle = '#2f8a86'; c.fillRect(0, 22, w, 5); c.fillStyle = '#1e5a58'; c.fillRect(0, 27, w, 1); });
   TX.menu = cvs(64, 40, (c, w, h) => { c.fillStyle = '#16141a'; c.fillRect(0, 0, w, h); c.fillStyle = '#e8507a'; c.fillRect(0, 0, w, 1); c.fillRect(0, h - 1, w, 1);   // backlit menu
     txt(c, 'MENU', w / 2, 6, 7, '#ff9ab8'); [['COFFEE', '1.50'], ['PIE', '3'], ['BURGER', '5'], ['SHAKE', '4']].forEach(([a, b], i) => { txt(c, a, 4, 15 + i * 7, 6, '#f0ead8', 'left'); txt(c, b, w - 4, 15 + i * 7, 6, '#7ef0e0', 'right'); }); });
-  TX.closed = cvs(32, 16, (c, w, h) => { c.fillStyle = '#efe6d2'; c.fillRect(0, 0, w, h); c.fillStyle = '#8a2222'; c.fillRect(0, 0, w, 1); c.fillRect(0, h - 1, w, 1); txt(c, 'CLOSED', w / 2, 8.5, 8, '#a01e28'); });
+  TX.closed = cvs(48, 20, (c, w, h) => { c.fillStyle = '#efe6d2'; c.fillRect(0, 0, w, h); c.fillStyle = '#8a2222'; c.fillRect(0, 0, w, 1); c.fillRect(0, h - 1, w, 1); txt(c, 'CLOSED', w / 2, 10.5, 11, '#a01e28', 'center', 'Verdana'); });
   TX.openTag = cvs(32, 16, (c, w, h) => { c.fillStyle = '#efe6d2'; c.fillRect(0, 0, w, h); c.fillStyle = '#1e6a66'; c.fillRect(0, 0, w, 1); c.fillRect(0, h - 1, w, 1); txt(c, 'OPEN', w / 2, 8.5, 9, '#1e6a66'); });
   TX.rain = cvs(32, 64, (c, w, h) => { c.clearRect(0, 0, w, h); const r = rng(17);   // window streaks: runs + beads (alpha cut-out)
     for (let k = 0; k < 9; k++) { let x = (r() * w) | 0; const y0 = (r() * h * 0.6) | 0, len = 14 + (r() * 40) | 0; for (let y = y0; y < Math.min(h, y0 + len); y++) { if (r() < 0.12) x += r() < 0.5 ? -1 : 1; c.fillStyle = 'rgba(200,225,255,0.9)'; c.fillRect((x + w) % w, y, 1, 1); } c.fillRect((x + w) % w, Math.min(h - 2, y0 + len), 2, 2); }
@@ -235,8 +235,8 @@ function umbrella(tag = 'away') {
   cyl(0.004, 0.002, 0.06, 4, trim, 0, -0.84, 0, g);                               // ferrule
   // tag on a string from the grip
   const T = new THREE.Group(); T.name = 'tag'; g.add(T); T.position.set(0, -0.15, 0.058);
-  cyl(0.0015, 0.0015, 0.05, 3, lam(null, 0xe8e0c8), 0, -0.02, 0.0, T);
-  const front = plane(0.064, 0.04, lam(tagTex()), 0, -0.065, 0.003, T); front.name = 'tagFront';
+  cyl(0.0015, 0.0015, 0.02, 3, lam(null, 0xe8e0c8), 0, -0.035, 0.0, T);
+  const front = plane(0.064, 0.04, lam(tagTex()), 0, -0.065, 0.003, T); T.position.z = 0.058; front.name = 'tagFront';
   const back = plane(0.064, 0.04, lam(tagBack()), 0, -0.065, -0.003, T, Math.PI); void back;
   if (tag === 'away') T.rotation.y = Math.PI;
   return g;
@@ -364,6 +364,7 @@ function diner({ sign = 'open', doorOpen = 0, umb = 'hook', pot = true, extraLig
     const sg = sign === 'closed' ? TX.closed : TX.openTag;
     plane(0.42, 0.21, lam(sg), 0.035, 0, 0, tag, Math.PI / 2); plane(0.42, 0.21, lam(sg), -0.035, 0, 0, tag, -Math.PI / 2);   // both faces read the same
     cyl(0.002, 0.002, 0.2, 3, lam(null, 0x8a8a8a), 0, 0.12, 0, tag); }
+  { const bk = rep(bokehTex(), 1, 1); plane(DOOR.w + 0.3, DOOR.h, basic(bk, 0xffffff, { transparent: true, opacity: 0.5, depthWrite: false }), 3.45, DOOR.h / 2 + 0.1, DOOR.z, scene, -Math.PI / 2); }
   door.rotation.y = doorOpen;
   { const b = new THREE.Group(); b.position.set(WX - 0.12, DOOR.h + 0.06, dz1 - 0.2); scene.add(b);
     box(0.2, 0.015, 0.015, lam(null, 0xb08a40), 0.05, 0.1, 0, b); mesh(new THREE.CylinderGeometry(0.012, 0.045, 0.06, 8, 1, true), lam(null, 0xd8b050, { side: THREE.DoubleSide }), -0.04, 0.05, 0, b);

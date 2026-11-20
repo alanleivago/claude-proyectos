@@ -27,7 +27,7 @@ def env(a, win=0.02):
     w = int(SR * win); e = np.sqrt(np.convolve(a ** 2, np.ones(w) / w, 'same')); return e
 
 
-SPLIT = {}   # cards that follow the cut / read better
+SPLIT = {'06_theo': ['Right. Sorry. Thank you.'], '17_theo': ['Oh… okay.']}   # cards that follow the cut / read better
 cards = []
 for L in TL['lines']:
     a = load(L['take']); i = int(L['at'] * SR); voice[i:i + len(a)] += a[:N - i]; spk_env[L['spk']][i:i + len(a)] += np.abs(a[:N - i])

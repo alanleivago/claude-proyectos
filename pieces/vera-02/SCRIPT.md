@@ -59,7 +59,7 @@ relatedTo: [vera-01, upnext-waitress, upnext-suitor]
 
 ## Storyboard (v1, 2026-11-18)
 
-- **Board:** `storyboard/board.png` (27 shots), single stills `storyboard/shot_<id>.png`, title card `storyboard/title.png` ("EPISODE 2" coral / "The Last Cup", the ep 1 v3 Title Case pixel font), set stills `storyboard/set.png`.
+- **Board:** `storyboard/board.png` (27 shots), single stills `storyboard/shot_<id>.png`, title card `storyboard/title.png` ("EPISODE 1" coral since Film v2, was "EPISODE 2" / "The Last Cup", the ep 1 v3 Title Case pixel font), set stills `storyboard/set.png`.
 - **Length:** 70.1 s, 27 shots, mean 2.6 s per shot (`work/timeline.json`, cut to the real takes). The twist insert lands at 49.2 s (70 %), the callback at 60.7 s.
 - **Voices:** all 24 spoken lines (the script has 27 rows; 02, 21 and 27 are silent) generated with VoiceStudio, Vera `cf0b8ddb`, Theo `a66e21f8` at speed 1.15, steps 32, wav, raw, no "!". Every take passes Whisper (match 1.0 after the clean chain; `voz/takes.json`). Questions rise: 01 +3.4 st, "For you?" +9.0, 08 +12.5/+11.6, 10 +10.6, 12 +7.2, 20 +7.6, 23 +4.9/+12.8, 25 +12.1. 15 "Which one is yours?" was retaken (seeds 5–12, `voz/retake_15_theo/`): seed 9, +4.0 st (the first pick rose only +1.0; kept as `s4_v1_used.wav`).
 - **Pipeline:** `python tools/voice_final.py 1,2,3,4` (reads `work/lines.json`), `python tools/take_spans.py`, `python tools/sb_timeline.py`, `cd engine && node render.mjs --page sb.html --frames <(3i+1)*30> --out stills/v6 --sbmeta stills/sb_meta.json`, `python tools/compose.py engine/stills/v6 --set engine/stills/set`.
@@ -117,3 +117,57 @@ relatedTo: [vera-01, upnext-waitress, upnext-suitor]
 3. Shot 09 is the only wide that shows the jukebox; it uses a slightly wider lens (~24 mm) to fit the jukebox, Vera pointing and Theo in the 9:16 frame. The jukebox sits at the left edge.
 4. The window rain streaks are an alpha texture plus line rain outside; in the film the streaks can slide down and the rain scroll.
 5. Music (slow lo-fi, original or CC0, also the jukebox song from 25) and SFX (bell, rain, mosaic whoosh, ding on 21 and 26, rain + neon hum on 27) are for the film pass.
+
+## Film v1 (2026-11-18, after the storyboard was approved with changes)
+
+- **Render:** `render/She Kept His Umbrella For a Week.mp4`. 70.3 s, 28 shots, 1080×1920 at 30 fps. −14.0 LUFS, −3.2 dBTP. Share encode (x264 CRF 24 slow, AAC 192k, +faststart).
+- **Also in `render/`:** the cover `She Kept His Umbrella For a Week.png` (`tools/cover.py`), the caption `.txt`, and the API review of the first pass, `vera02_v1_revision.md`. Nothing has been delivered.
+- **Storyboard changes the user asked for:**
+  - 01 is a closer 35 mm wide. Theo walks in from the rain and the door swings with the bell.
+  - 09: the jukebox is turned toward the counter and glows on the left, and Theo walks over to it. In 10 and 12 he is beside it.
+  - 05 and 18 are reframed so nobody is cut by the frame edge.
+  - 25 is over Theo's shoulder from his seat, with Vera big in the frame. A new insert, 24b (1.2 s, taken from the 25 beat), shows the door sign reading CLOSED.
+- **New engine-side keyframed clips (`bake()` in `sb_shots.js`):** each one is a body pose plus a spine/chest lean, a neck counter-turn and two-bone hand IK to exact contact points on the props. They are sampled at 30 fps into a real `THREE.AnimationClip` (quaternion and position tracks for every bone), and the props follow the same clock. Worst palm-to-contact distance per clip, logged as `BAKED`:
+  - `toss_towel` (Vera standing, underhand toss): 1.6 cm while she holds the towel. Release is at 0.62 s, then the towel flies on an arc into Theo's catching hand, timed to his `receive_object` clip.
+  - `dry_hair` (Theo): 0 cm. Both palms hold the ends of an arched towel that rubs over his crown, clear of the hair.
+  - `pat_across`: 0 cm. She leans in and pats twice, palm flat on the table at his place. The seat cushion across is about 1.2 m away and out of reach seated, so she pats the table in front of it.
+  - `pour_cup`: 0.7 cm. Her hand is on the handle; she lifts, tilts around the handle, pours (coffee stream, his mug fills) and sets it down.
+  - `lift_umbrella`: 1.9 cm. She grips it from beside the bench, lifts it over the table edge and lays it down exactly where it rests in 21–27, then lets go.
+  - `hand_towel`: 1.8 cm. Palm on the folded towel, she lifts it and holds it out to him.
+  - The GLBs are unchanged; the new clips exist only inside the engine.
+- **Rain seen from inside:** the flat streak texture is gone.
+  - Drops on the glass come from a shader on the glass plane: static beads, plus drops running down in wobbling columns with broken trails. They are drawn in 7 mm cells, with a light rim on top and a dark core underneath.
+  - Behind the window and the door there is a plane of soft out-of-focus neon/lamp light. It faces inside only, so it cannot be seen from the street.
+  - The line rain outside actually falls (each line wraps on its own). It was checked over consecutive frames. `tools/flicker_scan.py`: every A-B-A blink in the render is rain, with no set flicker.
+- **Sound** (`tools/mix_film.py`; all music and SFX are Freesound CC0, chosen with earshot rank/find):
+  - Music: the diner radio bed is "Chill Lofi - lost stars" by noel.wav, up to the needle drop in 24b. The song he picked is "TheEternalLighthouse" by jcmbo369 (slow piano), from 24b to the end.
+  - Levels: under speech the music sits about 13.9 dB below the voice, with a −3 dB dip under "I kept the booth too."
+  - SFX: rain on the window (inside), street rain through the open door and on the exterior, room tone, bell, wet steps, towel whip and catch, towel rub, mug down, three pats, booth-seat sit, pour, carafe down, umbrella fabric and set-down, jukebox coin and needle drop, mosaic whooshes, and a ding on 21 and on 26.
+- **Fixed after the API review** (`tools/revisar_render.py --reglas`; there is no "vera" style, so the rules came from a short temporary rules file):
+  - Tops of the heads were cut in 08, 23, 24 and 26.
+  - 07 read like a second dutch angle; it is now level.
+  - The towel went through Theo's hair in 06; the new `dry_hair` clip replaces it.
+  - The umbrella started across her torso and the tag string crossed her body; the umbrella now starts on her aisle side and the string is shortened.
+  - In the wide of 18 the coffee stream seemed to land on the towel; the towel was moved to where she picks it up in 25.
+  - The CLOSED insert had a flat background; the door now has bokeh behind it and softer drops.
+  - Subtitles: "Right. Sorry. Thank you." and "Oh… okay." are now each one card.
+  - In 14 the corset vanished; the camera is now lower.
+  - No blink on 22, 25 or 26.
+- **Left as is, by choice:**
+  - The mosaic into 02 is in the approved script.
+  - earshot critique flags the quiet ending (−4.3 LU), but the script asks for a silent tail with a fade.
+  - The bottom end is thin (lo-fi tracks).
+
+## Film v2 (2026-11-18, user notes on v1)
+
+- **Episode number:** the card now reads "EPISODE 1", because the user is testing this as an episode 1. The change is in the film's title card (`tools/post_film.py`), `storyboard/title.png`, the board and the cover. Only the post pass was redone, on the same engine render (`work/engine_v2.mkv`).
+- **Music is louder** (`tools/mix_film.py`): the radio bed now sits at voice −6 LU and the jukebox song at voice −5 LU, with a 5 dB duck under speech (v1 was −9 / −8 and 7.5 dB).
+  - Under speech the voice is now 8.4 dB above the music (v1: 13.9 dB). In the pauses the music is about 4 dB louder than under speech.
+  - Master: −14.0 LUFS. True peak is −3.0 dBTP on the mix wav and −1.1 dBTP on the decoded mp4.
+  - earshot critique: launch-grade, 0 major issues; the quiet-ending flag from v1 is gone.
+  - Whisper on the full mix matches the script 1.0, so the voices stay intelligible.
+- **Cover, new standing rules** (`tools/cover.py`):
+  - The only words are "EPISODE 1" set directly above "The Last Cup", as one block on the divider.
+  - Vera gets about 60 % of the frame, from a pulled-back still of shot 13 that shows a little cleavage (`engine/stills/cover_v`).
+  - Theo's panel is clipped on the same pink diagonal and starts above the line's highest point, so there are no black corners (0 black pixels, checked at 100 % and in ×4 crops).
+- **Files:** `render/She Kept His Umbrella For a Week.mp4`, `.png` and `.txt` were overwritten. The v1 engine render and the v1/v2 mixes were deleted.
