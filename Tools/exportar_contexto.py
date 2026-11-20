@@ -22,8 +22,15 @@ redacted = 0
 KNOWN = re.findall(r'[A-Za-z0-9_\-]{20,}', ''.join(open(p, encoding='utf-8', errors='ignore').read()
                     for p in (os.path.join(ROOT, '.env'), os.path.join(HOME, '.freesound.json')) if os.path.exists(p)))
 
+_RF = os.path.join(ROOT, '.export_redact.txt')  # términos privados, uno por línea (git-ignorado)
+PRIVATE = [l.strip() for l in open(_RF, encoding='utf-8')] if os.path.exists(_RF) else []
+PRIVATE = [p for p in PRIVATE if p and not p.startswith('#')]
+
 def clean(t):
     global redacted
+    for p in PRIVATE:
+        t, n = re.subn(re.escape(p), '[PRIVADO]', t, flags=re.I)
+        redacted += n
     for k in KNOWN:
         redacted += t.count(k)
         t = t.replace(k, '[REDACTADO]')

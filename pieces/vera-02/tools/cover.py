@@ -9,12 +9,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import post_film as P
 
 PIECE = Path(__file__).resolve().parents[1]; W, H = 1080, 1920
-vera = Image.open(PIECE / 'engine' / 'stills' / 'cover_v' / 'f_0030.png')   # v2: shot 13 pulled back (sb.html?only=13&cam=-1.36,1.42,-1.43,0.3,1.3,-2.53,40).convert('RGB').resize((W, H), Image.NEAREST)
+vera = Image.open(PIECE / 'engine' / 'stills' / 'cover_v' / 'f_0030.png').convert('RGB').resize((W, H), Image.NEAREST)   # v3 (user): Vera facing the camera, eyes open (sb.html?coververa)
 theo = Image.open(PIECE / 'engine' / 'stills' / 'cover' / 'f_0120.png').convert('RGB').resize((W, H), Image.NEAREST)
 # v2 (user, standing rules): Vera gets ~60 % of the frame (framed to show a little cleavage), Theo below; both images fill their side
 # of the diagonal completely (no black corners); the only words are the episode card, as one block on the divider.
 YL, YR = 1210, 1070                                    # diagonal: y at the left / right edge
-top = vera.crop((0, 90, W, 90 + YL + 10))              # her panel covers everything above the line
+top = vera.crop((0, 0, W, YL + 10))              # her panel covers everything above the line
 img = Image.new('RGB', (W, H)); img.paste(top, (0, 0))
 y0 = min(YL, YR) - 12; bot = theo.crop((0, 30, W, 30 + H - y0))   # his panel starts above the highest point of the line
 mask = Image.new('L', (W, H), 0); ImageDraw.Draw(mask).polygon([(0, YL), (W, YR), (W, H), (0, H)], fill=255)

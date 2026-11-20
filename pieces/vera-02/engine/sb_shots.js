@@ -144,6 +144,11 @@ export function buildShots(L) {
     if (towelOn) { const t = towel(); t.position.copy(TOWEL_T); R.scene.add(t); }
     return u; };
 
+  if (QS.has('coververa')) {   // delivery cover (user): Vera facing the camera, eyes open to the viewer
+    const R = diner(); const v = put(R.scene, 'vera', 'flirt_hip_tilt', 1.6, 'open', 'smirk', VB[0], VB[1], 0);
+    const E = head(v); const c = cam(40, [E.x, E.y - 0.1, E.z + 1.6], [E.x, E.y - 0.3, E.z]);
+    SB.push({ id: 'coververa' }); addShot(R.scene, c, dofAt(c, v, 0.3, 1.6)); return;
+  }
   if (QS.has('set')) {   // set stills: empty diner, wide + window/booth + counter + exterior
     { const R = diner(); SB.push({ id: 'set_wide' }); addShot(R.scene, cam(F28, [-2.4, 1.75, 2.7], [1.3, 0.95, -0.9])); }
     { const R = diner(); SB.push({ id: 'set_booth' }); addShot(R.scene, cam(F28, [0.4, 1.6, -0.6], [2.7, 1.1, 1.4])); }

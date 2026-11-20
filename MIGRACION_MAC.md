@@ -6,7 +6,7 @@ relatedTo: [CLAUDE.md, CLAUDE.local.md, tools/exportar_contexto.py]
 ---
 # Contexto completo para continuar el trabajo en Antigravity
 
-Generado el 2026-11-19 en la máquina Darwin con `tools/exportar_contexto.py`, a partir de todo lo trabajado con Claude Code: instrucciones, memoria, estilos, estado de piezas, el historial completo de mensajes del usuario, herramientas y git. Solo incluye texto: los videos, audios y modelos 3D están en el repo y en los discos.
+Generado el 2026-11-20 en la máquina Darwin con `tools/exportar_contexto.py`, a partir de todo lo trabajado con Claude Code: instrucciones, memoria, estilos, estado de piezas, el historial completo de mensajes del usuario, herramientas y git. Solo incluye texto: los videos, audios y modelos 3D están en el repo y en los discos.
 
 ## 0. Léeme primero (instrucciones para el agente de Antigravity)
 
@@ -874,6 +874,7 @@ User's standing notes for this look: lots of detail everywhere; very pixelated (
 - [zawdog: solo personajes necesarios](zawdog-only-needed-chars.md) — pulir solo los humanos que usa el próximo video; ropa Flow = build_human3 flow=1
 - [Zernio](zernio.md) — MCP para publicar/programar videos en TikTok, Facebook, etc.; confirmar cada publicación
 - [Canal zombies](zombie-channel.md) — heroína PS1 estilo RE hecha desde cero (pieces/zombie-girl), ref Learn with Alya, voz nueva US
+- [Airy SCP format](airy-scp-format.md) — passthesalt format, ≥61 s, fast dialogue, Airy naive+flirty, guard voice 8bd4e6c7
 
 ## memoria: `agent-browser.md`
 
@@ -933,6 +934,32 @@ El usuario me pidió escribir los guiones y generar su voz (VoiceStudio, perfil 
 - Fuentes de temas: sus 9 videos ganadores, canales de referencia < 250k subs con videos largos > 50k vistas y del mismo tema, y vidIQ (outliers/tendencias). Temas permitidos: ICE, visas, green card, aeropuertos, países para emigrar, qué hacer si ICE te detiene.
 **Why:** quiere delegar guion + voz para solo grabar.
 **How to apply:** datos legales exactos y prudentes (es su credibilidad); entregar el guion limpio + el WAV.
+
+## memoria: `airy-scp-format.md`
+
+---
+name: airy-scp-format
+description: Airy SCP shorts (@passthesalt17_ format) — ≥61 s, passthesalt-speed dialogue, Airy naive AND flirty with poses, guard voice "Guardia scp" 8bd4e6c7
+metadata:
+  type: feedback
+---
+
+Airy SCP episodes follow @passthesalt17_ (fuentes/passthesalt17/ANALISIS.md + notas/ transcripts): Airy = naive one, one deadpan guard who knows the lore.
+
+- Duration **61 s minimum** (user, 2026-11-20).
+- Dialogue as fast as passthesalt: 1–3 s replies, tiny gaps, ~3.6 words/s, ~30+ lines / ~220 words for 61 s; silence only before the ending.
+- Same structure and comic devices (Airy causes the problem, literal clarifying questions, "Wait, wait, wait", lone "...Oh.", dry cut) but NEVER their lines.
+- Airy is naive **and flirty**: coquette poses (hip on wall, hair twirl, winks, slow blinks, tiptoe close to the guard).
+- Voices: Airy "Voz ashley clean limpia" 60ea9b99; guard "Guardia scp" 8bd4e6c7 (VoiceStudio, Mac).
+- Airy model = her OWN UpNext clips (girl_up01_tights.glb), never Mechayuki-type clips; base idle = idle_shy (hand on chest); no open wide-arm poses (user correction 2026-11-20).
+- 15 fps character animation (film mode ANIM_FPS 15), like the Airy style.
+- Subtitles: ONE line per card (Barlow Condensed ExtraBold, speaker colour, black outline, ~64 % height), never over faces/mouths.
+- Guard: empty hands (P90/clipboard hidden), talk gestures (palm, point, stop, hips) + nods, like the ref guards. Shots = ref framing (medium head-to-knee singles, OTS, few CUs).
+- Voice speed for passthesalt pace: Airy 1.2, guard 1.18 (ep1 = 61.78 s). Review in VideoHub live (engine/film.html) before any render.
+- Ep 1 = pieces/airy-scp-01 (SCP-173 "Who blinks first"), script approved 2026-11-20.
+
+**Why:** user's explicit requests while approving ep 1.
+**How to apply:** check length and pace in every Airy SCP script and timeline before the storyboard and before export. Related: [[storyboard-before-render]], [[humanizer]].
 
 ## memoria: `ali-abdaal-2-style.md`
 
@@ -7429,6 +7456,299 @@ Script, then storyboard (wait for approval), then final, then QA (pop, flicker a
 - Mocap first for hand actions (no raw IK on the arms): Kimodo clips `z8_sci_offer_pull`, `z8_owner_tease`, `z8_owner_fake` (+ unused `z8_sci_offer_drop`), prompts in `motions/kimodo/prompts_z8.txt`; run `tools/kimodo_cpp_batch.py --kimodo ~/kimodo-cpp/src`, retarget from a `src_<name>.bvh` copy (same-name BVH makes the action `<name>.001`). Pose-to-pose moves = per-bone slerp of two clip frames (`hpose_blend` in `pieces/zaw-dog-08/shots.py`).
 - QA adds arm-vs-torso: arm/hand vertices > 1.5 cm inside the torso surface, every frame (`shots.py feet`).
 
+## `styles/zawdog/humans/ownerf/README.md`
+
+---
+type: spec
+status: draft
+tags: [zawdog, doggo-poly-shorts, kit-human, ownerf, ps1, lowpoly, makehuman-rig, flow]
+relatedTo: [fuentes/tomgrave-ps1-girl, styles/zawdog/STYLE.md, styles/zawdog/humans/human.py, styles/zawdog/tools/retarget.py]
+---
+# ownerf: the dog's owner (female main character), PS1 low poly
+
+Replica of TomGrave3D's PS1 girl (study: `fuentes/tomgrave-ps1-girl/REF.md`) with the user's three changes: a bigger
+butt, fuller thighs, and round human ears. Face, garments and hair come from our own Flow images. **Status: round 3,
+waiting for the user's approval** (review files in `review/`; round 1 in `backup_v1/`, round 2 in `backup_v2/`).
+
+## Round 3 (2026-11-20, user review of round 2)
+- **Legs / butt in profile:** the side silhouette is now set explicitly (`geo.py` `SPZ/SPF/SPB` + `side_fit()`: front and
+  back extent of every pelvis and leg ring, pre-stretch), so it runs as one curve belly -> belt -> thigh front -> knee ->
+  shin and butt -> back of the thigh -> calf: thigh tops flush with the pelvis (no step at the crotch), no notch under
+  the butt (the H ring, two new butt rings at z 0.885 / 0.915 and the belt-bottom ring follow the same profile), shins and
+  knees a little deeper like his straight jeans. Checked on `review/side_compare.jpg` (ortho side + our silhouette under
+  his outline, aligned at the jeans cuff): our front line sits on his; the butt and back of the thigh stay fuller (intended).
+  Jeans side texels read slightly inside the photo edge (no smear at the hip side); the back photo's thin horizontal
+  creases are softened (they streaked across the bigger seat).
+  **Root cause of the "butt cut off from the legs" found and fixed:** the leg rings were built in mirrored vertex order
+  relative to the pelvis H ring (the leg frame's 90 deg points inward), so the hip band joining them was twisted (the
+  crotch vertex joined the outer thigh) and the leg normals came out inverted (wrong flat shading on the jeans). Now
+  the order matches (`leg_rings` angles), the hip band is a clean ring and the seat flows into the thighs from every
+  angle (`work/cmp` hip renders); the H ring's outer vertices sit flush with the thigh top (the old +4 mm made a ledge).
+- **Cleavage:** new Flow torso photo (`photo/torso.jpg`, V/sweetheart neckline with lace; round 2 kept as `torso_v2.jpg`);
+  the upper trunk rings (bust -> neck) now have +-13 deg columns (`A14`, stitched to the crop ring) so the cups
+  (`bust_k`, fullest at +-27 deg) and a recessed centre (`cleave()`, deepest at z 1.272) make a real cleavage valley; the
+  chest patch gets ~2x texel density (`uv.py` `SRC_DENS`), the photo's cleavage is mapped over z 1.26-1.31 and its
+  luminance contrast lifted.
+- **Hair (rebuilt, silhouette-driven):** his FINAL turntable head (`fuentes/.../frames/final_head/`) measured in
+  hair-top -> chin units (front half-width, side extents ahead / behind the nose tip) drives a 24-column, 7-row shell:
+  rounded tall crown, the bang "visor" standing off the forehead, centre spike to between the brows, tall forehead
+  windows, side spikes, cap edge just above the round ears, the back hanging to the jaw with long side tufts and a nape
+  flick that turns up (dark underside showing, like his inner shell), plus thicker side locks in front of the ears to
+  below the chin. Silhouette error vs his: within ~0.02 of the head height at most depths (`hsil` check in the session).
+  Texture: flat hand-painted strands (new Flow `photo/hair_paint_b.jpg`, 3 tones, softened), his gradient (light
+  magenta-violet crown -> dark tips), near-black underside.
+- **Head / ears / neck:** the face sits lower in a taller skull like his (eyes at 0.60 of hair top -> chin; `vremap()`:
+  proxy eye line -1.8 cm, chin kept, cranium stretched), skull 3 % wider, V jaw (lower face tapers 7 % to the chin),
+  flatter profile (smaller nose push, firmer chin, stronger brow); round ears smaller (5 cm), a little forward, softer concha tone, standing
+  out so they show from the front between the cap edge and the side lock; neck a slimmer oval tube, the choker lower and
+  wider (his band 1.40-1.43 m), the portrait fades out under the chin (no second choker), the collar opens wider at the
+  front and sits lower at the neck sides. `face_bake.py` reads the new eye line / choker from `work/geo.json`.
+- The rig and the baked clips are unchanged (hair top pinned to the round-2 height, so the final scale is identical:
+  max bone offset 0.5 mm vs `backup_v2`).
+
+## Round 2 (2026-11-20, user review of round 1)
+- **Head:** a real low-poly 3D head (`tools/headmesh.py`): the MakeHuman CC0 `proxy741` retopology (hand-modelled nose,
+  brow, lips, chin, jaw, full skull) fitted to her body, eyes/mouth closed, symmetric decimation, reshaped toward his
+  head (longer narrower face, pointier chin, stronger nose / brow, more skull behind the ears) + modelled round ears.
+  The Flow portrait is BAKED into a per-expression head texture (`tools/face_bake.py`, cylindrical "headuv" unwrap,
+  TPS landmark warp, fades into the portrait's own skin tone): no cheek seam at 3/4, skin all around the head.
+- **Hair:** his bob rebuilt: dome crown, long narrow centre spike + gaps + side spikes (denser front angles), cap edge
+  above the ears so the round ears show, two wedge side locks in front of the ears to the jaw, a jagged duck-tail
+  flick at the nape, an underside fold (thickness, nothing seen through).
+- **Legs:** fuller thighs grow at the back (hamstring/butt), and the leg rings are aligned so the front line runs
+  straight from thigh to cuff in profile (no forward kink at the knee).
+- **Torso:** new Flow torso photo (fuller bust, square neckline with the cleavage line, small navel); bust volume in the
+  geometry (`bust_k`), jacket opening a little wider at the chest; navel small (no stretched shadow).
+
+## Use it in a shot (kit contract, same as every kit human)
+```python
+sys.path.insert(0, "<repo>/styles/zawdog/humans"); import human as HU
+P = HU.Human("ownerf")                    # ownerf.blend: ownerf_rig + ownerf_body (materials already kit-flat)
+P.body.modifiers.new("ps1", "NODES").node_group = bpy.data.node_groups["PS1Snap"]   # inside the zaw-dog kit
+P.place((x, y), yaw); P.play(HU.load_action("of_walk")); P.face("scared")
+```
+- Bone names: MakeHuman "default" skeleton (`root, spine05..01, neck01..03, head, clavicle.L, upperarm01.L, lowerarm01.L,
+  wrist.L, finger1-1.L ... finger5-3.L, upperleg01.L, lowerleg01.L, foot.L`), rest = MakeHuman A-pose, so
+  `styles/zawdog/tools/retarget.py`, the baked clips and the Kimodo BVHs work. Bake her own clips with `human=ownerf`
+  (foot planting uses her real boots): `of_walk` (100STYLE Neutral_FW 517-697), `of_idle` (Neutral_ID 700-880,
+  still=1 stance=0.1), `of_startle` (Kimodo startle_jump_back) are in `motions/baked/`. Owner-baked clips
+  (`k_*`, `c_*`) also play on her (checked: `k_startle_jump_back`).
+- **ABDUCT 13 deg** for hanging arms (the kit's `abduct()` from `pieces/zaw-dog-08/shots.py`, also in
+  `tools/motion_kit.py`): her hips are wider, so without it the gloves sink 2-6 cm into the hips in idle/walk poses.
+- Faces (hard swap on the beat, kit names): `neutral, smile, surprised, crying, laughing, scared`. `faces/<expr>.png`
+  (256 px, Closest) are BAKED head textures on the `headuv` UV (sources: `faces/<expr>.jpg` Flow portraits ->
+  `faces/src_<expr>.png` aligned). Slot 1 = the whole head (`img` swapped by `P.face`).
+- Fingers: index separate from the others, so `finger2-*` straight + `finger3/4/5-*` curled = point; all curled = fist
+  (local X rotation; see `tools/look.py curl()`).
+
+## What she is
+- 2566 triangles (1345 faces, 1484 verts): head + round ears 412, hair 404 (shell + underside fold + 2 side locks),
+  body (crop-top patch + jeans + legs) 550, jacket + sleeves + collar 440, forearms 96, hands 448 (4 fingers + thumb
+  each), boots 216. Faceted, no subdivision, one mesh with loose parts (like his separate objects).
+- Height 1.676 m. Proportions from his model: legs stretched x1.18 on the MakeHuman base (crotch 0.50 of the height,
+  his 0.53), high waist (navel 0.67, his 0.69), jacket ending at the belt, ~7.1 heads with the hair.
+- Atlas `atlas.png` 512 px, Closest (texel-space bake from the Flow photos: jacket/jeans/torso by thin-plate-spline
+  landmark warps, front/back cross-faded by the normal; boots, gloves in their own frames; hair tiled along the strands;
+  flat fills only where his texture is flat: skin, collar, rolled cuff band, choker, boots/gloves stay near-black).
+  Jacket/jeans get his mottled-fabric noise (+-11 %) baked in.
+
+## Files
+- `ownerf.blend` (rig + body, textures packed), `atlas.png`, `faces/` (6 Flow portraits `.jpg` + 256 px `.png`, `mask.png`,
+  `face_lm.json`), `photo/` (Flow: `jacket.jpg` ghost mannequin front|back, `jeans.jpg` front|back, `torso.jpg` V-neck crop
+  top + choker + midriff (round 3), `boots_gloves.jpg`, `hair_paint_b.jpg` painted strands (round 3; `hair.jpg` = round 2), `src/turnaround.jpg` (Flow front|side|back of the modified
+  character = the modelling reference), `review/`, `tools/`, `work/` (intermediate, rebuildable).
+- Rebuild everything: `tools/build.sh` (geo.py -> uv.py -> tex.py -> final.py), then `tools/review.sh`.
+  - `geo.py` (Blender): MakeHuman female + rig via MPFB, ring lofts ray-cast from its body and fitted to the turnaround
+    (bigger butt `BUTT`, fuller thighs `THIGH`), jacket / jeans as offset shells, collar, hair bob, round ears, hands
+    with 5 fingers, boots; writes `work/geo.blend`, `work/model_lm.json` (2D landmarks for the photo warps).
+  - `uv.py`: one mesh, per-part texel density, atlas pack, `proj` UV for the face photo. `tex.py`: the atlas bake.
+  - `final.py`: kit materials, procedural weights (spine tents, clavicle/upper-arm blend at the shoulder, the armhole
+    shared 40/30/30, sleeve -> elbow blend, hip/knee blends, boots 100 % foot), leg-length remap, saves `ownerf.blend`.
+  - `face_prep.py`: aligns the 6 portraits (ECC), paler skin grade, mask, landmarks. `photo_lm.py`: photo landmarks.
+  - QA: `qa_poke.py` (frame-by-frame poke-through), `styles/zawdog/tools/motion_check.py` (feet), `look.py` (renders;
+    `ortho=<m>` for pure orthographic views), `compare.py` / `sheets.py` / `headcmp.py` (head vs his final head, same
+    scale) / `sidecmp.py` (full-body ortho side + silhouette overlay) / `csheet.py` (review sheets), `ask.py` (API
+    critique), `motion_kit.py` (kit hallway test), `ps1post.py` (our finals' stable PS1 dither).
+
+## QA (2026-11-20, round 3 final build; round 2 numbers in `backup_v2/README.md`)
+- Feet (`motion_check.py`, `work/qa/r3/*_feet.txt`): identical to round 2 (same rig): no floating, no sinking; planted-sole
+  slides 2-4 cm in the walk (mocap), 3-6 cm in the startle (the jump itself).
+- Poke-through on every frame (`qa_poke.py`, `work/qa/r3/poke_*.txt`, clips WITHOUT abduction): forearm->sleeve 0,
+  torso->jacket 0.6 (walk, idle) / 1.3 (startle, both arms up), head->hair 0.5 (temple skin just under the cap edge),
+  boot->cuff 0.3-2.0 (was 2.9-4.9 before the leg ring order fix), hands->hips 3.9-6.2 cm, fixed in shots by ABDUCT 13
+  (`motion_test.mp4` uses it: no glove in the hips in any frame).
+- Silhouette checks vs his final turntable (session tools): leg front line on his outline (`side_compare.jpg`); head
+  outline within ~0.02 of the hair-top -> chin height at most depths (front half-width, side front / back extents).
+- API reviews (sonnet 5.5, `work/cmp/r3_critique.md`, `r3_critique2.md`): taken as hints only (they contradict each
+  other on ears / neck); acted on: the butt-to-thigh corner (root cause = the twisted hip band, fixed), jeans streaks,
+  the navel-like dot at the V-neck, ears too dark, collar standing off the back of the neck, chin.
+
+## `styles/zawdog/humans/ownerf/backup_v1/README.md`
+
+---
+type: spec
+status: draft
+tags: [zawdog, doggo-poly-shorts, kit-human, ownerf, ps1, lowpoly, makehuman-rig, flow]
+relatedTo: [fuentes/tomgrave-ps1-girl, styles/zawdog/STYLE.md, styles/zawdog/humans/human.py, styles/zawdog/tools/retarget.py]
+---
+# ownerf: the dog's owner (female main character), PS1 low poly
+
+Replica of TomGrave3D's PS1 girl (study: `fuentes/tomgrave-ps1-girl/REF.md`) with the user's three changes: a bigger
+butt, fuller thighs, and round human ears. Face, garments and hair come from our own Flow images. **Status: waiting for
+the user's approval** (review files in `review/`).
+
+## Use it in a shot (kit contract, same as every kit human)
+```python
+sys.path.insert(0, "<repo>/styles/zawdog/humans"); import human as HU
+P = HU.Human("ownerf")                    # ownerf.blend: ownerf_rig + ownerf_body (materials already kit-flat)
+P.body.modifiers.new("ps1", "NODES").node_group = bpy.data.node_groups["PS1Snap"]   # inside the zaw-dog kit
+P.place((x, y), yaw); P.play(HU.load_action("of_walk")); P.face("scared")
+```
+- Bone names: MakeHuman "default" skeleton (`root, spine05..01, neck01..03, head, clavicle.L, upperarm01.L, lowerarm01.L,
+  wrist.L, finger1-1.L ... finger5-3.L, upperleg01.L, lowerleg01.L, foot.L`), rest = MakeHuman A-pose, so
+  `styles/zawdog/tools/retarget.py`, the baked clips and the Kimodo BVHs work. Bake her own clips with `human=ownerf`
+  (foot planting uses her real boots): `of_walk` (100STYLE Neutral_FW 517-697), `of_idle` (Neutral_ID 700-880,
+  still=1 stance=0.1), `of_startle` (Kimodo startle_jump_back) are in `motions/baked/`. Owner-baked clips
+  (`k_*`, `c_*`) also play on her (checked: `k_startle_jump_back`).
+- **ABDUCT 13 deg** for hanging arms (the kit's `abduct()` from `pieces/zaw-dog-08/shots.py`, also in
+  `tools/motion_kit.py`): her hips are wider, so without it the gloves sink 2-6 cm into the hips in idle/walk poses.
+- Faces (hard swap on the beat, kit names): `neutral, smile, surprised, crying, laughing, scared` (`faces/*.png`, 256 px,
+  Closest: the PS1 face resolution of the reference). Slot 1 = face material (`img` swapped by `P.face`).
+- Fingers: index separate from the others, so `finger2-*` straight + `finger3/4/5-*` curled = point; all curled = fist
+  (local X rotation; see `tools/look.py curl()`).
+
+## What she is
+- 2262 triangles (1152 faces, 1328 verts): head 266, ears 24, hair 312 (shell + underside fold), body (crop-top patch +
+  jeans + legs) 484, jacket + sleeves + collar 416, forearms 96, hands 448 (4 fingers + thumb each), boots 216. Faceted,
+  no subdivision, one mesh with loose parts (like his separate objects: head, hair shell, jacket shell, limbs, hands,
+  boots).
+- Height 1.676 m. Proportions from his model: legs stretched x1.18 on the MakeHuman base (crotch 0.50 of the height,
+  his 0.53), high waist (navel 0.67, his 0.69), jacket ending at the belt, ~7.1 heads with the hair.
+- Atlas `atlas.png` 512 px, Closest (texel-space bake from the Flow photos: jacket/jeans/torso by thin-plate-spline
+  landmark warps, front/back cross-faded by the normal; boots, gloves in their own frames; hair tiled along the strands;
+  flat fills only where his texture is flat: skin, collar, rolled cuff band, choker, boots/gloves stay near-black).
+  Jacket/jeans get his mottled-fabric noise (+-11 %) baked in.
+
+## Files
+- `ownerf.blend` (rig + body, textures packed), `atlas.png`, `faces/` (6 Flow portraits `.jpg` + 256 px `.png`, `mask.png`,
+  `face_lm.json`), `photo/` (Flow: `jacket.jpg` ghost mannequin front|back, `jeans.jpg` front|back, `torso.jpg` crop top
+  + choker + midriff, `boots_gloves.jpg`, `hair.jpg`), `src/turnaround.jpg` (Flow front|side|back of the modified
+  character = the modelling reference), `review/`, `tools/`, `work/` (intermediate, rebuildable).
+- Rebuild everything: `tools/build.sh` (geo.py -> uv.py -> tex.py -> final.py), then `tools/review.sh`.
+  - `geo.py` (Blender): MakeHuman female + rig via MPFB, ring lofts ray-cast from its body and fitted to the turnaround
+    (bigger butt `BUTT`, fuller thighs `THIGH`), jacket / jeans as offset shells, collar, hair bob, round ears, hands
+    with 5 fingers, boots; writes `work/geo.blend`, `work/model_lm.json` (2D landmarks for the photo warps).
+  - `uv.py`: one mesh, per-part texel density, atlas pack, `proj` UV for the face photo. `tex.py`: the atlas bake.
+  - `final.py`: kit materials, procedural weights (spine tents, clavicle/upper-arm blend at the shoulder, the armhole
+    shared 40/30/30, sleeve -> elbow blend, hip/knee blends, boots 100 % foot), leg-length remap, saves `ownerf.blend`.
+  - `face_prep.py`: aligns the 6 portraits (ECC), paler skin grade, mask, landmarks. `photo_lm.py`: photo landmarks.
+  - QA: `qa_poke.py` (frame-by-frame poke-through), `styles/zawdog/tools/motion_check.py` (feet), `look.py` (renders),
+    `compare.py` / `sheets.py` (review sheets), `ask.py` (API critique), `motion_kit.py` (kit hallway test),
+    `ps1post.py` (our finals' stable PS1 dither).
+
+## QA (2026-11-20, final build)
+- Feet (`motion_check.py`): no floating, no sinking; planted-sole slides 2-4 cm in the walk (mocap), 3-6 cm in the
+  startle (the jump itself).
+- Poke-through on every frame (`qa_poke.py`, cm outside the covering shell, clips WITHOUT abduction): head->hair 0,
+  forearm->sleeve 0, torso->jacket 0.3 (walk, idle) / 0.7 (k_wave_hello) / 1.3 (startle, both arms up); hands->hips
+  2-6 cm, fixed in shots by ABDUCT 13 (motion_test.mp4 uses it). The boot->cuff number (3-5 cm) comes from the cuff's
+  inner return fold confusing the nearest-face sign; no boot shows through the cuff in any render (8 angles checked).
+- API reviews (sonnet 5.5): reference-vs-ours critiques `work/cmp/critique1-3.md` (scores 5-6/10, they also count the
+  intended face change), skinning QA on the motion frames `work/cmp/motion_qa.md` -> fixed: see-through gap behind the
+  side locks (hair underside fold), wrist skin wedge (forearm tapers into the glove), collar tips riding up (chest-only
+  weights, shorter tips), flat skin wedges at the temples (hair-shadow tone).
+- Known: the 3/4 view shows the face photo's edge on the cheek plane; the profile is flatter than his sculpted nose/chin;
+  the collar is a stand + fold funnel where his lies flatter on the shoulders.
+
+## `styles/zawdog/humans/ownerf/backup_v2/README.md`
+
+---
+type: spec
+status: draft
+tags: [zawdog, doggo-poly-shorts, kit-human, ownerf, ps1, lowpoly, makehuman-rig, flow]
+relatedTo: [fuentes/tomgrave-ps1-girl, styles/zawdog/STYLE.md, styles/zawdog/humans/human.py, styles/zawdog/tools/retarget.py]
+---
+# ownerf: the dog's owner (female main character), PS1 low poly
+
+Replica of TomGrave3D's PS1 girl (study: `fuentes/tomgrave-ps1-girl/REF.md`) with the user's three changes: a bigger
+butt, fuller thighs, and round human ears. Face, garments and hair come from our own Flow images. **Status: round 2,
+waiting for the user's approval** (review files in `review/`; round 1 kept in `backup_v1/`).
+
+## Round 2 (2026-11-20, user review of round 1)
+- **Head:** a real low-poly 3D head (`tools/headmesh.py`): the MakeHuman CC0 `proxy741` retopology (hand-modelled nose,
+  brow, lips, chin, jaw, full skull) fitted to her body, eyes/mouth closed, symmetric decimation, reshaped toward his
+  head (longer narrower face, pointier chin, stronger nose / brow, more skull behind the ears) + modelled round ears.
+  The Flow portrait is BAKED into a per-expression head texture (`tools/face_bake.py`, cylindrical "headuv" unwrap,
+  TPS landmark warp, fades into the portrait's own skin tone): no cheek seam at 3/4, skin all around the head.
+- **Hair:** his bob rebuilt: dome crown, long narrow centre spike + gaps + side spikes (denser front angles), cap edge
+  above the ears so the round ears show, two wedge side locks in front of the ears to the jaw, a jagged duck-tail
+  flick at the nape, an underside fold (thickness, nothing seen through).
+- **Legs:** fuller thighs grow at the back (hamstring/butt), and the leg rings are aligned so the front line runs
+  straight from thigh to cuff in profile (no forward kink at the knee).
+- **Torso:** new Flow torso photo (fuller bust, square neckline with the cleavage line, small navel); bust volume in the
+  geometry (`bust_k`), jacket opening a little wider at the chest; navel small (no stretched shadow).
+
+## Use it in a shot (kit contract, same as every kit human)
+```python
+sys.path.insert(0, "<repo>/styles/zawdog/humans"); import human as HU
+P = HU.Human("ownerf")                    # ownerf.blend: ownerf_rig + ownerf_body (materials already kit-flat)
+P.body.modifiers.new("ps1", "NODES").node_group = bpy.data.node_groups["PS1Snap"]   # inside the zaw-dog kit
+P.place((x, y), yaw); P.play(HU.load_action("of_walk")); P.face("scared")
+```
+- Bone names: MakeHuman "default" skeleton (`root, spine05..01, neck01..03, head, clavicle.L, upperarm01.L, lowerarm01.L,
+  wrist.L, finger1-1.L ... finger5-3.L, upperleg01.L, lowerleg01.L, foot.L`), rest = MakeHuman A-pose, so
+  `styles/zawdog/tools/retarget.py`, the baked clips and the Kimodo BVHs work. Bake her own clips with `human=ownerf`
+  (foot planting uses her real boots): `of_walk` (100STYLE Neutral_FW 517-697), `of_idle` (Neutral_ID 700-880,
+  still=1 stance=0.1), `of_startle` (Kimodo startle_jump_back) are in `motions/baked/`. Owner-baked clips
+  (`k_*`, `c_*`) also play on her (checked: `k_startle_jump_back`).
+- **ABDUCT 13 deg** for hanging arms (the kit's `abduct()` from `pieces/zaw-dog-08/shots.py`, also in
+  `tools/motion_kit.py`): her hips are wider, so without it the gloves sink 2-6 cm into the hips in idle/walk poses.
+- Faces (hard swap on the beat, kit names): `neutral, smile, surprised, crying, laughing, scared`. `faces/<expr>.png`
+  (256 px, Closest) are BAKED head textures on the `headuv` UV (sources: `faces/<expr>.jpg` Flow portraits ->
+  `faces/src_<expr>.png` aligned). Slot 1 = the whole head (`img` swapped by `P.face`).
+- Fingers: index separate from the others, so `finger2-*` straight + `finger3/4/5-*` curled = point; all curled = fist
+  (local X rotation; see `tools/look.py curl()`).
+
+## What she is
+- 2546 triangles (1337 faces, 1476 verts): head + round ears 412, hair 450 (shell + underside fold + 2 side locks),
+  body (crop-top patch + jeans + legs) 484, jacket + sleeves + collar 440, forearms 96, hands 448 (4 fingers + thumb
+  each), boots 216. Faceted, no subdivision, one mesh with loose parts (like his separate objects).
+- Height 1.676 m. Proportions from his model: legs stretched x1.18 on the MakeHuman base (crotch 0.50 of the height,
+  his 0.53), high waist (navel 0.67, his 0.69), jacket ending at the belt, ~7.1 heads with the hair.
+- Atlas `atlas.png` 512 px, Closest (texel-space bake from the Flow photos: jacket/jeans/torso by thin-plate-spline
+  landmark warps, front/back cross-faded by the normal; boots, gloves in their own frames; hair tiled along the strands;
+  flat fills only where his texture is flat: skin, collar, rolled cuff band, choker, boots/gloves stay near-black).
+  Jacket/jeans get his mottled-fabric noise (+-11 %) baked in.
+
+## Files
+- `ownerf.blend` (rig + body, textures packed), `atlas.png`, `faces/` (6 Flow portraits `.jpg` + 256 px `.png`, `mask.png`,
+  `face_lm.json`), `photo/` (Flow: `jacket.jpg` ghost mannequin front|back, `jeans.jpg` front|back, `torso.jpg` crop top
+  + choker + midriff, `boots_gloves.jpg`, `hair.jpg`), `src/turnaround.jpg` (Flow front|side|back of the modified
+  character = the modelling reference), `review/`, `tools/`, `work/` (intermediate, rebuildable).
+- Rebuild everything: `tools/build.sh` (geo.py -> uv.py -> tex.py -> final.py), then `tools/review.sh`.
+  - `geo.py` (Blender): MakeHuman female + rig via MPFB, ring lofts ray-cast from its body and fitted to the turnaround
+    (bigger butt `BUTT`, fuller thighs `THIGH`), jacket / jeans as offset shells, collar, hair bob, round ears, hands
+    with 5 fingers, boots; writes `work/geo.blend`, `work/model_lm.json` (2D landmarks for the photo warps).
+  - `uv.py`: one mesh, per-part texel density, atlas pack, `proj` UV for the face photo. `tex.py`: the atlas bake.
+  - `final.py`: kit materials, procedural weights (spine tents, clavicle/upper-arm blend at the shoulder, the armhole
+    shared 40/30/30, sleeve -> elbow blend, hip/knee blends, boots 100 % foot), leg-length remap, saves `ownerf.blend`.
+  - `face_prep.py`: aligns the 6 portraits (ECC), paler skin grade, mask, landmarks. `photo_lm.py`: photo landmarks.
+  - QA: `qa_poke.py` (frame-by-frame poke-through), `styles/zawdog/tools/motion_check.py` (feet), `look.py` (renders),
+    `compare.py` / `sheets.py` (review sheets), `ask.py` (API critique), `motion_kit.py` (kit hallway test),
+    `ps1post.py` (our finals' stable PS1 dither).
+
+## QA (2026-11-20, round 2 final build)
+- Feet (`motion_check.py`): no floating, no sinking; planted-sole slides 2-4 cm in the walk (mocap), 3-6 cm in the
+  startle (the jump itself).
+- Poke-through on every frame (`qa_poke.py`, cm outside the covering shell, clips WITHOUT abduction): forearm->sleeve 0,
+  torso->jacket 0.5-0.7 (walk, idle, wave) / 1.3 (startle, both arms up), head->hair 0.8 = the temple skin just under
+  the cap edge (visible by design, like his); hands->hips 2-6 cm, fixed in shots by ABDUCT 13 (motion_test.mp4 uses
+  it). boot->cuff 3-5 cm is the cuff's inner fold confusing the nearest-face sign; no boot shows through a cuff in any
+  render.
+- API reviews (sonnet 5.5): head/hair likeness `work/cmp/head_critique1-3.md`, body `work/cmp/critique1-3.md`, skinning on
+  the videos `work/cmp/motion_qa3.md` (verdict: minor issues; collar wing in head tilts, low-confidence wrist pinch).
+- 360 head check: `review/head_360.jpg` (12 angles); his head vs ours: `review/head_compare.jpg`.
+
 ## `styles/zawdog/motions/README.md`
 
 # zawdog motions: mocap BVH starter library
@@ -7540,6 +7860,17 @@ The `kimodo/` folder was made by another session and is not part of this library
 - `styles/yokai/template/sound/CREDITS.md` (1 KB)
 - `styles/zawdog/backup_STYLE_2026-11-13.md` (13 KB)
 - `styles/zawdog/backup_STYLE_2026-11-16.md` (15 KB)
+- `styles/zawdog/humans/ownerf/work/cmp/critique1.md` (3 KB)
+- `styles/zawdog/humans/ownerf/work/cmp/critique2.md` (3 KB)
+- `styles/zawdog/humans/ownerf/work/cmp/critique3.md` (3 KB)
+- `styles/zawdog/humans/ownerf/work/cmp/head_critique1.md` (3 KB)
+- `styles/zawdog/humans/ownerf/work/cmp/head_critique2.md` (2 KB)
+- `styles/zawdog/humans/ownerf/work/cmp/head_critique3.md` (3 KB)
+- `styles/zawdog/humans/ownerf/work/cmp/motion_qa.md` (4 KB)
+- `styles/zawdog/humans/ownerf/work/cmp/motion_qa2.md` (3 KB)
+- `styles/zawdog/humans/ownerf/work/cmp/motion_qa3.md` (3 KB)
+- `styles/zawdog/humans/ownerf/work/cmp/r3_critique.md` (3 KB)
+- `styles/zawdog/humans/ownerf/work/cmp/r3_critique2.md` (3 KB)
 
 
 ---
@@ -7548,7 +7879,15 @@ The `kimodo/` folder was made by another session and is not part of this library
 
 ## Todas las piezas (más reciente primero)
 
-- 2026-11-18 `pieces/zombie-16-floor30-2` — docs: LOG.md, FACTS.md
+- 2026-11-20 `pieces/teke-teke` — docs: LOG.md, brief.md
+- 2026-11-20 `pieces/scp-087` — docs: LOG.md, brief.md
+- 2026-11-20 `pieces/black-cave` — docs: LOG.md, brief.md
+- 2026-11-20 `pieces/gta6-look`
+- 2026-11-20 `pieces/gta6-boxart-16x9`
+- 2026-11-20 `pieces/gta6-parallax-16x9`
+- 2026-11-20 `pieces/trash-library` — docs: AGENT_BRIEF.md, shots.md
+- 2026-11-20 `pieces/airy-scp-01` — docs: GUION.md
+- 2026-11-19 `pieces/zombie-16-floor30-2` — docs: LOG.md, FACTS.md
 - 2026-11-18 `pieces/vera-02` — docs: SCRIPT.md, SCRIPT_vera01_ref.md
 - 2026-11-18 `pieces/trapiche-cuautla` — docs: ESTADO.md
 - 2026-11-18 `pieces/puro-tuxtla` — docs: ESTADO.md
@@ -7651,7 +7990,6 @@ The `kimodo/` folder was made by another session and is not part of this library
 - 2026-11-17 `pieces/zero-fem`
 - 2026-11-17 `pieces/vera-01` — docs: SCRIPT.md
 - 2026-11-17 `pieces/upnext-01` — docs: SCRIPT.md
-- 2026-11-17 `pieces/teke-teke` — docs: LOG.md, brief.md
 - 2026-11-17 `pieces/zombie-15-lasttrain3` — docs: LOG.md, FACTS.md
 - 2026-11-17 `pieces/ponche-zitacuaro`
 - 2026-11-17 `pieces/plata-taxco` — docs: guion.md, ESTADO.md
@@ -7665,8 +8003,6 @@ The `kimodo/` folder was made by another session and is not part of this library
 - 2026-11-16 `pieces/zaw-dog-08` — docs: guion.md, CREDITS.md, borrador_v1_40s.md
 - 2026-11-16 `pieces/zombie-14-attic` — docs: LOG.md, FACTS.md
 - 2026-11-16 `pieces/gta6-story` — docs: comic_script.md, shotlist_v2.md, script_voice.md
-- 2026-11-16 `pieces/scp-087` — docs: LOG.md, brief.md
-- 2026-11-15 `pieces/black-cave` — docs: LOG.md, brief.md
 - 2026-11-14 `pieces/zombie-girl`
 - 2026-11-14 `pieces/voice-fx` — docs: README.md
 - 2026-11-14 `pieces/lib-mml` — docs: README.md
@@ -7768,12 +8104,8 @@ The `kimodo/` folder was made by another session and is not part of this library
 - 2026-11-13 `pieces/zaw-dog-07` — docs: guion.md, CREDITS.md
 - 2026-11-13 `pieces/nvidia-huang` — docs: script-options.md, script.md, shots.md, facts.md
 - 2026-11-13 `pieces/gta6-16x9`
-- 2026-11-13 `pieces/gta6-boxart-16x9`
-- 2026-11-13 `pieces/gta6-parallax-16x9`
-- 2026-11-13 `pieces/gta6-look`
 - 2026-11-13 `pieces/zaw-dog-05` — docs: guion.md, CREDITS.md
 - 2026-11-12 `pieces/zaw-dog-06` — docs: guion.md, CREDITS.md
-- 2026-11-12 `pieces/trash-library` — docs: AGENT_BRIEF.md, shots.md
 - 2026-11-11 `pieces/kit-v3-test` — docs: CREDITS.md
 - 2026-11-11 `pieces/toon-test`
 - 2026-11-10 `pieces/rbx-library` — docs: script.md
@@ -12598,27 +12930,8 @@ Puntos marcados: V2 00:39, 00:52 · V3 00:35–36, 00:45 · V4 00:25 (extender b
 
 # PARTE 5 — Historial completo de instrucciones del usuario (todas las sesiones)
 
-Todos los mensajes que el usuario escribió en 61 sesiones de Claude Code en esta máquina (Darwin), en orden cronológico. Las instrucciones más recientes mandan sobre las viejas.
+Todos los mensajes que el usuario escribió en 62 sesiones de Claude Code en esta máquina (Darwin), en orden cronológico. Las instrucciones más recientes mandan sobre las viejas.
 
-
-## Sesión 2026-10-12 — `-Users-alanleiva-Documents-claude-proyectos`
-
-- **2026-10-12 16:01** — ok varias cosas: La musica esta bien el ritmo y la melodia pero necesito acordes de bajo debajo de la melodia como la tiene el video de referencia, para darle peso. Hay cosas y animaciones que pasan muy rapido (como la parte del tribunal y otras) asi que alarga el video 10 segundos mas. Cambia la camara de flotacion al inicio por un zoom, me acabo de dar cuenta que eso es lo que hace. Y al inicio tambien se ve como la antena brilla como en rojo por un momento, eso no lo colocaste, y dale mas presencia y mejor sonido a los efectos de los numeros y demas. Tambien necesito que la musica comience desde el inicio, porque inicia en silencio y no puede ser asi. Verifica la referencia de nuevo y añade lo que tengas que añadir para extenderlo los 10 segundos
-- **2026-10-12 16:24** — La animacion esta excelente, todo bien. Lo unico es que en la musica los acordes van como desincronizado del beat de la melodía, esta como a un destiempo mal hecho. Arregla eso, solo el audio
-- **2026-10-12 17:19** — Buenisimo, ahora si esta excelente. Guarda este nivel de detalle como lo minimo que debes hacer en visuales y sonido para futuros videos de este estilo. De igual forma lo iremos mejorando con futuros videos
-- **2026-10-12 17:48** — implementa este codigo de la imagen que te adjunto, igual verifica la carpeta sound-layer para comprobar lo que ya esta y lo que necesitas. Haz lo que necesites
-- **2026-10-13 00:51** — Oh pero no me refería a que la aplicaras al estilo. Me referia a que ejecutaras el codigo ese para que tengamos esa opcion para otros estilos de video. Pero para este estilo de video el sonido se queda con codigo como el ultimo que generaste osea sin real sfx y QA. Pero igual ya tengo ambas versiones asi que dejalo asi no lo hagas de nuevo
-- **2026-10-13 00:52** — Oh pero no me refería a que la aplicaras al estilo. Me referia a que ejecutaras el codigo ese para que tengamos esa opcion para otros estilos de video. Pero para este estilo de video el sonido se queda con codigo como el ultimo que generaste osea sin real sfx y QA. Pero igual ya tengo ambas versiones asi que dejalo asi no lo hagas de nuevo
-- **2026-10-13 01:06** — Oh pero no me refería a que la aplicaras al estilo. Me referia a que ejecutaras el codigo ese para que tengamos esa opcion para otros estilos de video. Pero para este estilo de video el sonido se queda con codigo como el ultimo que generaste osea sin real sfx y QA. Pero igual ya tengo ambas versiones asi que dejalo asi no lo hagas de nuevo
-- **2026-10-13 05:50** — Esta excelente, y los efectos de sonido tambien... pero la musica es la misma que el video pasado, tiene que ser diferente. Igual con su bajo con bastante presencia y el mismo nivel de detalle en los beats y el timing que la pasada.
-- **2026-10-15 01:10** — stop
-- **2026-10-18 05:31** — Ya esta lista la voz. esta en ref posit pixel/voces
-- **2026-10-18 05:45** — aprobado
-- **2026-10-18 16:11** — Esta muy bien, pero necesito que me lo des igual pero subele mas volumen a los sfx, no se escuchan casi. solo necesito eso
-- **2026-10-19 14:43** — ya esta la voz. aprobada
-- **2026-10-19 14:54** — aprobado
-- **2026-10-20 03:11** — aprobado. ya esta la voz
-- **2026-10-20 03:18** — aprobado
 
 ## Sesión 2026-10-12 — `-Users-alanleiva-claude-proyectos`
 
@@ -14640,6 +14953,11 @@ Todos los mensajes que el usuario escribió en 61 sesiones de Claude Code en est
 - **2026-11-16 19:30** — adelante
 - **2026-11-16 21:08** — corrije lo que dices que esta flojo y tambien: en el seg 10 cuando la cientifica mueve su mano se mueve horrible. tambien mejora la union de la cara de la cientifica con su cabeza porque su cuerpo esta gris y su cara de color normal carne. y al final el hombre su brazo le atraviesa el cuerpo
 - **2026-11-16 23:40** — si adelante exporta, recuerda que ahora deben ir a trabajo
+- **2026-11-20 03:38** — si haz commit y push. Otra cosa, quisiera que creemos un personaje dueña para nuestro perro, y tengo un modelo que quiero que repliques para que sea esta, es esta: https://www.youtube.com/watch?v=GOmAvPOrAwE
+  Dime si puedes recrearla con un agente en extra high por ejemplo, o si no crees que te quede igual, porque la quiero exactamente igual solo que con mas trasero, muslos mas grandes y sin las orejas puntiagudas
+- **2026-11-20 03:43** — el regala el modelo en el video. igual necesito que lo hagas exactamente igual, o lo mas igual posible que puedas pero cambiandole lo que te dije del trasero, muslos y orejas. igual al final vemos que mas le modificamos para que no sea igual
+- **2026-11-20 16:53** — Ok, vas bien. Pero necesita muchos arreglos. Todavía. Primero y principal, la cara, la cabeza, el cabello. Eso todavía no se parece. La cara de la nuestra de perfil se ve horrible, o sea, se ve aplastada, se ve muy fea. Tienes que verificarla dándole una vuelta en 360 grados para que veas lo que se ve mal. O sea, de perfil, si la ves de perfil, se ven varias cosas mal. Todo lo que tiene que ver con la ropa, y la estructura del cuerpo está bien. Me gusta. Pero, como te digo, si la ves de perfil, te das cuenta de que la parte de los muslos está cortado. Con las piernas. O sea, la parte de las piernas están echadas más hacia adelante que la parte de los muslos. Mira el lado de side. Y ahí te darás cuenta. Otra cosa, la nuestra no tiene Pero la parte de adentro de la cabeza no la tiene. No se le ven las orejas. O sea, no parece una cabeza en 3D. Tienes que hacerlo tal cual como él lo hizo. El cabello está horrible. El cabello está totalmente feo. Tiene que ser como el de él. El cabello tiene que ser como el de él. La ropa está bastante bien, me gusta. Las botas me gustan. Lo que tampoco Me convence es el ombligo que se ve muy grande y se ve con una mancha negra, o sea, se ve con una mancha como muy rara debajo. Y que el pecho, o sea, el busto de ella, tienes que hacerlo más grande. Si te das cuenta, en el original se le ve la raya del busto cuando comienza los pechos. Eso quiero que se le vea, ¿ok? Así que arregla todo eso . Haz una siguiente corrección con un agente en extra high y tómate el tiempo que necesites, pero que quede lo más idéntico posible.
+- **2026-11-20 18:19** — mira como se ve el area de la nalga cortada del area de las piernas osea tienes que mover esa parte de arriba de las piernas hacia adelante. y ok ahora se va pareciendo mas, necesito que se le vea mas la rayita de los senos encima de la blusita blanca como en la referencia. y el pelo va mejorando bastante , pero le falta. Pongo otro agente en esfuerzo extra high para hacer estos arreglos. Y para corregir y mejorar todo lo que es el cabello, la cabeza, las orejas, el cuello, para que sean iguales a los de la mujer de la referencia.
 
 ## Sesión 2026-11-03 — `-Users-alanleiva-claude-proyectos`
 
@@ -14744,6 +15062,7 @@ Todos los mensajes que el usuario escribió en 61 sesiones de Claude Code en est
 - **2026-11-10 22:44** — genial mejora lo que dices y sadelante
 - **2026-11-12 22:10** — ok esta bien. una pregunta, fable 5.2 esta gratis hasta el domingo?
 - **2026-11-12 22:12** — pero osea no entiendo, si lo uso aqui me consumira el limite semanal?
+- **2026-11-20 02:15** — ok vamos con el siguiente video, cual seria?
 
 ## Sesión 2026-11-10 — `-Users-alanleiva-claude-proyectos`
 
@@ -14875,6 +15194,11 @@ Todos los mensajes que el usuario escribió en 61 sesiones de Claude Code en est
 - **2026-11-18 17:53** — si adelante, lo unico es que mejora la lluvia como se ve desde dentro porque se ve rara en las ventanas y puerta. y recuerda que cuando necesites crearle una animacion puedes hacerlo
 - **2026-11-18 18:58** — si esta bueno, solo un detalle: este es el episodio 1 de nuevo osea cambia episode 2 por episode 1, porque estoy probando algo. tambien subele el volumen a la musica porque se escucha muy baja. tambien en las miniaturas, quitales todas las palabras, solo deja siempre el Episode 1 the last cup (o el numero de episodio que sea) y baja el episode 1 para que este encima de The last cup en la miniatura y tambien que la imagen de ella tenga mas espacio que la de el, si es posibe que se le vean los pechos a ella un poco, o el inicio, y tambien  me gusta esa linea rosada en diagonal que pones para la division, pero verifica que la imagen de el este cortada en diagonal como la linea, porque mira en la esquina derecha superior de su imagen se ve un lado negro
 - **2026-11-18 19:23** — genial si ahora si esta bien. si ponlos en Vera
+- **2026-11-20 02:49** — ok haz commit y push y tambien en la miniatura esta perfecta, solo me gustaria que ella estuviese mirando al frente, y luego vamos con el siguiente video, que quiero hacer uno de Ashley y por cierto creo que encontre un nuevo estilo que podemos hacer con ella, es este mira: https://www.tiktok.com/@x0ffz?_r=1&_t=ZS-9BVZ3sMBW00
+  Analiza los videos que tengan mas vistas, es de scps creo
+- **2026-11-20 02:56** — genial ahora si esta bien. mira y para ashley tambien videos asi https://www.tiktok.com/@passthesalt17_?_r=1&_t=ZS-9BVaDh2qfbE
+  esos estan buenisimos, mira las vistas que tienen... podemos hacer asi osea descargamos un modelo de un guardia y la ponemos a hablar con ella, osea en vez de dos guardias hablando, que hable Ashley con otro guardia, y tambien bajar los modelos de los scps como ellos los tienen
+- **2026-11-20 03:18** — ok me gusta tu recomendacion de hacer el formato de passthesalt17_ , con Airy como la ingenua y el guardia como el serio... pero lo de que tomar el gancho de x0ffz en segunda persona y el loop final no, mejor lo que haces es que podemos subir algunos videos de ella que hayan funcionado bien y usarlos (obviamente no iguales) y ya, pero que el foco principal sea usar el formato de passthesalt17_ .. ah y tambien es necesario esos escenarios que usan del juego scp de fondo, que igual creo que se ve desenfocado
 
 ## Sesión 2026-11-14 — `-Users-alanleiva-claude-proyectos`
 
@@ -14919,6 +15243,26 @@ Todos los mensajes que el usuario escribió en 61 sesiones de Claude Code en est
   usala de la misma manera osea comienza desde los 0.5 s cada vez que el sale
 - **2026-11-18 23:03** — no puedo verlo en videohub?
 - **2026-11-19 02:46** — pero mira como se ve la imagen de pequeña en el reproductor de videohub, y otra cosa como que youtube bloqueo la descarga de la musica??? no puedes descargarla?
+- **2026-11-19 12:20** — VideoHub: 8 notes on "Ava ep16 - Stuck On Floor 30 Part 2" (#1, #2, #3, #4, #5, #6, #7, #8).
+  Project folder: /Users/alanleiva/claude-proyectos/pieces/zombie-16-floor30-2
+  Get them with hub_notes({project: "/Users/alanleiva/claude-proyectos/pieces/zombie-16-floor30-2"}), fix the code (the open live preview reloads itself) and mark each note with hub_note_update. DO NOT RENDER: render only with hub_render when the user asks for a render. If this chat does not know the project yet, first read the STATE.md / CLAUDE.md / README files in its folder.
+- **2026-11-19 19:12** — VideoHub: 1 note on "Ava ep16 - Stuck On Floor 30 Part 2" (#9).
+  Project folder: /Users/alanleiva/claude-proyectos/pieces/zombie-16-floor30-2
+  Get them with hub_notes({project: "/Users/alanleiva/claude-proyectos/pieces/zombie-16-floor30-2"}), fix the code (the open live preview reloads itself) and mark each note with hub_note_update. DO NOT RENDER: render only with hub_render when the user asks for a render. If this chat does not know the project yet, first read the STATE.md / CLAUDE.md / README files in its folder.
+  
+  ya te deje la musica que te dije en /Users/alanleiva/claude-proyectos/Ref\ ava\ bread/Resident\ Evil\ 3\ Nemesis\ OST\ -\ Nemesis\'\ Theme.mp3
+  
+  otra cosa, acomoda el logo o icono de videohub en el dock porque se ve pequeñito y lo demas blanco
+- **2026-11-19 19:18** — VideoHub: 2 notes on "Ava ep16 - Stuck On Floor 30 Part 2" (#10, #11).
+  Project folder: /Users/alanleiva/claude-proyectos/pieces/zombie-16-floor30-2
+  Get them with hub_notes({project: "/Users/alanleiva/claude-proyectos/pieces/zombie-16-floor30-2"}), fix the code (the open live preview reloads itself) and mark each note with hub_note_update. DO NOT RENDER: render only with hub_render when the user asks for a render. If this chat does not know the project yet, first read the STATE.md / CLAUDE.md / README files in its folder.
+- **2026-11-19 19:35** — VideoHub: 1 note on "Ava ep16 - Stuck On Floor 30 Part 2" (#12).
+  Project folder: /Users/alanleiva/claude-proyectos/pieces/zombie-16-floor30-2
+  Get them with hub_notes({project: "/Users/alanleiva/claude-proyectos/pieces/zombie-16-floor30-2"}), fix the code (the open live preview reloads itself) and mark each note with hub_note_update. DO NOT RENDER: render only with hub_render when the user asks for a render. If this chat does not know the project yet, first read the STATE.md / CLAUDE.md / README files in its folder.
+  
+  Por cierto otra cosa: podrias agregarle los efectos ps1 que usamos en los videos de Vera? osea el wooble, que los personajes vayan a 15 fps, y el movimiento de los escenarios y el desenfoque , todo tal cual como lo usas alla
+- **2026-11-20 00:03** — si claro dejale el temblor de vertices que tenia y si ya esta bien adelante
+- **2026-11-20 02:13** — vamos a volver a las miniaturas de antes mejor. otra cosa, al final cuando colocas la musica cuando el hunter sale, tienes que dejarla hasta el final
 
 ## Sesión 2026-11-17 — `-Users-alanleiva-claude-proyectos`
 
@@ -14927,6 +15271,135 @@ Todos los mensajes que el usuario escribió en 61 sesiones de Claude Code en est
 - **2026-11-17 20:32** — genial. ahora vamos a instalar algo que nos va a ayudar muchisimo a en las previstas de los videos que me generas en general y tambien trae varias otras herramientas como miniaturas y más. Es esta instalala: https://github.com/TensaikunYT/Videohub
 - **2026-11-17 20:38** — no entiendo muchas cosas, dime como puedo usarlo paso por paso, y pon un acceso directo en el dock o en apps para yo poder verlo y abrirlo facilmente... otra cosa, no podre ver las previsualizaciones en la linea de tiempo? para eso lo instale. Mira el video y como el lo enseña todo, eso es lo que quiero https://www.youtube.com/watch?v=ZyCmtt7_xMM
 - **2026-11-19 03:01** — ok, dime como se llama el skill para buscar skills que instalamos hace dias, y dame su direccion en github
+
+## Sesión 2026-11-19 — `-Users-alanleiva-claude-proyectos`
+
+- **2026-11-19 12:22** — si te autorizo a usar las cookies del navegador para yt-dlp adelante
+- **2026-11-20 02:14** — y como era que mirabas antes o descargabas antes los reels cuando yo te los pasaba?
+
+## Sesión 2026-11-20 — `-Users-alanleiva-claude-proyectos`
+
+- **2026-11-20 03:45** — Airy SCP episodio 1: formato @passthesalt17_ (Airy ingenua + guardia serio), lee fuentes/passthesalt17/ANALISIS.md y la memoria "Airy SCP format". Modelos en assets/scp-models, salas en assets/scp-rooms (fondo desenfocado), motor base pieces/vera-02/engine. Propón ideas (173 parpadeo recomendada) antes del guion.
+- **2026-11-20 04:06** — ok pero tienes todos los datos que recopilamos de los videos de passthesalt no? como son sus dialogos y todo. la voz del guardia ya la estoy creando, te aviso cuando la tenga
+- **2026-11-20 04:24** — si, vamos con la 173 adelante, que sea como los videos de passthesalt y sus dialogos, pero que no sea iguales en los dialogos. Y que airy sea la ingenua pero a la vez coqueta y haga poses de coqueta tu sabes... la voz del guardia esta lista y se llama Guardia scp en voice studio
+- **2026-11-20 04:28** — genial me gusta adelante, solo que el video debe durar 61 segundos minimo. y asegurate que sean dialogos asi con la misma rapidez como lo son en los videos de passthesalt
+- **2026-11-20 11:01** — le pusiste a airy las poses de mechayuki o el esqueleto? es que esas posiciones abiertas asi como en el panel 1 estan horribles. la pose principal de ella de estar idle es la quetiene su mano en el pecho y tal. mejora los ojos de corazony haz la voz mandalo a videohub para verlo en movimiento. tambien aqui tambien quiero lo que traiamos del estilo de Airy de los personajes en 15 fps.. no me gusta la expresion de ojitos corazones del panel 9. otra cosa pendiente de no tapar las caras ni las bocas con los subtitulos, osea en el de passthesalt los subtitulos son solo una linea, aqui estas poniendo varias lineas. Tambien corrije lo que dices que ves flojo, el guardia debe tener los movimientos que tienen en la referencia, y necesito que las tomas y tal sean exactamente como los de la referencia. por favor pendiente de todo eso. Si necesitas puedes poner un agente en high para esto
+- **2026-11-20 16:58** — Genial, se ve mucho mejor. Mucho mejor. Hay una cosita que me gustaría que le corrigieras a Airy. Y es que Hay una parte de su pierna izquierda que se corta antes de llegar a la falda. Por ejemplo, eso lo puedes ver en el panel 13. Te das cuenta que cuando le comienza la nalga, se corta. Hay un corte raro antes de llegar a la falda. Me gustaría que rellenaras esa parte allí como tiene que ser bien, para que no se vea cortado eso. Y también haz que sus muñecas no sean tan delgadas, no sé exactamente si las dos son igual de delgadas, pero por ejemplo en el panel 31 te das cuenta en la muñeca de ella se ve súper delgadita, entonces eso hay que arreglarlo. No es que le vas a reformar las manos ni nada, no, solamente me refiero a las muñecas. Y también pasa algo extraño con sus botas. No sé si es exactamente la bota de la izquierda. De ella. Por ejemplo, en el panel 29 te das cuenta que la bota se corta en la parte inferior. Y solo hay como una púa que sobresale. Eso hay que arreglarlo. Usa un agente en hide si lo necesitas para arreglar todo esto.
+- **2026-11-20 18:06** — no puedo ver el video en movimiento en video hub, osea me sale pero todo negro
+- **2026-11-20 18:13** — ahora se ve pero se ve super pequeño en una esquina superior izquierda
+- **2026-11-20 18:36** — VideoHub: 11 notes on "Airy SCP 01 – Who blinks first" (#1, #2, #3, #4, #5, #6, #7, #8, #9, #10, #11).
+  Project folder: /Users/alanleiva/claude-proyectos/pieces/airy-scp-01
+  Get them with hub_notes({project: "/Users/alanleiva/claude-proyectos/pieces/airy-scp-01"}), fix the code (the open live preview reloads itself) and mark each note with hub_note_update. DO NOT RENDER: render only with hub_render when the user asks for a render. If this chat does not know the project yet, first read the STATE.md / CLAUDE.md / README files in its folder.
+  
+  Me gusta mucho el guión y cómo está quedando todo. Solo son esas correcciones y también algo muy importante es que siento que la voz del guardia está muy robótica. La de ella está bastante bien, pero la de él la siento muy robótica. Y sin emoción.
+- **2026-11-20 19:29** — Pero que hay un motor de Visual Studio que puedo instalar para controlar las emociones? Si eso es así, dímelo y yo lo instalo.
+- **2026-11-20 19:41** — pues esta el KittenTTS (English, 8 preset voices, CPU realtime) que lo acabo de descargar, y estan estos:
+  VoiceStudio (k2-fsa/OmniVoice, 600+ languages) (el que ya tenemos)
+  Seleccionado
+  recomendado
+  VoiceStudio TTS (k2-fsa/OmniVoice, 600+ languages, zero-shot)
+  Apple MPS
+  2.40 GB
+  instalado
+  
+  KittenTTS (English, 8 preset voices, CPU realtime) (el que acabo de instalar)
+  recomendado
+  CPU
+  81.9 MB
+  instalado
+  
+  MLX-Audio (mac-ARM, 14+ engines: Kokoro, CSM, Dia, Qwen3, …)
+  recomendado
+  0 de 10 instalados
+  Apple MPS
+  
+  CosyVoice 3 (9 langs, zero-shot, instruct, Apache-2.0)
+  no disponible
+  El paquete de este motor aún no está instalado. Instálalo en Ajustes → Modelos.
+  CPU
+  9.80 GB
+  
+  VoxCPM2 (30 langs, studio 48 kHz, voice design)
+  no disponible
+  El paquete de este motor aún no está instalado. Instálalo en Ajustes → Modelos.
+  Apple MPS
+  5.00 GB
+  
+  MOSS-TTS-Nano (20 langs, CPU realtime, 48 kHz)
+  no disponible
+  El paquete de este motor aún no está instalado. Instálalo en Ajustes → Modelos.
+  CPU
+  409.6 MB
+  
+  GPT-SoVITS (5 langs, zero-shot, RTF 0.014, MIT)
+  no disponible
+  Engine unavailable. Check installation and configuration.
+  CPU
+  2.00 GB
+  
+  Sherpa-ONNX (20+ engines, WASM-ready, universal runtime)
+  no disponible
+  Engine unavailable. Check installation and configuration.
+  CPU
+  
+  audio.cpp · Breeze-TTS-2 (native GGUF, en+zh, clone+design; weights research/non-commercial)
+  no disponible
+  A file this engine needs is missing or unreadable. Its guide lists the install steps.
+  CPU
+  4.98 GB
+  
+  audio.cpp · dots.tts (native GGUF, multilingual voice cloning; Apache-2.0)
+  no disponible
+  A file this engine needs is missing or unreadable. Its guide lists the install steps.
+  CPU
+  2.96 GB
+  
+  CosyVoice 3 GGUF (native Vulkan/CPU, 9 langs, reference clone)
+  no disponible
+  This engine's native runtime isn't set up or won't start. Its guide lists how to build it and check it from a terminal.
+  CPU
+  921.6 MB
+  
+  Qwen3-TTS Base
+  no disponible
+  Engine unavailable. Check installation and configuration.
+  CUDA
+  
+  IndexTTS 2.5 (multilingual emotion-controlled cloning)
+  no disponible
+  Engine unavailable. Check installation and configuration.
+  CPU
+  
+  OmniVoice (GGUF, hardware-adaptive)
+  no disponible
+  A file this engine needs is missing or unreadable. Its guide lists the install steps.
+  CPU
+  
+  Supertonic-3 (31 langs, CPU ONNX, 7 preset voices, OpenRAIL-M)
+  no disponible
+  El paquete de este motor aún no está instalado. Instálalo en Ajustes → Modelos.
+  CPU
+  
+  MOSS-TTS-v1.5 (8B, 31 langs, zero-shot clone, Apache-2.0)
+  no disponible
+  Engine unavailable. Check installation and configuration.
+  CPU
+  
+  dots.tts (2B, 24 langs, zero-shot clone, CUDA/CPU, 48 kHz, Apache-2.0)
+  no disponible
+  Engine unavailable. Check installation and configuration.
+  CPU
+  
+  PocketTTS (Kyutai, 6 langs, CPU-only, MIT/CC-BY-4.0)
+  no disponible
+  El paquete de este motor aún no está instalado. Instálalo en Ajustes → Modelos.
+  CPU
+  
+  Confucius4-TTS (LLM, 14 langs, cross-lingual zero-shot clone, Apache-2.0)
+  no disponible
+  Engine unavailable. Check installation and configuration.
+- **2026-11-20 19:45** — ok necesito liberar espacio en el disco, vamos a hacer lo mismo de la ultima vez por favor, borrar lo que no necesitemos y ya hayamos publicado para liberar espacio, ojo que no dañe nada
+- **2026-11-20 19:50** — tambien puedes aprovechar lucidlink, para respaldar cosas muy pesadas
 
 
 ---
@@ -16338,12 +16811,13 @@ Las mezclas usan `ffmpeg` y el `.venv` del paso 4. Lo que el PC genere (`.wav`, 
 
 | decision | rationale | recall |
 |----------|-----------|--------|
-| Only Way Out v2: titles Pricedown Black (Typodermic free desktop licence), cards Barlow Condensed ExtraBold, dialogue Outfit SemiBold subtitles with speaker name; plates repainted from the same Flow photo as each pose | GTA VI site uses proprietary GTA Art Deco; Outfit/Barlow are closest OFL matches. Same-photo plates give correct support, perspective and contact shadow by construction (user's v1 staging complaint). | - |
-| Long-form channel: whole myths in 16:9 (25-40 min) in their own era's art; shorts = chapters; pilot = The Odyssey in amphora-bf | yt-viral: Odyssey/whole-myth videos 3-19x channel median; nobody does long vase/tapestry style | - |
 | gta6 characters v4 = code block-in (make_character.py: per-material parsing, dual split light shapes, vector print, strokes) -> Flow NB2 render pass on the block-in -> finish_character.py (key, multiply/screen relight, silhouette, grade) | Code-only reads as vector trace; Flow straight on the photo goes generic comic; Flow over the designed block-in keeps palette, print, face and hands and adds paint quality. Matches the paint-over method of Artwod, Rising67 and 21DPS tutorials. | - |
+| Long-form channel: whole myths in 16:9 (25-40 min) in their own era's art; shorts = chapters; pilot = The Odyssey in amphora-bf | yt-viral: Odyssey/whole-myth videos 3-19x channel median; nobody does long vase/tapestry style | - |
+| Only Way Out v2: titles Pricedown Black (Typodermic free desktop licence), cards Barlow Condensed ExtraBold, dialogue Outfit SemiBold subtitles with speaker name; plates repainted from the same Flow photo as each pose | GTA VI site uses proprietary GTA Art Deco; Outfit/Barlow are closest OFL matches. Same-photo plates give correct support, perspective and contact shadow by construction (user's v1 staging complaint). | - |
 
 | type | text | context | plan/date |
 |------|------|---------|----------|
+| decision | Airy SCP format (2026-11-19): MAIN = @passthesalt17_ format (fuentes/passthesalt17/ANALISIS.md): Airy = naive one, ONE Foundation guard = deadpan lore expert; cut per line, per-speaker colored bold subs, no music, silence before dry ending. Do NOT take x0ffz's second-person hook or loop ending. Topics: may reuse (never identical) @x0ffz's best-performing SCP videos (fuentes/x0ffz/ANALISIS.md) as subject ideas. Backgrounds = SCP: Containment Breach game environments (CC BY-SA), shown slightly out of focus (DOF) like the ref. Models in assets/scp-models/ (SCP:CB, CC BY-SA 3.0, credit in description). | - | 2026-11-19T23:18:58-04:00 |
 | decision | Estado 2026-11-18: router Olax 192.168.150.1 se maneja con tools/olax.py (API /hbapi-json, login challenge md5; funciones: mobile_setbandlock, mobile_setnetmode, router at_send/at_recv para AT+CFUN modo avion = IP nueva, system_getnetoverview). Hoy fibra = WAN del Olax (ONT da DHCP 192.168.1.x), banda bloqueada en BAND13 para apagar Digitel. PLAN: usuario compra 2o adaptador USB-C Ethernet -> ONT directo a la Mac (fibra = ruta por defecto, VPN Surfshark ahi) y Olax solo con SIM en el adaptador actual (en7); proxy local atado a en7 para AdsPower + guardia ASN Digitel/IP nueva + watchdog. Nada probado aun en escritura; esperar adaptador antes de pasar el router a Digitel. | - | 2026-11-18T22:44:02-04:00 |
 | correction | ADSPOWER REGLA ABSOLUTA: nunca abrir un perfil de AdsPower (salvo EXPERIMENTOS [PRIVADO]) si la IP publica no es de Digitel y no es una IP nueva nunca usada por otro perfil; jamas la fibra Network Speed dentro de un perfil (el canal se dana). Router Olax AX8 Pro en 192.168.150.1 (credenciales y ADSPOWER_API_KEY en .env). Perfiles = canales de YouTube venezolanos. Plan: tools/perfiles.py con guardia de IP + watchdog que cierra el perfil al instante; fibra fuera del Olax; WebRTC y geolocalizacion por IP en cada perfil; no usar el MCP de AdsPower para abrir perfiles, solo la API via la guardia. | - | 2026-11-18T21:53:11-04:00 |
 | correction | Vera/UpNext covers (from 2026-11-18): NO words on the thumbnail except the episode card 'EPISODE N' + title (e.g. 'The Last Cup'), with EPISODE N sitting just above the title; Vera's image takes more space than Theo's, framed to show a bit of her chest/cleavage; keep the pink diagonal divider line, and Theo's image must be cut along the same diagonal (no black gaps in corners). Music in Vera films must be clearly audible (ep 'Last Cup' v1 was too low). | - | 2026-11-18T14:58:29-04:00 |
@@ -16572,6 +17046,9 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 ## Historial de commits
 
 ```
+2026-11-19 24c57a4e zawdog videos 7 (v3 script) + 8, kit v6.1 skin match + reweight, z8 Kimodo clips
+2026-11-19 c84982b6 vera-02 'The Last Cup' (episode 1 test): film v2, cover rules, Mac paths for Airy/Vera tools
+2026-11-19 c3f4111a exportar_contexto: redact private terms from .export_redact.txt (git-ignored)
 2026-11-19 d128eb6f YouTube publishing plan (AdsPower + Digitel guard, PC VPN bypass) + Olax router client
 2026-11-18 4c73208b Mac sync: pending pieces work, MIGRACION_MAC.md refresh
 2026-11-18 438b883b Sync to Mac: memory copy (memoria_pc/), refreshed migration export, pending scripts/docs/novelas/styles
@@ -16660,24 +17137,21 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 ## Cambios sin commitear al generar este archivo
 
 ```
+ M .base-ast/.needs-confirm
+ M .base-ast/.tree-size
  M .base/graph.nq
  M .gitignore
  M MIGRACION_MAC.md
  M Tools/exportar_contexto.py
- M pieces/vera-02/SCRIPT.md
- M pieces/vera-02/engine/film_timeline.json
- M pieces/vera-02/engine/sb.js
+ M Tools/srzGoogleFlowMCP/state.json
  M pieces/vera-02/engine/sb_shots.js
  M pieces/vera-02/tools/cover.py
- M pieces/vera-02/tools/film_timeline.py
- M pieces/vera-02/tools/mix_film.py
- M pieces/vera-02/tools/post_film.py
- M pieces/vera-02/tools/sfx_fetch.py
  M styles/ava-restfield/GUIA.md
  M styles/ava-restfield/STALKER.md
 ?? .log
 ?? "Sinaboto voz 15 seg.m4a"
 ?? Tools/olax.py
+?? Tools/scp/
 ?? agente-davis/tiktok/piloto01/2026-11-15T23-59-38-patrick_src-recreate-this-exact-same-ima-1.jpg
 ?? agente-davis/tiktok/piloto01/frame_a.png
 ?? agente-davis/tiktok/piloto01/frame_b.png
@@ -16696,6 +17170,10 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 ?? agente-davis/tiktok/piloto01/v2/
 ?? agente-davis/tiktok/piloto01/v3/
 ?? fuentes/gta6-style/tutorial/
+?? fuentes/passthesalt17/
+?? fuentes/tomgrave-ps1-girl/
+?? fuentes/x0ffz/
+?? pieces/_gallery.png
 ?? pieces/agave-amatitan/chars/
 ?? pieces/agave-amatitan/qa/c01.jpg
 ?? pieces/agave-amatitan/qa/c02.jpg
@@ -16743,6 +17221,7 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 ?? pieces/agave-amatitan/qa/sub6.jpg
 ?? pieces/agave-amatitan/qa/sub7.jpg
 ?? pieces/agave-amatitan/qa/subs_check.jpg
+?? pieces/airy-scp-01/
 ?? pieces/alebrije-tilcajete/chars/
 ?? pieces/alebrije-tilcajete/qa/c01.jpg
 ?? pieces/alebrije-tilcajete/qa/c02.jpg
@@ -19530,7 +20009,6 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 ?? pieces/trash-library/qa/v4/sheet_1740.jpg
 ?? pieces/trash-library/qa/v4/sheet_1800.jpg
 ?? pieces/trash-library/storyboard.png
-?? pieces/upnext-metalshadow/engine/ref/
 ?? pieces/vainilla-papantla/chars/
 ?? pieces/vainilla-papantla/qa/c01.jpg
 ?? pieces/vainilla-papantla/qa/c02.jpg
@@ -19594,8 +20072,6 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 ?? pieces/vendimia-ensenada/qa/r2.jpg
 ?? pieces/vendimia-ensenada/qa/r3.jpg
 ?? pieces/vendimia-ensenada/qa/strip.jpg
-?? pieces/vera-02/engine/fonts/PixelifySans.ttf
-?? pieces/vera-02/storyboard/
 ?? pieces/viajante-sombrerete/chars/
 ?? pieces/viajante-sombrerete/qa/c01.jpg
 ?? pieces/viajante-sombrerete/qa/c02.jpg
@@ -19661,31 +20137,6 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 ?? pieces/yegua-jerez/qa/sub6.jpg
 ?? pieces/yegua-jerez/qa/sub7.jpg
 ?? pieces/yegua-jerez/qa/subs_check.jpg
-?? pieces/zaw-dog-07/review/logs/board_01c.log
-?? pieces/zaw-dog-07/review/logs/board_07a.log
-?? pieces/zaw-dog-07/review/logs/board_07b.log
-?? pieces/zaw-dog-07/review/logs/board_07c.log
-?? pieces/zaw-dog-07/review/logs/feet_01c.log
-?? pieces/zaw-dog-07/review/logs/feet_07a.log
-?? pieces/zaw-dog-07/review/logs/feet_07b.log
-?? pieces/zaw-dog-07/review/logs/feet_07c.log
-?? pieces/zaw-dog-07/review/logs/final_01c.log
-?? pieces/zaw-dog-07/review/logs/final_07a.log
-?? pieces/zaw-dog-07/review/logs/final_07b.log
-?? pieces/zaw-dog-07/review/logs/final_07c.log
-?? pieces/zaw-dog-07/review/logs/frames_01c.log
-?? pieces/zaw-dog-07/review/logs/frames_07a.log
-?? pieces/zaw-dog-07/review/logs/frames_07b.log
-?? pieces/zaw-dog-07/review/logs/frames_07c.log
-?? pieces/zaw-dog-07/review/logs/revisar_final.log
-?? pieces/zaw-dog-08/review/board/
-?? pieces/zaw-dog-08/review/logs/
-?? pieces/zaw-dog-08/review/selfcheck_sheet.jpg
-?? pieces/zaw-dog-08/tex/
-?? pieces/zaw-dog-08/v1/board_1.jpg
-?? pieces/zaw-dog-08/v1/board_2.jpg
-?? pieces/zaw-dog-08/v1/motion08.jpg
-?? pieces/zaw-dog-08/v1/selfcheck_sheet_v1.jpg
 ?? pieces/zombie-03-station/largo3/miniaturas_v2/_flow/
 ?? pieces/zombie-03-station/largo3/miniaturas_v2/_hoja.png
 ?? pieces/zombie-03-station/largo3/miniaturas_v2/_layers/avaA.png
@@ -19810,20 +20261,10 @@ origin	https://github.com/alanleivago/claude-proyectos.git (push)
 ?? pieces/zombie-15-lasttrain3/storyboard_v2.png
 ?? pieces/zombie-16-floor30-2/
 ?? styles/gta6/tools/models/.gitignore
-?? styles/zawdog/humans/owner/body_v6.png
-?? styles/zawdog/humans/owner/faces/mask_v6.png
-?? styles/zawdog/humans/owner/photo/skin_match_cmp.jpg
-?? styles/zawdog/humans/scientist/body_v6.png
-?? styles/zawdog/humans/scientist/faces/mask_v6.png
-?? styles/zawdog/humans/scientist/photo/skin_match_cmp.jpg
-?? styles/zawdog/motions/kimodo/src_z8_owner_fake.bvh
-?? styles/zawdog/motions/kimodo/src_z8_owner_tease.bvh
-?? styles/zawdog/motions/kimodo/src_z8_sci_offer_drop.bvh
-?? styles/zawdog/motions/kimodo/src_z8_sci_offer_pull.bvh
-?? styles/zawdog/motions/kimodo/z8_owner_fake.bvh
-?? styles/zawdog/motions/kimodo/z8_owner_tease.bvh
-?? styles/zawdog/motions/kimodo/z8_sci_offer_drop.bvh
-?? styles/zawdog/motions/kimodo/z8_sci_offer_pull.bvh
+?? styles/zawdog/humans/ownerf/
+?? styles/zawdog/motions/baked/of_idle.json
+?? styles/zawdog/motions/baked/of_startle.json
+?? styles/zawdog/motions/baked/of_walk.json
 ?? "voz ava bread LIMPIA.m4a"
 ```
 

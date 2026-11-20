@@ -7,7 +7,7 @@ relatedTo: [zombie-channel, ava-rules, zombie-03-station]
 
 # El gigante ("the Stalker"): enemigo recurrente
 
-**Nombre en la narración: "the hunter"** (desde el ep15, pedido del usuario). "the Stalker" es solo el nombre interno del modelo/código; Ava nunca lo llama así ni "the smile". En pantalla: sus dientes sin labios con luz suave en la cara, luz verde del pecho. Tema musical cuando está en pantalla: ver GUIA §6. **Su BGM siempre arranca desde 0,5 s del tema en cada aparición** (entrada de 0,15–0,3 s, nunca continúa desde donde quedó; GUIA §4).
+**Nombre en la narración: "the hunter"** (desde el ep15, pedido del usuario). "the Stalker" es solo el nombre interno del modelo/código; Ava nunca lo llama así ni "the smile". En pantalla: sus dientes sin labios con luz suave en la cara, luz verde del pecho. Tema musical cuando está en pantalla: ver GUIA §6. **Su BGM siempre arranca desde 0,5 s del tema en cada aparición** (entrada de 0,15–0,3 s, nunca continúa desde donde quedó; GUIA §4). **Desde el ep16 (2026-11-18) su tema es "Resident Evil 3: Nemesis OST - Nemesis' Theme" (https://www.youtube.com/watch?v=0KqffiEc3zk, `audio/bgm_giant/`), que reemplaza al cover "Menacing Nemesis":** reinicio desde 0,5 s con entrada de ~0,2 s en cada aparición, fundido de salida al cambiar de escena, y sin cortes desde la decisión hasta el final.
 
 Aparece en el Día 3 (largo 3, `pieces/zombie-03-station/largo3`): siguió a Ava desde el bosque (huellas descalzas del doble de su bota) y entra a la mansión saltando por la ventana alta junto a la puerta. Desde ahora persigue a Ava y a Ribbon en los videos siguientes, con la gramática del primer encuentro con el perseguidor de RE3. Solo se copia la técnica: nada de nombres, música, assets ni símbolos del juego.
 

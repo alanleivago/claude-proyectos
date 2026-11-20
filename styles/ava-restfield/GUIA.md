@@ -98,7 +98,8 @@ En la Mac (2026-11-14): Desconocido, Vickers y Dutch clonados desde su wav del k
   - **Gancho 0-10 s con más música de terror:** drone real + caja de música + stinger en palabras clave, crossfade al BGM hacia los ~10 s (`mix5.py`, `mix13.py`). En el largo 2 el gancho va a ~7 LU bajo la voz.
   - BGM oscura continua (sin huecos largos). Se corta en los YOU DIED. En los largos, la BGM suena hasta el final; pistas por capítulo (`largo2/audio/mix_largo.py`, tabla `TRK`/`CUES`).
   - Pistas usadas (créditos): metrostock99 345069 y 350953, Dredile 164272, mr45 492956, szegvari 559388/640612/631933, kkenny101 865550, xkeril 686659, más `mus_horror/610534`, `hook_drone/799307`, `hook_musicbox/712798` en shorts.
-- **Tema del cazador (regla fija desde el ep15):** cada vez que el cazador aparece, su BGM (`audio/bgm_giant/`, cover "Menacing Nemesis") **arranca de nuevo desde 0,5 s** del tema (nunca sigue desde donde quedó), con una entrada corta de 0,15–0,3 s para que el ataque caiga con él; sale con un fundido de ~0,8 s al cambiar de escena; la última aparición suena desde 0,5 s sin cortes hasta el final (`mix15.py`, `GSEG`).
+- **Tema del cazador, pista NUEVA (regla fija desde el ep16, 2026-11-18):** el BGM del cazador pasa a ser "Resident Evil 3: Nemesis OST - Nemesis' Theme" (subida de VideoGameOST1, https://www.youtube.com/watch?v=0KqffiEc3zk), en `audio/bgm_giant/` de cada pieza (solo audio, `yt-dlp --no-playlist -x`, sin cookies; si YouTube pide sign-in, parar y avisar). **Reemplaza al cover "Menacing Nemesis"** y se usa igual: en CADA aparición del cazador arranca de nuevo desde 0,5 s con entrada de ~0,2 s, sale con fundido al cambiar de escena, y desde la decisión hasta el final suena sin cortes desde su último reinicio. Título y autor en `audio/CREDITS.json`.
+- **Tema del cazador (regla fija desde el ep15; la pista cambió en el ep16, ver arriba):** cada vez que el cazador aparece, su BGM (`audio/bgm_giant/`, cover "Menacing Nemesis") **arranca de nuevo desde 0,5 s** del tema (nunca sigue desde donde quedó), con una entrada corta de 0,15–0,3 s para que el ataque caiga con él; sale con un fundido de ~0,8 s al cambiar de escena; la última aparición suena desde 0,5 s sin cortes hasta el final (`mix15.py`, `GSEG`).
 - **Master:** ESTÉREO, **−14 LUFS integrados**, true peak ≤ −1 dBTP (un mono se lee 3 dB más fuerte en plataformas). Voz: `x1.15` en mix3 y +1.5 dB extra en largos.
 - Largos: `mix_largo.py` mapea cada evento SFX de `sfx_events.json` a un sonido real; la lista de no mapeados debe quedar vacía.
 
@@ -179,7 +180,7 @@ Cada regla es una corrección que el usuario tuvo que pedir; repetirla cuesta un
 - **Nunca repetir palabras** tipo "stay. Stay." o "Static. Static.": una sola vez.
 - **Cualquier toma que suene robótica se regenera** (varias semillas, elegir la más humana: earshot `rank` "a frightened young woman whispering, natural breathy human voice" + transcripción exacta). Los susurros a velocidad 0.76 sonaban robóticos: usar ~0.88.
 - El gigante ruge (ver [STALKER.md](STALKER.md)); nunca narrar que "no hace ruido".
-- **En la narración el gigante se llama "the hunter"** (desde el ep15, pedido del usuario): nunca "the smile", "the giant" ni "the Stalker" en voz o subtítulos. Cuando está en pantalla suena su tema (ep15: cover "Menacing Nemesis" de Andre Kane, `pieces/zombie-15-lasttrain3/audio/bgm_giant/`) con cruce de 0,6–0,8 s, y entra un gruñido/rugido del kit en su cuadro de aparición.
+- **En la narración el gigante se llama "the hunter"** (desde el ep15, pedido del usuario): nunca "the smile", "the giant" ni "the Stalker" en voz o subtítulos. Cuando está en pantalla suena su tema (desde el ep16: "Nemesis' Theme", https://www.youtube.com/watch?v=0KqffiEc3zk, reinicia en 0,5 s en cada aparición, ver §4; ep15 usó el cover "Menacing Nemesis" de Andre Kane) con cruce de 0,6–0,8 s, y entra un gruñido/rugido del kit en su cuadro de aparición.
 
 ### Finales y tarjetas
 - Shorts: **"FOLLOW FOR MORE!"**. Largos: **"SUBSCRIBE!"** (y la BGM suena hasta el final). Ya no "FOLLOW AVA RESTFIELD!".
@@ -212,15 +213,14 @@ Cada regla es una corrección que el usuario tuvo que pedir; repetirla cuesta un
 
 ## 7. Miniaturas
 
-### Estilo fijo desde el ep15 (2026-11-17): poster de cine tipo RE3 (TODOS los videos de Ava)
-- **El cazador** (el gigante) enorme arriba: cabeza, hombros y los dientes sin labios llenan el ~40 % de arriba, oscuro y medio perdido en la niebla.
-- **Ava al centro adelante**, cuerpo entero o 3/4 hasta las rodillas, de frente a cámara con mirada decidida; recta, apenas girada; el brazo derecho relajado abajo con la **pistola negra baja a la altura de la cadera** (de perfil para que se lea contra la niebla).
-- **Zombis a los dos lados** detrás de ella, borrosos en la niebla. **Fondo = el set del episodio** (aquí el túnel del metro).
-- Look de cine: niebla volumétrica espesa, luz de luna fría azul, contraluz en Ava y en el cazador, reflejo de piso mojado, profundidad de campo.
-- **HUD real** (panel CONDITION de `film.js hud()`) **debajo de Ava, abajo al centro**, nítido (nearest). Ningún otro texto.
-- Se renderiza desde el motor 3D (nuestros modelos, texturas PS1) en capas + pase de niebla compuesto: `?poster=1&layer=bg|ava|hud` en el set (`pieces/zombie-15-lasttrain3/engine/sets/lasttrain3.js`, bloque "poster"), `review/poster_layers.sh` y `review/poster.py` (DOF, niebla fractal, luna, reflejo, contraluz, HUD). 1080x1920.
-- Revisar al 100 % y con recortes antes de entregar: pistola negra legible, dientes del cazador legibles, Ava sin cortar, HUD nítido.
-- Lo de abajo (pose apuntando a dos manos, HUD arriba) queda como referencia de las miniaturas viejas.
+### Desde 2026-11-19 se vuelve a las miniaturas anteriores (pedido del usuario)
+- El poster de cine tipo RE3 (ep15) queda descartado; no usarlo más.
+- Estilo vigente = el de ep14 (`pieces/zombie-14-attic/review/thumb_v1.png`) y la primera portada del ep15, renderizado desde el motor con `?thumb=1`:
+  - `thumb_post.js` con la pose aprobada (3/4, pistola negra a dos manos a la altura del pecho, rodillas flexionadas);
+  - el cazador (o la amenaza) detrás, con los dientes a la luz;
+  - el set del episodio de fondo;
+  - el HUD real arriba al ~48 % del ancho.
+- Ejemplo: `pieces/zombie-16-floor30-2/engine/sets/floor30b.js` (bloque `?thumb`) → `review/thumb_v1.png`.
 
 - Largos: siempre miniatura YouTube 1280x720 (`largo/miniatura_1280x720.png`); shorts: portada vertical 1080x1920. Renderizar desde el propio motor 3D del video.
 - Investigar título (skills `yt-package`, `yt-viral`) y competidores del nicho + lecciones de `fuentes/miniaturas/` (video KE4zqD0ONDI).
@@ -254,6 +254,7 @@ Cada regla es una corrección que el usuario tuvo que pedir; repetirla cuesta un
 | 13 | `zombie-13-gasstation` | "Gas Station, Part 1" — bombas sin luz, agua antes que snacks, cámara frigorífica = safe room, mano vendada bajo la puerta del baño | entregado (último short, plantilla) |
 | 14 | `zombie-14-attic` | "How To HIDE In Your Attic During A Zombie Outbreak" — The Stairs, Part 2 (misma casa del ep10): silencio 60/30 dB, llama visible a 1+ milla, manta + linterna al piso, desván con escotilla y escalera plegable, el piso roba calor; el gigante entra por la ventana del pie de la escalera y mira arriba; decisión RE3 "Stay still / Jump to the neighbor's roof" | entregado v5 (74.9 s; LucidLink `How To HIDE In Your Attic During A Zombie Outbreak.mp4`) |
 | 15 | `zombie-15-lasttrain3` | "CHOOSE: You Stayed On The Last Train… - Part 3": rama LEAVE (tercer riel 600 V, pasos detrás, el cazador, YOU DIED) → rewind → rama STAY (tren sin conductor, dead man's switch atado con cinta, regla 3 NEVER ENTER THE CAB, Ava frena con sus manos), "the hunter got on board", pantalla YOU BROKE RULE 3 — 10; menú "Run for the exit / Lock yourself in the cab". El gigante reemplaza a la criatura; su tema (cover de Andre Kane) suena cuando está en pantalla | entregado (62,0 s; LucidLink `CHOOSE - You Stayed On The Last Train… - Part 3.mp4`) |
+| 16 | `zombie-16-floor30-2` | "CHOOSE - Stuck On Floor 30… Part 2": apertura con grúa (el cazador entra al lobby de MERCY TOWER y empuja la puerta STAIRS); rama 1 OPEN (cómoda, vecino 3011 con gorra y brazo mordido, YOU DIED) → rewind → rama 2 STAY QUIET (nota bajo la puerta "THE STAIRS. IT'S COMING UP.", teléfono al 18 % en modo avión, máquina DAY 3, hueco de escalera con el sonido que sube, mirilla); decisión RE3 con negativos cortos (1,2 s y 1,6 s) mientras el cazador golpea 3012: "Hide in the tub / Climb to the balcony below". Primer video con el tema "Nemesis' Theme" y los efectos PS1 de Vera (wobble del set, personajes a 15 fps, empuje y vaivén de cámara, DOF, lente, bloom; viñeta y grano en `tools/post16.py`) | entregado (62,0 s; LucidLink `CHOOSE - Stuck On Floor 30… Part 2.mp4`) |
 | L1 | `zombie-03-station/largo` | LARGO "Zombie Outbreak: 1 Night Locked Inside a Police Station" (~7:40, 18 capítulos) | APROBADO v3 |
 | L2 | `zombie-03-station/largo2` | LARGO "Zombie Outbreak: Day 2 Locked Inside a Police Station" (~9 min, 18 capítulos) | entregado v3 (LucidLink `police-station-part-2.mp4`) |
 | L3 | `zombie-03-station/largo3` | LARGO "Zombie Outbreak: Day 3 Something Followed Me Out of the Sewers" (~9:57, 19 capítulos): alcantarillas → bosque → mansión, aparece el gigante | entregado v3 (correcciones del usuario; LucidLink `police-station-part-3.mp4`) |
